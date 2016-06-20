@@ -22,6 +22,7 @@ services:
       - postgres
     environment:
       - POSTGRES_USER=blousebrothers
+      - USE_DOCKER=yes
     volumes:
       - .:/app
     ports:

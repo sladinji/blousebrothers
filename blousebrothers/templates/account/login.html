@@ -10,8 +10,10 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-5">
-      <h2>{% trans "Sign In" %}</h2>
+    <div class="col-md-2 middle-border"></div>
+    <div class="col-md-8">
+      <h2>{% trans "Connexion" %}</h2>
+
       {% get_providers as socialaccount_providers %}
       {% if socialaccount_providers %}
       <p>{% blocktrans with site.name as site_name %}Please sign in with one

@@ -43,6 +43,8 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
 
 # Apps specific for this project go here.
@@ -222,13 +224,37 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Some really nice defaults
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
-ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
+ACCOUNT_ALLOW_REGISTRATION = True
 ACCOUNT_ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'blousebrothers.users.adapters.SocialAccountAdapter'
+
+SOCIALACCOUNT_PROVIDERS = \
+        {'facebook':
+                {'METHOD': 'js_sdk',
+                         'SCOPE': ['email', 'public_profile', 'user_friends'],
+                         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+                         'FIELDS': [
+                                         'id',
+                                         'email',
+                                         'name',
+                                         'first_name',
+                                         'last_name',
+                                         'verified',
+                                         'locale',
+                                         'timezone',
+                                         'link',
+                                         'gender',
+                                         'updated_time'],
+                         'EXCHANGE_TOKEN': True,
+                         'LOCALE_FUNC': lambda request: 'fr_FR',
+                         'VERIFIED_EMAIL': False,
+                         'VERSION': 'v2.6'}
+         }
+
 
 # Custom user app defaults
 # Select the correct user model
@@ -250,3 +276,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+OSCAR_DEFAULT_CURRENCY = 'EUR'
+OSCAR_SHOP_NAME = "Blouse Brother's"
+OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
+
+OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
