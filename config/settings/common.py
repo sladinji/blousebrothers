@@ -281,3 +281,4 @@ OSCAR_SHOP_NAME = "Blouse Brother's"
 OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
+
