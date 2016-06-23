@@ -19,12 +19,35 @@
 								<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
 							</div>
 						</form>
+	    					<div class="con-menu">
+	    					<ul class="boutique-nav main-menu clone-main-menu">
+            					    {% if user.is_authenticated %}
+	    					        <li class="menu-item-has-children item-megamenu">
+            					            {% if num_unread_notifications > 0 %}
+            					                {# If user has new notifications - we change account link to go to inbox #}
+            					                <a href="{% url 'customer:notifications-inbox' %}">
+            					                    <i class="icon-user"></i>
+            					                    {% trans "Account" %}
+            					                    <span class="label label-important">{{ num_unread_notifications }}</span>
+            					                </a>
+            					            {% else %}
+            					                <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
+            					            {% endif %}
+            					        </li>
+            					        {% if user.is_staff or perms.partner.dashboard_access %}
+	    					            <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
+            					        {% endif %}
+            					        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
+            					    {% else %}
+            					        <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
+            					    {% endif %}
+	   					</ul>
+						</div>
 	
 					</div>
 				</div>
-				<ul class="boutique-nav main-menu clone-main-menu">                                      
 				
-	    <ul class="boutique-nav main-menu clone-main-menu pull-right">
+	    <ul class="boutique-nav main-menu clone-main-menu pull-left">
 		<li class="menu-item-has-children item-megamenu">
 	          <a href="/">
 	                <i class="icon-home"></i> Accueil
@@ -78,28 +101,6 @@
 	                {% endif %}
 	            </a>
 		    </li>
-     
-
-                {% if user.is_authenticated %}
-		    <li class="menu-item-has-children item-megamenu">
-                        {% if num_unread_notifications > 0 %}
-                            {# If user has new notifications - we change account link to go to inbox #}
-                            <a href="{% url 'customer:notifications-inbox' %}">
-                                <i class="icon-user"></i>
-                                {% trans "Account" %}
-                                <span class="label label-important">{{ num_unread_notifications }}</span>
-                            </a>
-                        {% else %}
-                            <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
-                        {% endif %}
-                    </li>
-                    {% if user.is_staff or perms.partner.dashboard_access %}
-		        <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
-                    {% endif %}
-                    <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
-                {% else %}
-                    <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
-                {% endif %}
             </ul>				
 			</div>
 		</div>
