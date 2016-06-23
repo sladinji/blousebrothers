@@ -14,7 +14,8 @@
         <link rel="stylesheet" type="text/css" href="{% static "oscar/css/styles.css" %}" />
     {% endif %}
     <link rel="stylesheet" href="{% static "oscar/js/bootstrap-datetimepicker/bootstrap-datetimepicker.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "css/font-awsome.min.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/pe-icon-7-stroke.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "oscar/css/datetimepicker.css" %}" />
 {% endblock %}
 
@@ -24,6 +25,7 @@
 
     {# Main content of page - other layout templates may override this block #}
     {% block content_wrapper %}
+        {% block parallax %}{% endblock %}
         <div class="container-fluid">
             <div class="page_inner">
                 {% block breadcrumbs %}{% endblock %}

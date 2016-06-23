@@ -1400,6 +1400,7 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+
 }
 .row {
   margin-left: -15px;
@@ -2302,6 +2303,14 @@ input[type="search"] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  border-radius: 0;
+  border:none;
+outline: none;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 10px 0px;
 }
 input[type="radio"],
 input[type="checkbox"] {
@@ -10318,9 +10327,6 @@ FOOTER
 /*-------------------------------
  HEADER 
  -------------------------------*/
-.top-header .inner{
-    border-bottom: 1px solid #e5e5e5;
-}
 .topbar{
     display: table;
     width: 100%;
@@ -10709,11 +10715,83 @@ FOOTER
     font-family: 'MontserratLight';
     font-size: 12px;
 }
-.header.style3 .slogan {
+.slogan {
 	display: inline-block;
 	float: left;
 	padding: 10px 0;
 	font-family: 'DearPrudence';
 	font-size: 24px;
 	color: #222;
+}
+
+.parallax {
+  background-image: url("/static/images/pipe.jpg");
+  background-position: 50% 0px;
+  background-color: #453b39;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+.logoparallax{
+  padding-top: 90px;
+  padding-bottom: 90px;
+  max-width: 1170px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.form-control {
+  padding: 10px 15px;
+	border: none;
+	padding: 13px 15px;
+	padding-right: 50px;
+	width: auto;
+}
+.box-search {
+	border-right: 1px solid #e8e8e8;
+	padding: 10px 15px;
+}
+
+.top-header {
+	width: 100%;
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 17px;
+	padding-top: 40px!important;
+	display: table;
+}
+.button-search {
+	width: 44px;
+	height: 44px;
+	line-height: 45px;
+	padding: 0;
+	right: 15px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 24px;
+	background-color: transparent;
+	border: none;
+	width: 50px;
+	height: 50px;
+	line-height: 54px;
+	text-align: center;
+}
+[class^="pe-7s-"], [class*=" pe-7s-"] {
+	display: inline-block;
+	font-family: 'Pe-icon-7-stroke';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.box-control {
+	width: auto;
+	float: right;
 }
