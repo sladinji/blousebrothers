@@ -1,4 +1,10 @@
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+@font-face {
+	font-family: 'lobster';
+	src:url('/static/fonts/Lobster.otf');
+	font-weight: normal;
+	font-style: normal;
+}
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -10718,9 +10724,9 @@ FOOTER
 .slogan {
 	display: inline-block;
 	float: left;
-	padding: 10px 0;
-	font-family: 'DearPrudence';
-	font-size: 24px;
+	padding: 0;
+	font-family: 'lobster';
+	font-size: 48px;
 	color: #222;
 }
 
@@ -10762,7 +10768,7 @@ FOOTER
 	padding-top: 40px!important;
 	display: table;
 }
-.button-search {
+.box-search .button-search {
 	width: 44px;
 	height: 44px;
 	line-height: 45px;
