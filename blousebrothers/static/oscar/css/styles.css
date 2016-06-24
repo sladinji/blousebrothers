@@ -8611,12 +8611,9 @@ body {
   -webkit-border-radius: 0 0 6px 6px;
   -moz-border-radius: 0 0 6px 6px;
   border-radius: 0 0 6px 6px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 .page_inner {
-  padding: 30px;
+  padding: 0px;
 }
 .page_inner:before,
 .page_inner:after {
@@ -10832,4 +10829,16 @@ FOOTER
 	display: table-cell;
 	vertical-align: middle;
 	position: relative;
+}
+
+.border-right-solid {
+	border-right: 1px solid #e8e8e8;
+}
+.con-page {
+	padding: 0 40px;
+}
+
+.blouse-font {
+	font-family: 'lobster';
+	font-size: 16pt;
 }

@@ -4,35 +4,39 @@
 {% load account %}
 {% load socialaccount %}
 {% load crispy_forms_tags %}
+{% load staticfiles %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-2 middle-border"></div>
-    <div class="col-md-8">
+    <div class="col-md-12 text-center">
       <h2>{% trans "Connexion" %}</h2>
-
+    </div>
+    <div class="col-md-6 text-right border-right-solid con-page">
       {% get_providers as socialaccount_providers %}
       {% if socialaccount_providers %}
-      <p>{% blocktrans with site.name as site_name %}Please sign in with one
-      of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-      for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+      <h3>Via le réseau social de ton choix</h3>
 
       <div class="socialaccount_ballot">
 
         <ul class="socialaccount_providers">
-          {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          {% include "partials/social_connect.html" with process="login" %}
         </ul>
 
-        <div class="login-or">{% trans 'or' %}</div>
+      <h3>Ou en créant ton compte ici</h3>
+      <a class="btn-ok" href="/accounts/signup/"><img src="{% static "images/user-avatar-main-picture.png" %}"></img></a>
 
       </div>
 
       {% include "socialaccount/snippets/login_extra.html" %}
 
       {% endif %}
+
+    </div>
+    <div class="col-md-6 con-page">
+      <h3>Via ton compte <span class="blouse-font"> Blouse Brothers</span></h3>
 
       <form class="login" method="POST" action="{% url 'account_login' %}">
         {% csrf_token %}
