@@ -12,6 +12,7 @@ from __future__ import absolute_import, unicode_literals
 from oscar.defaults import *
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
+from django.utils.translation import ugettext_lazy as _
 
 import environ
 
@@ -55,7 +56,9 @@ LOCAL_APPS = [
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + get_core_apps()
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + get_core_apps(
+      ['blousebrothers.dashboard']
+)
 SITE_ID = 1
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -277,8 +280,105 @@ HAYSTACK_CONNECTIONS = {
 }
 
 OSCAR_DEFAULT_CURRENCY = 'EUR'
-OSCAR_SHOP_NAME = "Blouse Brother's"
+OSCAR_SHOP_NAME = "Blouse Brothers"
 OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
 
+# Menu structure of the dashboard navigation
+OSCAR_DASHBOARD_NAVIGATION = [
+    {
+        'label': _('Dashboard'),
+        'icon': 'icon-th-list',
+        'url_name': 'dashboard:index',
+    },
+    {
+        'label': _('Mes Sujets'),
+        'icon': 'icon-sitemap',
+        'children': [
+            {
+                'label': _('Sujets'),
+                'url_name': 'dashboard:catalogue-product-list',
+            },
+            {
+                'label': _('Type de sujet'),
+                'url_name': 'dashboard:catalogue-class-list',
+            },
+            {
+                'label': _('Categories'),
+                'url_name': 'dashboard:catalogue-category-list',
+            },
+        ]
+    },
+    {
+        'label': _('Cours'),
+        'icon': 'icon-rss',
+        'children': [
+            {
+                'label': _('Orders'),
+                'url_name': 'dashboard:order-list',
+            },
+            {
+                'label': _('Statistics'),
+                'url_name': 'dashboard:order-stats',
+            },
+            {
+                'label': _('Partners'),
+                'url_name': 'dashboard:partner-list',
+            },
+            # The shipping method dashboard is disabled by default as it might
+            # be confusing. Weight-based shipping methods aren't hooked into
+            # the shipping repository by default (as it would make
+            # customising the repository slightly more difficult).
+            # {
+            #     'label': _('Shipping charges'),
+            #     'url_name': 'dashboard:shipping-method-list',
+            # },
+        ]
+    },
+    {
+        'label': _('Élèves'),
+        'icon': 'icon-group',
+        'children': [
+            {
+                'label': _('Customers'),
+                'url_name': 'dashboard:users-index',
+            },
+            {
+                'label': _('Stock alert requests'),
+                'url_name': 'dashboard:user-alert-list',
+            },
+        ]
+    },
+    {
+        'label': _('Content'),
+        'icon': 'icon-folder-close',
+        'children': [
+            {
+                'label': _('Content blocks'),
+                'url_name': 'dashboard:promotion-list',
+            },
+            {
+                'label': _('Content blocks by page'),
+                'url_name': 'dashboard:promotion-list-by-page',
+            },
+            {
+                'label': _('Pages'),
+                'url_name': 'dashboard:page-list',
+            },
+            {
+                'label': _('Email templates'),
+                'url_name': 'dashboard:comms-list',
+            },
+            {
+                'label': _('Reviews'),
+                'url_name': 'dashboard:reviews-list',
+            },
+        ]
+    },
+    {
+        'label': _('Reports'),
+        'icon': 'icon-bar-chart',
+        'url_name': 'dashboard:reports-index',
+    },
+]
