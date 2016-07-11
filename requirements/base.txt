@@ -52,4 +52,6 @@ django-constance[database]
 django-picklefield
 django-axes
 django-oscar>=1.2
-shortuuid
+shortuuid==0.4.3
+weasyprint
+django-angular

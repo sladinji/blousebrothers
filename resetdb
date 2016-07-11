@@ -1,0 +1,6 @@
+#!/bin/bash
+./reset_initial_migration
+docker stop blousebrothers_django_1
+docker exec blousebrothers_postgres_1 dropdb -U postgres blousebrothers
+docker exec blousebrothers_postgres_1 createdb -U postgres blousebrothers
+docker-compose run django python manage.py migrate -v 3

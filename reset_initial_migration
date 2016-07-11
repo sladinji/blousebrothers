@@ -1,0 +1,3 @@
+#!/bin/bash
+rm blousebrothers/users/migrations/*
+docker-compose run -u root django python manage.py makemigrations users
