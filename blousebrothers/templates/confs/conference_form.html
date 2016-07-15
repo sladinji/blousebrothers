@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% load static %}{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}{% trans 'Confs' %}{% endblock %}
+
+{% block submenu %}
+	<p class="blouse-font">{% trans "Rédaction d'un sujet" %}</p>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+
+    <div class='row'>
+	<div class='col-md-9'>
+	  <div class="well">
+	    {% if object %}
+	    <form class="form-horizontal" method="post" action="{% url 'confs:update' object.slug %}">
+	    {% else %}
+	    <form class="form-horizontal" method="post" action="{% url 'confs:create' %}">
+	    {% endif %}
+            {% csrf_token %}
+            {{ form | crispy }}
+            <div class="control-group">
+              <div class="controls">
+	              <button type="submit" class="btn">{% trans "Valider" %}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+	<div class='col-md-3'>
+	  <div class="well">
+	    <h3>Tips</h3>
+	    <br>
+	    <p>Pour faire une bon conf...</p>
+      	  </div>
+	</div>
+    </div>
+
+</div>
+
+{% endblock content %}

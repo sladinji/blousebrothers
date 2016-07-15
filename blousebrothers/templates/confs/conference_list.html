@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% load static %}{% load i18n %}
+{% block title %}{% trans 'Confs' %}{% endblock %}
+
+{% block submenu %}
+<a class="btn btn-success pull-left" href="{% url 'confs:create' %}">{% trans '+ Créer une conf' %}</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+	<h2 class="slogan">{% trans 'Mes confs' %}</h2>
+
+    <div class="list-group">
+        {% for conference in conference_list %}
+          <a href="{% url 'confs:detail' conference.slug %}" class="list-group-item">
+            <h4 class="list-group-item-heading">{{ conference.title }}</h4>
+          </a>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock content %}
