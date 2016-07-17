@@ -41,9 +41,16 @@ class Item(models.Model):
     name = models.CharField(_("Item"), max_length=128, blank=False, null=False)
     number = models.IntegerField(_("Numéro"), blank=False, null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Speciality(models.Model):
     name = models.CharField(_("Matière"), max_length=128, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
 
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), max_length=256, blank=False, null=False)
