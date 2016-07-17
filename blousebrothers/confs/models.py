@@ -16,10 +16,7 @@ class Conference(models.Model):
     )
 
     def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('confs:detail', kwargs={'uuid': self.uuid})
+        return self.title
 
     owner = models.ForeignKey('users.User', blank=False, null=False)
     """ Owner/creator """
@@ -30,36 +27,31 @@ class Conference(models.Model):
     abstract = models.TextField(_('Résumé'), blank=False, null=False, max_length=140)
     type = models.CharField(_("Type"), max_length=10, choices=TYPE_CHOICES,
                             blank=False, default='QI')
-    items = models.ManyToManyField('Item', verbose_name=_("Items"))
-    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'))
+    items = models.ManyToManyField('Item', verbose_name=_("Items"), related_name='conferences')
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
+
 
 class Item(models.Model):
     """
     National item exam
     """
-    name = models.CharField(_("Nom"), max_length=128, blank=False, null=False)
+    name = models.CharField(_("Item"), max_length=128, blank=False, null=False)
     number = models.IntegerField(_("Numéro"), blank=False, null=False)
 
 
 class Speciality(models.Model):
-    name = models.CharField(_("Nom"), max_length=128, blank=False, null=False)
-
+    name = models.CharField(_("Matière"), max_length=128, blank=False, null=False)
 
 class Question(models.Model):
-    label = models.TextField(_("Enoncé"), max_length=256, blank=False, null=False)
+    question = models.TextField(_("Enoncé"), max_length=256, blank=False, null=False)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     order = models.PositiveIntegerField(_("Ordre"), default=0)
-
-
-class Answer(models.Model):
-    label = models.CharField(_("Réponse"), max_length=256, blank=False, null=False)
-    why = models.CharField(_("Explication"), max_length=256, blank=True, null=True)
+    answer = models.CharField(_("Réponse"), max_length=256, blank=False, null=False)
+    explaination = models.CharField(_("Explication"), max_length=256, blank=True, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
-    question = models.ForeignKey('Question', related_name='answers', verbose_name=_("Question"))
-
 
 class QuestionImage(models.Model):
 
@@ -67,9 +59,4 @@ class QuestionImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=200, blank=True)
     order = models.PositiveIntegerField(_("Ordre"), default=0)
-
-admin.site.register(Item)
-admin.site.register(Speciality)
-admin.site.register(Question)
-admin.site.register(Answer)
-admin.site.register(QuestionImage)
+    question = models.ForeignKey('Question', related_name='images')

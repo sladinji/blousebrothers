@@ -55,3 +55,4 @@ django-oscar>=1.2
 shortuuid==0.4.3
 weasyprint
 django-angular
+django-nested-admin

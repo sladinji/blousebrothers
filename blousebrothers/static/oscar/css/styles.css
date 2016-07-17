@@ -10716,15 +10716,6 @@ FOOTER
     font-family: 'MontserratLight';
     font-size: 12px;
 }
-.slogan {
-	display: inline-block;
-	float: left;
-	padding: 0;
-	font-family: 'lobster';
-	font-size: 48px;
-	color: #222;
-}
-
 .parallax {
   background-image: url("/static/images/pipe.jpg");
   background-position: 50% 0px;
@@ -10747,7 +10738,7 @@ FOOTER
 .form-control {
 	border: none;
 	padding-right: 50px;
-	width: auto;
+	width: 100%;
 	box-shadow: none!important;
 }
 .box-search {
@@ -10838,7 +10829,3 @@ FOOTER
 	padding: 0 40px;
 }
 
-.blouse-font {
-	font-family: 'lobster';
-	font-size: 16pt;
-}

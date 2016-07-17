@@ -37,3 +37,23 @@
   display: block !important;
 }
 
+
+.submenu {
+	padding-top: 9px;
+}
+.blouse-font {
+	font-family: 'lobster';
+	font-size: 20pt;
+	margin-bottom: 0px!important;
+}
+
+.slogan {
+	display: inline-block;
+	float: left;
+	padding: 0;
+	margin-top: -17px;
+	font-family: 'lobster';
+	font-size: 48px;
+	color: #222;
+}
+

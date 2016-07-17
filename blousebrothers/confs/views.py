@@ -43,7 +43,7 @@ class ConferenceListView(LoginRequiredMixin, ListView):
 
 class ConferenceCreateView(LoginRequiredMixin, CreateView):
     model = Conference
-    fields = ['title', 'abstract', 'type', 'items', 'specialities']
+    fields = ['title', 'abstract', 'type', 'items', 'specialities', 'questions']
     success_url='.'
 
     def form_valid(self, form):

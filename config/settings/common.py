@@ -38,6 +38,7 @@ DJANGO_APPS = [
 
     # Admin
     'django.contrib.admin',
+    'nested_admin',
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
@@ -51,6 +52,7 @@ THIRD_PARTY_APPS = [
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'blousebrothers.users',  # custom users app
+    'blousebrothers.confs',  # custom users app
     # Your stuff: custom apps go here
     'widget_tweaks',
 ]

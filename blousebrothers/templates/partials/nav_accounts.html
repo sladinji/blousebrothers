@@ -11,11 +11,27 @@
 			</div>
 			<div class="col-sm-12 col-md-10 menu-wapper">
 				<div class="top-header">
+            				{% if not user.is_authenticated %}
 					<div class="slogan">BlouseBrothers</div>
+				        {% else %}
+					<ul class="boutique-nav main-menu clone-main-menu pull-left">
+					    <li class="menu-item-has-children item-megamenu">
+						    <a href="{% url 'confs:list' %}">
+						      <i class="icon-home"></i> {% trans 'Home' %}
+					    </a>
+					    </li>
+					    <li class="menu-item-has-children item-megamenu">
+					      <a href="/">
+						      <i class="icon-list-ul"></i> {% trans 'Confs' %}
+					    </a>
+					    </li>
+					</ul>
+				        {% endif %}
+					<ul class="boutique-nav main-menu clone-main-menu pull-left">
 					<div class="box-control">
 						<form method="get" action="{% url 'search:search' %}" class="box-search">
 							<div class="inner">
-        {{ search_form.q }}
+								{{ search_form.q }}
 								<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
 							</div>
 						</form>
@@ -46,6 +62,8 @@
 	
 					</div>
 				</div>
+
+	    {% comment %}
 				
 	    <ul class="boutique-nav main-menu clone-main-menu pull-left">
 		<li class="menu-item-has-children item-megamenu">
@@ -102,6 +120,7 @@
 	            </a>
 		    </li>
             </ul>				
+	    {% endcomment %}
 			</div>
 		</div>
 		</div>

@@ -16,9 +16,9 @@
 	<div class='col-md-9'>
 	  <div class="well">
 	    {% if object %}
-	    <form class="form-horizontal" method="post" action="{% url 'confs:update' object.slug %}">
+	    <form class="form" method="post" action="{% url 'confs:update' object.slug %}">
 	    {% else %}
-	    <form class="form-horizontal" method="post" action="{% url 'confs:create' %}">
+	    <form class="form" method="post" action="{% url 'confs:create' %}">
 	    {% endif %}
             {% csrf_token %}
             {{ form | crispy }}
