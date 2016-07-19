@@ -9,9 +9,11 @@ class QuestionImageInline(nested_admin.NestedTabularInline):
     exclude = ['order', 'date_created']
     extra = 1
 
+
 class AnswerInline(nested_admin.NestedTabularInline):
     model = Answer
     extra = 5
+
 
 class QuestionInline(nested_admin.NestedTabularInline):
     model = Question
@@ -25,12 +27,9 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class ConferenceAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('title','abstract', 'items', 'specialiies', 'owner',)
-    inlines = [
-        QuestionInline,
-    ]
-
-    exclude = [ 'owner', 'abstract', 'type' ]
+    list_display = ('title', 'abstract', 'owner')
+    inlines = [QuestionInline, ]
+    exclude = ['owner', 'abstract', 'type']
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
@@ -40,4 +39,3 @@ admin.site.register(Conference, ConferenceAdmin)
 admin.site.register(Item)
 admin.site.register(Speciality)
 admin.site.register(Question, QuestionAdmin)
-
