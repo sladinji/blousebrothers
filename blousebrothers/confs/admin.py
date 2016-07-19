@@ -29,9 +29,6 @@ class ConferenceAdmin(nested_admin.NestedModelAdmin):
     inlines = [
         QuestionInline,
     ]
-    formfield_overrides = {
-        models.TextField: {'widget': RichTextEditorWidget},
-    }
 
     exclude = [ 'owner', 'abstract', 'type' ]
 
