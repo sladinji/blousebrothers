@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Conference, Item, Question, Speciality, QuestionImage
+from .models import Conference, Item, Question, Speciality, QuestionImage, Answer
 import nested_admin
 # Register your models here.
 
@@ -9,25 +9,35 @@ class QuestionImageInline(nested_admin.NestedTabularInline):
     exclude = ['order', 'date_created']
     extra = 1
 
+class AnswerInline(nested_admin.NestedTabularInline):
+    model = Answer
+    extra = 5
 
 class QuestionInline(nested_admin.NestedTabularInline):
     model = Question
     exclude = ['order']
-    inlines = [QuestionImageInline]
+    inlines = [QuestionImageInline, AnswerInline]
     extra = 1
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    inlines = [QuestionImageInline]
+    inlines = [AnswerInline, QuestionImageInline]
 
 
 class ConferenceAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('title', 'owner')
+    list_display = ('title','abstract', 'items', 'specialiies', 'owner',)
     inlines = [
         QuestionInline,
     ]
+    formfield_overrides = {
+        models.TextField: {'widget': RichTextEditorWidget},
+    }
 
     exclude = [ 'owner', 'abstract', 'type' ]
+
+    def save_model(self, request, obj, form, change):
+        obj.owner = request.user
+        obj.save()
 
 admin.site.register(Conference, ConferenceAdmin)
 admin.site.register(Item)

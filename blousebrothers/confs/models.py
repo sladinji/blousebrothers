@@ -24,7 +24,7 @@ class Conference(models.Model):
     title = models.CharField(_('Titre'), blank=False, null=False, max_length=64)
     slug = AutoSlugField(_('Slug'), max_length=128, unique=True,
                          populate_from='title')
-    abstract = models.TextField(_('Résumé'), blank=False, null=False, max_length=140)
+    abstract = models.TextField(_('Résumé'), blank=False, null=False)
     type = models.CharField(_("Type"), max_length=10, choices=TYPE_CHOICES,
                             blank=False, default='QI')
     items = models.ManyToManyField('Item', verbose_name=_("Items"), related_name='conferences')
@@ -53,12 +53,16 @@ class Speciality(models.Model):
 
 
 class Question(models.Model):
-    question = models.TextField(_("Enoncé"), max_length=256, blank=False, null=False)
+    question = models.TextField(_("Enoncé"), blank=False, null=False)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     order = models.PositiveIntegerField(_("Ordre"), default=0)
+
+
+class Answer(models.Model):
     answer = models.CharField(_("Réponse"), max_length=256, blank=False, null=False)
-    explaination = models.CharField(_("Explication"), max_length=256, blank=True, null=True)
+    explaination = models.TextField(_("Explication"), blank=True, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
+    question = models.ForeignKey('Question', related_name='answers')
 
 class QuestionImage(models.Model):
 
