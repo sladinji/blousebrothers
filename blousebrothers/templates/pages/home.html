@@ -4,6 +4,7 @@
 {% load socialaccount %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
+{% comment %}
 {% block parallax%}
 
 <div id="pipe" class="parallax">
@@ -17,13 +18,40 @@
   </div>
 </div>
 {% endblock parallax %}
+{% endcomment %}
+{% block main_header %}
+{% endblock main_header %}
+{% block header %}
+{% endblock header %}
+{% block main_container_class %}<div class="container_fluid parallax">{% endblock %}
 
 {% block content %}
+<div class="row top-header main-title">
+	<div class="col-sm-2"><span class="slogan-top-header"> BlouseBrothers</div>
+	<div class="col-sm-8 text-center">Prépa ECNi<em> collaborative</em></span></div>
+	<div class="col-sm-2 text-right small"><a href="/" class="btn btn-primary">Connexion</a> </div>
+</div>
+
 <div class="container">
   <div class="row">
-    <div class="col-md-2 middle-border"></div>
-    <div class="col-md-8 text-center">
-      <h2>{% trans "C'est parti, connecte toi via le réseau social de ton choix" %}</h2>
+    <div class="col-sm-12 text-center">
+      <div class="well main-page">
+	      <p><span class="yellow">Externe ?</span> Fais ton programme selon tes révisions. Pas d'abonnement, pas d'engagement. Pose tes questions à la communauté. Évalue les QI, les DCP, et les réponses des conférenciers... et base toi sur les évaluations pour choisir tes confs.</p>
+	      <p><span class="yellow">Conférencier ?</span> Construis tes DCP et QI sur la plateforme.</p>
+	      <p>Garde 85% de tes ventes. Tes notes et ta réputation seront gage de ton succès.</p>
+	      <p>Bonne chance à tous... <span class="yellow">Bienvenue sur <span class="blouse-font">Blousebrothers</span>. Nous n'avons plus besoin d'eux.</span>
+      </div>
+      <div class="col-sm-12">
+        <form method="get" action="{% url 'search:search' %}" class="box-search search-main-page">
+	      <div class="inner">
+		      {{ search_form.q }}
+		      <button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
+	      </div>
+        </form>
+      </div>
+
+
+
 
       {% get_providers as socialaccount_providers %}
       {% if socialaccount_providers %}

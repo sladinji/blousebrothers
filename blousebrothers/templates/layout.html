@@ -26,6 +26,8 @@
 {% load i18n %}
 {% load category_tags %}
 {% load currency_filters %}
+
+{% block main_header %}
 	<div class="container">
 		<div class="main-menu-wapper">
 		<div class="row">
@@ -96,11 +98,11 @@
 		</div>
 		</div>
 		</div>
-
+		{% endblock main_header %}
     {# Main content of page - other layout templates may override this block #}
     {% block content_wrapper %}
         {% block parallax %}{% endblock %}
-        <div class="container-fluid">
+	{% block main_container_class %}<div class="container-fluid">{% endblock %}
             <div class="page_inner">
                 {% block breadcrumbs %}{% endblock %}
                 {% block header %}

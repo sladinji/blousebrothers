@@ -1,4 +1,4 @@
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v2.0.1 | MIT License | git.io/normalize */
 @font-face {
 	font-family: 'lobster';
 	src:url('/static/fonts/Lobster.otf');
@@ -10717,12 +10717,14 @@ FOOTER
     font-size: 12px;
 }
 .parallax {
-  background-image: url("/static/images/pipe.jpg");
-  background-position: 50% 0px;
-  background-color: #453b39;
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-attachment: fixed;
+  background: url("/static/images/pipe.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: top;
+  min-height: 1200px;
+
 }
 
 .logoparallax{
@@ -10820,6 +10822,10 @@ FOOTER
 	display: table-cell;
 	vertical-align: middle;
 	position: relative;
+}
+
+.box-search.search-main-page {
+	display: inherit;
 }
 
 .border-right-solid {
