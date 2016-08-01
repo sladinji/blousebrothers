@@ -10826,6 +10826,12 @@ FOOTER
 
 .box-search.search-main-page {
 	display: inherit;
+	color: #555555;
+	border: 0;
+	margin: 0;
+}
+.box-search.search-main-page input {
+	padding: 10px 30px;
 }
 
 .border-right-solid {
