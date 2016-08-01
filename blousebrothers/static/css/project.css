@@ -76,10 +76,12 @@
 	background-color: rgba(245, 245, 245, 0.2);
 	border: 0px;
 	border-radius: 0px;
-	font-size: 30px;
 	text-align: left;
 	color: #fff;
    }
+.main-page {
+	font-size: 30px;
+}
 .yellow {
 	color: #c99947;
 }
