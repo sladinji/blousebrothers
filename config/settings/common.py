@@ -47,6 +47,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     #'allauth.socialaccount.providers.facebook',
     #'allauth.socialaccount.providers.google',
+    'django_bootstrap_dynamic_formsets',
+    'bootstrap3',
 ]
 
 # Apps specific for this project go here.

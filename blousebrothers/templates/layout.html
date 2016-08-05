@@ -27,6 +27,14 @@
 {% load category_tags %}
 {% load currency_filters %}
 
+{% block cdn_scripts %}
+  {{ block.super }}
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+  {% if use_less and debug %}
+    {# Load the on-the-fly less compiler. Never do this in production. #}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+  {% endif %}
+{% endblock %}
 {% block main_header %}
 	<div class="container">
 		<div class="main-menu-wapper">
@@ -132,13 +140,6 @@
     {% include "partials/footer.html" %}
 {% endblock %}
 
-{% block cdn_scripts %}
-  {{ block.super }}
-  {% if use_less and debug %}
-    {# Load the on-the-fly less compiler. Never do this in production. #}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
-  {% endif %}
-{% endblock %}
 
 {# Local scripts #}
 {% block scripts %}

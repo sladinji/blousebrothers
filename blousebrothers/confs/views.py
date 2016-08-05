@@ -6,7 +6,8 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView,
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Conference
+from .models import Conference, Question
+from .forms import ConferenceForm, QuestionFormSet
 
 
 class ConferenceDetailView(LoginRequiredMixin, DetailView):
@@ -25,8 +26,9 @@ class ConferenceRedirectView(LoginRequiredMixin, RedirectView):
 
 
 class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
-    model = Conference
-    fields = ['title', 'abstract', 'type', 'items', 'specialities']
+    fields = '__all__'
+    model=Conference
+    template_name = 'confs/conference_form.html'
 
     # send the user back to their own page after a successful update
     def get_redirect_url(self):
@@ -42,11 +44,29 @@ class ConferenceListView(LoginRequiredMixin, ListView):
 
 
 class ConferenceCreateView(LoginRequiredMixin, CreateView):
-    model = Conference
-    fields = ['title', 'abstract', 'type', 'items', 'specialities', 'questions']
     success_url='.'
+    template_name = 'confs/conference_form.html'
+    form_class = ConferenceForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ConferenceCreateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = QuestionFormSet(self.request.POST)
+        else:
+            context['formset'] = QuestionFormSet(queryset=Question.objects.order_by('order'))
+        return context
 
     def form_valid(self, form):
-        conf = form.save(commit=False)
-        conf.owner = self.request.user
-        return super().form_valid(form)
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
+            self.object = form.save(commit=False)
+            self.object.owner = self.request.user
+            formset.instance = self.object
+            for form in formset.ordered_forms:
+                form.instance.order = form.cleaned_data['ORDER']
+            formset.save()
+            return super().form_valid(form)
+            #return redirect(self.object.get_absolute_url())  # assuming your model has ``get_absolute_url`` defined.
+        else:
+            return self.render_to_response(self.get_context_data(form=form))

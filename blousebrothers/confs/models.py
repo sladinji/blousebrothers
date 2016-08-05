@@ -5,7 +5,6 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib import admin
 from oscar.models.fields import AutoSlugField
 
 
@@ -38,11 +37,11 @@ class Item(models.Model):
     """
     National item exam
     """
-    name = models.CharField(_("Item"), max_length=128, blank=False, null=False)
+    name = models.CharField("Item", max_length=128, blank=False, null=False)
     number = models.IntegerField(_("Numéro"), blank=False, null=False)
 
     def __str__(self):
-        return self.name
+        return "%s - %s" % (self.number, self.name)
 
 
 class Speciality(models.Model):
@@ -53,16 +52,17 @@ class Speciality(models.Model):
 
 
 class Question(models.Model):
-    question = models.TextField(_("Enoncé"), blank=False, null=False)
+    question = models.TextField(_("Enoncé"), blank=False, null=False, max_length=64)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     order = models.PositiveIntegerField(_("Ordre"), default=0)
 
 
 class Answer(models.Model):
     answer = models.CharField(_("Réponse"), max_length=256, blank=False, null=False)
-    explaination = models.TextField(_("Explication"), blank=True, null=True)
+    explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
     question = models.ForeignKey('Question', related_name='answers')
+    order = models.PositiveIntegerField(_("Ordre"), default=0)
 
 class QuestionImage(models.Model):
 

@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% load static %}{% load i18n %}
 {% load crispy_forms_tags %}
+{% load bootstrap_dynamic_formsets %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
@@ -22,9 +23,10 @@
 	    {% endif %}
             {% csrf_token %}
             {{ form | crispy }}
+	    {% bootstrap_dynamic_formset formset can_order=True can_delete=True layout="horizontal" %}
             <div class="control-group">
               <div class="controls">
-	              <button type="submit" class="btn">{% trans "Valider" %}</button>
+	              <button id="form-submit" type="submit" class="btn">{% trans "Valider" %}</button>
               </div>
             </div>
           </div>
