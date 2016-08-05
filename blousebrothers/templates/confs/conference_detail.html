@@ -14,21 +14,44 @@
   </div>
 
 <!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12 ">
-	  <p>{{object.type}}</p>
-	  <p>{{object.items}}</p>
-	  <p>{{object.specialities}}</p>
-	  <p>{{object.abstract}}</p>
+  <div class="row">
+  
     <a class="btn btn-primary" href="{% url 'confs:update' object.slug %}">Editer</a>
-    <!-- Your Stuff: Custom user template urls -->
+    <div class="col-sm-12 ">
+  	  <p>Type : {{object.type}}</p>
+  	  <p>Items : {{object.items.all | join:", "}}</p>
+  	  <p>Specialités : {{object.specialities.all | join:", "}}</p>
+  	  <p>Résumé : {{object.abstract}}</p>
+      <!-- Your Stuff: Custom user template urls -->
+    </div>
+    <h2>Questions</h2>
+    {% for question in object.questions.all %}
+    <div class="well">
+      <div class="col-sm-12 ">
+  	<p>Énoncé :<br>{{ question.question }}</p>
+      </div>
+      <div class="col-sm-12 col-md-6">
+  	<p>Réponse A : {{ question.answer_a }}/<p>
+  	<p>Explication : {{ question.explaination_a|default:"aucune" }}</p>
+  	<p>{% if question.correct_a %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
+  	<br>
+  	<p>Réponse B : {{ question.answer_b }}/<p>
+  	<p>Explication : {{ question.explaination_b| default:"aucune" }}</p>
+  	<p>{% if question.correct_b %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
+      </div>
+      <div class="col-sm-12 col-md-6">
+  	<p>Réponse C : {{ question.answer_c }}/<p>
+  	<p>Explication : {{ question.explaination_c | default:"aucune" }}</p>
+  	<p>{% if question.correct_c %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
+  	<br>
+  	<p>Réponse D : {{ question.answer_d }}/<p>
+  	<p>Explication : {{ question.explaination_d| default:"aucune" }}</p>
+  	<p>{% if question.correct_d %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
+      </div>
+    {% endfor %}
+  
   </div>
-
-</div>
 <!-- End Action buttons -->
-
-
 </div>
 {% endblock content %}
 

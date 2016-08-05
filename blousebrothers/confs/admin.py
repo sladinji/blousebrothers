@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Conference, Item, Question, Speciality, QuestionImage, Answer
+from .models import Conference, Item, Question, Speciality, QuestionImage
 import nested_admin
 # Register your models here.
 
@@ -10,20 +10,15 @@ class QuestionImageInline(nested_admin.NestedTabularInline):
     extra = 1
 
 
-class AnswerInline(nested_admin.NestedTabularInline):
-    model = Answer
-    extra = 5
-
-
 class QuestionInline(nested_admin.NestedTabularInline):
     model = Question
     exclude = ['order']
-    inlines = [QuestionImageInline, AnswerInline]
+    inlines = [QuestionImageInline]
     extra = 1
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    inlines = [AnswerInline, QuestionImageInline]
+    inlines = [QuestionImageInline]
 
 
 class ConferenceAdmin(nested_admin.NestedModelAdmin):

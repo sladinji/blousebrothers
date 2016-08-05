@@ -56,13 +56,21 @@ class Question(models.Model):
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     order = models.PositiveIntegerField(_("Ordre"), default=0)
 
+    answer_a = models.CharField(_("Réponse A"), max_length=256, blank=False, null=False)
+    explaination_a = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    correct_a = models.BooleanField(_("Correct"), default=False)
 
-class Answer(models.Model):
-    answer = models.CharField(_("Réponse"), max_length=256, blank=False, null=False)
-    explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
-    correct = models.BooleanField(_("Correct"), default=False)
-    question = models.ForeignKey('Question', related_name='answers')
-    order = models.PositiveIntegerField(_("Ordre"), default=0)
+    answer_b = models.CharField(_("Réponse B"), max_length=256, blank=False, null=False)
+    explaination_b = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    correct_b = models.BooleanField(_("Correct"), default=False)
+
+    answer_c = models.CharField(_("Réponse C"), max_length=256, blank=False, null=False)
+    explaination_c = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    correct_c = models.BooleanField(_("Correct"), default=False)
+
+    answer_d = models.CharField(_("Réponse D"), max_length=256, blank=False, null=False)
+    explaination_d = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    correct_d = models.BooleanField(_("Correct"), default=False)
 
 class QuestionImage(models.Model):
 

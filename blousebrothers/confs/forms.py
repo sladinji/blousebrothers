@@ -5,13 +5,6 @@ from .models import(
         Question,
 )
 
-
-class QuestionInline(ModelForm):
-    class Meta:
-        model = Question
-        fields = '__all__'
-
-
 class ConferenceForm(ModelForm):
     class Meta:
         model = Conference
@@ -23,5 +16,6 @@ QuestionFormSet = inlineformset_factory(
         Conference,
         Question,
         exclude=['owner', 'order',],
+        extra = 1,
         can_order=True, can_delete= True,
 )
