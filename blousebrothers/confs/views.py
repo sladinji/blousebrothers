@@ -44,8 +44,28 @@ class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['formset'] = QuestionFormSet(instance=self.object)
+        if self.request.POST:
+            context['formset'] = QuestionFormSet(self.request.POST)
+            print("???")
+        else:
+            context['formset'] = QuestionFormSet(instance=self.object)
         return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+        formset.instance = self.object
+        if formset.is_valid():
+            self.object = form.save(commit=False)
+            self.object.owner = self.request.user
+            self.object.save()
+            for form in formset.ordered_forms:
+                form.instance.order = form.cleaned_data['ORDER']
+            formset.save()
+            return redirect(self.object.get_absolute_url())
+        else:
+            print("SAM7REE!!")
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
 class ConferenceListView(LoginRequiredMixin, ListView):
