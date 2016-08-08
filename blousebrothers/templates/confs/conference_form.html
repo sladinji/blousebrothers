@@ -2,6 +2,7 @@
 {% load static %}{% load i18n %}
 {% load crispy_forms_tags %}
 {% load bootstrap_dynamic_formsets %}
+{% load djng_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
@@ -10,36 +11,123 @@
 
 {% block content %}
 
-<div class="container">
+<div ng-controller="ConfFormCtrl" class="container">
 
 
     <div class='row'>
-	<div class='col-md-9'>
-	  <div class="well">
+	<aside class="col-md-3">
+	    <ul class="nav nav-pills  nav-stacked">
+		<li class="active"><a href ng-click="showsubject=true"><i class="fa fa-file-text-o fa-fw"></i> {% trans "Sujet" %}</a></li>
+	    </ul>
+	    {% verbatim %}
+	    <div ng-app="myShoppingList" ng-cloak class="bb-card-2 bb-margin" style="max-width:400px;">
+	    <header class="bb-container bb-light-grey bb-padding-16">
+	    <h3>Questions</h3>
+	    </header>
+	    <ul class="nav nav-pills  nav-stacked">
+		    <li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="showsubject=false"><i class="fa fa-comment fa-fw"></i>{{ $index }} : {{x.question | limitTo: 20}} ...</a></li>
+	    </ul>
+	    <div class="bb-container bb-light-grey bb-padding-16">
+	    <div class="bb-row bb-margin-top">
+	    <div class="bb-col s10">
+	    	<input placeholder="Saisissez une question ici" ng-model="addMe" class="form-control bb-border bb-padding">
+	    </div>
+	    <div class="bb-col s2">
+	    	<button ng-click="addItem()" class="btn bb-padding bb-green">Ajouter</button>
+	    </div>
+	    </div>
+	    <p class="bb-padding-left bb-text-red">{{errortext}}</p>
+	    </div>
+	    </div>
+	    {% endverbatim %}
+	</aside>
+
+	<div id="subject" class="col-md-9" >
+	  <div class="tabbable dashboard col-md-12">
+
 	    {% if object %}
-	    <form class="form" method="post" action="{% url 'confs:update' object.slug %}">
+	    <form class="form" name="{{ form.form_name }}" novalidate action="{% url 'confs:update' object.slug %}">
 	    {% else %}
-	    <form class="form" method="post" action="{% url 'confs:create' %}">
+	    <form class="form" name="{{ form.form_name }}" novalidate action="{% url 'confs:create' %}">
 	    {% endif %}
             {% csrf_token %}
-            {{ form | crispy }}
-	    {% bootstrap_dynamic_formset formset can_order=True can_delete=True layout="horizontal" %}
-            <div class="control-group">
-              <div class="controls">
-	              <button id="form-submit" type="submit" class="btn">{% trans "Valider" %}</button>
-              </div>
-            </div>
-          </div>
-        </div>
-	<div class='col-md-3'>
-	  <div class="well">
-	    <h3>Tips</h3>
-	    <br>
-	    <p>Pour faire une bon conf...</p>
-      	  </div>
+	    <div class="tab-content">
+	      <div id="conference" ng-show="showsubject" ng-init="showsubject=true">
+                {{ form }}
+	      </div>
+	      <div id="question" ng-show="!showsubject">
+	        {% bootstrap_dynamic_formset formset can_order=False can_delete=False layout="inline" %}
+	      </div>
+	    </div>
+
+	    <div class="control-group">
+	      <div class="controls">
+		      <button ng-click="submit()" class="btn">{% trans "Valider" %}</button>
+	      </div>
+	    </div>
+	    </form>
+
+
+	  </div>
 	</div>
     </div>
-
 </div>
 
+
 {% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+var myServices = angular.module('myServices', ['ngResource']);
+var my_app = angular.module('djangular-bb', ['myServices', 'djng.forms']);
+
+myServices.factory('Question', ['$resource', function($resource) {
+	return $resource('{% url 'confs:question_crud_view' %}', {'pk': '@pk'}, {
+		        });
+}]);
+myServices.factory('Conference', ['$resource', function($resource) {
+	return $resource('{% url 'confs:conference_crud_view' %}', {'pk': '@pk'}, {
+		        });
+}]);
+myServices.factory('Answer', ['$resource', function($resource) {
+	return $resource('{% url 'confs:answer_crud_view' %}', {'pk': '@pk'}, {
+		        });
+}]);
+my_app.config(function($httpProvider) {
+	    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+	    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+	    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+});
+my_app.controller('ConfFormCtrl', function($scope, $http) {
+    $scope.submit = function() {
+        var in_data = { title: $scope.title };
+        $http.post('{% url 'confs:create' %}', in_data)
+            .success(function(out_data) {
+		console.log(out_data);
+            });
+
+    }
+});
+my_app.controller("ConfFormCtrl", function($scope, Question) {
+    $scope.questions = ["Question 1", "Question 2"];
+    $scope.addItem = function () {
+        $scope.errortext = "";
+        if (!$scope.addMe) {return;}
+        if ($scope.questions.indexOf($scope.addMe) == -1) {
+            $scope.questions.push($scope.addMe);
+	    $scope.showsubject = false;
+        } else {
+            $scope.errortext = "Vous avez déjà saisi cette question.";
+        }
+    }
+    $scope.removeItem = function (x) {
+        $scope.errortext = "";    
+        $scope.questions.splice(x, 1);
+    }
+    $scope.init_model = function () {
+	$scope.questions = Question.query();
+    }
+    $scope.init_model();
+});
+</script>
+{% endblock %}

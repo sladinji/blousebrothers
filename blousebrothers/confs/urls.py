@@ -39,4 +39,15 @@ urlpatterns = [
         view=views.ConferenceCreateView.as_view(),
         name='create'
     ),
+    url(r'^crud/conference/?$',
+        views.ConferenceCRUDView.as_view(),
+        name='conference_crud_view'),
+
+    url(r'^crud/question/?$',
+        views.QuestionCRUDView.as_view(),
+        name='question_crud_view'),
+
+    url(r'^crud/answer/?$',
+        views.QuestionCRUDView.as_view(),
+        name='answer_crud_view'),
 ]

@@ -85,3 +85,14 @@
 .yellow {
 	color: #c99947;
 }
+
+/* Angular stuff */
+
+.bb-light-grey, .bb-hover-light-grey:hover {
+	color: #000 !important;
+	background-color: #f1f1f1 !important;
+}
+
+.bb-margin-right {
+	margin-right: 16px !important;
+}

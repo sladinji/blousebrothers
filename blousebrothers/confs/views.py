@@ -7,8 +7,8 @@ from django.shortcuts import redirect
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Conference
-from .forms import ConferenceForm, QuestionFormSet
+from .models import Conference, Question, Answer
+from .forms import ConferenceForm, AnswerFormSet
 
 
 class ConferenceDetailView(LoginRequiredMixin, DetailView):
@@ -45,9 +45,9 @@ class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['formset'] = QuestionFormSet(self.request.POST, instance=self.object)
+            context['formset'] = AnswerFormSet(self.request.POST, instance=self.object)
         else:
-            context['formset'] = QuestionFormSet(instance=self.object)
+            context['formset'] = AnswerFormSet(instance=self.object)
         return context
 
     def form_valid(self, form):
@@ -85,9 +85,9 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(ConferenceCreateView, self).get_context_data(**kwargs)
         if self.request.POST:
-            context['formset'] = QuestionFormSet(self.request.POST)
+            context['formset'] = AnswerFormSet(self.request.POST)
         else:
-            context['formset'] = QuestionFormSet()
+            context['formset'] = AnswerFormSet()
         return context
 
     def form_valid(self, form):
@@ -106,3 +106,14 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
+
+from djng.views.crud import NgCRUDView
+
+class ConferenceCRUDView(LoginRequiredMixin, NgCRUDView):
+        model = Conference
+
+class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
+        model = Question
+
+class AnswerCRUDView(LoginRequiredMixin, NgCRUDView):
+        model = Answer

@@ -10,8 +10,8 @@ from oscar.models.fields import AutoSlugField
 
 class Conference(models.Model):
     TYPE_CHOICES = (
-        ('QI', _('QI')),
         ('DCP', _('DCP')),
+        ('QI', _('QI')),
     )
 
     def __str__(self):
@@ -21,11 +21,13 @@ class Conference(models.Model):
     """ Owner/creator """
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     title = models.CharField(_('Titre'), blank=False, null=False, max_length=64)
+    type = models.CharField(_("Type"), max_length=10, choices=TYPE_CHOICES,
+                            blank=False, default='DP')
     slug = AutoSlugField(_('Slug'), max_length=128, unique=True,
                          populate_from='title')
-    abstract = models.TextField(_('Résumé'), blank=False, null=False)
-    type = models.CharField(_("Type"), max_length=10, choices=TYPE_CHOICES,
-                            blank=False, default='QI')
+    summary = models.CharField(_('Résumé'), blank=False, null=False, max_length=140,
+                               help_text=_("Ce résumé doit décrire le contenu de la conférence en moins de 140 caractères."))
+    statement = models.TextField(_('Énoncé'), blank=False, null=False)
     items = models.ManyToManyField('Item', verbose_name=_("Items"), related_name='conferences')
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
 
@@ -56,21 +58,12 @@ class Question(models.Model):
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     order = models.PositiveIntegerField(_("Ordre"), default=0)
 
-    answer_a = models.CharField(_("Réponse A"), max_length=256, blank=False, null=False)
-    explaination_a = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
-    correct_a = models.BooleanField(_("Correct"), default=False)
-
-    answer_b = models.CharField(_("Réponse B"), max_length=256, blank=False, null=False)
-    explaination_b = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
-    correct_b = models.BooleanField(_("Correct"), default=False)
-
-    answer_c = models.CharField(_("Réponse C"), max_length=256, blank=False, null=False)
-    explaination_c = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
-    correct_c = models.BooleanField(_("Correct"), default=False)
-
-    answer_d = models.CharField(_("Réponse D"), max_length=256, blank=False, null=False)
-    explaination_d = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
-    correct_d = models.BooleanField(_("Correct"), default=False)
+class Answer(models.Model):
+    question = models.ForeignKey(Question, related_name="answers")
+    answer = models.CharField(_("Proposition"), max_length=256, blank=False, null=False)
+    explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    correct = models.BooleanField(_("Correct"), default=False)
+    order = models.PositiveIntegerField(_("Ordre"), default=0)
 
 class QuestionImage(models.Model):
 

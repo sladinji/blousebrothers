@@ -22,9 +22,9 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class ConferenceAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('title', 'abstract', 'owner')
+    list_display = ('title', 'summary', 'owner')
     inlines = [QuestionInline, ]
-    exclude = ['owner', 'abstract', 'type']
+    exclude = ['owner', 'summary', 'type']
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
