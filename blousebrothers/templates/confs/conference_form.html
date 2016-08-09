@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% load static %}{% load i18n %}
 {% load crispy_forms_tags %}
-{% load bootstrap_dynamic_formsets %}
 {% load djng_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
@@ -48,15 +47,12 @@
 	    {% if object %}
 	    <form class="form" name="{{ form.form_name }}" novalidate action="{% url 'confs:update' object.slug %}">
 	    {% else %}
-	    <form class="form" name="{{ form.form_name }}" novalidate action="{% url 'confs:create' %}">
+	    <form class="form" name="{{ form.form_name }}" novalidate method="post" action="{% url 'confs:create' %}">
 	    {% endif %}
             {% csrf_token %}
 	    <div class="tab-content">
 	      <div id="conference" ng-show="showsubject" ng-init="showsubject=true">
                 {{ form }}
-	      </div>
-	      <div id="question" ng-show="!showsubject">
-	        {% bootstrap_dynamic_formset formset can_order=False can_delete=False layout="inline" %}
 	      </div>
 	    </div>
 
@@ -67,6 +63,12 @@
 	    </div>
 	    </form>
 
+	      <div id="question" ng-show="showsubject">
+		<form novalidate class="question-form">
+		Énoncé : <input type="text" ng-model="question.question" /><br />
+		</form>
+
+	      </div>
 
 	  </div>
 	</div>
@@ -80,6 +82,11 @@
 <script type="text/javascript">
 var myServices = angular.module('myServices', ['ngResource']);
 var my_app = angular.module('djangular-bb', ['myServices', 'djng.forms']);
+{% if object %}
+var slug="{{ object.slug }}"
+{% else %}
+var slug=""
+{% endif %}
 
 myServices.factory('Question', ['$resource', function($resource) {
 	return $resource('{% url 'confs:question_crud_view' %}', {'pk': '@pk'}, {
@@ -98,34 +105,49 @@ my_app.config(function($httpProvider) {
 	    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
 	    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });
-my_app.controller('ConfFormCtrl', function($scope, $http) {
-    $scope.submit = function() {
-        var in_data = { title: $scope.title };
-        $http.post('{% url 'confs:create' %}', in_data)
-            .success(function(out_data) {
-		console.log(out_data);
-            });
 
+my_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm) {
+    $scope.submit = function() {
+	if ($scope.conf_data) {
+		$http.post(".", $scope.conf_data).success(function(out_data) {
+			if (!djangoForm.setErrors($scope.conf_form, out_data.errors)) {
+				// on successful post, redirect onto success page
+				$window.location.href = out_data.success_url;
+			}
+		}).error(function() {
+		console.error('An error occured during submission');
+		});
+	}
+	return false;
     }
 });
-my_app.controller("ConfFormCtrl", function($scope, Question) {
-    $scope.questions = ["Question 1", "Question 2"];
+
+my_app.controller("ConfFormCtrl", function($scope, Conference, Question, Answer) {
     $scope.addItem = function () {
         $scope.errortext = "";
         if (!$scope.addMe) {return;}
-        if ($scope.questions.indexOf($scope.addMe) == -1) {
-            $scope.questions.push($scope.addMe);
-	    $scope.showsubject = false;
-        } else {
-            $scope.errortext = "Vous avez déjà saisi cette question.";
-        }
+	$scope.question = new Question({
+		conf: $scope.conference.id,
+		question: $scope.addMe,
+	})
+	$scope.questions.push(new_model);
+	$scope.question.index = $scope.questions.indexOf($scope.question)
+	$scope.question.$save(function(){
+		$scope.showsubject = false;
+	});
     }
     $scope.removeItem = function (x) {
         $scope.errortext = "";    
         $scope.questions.splice(x, 1);
     }
     $scope.init_model = function () {
-	$scope.questions = Question.query();
+	if (slug != ""){
+		$scope.conference = Conference.get({slug: slug});
+		$scope.questions = Question.query({conf : $scope.conference.id});
+	}
+	else{
+		$scope.showsubject = true;
+	}
     }
     $scope.init_model();
 });

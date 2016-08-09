@@ -27,7 +27,7 @@ class ConferenceRedirectView(LoginRequiredMixin, RedirectView):
 
 
 class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'confs/conference_form.html'
+    template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
     slug_field = 'slug'
@@ -41,14 +41,6 @@ class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         obj = Conference.objects.get(slug=self.kwargs['slug'])
         return obj
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['formset'] = AnswerFormSet(self.request.POST, instance=self.object)
-        else:
-            context['formset'] = AnswerFormSet(instance=self.object)
-        return context
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -91,18 +83,13 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
-        if formset.is_valid():
+        #context = self.get_context_data()
+        #formset = context['formset']
+        if form.is_valid():
             self.object = form.save(commit=False)
             self.object.owner = self.request.user
             self.object.save()
-            formset.instance = self.object
-            for form in formset.ordered_forms:
-                form.instance.order = form.cleaned_data['ORDER']
-            formset.save()
-            #return super().form_valid(form)
-            return redirect(self.object.get_absolute_url())  # assuming your model has ``get_absolute_url`` defined.
+            return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
@@ -110,10 +97,10 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
 from djng.views.crud import NgCRUDView
 
 class ConferenceCRUDView(LoginRequiredMixin, NgCRUDView):
-        model = Conference
+    model = Conference
 
 class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
-        model = Question
+    model = Question
 
 class AnswerCRUDView(LoginRequiredMixin, NgCRUDView):
-        model = Answer
+    model = Answer

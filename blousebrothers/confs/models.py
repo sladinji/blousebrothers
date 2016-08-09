@@ -32,7 +32,7 @@ class Conference(models.Model):
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
 
     def get_absolute_url(self):
-        return reverse('confs:detail', kwargs={'slug': self.slug})
+        return reverse('confs:update', kwargs={'slug': self.slug})
 
 
 class Item(models.Model):
@@ -56,19 +56,19 @@ class Speciality(models.Model):
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False, max_length=64)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
-    order = models.PositiveIntegerField(_("Ordre"), default=0)
+    index = models.PositiveIntegerField(_("Ordre"), default=0)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers")
     answer = models.CharField(_("Proposition"), max_length=256, blank=False, null=False)
     explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
-    order = models.PositiveIntegerField(_("Ordre"), default=0)
+    index = models.PositiveIntegerField(_("Ordre"), default=0)
 
 class QuestionImage(models.Model):
 
     image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=200, blank=True)
-    order = models.PositiveIntegerField(_("Ordre"), default=0)
+    index = models.PositiveIntegerField(_("Ordre"), default=0)
     question = models.ForeignKey('Question', related_name='images')
