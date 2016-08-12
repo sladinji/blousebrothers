@@ -4,8 +4,8 @@ from __future__ import absolute_import, unicode_literals
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, CreateView
 from django.shortcuts import redirect
-
 from django.contrib.auth.mixins import LoginRequiredMixin
+from djng.views.crud import NgCRUDView
 
 from .models import Conference, Question, Answer
 from .forms import ConferenceForm, AnswerFormSet
@@ -94,13 +94,23 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
-from djng.views.crud import NgCRUDView
+
 
 class ConferenceCRUDView(LoginRequiredMixin, NgCRUDView):
     model = Conference
 
+
 class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
     model = Question
 
+    def get_queryset(self):
+        if 'conf' in self.request.GET :
+            return self.model.objects.filter(conf_id=self.request.GET['conf'])
+
+
 class AnswerCRUDView(LoginRequiredMixin, NgCRUDView):
     model = Answer
+
+    def get_queryset(self):
+        if 'question' in self.request.GET :
+            return self.model.objects.filter(question_id=self.request.GET['question'])

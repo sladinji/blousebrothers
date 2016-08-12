@@ -48,6 +48,6 @@ urlpatterns = [
         name='question_crud_view'),
 
     url(r'^crud/answer/?$',
-        views.QuestionCRUDView.as_view(),
+        views.AnswerCRUDView.as_view(),
         name='answer_crud_view'),
 ]

@@ -60,7 +60,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers")
-    answer = models.CharField(_("Proposition"), max_length=256, blank=False, null=False)
+    answer = models.CharField(_("Proposition"), max_length=256, blank=True, null=True)
     explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
