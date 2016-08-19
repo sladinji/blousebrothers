@@ -12,22 +12,22 @@
 <div ng-controller="ConfFormCtrl" class="container" ng-cloak >
 
     <div class='row'>
-	<aside class="col-md-3">
+	<aside class="col-md-3 col-sm-12">
 	    {% verbatim %}
-	    <div ng-app="myShoppingList" class="bb-card-2 bb-margin" style="max-width:400px;">
+	    <div ng-app="myShoppingList" class="bb-card-2 bb-margin">
 	    <header class="bb-container bb-light-grey bb-padding-16">
 	    <h3>Questions</h3>
 	    </header>
-	    <ul class="nav nav-pills  nav-stacked">
+	    <ul class="bb-ul">
 		    <li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-comment fa-fw"></i>{{ $index + 1 }} : {{x.question | limitTo: 20}} ...</a></li>
 	    </ul>
 	    <div class="bb-container bb-light-grey bb-padding-16">
-	    <div class="bb-row bb-margin-top">
-	    <div class="bb-col s10">
+	    <div class="row bb-margin-top">
+	    <div class="col-sm-12">
 	    	<input placeholder="Saisissez une question ici" ng-model="addMe" class="form-control bb-border bb-padding">
 	    </div>
-	    <div class="bb-col s2">
-	    	<button ng-click="addItem()" class="btn bb-padding bb-green">Ajouter</button>
+	    <div class="col-sm-12 text-center">
+	    	<button ng-click="addItem()" class="btn bb-padding bb-green text-bold">Ajouter</button>
 	    </div>
 	    </div>
 	    <p class="bb-padding-left bb-text-red">{{errortext}}</p>
@@ -144,7 +144,7 @@ conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm)
     }
 });
 
-conf_app.controller("ConfFormCtrl", function($scope, Conference, Question, Answer) {
+conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Question, Answer) {
     $scope.addItem = function () {
         $scope.errortext = "";
         if (!$scope.addMe) {return;}
@@ -154,11 +154,11 @@ conf_app.controller("ConfFormCtrl", function($scope, Conference, Question, Answe
 	$scope.question.index = $scope.questions.indexOf($scope.question);
 	$scope.question.conf = $scope.conference.pk;
 	$scope.question.question = $scope.addMe;
-	Question.save($scope.question, function(){
+	$scope.question.$save()
+		.then(function(res){
 		for (var i=0; i<5; i++) {
-			console.log("TRACE");
 			var new_answer = new Answer();
-			new_answer.question = $scope.question.pk;
+			new_answer.question = res.pk;
 			new_answer.index = i;
 			new_answer.$save();
 			$scope.answers.push(new_answer);
@@ -169,14 +169,16 @@ conf_app.controller("ConfFormCtrl", function($scope, Conference, Question, Answe
     	$scope.question = question;
     	$scope.answers = Answer.query({question: question.pk});
     }
+
     $scope.init_model = function () {
 	$scope.questions = [];
+	$scope.answers = [];
 	$scope.question = null;
 	if (slug != ""){
 		Conference.get({slug: slug}).$promise
     		.then(function(result){
     			$scope.conference = result;
-				Question.query({conf: $scope.conference.pk}).$promise
+			Question.query({conf: $scope.conference.pk}).$promise
     			.then(function(result){
 				$scope.questions = result;
 				$scope.question = $scope.questions[0];
@@ -190,6 +192,29 @@ conf_app.controller("ConfFormCtrl", function($scope, Conference, Question, Answe
     }
     // init model on load
     $scope.init_model();
+
+    // START AUTO SAVE
+    var timeout = null;
+    var saveUpdates = function() {
+      // .... save data to server
+      console.log("saveUpdates")
+      $scope.conference.$save();
+      $scope.question.$save();
+
+    };
+    var debounceSaveUpdates = function(newVal, oldVal) {
+      console.log(newVal, oldVal);
+      if (newVal != oldVal) {
+        if (timeout) {
+          $timeout.cancel(timeout)
+        }
+        timeout = $timeout(saveUpdates, 1000);  // 1000 = 1 second
+      }
+    };
+    $scope.$watch('conference.title', debounceSaveUpdates)
+    $scope.$watch('question.question', debounceSaveUpdates)
+    $scope.$watch('answers', debounceSaveUpdates)
+    // END AUTO SAVE
 });
 </script>
 {% endblock %}
