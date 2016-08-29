@@ -105,7 +105,7 @@ class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
 
     def get_queryset(self):
         if 'conf' in self.request.GET :
-            return self.model.objects.filter(conf_id=self.request.GET['conf'])
+            return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
 
 
 class AnswerCRUDView(LoginRequiredMixin, NgCRUDView):
@@ -113,4 +113,4 @@ class AnswerCRUDView(LoginRequiredMixin, NgCRUDView):
 
     def get_queryset(self):
         if 'question' in self.request.GET :
-            return self.model.objects.filter(question_id=self.request.GET['question'])
+            return self.model.objects.filter(question_id=self.request.GET['question']).order_by("index")

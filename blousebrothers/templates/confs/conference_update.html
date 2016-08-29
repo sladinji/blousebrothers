@@ -24,10 +24,10 @@
 	    <div class="bb-container bb-light-grey bb-padding-16">
 	    <div class="row bb-margin-top">
 	    <div class="col-sm-12">
-	    	<input placeholder="Saisissez une question ici" ng-model="addMe" class="form-control bb-border bb-padding">
+	    	<input placeholder="Saisissez une question ici" ng-model="addMe" class="no-border-form form-control bb-border bb-padding">
 	    </div>
 	    <div class="col-sm-12 text-center">
-	    	<button ng-click="addItem()" class="btn bb-padding bb-green text-bold">Ajouter</button>
+	    	<button ng-click="add_item()" class="btn bb-padding bb-green text-bold">Ajouter</button>
 	    </div>
 	    </div>
 	    <p class="bb-padding-left bb-text-red">{{errortext}}</p>
@@ -55,32 +55,31 @@
 	  {% verbatim %}
 	  <legend>Sujet</legend>
 	  <form novalidate class="question-form">
-	  <input type="text" class="form-control" ng-model="conference.title" placeholder="Titre"/><br />
-	  <input type="text" class="form-control" ng-model="conference.statement" placeholder="Énoncé"/><br />
+	  <input type="text" class="no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
+	  <input type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé"/><br />
 	  </form>
 		
 	  
-	  <div>
-	    <legend>Question {{ question.index + 1}}</legend>
+	  <div ng-if="question">
+	    <legend>Question {{ question.index + 1 }}</legend>
 	    <form novalidate class="question-form">
-	    <input type="text" class="form-control" ng-model="question.question" placeholder="Énoncé"/><br />
+	    <input type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Énoncé"/><br />
 	    </form>
 	          
 	    <form class="form-horizontal">
 	    <fieldset>
 	    <legend>Réponses</legend>
-	    <div ng-repeat="answer in answers">
+	    <div class="well well-white" ng-repeat="answer in answers">
+	      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
 	      <div class="form-group">
-	        <div class="col-md-6">
-	          <div class="input-group">
-	          	<input ng-model="answer.answer" class="form-control" placeholder="Réponse {{answers.indexOf(answer) + 1}}" required="true" type="text">
-	             <input ng-model="anwser.correct" name="checkboxes"  type="checkbox"> Correcte ?
-	          </div>
+	        <div class="col-sm-12">
+	          	<input ng-model="answer.answer" class="material_form form-control" placeholder="Réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+	             <label><input type="checkbox" ng-model="answer.correct"/> Correcte ?</label>
 	        </div>
 	      </div>
 	      <div class="form-group">
-	        <div class="col-md-6">
-	        <input id="explain_A" name="explain_A" placeholder="Explication" class="form-control input-md" type="text">
+	        <div class="col-sm-12">
+	        <input ng-model="answer.explaination" placeholder="Explication" class="material_form form-control input-md" type="text">
 	          
 	        </div>
 	      </div>
@@ -88,6 +87,9 @@
 	    </div>
 	    </fieldset>
 	    </form>
+	  </div> 
+	  <div ng-if="!question">
+		  <p>Vous pouvez modifier votre sujet ou commencer à ajouter des questions.</p>
 	  </div> 
 	  {% endverbatim %}
 	</div>
@@ -145,7 +147,8 @@ conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm)
 });
 
 conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Question, Answer) {
-    $scope.addItem = function () {
+    $scope.ans_label = ["A", "B", "C", "D", "E"];
+    $scope.add_item = function () {
         $scope.errortext = "";
         if (!$scope.addMe) {return;}
 	$scope.question = new Question()
@@ -157,17 +160,27 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Quest
 	$scope.question.$save()
 		.then(function(res){
 		for (var i=0; i<5; i++) {
-			var new_answer = new Answer();
+			var new_answer = {};
 			new_answer.question = res.pk;
 			new_answer.index = i;
-			new_answer.$save();
-			$scope.answers.push(new_answer);
+			Answer.save(new_answer).$promise.then(function(result){
+			  $scope.answers.push(result);
+			});
 		}
 	});
     }
+    var setAnswers = function(question) {
+	if (question != null){
+		Answer.query({question: question.pk}).$promise
+		.then(function(result){
+			$scope.answers = result;
+			$scope.answers.length = 5;
+		})
+	}
+    };
     $scope.question_selected = function(question){
     	$scope.question = question;
-    	$scope.answers = Answer.query({question: question.pk});
+    	setAnswers(question);
     }
 
     $scope.init_model = function () {
@@ -182,7 +195,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Quest
     			.then(function(result){
 				$scope.questions = result;
 				$scope.question = $scope.questions[0];
-				$scope.answers = Answer.query({question: $scope.question.pk});
+    				setAnswers($scope.question);
     			})
     		})
 	}
@@ -199,8 +212,15 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Quest
       // .... save data to server
       console.log("saveUpdates")
       $scope.conference.$save();
-      $scope.question.$save();
-
+      if ( $scope.question != null ){
+	      $scope.question.$save();
+	      for (var i=0; i<5; i++) {
+		ans = $scope.answers[i];
+		console.log("ans :");
+		console.log(ans);
+		ans.$save();
+      }
+      }
     };
     var debounceSaveUpdates = function(newVal, oldVal) {
       console.log(newVal, oldVal);
@@ -213,7 +233,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Quest
     };
     $scope.$watch('conference.title', debounceSaveUpdates)
     $scope.$watch('question.question', debounceSaveUpdates)
-    $scope.$watch('answers', debounceSaveUpdates)
+    $scope.$watch('answers', debounceSaveUpdates, true)
     // END AUTO SAVE
 });
 </script>

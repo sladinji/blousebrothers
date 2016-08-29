@@ -10738,10 +10738,10 @@ FOOTER
 }
 
 .form-control {
-	border: none;
 	padding-right: 50px;
 	width: 100%;
 	box-shadow: none!important;
+	border-radius: 0px;
 }
 .box-search {
 	border-right: 1px solid #e8e8e8;

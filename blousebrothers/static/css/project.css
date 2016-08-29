@@ -118,7 +118,7 @@ ul.bb-ul li {
 }
 
 .bb-container {
-	padding: 0.01em 16px;
+	padding: 0.01em 2px;
 }
 
 .bb-padding-medium, .bb-padding, .bb-form {
@@ -128,3 +128,44 @@ ul.bb-ul li {
 .bb-margin-top {
 	margin-top: 16px !important;
 }
+
+.helptext {
+		display: block;
+}
+
+ul.djng-form-errors li, ul.djng-field-errors li {
+	color: #e9322d;
+	font-size: 15pt;
+	padding-left: 6px;
+}
+
+ul.djng-field-errors li.valid::before {
+	color: #fe5e52;
+	content: "\2714";
+	font-size: 15pt;
+	padding-left: 6px;
+}
+
+.no-border-form {
+	border: none;
+}
+
+.material_form {
+	border-top: none;
+	border-left: none;
+	border-right: none;
+}
+
+.well-white {
+	background-color: #fff;
+}
+
+.well-title{
+    position:relative;
+    text-align:right;
+    display:block;
+    font-size:47px;
+    font-weight:bold;
+    opacity:0.2;
+    z-index: 1000;
+}    
