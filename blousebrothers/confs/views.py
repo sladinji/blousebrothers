@@ -2,13 +2,13 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView, CreateView
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView, FormView
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from djng.views.crud import NgCRUDView
 
-from .models import Conference, Question, Answer
-from .forms import ConferenceForm, AnswerFormSet
+from .models import Conference, Question, Answer, ConferenceImage
+from .forms import ConferenceForm
 
 
 class ConferenceDetailView(LoginRequiredMixin, DetailView):
@@ -65,7 +65,7 @@ class ConferenceListView(LoginRequiredMixin, ListView):
     slug_url_kwarg = 'slug'
 
 
-class ConferenceCreateView(LoginRequiredMixin, CreateView):
+class ConferenceCreateView(LoginRequiredMixin, FormView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
 
@@ -74,14 +74,6 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
         return reverse('confs:detail',
                        kwargs={'slug': self.request.conf.slug})
 
-    def get_context_data(self, **kwargs):
-        context = super(ConferenceCreateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['formset'] = AnswerFormSet(self.request.POST)
-        else:
-            context['formset'] = AnswerFormSet()
-        return context
-
     def form_valid(self, form):
         #context = self.get_context_data()
         #formset = context['formset']
@@ -89,6 +81,8 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
             self.object = form.save(commit=False)
             self.object.owner = self.request.user
             self.object.save()
+            for i, image in enumerate(form.cleaned_data['images']):
+                ConferenceImage.objects.create(image=image, index=i, conf=self.object)
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form))

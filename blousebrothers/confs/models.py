@@ -28,12 +28,20 @@ class Conference(models.Model):
     summary = models.CharField(_('Résumé'), blank=False, null=False, max_length=140,
                                help_text=_("Ce résumé doit décrire le contenu de la conférence en moins de 140 caractères."))
     statement = models.TextField(_('Énoncé'), blank=False, null=False)
-    items = models.ManyToManyField('Item', verbose_name=_("Items"), related_name='conferences')
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences')
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
 
     def get_absolute_url(self):
         return reverse('confs:update', kwargs={'slug': self.slug})
 
+
+
+class ConferenceImage(models.Model):
+    image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255)
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    index = models.PositiveIntegerField(_("Ordre"), default=0)
+    conf = models.ForeignKey('Conference', related_name='images')
 
 class Item(models.Model):
     """
@@ -62,11 +70,11 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers")
     answer = models.CharField(_("Proposition"), max_length=256, blank=True, null=True)
     explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    explaination_image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255)
     correct = models.BooleanField(_("Correct"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
 
 class QuestionImage(models.Model):
-
     image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=200, blank=True)

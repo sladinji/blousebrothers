@@ -58,3 +58,4 @@ django-angular
 django-nested-admin
 django-bootstrap3
 django-bootstrap-dynamic-formsets
+django-multiupload
