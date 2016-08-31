@@ -10744,7 +10744,7 @@ FOOTER
 	border-radius: 0px;
 }
 .box-search {
-	border-right: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e8e8e8;
 	padding: 10px 15px;
 }
 
@@ -10822,6 +10822,7 @@ FOOTER
 	display: table-cell;
 	vertical-align: middle;
 	position: relative;
+	width: 300px;
 }
 
 .box-search.search-main-page {

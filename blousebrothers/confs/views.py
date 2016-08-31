@@ -64,6 +64,9 @@ class ConferenceListView(LoginRequiredMixin, ListView):
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
+    def get_queryset(self):
+        return self.model.objects.filter(owner = self.request.user).all()
+
 
 class ConferenceCreateView(LoginRequiredMixin, CreateView):
     template_name = 'confs/conference_form.html'

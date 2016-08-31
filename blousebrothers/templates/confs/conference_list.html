@@ -3,7 +3,13 @@
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
-<a class="btn btn-success pull-left" href="{% url 'confs:create' %}">{% trans '+ Créer une conf' %}</a>
+<form method="get" action="{% url 'search:search' %}" class="box-search pull-left">
+	<div class="inner">
+		{{ search_form.q }}
+		<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
+	</div>
+</form>
+<a class="btn btn-success pull-right" href="{% url 'confs:create' %}"><strong>{% trans '+ Créer une conf' %}</strong></a>
 {% endblock %}
 
 {% block content %}

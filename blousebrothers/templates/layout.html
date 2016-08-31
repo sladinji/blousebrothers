@@ -55,21 +55,10 @@
 						      <i class="icon-home"></i> {% trans 'Home' %}
 					    </a>
 					    </li>
-					    <li class="menu-item-has-children item-megamenu">
-					      <a href="/">
-						      <i class="icon-list-ul"></i> {% trans 'Confs' %}
-					    </a>
-					    </li>
 					</ul>
 				        {% endif %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-left">
 					<div class="box-control">
-						<form method="get" action="{% url 'search:search' %}" class="box-search">
-							<div class="inner">
-								{{ search_form.q }}
-								<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
-							</div>
-						</form>
 	    					<div class="con-menu">
 	    					<ul class="boutique-nav main-menu clone-main-menu">
             					    {% if user.is_authenticated %}
@@ -82,7 +71,7 @@
             					                    <span class="label label-important">{{ num_unread_notifications }}</span>
             					                </a>
             					            {% else %}
-            					                <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
+            					                <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
             					            {% endif %}
             					        </li>
             					        {% if user.is_staff or perms.partner.dashboard_access %}
