@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView, FormView
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView, CreateView
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from djng.views.crud import NgCRUDView
@@ -65,7 +65,7 @@ class ConferenceListView(LoginRequiredMixin, ListView):
     slug_url_kwarg = 'slug'
 
 
-class ConferenceCreateView(LoginRequiredMixin, FormView):
+class ConferenceCreateView(LoginRequiredMixin, CreateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
 
@@ -93,6 +93,12 @@ class ConferenceCreateView(LoginRequiredMixin, FormView):
 class ConferenceCRUDView(LoginRequiredMixin, NgCRUDView):
     model = Conference
 
+class ConferenceImageCRUDView(LoginRequiredMixin, NgCRUDView):
+    model = ConferenceImage
+
+    def get_queryset(self):
+        if 'conf' in self.request.GET :
+            return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
 
 class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
     model = Question

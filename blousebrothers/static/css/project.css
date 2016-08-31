@@ -1,5 +1,10 @@
 /* These styles are generated from project.scss. */
 
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .alert-debug {
   color: black;
   background-color: white;
@@ -169,3 +174,9 @@ ul.djng-field-errors li.valid::before {
     opacity:0.2;
     z-index: 1000;
 }    
+
+.illustrations{
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: none;
+}

@@ -43,6 +43,10 @@ urlpatterns = [
         views.ConferenceCRUDView.as_view(),
         name='conference_crud_view'),
 
+    url(r'^crud/conferenceimage/?$',
+        views.ConferenceImageCRUDView.as_view(),
+        name='conferenceimage_crud_view'),
+
     url(r'^crud/question/?$',
         views.QuestionCRUDView.as_view(),
         name='question_crud_view'),
