@@ -10794,6 +10794,7 @@ FOOTER
 	font-size: 12px;
 	border: none;
 	border-radius: 0px;
+	margin-left: 5px;
 }
 [class^="pe-7s-"], [class*=" pe-7s-"] {
 	display: inline-block;

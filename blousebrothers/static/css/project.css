@@ -95,7 +95,7 @@ img {
 
 .bb-light-grey, .bb-hover-light-grey:hover {
 	color: #000 !important;
-	background-color: #f1f1f1 !important;
+	background-color: #ead2ac !important;
 }
 
 .bb-margin-right {
@@ -179,4 +179,22 @@ ul.djng-field-errors li.valid::before {
 	margin-top: 15px;
 	margin-bottom: 15px;
 	border: none;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.btn-warning {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #4281a4;
+  border-color: #46b8da;
 }

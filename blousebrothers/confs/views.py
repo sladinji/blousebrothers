@@ -58,6 +58,16 @@ class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
+class MyConferenceListView(LoginRequiredMixin, ListView):
+    model = Conference
+    # These next two lines tell the view to index lookups by conf
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return self.model.objects.filter(owner=self.request.user).all()
+
+
 class ConferenceListView(LoginRequiredMixin, ListView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
@@ -66,7 +76,6 @@ class ConferenceListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.model.objects.filter(owner = self.request.user).all()
-
 
 class ConferenceCreateView(LoginRequiredMixin, CreateView):
     template_name = 'confs/conference_form.html'
