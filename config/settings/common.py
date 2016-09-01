@@ -289,6 +289,7 @@ OSCAR_SHOP_NAME = "Blouse Brothers"
 OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
+DEFAULT_FROM_EMAIL = 'support@blousebrothers.fr'
 
 # Menu structure of the dashboard navigation
 OSCAR_DASHBOARD_NAVIGATION = [

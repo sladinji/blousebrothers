@@ -1,0 +1,12 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Bienvenue sur {{ site_name }}!
+
+Tu viens de t'inscrire sur {{ site_domain }}.
+
+Merci de confirmer ton adresse en cliquant sur ce lien : {{ activate_url }}
+
+Le site étant actuellement en phase de lancement, un membre de l'équipe te recontactera pour finaliser inscription.
+
+{% endblocktrans %}{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Merci et à bientôt sur {{ site_name }}!
+{{ site_domain }}{% endblocktrans %}
+
