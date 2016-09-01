@@ -165,6 +165,10 @@ ul.djng-field-errors li.valid::before {
 	background-color: #fff;
 }
 
+.well-warning {
+  background-color: #f0ad4e;
+}
+
 .well-title{
     position:relative;
     text-align:right;

@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
+from blousebrothers.shortcuts.auth import BBRequirementMixin
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(BBRequirementMixin, DetailView):
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
@@ -26,7 +25,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    fields = ['name', 'university' ]
+    fields = ['first_name', 'last_name', 'university', 'degree']
 
     # we already imported User in the view code above, remember?
     model = User

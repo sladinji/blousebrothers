@@ -4,21 +4,21 @@ from __future__ import absolute_import, unicode_literals
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, CreateView
 from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
 from djng.views.crud import NgCRUDView
 
+from blousebrothers.shortcuts.auth import BBRequirementMixin
 from .models import Conference, Question, Answer, ConferenceImage
 from .forms import ConferenceForm
 
 
-class ConferenceDetailView(LoginRequiredMixin, DetailView):
+class ConferenceDetailView(BBRequirementMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
 
-class ConferenceRedirectView(LoginRequiredMixin, RedirectView):
+class ConferenceRedirectView(BBRequirementMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
@@ -26,7 +26,7 @@ class ConferenceRedirectView(LoginRequiredMixin, RedirectView):
                        kwargs={'slug': self.request.conf.slug})
 
 
-class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
+class ConferenceUpdateView(BBRequirementMixin, UpdateView):
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
@@ -58,7 +58,7 @@ class ConferenceUpdateView(LoginRequiredMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class MyConferenceListView(LoginRequiredMixin, ListView):
+class ConferenceListView(BBRequirementMixin, ListView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
     slug_field = 'slug'
@@ -68,16 +68,7 @@ class MyConferenceListView(LoginRequiredMixin, ListView):
         return self.model.objects.filter(owner=self.request.user).all()
 
 
-class ConferenceListView(LoginRequiredMixin, ListView):
-    model = Conference
-    # These next two lines tell the view to index lookups by conf
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
-
-    def get_queryset(self):
-        return self.model.objects.filter(owner = self.request.user).all()
-
-class ConferenceCreateView(LoginRequiredMixin, CreateView):
+class ConferenceCreateView(BBRequirementMixin, CreateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
 
@@ -102,17 +93,17 @@ class ConferenceCreateView(LoginRequiredMixin, CreateView):
 
 
 
-class ConferenceCRUDView(LoginRequiredMixin, NgCRUDView):
+class ConferenceCRUDView(BBRequirementMixin, NgCRUDView):
     model = Conference
 
-class ConferenceImageCRUDView(LoginRequiredMixin, NgCRUDView):
+class ConferenceImageCRUDView(BBRequirementMixin, NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
         if 'conf' in self.request.GET :
             return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
 
-class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
+class QuestionCRUDView(BBRequirementMixin, NgCRUDView):
     model = Question
 
     def get_queryset(self):
@@ -120,7 +111,7 @@ class QuestionCRUDView(LoginRequiredMixin, NgCRUDView):
             return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
 
 
-class AnswerCRUDView(LoginRequiredMixin, NgCRUDView):
+class AnswerCRUDView(BBRequirementMixin, NgCRUDView):
     model = Answer
 
     def get_queryset(self):
