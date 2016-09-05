@@ -188,6 +188,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Confe
 	$scope.question.index = $scope.questions.indexOf($scope.question);
 	$scope.question.conf = $scope.conference.pk;
 	$scope.question.question = $scope.addMe;
+	$scope.addMe = '';
 	$scope.question.$save()
 		.then(function(res){
 		for (var i=0; i<5; i++) {
