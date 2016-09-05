@@ -15,7 +15,7 @@ class ConferenceForm(NgModelFormMixin, NgFormValidationMixin, NgModelForm,  Boot
 
     scope_prefix = 'conf_data'
     form_name = 'conf_form'
-    field_order = ['title', 'type', 'summary', 'statement', 'images', 'items', 'specialities']
+    field_order = ['title', 'type', 'images', 'summary', 'statement', 'items', 'specialities']
     class Meta:
         model = Conference
         exclude = ['owner']
@@ -23,3 +23,7 @@ class ConferenceForm(NgModelFormMixin, NgFormValidationMixin, NgModelForm,  Boot
                              widget=MultiFileInput(attrs={'class':'no-border-form'}))
 
 
+    field_css_classes = {
+            '*': 'form-group has-feedback',
+            'images': "ng-class:{'ng-hide':conf_data['type']==='QI'}",
+    }

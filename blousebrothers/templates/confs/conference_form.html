@@ -36,7 +36,7 @@
             {% csrf_token %}
 	    <div class="tab-content">
 	      <div id="conference" ng-show="showsubject" ng-init="showsubject=true">
-                {{ form }}
+                {{ form.as_div  }}
 	      </div>
 	    </div>
 
