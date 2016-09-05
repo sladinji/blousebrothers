@@ -285,7 +285,7 @@ HAYSTACK_CONNECTIONS = {
 }
 
 OSCAR_DEFAULT_CURRENCY = 'EUR'
-OSCAR_SHOP_NAME = "Blouse Brothers"
+OSCAR_SHOP_NAME = "BlouseBrothers"
 OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
