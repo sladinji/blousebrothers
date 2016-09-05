@@ -121,5 +121,7 @@ class User(AbstractUser):
 
     def gave_all_required_info(self):
         """Used for permission management"""
+        if self.is_superuser :
+            return True
         return self.university and self.first_name and self.last_name and self.degree
 
