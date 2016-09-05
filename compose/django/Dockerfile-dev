@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED 1
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
+COPY ./i18n_oscar/django.* /usr/local/lib/python3.5/site-packages/oscar/locale/fr/LC_MESSAGES/
 
 COPY ./compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh

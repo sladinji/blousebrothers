@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements /requirements
 
 RUN pip install -r /requirements/production.txt
+COPY ./i18n_oscar/django.* /usr/local/lib/python3.5/site-packages/oscar/locale/fr/LC_MESSAGES/
 
 RUN groupadd -r django && useradd -r -g django django
 COPY . /app
