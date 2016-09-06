@@ -99,7 +99,15 @@ FIXTURE_DIRS = (
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
+                         default='BlouseBrothers <support@blousebrothers.fr>')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django_mailgun.MailgunBackend')
+MAILGUN_ACCESS_KEY = env('DJANGO_MAILGUN_API_KEY')
+MAILGUN_SERVER_NAME = env('DJANGO_MAILGUN_SERVER_NAME')
+EMAIL_SUBJECT_PREFIX = env("DJANGO_EMAIL_SUBJECT_PREFIX", default='[blousebrothers] ')
+SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
+NEW_RELIC_LICENSE_KEY = env('NEW_RELIC_LICENSE_KEY', default="")
+NEW_RELIC_APP_NAME = env('NEW_RELIC_APP_NAME', default="")
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -289,7 +297,6 @@ OSCAR_SHOP_NAME = "BlouseBrothers"
 OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
-DEFAULT_FROM_EMAIL = 'support@blousebrothers.fr'
 
 # Menu structure of the dashboard navigation
 OSCAR_DASHBOARD_NAVIGATION = [

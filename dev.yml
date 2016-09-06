@@ -10,8 +10,7 @@ services:
     volumes:
       - postgres_data_dev:/data/blousebros/postgresql/data
       - postgres_backup_dev:/data/blousebros/backups
-    environment:
-      - POSTGRES_USER=blousebrothers
+    env_file: .env-dev
 
   django:
     build:
@@ -20,6 +19,7 @@ services:
     command: python /app/manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
+    env_file: .env-dev
     environment:
       - POSTGRES_USER=blousebrothers
       - USE_DOCKER=yes
