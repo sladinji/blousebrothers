@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      {% if user.wanabe_conferencier %}
+
+      <h2>Votre demande à bien été prise en compte</h2>
+      <p> Un responsable va prendre contact avec toi afin de valider ta demande et t'expliquer dans les détails notre 
+      fonctionnement.
+          <strong> Assure toi d'avoir renseigné une adresse email ou un numéro de télphone
+		  valide dans <a href="{% url "users:update" %}">ton profil</a>.
+	  </strong>
+      </p>
+      {% else %}
+      <h2>Tu souhaites proposer des sujets ?</h2>
+      <a class="btn" href="{% url "confs:wanabe_conferencier" %}?Iwanabe=true">
+	      Oui je souhaite devenir conférencier !
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
