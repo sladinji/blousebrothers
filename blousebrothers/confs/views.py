@@ -1,24 +1,32 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
+from datetime import datetime
 from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView, CreateView
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, render
 from djng.views.crud import NgCRUDView
+from django.views.generic import (
+    DetailView,
+    ListView,
+    RedirectView,
+    UpdateView,
+    CreateView,
+    TemplateView,
+)
 
-from blousebrothers.shortcuts.auth import BBRequirementMixin
+from blousebrothers.shortcuts.auth import BBConferencierReqMixin
 from .models import Conference, Question, Answer, ConferenceImage
 from .forms import ConferenceForm
 
 
-class ConferenceDetailView(BBRequirementMixin, DetailView):
+class ConferenceDetailView(BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
 
-class ConferenceRedirectView(BBRequirementMixin, RedirectView):
+class ConferenceRedirectView(BBConferencierReqMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
@@ -26,7 +34,7 @@ class ConferenceRedirectView(BBRequirementMixin, RedirectView):
                        kwargs={'slug': self.request.conf.slug})
 
 
-class ConferenceUpdateView(BBRequirementMixin, UpdateView):
+class ConferenceUpdateView(BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
@@ -58,7 +66,7 @@ class ConferenceUpdateView(BBRequirementMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class ConferenceListView(BBRequirementMixin, ListView):
+class ConferenceListView(BBConferencierReqMixin, ListView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
     slug_field = 'slug'
@@ -68,7 +76,7 @@ class ConferenceListView(BBRequirementMixin, ListView):
         return self.model.objects.filter(owner=self.request.user).all()
 
 
-class ConferenceCreateView(BBRequirementMixin, CreateView):
+class ConferenceCreateView(BBConferencierReqMixin, CreateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
 
@@ -93,17 +101,17 @@ class ConferenceCreateView(BBRequirementMixin, CreateView):
 
 
 
-class ConferenceCRUDView(BBRequirementMixin, NgCRUDView):
+class ConferenceCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Conference
 
-class ConferenceImageCRUDView(BBRequirementMixin, NgCRUDView):
+class ConferenceImageCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
         if 'conf' in self.request.GET :
             return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
 
-class QuestionCRUDView(BBRequirementMixin, NgCRUDView):
+class QuestionCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Question
 
     def get_queryset(self):
@@ -111,9 +119,21 @@ class QuestionCRUDView(BBRequirementMixin, NgCRUDView):
             return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
 
 
-class AnswerCRUDView(BBRequirementMixin, NgCRUDView):
+class AnswerCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Answer
 
     def get_queryset(self):
         if 'question' in self.request.GET :
             return self.model.objects.filter(question_id=self.request.GET['question']).order_by("index")
+
+
+class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        if 'Iwanabe' in request.GET :
+            request.user.wanabe_conferencier = True
+            request.user.wanabe_conferencier_date = datetime.now()
+            request.user.save()
+        return render(request, 'confs/wanabe_conferencier.html')
+
+

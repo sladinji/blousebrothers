@@ -10,11 +10,14 @@ from django.core.validators import RegexValidator
 from shortuuidfield import ShortUUIDField
 from django.contrib import admin
 
+AbstractUser._meta.get_field('first_name').blank = False
+AbstractUser._meta.get_field('last_name').blank = False
 
 @python_2_unicode_compatible
 class User(AbstractUser):
 
     DEGREE_LEVEL = (
+        (None, '---'),
         ('P2', _('P2')),
         ('P3', _('P3')),
         ('M1', _('M1')),
@@ -106,8 +109,12 @@ class User(AbstractUser):
     """Phone number"""
     mobile = models.CharField(_("Mobile"), validators=[phone_regex], blank=True, max_length=20)
     """Mobile phone number"""
-    is_conferencier = models.BooleanField("Conférencier", default=False)
+    is_conferencier = models.BooleanField(_("Conférencier"), default=False)
     """Is user a "conferencier" or not"""
+    wanabe_conferencier = models.BooleanField(_("Souhaite devenir conférencier"), default=False)
+    """Does user want to be a "conferencier" or not"""
+    wanabe_conferencier_date = models.DateField(_("Date de demande"), blank=True, null=True)
+    """Date when request to be conferencier was made"""
     is_patriot = models.BooleanField("Conférencier", default=False)
     """Patriot will offer free stuff to students of his university"""
     university = models.CharField(_('Université'), max_length=15, blank=False, null=True,

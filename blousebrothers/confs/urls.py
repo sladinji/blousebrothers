@@ -54,4 +54,8 @@ urlpatterns = [
     url(r'^crud/answer/?$',
         views.AnswerCRUDView.as_view(),
         name='answer_crud_view'),
+
+    url(r'^wanabe_conferencier/?$',
+        views.HandleConferencierRequest.as_view(),
+        name='wanabe_conferencier'),
 ]
