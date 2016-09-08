@@ -202,3 +202,7 @@ ul.djng-field-errors li.valid::before {
   background-color: #4281a4;
   border-color: #46b8da;
 }
+
+.footer {
+	margin-top: 30px;
+}

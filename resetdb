@@ -3,5 +3,7 @@
 docker-compose run postgres dropdb -U postgres blousebrothers
 docker-compose run postgres createdb -U postgres blousebrothers
 docker-compose run django python manage.py migrate -v 3
-docker-compose run django python manage.py loaddata --verbosity=2 all
+docker-compose run django python manage.py loaddata --verbosity=2 users
+docker-compose run django python manage.py loaddata --verbosity=2 confs
 docker-compose run django python manage.py loaddata --verbosity=2 socialaccount
+docker-compose run django python manage.py loaddata --verbosity=2 flatpages

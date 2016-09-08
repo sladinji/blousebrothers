@@ -55,19 +55,6 @@
     <div class="col-sm-12 main-page">
       <p><span class="yellow big">#killtheconf</span></p>
     </div>
-
-    {% get_providers as socialaccount_providers %}
-    {% if socialaccount_providers %}
-
-    <div>
-        {% include "partials/social_connect.html" with process="login" %}
-    </div>
-    <a class="btn-ok" href="/accounts/signup/"><img src="{% static "images/user-avatar-main-picture.png" %}"</a>
-
-    {% include "socialaccount/snippets/login_extra.html" %}
-
-    {% endif %}
-
   </div>
 </div>
 {% endblock %}
