@@ -19,6 +19,8 @@ class BBConferencierReqMixin(LoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         user = request.user
+        if user.is_superuser :
+            return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info() :
             return redirect("users:update")
         if not user.is_conferencier :
