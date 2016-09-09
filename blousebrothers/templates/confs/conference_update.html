@@ -27,7 +27,7 @@
 	    <div class="bb-container bb-light-grey bb-padding-16">
 	    <div class="row bb-margin-top">
 	    <div class="col-sm-12">
-	    	<input placeholder="Saisissez une question ici" ng-model="addMe" class="no-border-form form-control bb-border bb-padding">
+		    <textarea placeholder="Saisissez une question ici" ng-model="addMe" class="no-border-form form-control bb-border bb-padding"></textarea>
 	    </div>
 	    <div class="col-sm-12 text-center">
 	    	<button ng-click="add_item()" class="btn bb-padding bb-green text-bold">Ajouter</button>
@@ -59,7 +59,7 @@
 	  <legend>Sujet</legend>
 	  <form novalidate class="question-form">
 	  <input type="text" class="no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
-	  <input type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé"/><br />
+	  <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
 	  </form>
 	  <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
 		<div ng-if="isImagesDiplayed">
@@ -80,7 +80,7 @@
 	  <div ng-if="question">
 	    <legend>Question {{ question.index + 1 }}</legend>
 	    <form novalidate class="question-form">
-	    <input type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Énoncé"/><br />
+		    <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Énoncé"></textarea><br />
 	    </form>
 	          
 	    <form class="form-horizontal">

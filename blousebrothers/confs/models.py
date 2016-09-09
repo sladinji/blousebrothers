@@ -30,7 +30,6 @@ class Conference(models.Model):
     statement = models.TextField(_('Énoncé'), blank=False, null=False)
     items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences')
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
-    published = models.BooleanField(_('Accessible'), default=False)
 
     def get_absolute_url(self):
         return reverse('confs:update', kwargs={'slug': self.slug})

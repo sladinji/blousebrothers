@@ -20,7 +20,10 @@ class ConferenceForm(NgModelFormMixin, NgFormValidationMixin, NgModelForm,  Boot
         model = Conference
         exclude = ['owner']
     images = MultiFileField(min_num=0, max_num=3,required=False, max_file_size=1024*1024*5,
-                             widget=MultiFileInput(attrs={'class':'no-border-form'}))
+                             widget=MultiFileInput(attrs={'class':'no-border-form'}),
+                            label=_("Images de l'énoncé"),
+                            help_text=_("Vous pouvez selectionner pulsieurs images"),
+                            )
 
 
     field_css_classes = {
