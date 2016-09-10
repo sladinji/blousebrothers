@@ -17,6 +17,8 @@ from django.views.generic import (
 from blousebrothers.shortcuts.auth import BBConferencierReqMixin
 from .models import Conference, Question, Answer, ConferenceImage
 from .forms import ConferenceForm
+from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
+
 
 
 class ConferenceDetailView(BBConferencierReqMixin, DetailView):
@@ -34,7 +36,7 @@ class ConferenceRedirectView(BBConferencierReqMixin, RedirectView):
                        kwargs={'slug': self.request.conf.slug})
 
 
-class ConferenceUpdateView(BBConferencierReqMixin, UpdateView):
+class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView):
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
@@ -64,6 +66,19 @@ class ConferenceUpdateView(BBConferencierReqMixin, UpdateView):
             return redirect(self.object.get_absolute_url())
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+
+    @allow_remote_invocation
+    def sync_data(self, edit_data):
+        # process in_data
+        conf, question, answers = edit_data
+        conf.pop('items')
+        conf.pop('specialities')
+        Conference.objects.filter(pk=conf.pop('pk')).update(**conf)
+        Question.objects.filter(pk=question.pop('pk')).update(**question)
+        for answer in answers:
+            Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
+        return answers
 
 
 class ConferenceListView(BBConferencierReqMixin, ListView):
@@ -135,5 +150,4 @@ class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
             request.user.wanabe_conferencier_date = datetime.now()
             request.user.save()
         return render(request, 'confs/wanabe_conferencier.html')
-
 

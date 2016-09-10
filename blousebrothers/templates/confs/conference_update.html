@@ -40,22 +40,10 @@
 	</aside>
 
 	<div id="subject" class="col-md-9" >
-	  {% comment %}
-	  <form class="form" name="{{ form.form_name }}" novalidate action="{% url 'confs:update' object.slug %}">
-          {% csrf_token %}
-	  <div id="conference">
-            {{ form }}
-	  </div>
-
-	  <div class="control-group">
-	    <div class="controls">
-	            <button ng-click="submit()" class="btn">{% trans "Valider" %}</button>
-	    </div>
-	  </div>
-	  </form>
-	  {% endcomment %}
-
 	  {% verbatim %}
+	  <a href class="btn" ng-click="invoke()">TEST RMI</a>
+	  <p ng-bind="remote" ng-init="init"></p>
+
 	  <legend>Sujet</legend>
 	  <form novalidate class="question-form">
 	  <input type="text" class="no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
@@ -124,13 +112,14 @@
 {% endcomment %}
 var STATIC_URL = '{{ STATIC_URL|escapejs }}';
 var MEDIA_URL  = '{{ MEDIA_URL|escapejs }}';
+
 function static(path) {
     return STATIC_URL + path;
 }
 function static_media(path) {
     return MEDIA_URL + path;
 }
-var conf_app = angular.module('djangular-bb', ['ngResource', 'djng.forms']);
+var conf_app = angular.module('djangular-bb', ['djng.rmi', 'ngResource', 'djng.forms']);
 {% if object %}
 var slug="{{ object.slug }}"
 {% else %}
@@ -158,6 +147,10 @@ conf_app.config(function($httpProvider) {
 	    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
 	    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });
+var tags = {% djng_current_rmi %};
+conf_app.config(function(djangoRMIProvider) {
+    djangoRMIProvider.configure(tags);
+});
 
 conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm) {
     $scope.submit = function() {
@@ -175,7 +168,7 @@ conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm)
     }
 });
 
-conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, ConferenceImage, Question, Answer) {
+conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Conference, ConferenceImage, Question, Answer) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.static_media = static_media;
@@ -247,17 +240,10 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, Conference, Confe
     var timeout = null;
     var saveUpdates = function() {
       // .... save data to server
-      console.log("saveUpdates")
-      $scope.conference.$save();
-      if ( $scope.question != null ){
-	      $scope.question.$save();
-	      for (var i=0; i<5; i++) {
-		ans = $scope.answers[i];
-		console.log("ans :");
-		console.log(ans);
-		ans.$save();
-      }
-      }
+      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers])
+	 .success(function(out_data) {
+	     $scope.remote = out_data;
+	 });
     };
     var debounceSaveUpdates = function(newVal, oldVal) {
       console.log(newVal, oldVal);
