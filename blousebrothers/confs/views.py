@@ -109,6 +109,11 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView):
             self.object.save()
             for i, image in enumerate(form.cleaned_data['images']):
                 ConferenceImage.objects.create(image=image, index=i, conf=self.object)
+            # create questions
+            for i in range(15):
+                q = Question.objects.create(conf=self.object, index=i)
+                for j in range(5):
+                    Answer.objects.create(question=q, index=j)
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form))

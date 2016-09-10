@@ -25,15 +25,8 @@
 		    <li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-comment fa-fw"></i>{{ $index + 1 }} : {{x.question | limitTo: 20}} ...</a></li>
 	    </ul>
 	    <div class="bb-container bb-light-grey bb-padding-16">
-	    <div class="row bb-margin-top">
-	    <div class="col-sm-12">
-		    <textarea placeholder="Saisissez une question ici" ng-model="addMe" class="no-border-form form-control bb-border bb-padding"></textarea>
-	    </div>
-	    <div class="col-sm-12 text-center">
-	    	<button ng-click="add_item()" class="btn bb-padding bb-green text-bold">Ajouter</button>
-	    </div>
-	    </div>
-	    <p class="bb-padding-left bb-text-red">{{errortext}}</p>
+		<div class="row bb-margin-top"></div>
+		<p class="bb-padding-left bb-text-red">{{errortext}}</p>
 	    </div>
 	    </div>
 	    {% endverbatim %}
@@ -41,9 +34,6 @@
 
 	<div id="subject" class="col-md-9" >
 	  {% verbatim %}
-	  <a href class="btn" ng-click="invoke()">TEST RMI</a>
-	  <p ng-bind="remote" ng-init="init"></p>
-
 	  <legend>Sujet</legend>
 	  <form novalidate class="question-form">
 	  <input type="text" class="no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
@@ -172,28 +162,6 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Confer
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.static_media = static_media;
-    $scope.add_item = function () {
-        $scope.errortext = "";
-        if (!$scope.addMe) {return;}
-	$scope.question = new Question()
-	$scope.answers = [];
-	$scope.questions.push($scope.question);
-	$scope.question.index = $scope.questions.indexOf($scope.question);
-	$scope.question.conf = $scope.conference.pk;
-	$scope.question.question = $scope.addMe;
-	$scope.addMe = '';
-	$scope.question.$save()
-		.then(function(res){
-		for (var i=0; i<5; i++) {
-			var new_answer = {};
-			new_answer.question = res.pk;
-			new_answer.index = i;
-			Answer.save(new_answer).$promise.then(function(result){
-			  $scope.answers.push(result);
-			});
-		}
-	});
-    }
     var setAnswers = function(question) {
 	if (question != null){
 		Answer.query({question: question.pk}).$promise
@@ -254,7 +222,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Confer
         timeout = $timeout(saveUpdates, 1000);  // 1000 = 1 second
       }
     };
-    $scope.$watch('conference.title', debounceSaveUpdates)
+    $scope.$watch('conference', debounceSaveUpdates, true)
     $scope.$watch('question.question', debounceSaveUpdates)
     $scope.$watch('answers', debounceSaveUpdates, true)
     // END AUTO SAVE
