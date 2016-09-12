@@ -18,39 +18,28 @@
   
     <a class="btn btn-primary" href="{% url 'confs:update' object.slug %}">Editer</a>
     <div class="col-sm-12 ">
-  	  <p>Type : {{object.type}}</p>
-  	  <p>Items : {{object.items.all | join:", "}}</p>
-  	  <p>Specialités : {{object.specialities.all | join:", "}}</p>
-  	  <p>Résumé : {{object.abstract}}</p>
+  	  <strong>Type :</strong> {{object.type}}
+  	  <strong>Items :</strong> {{object.items.all | join:", "}}
+  	  <strong>Specialités :</strong> {{object.specialities.all | join:", "}}
+  	  <strong>Résumé :</strong> {{object.abstract}}
       <!-- Your Stuff: Custom user template urls -->
     </div>
     <h2>Questions</h2>
     {% for question in object.questions.all %}
     <div class="well">
-      <div class="col-sm-12 ">
-  	<p>Énoncé :<br>{{ question.question }}</p>
+      <legend>Question {{ question.index | add:"1" }}</legend>
+      <div class="col-sm-12 col-md-6 ">
+	      <strong>Énoncé :</strong><p>{{ question.question | default:"<i>aucun</i>"}}</p>
       </div>
-      <div class="col-sm-12 col-md-6">
-  	<p>Réponse A : {{ question.answer_a }}/<p>
-  	<p>Explication : {{ question.explaination_a|default:"aucune" }}</p>
-  	<p>{% if question.correct_a %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
-  	<br>
-  	<p>Réponse B : {{ question.answer_b }}/<p>
-  	<p>Explication : {{ question.explaination_b| default:"aucune" }}</p>
-  	<p>{% if question.correct_b %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
+      {% for answer in question.answers.all %}
+      <div class="col-sm-12 col-md-6 {% if answer.correct %}correct{% else %}notcorrect{% endif %}">
+	      <strong>Réponse {{ forloop.counter }}:</strong> <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
+	      <strong>Explication :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" }}</p>
+  	<strong>{% if answer.correct %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</strong>
       </div>
-      <div class="col-sm-12 col-md-6">
-  	<p>Réponse C : {{ question.answer_c }}/<p>
-  	<p>Explication : {{ question.explaination_c | default:"aucune" }}</p>
-  	<p>{% if question.correct_c %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
-  	<br>
-  	<p>Réponse D : {{ question.answer_d }}/<p>
-  	<p>Explication : {{ question.explaination_d| default:"aucune" }}</p>
-  	<p>{% if question.correct_d %}Bonne réponse{% else %}Mauvaise réponse{% endif %}</p>
-      </div>
-    </div>
-    {% endfor %}
-  
+     {% endfor %}
+   </div>
+   {% endfor %}
   </div>
 <!-- End Action buttons -->
 </div>

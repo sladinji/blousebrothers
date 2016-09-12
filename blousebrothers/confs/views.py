@@ -15,6 +15,7 @@ from django.views.generic import (
 )
 
 from blousebrothers.shortcuts.auth import BBConferencierReqMixin
+from blousebrothers.shortcuts.tools import analyse_conf
 from .models import Conference, Question, Answer, ConferenceImage
 from .forms import ConferenceForm
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
@@ -67,18 +68,18 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
-
     @allow_remote_invocation
     def sync_data(self, edit_data):
         # process in_data
         conf, question, answers = edit_data
         conf.pop('items')
         conf.pop('specialities')
-        Conference.objects.filter(pk=conf.pop('pk')).update(**conf)
+        conf_pk = conf.pop('pk')
+        Conference.objects.filter(pk=conf_pk).update(**conf)
         Question.objects.filter(pk=question.pop('pk')).update(**question)
         for answer in answers:
             Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
-        return answers
+        return analyse_conf(Conference.objects.get(pk=conf_pk))
 
 
 class ConferenceListView(BBConferencierReqMixin, ListView):

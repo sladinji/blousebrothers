@@ -204,5 +204,8 @@ ul.djng-field-errors li.valid::before {
 }
 
 .footer {
-	margin-top: 30px;
+  margin-top: 30px;
+}
+.progress-bar {
+  background-color: #c99947;
 }

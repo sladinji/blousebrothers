@@ -22,7 +22,7 @@
 	    </div> 
 	    </header>
 	    <ul class="bb-ul">
-		    <li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-comment fa-fw"></i>{{ $index + 1 }} : {{x.question | limitTo: 20}} ...</a></li>
+		    <li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-{{ valid_q.indexOf(x.pk) !== -1 ? 'check' : 'comment'}}  fa-fw"></i>{{ $index + 1 }} : {{x.question | limitTo: 20}} ...</a></li>
 	    </ul>
 	    <div class="bb-container bb-light-grey bb-padding-16">
 		<div class="row bb-margin-top"></div>
@@ -56,7 +56,7 @@
 		
 	  
 	  <div ng-if="question">
-	    <legend>Question {{ question.index + 1 }}</legend>
+	    <legend>Question {{ question.index + 1 }} {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque réponse et définissez au moins une réponse juste)'}} </legend>
 	    <form novalidate class="question-form">
 		    <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Énoncé"></textarea><br />
 	    </form>
@@ -83,6 +83,12 @@
 	    </fieldset>
 	    </form>
 	  </div> 
+	  <h2>Sujet complété à {{ progress | number : 0 }}%</h2>
+	  <div class="progress">
+	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ progress }}%">
+		<span class="sr-only">{{ progress }}% Complete</span>
+	    </div>
+	  </div>
 	  {% endverbatim %}
 	</div>
     </div>
@@ -176,41 +182,17 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Confer
     	setAnswers(question);
     }
 
-    $scope.init_model = function () {
-	$scope.questions = [];
-	$scope.answers = [];
-	$scope.conferenceimages = [];
-	$scope.question = null;
-	if (slug != ""){
-		Conference.get({slug: slug}).$promise
-    		.then(function(result){
-    			$scope.conference = result;
-			Question.query({conf: $scope.conference.pk}).$promise
-    			.then(function(result){
-				$scope.questions = result;
-				$scope.question = $scope.questions[0];
-    				setAnswers($scope.question);
-    			})
-			ConferenceImage.query({conf: $scope.conference.pk}).$promise
-    			.then(function(result){
-				$scope.conferenceimages= result;
-    			})
-    		})
-	}
-	else{
-		$scope.showsubject = true;
-	}
-    }
-    // init model on load
-    $scope.init_model();
-
     // START AUTO SAVE
     var timeout = null;
     var saveUpdates = function() {
       // .... save data to server
       djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers])
 	 .success(function(out_data) {
-	     $scope.remote = out_data;
+	     $scope.total_q = out_data['total_q'];
+	     $scope.written_q = out_data['written_q'];
+	     $scope.valid_q = out_data['valid_q'];
+	     $scope.progress = out_data['progress']
+
 	 });
     };
     var debounceSaveUpdates = function(newVal, oldVal) {
@@ -226,6 +208,36 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Confer
     $scope.$watch('question.question', debounceSaveUpdates)
     $scope.$watch('answers', debounceSaveUpdates, true)
     // END AUTO SAVE
+
+    $scope.init_model = function () {
+	$scope.questions = [];
+	$scope.answers = [];
+	$scope.conferenceimages = [];
+	$scope.question = null;
+	if (slug != ""){
+		Conference.get({slug: slug}).$promise
+    		.then(function(result){
+    			$scope.conference = result;
+			Question.query({conf: $scope.conference.pk}).$promise
+    			.then(function(result){
+				$scope.questions = result;
+				$scope.question = $scope.questions[0];
+    				setAnswers($scope.question);
+				saveUpdates(); // init progress etc...
+    			})
+			ConferenceImage.query({conf: $scope.conference.pk}).$promise
+    			.then(function(result){
+				$scope.conferenceimages= result;
+    			})
+    		})
+	}
+	else{
+		$scope.showsubject = true;
+	}
+    }
+    // init model on load
+    $scope.init_model();
+
 });
 </script>
 {% endblock %}
