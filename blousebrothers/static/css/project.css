@@ -209,3 +209,7 @@ ul.djng-field-errors li.valid::before {
 .progress-bar {
   background-color: #c99947;
 }
+
+.correct {
+	background-color: #fff;
+}
