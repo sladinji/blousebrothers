@@ -1,5 +1,5 @@
 #!/bin/bash
-rm blousebrothers/users/migrations/*
-rm blousebrothers/confs/migrations/*
+rm -rf blousebrothers/users/migrations/*
+rm -rf blousebrothers/confs/migrations/*
 docker-compose run -u root django python manage.py makemigrations users
 docker-compose run -u root django python manage.py makemigrations confs
