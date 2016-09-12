@@ -10,7 +10,12 @@
     <div class="col-sm-12">
 
       <h2>{{ object.title}}</h2>
+	<div class="progress">
+	   <div class="progress-bar" role="progressbar" aria-valuenow="{{ object.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ object.edition_progress }}%"/>
+	      <span class="sr-only">{{ object.edition_progress }}% Complete</span>
+	</div>
     </div>
+    <p>Rédaction complétée à {{ object.edition_progress }}%</p>
   </div>
 
 <!-- Action buttons -->
@@ -26,8 +31,8 @@
     </div>
     <h2>Questions</h2>
     {% for question in object.questions.all %}
-    <div class="well">
-      <legend>Question {{ question.index | add:"1" }}</legend>
+    <div class="well {% if not question.is_valid %}well-warning{% endif %}">
+	    <legend>Question {{ question.index | add:"1" }} {% if not question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
       <div class="col-sm-12 col-md-6 ">
 	      <strong>Énoncé :</strong><p>{{ question.question | default:"<i>aucun</i>"}}</p>
       </div>
@@ -44,4 +49,3 @@
 <!-- End Action buttons -->
 </div>
 {% endblock content %}
-

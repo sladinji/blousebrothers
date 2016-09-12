@@ -18,7 +18,7 @@ class ConferenceForm(NgModelFormMixin, NgFormValidationMixin, NgModelForm,  Boot
     field_order = ['title', 'type', 'images', 'summary', 'statement', 'items', 'specialities']
     class Meta:
         model = Conference
-        exclude = ['owner']
+        exclude = ['owner', 'edition_progress']
     images = MultiFileField(min_num=0, max_num=3,required=False, max_file_size=1024*1024*5,
                              widget=MultiFileInput(attrs={'class':'no-border-form'}),
                             label=_("Images de l'énoncé"),

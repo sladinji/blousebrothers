@@ -30,6 +30,7 @@ class Conference(models.Model):
     statement = models.TextField(_('Énoncé'), blank=False, null=False)
     items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences')
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
+    edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
 
     def get_absolute_url(self):
         return reverse('confs:update', kwargs={'slug': self.slug})
@@ -65,6 +66,12 @@ class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False, max_length=64)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     index = models.PositiveIntegerField(_("Ordre"), default=0)
+
+    def is_valid(self):
+        one_good = len([a for a in self.answers.all() if a.answer and a.correct]) >= 1
+        all_filled = len([a for a in self.answers.all() if a.answer ]) == 5
+        return one_good and all_filled
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers")
