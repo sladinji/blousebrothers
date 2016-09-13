@@ -30,7 +30,7 @@
       <!-- Your Stuff: Custom user template urls -->
     </div>
     <h2>Questions</h2>
-    {% for question in object.questions.all %}
+    {% for question in object.questions.all|dictsort:"index" %}
     <div class="well {% if not question.is_valid %}well-warning{% endif %}">
 	    <legend>Question {{ question.index | add:"1" }} {% if not question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
       <div class="col-sm-12 col-md-6 ">
