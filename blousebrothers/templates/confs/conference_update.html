@@ -50,6 +50,8 @@
 	  <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
 	    <div ng-repeat="image in conferenceimages">
 	      <img src="{{ static_media(image.image) }}"/>
+	      <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
+	      <a class="btn btn-primary" href="" ng-click="deleteimg(image)">Supprimer l'image</a>
 	    </div>
 	  </div>
 		
@@ -67,7 +69,7 @@
 	      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
 	      <div class="form-group">
 	        <div class="col-sm-12">
-	          	<input ng-model="answer.answer" class="material_form form-control" placeholder="Réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+	             <input ng-model="answer.answer" class="material_form form-control" placeholder="Réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
 	             <label><input type="checkbox" ng-model="answer.correct"/> Correcte ?</label>
 	        </div>
 	      </div>

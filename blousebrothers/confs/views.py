@@ -71,7 +71,7 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
     @allow_remote_invocation
     def sync_data(self, edit_data):
         # process in_data
-        conf, question, answers = edit_data
+        conf, question, answers, images = edit_data
         conf.pop('items')
         conf.pop('specialities')
         conf_pk = conf.pop('pk')
@@ -79,6 +79,8 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
         Question.objects.filter(pk=question.pop('pk')).update(**question)
         for answer in answers:
             Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
+        for image in images:
+            ConferenceImage.objects.filter(pk=image.pop('pk')).update(**image)
         return analyse_conf(Conference.objects.get(pk=conf_pk))
 
 
@@ -130,6 +132,12 @@ class ConferenceEditView(BBConferencierReqMixin, UpdateView):
     def get_redirect_url(self):
         return reverse('confs:detail',
                        kwargs={'slug': self.request.conf.slug})
+
+    def form_valid(self, form):
+        if form.is_valid():
+            for i, image in enumerate(form.cleaned_data['images']):
+                ConferenceImage.objects.create(image=image, index=i, conf=self.object)
+        return super().form_valid(form)
 
 class ConferenceCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Conference

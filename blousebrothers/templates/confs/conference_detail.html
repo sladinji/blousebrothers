@@ -32,7 +32,7 @@
 	  <legend>Illustrations</legend>
 	  {% for image in object.images.all %}
 	  <div class="illustrations" id="images_div">
-	      <img src="{% static image.image  %}"/>
+		  <img src="{{ image.image.url }}"/>
 	  </div>
 	  {% empty %}
 	  <i>Aucune</i>

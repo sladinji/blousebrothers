@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
+import os
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 from oscar.models.fields import AutoSlugField
 
 
@@ -40,9 +42,21 @@ class Conference(models.Model):
 class ConferenceImage(models.Model):
     image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
-    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    caption = models.CharField(_("Légende"), max_length=200, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     conf = models.ForeignKey('Conference', related_name='images')
+
+
+# These two auto-delete files from filesystem when they are unneeded:
+@receiver(models.signals.post_delete, sender=ConferenceImage)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
+
 
 class Item(models.Model):
     """

@@ -58,7 +58,7 @@ conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm)
     }
 });
 
-conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Conference, ConferenceImage, Question, Answer) {
+conf_app.controller("ConfFormCtrl", function($scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.static_media = static_media;
@@ -75,12 +75,18 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Confer
     	$scope.question = question;
     	setAnswers(question);
     }
+    $scope.deleteimg = function(image){
+	if ($window.confirm("Supprimer l'image ?")) {
+	  image.$delete();
+	  $scope.conferenceimages.splice($scope.conferenceimages.indexOf(image), 1);
+	}
+    }
 
     // START AUTO SAVE
     var timeout = null;
     var saveUpdates = function() {
       // .... save data to server
-      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers])
+      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers, $scope.conferenceimages])
 	 .success(function(out_data) {
 	     $scope.total_q = out_data['total_q'];
 	     $scope.written_q = out_data['written_q'];
@@ -100,6 +106,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, djangoRMI, Confer
     $scope.$watch('conference', debounceSaveUpdates, true)
     $scope.$watch('question.question', debounceSaveUpdates)
     $scope.$watch('answers', debounceSaveUpdates, true)
+    $scope.$watch('conferenceimages', debounceSaveUpdates, true)
     // END AUTO SAVE
 
     $scope.init_model = function () {
