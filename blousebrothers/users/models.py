@@ -26,43 +26,6 @@ class User(AbstractUser):
         ('INTERNE', _('Interne')),
         ('MEDECIN', _('Médecin')),
     )
-    UNIVERSITY = (('aix-marseille', 'Aix-Marseille'),
-      ('amiens', 'Amiens'),
-      ('angers', 'Angers'),
-      ('antilles-guya', 'Antilles-Guyane'),
-      ('besancon', 'Besançon'),
-      ('bordeaux_2', 'Bordeaux 2'),
-      ('brest', 'Brest'),
-      ('caen', 'Caen'),
-      ('clermont_ferr', 'Clermont Ferrand 1'),
-      ('corse', 'Corse'),
-      ('dijon', 'Dijon'),
-      ('grenoble_1', 'Grenoble 1'),
-      ('la_reunion', 'La Réunion'),
-      ('lille_2', 'Lille 2'),
-      ('limoge', 'Limoge'),
-      ('lorraine', 'Lorraine'),
-      ('lyon_1', 'Lyon 1'),
-      ('montpellier_1', 'Montpellier 1'),
-      ('nantes', 'Nantes'),
-      ('nice', 'Nice'),
-      ('paris_11', 'Paris 11'),
-      ('paris_12', 'Paris 12'),
-      ('paris_13', 'Paris 13'),
-      ('paris_5', 'Paris 5'),
-      ('paris_6', 'Paris 6'),
-      ('paris_7', 'Paris 7'),
-      ('poitiers', 'Poitiers'),
-      ('reims', 'Reims'),
-      ('rennes_1', 'Rennes 1'),
-      ('rouen', 'Rouen'),
-      ('st-etienne', 'Saint-Etienne'),
-      ('strasbourg', 'Strasbourg'),
-      ('toulouse_3', 'Toulouse 3'),
-      ('tours', 'Tours'),
-      ('versailles_st', 'Versailles Saint-Quentin-en-Yveline'),
-      ('x', 'Autre...'),)
-
 
     def gen_sponsor_code():
         """
@@ -117,8 +80,7 @@ class User(AbstractUser):
     """Date when request to be conferencier was made"""
     is_patriot = models.BooleanField("Conférencier", default=False)
     """Patriot will offer free stuff to students of his university"""
-    university = models.CharField(_('Université'), max_length=15, blank=False, null=True,
-                                  choices=UNIVERSITY)
+    university = models.ForeignKey('University', blank=True, null=True, verbose_name=_("Ville de CHU actuelle"))
     """University"""
     degree = models.CharField(_("Niveau"), max_length=10, choices=DEGREE_LEVEL,
                             blank=False, default=None, null=True)
@@ -132,3 +94,9 @@ class User(AbstractUser):
             return True
         return self.university and self.first_name and self.last_name and self.degree
 
+class University(models.Model):
+    name = models.CharField(_("Nom"), max_length=128, blank=False, null=False)
+    """University name"""
+
+    def __str__(self):
+        return self.name

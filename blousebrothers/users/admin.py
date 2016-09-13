@@ -5,7 +5,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from .models import User
+from .models import User, University
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -43,3 +43,5 @@ class MyUserAdmin(AuthUserAdmin):
     search_fields = ['name', 'is_conferencier', 'wanabe_conferencier']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
     'wanabe_conferencier')
+
+admin.site.register(University)
