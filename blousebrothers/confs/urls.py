@@ -39,6 +39,11 @@ urlpatterns = [
         view=views.ConferenceCreateView.as_view(),
         name='create'
     ),
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/~edit$',
+        view=views.ConferenceEditView.as_view(),
+        name='edit'
+    ),
     url(r'^crud/conference/?$',
         views.ConferenceCRUDView.as_view(),
         name='conference_crud_view'),

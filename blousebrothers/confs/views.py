@@ -120,7 +120,16 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
+class ConferenceEditView(BBConferencierReqMixin, UpdateView):
+    template_name = 'confs/conference_form.html'
+    form_class = ConferenceForm
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    model=Conference
 
+    def get_redirect_url(self):
+        return reverse('confs:detail',
+                       kwargs={'slug': self.request.conf.slug})
 
 class ConferenceCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Conference

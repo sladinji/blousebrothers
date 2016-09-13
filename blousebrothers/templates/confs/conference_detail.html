@@ -11,25 +11,38 @@
 
       <h2>{{ object.title}}</h2>
 	<div class="progress">
-	   <div class="progress-bar" role="progressbar" aria-valuenow="{{ object.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ object.edition_progress }}%"/>
+	   <div class="progress-bar" role="progressbar" aria-valuenow="{{ object.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ object.edition_progress }}%">
 	      <span class="sr-only">{{ object.edition_progress }}% Complete</span>
+	   </div>
 	</div>
     </div>
-    <p>Rédaction complétée à {{ object.edition_progress }}%</p>
+    <p class="pull-right">Rédaction complétée à {{ object.edition_progress }}%</p>
   </div>
 
 <!-- Action buttons -->
   <div class="row">
   
-    <a class="btn btn-primary" href="{% url 'confs:update' object.slug %}">Editer</a>
     <div class="col-sm-12 ">
+	  <legend>Détails <a class="btn btn-primary pull-right" href="{% url 'confs:edit' object.slug %}">Editer la conférence</a></legend>
   	  <strong>Type :</strong> {{object.type}}<br>
   	  <strong>Items :</strong> {{object.items.all | join:", "}}<br>
   	  <strong>Specialités :</strong> {{object.specialities.all | join:", "}}<br>
   	  <strong>Résumé :</strong> {{object.abstract |default:"<i>aucun</i>"}}<br>
+	  <legend>Énoncé</legend><p> {{ object.statement | default:"<i>aucun</i>"}}<p>
+	  <legend>Illustrations</legend>
+	  {% for image in object.images.all %}
+	  <div class="illustrations" id="images_div">
+	      <img src="{% static image.image  %}"/>
+	  </div>
+	  {% empty %}
+	  <i>Aucune</i>
+	  {% endfor %}
       <!-- Your Stuff: Custom user template urls -->
     </div>
-    <h2>Questions</h2>
+    <h2>Questions
+    <a class="btn btn-primary pull-right" href="{% url 'confs:update' object.slug %}">Editer les questions</a>
+    </h2>
+   
     {% for question in object.questions.all|dictsort:"index" %}
     <div class="well {% if not question.is_valid %}well-warning{% endif %}">
 	    <legend>Question {{ question.index | add:"1" }} {% if not question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>

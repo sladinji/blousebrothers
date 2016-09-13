@@ -32,8 +32,8 @@
 	</aside>
 
 	<div id="subject" class="col-md-9" >
+	  <legend>Sujet<a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}">Editer</a></legend>
 	  {% verbatim %}
-	  <legend>Sujet</legend>
 	  <form novalidate class="question-form">
 	  <input type="text" class="no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
 	  <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />

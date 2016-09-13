@@ -39,7 +39,11 @@
 	<div id="subject" class="col-md-9" >
 	  <div class="tabbable dashboard col-md-12">
 
+	    {% if object %}
+	    <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'confs:edit' object.slug %}">
+	    {% else %}
 	    <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'confs:create' %}">
+	    {% endif %}
             {% csrf_token %}
 	    <div class="tab-content">
 	      <div id="conference" ng-show="showsubject" ng-init="showsubject=true">
