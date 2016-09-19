@@ -246,6 +246,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 ACCOUNT_ALLOW_REGISTRATION = True
 ACCOUNT_ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 SOCIALACCOUNT_ADAPTER = 'blousebrothers.users.adapters.SocialAccountAdapter'
 
 SOCIALACCOUNT_PROVIDERS = \
