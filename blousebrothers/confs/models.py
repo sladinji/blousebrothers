@@ -94,6 +94,7 @@ class Answer(models.Model):
     explaination_image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255,
                                            blank=True, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
+    ziw = models.BooleanField(_("Zéro si erreur"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
 
 class QuestionImage(models.Model):
