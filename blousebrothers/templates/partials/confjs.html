@@ -105,6 +105,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, $window, djangoRM
     };
     $scope.$watch('conference', debounceSaveUpdates, true)
     $scope.$watch('question.question', debounceSaveUpdates)
+    $scope.$watch('question.coefficient', debounceSaveUpdates)
     $scope.$watch('answers', debounceSaveUpdates, true)
     $scope.$watch('conferenceimages', debounceSaveUpdates, true)
     // END AUTO SAVE

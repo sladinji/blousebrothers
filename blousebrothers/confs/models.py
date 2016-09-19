@@ -80,6 +80,7 @@ class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False, max_length=64)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     index = models.PositiveIntegerField(_("Ordre"), default=0)
+    coefficient = models.PositiveIntegerField(_("Coéfficient"), default=1)
 
     def is_valid(self):
         one_good = len([a for a in self.answers.all() if a.answer and a.correct]) >= 1
