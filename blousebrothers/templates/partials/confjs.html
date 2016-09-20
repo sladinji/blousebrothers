@@ -9,7 +9,7 @@ function static(path) {
 function static_media(path) {
     return MEDIA_URL + path;
 }
-var conf_app = angular.module('djangular-bb', ['djng.rmi', 'ngResource', 'djng.forms']);
+var conf_app = angular.module('djangular-bb', ['toaster', 'ngAnimate', 'djng.rmi', 'ngResource', 'djng.forms']);
 {% if object %}
 var slug="{{ object.slug }}"
 {% else %}
@@ -58,7 +58,7 @@ conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm)
     }
 });
 
-conf_app.controller("ConfFormCtrl", function($scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer) {
+conf_app.controller("ConfFormCtrl", function(toaster, $scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.static_media = static_media;
@@ -72,6 +72,7 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, $window, djangoRM
 	}
     };
     $scope.question_selected = function(question){
+	saveUpdates();
     	$scope.question = question;
     	setAnswers(question);
     }
@@ -91,14 +92,19 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, $window, djangoRM
 	     $scope.total_q = out_data['total_q'];
 	     $scope.written_q = out_data['written_q'];
 	     $scope.valid_q = out_data['valid_q'];
-	     $scope.progress = out_data['progress']
+	     $scope.progress = out_data['progress'];
+  	     toaster.pop('success', "Sauvegarde auto OK", "");
 
+	 })
+	 .error(function(out_data){
+  	     toaster.pop('erreur', "Echec de sauvegarde", "Nouvelle tentative dans quelques secondes...");
+	     timeout = $timeout(saveUpdates, 5000);  // 1000 = 1 second
 	 });
     };
     var debounceSaveUpdates = function(newVal, oldVal) {
       if (newVal != oldVal) {
         if (timeout) {
-          $timeout.cancel(timeout)
+          $timeout.cancel(timeout);
         }
         timeout = $timeout(saveUpdates, 1000);  // 1000 = 1 second
       }
@@ -124,7 +130,6 @@ conf_app.controller("ConfFormCtrl", function($scope, $timeout, $window, djangoRM
 				$scope.questions = result;
 				$scope.question = $scope.questions[0];
     				setAnswers($scope.question);
-				saveUpdates(); // init progress etc...
     			})
 			ConferenceImage.query({conf: $scope.conference.pk}).$promise
     			.then(function(result){
