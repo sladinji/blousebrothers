@@ -31,21 +31,31 @@
 	    {% endverbatim %}
 	</aside>
 
-	<div id="subject" class="col-md-9" >
-	  <legend>Sujet<a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}">Editer</a></legend>
-	  {% verbatim %}
-	  <form novalidate class="question-form">
-	  <input type="text" class="no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
-	  <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
-	  </form>
-	  <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
-		<div ng-if="isImagesDiplayed">
-		  Masquer les illustrations
-		</div>
-		<div ng-if="!isImagesDiplayed">
-		  Afficher les illustrations
-		</div>
-	  </a>
+	<div class="col-md-9" >
+	      <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
+	            <div ng-if="isSubjectDiplayed">
+	              Masquer le sujet
+	            </div>
+	            <div ng-if="!isSubjectDiplayed">
+	              Afficher le sujet
+	            </div>
+	      </a>
+	  <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
+	      <legend>Sujet<a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}">Editer</a></legend>
+	      {% verbatim %}
+	      <form novalidate class="question-form">
+	      <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
+	      <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
+	      </form>
+	      <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
+	            <div ng-if="isImagesDiplayed">
+	              Masquer les illustrations
+	            </div>
+	            <div ng-if="!isImagesDiplayed">
+	              Afficher les illustrations
+	            </div>
+	      </a>
+	  </div>
 	  <br>
 	  <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
 	    <div ng-repeat="image in conferenceimages">
@@ -56,7 +66,7 @@
 	  </div>
 		
 	  
-	  <div ng-if="question">
+	  <div ng-if="question" class="well well-white">
 	    <legend>Question {{ question.index + 1 }} {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque réponse et définissez au moins une réponse juste)'}} </legend>
 	    <form novalidate class="question-form">
 		    <label><select class="selectpicker" ng-model="question.coefficient"><option ng-repeat="option in [1,2,3,4,5,6,7,8,9,10]" value="{{option}}">{{option}}</option></select> Coéfficient </label><br>
@@ -66,7 +76,7 @@
 	    <form class="form-horizontal">
 	    <fieldset>
 	    <legend>Réponses</legend>
-	    <div class="well well-white" ng-repeat="answer in answers">
+	    <div class="well well-answer" ng-repeat="answer in answers">
 	      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
 	      <div class="form-group">
 	        <div class="col-sm-12">

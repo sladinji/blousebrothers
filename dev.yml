@@ -8,8 +8,8 @@ services:
   postgres:
     build: ./compose/postgres
     volumes:
-      - postgres_data_dev:/data/blousebros/postgresql/data
-      - postgres_backup_dev:/data/blousebros/backups
+      - postgres_data_dev:/var/lib/postgresql/data
+      - postgres_backup_dev:/backups
     env_file: .env-dev
 
   django:

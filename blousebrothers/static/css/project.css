@@ -213,3 +213,17 @@ ul.djng-field-errors li.valid::before {
 .correct {
 	background-color: #fff;
 }
+
+.well-answer {
+	border: 1px dashed #bcbcbc;
+	background-color: #fff;
+	border-radius: 0px;
+}
+
+.well {
+	border-radius: 0px;
+}
+
+.ititle {
+	font-size: 20px;
+}

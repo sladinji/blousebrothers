@@ -90,8 +90,8 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers")
-    answer = models.CharField(_("Proposition"), max_length=256, blank=True, null=True)
-    explaination = models.CharField(_("Explication"), blank=True, max_length=256, null=True)
+    answer = models.TextField(_("Proposition"), blank=True, null=True)
+    explaination = models.TextField(_("Explication"), blank=True, null=True)
     explaination_image = models.ImageField(_("Image"), upload_to=settings.OSCAR_IMAGE_FOLDER, max_length=255,
                                            blank=True, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
