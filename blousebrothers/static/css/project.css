@@ -227,3 +227,9 @@ ul.djng-field-errors li.valid::before {
 .ititle {
 	font-size: 20px;
 }
+.ta-editor {
+  height: auto;
+  overflow: auto;
+  font-family: inherit;
+  font-size: 100%;
+}

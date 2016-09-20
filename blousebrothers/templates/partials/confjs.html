@@ -9,7 +9,7 @@ function static(path) {
 function static_media(path) {
     return MEDIA_URL + path;
 }
-var conf_app = angular.module('djangular-bb', ['toaster', 'ngAnimate', 'djng.rmi', 'ngResource', 'djng.forms']);
+var conf_app = angular.module('djangular-bb', ['textAngular', 'toaster', 'ngAnimate', 'djng.rmi', 'ngResource', 'djng.forms']);
 {% if object %}
 var slug="{{ object.slug }}"
 {% else %}
@@ -58,7 +58,7 @@ conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm)
     }
 });
 
-conf_app.controller("ConfFormCtrl", function(toaster, $scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer) {
+conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.static_media = static_media;
@@ -143,7 +143,6 @@ conf_app.controller("ConfFormCtrl", function(toaster, $scope, $timeout, $window,
     }
     // init model on load
     $scope.init_model();
-
 });
 
 </script>
