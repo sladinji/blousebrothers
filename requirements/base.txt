@@ -60,3 +60,4 @@ django-bootstrap3
 django-bootstrap-dynamic-formsets
 django-multiupload
 django-mailgun
+django-select2

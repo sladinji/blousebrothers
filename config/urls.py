@@ -25,6 +25,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'', include(application.urls)),
     url(r'^nested_admin/', include('nested_admin.urls')),
+    url(r'^select2/', include('django_select2.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

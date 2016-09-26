@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     'django_bootstrap_dynamic_formsets',
     'bootstrap3',
     'djng',
+    'django_select2',
 ]
 
 # Apps specific for this project go here.
