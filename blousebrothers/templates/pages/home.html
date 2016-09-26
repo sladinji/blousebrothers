@@ -4,21 +4,6 @@
 {% load socialaccount %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
-{% comment %}
-{% block parallax%}
-
-<div id="pipe" class="parallax">
-  <div class="row logoparallax">
-    <div class="col-md-10 parallax_caption">
-      <h3 class>Prépa iECN sans additifs</h3>
-	<p>Moins cher</p>
-	<p>Moins chronophage</p>
-	<p>Sans compromis.</p>
-    </div>
-  </div>
-</div>
-{% endblock parallax %}
-{% endcomment %}
 {% block main_header %}
 {% endblock main_header %}
 {% block header %}
@@ -27,33 +12,24 @@
 
 {% block content %}
 <div class="row top-header main-title">
-	<div class="col-sm-3"><span class="slogan-top-header"> BlouseBrothers</div>
-	<div class="col-sm-6 text-center">Prépa ECNi<em> collaborative</em></span></div>
-	<div class="col-sm-3 text-right small"><a href="{% url 'account_signup' %}" class="btn btn-primary">Inscription</a> <a href="{% url 'account_login' %}" class="btn btn-primary">Connexion</a> </div>
+	<div class="col-md-2"><span class="slogan-top-header"> BlouseBrothers</div>
+	<div class='col-md-2'><img src="/static/images/logo.gif" alt="" width="160px"></div>
+	<div class="col-md-5 text-center">Prépa ECNi<em> collaborative</em></span></div>
+	<div class="col-md-3 text-right small"><a href="{% url 'account_login' %}" class="btn btn-primary"><strong>J'ai déjà un compte, me connecter</strong></a> </div>
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 text-center">
-      <div class="well main-page">
-	      <p><span class="yellow">Externe ?</span> Fais ton programme selon tes révisions. Pas d'abonnement, pas d'engagement. Pose tes questions à la communauté. Évalue les QI, les DCP, et les réponses des conférenciers... et base toi sur les évaluations pour choisir tes confs.</p>
-	      <p><span class="yellow">Conférencier ?</span> Construis tes DCP et QI sur la plateforme. Garde 85% de tes ventes. Tes notes et ta réputation seront gage de ton succès.</p>
-	      <p>Bonne chance à tous... <span class="yellow">Bienvenue sur <span class="blouse-font">Blousebrothers</span>. Nous n'avons plus besoin d'eux.</span>
-      </div>
-    </div>
-    <div class="col-sm-12 text-center">
-      <div class="well main-page">
-        <form method="get" action="{% url 'search:search' %}" class="box-search search-main-page">
-	      <div class="inner">
-		      {{ search_form.q }}
-		      <button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
-	      </div>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-sm-12 main-page">
-      <p><span class="yellow big">#killtheconf</span></p>
+    <div class="col-md-12">
+      <h1>{% trans "Inscription" %}</h1>
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button id="sign-up-button" class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+      </form>
     </div>
   </div>
 </div>

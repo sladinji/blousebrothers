@@ -1,10 +1,10 @@
 {% load i18n %}
+{% if user.is_authenticated %}
 <form method="get" action="{% url 'search:search' %}" class="box-search pull-left">
 	<div class="inner">
 		{{ search_form.q }}
 		<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
 	</div>
 </form>
-{% if user.is_authenticated %}
 <a class="btn btn-success pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
 {% endif %}

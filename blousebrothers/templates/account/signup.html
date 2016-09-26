@@ -1,19 +1,45 @@
-{% extends "account/base.html" %}
+{% extends "layout.html" %}
 
+{% load account %}
+{% load socialaccount %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block main_header %}
+{% endblock main_header %}
+{% block header %}
+{% endblock header %}
+{% block main_container_class %}<div class="container_fluid parallax">{% endblock %}
 
 {% block title %}{% trans "Signup" %}{% endblock title %}
 
 {% block content %}
+<div class="row top-header main-title">
+	<div class="col-md-2"><span class="slogan-top-header"> BlouseBrothers</div>
+	<div class='col-md-2'><img src="/static/images/logo.gif" alt="" width="160px"></div>
+	<div class="col-md-5 text-center">Prépa ECNi<em> collaborative</em></span></div>
+	<div class="col-md-3 text-right small"><a href="{% url 'account_login' %}" class="btn btn-primary"><strong>J'ai déjà un compte, me connecter</strong></a> </div>
+</div>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-5">
-      <h1>{% trans "Sign Up" %}</h1>
+    <div class="col-md-12 well main-page">
+      <div class="socialaccount_ballot text-center">
+	      <p><strong>{% trans "Inscription" %}</strong></p>
+      {% get_providers as socialaccount_providers %}
+      {% if socialaccount_providers %}
+      <p>Via le réseau social de ton choix</p>
+	<ul class="socialaccount_providers text-center">
+	  {% include "partials/social_connect.html" with process="login" %}
+	</ul>
 
-      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+      <p>Ou en créant ton compte ici</p>
 
+      </div>
+
+      {% include "socialaccount/snippets/login_extra.html" %}
+
+      {% endif %}
       <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         {{ form|crispy }}
