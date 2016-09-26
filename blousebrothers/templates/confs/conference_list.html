@@ -2,18 +2,6 @@
 {% load static %}{% load i18n %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
-{% block submenu %}
-<form method="get" action="{% url 'search:search' %}" class="box-search pull-left">
-	<div class="inner">
-		{{ search_form.q }}
-		<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
-	</div>
-</form>
-<a class="btn pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
-
-<a class="btn-info btn pull-right" href="{% url 'confs:create' %}"><span class="fa fa-reorder"></span> <strong>{% trans 'Gérer mes confs' %}</strong></a>
-{% endblock %}
-
 {% block content %}
 
 <div class="container">

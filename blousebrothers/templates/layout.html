@@ -41,7 +41,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-2 logo-wapper">
 				<div class="logo">
-					<a href="#"><img src="{% static "images/logo.gif" %}" width=160px alt=""></a>
+					<a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo.gif" %}" width=160px alt=""></a>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 menu-wapper">
@@ -50,11 +50,11 @@
 					<div class="slogan">BlouseBrothers</div>
 				        {% else %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-left">
+            				    {% if not user.is_conferencier%}
 					    <li class="menu-item-has-children item-megamenu">
-						    <a href="{% url 'catalogue:index' %}">
-						      <i class="icon-home"></i> {% trans 'Home' %}
-					    </a>
+						<a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Gérer mes confs' %}</a>
 					    </li>
+					    {% endif %}
 					</ul>
 				        {% endif %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-left">
@@ -62,21 +62,24 @@
 	    					<div class="con-menu">
 	    					<ul class="boutique-nav main-menu clone-main-menu">
             					    {% if user.is_authenticated %}
-	    					        <li class="menu-item-has-children item-megamenu">
-            					            {% if num_unread_notifications > 0 %}
-            					                {# If user has new notifications - we change account link to go to inbox #}
-            					                <a href="{% url 'customer:notifications-inbox' %}">
-            					                    <i class="icon-user"></i>
-            					                    {% trans "Account" %}
-            					                    <span class="label label-important">{{ num_unread_notifications }}</span>
-            					                </a>
-            					            {% else %}
-            					                <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
-            					            {% endif %}
-            					        </li>
             					        {% if user.is_staff or perms.partner.dashboard_access %}
 	    					            <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
             					        {% endif %}
+	   					</ul>
+					</ul>
+	    					<ul class="boutique-nav main-menu clone-main-menu pull-right">
+							<li class="menu-item-has-children item-megamenu">
+							    {% if num_unread_notifications > 0 %}
+								{# If user has new notifications - we change account link to go to inbox #}
+								<a href="{% url 'customer:notifications-inbox' %}">
+								    <i class="icon-user"></i>
+								    {{ user.username }}
+								    <span class="label label-important">{{ num_unread_notifications }}</span>
+								</a>
+							    {% else %}
+							    <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {{ user.username }}</a>
+							    {% endif %}
+							</li>
             					        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
             					    {% else %}
             					        <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
@@ -85,13 +88,13 @@
 						</div>
 	
 					</div>
+					<div class="submenu">
+					{% block submenu %}
+					{% include 'partials/search_submenu.html' %}
+					{% endblock %}
+					</div>
 				</div>
 
-				<div class="submenu">
-				{% block submenu %}
-				{% include 'partials/search_submenu.html' %}
-				{% endblock %}
-				</div>
 			</div>
 		</div>
 		</div>

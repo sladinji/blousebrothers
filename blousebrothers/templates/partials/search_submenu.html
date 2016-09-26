@@ -6,7 +6,5 @@
 	</div>
 </form>
 {% if user.is_authenticated %}
-<a class="btn pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
-
-<a class="btn-info btn pull-right" href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> <strong>{% trans 'Gérer mes confs' %}</strong></a>
+<a class="btn btn-success pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
 {% endif %}
