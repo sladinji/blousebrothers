@@ -12,6 +12,7 @@ from django.views.generic import (
     UpdateView,
     CreateView,
     TemplateView,
+    FormView
 )
 
 from blousebrothers.shortcuts.auth import BBConferencierReqMixin
@@ -94,7 +95,7 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
         return self.model.objects.filter(owner=self.request.user).all()
 
 
-class ConferenceCreateView(BBConferencierReqMixin, CreateView):
+class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
 

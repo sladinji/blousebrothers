@@ -4,14 +4,18 @@ from djng.forms import NgModelForm, NgFormValidationMixin, NgModelFormMixin
 from djng.styling.bootstrap3.forms import Bootstrap3FormMixin
 from django.utils.translation import ugettext_lazy as _
 from multiupload.fields import MultiFileField, MultiFileInput
+from django_select2.forms import ModelSelect2MultipleWidget
 
 from .models import(
-        Conference,
-        Question,
-        Answer,
+    Conference,
+    Question,
+    Answer,
+    Item,
+    Speciality,
 )
 
-class ConferenceForm(NgModelFormMixin, NgFormValidationMixin, NgModelForm,  Bootstrap3FormMixin):
+
+class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
 
     scope_prefix = 'conf_data'
     form_name = 'conf_form'
@@ -20,13 +24,24 @@ class ConferenceForm(NgModelFormMixin, NgFormValidationMixin, NgModelForm,  Boot
         model = Conference
         exclude = ['owner', 'edition_progress']
     images = MultiFileField(min_num=0, max_num=3,required=False, max_file_size=1024*1024*5,
-                             widget=MultiFileInput(attrs={'class':'no-border-form'}),
+                            widget=MultiFileInput(attrs={'class':'no-border-form'}),
                             label=_("Images de l'énoncé"),
                             help_text=_("Vous pouvez selectionner pulsieurs images"),
                             )
 
-
-    field_css_classes = {
-            '*': 'form-group has-feedback',
-            'images': "ng-class:{'ng-hide':conf_data['type']==='QI'}",
-    }
+    items = forms.ModelMultipleChoiceField(
+                widget=ModelSelect2MultipleWidget(
+                                queryset=Item.objects.order_by('number').all(),
+                                search_fields=['name__icontains']
+                            ),
+        queryset=Item.objects.all(),
+        required=True,
+            )
+    specialities = forms.ModelMultipleChoiceField(
+                widget=ModelSelect2MultipleWidget(
+                                queryset=Speciality.objects.order_by('name').all(),
+                                search_fields=['name__icontains']
+                            ),
+        queryset=Speciality.objects.all(),
+        required=True,
+            )
