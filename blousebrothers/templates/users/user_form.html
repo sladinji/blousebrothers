@@ -4,12 +4,7 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-    <h1>Mes infos</h1>
-    {% if not user.gave_all_required_info %}
-    <div class="well well-warning">
-	    Avant de poursuivre, merci de renseigner le formulaire ci dessous.
-    </div>
-    {% endif %}
+    <h1>Modifier mes informations</h1>
     <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
         {% csrf_token %}
         {{ form|crispy }}
@@ -19,7 +14,9 @@
           </div>
         </div>
     </form>
+    {% comment multiple emails disabled %}
     <h1>Gestion des emails</h1>
     <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
     <br>
+    {% endcomment %}
 {% endblock %}

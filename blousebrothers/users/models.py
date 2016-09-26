@@ -12,6 +12,7 @@ from django.contrib import admin
 
 AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
+AbstractUser._meta.get_field('email').blank = False
 
 @python_2_unicode_compatible
 class User(AbstractUser):
@@ -80,7 +81,7 @@ class User(AbstractUser):
     """Date when request to be conferencier was made"""
     is_patriot = models.BooleanField("Conférencier", default=False)
     """Patriot will offer free stuff to students of his university"""
-    university = models.ForeignKey('University', blank=True, null=True, verbose_name=_("Ville de CHU actuelle"))
+    university = models.ForeignKey('University', blank=False, null=True, verbose_name=_("Ville de CHU actuelle"))
     """University"""
     degree = models.CharField(_("Niveau"), max_length=10, choices=DEGREE_LEVEL,
                             blank=False, default=None, null=True)
@@ -92,7 +93,9 @@ class User(AbstractUser):
         """Used for permission management"""
         if self.is_superuser :
             return True
-        return self.university and self.first_name and self.last_name and self.degree
+        if self.wanabe_conferencier or self.is_conferencier :
+            return self.university and self.first_name and self.last_name and self.degree
+        return True
 
 class University(models.Model):
     name = models.CharField(_("Nom"), max_length=128, blank=False, null=False)
