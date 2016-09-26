@@ -149,9 +149,15 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
                                         # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-        }
+        },
+    },
+    'select2': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': '',
+        'TIMEOUT': 60 * 60 * 24,
     }
 }
+SELECT2_CACHE_BACKEND = 'select2'
 
 
 # LOGGING CONFIGURATION
