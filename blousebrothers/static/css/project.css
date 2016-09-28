@@ -68,7 +68,7 @@ img {
 .top-header.main-title {
 	border-bottom:0px;
 	padding-top: 10px !important;
-	padding-bottom: 110px;
+	padding-bottom: 30px;
 }
 
 .slogan-top-header{
@@ -203,9 +203,6 @@ ul.djng-field-errors li.valid::before {
   border-color: #46b8da;
 }
 
-.footer {
-  margin-top: 30px;
-}
 .progress-bar {
   background-color: #c99947;
 }
@@ -232,4 +229,14 @@ ul.djng-field-errors li.valid::before {
   overflow: auto;
   font-family: inherit;
   font-size: 100%;
+}
+
+.btn.btn-success.btn-create-conf.pull-right {
+	margin-right: 15px;
+	margin-top: 12px;
+}
+
+#sign-up-button {
+	margin-left: 0;
+	margin-top:40px;
 }

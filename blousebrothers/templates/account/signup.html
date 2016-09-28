@@ -16,8 +16,8 @@
 {% block content %}
 <div class="row top-header main-title">
 	<div class="col-md-2"><span class="slogan-top-header"> BlouseBrothers</div>
-	<div class='col-md-2'><img src="/static/images/logo.gif" alt="" width="160px"></div>
-	<div class="col-md-5 text-center">Prépa ECNi<em> collaborative</em></span></div>
+	<div class='col-md-2 hidden-sm hidden-xs'><img src="/static/images/logo.gif" alt="" width="160px"></div>
+	<div class="col-md-5 text-center hidden-sm hidden-xs">Prépa ECNi<em> collaborative</em></span></div>
 	<div class="col-md-3 text-right small"><a href="{% url 'account_login' %}" class="btn btn-primary"><strong>J'ai déjà un compte, me connecter</strong></a> </div>
 </div>
 
@@ -46,7 +46,7 @@
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        <button id="sign-up-button" class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+        <button id="sign-up-button" class="btn btn-primary btn-signup" type="submit">Création de compte »</button>
       </form>
     </div>
   </div>
