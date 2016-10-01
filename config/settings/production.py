@@ -21,6 +21,15 @@ import logging
 
 from .common import *  # noqa
 
+
+# Static Assets
+# ------------------------
+
+# See: https://github.com/antonagestam/collectfast
+# For Django 1.7+, 'collectfast' should come before
+# 'django.contrib.staticfiles'
+AWS_PRELOAD_METADATA = True
+
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -85,7 +94,7 @@ INSTALLED_APPS += (
 AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
-AWS_AUTO_CREATE_BUCKET = True
+AWS_AUTO_CREATE_BUCKET = False
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
@@ -100,9 +109,14 @@ AWS_HEADERS = {
         AWS_EXPIRY, AWS_EXPIRY))
 }
 
+#  See:http://stackoverflow.com/questions/10390244/
+from storages.backends.s3boto import S3BotoStorage
+StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')
+MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')
+DEFAULT_FILE_STORAGE = 'config.settings.production.MediaRootS3BotoStorage'
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
-MEDIA_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = 'https://s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
 
 
 # Static Assets
@@ -149,8 +163,8 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
                                         # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-        }
-    }
+        },
+    },
 }
 
 
