@@ -50,7 +50,7 @@
 					<div class="slogan">BlouseBrothers</div>
 				        {% else %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-left">
-            				    {% if not user.is_conferencier%}
+            				    {% if user.is_conferencier%}
 					    <li class="menu-item-has-children item-megamenu">
 						<a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Gérer mes confs' %}</a>
 					    </li>
