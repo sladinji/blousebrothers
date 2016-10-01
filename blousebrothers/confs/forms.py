@@ -44,4 +44,5 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
                             ),
         queryset=Speciality.objects.all(),
         required=True,
-            )
+        label=_("Matières abordées"),
+    )
