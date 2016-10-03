@@ -64,4 +64,25 @@
 {% block scripts %}
 {{ block.super }}
 {{ form.media.js }}
+<script type="text/javascript">
+  var hide_according_type = function(){
+      opt = $("#id_type").val();
+      if ( opt == 'QI' ) {
+        $('#div_id_statement').addClass('hidden');
+        $('#div_id_images').addClass('hidden');
+      }
+      if ( opt == 'DCP' ) {
+        $('#div_id_statement').removeClass('hidden');
+        $('#div_id_images').removeClass('hidden');
+      }
+  };
+  $('#id_type').change(function(){
+      hide_according_type();
+  });
+</script>
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    hide_according_type();
 {% endblock %}

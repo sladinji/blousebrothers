@@ -32,36 +32,43 @@
 	</aside>
 
 	<div class="col-md-9" >
-	      <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
-	            <div ng-if="isSubjectDiplayed">
-	              Masquer le sujet
-	            </div>
-	            <div ng-if="!isSubjectDiplayed">
-	              Afficher le sujet
-	            </div>
-	      </a>
-	  <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
-	      <legend>Sujet<a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}">Editer</a></legend>
-	      {% verbatim %}
-	      <form novalidate class="question-form">
-	      <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
-	      <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
-	      </form>
-	      <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
-	            <div ng-if="isImagesDiplayed">
-	              Masquer les illustrations
-	            </div>
-	            <div ng-if="!isImagesDiplayed">
-	              Afficher les illustrations
-	            </div>
-	      </a>
+	  <div ng-if="conference.type == 'QI'">
+	    <form novalidate class="question-form">
+	    <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}">Editer le QI</a><br />
+	    </form>
 	  </div>
-	  <br>
-	  <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
-	    <div ng-repeat="image in conferenceimages">
-	      <img src="{{ static_media(image.image) }}"/>
-	      <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
-	      <a class="btn btn-primary" href="" ng-click="deleteimg(image)">Supprimer l'image</a>
+	  <div ng-if="conference.type == 'DCP'">
+	    <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
+	          <div ng-if="isSubjectDiplayed">
+	            Masquer le sujet du DCP
+	          </div>
+	          <div ng-if="!isSubjectDiplayed">
+	            Afficher le sujet du DCP
+	          </div>
+	    </a>
+	    <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
+	        <legend>Sujet<a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}">Editer</a></legend>
+	        {% verbatim %}
+	        <form novalidate class="question-form">
+	        <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br />
+	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
+	        </form>
+	        <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
+	              <div ng-if="isImagesDiplayed">
+	                Masquer les illustrations
+	              </div>
+	              <div ng-if="!isImagesDiplayed">
+	                Afficher les illustrations
+	              </div>
+	        </a>
+	    </div>
+	    <br>
+	    <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
+	      <div ng-repeat="image in conferenceimages">
+	        <img src="{{ static_media(image.image) }}"/>
+	        <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
+	        <a class="btn btn-primary" href="" ng-click="deleteimg(image)">Supprimer l'image</a>
+	      </div>
 	    </div>
 	  </div>
 		
@@ -122,4 +129,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular-sanitize.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular.min.js'></script>
 {% include 'partials/confjs.html' %}
+{% endblock %}
+
+{% block onbodyload %}
 {% endblock %}

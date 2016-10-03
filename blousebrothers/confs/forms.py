@@ -17,7 +17,6 @@ from .models import(
 
 class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
 
-    scope_prefix = 'conf_data'
     form_name = 'conf_form'
     field_order = ['title', 'type', 'images', 'summary', 'statement', 'items', 'specialities']
     class Meta:
@@ -46,3 +45,14 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
         required=True,
         label=_("Matières abordées"),
     )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        type = cleaned_data.get("type")
+
+        if type == 'DCP' :
+            statement  = cleaned_data.get("statement")
+            if not statement :
+                raise forms.ValidationError(
+                    "Vous devez saisir un énoncé pour un DCP."
+                )
