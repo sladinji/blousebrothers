@@ -27,10 +27,14 @@ class Conference(models.Model):
                             blank=False, default='DP')
     slug = AutoSlugField(_('Slug'), max_length=128, unique=True,
                          populate_from='title')
-    summary = models.CharField(_('Résumé'), blank=False, null=False, max_length=140,
-                               help_text=_("Ce résumé doit décrire le contenu de la conférence en moins de 140 caractères."))
-    statement = models.TextField(_('Énoncé'), blank=True, null=True)
-    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences')
+    summary = models.CharField(_('Esprit du dossier'), blank=False, null=False, max_length=140,
+                               help_text=_('Ex: "dossier très pointu et monothématique sur la fibrillation auriculaire" '
+                                           'ou "dossier transversal de révisions classiques sur lupus et grossesse" '))
+    statement = models.TextField(_('Énoncé*'), blank=True, null=True)
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences',
+                                   help_text=_('Ne sélectionnez que les items abordés de manière '
+                                               '<strong>significative</strong> dans votre dossier')
+                                   )
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
 

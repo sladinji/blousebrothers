@@ -5,6 +5,7 @@ from djng.styling.bootstrap3.forms import Bootstrap3FormMixin
 from django.utils.translation import ugettext_lazy as _
 from multiupload.fields import MultiFileField, MultiFileInput
 from django_select2.forms import ModelSelect2MultipleWidget
+from django.utils.safestring import mark_safe
 
 from .models import(
     Conference,
@@ -25,7 +26,7 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
     images = MultiFileField(min_num=0, max_num=3,required=False, max_file_size=1024*1024*5,
                             widget=MultiFileInput(attrs={'class':'no-border-form'}),
                             label=_("Images de l'énoncé"),
-                            help_text=_("Vous pouvez selectionner pulsieurs images"),
+                            help_text=_("Vous pouvez sélectionner plusieurs images"),
                             )
 
     items = forms.ModelMultipleChoiceField(
@@ -35,6 +36,8 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
                             ),
         queryset=Item.objects.all(),
         required=True,
+        help_text=mark_safe(_('Ne sélectionnez que les items abordés de manière '
+                    '<strong>significative</strong> dans votre dossier'))
             )
     specialities = forms.ModelMultipleChoiceField(
                 widget=ModelSelect2MultipleWidget(
