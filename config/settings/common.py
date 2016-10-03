@@ -277,7 +277,7 @@ SOCIALACCOUNT_PROVIDERS = \
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'users:redirect'
+LOGIN_REDIRECT_URL = 'catalogue:index'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
