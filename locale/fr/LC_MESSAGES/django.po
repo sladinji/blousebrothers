@@ -1,0 +1,1069 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-03 08:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: blousebrothers/confs/forms.py:28
+msgid "Images de l'énoncé"
+msgstr ""
+
+#: blousebrothers/confs/forms.py:29
+msgid "Vous pouvez selectionner pulsieurs images"
+msgstr ""
+
+#: blousebrothers/confs/forms.py:47
+msgid "Matières abordées"
+msgstr ""
+
+#: blousebrothers/confs/models.py:15
+msgid "DCP"
+msgstr ""
+
+#: blousebrothers/confs/models.py:16
+msgid "QI"
+msgstr ""
+
+#: blousebrothers/confs/models.py:24 blousebrothers/confs/models.py:44
+#: blousebrothers/confs/models.py:103
+msgid "Date created"
+msgstr ""
+
+#: blousebrothers/confs/models.py:25
+msgid "Titre"
+msgstr ""
+
+#: blousebrothers/confs/models.py:26
+msgid "Type"
+msgstr ""
+
+#: blousebrothers/confs/models.py:28
+msgid "Slug"
+msgstr ""
+
+#: blousebrothers/confs/models.py:30
+msgid "Résumé"
+msgstr ""
+
+#: blousebrothers/confs/models.py:31
+msgid ""
+"Ce résumé doit décrire le contenu de la conférence en moins de 140 "
+"caractères."
+msgstr ""
+
+#: blousebrothers/confs/models.py:32
+msgid "Énoncé"
+msgstr ""
+
+#: blousebrothers/confs/models.py:34
+msgid "Spécialités"
+msgstr ""
+
+#: blousebrothers/confs/models.py:35
+msgid "Progression"
+msgstr ""
+
+#: blousebrothers/confs/models.py:43 blousebrothers/confs/models.py:95
+#: blousebrothers/confs/models.py:102
+msgid "Image"
+msgstr ""
+
+#: blousebrothers/confs/models.py:45
+msgid "Légende"
+msgstr ""
+
+#: blousebrothers/confs/models.py:46 blousebrothers/confs/models.py:82
+#: blousebrothers/confs/models.py:99 blousebrothers/confs/models.py:105
+msgid "Ordre"
+msgstr ""
+
+#: blousebrothers/confs/models.py:66
+msgid "Numéro"
+msgstr ""
+
+#: blousebrothers/confs/models.py:73
+msgid "Matière"
+msgstr ""
+
+#: blousebrothers/confs/models.py:80
+msgid "Enoncé"
+msgstr ""
+
+#: blousebrothers/confs/models.py:81
+msgid "Conference"
+msgstr ""
+
+#: blousebrothers/confs/models.py:83
+msgid "Coéfficient"
+msgstr ""
+
+#: blousebrothers/confs/models.py:93
+msgid "Proposition"
+msgstr ""
+
+#: blousebrothers/confs/models.py:94
+msgid "Explication"
+msgstr ""
+
+#: blousebrothers/confs/models.py:97
+msgid "Correct"
+msgstr ""
+
+#: blousebrothers/confs/models.py:98
+msgid "Zéro si erreur"
+msgstr ""
+
+#: blousebrothers/confs/models.py:104
+msgid "Libellé"
+msgstr ""
+
+#: blousebrothers/dashboard/catalogue/forms.py:9
+msgid "Créer un nouveau sujet de type"
+msgstr ""
+
+#: blousebrothers/dashboard/catalogue/forms.py:10
+msgid "-- Choose type --"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:6
+#: blousebrothers/templates/dashboard/layout.html:44
+#: blousebrothers/templates/partials/nav_accounts.html:46
+#: blousebrothers/templates/partials/nav_accounts.html:50
+msgid "Account"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:12
+msgid "E-mail Addresses"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:14
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:28
+msgid "Verified"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:30
+msgid "Unverified"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:32
+msgid "Primary"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:38
+msgid "Make Primary"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:39
+msgid "Re-send Verification"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:40
+msgid "Remove"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:47
+msgid "Warning:"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:47
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:52
+msgid "Add E-mail Address"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:57
+msgid "Add E-mail"
+msgstr ""
+
+#: blousebrothers/templates/account/email.html:68
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: blousebrothers/templates/account/email/email_confirmation_message.txt:1
+#, python-format
+msgid ""
+"Bienvenue sur %(site_name)s!\n"
+"\n"
+"Tu viens de t'inscrire sur %(site_domain)s.\n"
+"\n"
+"Merci de confirmer ton adresse en cliquant sur ce lien : %(activate_url)s\n"
+"\n"
+"Le site étant actuellement en phase de lancement, un membre de l'équipe te "
+"recontactera pour finaliser inscription.\n"
+"\n"
+msgstr ""
+
+#: blousebrothers/templates/account/email/email_confirmation_message.txt:10
+#, python-format
+msgid ""
+"Merci et à bientôt sur %(site_name)s!\n"
+"%(site_domain)s"
+msgstr ""
+
+#: blousebrothers/templates/account/email_confirm.html:6
+#: blousebrothers/templates/account/email_confirm.html:13
+#: blousebrothers/templates/account/email_confirmed.html:6
+#: blousebrothers/templates/account/email_confirmed.html:13
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: blousebrothers/templates/account/email_confirm.html:19
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: blousebrothers/templates/account/email_confirm.html:23
+msgid "Confirm"
+msgstr ""
+
+#: blousebrothers/templates/account/email_confirm.html:30
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: blousebrothers/templates/account/email_confirmed.html:17
+#, python-format
+msgid ""
+"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-"
+"mail address for user %(user_display)s."
+msgstr ""
+
+#: blousebrothers/templates/account/login.html:9
+#: blousebrothers/templates/account/login.html:47
+msgid "Sign In"
+msgstr ""
+
+#: blousebrothers/templates/account/login.html:15
+msgid "Connexion"
+msgstr ""
+
+#: blousebrothers/templates/account/login.html:48
+msgid "Forgot Password?"
+msgstr ""
+
+#: blousebrothers/templates/account/logout.html:5
+#: blousebrothers/templates/account/logout.html:12
+#: blousebrothers/templates/account/logout.html:21
+msgid "Sign Out"
+msgstr ""
+
+#: blousebrothers/templates/account/logout.html:14
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: blousebrothers/templates/account/password_change.html:5
+#: blousebrothers/templates/account/password_change.html:11
+#: blousebrothers/templates/account/password_change.html:16
+#: blousebrothers/templates/account/password_reset_from_key.html:6
+#: blousebrothers/templates/account/password_reset_from_key.html:12
+#: blousebrothers/templates/account/password_reset_from_key_done.html:4
+#: blousebrothers/templates/account/password_reset_from_key_done.html:10
+msgid "Change Password"
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset.html:7
+#: blousebrothers/templates/account/password_reset.html:14
+#: blousebrothers/templates/account/password_reset_done.html:6
+#: blousebrothers/templates/account/password_reset_done.html:12
+msgid "Password Reset"
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset.html:19
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset.html:24
+msgid "Reset My Password"
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset.html:27
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset_done.html:18
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset_from_key.html:12
+msgid "Bad Token"
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset_from_key.html:16
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset_from_key.html:22
+msgid "change password"
+msgstr ""
+
+#: blousebrothers/templates/account/password_reset_from_key.html:25
+#: blousebrothers/templates/account/password_reset_from_key_done.html:11
+msgid "Your password is now changed."
+msgstr ""
+
+#: blousebrothers/templates/account/password_set.html:6
+#: blousebrothers/templates/account/password_set.html:12
+#: blousebrothers/templates/account/password_set.html:17
+msgid "Set Password"
+msgstr ""
+
+#: blousebrothers/templates/account/signup.html:14
+msgid "Signup"
+msgstr ""
+
+#: blousebrothers/templates/account/signup.html:28
+#: blousebrothers/templates/pages/home.html:24
+msgid "Inscription"
+msgstr ""
+
+#: blousebrothers/templates/account/signup_closed.html:5
+#: blousebrothers/templates/account/signup_closed.html:11
+msgid "Sign Up Closed"
+msgstr ""
+
+#: blousebrothers/templates/account/signup_closed.html:13
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: blousebrothers/templates/account/verification_sent.html:5
+#: blousebrothers/templates/account/verification_sent.html:11
+#: blousebrothers/templates/account/verified_email_required.html:5
+#: blousebrothers/templates/account/verified_email_required.html:11
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: blousebrothers/templates/account/verification_sent.html:13
+#, python-format
+msgid ""
+"We have sent an e-mail to <a href=\"mailto:%(email)s\">%(email)s</a> for "
+"verification. Follow the link provided to finalize the signup process. "
+"Please contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: blousebrothers/templates/account/verified_email_required.html:15
+msgid ""
+"This part of the site requires us to verify that\n"
+"        you are who you claim to be. For this purpose, we require that you\n"
+"        verify ownership of your e-mail address. "
+msgstr ""
+
+#: blousebrothers/templates/account/verified_email_required.html:19
+msgid ""
+"We have sent an e-mail to you for\n"
+"        verification. Please click on the link inside this e-mail. Please\n"
+"        contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: blousebrothers/templates/account/verified_email_required.html:23
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: blousebrothers/templates/base.html:9
+msgid "Build"
+msgstr ""
+
+#: blousebrothers/templates/base.html:86
+msgid "Version:"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_form.html:5
+#: blousebrothers/templates/confs/conference_list.html:3
+#: blousebrothers/templates/confs/conference_update.html:3
+#: blousebrothers/templates/partials/nav_accounts.html:25
+msgid "Confs"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_form.html:13
+#: blousebrothers/templates/confs/conference_update.html:6
+msgid "Rédaction d'un sujet"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_form.html:55
+msgid "Valider"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_list.html:9
+msgid "Mes confs"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:11
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:19
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:11
+msgid "Products"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:17
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:17
+#: blousebrothers/templates/dashboard/layout.html:25
+#: blousebrothers/templates/dashboard/layout.html:103
+#: blousebrothers/templates/layout.html:67
+#: blousebrothers/templates/partials/nav_accounts.html:54
+#: config/settings/common.py:306
+msgid "Dashboard"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:25
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:20
+#: config/settings/common.py:315
+msgid "Sujets"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:32
+msgid "Créer un nouveau sujet"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:37
+msgid "Submitting..."
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:37
+msgid "Nouveau sujet"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:44
+#, python-format
+msgid ""
+"\n"
+"                            You are currently editing a product variant of\n"
+"                            <a href=\"%(parent_url)s\">%(title)s</a>.\n"
+"                        "
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:59
+msgid "Sections"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:71
+msgid "Énoncé du sujet"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:73
+#: config/settings/common.py:323
+msgid "Categories"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:76
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:147
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:258
+msgid "Attributes"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:79
+msgid "Iconographie"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:82
+msgid "Questions"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:104
+msgid "Product details"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:127
+msgid "Category"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:149
+msgid "Product Type:"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:170
+msgid "Upload, change or remove images"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:189
+msgid "Stock and pricing"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:194
+msgid "Partner"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:195
+msgid "SKU"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:197
+msgid "Num in stock"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:198
+msgid "Num allocated"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:199
+msgid "Low stock threshold"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:201
+msgid "Currency"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:202
+msgid "Cost price"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:203
+msgid "Price (excl tax)"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:204
+msgid "Retail price"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:205
+msgid "Delete?"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:249
+msgid "Variants"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:250
+msgid "Adding..."
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:252
+msgid "Add variant"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:257
+msgid "Title"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:259
+msgid "Stock records"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:269
+msgid "Edit"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:272
+msgid "Delete"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:281
+msgid "This product does not have any variants."
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:283
+msgid "One can't add variants to this product at this point."
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:285
+msgid "This is likely because this product still has stock records."
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:301
+msgid "Recommended products"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:324
+msgid "Cancel"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:326
+#: blousebrothers/templates/partials/form.html:12
+msgid "or"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:328
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:332
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:335
+#: blousebrothers/templates/partials/form.html:11
+msgid "Saving..."
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:329
+msgid "Save and add another variant"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:333
+msgid "Save and continue editing"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:336
+#: blousebrothers/templates/partials/form.html:11
+msgid "Save"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_update.html:340
+msgid "View on site"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/layout.html:42
+msgid "Welcome"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/layout.html:43
+msgid "Return to site"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/layout.html:45
+msgid "Log out"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:56
+msgid "Gérer mes confs"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:84
+#: blousebrothers/templates/partials/nav_accounts.html:56
+msgid "Logout"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:86
+#: blousebrothers/templates/partials/nav_accounts.html:58
+msgid "Login or register"
+msgstr ""
+
+#: blousebrothers/templates/pages/home.html:31
+msgid "Sign Up"
+msgstr ""
+
+#: blousebrothers/templates/partials/ellipses_pagination.html:9
+#: blousebrothers/templates/partials/pagination.html:8
+msgid "previous"
+msgstr ""
+
+#: blousebrothers/templates/partials/ellipses_pagination.html:21
+#: blousebrothers/templates/partials/pagination.html:16
+msgid "next"
+msgstr ""
+
+#: blousebrothers/templates/partials/form.html:12
+msgid "cancel"
+msgstr ""
+
+#: blousebrothers/templates/partials/form_fields.html:5
+msgid "Oops! We found some errors"
+msgstr ""
+
+#: blousebrothers/templates/partials/form_fields.html:5
+msgid "please check the error messages below and try again"
+msgstr ""
+
+#: blousebrothers/templates/partials/image_input_widget.html:7
+#: blousebrothers/templates/partials/image_input_widget.html:10
+msgid "thumbnail"
+msgstr ""
+
+#: blousebrothers/templates/partials/image_input_widget.html:12
+msgid "Unrecognized image type!"
+msgstr ""
+
+#: blousebrothers/templates/partials/image_input_widget.html:13
+msgid "Upload Image"
+msgstr ""
+
+#: blousebrothers/templates/partials/mini_basket.html:5
+msgid "Basket total:"
+msgstr ""
+
+#: blousebrothers/templates/partials/mini_basket.html:13
+msgid "View basket"
+msgstr ""
+
+#: blousebrothers/templates/partials/nav_accounts.html:20
+msgid "Home"
+msgstr ""
+
+#: blousebrothers/templates/partials/nav_primary.html:20
+msgid "Basket"
+msgstr ""
+
+#: blousebrothers/templates/partials/nav_primary.html:23
+#: blousebrothers/templates/partials/nav_primary.html:27
+#, python-format
+msgid ""
+"\n"
+"                        Total: %(total)s\n"
+"                    "
+msgstr ""
+
+#: blousebrothers/templates/partials/nav_primary.html:40
+msgid "Browse store"
+msgstr ""
+
+#: blousebrothers/templates/partials/nav_primary.html:45
+msgid "All products"
+msgstr "Tous les sujets"
+
+#: blousebrothers/templates/partials/nav_primary.html:64
+msgid "Offers"
+msgstr ""
+
+#: blousebrothers/templates/partials/pagination.html:11
+#, python-format
+msgid ""
+"\n"
+"                Page %(page_num)s of %(total_pages)s\n"
+"            "
+msgstr ""
+
+#: blousebrothers/templates/partials/search.html:7
+msgid "Search"
+msgstr ""
+
+#: blousebrothers/templates/partials/search_submenu.html:9
+msgid "Créer une conf"
+msgstr ""
+
+#: blousebrothers/users/models.py:22
+msgid "P2"
+msgstr ""
+
+#: blousebrothers/users/models.py:23
+msgid "P3"
+msgstr ""
+
+#: blousebrothers/users/models.py:24
+msgid "M1"
+msgstr ""
+
+#: blousebrothers/users/models.py:25
+msgid "M2"
+msgstr ""
+
+#: blousebrothers/users/models.py:26
+msgid "M3"
+msgstr ""
+
+#: blousebrothers/users/models.py:27
+msgid "Interne"
+msgstr ""
+
+#: blousebrothers/users/models.py:28
+msgid "Médecin"
+msgstr ""
+
+#: blousebrothers/users/models.py:46
+msgid "Name of User"
+msgstr ""
+
+#: blousebrothers/users/models.py:48
+msgid "Code Parrain"
+msgstr ""
+
+#: blousebrothers/users/models.py:54
+msgid "Date de naissance"
+msgstr ""
+
+#: blousebrothers/users/models.py:56
+msgid "Adresse 1"
+msgstr ""
+
+#: blousebrothers/users/models.py:58
+msgid "Adresse 2"
+msgstr ""
+
+#: blousebrothers/users/models.py:60
+msgid "Ville"
+msgstr ""
+
+#: blousebrothers/users/models.py:62
+msgid "Code postal"
+msgstr ""
+
+#: blousebrothers/users/models.py:66
+msgid ""
+"Phone number must be entered in the format: '+999999999'. Up to 15 digits "
+"allowed."
+msgstr ""
+
+#: blousebrothers/users/models.py:70
+msgid "Fixe"
+msgstr ""
+
+#: blousebrothers/users/models.py:74
+msgid "Mobile"
+msgstr ""
+
+#: blousebrothers/users/models.py:76
+msgid "Conférencier"
+msgstr ""
+
+#: blousebrothers/users/models.py:78
+msgid "Souhaite devenir conférencier"
+msgstr ""
+
+#: blousebrothers/users/models.py:80
+msgid "Date de demande"
+msgstr ""
+
+#: blousebrothers/users/models.py:84
+msgid "Ville de CHU actuelle"
+msgstr ""
+
+#: blousebrothers/users/models.py:86
+msgid "Niveau"
+msgstr ""
+
+#: blousebrothers/users/models.py:101
+msgid "Nom"
+msgstr ""
+
+#: blousebrothers/users/views.py:46
+msgid "Pour être conférencier, vous devez compléter le formulaire ci-dessous."
+msgstr ""
+
+#: config/settings/common.py:311
+msgid "Mes Sujets"
+msgstr ""
+
+#: config/settings/common.py:319
+msgid "Type de sujet"
+msgstr ""
+
+#: config/settings/common.py:329
+msgid "Cours"
+msgstr ""
+
+#: config/settings/common.py:333
+msgid "Orders"
+msgstr ""
+
+#: config/settings/common.py:337
+msgid "Statistics"
+msgstr ""
+
+#: config/settings/common.py:341
+msgid "Partners"
+msgstr ""
+
+#: config/settings/common.py:355
+msgid "Élèves"
+msgstr ""
+
+#: config/settings/common.py:359
+msgid "Customers"
+msgstr ""
+
+#: config/settings/common.py:363
+msgid "Stock alert requests"
+msgstr ""
+
+#: config/settings/common.py:369
+msgid "Content"
+msgstr ""
+
+#: config/settings/common.py:373
+msgid "Content blocks"
+msgstr ""
+
+#: config/settings/common.py:377
+msgid "Content blocks by page"
+msgstr ""
+
+#: config/settings/common.py:381
+msgid "Pages"
+msgstr ""
+
+#: config/settings/common.py:385
+msgid "Email templates"
+msgstr ""
+
+#: config/settings/common.py:389
+msgid "Reviews"
+msgstr ""
+
+#: config/settings/common.py:395
+msgid "Reports"
+msgstr ""
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "User product views"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Parent product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Child product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "All orders"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Delete product?"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Deleted product '%s'"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "All alerts"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "All partners"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "All Alerts"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "All vouchers"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Includes all products?"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Included Products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Excluded Products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Single product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Bestselling products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "No products found."
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Remove product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "View product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Number of products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "New Product"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Total Products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Total products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Product:"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "All Orders"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Num products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Edit products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Add products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "New products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Duplicate products"
+#~ msgstr "Tous les sujets"
+
+#, fuzzy
+#~| msgid "All products"
+#~ msgid "Unknown products"
+#~ msgstr "Tous les sujets"
