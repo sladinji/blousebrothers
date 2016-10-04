@@ -78,7 +78,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     }
     $scope.deleteimg = function(image){
 	if ($window.confirm("Supprimer l'image ?")) {
-	  image.$delete();
+	  image.$remove();
 	  $scope.conferenceimages.splice($scope.conferenceimages.indexOf(image), 1);
 	}
     }
