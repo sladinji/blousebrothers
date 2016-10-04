@@ -175,3 +175,18 @@ class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
             request.user.save()
         return render(request, 'confs/wanabe_conferencier.html')
 
+from django.views.generic import TemplateView
+from django.http import JsonResponse
+from .models import QuestionImage
+
+class UploadImage(BBConferencierReqMixin, TemplateView):
+
+  def post(self, request, **kwargs):
+
+    question_id= kwargs['question_id']
+    qimg = QuestionImage(question_id=question_id)
+    qimg.image = request.FILES['file']
+    qimg.save()
+    data = { "filename" : qimg.image.name }
+    return JsonResponse(data)
+

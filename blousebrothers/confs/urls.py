@@ -63,4 +63,8 @@ urlpatterns = [
     url(r'^wanabe_conferencier/?$',
         views.HandleConferencierRequest.as_view(),
         name='wanabe_conferencier'),
+
+    url(r'^question/upload_image/(?P<question_id>[0-9]+)$',
+        views.UploadImage.as_view(),
+        name='up_q_img'),
 ]

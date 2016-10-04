@@ -9,7 +9,7 @@ function static(path) {
 function static_media(path) {
     return MEDIA_URL + path;
 }
-var conf_app = angular.module('djangular-bb', ['textAngular', 'toaster', 'ngAnimate', 'djng.rmi', 'ngResource', 'djng.forms']);
+var conf_app = angular.module('djangular-bb', ['textAngular', 'toaster', 'ngAnimate', 'djng.rmi', 'ngResource', 'djng.forms', 'ngFileUpload']);
 {% if object %}
 var slug="{{ object.slug }}"
 {% else %}
@@ -42,25 +42,11 @@ conf_app.config(function(djangoRMIProvider) {
     djangoRMIProvider.configure(tags);
 });
 
-conf_app.controller('ConfFormCtrl', function($scope, $http, $window, djangoForm) {
-    $scope.submit = function() {
-	if ($scope.conf_data) {
-		$http.post(".", $scope.conf_data).success(function(out_data) {
-			if (!djangoForm.setErrors($scope.conf_form, out_data.errors)) {
-				// on successful post, redirect onto success page
-				$window.location.href = out_data.success_url;
-			}
-		}).error(function() {
-		console.error('An error occured during submission');
-		});
-	}
-	return false;
-    }
-});
 
-conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer) {
+conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer, Upload) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
+    $scope.questionimages = [];
     $scope.static_media = static_media;
     var setAnswers = function(question) {
 	if (question != null){
@@ -82,7 +68,31 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	  $scope.conferenceimages.splice($scope.conferenceimages.indexOf(image), 1);
 	}
     }
+    $scope.uploadFiles = function(file, errFiles, type) {
+        $scope.f = file;
+        $scope.errFile = errFiles && errFiles[0];
+        if (file) {
+	    var url = '';
+	    if ( type == 'question')
+		url ='/sweethomechicago/question/upload_image/' + $scope.question.pk 
+            file.upload = Upload.upload({
+		url: url,
+                data: {file: file, question_id: $scope.question.id}
+            });
 
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                         evt.loaded / evt.total));
+            });
+        }   
+    }
     // START AUTO SAVE
     var timeout = null;
     var saveUpdates = function() {
