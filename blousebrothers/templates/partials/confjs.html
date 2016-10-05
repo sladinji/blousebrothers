@@ -96,15 +96,20 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	    var url = '';
 	    if ( type == 'question')
 		url ='/sweethomechicago/question/upload_image/' + $scope.question.pk 
+	    if ( type == 'conf')
+		url ='/sweethomechicago/conference/upload_image/' + $scope.conference.pk 
             file.upload = Upload.upload({
 		url: url,
-                data: {file: file, question_id: $scope.question.id}
+                data: {file: file}
             });
 
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
-		    setQuestionImages($scope.question);
+		    if ( type == 'question')
+			setQuestionImages($scope.question);
+		    if ( type == 'conf')
+			setConferenceImage();
                 });
             }, function (response) {
                 if (response.status > 0)
