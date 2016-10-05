@@ -72,6 +72,19 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	        <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
 	        <a class="btn btn-primary" href="" ng-click="deleteimg(image, conferenceimages)">Supprimer l'image</a>
 	      </div>
+	      <h4>Ajouter une image</h4>
+	      <button type="file" ngf-select="uploadFiles($file, $invalidFiles, 'conf')"
+		      accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
+		  Sélectionner une image</button>
+	      <br><br>
+	      Image:
+	      <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+		  <span class="progress" ng-show="f.progress >= 0">
+		      <div style="width:{{f.progress}}%"  
+			   ng-bind="f.progress + '%'"></div>
+		  </span>
+	      </div>     
+	      {{errorMsg}}
 	    </div>
 	  </div>
 		

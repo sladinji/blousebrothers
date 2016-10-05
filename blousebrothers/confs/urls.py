@@ -48,6 +48,10 @@ urlpatterns = [
         views.ConferenceCRUDView.as_view(),
         name='conference_crud_view'),
 
+    url(r'^conference/upload_image/(?P<conference_id>[0-9]+)$',
+        views.UploadConferenceImage.as_view(),
+        name='up_conf_img'),
+
     url(r'^crud/conferenceimage/?$',
         views.ConferenceImageCRUDView.as_view(),
         name='conferenceimage_crud_view'),
