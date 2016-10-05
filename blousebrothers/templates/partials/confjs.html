@@ -62,6 +62,12 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		});
 	}
     };
+    var setConferenceImage = function() {
+	ConferenceImage.query({conf: $scope.conference.pk}).$promise
+	.then(function(result){
+		$scope.conferenceimages= result;
+	})
+    };
     var setAnswers = function(question) {
 	if (question != null){
 		Answer.query({question: question.pk}).$promise
@@ -157,10 +163,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 				$scope.question = $scope.questions[0];
     				setAnswers($scope.question);
     			})
-			ConferenceImage.query({conf: $scope.conference.pk}).$promise
-    			.then(function(result){
-				$scope.conferenceimages= result;
-    			})
+			setConferenceImage();
     		})
 	}
 	else{
