@@ -9,7 +9,8 @@ function static(path) {
 function static_media(path) {
     return MEDIA_URL + path;
 }
-var conf_app = angular.module('djangular-bb', ['textAngular', 'toaster', 'ngAnimate', 'djng.rmi', 'ngResource', 'djng.forms', 'ngFileUpload']);
+var conf_app = angular.module('djangular-bb', ['textAngular', 'toaster', 'ngAnimate', 'djng.rmi', 'ngResource',
+		'djng.forms', 'ngFileUpload']);
 {% if object %}
 var slug="{{ object.slug }}"
 {% else %}
@@ -18,6 +19,10 @@ var slug=""
 
 conf_app.factory('Question', ['$resource', function($resource) {
 	return $resource('{% url 'confs:question_crud_view' %}', {'pk': '@pk'}, {
+		        });
+}]);
+conf_app.factory('QuestionImage', ['$resource', function($resource) {
+	return $resource('{% url 'confs:questionimage_crud_view' %}', {'pk': '@pk'}, {
 		        });
 }]);
 conf_app.factory('Conference', ['$resource', function($resource) {
@@ -43,18 +48,28 @@ conf_app.config(function(djangoRMIProvider) {
 });
 
 
-conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI, Conference, ConferenceImage, Question, Answer, Upload) {
+conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI,
+			Conference, ConferenceImage, Question, QuestionImage, Answer, Upload) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.questionimages = [];
     $scope.static_media = static_media;
+    var setQuestionImages = function(question) {
+	if (question != null){
+		QuestionImage.query({question_id: question.pk}).$promise
+		.then(function(result){
+			$scope.questionimages = result;
+		});
+	}
+    };
     var setAnswers = function(question) {
 	if (question != null){
 		Answer.query({question: question.pk}).$promise
 		.then(function(result){
 			$scope.answers = result;
 			$scope.answers.length = 5;
-		})
+		});
+		setQuestionImages(question);
 	}
     };
     $scope.question_selected = function(question){
@@ -62,10 +77,10 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     	$scope.question = question;
     	setAnswers(question);
     }
-    $scope.deleteimg = function(image){
+    $scope.deleteimg = function(image, from){
 	if ($window.confirm("Supprimer l'image ?")) {
 	  image.$remove();
-	  $scope.conferenceimages.splice($scope.conferenceimages.indexOf(image), 1);
+	  from.splice(from.indexOf(image), 1);
 	}
     }
     $scope.uploadFiles = function(file, errFiles, type) {
@@ -83,6 +98,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
+		    setQuestionImages($scope.question);
                 });
             }, function (response) {
                 if (response.status > 0)

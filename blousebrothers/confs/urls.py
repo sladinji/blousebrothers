@@ -56,6 +56,10 @@ urlpatterns = [
         views.QuestionCRUDView.as_view(),
         name='question_crud_view'),
 
+    url(r'^crud/questionimage/?$',
+        views.QuestionImageCRUDView.as_view(),
+        name='questionimage_crud_view'),
+
     url(r'^crud/answer/?$',
         views.AnswerCRUDView.as_view(),
         name='answer_crud_view'),
@@ -65,6 +69,6 @@ urlpatterns = [
         name='wanabe_conferencier'),
 
     url(r'^question/upload_image/(?P<question_id>[0-9]+)$',
-        views.UploadImage.as_view(),
+        views.UploadQuestionImage.as_view(),
         name='up_q_img'),
 ]

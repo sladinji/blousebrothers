@@ -1,25 +1,33 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
+
+from django.views.generic import TemplateView
+from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from djng.views.crud import NgCRUDView
+from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
 from django.views.generic import (
     DetailView,
     ListView,
     RedirectView,
     UpdateView,
     CreateView,
-    TemplateView,
     FormView
 )
 
 from blousebrothers.shortcuts.auth import BBConferencierReqMixin
 from blousebrothers.shortcuts.tools import analyse_conf
-from .models import Conference, Question, Answer, ConferenceImage
+from .models import (
+    Conference,
+    Question,
+    Answer,
+    ConferenceImage,
+    QuestionImage,
+)
 from .forms import ConferenceForm
-from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
 
 
 
@@ -148,45 +156,75 @@ class ConferenceImageCRUDView(BBConferencierReqMixin, NgCRUDView):
 
     def get_queryset(self):
         if 'conf' in self.request.GET :
-            return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
+            return self.model.objects.filter(
+                conf_id=self.request.GET['conf']
+            ).order_by('index', 'date_created')
 
 class QuestionCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Question
 
     def get_queryset(self):
         if 'conf' in self.request.GET :
-            return self.model.objects.filter(conf_id=self.request.GET['conf']).order_by('index')
+            return self.model.objects.filter(
+                conf_id=self.request.GET['conf']).order_by('index')
+
+
+class QuestionImageCRUDView(BBConferencierReqMixin, NgCRUDView):
+    model = QuestionImage
+
+    def get_queryset(self):
+        if 'question_id' in self.request.GET :
+            return self.model.objects.filter(
+                question_id=self.request.GET['question_id']
+            ).order_by('index', 'date_created')
 
 
 class AnswerCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Answer
 
     def get_queryset(self):
-        if 'question' in self.request.GET :
+        if 'question' in self.request.GET:
             return self.model.objects.filter(question_id=self.request.GET['question']).order_by("index")
 
 
 class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
-        if 'Iwanabe' in request.GET :
+        if 'Iwanabe' in request.GET:
             request.user.wanabe_conferencier = True
             request.user.wanabe_conferencier_date = datetime.now()
             request.user.save()
         return render(request, 'confs/wanabe_conferencier.html')
 
-from django.views.generic import TemplateView
-from django.http import JsonResponse
-from .models import QuestionImage
 
-class UploadImage(BBConferencierReqMixin, TemplateView):
+class UploadQuestionImage(BBConferencierReqMixin, TemplateView):
 
-  def post(self, request, **kwargs):
+    def post(self, request, **kwargs):
+        question_id = kwargs['question_id']
+        qimg = QuestionImage(question_id=question_id)
+        qimg.image = request.FILES['file']
+        qimg.save()
+        data = {"url": qimg.image.url}
+        return JsonResponse(data)
 
-    question_id= kwargs['question_id']
-    qimg = QuestionImage(question_id=question_id)
-    qimg.image = request.FILES['file']
-    qimg.save()
-    data = { "filename" : qimg.image.name }
-    return JsonResponse(data)
+
+class UploadConferenceImage(BBConferencierReqMixin, TemplateView):
+
+    def post(self, request, **kwargs):
+        conference_id = kwargs['conference_id']
+        cimg = ConferenceImage(conf_id=conference_id)
+        cimg.image = request.FILES['file']
+        cimg.save()
+        data = {"url": cimg.image.url}
+        return JsonResponse(data)
+
+
+class UploadAnswerImage(BBConferencierReqMixin, TemplateView):
+
+    def post(self, request, **kwargs):
+        answer = Answer.objects.get(pk=kwargs['answer_id'])
+        answer.explaination_image = request.FILES['file']
+        answer.save()
+        data = {"url": answer.explaination_image.url}
+        return JsonResponse(data)
 

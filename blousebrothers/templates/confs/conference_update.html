@@ -70,7 +70,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	      <div ng-repeat="image in conferenceimages">
 	        <img src="{{ static_media(image.image) }}"/>
 	        <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
-	        <a class="btn btn-primary" href="" ng-click="deleteimg(image)">Supprimer l'image</a>
+	        <a class="btn btn-primary" href="" ng-click="deleteimg(image, conferenceimages)">Supprimer l'image</a>
 	      </div>
 	    </div>
 	  </div>
@@ -83,14 +83,13 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		    <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Énoncé"></textarea><br />
 	    </form>
 
-  	    <h4>Ajouter une image</h4>
-	    <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
-	      <div ng-repeat="image in questionsimages">
-	        <img src="{{ static_media(image.image) }}"/>
-	        <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
-	        <a class="btn btn-primary" href="" ng-click="deleteimg(image)">Supprimer l'image</a>
-	      </div>
+	    <div ng-repeat="image in questionimages">
+	      <img src="{{ static_media(image.image) }}"/>
+	      <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
+	      <a class="btn btn-primary" href="" ng-click="deleteimg(image, questionimages)">Supprimer l'image</a>
 	    </div>
+
+  	    <h4>Ajouter une image</h4>
   	    <button type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
   	            accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
   	        Sélectionner une image</button>
