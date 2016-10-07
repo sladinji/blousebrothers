@@ -747,23 +747,23 @@ msgid "Créer une conf"
 msgstr ""
 
 #: blousebrothers/users/models.py:22
-msgid "P2"
+msgid "Deuxième année"
 msgstr ""
 
 #: blousebrothers/users/models.py:23
-msgid "P3"
+msgid "Troisième année"
 msgstr ""
 
 #: blousebrothers/users/models.py:24
-msgid "M1"
+msgid "Quatrième année"
 msgstr ""
 
 #: blousebrothers/users/models.py:25
-msgid "M2"
+msgid "Cinquième année"
 msgstr ""
 
 #: blousebrothers/users/models.py:26
-msgid "M3"
+msgid "Sixième année"
 msgstr ""
 
 #: blousebrothers/users/models.py:27
