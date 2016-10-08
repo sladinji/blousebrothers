@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
@@ -10,9 +11,19 @@
     <div class="col-sm-12">
 
       <h2>{{ object.username }}</h2>
+      <div class="well">
+      {% if user.socialaccount_set.all.0.get_avatar_url %}
+      <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+      {% endif %}
       {% if object.name %}
         <p>{{ object.name }}</p>
       {% endif %}
+      <p><label>{% trans 'First name' %} :</label> {{ object.first_name }}</p>
+      <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
+      <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
+      <p><label>{% trans 'City' %} :</label> {{ object.university }}</p>
+      <p><label>{% trans 'Level' %} :</label> {% trans  object.degree  %}</p>
+      </div>
     </div>
   </div>
 
@@ -21,7 +32,7 @@
 <div class="row">
 
   <div class="col-sm-12 ">
-    <a class="btn btn-primary" href="{% url 'users:update' %}">My Info</a>
+	  <a class="btn btn-primary" href="{% url 'users:update' %}">{% trans "Modifier mes informations" %}</a>
     <!-- Your Stuff: Custom user template urls -->
   </div>
 
