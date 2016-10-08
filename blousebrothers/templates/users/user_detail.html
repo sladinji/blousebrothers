@@ -12,14 +12,17 @@
 
       <h2>{{ object.username }}</h2>
       <div class="well">
+      {% if user.socialaccount_set.all %}
+      <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+      {% endif %}
       {% if object.name %}
         <p>{{ object.name }}</p>
       {% endif %}
       <p><label>{% trans 'First name' %} :</label> {{ object.first_name }}</p>
       <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
       <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
-      <p><label>{% trans 'City' %} :</label> {{ object.university }}</p>
-      <p><label>{% trans 'Level' %} :</label> {% trans  object.degree  %}</p>
+      <p><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</p>
+      <p><label>{% trans 'Level' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
       </div>
     </div>
   </div>
