@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-03 08:06+0000\n"
+"POT-Creation-Date: 2016-10-08 11:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,111 +22,117 @@ msgid "Images de l'énoncé"
 msgstr ""
 
 #: blousebrothers/confs/forms.py:29
-msgid "Vous pouvez selectionner pulsieurs images"
+msgid "Vous pouvez sélectionner plusieurs images"
 msgstr ""
 
-#: blousebrothers/confs/forms.py:47
+#: blousebrothers/confs/forms.py:39 blousebrothers/confs/models.py:32
+msgid ""
+"Ne sélectionnez que les items abordés de manière <strong>significative</"
+"strong> dans votre dossier"
+msgstr ""
+
+#: blousebrothers/confs/forms.py:49
 msgid "Matières abordées"
 msgstr ""
 
-#: blousebrothers/confs/models.py:15
+#: blousebrothers/confs/models.py:12
 msgid "DCP"
 msgstr ""
 
-#: blousebrothers/confs/models.py:16
+#: blousebrothers/confs/models.py:13
 msgid "QI"
 msgstr ""
 
-#: blousebrothers/confs/models.py:24 blousebrothers/confs/models.py:44
-#: blousebrothers/confs/models.py:103
+#: blousebrothers/confs/models.py:21 blousebrothers/confs/models.py:50
+#: blousebrothers/confs/models.py:128
 msgid "Date created"
 msgstr ""
 
-#: blousebrothers/confs/models.py:25
+#: blousebrothers/confs/models.py:22
 msgid "Titre"
 msgstr ""
 
-#: blousebrothers/confs/models.py:26
+#: blousebrothers/confs/models.py:23
 msgid "Type"
 msgstr ""
 
-#: blousebrothers/confs/models.py:28
+#: blousebrothers/confs/models.py:25
 msgid "Slug"
 msgstr ""
 
-#: blousebrothers/confs/models.py:30
-msgid "Résumé"
+#: blousebrothers/confs/models.py:27
+msgid "Esprit du dossier"
 msgstr ""
 
-#: blousebrothers/confs/models.py:31
+#: blousebrothers/confs/models.py:28
 msgid ""
-"Ce résumé doit décrire le contenu de la conférence en moins de 140 "
-"caractères."
+"Ex: \"dossier très pointu et monothématique sur la fibrillation auriculaire"
+"\" ou \"dossier transversal de révisions classiques sur lupus et grossesse\" "
 msgstr ""
 
-#: blousebrothers/confs/models.py:32
-msgid "Énoncé"
-msgstr ""
-
-#: blousebrothers/confs/models.py:34
-msgid "Spécialités"
+#: blousebrothers/confs/models.py:30
+msgid "Énoncé*"
 msgstr ""
 
 #: blousebrothers/confs/models.py:35
+msgid "Spécialités"
+msgstr ""
+
+#: blousebrothers/confs/models.py:36
 msgid "Progression"
 msgstr ""
 
-#: blousebrothers/confs/models.py:43 blousebrothers/confs/models.py:95
-#: blousebrothers/confs/models.py:102
+#: blousebrothers/confs/models.py:49 blousebrothers/confs/models.py:105
+#: blousebrothers/confs/models.py:127
 msgid "Image"
 msgstr ""
 
-#: blousebrothers/confs/models.py:45
+#: blousebrothers/confs/models.py:51
 msgid "Légende"
 msgstr ""
 
-#: blousebrothers/confs/models.py:46 blousebrothers/confs/models.py:82
-#: blousebrothers/confs/models.py:99 blousebrothers/confs/models.py:105
+#: blousebrothers/confs/models.py:52 blousebrothers/confs/models.py:86
+#: blousebrothers/confs/models.py:109 blousebrothers/confs/models.py:130
 msgid "Ordre"
 msgstr ""
 
-#: blousebrothers/confs/models.py:66
+#: blousebrothers/confs/models.py:70
 msgid "Numéro"
 msgstr ""
 
-#: blousebrothers/confs/models.py:73
+#: blousebrothers/confs/models.py:77
 msgid "Matière"
 msgstr ""
 
-#: blousebrothers/confs/models.py:80
+#: blousebrothers/confs/models.py:84
 msgid "Enoncé"
 msgstr ""
 
-#: blousebrothers/confs/models.py:81
+#: blousebrothers/confs/models.py:85
 msgid "Conference"
 msgstr ""
 
-#: blousebrothers/confs/models.py:83
+#: blousebrothers/confs/models.py:87
 msgid "Coéfficient"
 msgstr ""
 
-#: blousebrothers/confs/models.py:93
+#: blousebrothers/confs/models.py:103
 msgid "Proposition"
 msgstr ""
 
-#: blousebrothers/confs/models.py:94
+#: blousebrothers/confs/models.py:104
 msgid "Explication"
 msgstr ""
 
-#: blousebrothers/confs/models.py:97
+#: blousebrothers/confs/models.py:107
 msgid "Correct"
 msgstr ""
 
-#: blousebrothers/confs/models.py:98
+#: blousebrothers/confs/models.py:108
 msgid "Zéro si erreur"
 msgstr ""
 
-#: blousebrothers/confs/models.py:104
+#: blousebrothers/confs/models.py:129
 msgid "Libellé"
 msgstr ""
 
@@ -343,7 +349,7 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: blousebrothers/templates/account/signup.html:28
+#: blousebrothers/templates/account/signup.html:34
 #: blousebrothers/templates/pages/home.html:24
 msgid "Inscription"
 msgstr ""
@@ -433,13 +439,13 @@ msgstr ""
 #: blousebrothers/templates/dashboard/layout.html:103
 #: blousebrothers/templates/layout.html:67
 #: blousebrothers/templates/partials/nav_accounts.html:54
-#: config/settings/common.py:306
+#: config/settings/common.py:310
 msgid "Dashboard"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_list.html:25
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:20
-#: config/settings/common.py:315
+#: config/settings/common.py:319
 msgid "Sujets"
 msgstr ""
 
@@ -473,7 +479,7 @@ msgid "Énoncé du sujet"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:73
-#: config/settings/common.py:323
+#: config/settings/common.py:327
 msgid "Categories"
 msgstr ""
 
@@ -844,67 +850,71 @@ msgstr ""
 msgid "Pour être conférencier, vous devez compléter le formulaire ci-dessous."
 msgstr ""
 
-#: config/settings/common.py:311
+#: config/settings/common.py:145
+msgid "French"
+msgstr ""
+
+#: config/settings/common.py:315
 msgid "Mes Sujets"
 msgstr ""
 
-#: config/settings/common.py:319
+#: config/settings/common.py:323
 msgid "Type de sujet"
 msgstr ""
 
-#: config/settings/common.py:329
+#: config/settings/common.py:333
 msgid "Cours"
 msgstr ""
 
-#: config/settings/common.py:333
+#: config/settings/common.py:337
 msgid "Orders"
 msgstr ""
 
-#: config/settings/common.py:337
+#: config/settings/common.py:341
 msgid "Statistics"
 msgstr ""
 
-#: config/settings/common.py:341
+#: config/settings/common.py:345
 msgid "Partners"
 msgstr ""
 
-#: config/settings/common.py:355
+#: config/settings/common.py:359
 msgid "Élèves"
 msgstr ""
 
-#: config/settings/common.py:359
+#: config/settings/common.py:363
 msgid "Customers"
 msgstr ""
 
-#: config/settings/common.py:363
+#: config/settings/common.py:367
 msgid "Stock alert requests"
 msgstr ""
 
-#: config/settings/common.py:369
+#: config/settings/common.py:373
 msgid "Content"
 msgstr ""
 
-#: config/settings/common.py:373
+#: config/settings/common.py:377
 msgid "Content blocks"
 msgstr ""
 
-#: config/settings/common.py:377
+#: config/settings/common.py:381
 msgid "Content blocks by page"
 msgstr ""
 
-#: config/settings/common.py:381
+#: config/settings/common.py:385
 msgid "Pages"
 msgstr ""
 
-#: config/settings/common.py:385
+#: config/settings/common.py:389
 msgid "Email templates"
 msgstr ""
 
-#: config/settings/common.py:389
+#: config/settings/common.py:393
 msgid "Reviews"
 msgstr ""
 
-#: config/settings/common.py:395
+#: config/settings/common.py:399
 msgid "Reports"
 msgstr ""
 

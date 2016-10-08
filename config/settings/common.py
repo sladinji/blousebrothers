@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'oscar.apps.basket.middleware.BasketMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
@@ -139,7 +140,13 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 TIME_ZONE = 'UTC'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = 'fr-FR'
+LANGUAGE_CODE = 'fr'
+LANGUAGES = (
+      ('fr', _('French')),
+)
+LOCALE_PATHS = (
+        '/app/locale', # replace with correct path here
+)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
