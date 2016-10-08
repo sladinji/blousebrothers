@@ -748,23 +748,23 @@ msgstr ""
 
 #: blousebrothers/users/models.py:22
 msgid "P2"
-msgstr ""
+msgstr "Deuxième année"
 
 #: blousebrothers/users/models.py:23
 msgid "P3"
-msgstr ""
+msgstr "Troisième année"
 
 #: blousebrothers/users/models.py:24
 msgid "M1"
-msgstr ""
+msgstr "Quatrième année"
 
 #: blousebrothers/users/models.py:25
 msgid "M2"
-msgstr ""
+msgstr "Cinquième année"
 
 #: blousebrothers/users/models.py:26
 msgid "M3"
-msgstr ""
+msgstr "Sixième année"
 
 #: blousebrothers/users/models.py:27
 msgid "Interne"
