@@ -68,11 +68,15 @@ urlpatterns = [
         views.AnswerCRUDView.as_view(),
         name='answer_crud_view'),
 
+    url(r'^answer/upload_image/(?P<answer_id>[0-9]+)$',
+        views.UploadAnswerImage.as_view(),
+        name='up_answer_img'),
+
     url(r'^wanabe_conferencier/?$',
         views.HandleConferencierRequest.as_view(),
         name='wanabe_conferencier'),
 
     url(r'^question/upload_image/(?P<question_id>[0-9]+)$',
         views.UploadQuestionImage.as_view(),
-        name='up_q_img'),
+        name='up_question_img'),
 ]

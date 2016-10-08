@@ -132,11 +132,14 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	      <div class="form-group">
 	        <div class="well col-sm-12">
 		  <legend>Explication</legend>
-		  <text-angular ng-model="answer.explaination" ta-toolbar="[['html', 'insertImage', 'insertLink', 'insertVideo']]"></text-angular>
+		  <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]"></text-angular>
 	        </div>
 	      </div>
+	      <div ng-if="answer.explaination_image != ''">
 	      <img src="{{ static_media(answer.explaination_image) }}"/>
-	      <button type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
+	      <a class="btn btn-primary" href="" ng-click="deleteansimg(answer)">Supprimer l'image</a>
+	      </div>
+	      <button type="file" ngf-select="selected_answer = uploadFiles($file, $invalidFiles, answer)"
 		      accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
 		  Sélectionner une image</button>
 

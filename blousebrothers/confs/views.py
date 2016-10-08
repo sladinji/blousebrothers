@@ -92,6 +92,12 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
             ConferenceImage.objects.filter(pk=image.pop('pk')).update(**image)
         return analyse_conf(Conference.objects.get(pk=conf_pk))
 
+    @allow_remote_invocation
+    def delete_anwser_explaination_image(self, data):
+        ans = Answer.objects.get(pk=data['pk'])
+        ans.explaination_image.delete()
+        ans.save()
+
 
 class ConferenceListView(BBConferencierReqMixin, ListView):
     model = Conference

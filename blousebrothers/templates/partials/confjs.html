@@ -75,19 +75,23 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 			$scope.answers = result;
 			$scope.answers.length = 5;
 		});
-		setQuestionImages(question);
 	}
     };
     $scope.question_selected = function(question){
 	saveUpdates();
     	$scope.question = question;
     	setAnswers(question);
+	setQuestionImages(question);
     }
     $scope.deleteimg = function(image, from){
 	if ($window.confirm("Supprimer l'image ?")) {
 	  image.$remove();
 	  from.splice(from.indexOf(image), 1);
 	}
+    }
+    $scope.deleteansimg = function(answer){
+	    djangoRMI.delete_anwser_explaination_image(answer);
+	    answer.explaination_image = "";
     }
     $scope.uploadFiles = function(file, errFiles, type) {
         $scope.f = file;
@@ -98,6 +102,8 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		url ='/sweethomechicago/question/upload_image/' + $scope.question.pk 
 	    if ( type == 'conf')
 		url ='/sweethomechicago/conference/upload_image/' + $scope.conference.pk 
+	    else
+		url ='/sweethomechicago/answer/upload_image/' + type.pk 
             file.upload = Upload.upload({
 		url: url,
                 data: {file: file}
@@ -108,8 +114,10 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
                     file.result = response.data;
 		    if ( type == 'question')
 			setQuestionImages($scope.question);
-		    if ( type == 'conf')
+		    else if ( type == 'conf')
 			setConferenceImage();
+		    else
+			setAnswers($scope.question);
                 });
             }, function (response) {
                 if (response.status > 0)
@@ -167,6 +175,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 				$scope.questions = result;
 				$scope.question = $scope.questions[0];
     				setAnswers($scope.question);
+				setQuestionImages($scope.question);
     			})
 			setConferenceImage();
     		})
