@@ -27,13 +27,12 @@ class ItemAdmin(admin.ModelAdmin):
     inlines = [ItemKWInlne,]
 
 class ConferenceAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('title', 'summary', 'owner')
+    list_display = ('title', 'summary', 'owner', 'edition_progress')
     inlines = [QuestionInline, ]
     exclude = ['owner', 'summary', 'type']
+    filter_horizontal = ['items', 'specialities']
+    search_fields = ['summary', 'title', 'questions__answers__answer', 'questions__answers__explaination']
 
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        obj.save()
 
 admin.site.register(Conference, ConferenceAdmin)
 admin.site.register(Item, ItemAdmin)
