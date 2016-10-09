@@ -46,7 +46,7 @@ msgstr ""
 #: blousebrothers/confs/models.py:21 blousebrothers/confs/models.py:50
 #: blousebrothers/confs/models.py:128
 msgid "Date created"
-msgstr ""
+msgstr "Date de création"
 
 #: blousebrothers/confs/models.py:22
 msgid "Titre"
@@ -110,11 +110,11 @@ msgstr ""
 
 #: blousebrothers/confs/models.py:85
 msgid "Conference"
-msgstr ""
+msgstr "Conférence"
 
 #: blousebrothers/confs/models.py:87
 msgid "Coéfficient"
-msgstr ""
+msgstr "Coefficient"
 
 #: blousebrothers/confs/models.py:103
 msgid "Proposition"
@@ -142,30 +142,30 @@ msgstr ""
 
 #: blousebrothers/dashboard/catalogue/forms.py:10
 msgid "-- Choose type --"
-msgstr ""
+msgstr "--Choisissez le type--"
 
 #: blousebrothers/templates/account/email.html:6
 #: blousebrothers/templates/dashboard/layout.html:44
 #: blousebrothers/templates/partials/nav_accounts.html:46
 #: blousebrothers/templates/partials/nav_accounts.html:50
 msgid "Account"
-msgstr ""
+msgstr "Compte"
 
 #: blousebrothers/templates/account/email.html:12
 msgid "E-mail Addresses"
-msgstr ""
+msgstr "Adresses email"
 
 #: blousebrothers/templates/account/email.html:14
 msgid "The following e-mail addresses are associated with your account:"
-msgstr ""
+msgstr "Les adresses email suivantes sont associées avec votre compte"
 
 #: blousebrothers/templates/account/email.html:28
 msgid "Verified"
-msgstr ""
+msgstr "Vérifié"
 
 #: blousebrothers/templates/account/email.html:30
 msgid "Unverified"
-msgstr ""
+msgstr "Non vérifié"
 
 #: blousebrothers/templates/account/email.html:32
 msgid "Primary"
@@ -177,33 +177,35 @@ msgstr ""
 
 #: blousebrothers/templates/account/email.html:39
 msgid "Re-send Verification"
-msgstr ""
+msgstr "Envoyer de nouveau la vérification"
 
 #: blousebrothers/templates/account/email.html:40
 msgid "Remove"
-msgstr ""
+msgstr "Retirer"
 
 #: blousebrothers/templates/account/email.html:47
 msgid "Warning:"
-msgstr ""
+msgstr "Attention:"
 
 #: blousebrothers/templates/account/email.html:47
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
+"Vous n'avez pas encore indiqué d'adresse email. Vous devriez en indiquer une "
+"afin qu'il soit possible de vous renvoyer votre mot de passe, des notifications, etc"
 
 #: blousebrothers/templates/account/email.html:52
 msgid "Add E-mail Address"
-msgstr ""
+msgstr "Ajouter une adresse email"
 
 #: blousebrothers/templates/account/email.html:57
 msgid "Add E-mail"
-msgstr ""
+msgstr "Ajouter un email"
 
 #: blousebrothers/templates/account/email.html:68
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr ""
+msgstr "Voulez-vous réellement supprimer l'adresse email sélectionnée?"
 
 #: blousebrothers/templates/account/email/email_confirmation_message.txt:1
 #, python-format
@@ -231,7 +233,7 @@ msgstr ""
 #: blousebrothers/templates/account/email_confirmed.html:6
 #: blousebrothers/templates/account/email_confirmed.html:13
 msgid "Confirm E-mail Address"
-msgstr ""
+msgstr "Confirmez l'adresse email"
 
 #: blousebrothers/templates/account/email_confirm.html:19
 #, python-format
@@ -239,10 +241,12 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
 "address for user %(user_display)s."
 msgstr ""
+"Veuillez confirmer que <a href=\"mailto:%(email)s\">%(email)s</a> est une adresse email "
+"pour l'utilisateur %(user_display)s."
 
 #: blousebrothers/templates/account/email_confirm.html:23
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmer"
 
 #: blousebrothers/templates/account/email_confirm.html:30
 #, python-format
@@ -250,6 +254,8 @@ msgid ""
 "This e-mail confirmation link expired or is invalid. Please <a href="
 "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr ""
+"Ce lien de confirmation est invalide ou a expiré. Veuillez <a href="
+"\"%(email_url)s\">recommencer la procédure</a>."
 
 #: blousebrothers/templates/account/email_confirmed.html:17
 #, python-format
@@ -257,11 +263,13 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-"
 "mail address for user %(user_display)s."
 msgstr ""
+"Vous avez confirmé que <a href=\"mailto:%(email)s\">%(email)s</a> est une"
+"adresse email de l'utilisateur %(user_display)s."
 
 #: blousebrothers/templates/account/login.html:9
 #: blousebrothers/templates/account/login.html:47
 msgid "Sign In"
-msgstr ""
+msgstr "Inscription"
 
 #: blousebrothers/templates/account/login.html:15
 msgid "Connexion"
@@ -269,17 +277,17 @@ msgstr ""
 
 #: blousebrothers/templates/account/login.html:48
 msgid "Forgot Password?"
-msgstr ""
+msgstr "Mot de passe oublié?"
 
 #: blousebrothers/templates/account/logout.html:5
 #: blousebrothers/templates/account/logout.html:12
 #: blousebrothers/templates/account/logout.html:21
 msgid "Sign Out"
-msgstr ""
+msgstr "Déconnexion"
 
 #: blousebrothers/templates/account/logout.html:14
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Etes-vous sûr de vouloir vous déconnecter?"
 
 #: blousebrothers/templates/account/password_change.html:5
 #: blousebrothers/templates/account/password_change.html:11
@@ -289,34 +297,36 @@ msgstr ""
 #: blousebrothers/templates/account/password_reset_from_key_done.html:4
 #: blousebrothers/templates/account/password_reset_from_key_done.html:10
 msgid "Change Password"
-msgstr ""
+msgstr "Changer le mot de passe"
 
 #: blousebrothers/templates/account/password_reset.html:7
 #: blousebrothers/templates/account/password_reset.html:14
 #: blousebrothers/templates/account/password_reset_done.html:6
 #: blousebrothers/templates/account/password_reset_done.html:12
 msgid "Password Reset"
-msgstr ""
+msgstr "Effacer le mot de passe"
 
 #: blousebrothers/templates/account/password_reset.html:19
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll send you "
 "an e-mail allowing you to reset it."
 msgstr ""
+"Mot de passe oublié? Veuillez entrer votre adresse email afin "
+"d'en reconfigurer un nouveau"
 
 #: blousebrothers/templates/account/password_reset.html:24
 msgid "Reset My Password"
-msgstr ""
+msgstr "Effacer mon mot de passe"
 
 #: blousebrothers/templates/account/password_reset.html:27
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "Veuillez nous contacter pour tout problème lors du changement de mot de passe"
 
 #: blousebrothers/templates/account/password_reset_done.html:18
 msgid ""
 "We have sent you an e-mail. Please contact us if you do not receive it "
 "within a few minutes."
-msgstr ""
+msgstr "Nous vous avons envoyé un email. Veuillez nous contacter si vous ne le recevez pas dans les minutes qui suivent"
 
 #: blousebrothers/templates/account/password_reset_from_key.html:12
 msgid "Bad Token"
@@ -332,12 +342,12 @@ msgstr ""
 
 #: blousebrothers/templates/account/password_reset_from_key.html:22
 msgid "change password"
-msgstr ""
+msgstr "changer le mot de passe"
 
 #: blousebrothers/templates/account/password_reset_from_key.html:25
 #: blousebrothers/templates/account/password_reset_from_key_done.html:11
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Votre mot de passe a bien été changé"
 
 #: blousebrothers/templates/account/password_set.html:6
 #: blousebrothers/templates/account/password_set.html:12
@@ -481,7 +491,7 @@ msgstr ""
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:73
 #: config/settings/common.py:327
 msgid "Categories"
-msgstr ""
+msgstr "Catégories"
 
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:76
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:147
