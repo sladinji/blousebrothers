@@ -42,16 +42,26 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # raven sentry client
 # See https://docs.getsentry.com/hosted/clients/python/integrations/django/
-#INSTALLED_APPS += ('raven.contrib.django.raven_compat', )
+INSTALLED_APPS += ('raven.contrib.django.raven_compat', )
 
 # Use Whitenoise to serve static files
 # See: https://whitenoise.readthedocs.io/
 WHITENOISE_MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware', )
 MIDDLEWARE_CLASSES = WHITENOISE_MIDDLEWARE + MIDDLEWARE_CLASSES
-#RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware', )
-#MIDDLEWARE_CLASSES = RAVEN_MIDDLEWARE + MIDDLEWARE_CLASSES
-MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES
+RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware', )
+MIDDLEWARE_CLASSES = RAVEN_MIDDLEWARE + MIDDLEWARE_CLASSES
 
+import os
+import raven
+SENTRY_DSN = env('DJANGO_SENTRY_DSN')
+SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
+
+RAVEN_CONFIG = {
+        'dsn': DJANGO_SENTRY_DSN,
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        'release': raven.fetch_git_sha(os.path.dirname(__file__)),
+}
 
 # SECURITY CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -177,45 +187,104 @@ CACHES = {
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s '
-                      '%(process)d %(thread)d %(message)s'
-        },
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True
-        },
-        'django.security.DisallowedHost': {
-            'level': 'ERROR',
-            'handlers': ['console', 'mail_admins'],
-            'propagate': True
-        }
-    }
+        'version': 1,
+        'disable_existing_loggers': True,
+        'root': {
+                    'level': 'WARNING',
+                    'handlers': ['sentry'],
+                },
+        'formatters': {
+                    'verbose': {
+                                    'format': '%(levelname)s %(asctime)s %(module)s '
+                                              '%(process)d %(thread)d %(message)s'
+                                },
+                },
+        'handlers': {
+                    'sentry': {
+                                    'level': 'ERROR',
+                                    'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+                                },
+                    'console': {
+                                    'level': 'DEBUG',
+                                    'class': 'logging.StreamHandler',
+                                    'formatter': 'verbose'
+                                }
+                },
+        'loggers': {
+                    'django.db.backends': {
+                                    'level': 'ERROR',
+                                    'handlers': ['console'],
+                                    'propagate': False,
+                                },
+                    'raven': {
+                                    'level': 'DEBUG',
+                                    'handlers': ['console'],
+                                    'propagate': False,
+                                },
+                    'sentry.errors': {
+                                    'level': 'DEBUG',
+                                    'handlers': ['console'],
+                                    'propagate': False,
+                                },
+                    'django.security.DisallowedHost': {
+                                    'level': 'ERROR',
+                                    'handlers': ['console', 'sentry'],
+                                    'propagate': False,
+                                },
+                },
 }
-
+SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
+RAVEN_CONFIG = {
+        'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
+        'DSN': SENTRY_DSN
+}
+# LOGGING CONFIGURATION
+# ------------------------------------------------------------------------------
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'filters': {
+                    'require_debug_false': {
+                                    '()': 'django.utils.log.RequireDebugFalse'
+                                }
+                },
+        'formatters': {
+                    'verbose': {
+                                    'format': '%(levelname)s %(asctime)s %(module)s '
+                                              '%(process)d %(thread)d %(message)s'
+                                },
+                },
+        'handlers': {
+                    'mail_admins': {
+                                    'level': 'ERROR',
+                                    'filters': ['require_debug_false'],
+                                    'class': 'django.utils.log.AdminEmailHandler'
+                                },
+                    'console': {
+                                    'level': 'DEBUG',
+                                    'class': 'logging.StreamHandler',
+                                    'formatter': 'verbose',
+                                },
+                },
+        'loggers': {
+                    'django.request': {
+                                    'handlers': ['mail_admins'],
+                                    'level': 'ERROR',
+                                    'propagate': True
+                                },
+                    'django.security.DisallowedHost': {
+                                    'level': 'ERROR',
+                                    'handlers': ['console', 'mail_admins'],
+                                    'propagate': True
+                                }
+                }
+}
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL')
 
