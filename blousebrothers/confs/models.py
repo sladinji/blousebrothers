@@ -72,6 +72,13 @@ class Item(models.Model):
     def __str__(self):
         return "%s - %s" % (self.number, self.name)
 
+class ItemKeyWord(models.Model):
+    item = models.ForeignKey('Item', related_name='kwords')
+    value = models.CharField('Valeur', max_length=128, blank=False)
+
+    def __str__(self):
+        return self.value
+
 
 class Speciality(models.Model):
     name = models.CharField(_("Matière"), max_length=128, blank=False, null=False)
