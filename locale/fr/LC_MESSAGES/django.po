@@ -169,11 +169,11 @@ msgstr "Non vérifié"
 
 #: blousebrothers/templates/account/email.html:32
 msgid "Primary"
-msgstr ""
+msgstr "Principale"
 
 #: blousebrothers/templates/account/email.html:38
 msgid "Make Primary"
-msgstr ""
+msgstr "Définir comme principale"
 
 #: blousebrothers/templates/account/email.html:39
 msgid "Re-send Verification"
@@ -339,6 +339,9 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
 "a>."
 msgstr ""
+"Le lien de renouvellement du mot de passe est invalide, peut-être parce qu'il "
+"a déjà été utilisé. Veuillez redemander un<a href=\"%(passwd_reset_url)s\">nouveau renouvellement du mot de passe</"
+"a>."
 
 #: blousebrothers/templates/account/password_reset_from_key.html:22
 msgid "change password"
@@ -357,7 +360,7 @@ msgstr ""
 
 #: blousebrothers/templates/account/signup.html:14
 msgid "Signup"
-msgstr ""
+msgstr "Inscription"
 
 #: blousebrothers/templates/account/signup.html:34
 #: blousebrothers/templates/pages/home.html:24
@@ -378,7 +381,7 @@ msgstr ""
 #: blousebrothers/templates/account/verified_email_required.html:5
 #: blousebrothers/templates/account/verified_email_required.html:11
 msgid "Verify Your E-mail Address"
-msgstr ""
+msgstr "Vérifiez votre adresse email"
 
 #: blousebrothers/templates/account/verification_sent.html:13
 #, python-format
@@ -387,6 +390,9 @@ msgid ""
 "verification. Follow the link provided to finalize the signup process. "
 "Please contact us if you do not receive it within a few minutes."
 msgstr ""
+"Nous vous avons envoyé un email <a href=\"mailto:%(email)s\">%(email)s</a> pour "
+"vérification. Suivez le lien fourni pour terminer le processus d'inscription "
+"Veuillez nous contacter si vous ne le recevez pas dans les minutes qui suivent."
 
 #: blousebrothers/templates/account/verified_email_required.html:15
 msgid ""
@@ -663,7 +669,7 @@ msgstr ""
 #: blousebrothers/templates/layout.html:84
 #: blousebrothers/templates/partials/nav_accounts.html:56
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #: blousebrothers/templates/layout.html:86
 #: blousebrothers/templates/partials/nav_accounts.html:58
@@ -672,7 +678,7 @@ msgstr ""
 
 #: blousebrothers/templates/pages/home.html:31
 msgid "Sign Up"
-msgstr ""
+msgstr "Inscription"
 
 #: blousebrothers/templates/partials/ellipses_pagination.html:9
 #: blousebrothers/templates/partials/pagination.html:8
@@ -823,6 +829,8 @@ msgid ""
 "Phone number must be entered in the format: '+999999999'. Up to 15 digits "
 "allowed."
 msgstr ""
+"Le numéro de téléphone doit être entré dans le format suivant: '+999999999'. 15 chiffres "
+"autorisés."
 
 #: blousebrothers/users/models.py:70
 msgid "Fixe"
@@ -862,7 +870,7 @@ msgstr ""
 
 #: config/settings/common.py:145
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #: config/settings/common.py:315
 msgid "Mes Sujets"
