@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
+import re
 
 from django.views.generic import TemplateView
 from django.http import JsonResponse
@@ -15,7 +16,7 @@ from django.views.generic import (
     RedirectView,
     UpdateView,
     CreateView,
-    FormView
+    FormView,
 )
 
 from blousebrothers.shortcuts.auth import BBConferencierReqMixin
@@ -26,6 +27,7 @@ from .models import (
     Answer,
     ConferenceImage,
     QuestionImage,
+    Item,
 )
 from .forms import ConferenceForm
 
@@ -97,6 +99,24 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
         ans = Answer.objects.get(pk=data['pk'])
         ans.explaination_image.delete()
         ans.save()
+
+    @allow_remote_invocation
+    def get_keywords(self, data):
+        cf = Conference.objects.get(pk=data['pk'])
+        txt = cf.summary.lower() + cf.title.lower() + cf.statement.lower()
+        for q in cf.questions.all():
+            txt += q.question.lower() if q.question else ''
+            for a in q.answers.all():
+                txt += a.explaination.lower() if a.explaination else ''
+        ret = []
+        for item in Item.objects.all():
+            for kw in item.kwords.all():
+                if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
+                    ret.append("{} => {}".format(kw.value, item.name))
+                    break
+        print(ret)
+        return ret
+
 
 
 class ConferenceListView(BBConferencierReqMixin, ListView):

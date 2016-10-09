@@ -54,6 +54,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     $scope.conferenceimages = [];
     $scope.questionimages = [];
     $scope.static_media = static_media;
+    $scope.kwords = [];
     var setQuestionImages = function(question) {
 	if (question != null){
 		QuestionImage.query({question_id: question.pk}).$promise
@@ -68,6 +69,13 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		$scope.conferenceimages= result;
 	})
     };
+    var setKeyWords = function(){
+	djangoRMI.get_keywords($scope.conference)
+		.success(function(out_data) {
+			console.log(out_data)
+			$scope.kwords = out_data;
+		});
+    }
     var setAnswers = function(question) {
 	if (question != null){
 		Answer.query({question: question.pk}).$promise
@@ -139,6 +147,9 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	     $scope.valid_q = out_data['valid_q'];
 	     $scope.progress = out_data['progress'];
   	     toaster.pop('success', "Sauvegarde auto OK", "");
+	     {% if user.is_superuser %}
+	     setKeyWords();
+	     {% endif %}
 
 	 })
 	 .error(function(out_data){
@@ -178,6 +189,9 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 				setQuestionImages($scope.question);
     			})
 			setConferenceImage();
+			{% if user.is_superuser %}
+			setKeyWords();
+			{% endif %}
     		})
 	}
 	else{
