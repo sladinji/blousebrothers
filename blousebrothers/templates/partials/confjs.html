@@ -72,7 +72,6 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     var setKeyWords = function(){
 	djangoRMI.get_keywords($scope.conference)
 		.success(function(out_data) {
-			console.log(out_data)
 			$scope.kwords = out_data;
 		});
     }
@@ -108,7 +107,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	    var url = '';
 	    if ( type == 'question')
 		url ='/sweethomechicago/question/upload_image/' + $scope.question.pk 
-	    if ( type == 'conf')
+	    else if ( type == 'conf')
 		url ='/sweethomechicago/conference/upload_image/' + $scope.conference.pk 
 	    else
 		url ='/sweethomechicago/answer/upload_image/' + type.pk 
