@@ -39,10 +39,10 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  <div ng-if="conference.type == 'DCP'">
 	    <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
 	          <div ng-if="isSubjectDiplayed">
-	            Masquer le sujet du DCP
+	            <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer le sujet du DCP
 	          </div>
 	          <div ng-if="!isSubjectDiplayed">
-	            Afficher le sujet du DCP
+	            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher le sujet du DCP
 	          </div>
 	    </a>
 	    <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
@@ -53,10 +53,10 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	        </form>
 	        <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
 	              <div ng-if="isImagesDiplayed">
-	                Masquer les illustrations
+	                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
 	              </div>
 	              <div ng-if="!isImagesDiplayed">
-	                Afficher les illustrations
+	                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher les illustrations
 	              </div>
 	        </a>
 		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
