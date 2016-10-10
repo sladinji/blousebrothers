@@ -38,6 +38,17 @@ class Conference(models.Model):
     def get_absolute_url(self):
         return reverse('confs:update', kwargs={'slug': self.slug})
 
+    def get_all_txt(self):
+        """
+        Return a string with all text of conference.
+        """
+        txt = ' '.join([x.lower() if x else "" for x in (self.summary, self.title, self.statement)])
+        for q in self.questions.all():
+            txt += q.question.lower() if q.question else ''
+            for a in q.answers.all():
+                txt += a.explaination.lower() if a.explaination else ''
+        return txt
+
 
 def conf_directory_path(conf_image, filename):
     return '{0}/conf_{1}/{2}'.format(conf_image.conf.owner.username,

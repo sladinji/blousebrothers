@@ -18,24 +18,8 @@
 AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
 {% endcomment %}
     <div class='row'>
-	<aside class="col-md-3 col-sm-12">
-	    {% verbatim %}
-	    <div ng-app="myShoppingList" class="bb-card-2 bb-margin">
-	    <header class="tips bb-container bb-light-grey bb-padding-16">
-	    <h3>Questions</h3>
-	    <div ng-if="!question">
-		    <p>Commencez à ajouter des questions :</p>
-	    </div> 
-	    </header>
-	    <ul class="bb-ul">
-		    <li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-{{ valid_q.indexOf(x.pk) !== -1 ? 'check' : 'exclamation-triangle'}}  fa-fw"></i>{{ $index + 1 }} : {{x.question | limitTo: 20}} ...</a></li>
-	    </ul>
-	    <div class="bb-container bb-light-grey bb-padding-16">
-		<div class="row bb-margin-top"></div>
-		<p class="bb-padding-left bb-text-red">{{errortext}}</p>
-	    </div>
-	    </div>
-	    {% endverbatim %}
+	<aside class="col-md-3 hidden-sm hidden-xs">
+	{% include 'partials/nav_questions.html' %}
 	</aside>
 
 	<div class="col-md-9" >
@@ -155,9 +139,9 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   </div>
 	   </fieldset>
 	   </form>
-	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0">Question précédente</button>
-	   <button class="btn pull-right" ng-click="next_question()" ng-disabled="questions.indexOf(question) >= 14">Question suivante</button>
-	  <h2>Sujet complété à {{ progress | number : 0 }}%</h2>
+	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
+	   <button class="btn pull-right" ng-click="next_question()" ng-disabled="questions.indexOf(question) >= 14">Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+	  <h2 class="text-center">Sujet complété à {{ progress | number : 0 }}%</h2>
 	  <div class="progress">
 	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ progress }}%">
 		<span class="sr-only">{{ progress }}% Complete</span>
@@ -166,6 +150,10 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  {% endverbatim %}
 	</div>
     </div>
+	<aside class="hidden-md col-xs-12 hidden-lg">
+	  {% include 'partials/nav_questions.html' %}
+	</aside>
+
 
 </div>
 </div>

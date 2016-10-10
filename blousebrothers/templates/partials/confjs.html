@@ -105,7 +105,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	var iq = $scope.questions.indexOf($scope.question);
 	if ( iq < 14 ){
 		$scope.question_selected($scope.questions[iq + 1]);
-		$window.scrollTo(0, 0);
+		$window.scrollTo(0, 0, 1000);
 	}
     }
     $scope.previous_question = function(){

@@ -103,11 +103,7 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
     @allow_remote_invocation
     def get_keywords(self, data):
         cf = Conference.objects.get(pk=data['pk'])
-        txt = cf.summary.lower() + cf.title.lower() + cf.statement.lower()
-        for q in cf.questions.all():
-            txt += q.question.lower() if q.question else ''
-            for a in q.answers.all():
-                txt += a.explaination.lower() if a.explaination else ''
+        txt = cf.get_all_txt()
         ret = []
         for item in Item.objects.all():
             for kw in item.kwords.all():
