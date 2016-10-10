@@ -51,17 +51,13 @@ MIDDLEWARE_CLASSES = WHITENOISE_MIDDLEWARE + MIDDLEWARE_CLASSES
 RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware', )
 MIDDLEWARE_CLASSES = RAVEN_MIDDLEWARE + MIDDLEWARE_CLASSES
 
-import os
-import raven
-SENTRY_DSN = env('DJANGO_SENTRY_DSN')
-SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
-
+SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
 RAVEN_CONFIG = {
-        'dsn': DJANGO_SENTRY_DSN,
-        # If you are using git, you can also automatically configure the
-        # release based on the git info.
-        'release': raven.fetch_git_sha(os.path.dirname(__file__)),
+    'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
+    'dsn': SENTRY_DSN,
+    'release': 'alpha'
 }
+SENTRY_DSN = env('DJANGO_SENTRY_DSN')
 
 # SECURITY CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -233,61 +229,8 @@ LOGGING = {
                                 },
                 },
 }
-SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
-RAVEN_CONFIG = {
-        'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
-        'DSN': SENTRY_DSN
-}
-# LOGGING CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'filters': {
-                    'require_debug_false': {
-                                    '()': 'django.utils.log.RequireDebugFalse'
-                                }
-                },
-        'formatters': {
-                    'verbose': {
-                                    'format': '%(levelname)s %(asctime)s %(module)s '
-                                              '%(process)d %(thread)d %(message)s'
-                                },
-                },
-        'handlers': {
-                    'mail_admins': {
-                                    'level': 'ERROR',
-                                    'filters': ['require_debug_false'],
-                                    'class': 'django.utils.log.AdminEmailHandler'
-                                },
-                    'console': {
-                                    'level': 'DEBUG',
-                                    'class': 'logging.StreamHandler',
-                                    'formatter': 'verbose',
-                                },
-                },
-        'loggers': {
-                    'django.request': {
-                                    'handlers': ['mail_admins'],
-                                    'level': 'ERROR',
-                                    'propagate': True
-                                },
-                    'django.security.DisallowedHost': {
-                                    'level': 'ERROR',
-                                    'handlers': ['console', 'mail_admins'],
-                                    'propagate': True
-                                }
-                }
-}
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL')
-
 
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
