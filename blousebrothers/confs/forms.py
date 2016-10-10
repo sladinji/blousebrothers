@@ -15,20 +15,7 @@ from .models import(
     Speciality,
 )
 
-
-class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
-
-    form_name = 'conf_form'
-    field_order = ['title', 'type', 'images', 'summary', 'statement', 'items', 'specialities']
-    class Meta:
-        model = Conference
-        exclude = ['owner', 'edition_progress']
-    images = MultiFileField(min_num=0, max_num=3,required=False, max_file_size=1024*1024*5,
-                            widget=MultiFileInput(attrs={'class':'no-border-form'}),
-                            label=_("Images de l'énoncé"),
-                            help_text=_("Vous pouvez sélectionner plusieurs images"),
-                            )
-
+class EndingConferenceForm(ModelForm, Bootstrap3FormMixin):
     items = forms.ModelMultipleChoiceField(
                 widget=ModelSelect2MultipleWidget(
                                 queryset=Item.objects.order_by('number').all(),
@@ -49,13 +36,12 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
         label=_("Matières abordées"),
     )
 
-    def clean(self):
-        cleaned_data = super().clean()
-        type = cleaned_data.get("type")
 
-        if type == 'DCP' :
-            statement  = cleaned_data.get("statement")
-            if not statement :
-                raise forms.ValidationError(
-                    "Vous devez saisir un énoncé pour un DCP."
-                )
+
+class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
+
+    form_name = 'conf_form'
+    field_order = ['title', 'type', 'summary']
+    class Meta:
+        model = Conference
+        exclude = ['owner', 'edition_progress', 'items', 'specialities', 'images', 'statement']

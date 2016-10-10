@@ -145,8 +145,6 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
             self.object = form.save(commit=False)
             self.object.owner = self.request.user
             self.object.save()
-            for i, image in enumerate(form.cleaned_data['images']):
-                ConferenceImage.objects.create(image=image, index=i, conf=self.object)
             # create questions
             for i in range(15):
                 q = Question.objects.create(conf=self.object, index=i)
@@ -167,12 +165,6 @@ class ConferenceEditView(BBConferencierReqMixin, UpdateView):
     def get_redirect_url(self):
         return reverse('confs:detail',
                        kwargs={'slug': self.request.conf.slug})
-
-    def form_valid(self, form):
-        if form.is_valid():
-            for i, image in enumerate(form.cleaned_data['images']):
-                ConferenceImage.objects.create(image=image, index=i, conf=self.object)
-        return super().form_valid(form)
 
 class ConferenceCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Conference

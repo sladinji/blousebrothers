@@ -10,7 +10,11 @@
 {% endblock %}
 
 {% block submenu %}
-	<p class="blouse-font">{% trans "Rédaction d'un sujet" %}</p>
+	<span class="numtip">1</span> <strong>{% trans "Choix du type de sujet" %}</strong>
+	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	<span class="numtip">2</span> {% trans "Rédaction des questions" %}
+	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	<span class="numtip">3</span> {% trans "Finalisation" %}
 {% endblock %}
 
 {% block content %}
@@ -20,7 +24,7 @@
     <div class='row'>
 	<aside class="col-md-3">
 	    <div style="max-width:400px;">
-	      <header class="bb-container bb-light-grey bb-padding-16">
+	      <header class="tips bb-container bb-light-grey bb-padding-16">
 	      <h3>Conseils <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> </h3>
 	      </header>
 	      <ul class="list" > 

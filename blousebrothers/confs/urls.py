@@ -29,7 +29,7 @@ urlpatterns = [
 
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/~update$',
+        regex=r'^(?P<slug>[\w.@+-]+)/update$',
         view=views.ConferenceUpdateView.as_view(),
         name='update'
     ),
