@@ -7,7 +7,11 @@
 	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 	<span class="numtip">2</span> <strong>{% trans "Rédaction des questions" %}</strong>
 	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	<span class="numtip">3</span> {% trans "Finalisation" %}
+	{% if object.slug and object.edition_progress == 100 %}
+	<span class="numtip">3</span> <a href="{% url 'confs:final' object.slug %}">{% trans "Finalisation" %}</a>
+	{% else %}
+	<span class="numtip">3</span> {% trans "Finalisation" %} {{ object.edition_progress }}%
+	{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -123,7 +127,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	       </div>
 	     </div>
 	     <div class="form-group">
-	       <div class="well col-sm-12">
+	       <div class="well well-explaination col-sm-12">
 	         <legend>Explication</legend>
 	         <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]"></text-angular>
 	       </div>

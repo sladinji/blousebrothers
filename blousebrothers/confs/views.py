@@ -29,7 +29,7 @@ from .models import (
     QuestionImage,
     Item,
 )
-from .forms import ConferenceForm
+from .forms import ConferenceForm, ConferenceFinalForm
 
 
 
@@ -48,7 +48,7 @@ class ConferenceRedirectView(BBConferencierReqMixin, RedirectView):
                        kwargs={'slug': self.request.conf.slug})
 
 
-class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView):
+class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView):
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
@@ -110,7 +110,6 @@ class ConferenceUpdateView(BBConferencierReqMixin,JSONResponseMixin, UpdateView)
                 if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
                     ret.append("{} => {}".format(kw.value, item.name))
                     break
-        print(ret)
         return ret
 
 
@@ -135,8 +134,6 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
                        kwargs={'slug': self.request.conf.slug})
 
     def form_valid(self, form):
-        #context = self.get_context_data()
-        #formset = context['formset']
         if form.is_valid():
             self.object = form.save(commit=False)
             self.object.owner = self.request.user
@@ -150,6 +147,25 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
+class ConferenceFinalView(BBConferencierReqMixin, UpdateView):
+    template_name = 'confs/conference_final.html'
+    form_class = ConferenceFinalForm
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    model=Conference
+
+    def get_success_url(self):
+        return reverse('confs:list')
+
+    def get_context_data(self, **kwargs):
+        txt = self.object.get_all_txt()
+        items = []
+        for item in Item.objects.all():
+            for kw in item.kwords.all():
+                if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
+                    items.append(item.name)
+                    break
+        return super().get_context_data(**{'items':items})
 
 class ConferenceEditView(BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'

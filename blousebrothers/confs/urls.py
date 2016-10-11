@@ -33,14 +33,19 @@ urlpatterns = [
         view=views.ConferenceUpdateView.as_view(),
         name='update'
     ),
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/final$',
+        view=views.ConferenceFinalView.as_view(),
+        name='final'
+    ),
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^~create/$',
+        regex=r'^create/$',
         view=views.ConferenceCreateView.as_view(),
         name='create'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/~edit$',
+        regex=r'^(?P<slug>[\w.@+-]+)/edit$',
         view=views.ConferenceEditView.as_view(),
         name='edit'
     ),

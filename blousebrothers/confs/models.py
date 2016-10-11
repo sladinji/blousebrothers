@@ -29,7 +29,7 @@ class Conference(models.Model):
                                            ' ou "dossier transversal de révisions classiques sur lupus et grossesse" '))
     statement = models.TextField(_('Énoncé*'), blank=True, null=True)
     items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences',
-                                   help_text=_('Ne sélectionnez que les items abordés de manière '
+                                   help_text=_('Ne sélectionner que les items abordés de manière '
                                                '<strong>significative</strong> dans votre dossier')
                                    )
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')

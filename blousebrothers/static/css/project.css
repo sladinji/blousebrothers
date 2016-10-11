@@ -169,6 +169,10 @@ ul.djng-field-errors li.valid::before {
   background-color: #f0ad4e;
 }
 
+.well-explaination{
+  background-color: #4281a4;
+}
+
 .well-title{
     position:relative;
     text-align:right;
@@ -260,6 +264,6 @@ ul.djng-field-errors li.valid::before {
 }
 .submenu {
     padding-top: 17px;
-    padding-left: 94px;
+    padding-left: 97px;
     display: inline-block;
 }
