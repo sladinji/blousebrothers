@@ -1,5 +1,6 @@
 from __future__ import unicode_literals, absolute_import
 
+import re
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -49,6 +50,14 @@ class Conference(models.Model):
                 txt += a.explaination.lower() if a.explaination else ''
         return txt
 
+    def set_suggested_items(self):
+        txt = self.get_all_txt()
+        for item in Item.objects.all():
+            for kw in item.kwords.all():
+                if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
+                    self.items.add(item)
+                    break
+
 
 def conf_directory_path(conf_image, filename):
     return '{0}/conf_{1}/{2}'.format(conf_image.conf.owner.username,
@@ -81,7 +90,7 @@ class Item(models.Model):
     number = models.IntegerField(_("Numéro"), blank=False, null=False)
 
     def __str__(self):
-        return "%s - %s" % (self.number, self.name)
+        return self.name
 
 class ItemKeyWord(models.Model):
     item = models.ForeignKey('Item', related_name='kwords')

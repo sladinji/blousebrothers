@@ -13,7 +13,7 @@
 	<span class="numtip">1</span> <strong>{% trans "Choix du type de sujet" %}</strong>
 	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 	{% if object.slug %}
-	<span class="numtip">2</span> <a href="{% url 'confs:update' object.slug %}"> {% trans "Rédaction des question" %}</a>
+	<span class="numtip">2</span> <a href="{% url 'confs:update' object.slug %}"> {% trans "Rédaction des questions" %}</a>
 	{% else %}
 	<span class="numtip">2</span> {% trans "Rédaction des questions" %}
 	{% endif %}

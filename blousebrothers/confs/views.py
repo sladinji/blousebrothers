@@ -158,14 +158,21 @@ class ConferenceFinalView(BBConferencierReqMixin, UpdateView):
         return reverse('confs:list')
 
     def get_context_data(self, **kwargs):
-        txt = self.object.get_all_txt()
         items = []
-        for item in Item.objects.all():
-            for kw in item.kwords.all():
-                if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
-                    items.append(item.name)
-                    break
-        return super().get_context_data(**{'items':items})
+        if self.object.items.count() == 0:
+            self.object.set_suggested_items()
+        else:
+            txt = self.object.get_all_txt()
+            for item in Item.objects.exclude(
+                id__in = self.object.items.all()
+            ).all():
+                for kw in item.kwords.all():
+                    if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
+                        items.append(item)
+                        break
+        context = super().get_context_data(**{'items':items})
+
+        return context
 
 class ConferenceEditView(BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'

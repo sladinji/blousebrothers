@@ -31,7 +31,7 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
     specialities = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
             queryset=Speciality.objects.order_by('name').all(),
-            search_fields=['name__icontains']
+            search_fields=['name__icontains', 'number']
         ),
         queryset=Speciality.objects.all(),
         required=True,
