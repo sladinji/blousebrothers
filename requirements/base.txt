@@ -61,3 +61,5 @@ django-bootstrap-dynamic-formsets
 django-multiupload
 django-mailgun
 django-select2
+django-activeurl
+

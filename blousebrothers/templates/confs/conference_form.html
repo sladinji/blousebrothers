@@ -10,20 +10,7 @@
 {% endblock %}
 
 {% block submenu %}
-	<span class="numtip">1</span> <strong>{% trans "Choix du type de sujet" %}</strong>
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	{% if object.slug %}
-	<span class="numtip">2</span> <a href="{% url 'confs:update' object.slug %}"> {% trans "Rédaction des questions" %}</a>
-	{% else %}
-	<span class="numtip">2</span> {% trans "Rédaction des questions" %}
-	{% endif %}
-
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	{% if object.slug and object.edition_progress == 100 %}
-	<span class="numtip">3</span> <a href="{% url 'confs:final' object.slug %}">{% trans "Finalisation" %}</a>
-	{% else %}
-	<span class="numtip">3</span> {% trans "Finalisation" %}
-	{% endif %}
+{% include 'partials/submenu_conf_edit.html' %}
 {% endblock %}
 
 {% block content %}

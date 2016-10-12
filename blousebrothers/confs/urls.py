@@ -40,7 +40,7 @@ urlpatterns = [
     ),
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^create/$',
+        regex=r'^~create/$',
         view=views.ConferenceCreateView.as_view(),
         name='create'
     ),

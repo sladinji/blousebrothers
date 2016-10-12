@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
-{% load static %}
+{% load static %}{% load i18n %}
 
 {% block title %}{{ object.title}}{% endblock %}
 
+{% block submenu %}
+      <a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
+     Rédaction complétée à {{ object.edition_progress }}%
+{% endblock %}
 {% block content %}
 <div class="container">
 
@@ -10,20 +14,14 @@
     <div class="col-sm-12">
 
       <h2>{{ object.title}}</h2>
-	<div class="progress">
-	   <div class="progress-bar" role="progressbar" aria-valuenow="{{ object.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ object.edition_progress }}%">
-	      <span class="sr-only">{{ object.edition_progress }}% Complete</span>
-	   </div>
-	</div>
     </div>
-    <p class="pull-right">Rédaction complétée à {{ object.edition_progress }}%</p>
   </div>
 
 <!-- Action buttons -->
   <div class="row">
   
     <div class="col-sm-12 ">
-	  <legend>Détails <a class="btn btn-primary pull-right" href="{% url 'confs:edit' object.slug %}">Editer la conférence</a></legend>
+	  <legend>Détails </legend>
   	  <strong>Type :</strong> {{object.type}}<br>
   	  <strong>Items :</strong> {{object.items.all | join:", "}}<br>
   	  <strong>Specialités :</strong> {{object.specialities.all | join:", "}}<br>

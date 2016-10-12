@@ -32,7 +32,6 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
-
     # Useful template tags:
     # 'django.contrib.humanize',
 
@@ -51,6 +50,7 @@ THIRD_PARTY_APPS = [
     'bootstrap3',
     'djng',
     'django_select2',
+    'django_activeurl',
 ]
 
 # Apps specific for this project go here.

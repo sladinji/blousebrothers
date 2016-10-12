@@ -10,14 +10,8 @@
 {% endblock %}
 
 {% block submenu %}
-	<span class="numtip">1</span> <a href="{% url 'confs:edit' object.slug %}"> {% trans "Choix du type de sujet" %}</a>
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	<span class="numtip">2</span> <a href="{% url 'confs:update' object.slug %}"> {% trans "Rédaction des questions" %}</a>
-
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	<span class="numtip">3</span> <strong>{% trans "Finalisation" %}</strong>
+{% include 'partials/submenu_conf_edit.html' %}
 {% endblock %}
-
 {% block content %}
 
 
@@ -43,7 +37,7 @@
 	</aside>
 	<div id="subject" class="col-md-9" >
 	  <div class="tabbable dashboard col-md-12">
-	    <h1>Félicitation, c'est presque terminé !</h1>
+	    <h1>Félicitations, c'est presque terminé !</h1>
 	    {% if items %}
 	    Voici une liste d'items pouvant correspondre au {{object.type}} "<strong>{{object.title}}</strong>" :
 	    <ul class="list">

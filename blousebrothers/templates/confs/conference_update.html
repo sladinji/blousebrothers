@@ -3,15 +3,7 @@
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
-	<span class="numtip">1</span> <a href="{% url 'confs:edit' object.slug %}"> {% trans "Choix du type de sujet" %}</a>
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	<span class="numtip">2</span> <strong>{% trans "Rédaction des questions" %}</strong>
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	{% if object.slug and object.edition_progress == 100 %}
-	<span class="numtip">3</span> <a href="{% url 'confs:final' object.slug %}">{% trans "Finalisation" %}</a>
-	{% else %}
-	<span class="numtip">3</span> {% trans "Finalisation" %} {{ object.edition_progress }}%
-	{% endif %}
+{% include 'partials/submenu_conf_edit.html' %}
 {% endblock %}
 
 {% block content %}
