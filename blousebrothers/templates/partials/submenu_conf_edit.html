@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load activeurl %}
+
+{% activeurl %}
+<div class="submenu">
+  <ul>
+    <li>
+	<span class="numtip">1</span> <a href="{% url 'confs:edit' object.slug %}"> {% trans "Choix du type de sujet" %}</a>
+	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </li>
+    <li>
+	<span class="numtip">2</span> <a href="{% url 'confs:update' object.slug %}"> {% trans "Rédaction des questions" %}</a>
+	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </li>
+    <li>
+	{% if object.slug and object.edition_progress == 100 %}
+	<span class="numtip">3</span> <a href="{% url 'confs:final' object.slug %}">{% trans "Finalisation" %}</a>
+	{% else %}
+	<span class="numtip">3</span> {% trans "Finalisation" %} {{ object.edition_progress }}%
+	{% endif %}
+    </li>
+  </ul>
+</div>
+{% endactiveurl %}

@@ -267,3 +267,20 @@ ul.djng-field-errors li.valid::before {
     padding-left: 97px;
     display: inline-block;
 }
+
+.submenu li {
+	display: inline-block;
+}
+.subemnu.ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.submenu ul li a {
+	color: #888888;
+}
+
+ul li.active a {
+	color: #c99947;
+}

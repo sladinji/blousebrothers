@@ -4,12 +4,12 @@
 <h3 class="blouse-font">Questions</h3>
 </header>
 <ul class="bb-ul">
-	<li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-{{ valid_q.indexOf(x.pk) !== -1 ? 'check' : 'exclamation-triangle'}}  fa-fw"></i>{{ $index + 1 }} : {{x.question | limitTo: 20}} ...</a></li>
+	<li ng-repeat="x in questions" class="bb-padding-16"><a href ng-click="question_selected(x)"><i class="fa fa-{{ valid_q.indexOf(x.pk) !== -1 ? 'check' : 'exclamation-triangle'}}  fa-fw"></i>{{ $index + 1 }} : {{x.question || 'à compléter' | limitTo: 20}} ...</a></li>
 </ul>
 <div class="bb-container bb-light-grey bb-padding-16">
 <div class="row bb-margin-top"></div>
 <p class="bb-padding-left bb-text-red">{{errortext}}</p>
-<i class="fa fa-exclamation-triangle fa-fw"></i> = question à compléter
+<i class="fa fa-exclamation-triangle fa-fw"></i> = question à compléter (doit contenir au moins une réponse juste)
 </div>
 </div>
 {% endverbatim %}
