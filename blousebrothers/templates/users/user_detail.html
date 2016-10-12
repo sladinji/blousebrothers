@@ -13,7 +13,7 @@
       <h2>{{ object.username }}</h2>
       <div class="well">
       {% if user.socialaccount_set.all %}
-      <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+      <div class="social-circle style='background-image: {{ user.socialaccount_set.all.0.get_avatar_url }}'"></div>
       {% endif %}
       {% if object.name %}
         <p>{{ object.name }}</p>

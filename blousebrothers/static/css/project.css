@@ -284,3 +284,11 @@ ul.djng-field-errors li.valid::before {
 ul li.active a {
 	color: #c99947;
 }
+
+.social-circle {
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
