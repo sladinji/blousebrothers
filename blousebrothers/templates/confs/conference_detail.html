@@ -26,6 +26,8 @@
   	  <strong>Items :</strong> {{object.items.all | join:", "}}<br>
   	  <strong>Specialités :</strong> {{object.specialities.all | join:", "}}<br>
   	  <strong>Résumé :</strong> {{object.abstract |default:"<i>aucun</i>"}}<br>
+	  <br>
+	  {% if object.type == 'DCP' %}
 	  <legend>Énoncé</legend><p> {{ object.statement | default:"<i>aucun</i>"}}<p>
 	  <legend>Illustrations</legend>
 	  {% for image in object.images.all %}
@@ -35,6 +37,7 @@
 	  {% empty %}
 	  <i>Aucune</i>
 	  {% endfor %}
+	  {% endif %}
       <!-- Your Stuff: Custom user template urls -->
     </div>
     <h2>Questions
@@ -42,15 +45,15 @@
     </h2>
    
     {% for question in object.questions.all|dictsort:"index" %}
-    <div class="well {% if not question.is_valid %}well-warning{% endif %}">
+    <div class="well well-white">
 	    <legend>Question {{ question.index | add:"1" }} {% if not question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
-      <div class="col-sm-12 col-md-6 ">
+      <div class="col-sm-12">
 	      <strong>Énoncé :</strong><p>{{ question.question | default:"<i>aucun</i>"}}</p>
       </div>
       {% for answer in question.answers.all %}
-      <div class="col-sm-12 col-md-6 {% if answer.correct %}correct{% else %}notcorrect{% endif %}">
+      <div class="col-sm-12 {% if answer.correct %}correct{% else %}notcorrect{% endif %}">
 	      <strong>Réponse {{ forloop.counter }} <i class="fa fa-{% if answer.correct %}check"{% else %}times"{% endif %} aria-hidden="true"></i>:</strong> <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
-	      <strong>Explication :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" }}</p>
+	      <strong>Explication :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | safe }}</p>
       </div>
      {% endfor %}
    </div>
