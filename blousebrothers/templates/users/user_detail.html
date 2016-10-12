@@ -13,7 +13,7 @@
       <h2>{{ object.username }}</h2>
       <div class="well">
       {% if user.socialaccount_set.all %}
-      <div class="social-circle style='background-image: {{ user.socialaccount_set.all.0.get_avatar_url }}'"></div>
+      <img class="social-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
       {% endif %}
       {% if object.name %}
         <p>{{ object.name }}</p>
@@ -22,7 +22,7 @@
       <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
       <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
       <p><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</p>
-      <p><label>{% trans 'Level' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
+      <p><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
       </div>
     </div>
   </div>
