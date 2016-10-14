@@ -37,7 +37,7 @@ class Conference(models.Model):
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
 
     def get_absolute_url(self):
-        return reverse('confs:update', kwargs={'slug': self.slug})
+        return reverse('confs:detail', kwargs={'slug': self.slug})
 
     def get_all_txt(self):
         """
