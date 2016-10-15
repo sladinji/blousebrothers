@@ -79,7 +79,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  </div>
 		
 	  
-	  <div ng-if="question">
+	  <div class="well well-white" ng-if="question">
 		  <legend>Question {{ question.index + 1 }} <a name="question"> </a> </legend>
 	    <form novalidate class="question-form">
 		    <label><select class="selectpicker" ng-model="question.coefficient"><option ng-repeat="option in [1,2,3,4,5,6,7,8,9,10]" value="{{option}}">{{option}}</option></select> Coefficient </label><br>
@@ -106,6 +106,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
   	    {{errorMsg}}
   
 	  </div>       
+	  <br>
 	  <form class="form-horizontal">
 	   <fieldset>
 	   <legend>Réponses {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque réponse et définissez au moins une réponse juste)'}} </legend>
@@ -113,7 +114,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
 	     <div class="form-group">
 	       <div class="col-sm-12">
-	            <input ng-model="answer.answer" class="material_form form-control" placeholder="Réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+	            <input ng-model="answer.answer" class="material_form form-control" placeholder="Cliquez ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
 	            <label><input type="checkbox" ng-model="answer.correct"/> Correcte ?</label><br>
 	            <label><input type="checkbox" ng-model="answer.ziw"/> Zéro si erreur</label><br>
 	       </div>
@@ -121,7 +122,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <div class="form-group">
 	       <div class="well well-explaination col-sm-12">
 	         <legend>Explication</legend>
-	         <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]"></text-angular>
+	         <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]" placeholder="Cliquez ici pour rédiger l'explication"></text-angular>
 	       </div>
 	     </div>
 	     <div ng-if="answer.explaination_image != ''">
