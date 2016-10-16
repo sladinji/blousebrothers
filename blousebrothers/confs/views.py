@@ -133,6 +133,10 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
         return reverse('confs:detail',
                        kwargs={'slug': self.request.conf.slug})
 
+    def get_success_url(self):
+        return reverse('confs:update',
+                       kwargs={'slug': self.object.slug})
+
     def form_valid(self, form):
         if form.is_valid():
             self.object = form.save(commit=False)

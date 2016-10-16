@@ -5,16 +5,37 @@
 <div class="submenu">
   <ul>
     <li>
-	<span class="numtip">1</span> <a href="{% url 'confs:edit' object.slug %}"> {% trans "Choix du type de sujet" %}</a>
+	<span class="numtip">1</span>
+	{% if object %}
+       	<a href="{% url 'confs:edit' object.slug %}">
+	{% endif %}
+	       	{% trans "Choix du type de sujet" %}
+	{% if object %}
+	</a>
+	{% endif %}
 	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     </li>
     <li>
-	<span class="numtip">2</span> <a href="{% url 'confs:update' object.slug %}"> {% trans "Rédaction des questions" %}</a>
+	<span class="numtip">2</span> 
+	{% if object %}
+	<a href="{% url 'confs:update' object.slug %}">
+	{% endif %}
+	       	{% trans "Rédaction des questions" %}
+	{% if object %}
+	</a>
+	{% endif %}
 	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     </li>
     <li>
-	{% if object.slug and object.edition_progress == 100 %}
-	<span class="numtip">3</span> <a href="{% url 'confs:final' object.slug %}">{% trans "Finalisation" %}</a>
+	{% if object and object.slug and object.edition_progress == 100 %}
+	<span class="numtip">3</span>
+	{% if object %}
+       	<a href="{% url 'confs:final' object.slug %}">
+	{% endif %}
+		{% trans "Finalisation" %}
+	{% if object %}
+	</a>
+	{% endif %}
 	{% else %}
 	<span class="numtip">3</span> {% trans "Finalisation" %} {{ object.edition_progress }}%
 	{% endif %}
