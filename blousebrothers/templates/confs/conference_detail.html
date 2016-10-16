@@ -28,7 +28,7 @@
   	  <strong>Type :</strong> {{object.type}}<br>
   	  <strong>Items :</strong> {{object.items.all | join:", "}}<br>
   	  <strong>Specialités :</strong> {{object.specialities.all | join:", "}}<br>
-  	  <strong>Résumé :</strong> {{object.abstract |default:"<i>aucun</i>"}}<br>
+  	  <strong>Esprit du dossier :</strong> {{object.summary|default:"<i>aucun</i>"}}<br>
 	  <br>
 	  {% if object.type == 'DCP' %}
 	  <legend>Énoncé</legend><p> {{ object.statement | default:"<i>aucun</i>"}}<p>
