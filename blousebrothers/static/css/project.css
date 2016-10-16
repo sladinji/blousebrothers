@@ -292,3 +292,10 @@ ul li.active a {
     width: 150px;
     height: 150px;
 }
+.notcorrect strong {
+	background-color: rgba(255, 0, 0, 0.52);
+}
+
+.correct strong {
+	background-color: rgba(24, 255, 0, 0.69);
+}

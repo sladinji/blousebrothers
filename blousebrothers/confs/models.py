@@ -126,6 +126,8 @@ def answer_image_directory_path(answer_image, filename):
 
 
 class Answer(models.Model):
+    class Meta:
+        ordering = ['index']
     question = models.ForeignKey(Question, related_name="answers")
     answer = models.TextField(_("Proposition"), blank=True, null=True)
     explaination = models.TextField(_("Explication"), blank=True, null=True)
