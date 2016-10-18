@@ -60,6 +60,7 @@
     <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %}">
         {# Main content goes in this 'layout' block #}
         {% block layout %}{% endblock %}
+	{% block angular_end %}{% endblock %}
 
         {# Scripts loaded from a CDN. #}
         {% block cdn_scripts %}

@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout_angular.html" %}
 {% load static %}{% load i18n %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
@@ -7,8 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="ng-scope" ng-app='djangular-bb'>
-<div ng-controller="ConfFormCtrl" class="container" ng-cloak >
+<div class="container">
 <toaster-container toaster-options="{'time-out': 1000}"></toaster-container>
 {% comment %}
 AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
@@ -137,11 +136,21 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   </fieldset>
 	   </form>
 	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
-	   <button class="btn pull-right" ng-click="next_question()" ng-disabled="questions.indexOf(question) >= 14">Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-	  <h2 class="text-center">Sujet complété à {{ progress | number : 0 }}%</h2>
+	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+	   <button ng-if="questions.indexOf(question) == 14" class="btn pull-right" ng-click="next_question()" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+	  <div ng-if="conference.edition_progress != 100">
+	    <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}%</h2>
+	  </div>
+	  <div ng-if="conference.edition_progress == 100">
+ 	    {% endverbatim %}
+            <a href="{% url 'confs:final' object.slug %}">
+ 	    {% verbatim %}
+	      <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}% passer à la dernière étape !</h2>
+	    </a>
+	  </div>
 	  <div class="progress">
-	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ progress }}%">
-		<span class="sr-only">{{ progress }}% Complete</span>
+	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ conference.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ conference.edition_progress }}%">
+		<span class="sr-only">{{ conference.edition_progress }}% Complete</span>
 	    </div>
 	  </div>
 	  {% endverbatim %}
@@ -152,7 +161,6 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	</aside>
 
 
-</div>
 </div>
 {% endblock content %}
 

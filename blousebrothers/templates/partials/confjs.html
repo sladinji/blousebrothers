@@ -169,7 +169,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	     $scope.total_q = out_data['total_q'];
 	     $scope.written_q = out_data['written_q'];
 	     $scope.valid_q = out_data['valid_q'];
-	     $scope.progress = out_data['progress'];
+	     $scope.conference = out_data['conference']
   	     toaster.pop('success', "Sauvegarde auto OK", "");
 	     {% if user.is_superuser %}
 	     setKeyWords();
