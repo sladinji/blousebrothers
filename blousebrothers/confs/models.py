@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from oscar.models.fields import AutoSlugField
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils.safestring import mark_safe
 
 
 class Conference(models.Model):
@@ -41,8 +42,10 @@ class Conference(models.Model):
                                 default = Decimal(0.50),
                                 validators=[MinValueValidator(Decimal(0.50)),
                                             MaxValueValidator(100)],
-                                help_text=_('Vous récupérerez 85% de la au delà du prix minimum de 0,50€.')
+                                help_text=mark_safe(
+                                    _("Une commission de 10% du prix de vente + 10 centimes est soustraite à chaque vente réalisée. <a href='/cgu'>Voir nos conditions générales d'utilisation</a>."))
                                 )
+    deleted = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
