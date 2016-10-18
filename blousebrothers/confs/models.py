@@ -1,11 +1,13 @@
 from __future__ import unicode_literals, absolute_import
 
 import re
+from decimal import Decimal
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from oscar.models.fields import AutoSlugField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Conference(models.Model):
@@ -35,6 +37,12 @@ class Conference(models.Model):
                                    )
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
+    price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
+                                default = Decimal(0.50),
+                                validators=[MinValueValidator(Decimal(0.50)),
+                                            MaxValueValidator(100)],
+                                help_text=_('Vous récupérerez 85% de la au delà du prix minimum de 0,50€.')
+                                )
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
