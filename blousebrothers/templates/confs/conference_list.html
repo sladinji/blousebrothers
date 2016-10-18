@@ -11,8 +11,9 @@
     <div class="list-group">
         {% for conference in conference_list %}
           <a href="{% url 'confs:detail' conference.slug %}" class="list-group-item">
-            <h4 class="list-group-item-heading">{{ conference.title }}</h4>
+		  <h4 class="list-group-item-heading">{{ conference.title }} ({{ conference.summary }}) complétée à {{ conference.edition_progress }}%</h4>
           </a>
+
         {% endfor %}
 
     </div>
