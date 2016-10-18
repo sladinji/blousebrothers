@@ -46,7 +46,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	        <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre du sujet"/><br />
 	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
 	        </form>
-	        <a class="btn" ng-click="isImagesDiplayed = !isImagesDiplayed">
+	        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
 	              <div ng-if="isImagesDiplayed">
 	                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
 	              </div>
@@ -64,14 +64,6 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 			  accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
 		      <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
 		  <br><br>
-		  Image:
-		  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
-		      <span class="progress" ng-show="f.progress >= 0">
-			  <div style="width:{{f.progress}}%"  
-			       ng-bind="f.progress + '%'"></div>
-		      </span>
-		  </div>     
-		  {{errorMsg}}
 		</div>
 	    </div>
 	    <br>
@@ -95,14 +87,6 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
   	            accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
   	        <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
   	    <br><br>
-  	    Image:
-  	    <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
-  	        <span class="progress" ng-show="f.progress >= 0">
-  	            <div style="width:{{f.progress}}%"  
-  	                 ng-bind="f.progress + '%'"></div>
-  	        </span>
-  	    </div>     
-  	    {{errorMsg}}
   
 	  </div>       
 	  <br>

@@ -82,7 +82,7 @@ class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView
     @allow_remote_invocation
     def sync_data(self, edit_data):
         # process in_data
-        conf, question, answers, images = edit_data
+        conf, question, answers, images, qimages = edit_data
         conf.pop('items')
         conf.pop('specialities')
         conf_pk = conf.pop('pk')
@@ -92,6 +92,8 @@ class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView
             Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
         for image in images:
             ConferenceImage.objects.filter(pk=image.pop('pk')).update(**image)
+        for image in qimages:
+            QuestionImage.objects.filter(pk=image.pop('pk')).update(**image)
         return analyse_conf(Conference.objects.get(pk=conf_pk))
 
     @allow_remote_invocation
