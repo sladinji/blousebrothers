@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}Suppression de {{ object.title}}{% endblock %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+	<p>Confirmez vous la suppression de la conférence "{{ object }}" ?</p>
+	<input type="submit" value="Oui" />
+        <a class="btn btn-primary" href="{% url 'confs:detail' object.slug %}">Non</a>
+</form>
+{% endblock content %}
