@@ -9,7 +9,7 @@
 {% block submenu %}
       <a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
      Rédaction complétée à {{ object.edition_progress }}%
-      <a class="btn btn-primary" href="{% url 'confs:delete' object.slug %}"><span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span> Supprimer la conférence</a>
+      <a class="btn btn-primary pull-right" href="{% url 'confs:delete' object.slug %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer la conférence</a>
 {% endblock %}
 {% block content %}
 <div class="container">
