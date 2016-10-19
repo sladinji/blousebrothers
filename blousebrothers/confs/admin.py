@@ -27,11 +27,18 @@ class ItemAdmin(admin.ModelAdmin):
     inlines = [ItemKWInlne,]
 
 class ConferenceAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('title', 'summary', 'owner', 'edition_progress')
+    list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted')
+    list_filter= ('deleted',)
     inlines = [QuestionInline, ]
     exclude = ['owner', 'summary', 'type']
     filter_horizontal = ['items', 'specialities']
     search_fields = ['summary', 'title', 'questions__answers__answer', 'questions__answers__explaination']
+
+    def get_queryset(self, request):
+        """
+        Change default model manager to see deleted conference in Admin.
+        """
+        return  Conference.all_objects
 
 
 admin.site.register(Conference, ConferenceAdmin)

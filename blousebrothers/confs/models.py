@@ -10,8 +10,21 @@ from oscar.models.fields import AutoSlugField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.safestring import mark_safe
 
+class ConfManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+class AdminConfManager(models.Manager):
+    """
+    Admin manager return all objects.
+    """
+    def get_queryset(self):
+        return super().get_queryset()
 
 class Conference(models.Model):
+    objects = ConfManager()
+    all_objects = AdminConfManager()
+
     TYPE_CHOICES = (
         ('DCP', _('DCP')),
         ('QI', _('QI')),

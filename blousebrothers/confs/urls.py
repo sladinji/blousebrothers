@@ -34,6 +34,11 @@ urlpatterns = [
         name='update'
     ),
     url(
+        regex=r'^(?P<slug>[\w.@+-]+)/delete$',
+        view=views.ConferenceDeleteView.as_view(),
+        name='delete'
+    ),
+    url(
         regex=r'^(?P<slug>[\w.@+-]+)/final$',
         view=views.ConferenceFinalView.as_view(),
         name='final'

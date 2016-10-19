@@ -16,7 +16,7 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Conference
-        exclude = ['owner', 'edition_progress', 'images', 'statement', 'title', 'type', 'summary']
+        fields = ['items', 'specialities', 'price']
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
@@ -43,7 +43,6 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
 
     class Meta:
         model = Conference
-        exclude = ['owner', 'edition_progress', 'items', 'specialities', 'images', 'statement']
+        fields = ['title', 'type', 'summary']
 
     form_name = 'conf_form'
-    field_order = ['title', 'type', 'summary']

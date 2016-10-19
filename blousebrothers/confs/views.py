@@ -4,7 +4,7 @@ from datetime import datetime
 import re
 
 from django.views.generic import TemplateView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
@@ -17,6 +17,7 @@ from django.views.generic import (
     UpdateView,
     CreateView,
     FormView,
+    DeleteView,
 )
 
 from blousebrothers.shortcuts.auth import BBConferencierReqMixin
@@ -47,6 +48,23 @@ class ConferenceRedirectView(BBConferencierReqMixin, RedirectView):
         return reverse('confs:detail',
                        kwargs={'slug': self.request.conf.slug})
 
+
+class ConferenceDeleteView(BBConferencierReqMixin, DeleteView):
+    template_name = 'confs/conference_delete.html'
+    model = Conference
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Override delete method to simply update object attribute deleted=True.
+        """
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.deleted = True
+        self.object.save()
+        return HttpResponseRedirect(success_url)
+
+    def get_success_url(self):
+        return reverse('confs:list')
 
 class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView):
     template_name = 'confs/conference_update.html'
