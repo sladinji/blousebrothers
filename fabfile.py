@@ -13,3 +13,4 @@ def deploy():
         run("git pull origin master")
         run("docker-compose build")
         run("docker-compose up -d")
+        run("docker-compose run django ./manage.py migrate")
