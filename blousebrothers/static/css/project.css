@@ -305,3 +305,9 @@ ul li.active a {
 	margin-top: 5px;
 	padding-top: 9px;
 }
+
+@media print {
+  .content {
+    display: none;  /* hide whole page */
+  }
+}
