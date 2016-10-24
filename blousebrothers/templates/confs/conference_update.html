@@ -43,8 +43,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	    <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
 	        {% verbatim %}
 	        <form novalidate class="question-form">
-	        <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre du sujet"/><br />
-	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Énoncé" rows="10"></textarea><br />
+	        <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Cliquez ici pour éditer le titre du sujet"/><br />
+	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Cliquez ici pour rédiger l'énoncé" rows="10"></textarea><br />
 	        </form>
 	        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
 	              <div ng-if="isImagesDiplayed">
@@ -74,7 +74,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		  <legend>Question {{ question.index + 1 }} <a name="question"> </a> </legend>
 	    <form novalidate class="question-form">
 		    <label><select class="selectpicker" ng-model="question.coefficient"><option ng-repeat="option in [1,2,3,4,5,6,7,8,9,10]" value="{{option}}">{{option}}</option></select> Coefficient </label><br>
-		    <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Énoncé"></textarea><br />
+		    <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Cliquez ici pour rédiger l'énoncé de la question"></textarea><br />
 	    </form>
 
 	    <div ng-repeat="image in questionimages">
