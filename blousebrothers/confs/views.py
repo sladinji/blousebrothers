@@ -2,10 +2,11 @@
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
 import re
+import logging
 
 from django.views.generic import TemplateView
-from django.http import JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.core.mail import mail_admins
@@ -33,6 +34,7 @@ from .models import (
 )
 from .forms import ConferenceForm, ConferenceFinalForm
 
+logger = logging.getLogger(__name__)
 
 class ConferenceDetailView(BBConferencierReqMixin, DetailView):
     model = Conference
@@ -261,20 +263,26 @@ class AnswerCRUDView(BBConferencierReqMixin, NgCRUDView):
 
 
 class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
+    email_template = '''
+Nom : {}
+Email : {}
+Lien : {}{}{}'''
 
     def get(self, request, *args, **kwargs):
         if 'Iwanabe' in request.GET:
             request.user.wanabe_conferencier = True
             request.user.wanabe_conferencier_date = datetime.now()
             request.user.save()
-            mail_admins('Demande pour être conférencier',
-                       '''
-Nom : {}
-Email : {}
-Lien : 'https://blousebrothers.fr/catfishusers/user/{}/change/'''.format(request.user.name,
-                                                                        request.user.email,
-                                                                        request.user.id),
-                        )
+            msg = self.email_template.format(request.user.name,
+                                             request.user.email,
+                                             'https://' if request.is_secure() else 'http://',
+                                             request.get_host(),
+                                             reverse('admin:users_user_change',
+                                                     args=(request.user.id,)
+                                                     )
+                                             )
+            logger.info(msg)
+            mail_admins('Demande pour être conférencier', msg)
 
         return render(request, 'confs/wanabe_conferencier.html')
 
