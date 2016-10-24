@@ -1,18 +1,23 @@
 from __future__ import unicode_literals, absolute_import
 
 import re
+import os
+import uuid
 from decimal import Decimal
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
-from oscar.models.fields import AutoSlugField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.safestring import mark_safe
+from oscar.models.fields import AutoSlugField
+
 
 class ConfManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
+
 
 class AdminConfManager(models.Manager):
     """
@@ -20,6 +25,7 @@ class AdminConfManager(models.Manager):
     """
     def get_queryset(self):
         return super().get_queryset()
+
 
 class Conference(models.Model):
     objects = ConfManager()
@@ -52,7 +58,7 @@ class Conference(models.Model):
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
-                                default = Decimal(0.50),
+                                default=Decimal(0.50),
                                 validators=[MinValueValidator(Decimal(0.50)),
                                             MaxValueValidator(100)],
                                 help_text=mark_safe(
@@ -85,8 +91,13 @@ class Conference(models.Model):
 
 def conf_directory_path(conf_image, filename):
     return '{0}/conf_{1}/{2}'.format(conf_image.conf.owner.username,
-                                conf_image.conf.id,
-                                filename)
+                                     conf_image.conf.id,
+                                     "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
+                                                              filename
+                                                              ),
+                                                   os.path.splitext(filename)[-1]
+                                                   )
+                                     )
 
 
 class ConferenceImage(models.Model):
@@ -115,6 +126,7 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class ItemKeyWord(models.Model):
     item = models.ForeignKey('Item', related_name='kwords')
@@ -145,8 +157,13 @@ class Question(models.Model):
 
 def answer_image_directory_path(answer_image, filename):
     return '{0}/conf_{1}/answers/{2}'.format(answer_image.question.conf.owner.username,
-                                answer_image.question.conf.id,
-                                filename)
+                                             answer_image.question.conf.id,
+                                             "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
+                                                                      filename
+                                                                      ),
+                                                           os.path.splitext(filename)[-1]
+                                                           )
+                                             )
 
 
 class Answer(models.Model):
@@ -161,6 +178,7 @@ class Answer(models.Model):
     ziw = models.BooleanField(_("Zéro si erreur"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
 
+
 @receiver(models.signals.pre_delete, sender=Answer)
 def auto_delete_answer_image_on_delete(sender, instance, **kwargs):
     """Deletes file from filesystem
@@ -172,8 +190,13 @@ def auto_delete_answer_image_on_delete(sender, instance, **kwargs):
 
 def question_image_directory_path(question_image, filename):
     return '{0}/conf_{1}/questions/{2}'.format(question_image.question.conf.owner.username,
-                                question_image.question.conf.id,
-                                filename)
+                                               question_image.question.conf.id,
+                                               "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
+                                                                        filename
+                                                                        ),
+                                                             os.path.splitext(filename)[-1]
+                                                             )
+                                               )
 
 
 class QuestionImage(models.Model):
