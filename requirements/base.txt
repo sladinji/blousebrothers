@@ -62,4 +62,4 @@ django-multiupload
 django-mailgun
 django-select2
 django-activeurl
-
+django-cookie-law

@@ -38,6 +38,7 @@ DJANGO_APPS = [
     # Admin
     'django.contrib.admin',
     'nested_admin',
+    'cookielaw',
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
