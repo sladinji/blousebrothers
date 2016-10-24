@@ -271,7 +271,7 @@ class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
                        '''
 Nom : {}
 Email : {}
-Lien : 'https://blousebrothers.fr/admin/users/user/{}/change/'''.format(request.user.name,
+Lien : 'https://blousebrothers.fr/catfish/users/user/{}/change/'''.format(request.user.name,
                                                                         request.user.email,
                                                                         request.user.id),
                         )
