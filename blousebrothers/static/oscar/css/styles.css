@@ -2303,7 +2303,7 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: 20px;
-  font-size: 21px;
+  font-size: 16px;
   line-height: inherit;
   color: #333333;
   border: 0;
@@ -2748,6 +2748,35 @@ select[multiple].input-lg {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.btn, input[type="submit"] {
+	color: #fff;
+	display: inline-block;
+	padding: 9px 25px;
+	text-align: center;
+	text-transform: uppercase;
+	-webkit-transition: all 0.3s ease 0s;
+	-o-transition: all 0.3s ease 0s;
+	transition: all 0.3s ease 0s;
+	background: transparent;
+	position: relative;
+	background-color: #4281a4;
+	font-size: 12px;
+	border: none;
+	border-radius: 0px;
+	margin-left: 5px;
+}
+[class^="pe-7s-"], [class*=" pe-7s-"] {
+	display: inline-block;
+	font-family: 'Pe-icon-7-stroke';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 .btn:focus,
 .btn:active:focus,
@@ -10777,35 +10806,7 @@ FOOTER
 	background-color: #c99947;
 	color: #fff;
 }
-.btn, input[type="submit"] {
-	color: #fff;
-	display: inline-block;
-	padding: 9px 25px;
-	text-align: center;
-	text-transform: uppercase;
-	-webkit-transition: all 0.3s ease 0s;
-	-o-transition: all 0.3s ease 0s;
-	transition: all 0.3s ease 0s;
-	background: transparent;
-	position: relative;
-	background-color: #111111;
-	font-size: 12px;
-	border: none;
-	border-radius: 0px;
-	margin-left: 5px;
-}
-[class^="pe-7s-"], [class*=" pe-7s-"] {
-	display: inline-block;
-	font-family: 'Pe-icon-7-stroke';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
+
 .box-control {
 	width: auto;
 	float: right;

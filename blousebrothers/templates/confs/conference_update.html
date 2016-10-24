@@ -57,8 +57,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
 		  <div ng-repeat="image in conferenceimages">
 		    <img src="{{ static_media(image.image) }}"/>
-		    <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
-		    <a class="btn btn-primary" href="" ng-click="deleteimg(image, conferenceimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image</a>
+		    <input ng-model="image.caption" class="material_form form-control" placeholder="Cliquez ici pour éditer le légende de l'image" required="false" type="text"/>
+		    <a class="btn btn-danger" href="" ng-click="deleteimg(image, conferenceimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image &nbsp;</a>
 		  </div>
 		  <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'conf')"
 			  accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
@@ -79,8 +79,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 
 	    <div ng-repeat="image in questionimages">
 	      <img src="{{ static_media(image.image) }}"/>
-	      <input ng-model="image.caption" class="material_form form-control" placeholder="Légende" required="false" type="text"/>
-	      <a class="btn btn-primary" href="" ng-click="deleteimg(image, questionimages)">Supprimer l'image</a>
+	      <input ng-model="image.caption" class="material_form form-control" placeholder="Cliquez ici pour éditer la légende de l'image" required="false" type="text"/>
+	      <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
 	    </div>
 
   	    <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
@@ -94,13 +94,17 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   <fieldset>
 	   <legend>Réponses {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque réponse et définissez au moins une réponse juste)'}} </legend>
 	   <div class="well well-answer" ng-repeat="answer in answers">
-	     <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
 	     <div class="form-group">
 	       <div class="col-sm-12">
-	            <input ng-model="answer.answer" class="material_form form-control" placeholder="Cliquez ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+		    <div class="col-sm-11">
+	              <input ng-model="answer.answer" class="material_form form-control" placeholder="Cliquez ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+		    </div>
+		    <div class="col-sm-1">
+		      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
+		    </div>
 	            <label><input type="checkbox" ng-model="answer.correct"/> Correcte ?</label><br>
 	            <label><input type="checkbox" ng-model="answer.ziw"/> Zéro si erreur</label><br>
-		    <p>Caractères spéciaux : ® × ÷ ± ≠ ‰ √ ≤ ≥ < > α β γ δ Δ ε θ κ λ µ π ρ σ Σ φ ϕ Ψ ω Ω</p>
+		    <i class="txt-grey">Caractères spéciaux : ® × ÷ ± ≠ ‰ √ ≤ ≥ < > α β γ δ Δ ε θ κ λ µ π ρ σ Σ φ ϕ Ψ ω Ω</i>
 	       </div>
 	     </div>
 	     <div class="form-group">
@@ -111,7 +115,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     </div>
 	     <div ng-if="answer.explaination_image != ''">
 	     <img src="{{ static_media(answer.explaination_image) }}"/>
-	     <a class="btn btn-primary" href="" ng-click="deleteansimg(answer)">Supprimer l'image</a>
+	     <a class="btn btn-danger" href="" ng-click="deleteansimg(answer)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image &nbsp;</a>
 	     </div>
 	     <button class="btn btn-primary" type="file" ngf-select="selected_answer = uploadFiles($file, $invalidFiles, answer)"
 	             accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">

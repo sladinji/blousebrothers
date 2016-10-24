@@ -170,7 +170,7 @@ ul.djng-field-errors li.valid::before {
 }
 
 .well-explaination{
-  background-color: #ead2ac;
+  background-color: lightgray;
 }
 
 .well-title{
@@ -181,6 +181,7 @@ ul.djng-field-errors li.valid::before {
     font-weight:bold;
     opacity:0.2;
     z-index: 1000;
+    margin-top: -17px;
 }    
 
 .illustrations{
@@ -310,4 +311,8 @@ ul li.active a {
   .content {
     display: none;  /* hide whole page */
   }
+}
+
+.txt-grey {
+	color: grey;
 }
