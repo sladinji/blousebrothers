@@ -95,7 +95,7 @@ img {
 
 .bb-light-grey, .bb-hover-light-grey:hover {
 	color: #000 !important;
-	background-color: #ead2ac !important;
+	background-color: gray;
 }
 
 .bb-margin-right {
@@ -115,11 +115,6 @@ ul.bb-ul {
 ul.bb-ul li {
 	padding: 6px 2px 6px 16px;
 	border-bottom: 1px solid #ddd;
-}
-
-.bb-padding-16 {
-	padding-top: 16px !important;
-	padding-bottom: 16px !important;
 }
 
 .bb-container {
@@ -228,6 +223,7 @@ ul.djng-field-errors li.valid::before {
 
 .ititle {
 	font-size: 20px;
+	height: 35px;
 }
 .ta-editor {
   height: auto;
@@ -246,8 +242,18 @@ ul.djng-field-errors li.valid::before {
 	margin-top:40px;
 }
 
-.tips.bb-container.bb-light-grey {
-	padding-left: 25px;
+.tips{
+	padding-left: 15px;
+	font-size: 18pt !important;
+	color: #fff !important;
+	padding-top: 6px !important;
+	padding-bottom: 6px !important;
+}
+.tips-bottom {
+	padding-left: 16px;
+	font-size: 11pt !important;
+	padding-top: 15px !important;
+	padding-bottom: 15px !important;
 }
 .numtip{
     display: inline-block;
@@ -265,7 +271,7 @@ ul.djng-field-errors li.valid::before {
 }
 .submenu {
     padding-top: 17px;
-    padding-left: 97px;
+    padding-left: 72px;
     display: inline-block;
 }
 
@@ -315,4 +321,8 @@ ul li.active a {
 
 .txt-grey {
 	color: grey;
+}
+
+.qi-form {
+	margin-bottom: -10px;
 }

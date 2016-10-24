@@ -1102,7 +1102,7 @@ h6,
   font-size: 12px;
 }
 p {
-  margin: 0 0 10px;
+ 15margin: 0 0 10px;
 }
 .lead {
   margin-bottom: 20px;
@@ -2764,7 +2764,7 @@ select[multiple].input-lg {
 	font-size: 12px;
 	border: none;
 	border-radius: 0px;
-	margin-left: 5px;
+	margin-left: 0px;
 }
 [class^="pe-7s-"], [class*=" pe-7s-"] {
 	display: inline-block;

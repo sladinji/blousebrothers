@@ -18,16 +18,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	</aside>
 
 	<div class="col-md-9" >
-	  Mots clés trouvés :
-	  {% if user.is_superuser %}
-	  {% verbatim %}
-	  <ul>
-		  <li ng-repeat="x in kwords">{{ x }}</li>
-	  </ul>
-	  {% endverbatim %}
-	  {% endif %}
 	  <div ng-if="conference.type == 'QI'">
-	    <form novalidate class="question-form">
+	    <form novalidate class="qi-form question-form">
 	    <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br/>
 	    </form>
 	  </div>
