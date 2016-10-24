@@ -7,9 +7,9 @@
 {% block title %}{{ object.title}}{% endblock %}
 
 {% block submenu %}
-      <a class="btn btn-primary" href="{% url 'confs:edit' object.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
+      <a class="btn" href="{% url 'confs:edit' object.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
      Rédaction complétée à {{ object.edition_progress }}%
-      <a class="btn btn-primary pull-right" href="{% url 'confs:delete' object.slug %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer la conférence</a>
+      <a class="btn btn-danger pull-right" href="{% url 'confs:delete' object.slug %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer la conférence</a>
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -47,9 +47,7 @@
 	  {% endif %}
       <!-- Your Stuff: Custom user template urls -->
     </div>
-    <h2>Questions
-    <a class="btn btn-primary pull-right" href="{% url 'confs:update' object.slug %}">Editer les questions</a>
-    </h2>
+    <h2>Questions</h2>
    
     {% for question in object.questions.all|dictsort:"index" %}
     <div class="well well-white">

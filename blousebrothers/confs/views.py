@@ -140,7 +140,10 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
     slug_url_kwarg = 'slug'
 
     def get_queryset(self):
-        return self.model.objects.filter(owner=self.request.user).all()
+        if self.request.user.is_superuser:
+            return self.model.objects.all()
+        else :
+            return self.model.objects.filter(owner=self.request.user).all()
 
 
 class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):

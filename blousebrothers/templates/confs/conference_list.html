@@ -6,13 +6,18 @@
 
 <div class="container">
 
-	<h2 class="blouse-font">{% trans 'Mes confs' %}</h2>
+	<h2>{% trans 'Mes confs' %}</h2>
 
     <div class="list-group">
         {% for conference in conference_list %}
           <a href="{% url 'confs:detail' conference.slug %}" class="list-group-item">
-		  <h4 class="list-group-item-heading">{{ conference.title }} ({{ conference.summary }}) complétée à {{ conference.edition_progress }}%</h4>
+		  <h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong> <i>- {{ conference.summary }} -</i></h4>
           </a>
+	   <div class="progress">
+		<div class="progress-bar" role="progressbar" aria-valuenow="{{conference.edition_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{conference.edition_progress}}%">
+			{{conference.edition_progress}}%
+		</div>
+	   </div>
 
         {% endfor %}
 
