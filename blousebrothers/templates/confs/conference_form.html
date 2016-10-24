@@ -2,6 +2,7 @@
 {% load static %}{% load i18n %}
 {% load crispy_forms_tags %}
 {% load djng_tags %}
+{% load tinycontent_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block styles %}
@@ -19,22 +20,8 @@
 
     <div class='row'>
 	<aside class="col-md-3">
-	    <div style="max-width:400px;">
-	      <header class="tips bb-container bb-light-grey bb-padding-16">
-	      <h3>Conseils <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> </h3>
-	      </header>
-	      <ul class="list" > 
-		      <li>Un prix juste, c'est plus de ventes</li>
-		      <li>Evitez tout terme subjectif </li>
-		      <li>Justifiez tout de manière détaillée</li>
-		      <li>Mettez des liens vers les conf de consensus</li>
-		      <li>Pensez à la physiopath et à l'anat</li>
-		      <li>Ne plagiez rien</li>
-		      <li>Une seule notion par question</li>
-		      <li>Pas de réponses trop faciles</li>
-		      <li>Mettez des icono</li>
-	      </ul>
-	    </div>
+	{% tinycontent 'redaction_tips' %}
+	{% endtinycontent %}
 	</aside>
 	<div id="subject" class="col-md-9" >
 	  <div class="tabbable dashboard col-md-12">

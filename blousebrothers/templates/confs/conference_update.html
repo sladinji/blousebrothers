@@ -1,5 +1,7 @@
 {% extends "layout_angular.html" %}
-{% load static %}{% load i18n %}
+{% load static %}
+{% load i18n %}
+{% load tinycontent_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
@@ -15,6 +17,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
     <div class='row'>
 	<aside class="col-md-3 hidden-sm hidden-xs">
 	{% include 'partials/nav_questions.html' %}
+	{% tinycontent 'redaction_tips' %}
+	{% endtinycontent %}
 	</aside>
 
 	<div class="col-md-9" >
