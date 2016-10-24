@@ -18,6 +18,8 @@ import environ
 
 ROOT_DIR = environ.Path(__file__) - 3  # (blousebrothers/config/settings/common.py - 3 = blousebrothers/)
 APPS_DIR = ROOT_DIR.path('blousebrothers')
+COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = True
 
 env = environ.Env()
 
@@ -40,6 +42,7 @@ DJANGO_APPS = [
     'nested_admin',
     'cookielaw',
     'tinycontent',
+    'compressor',
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
@@ -224,6 +227,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # MEDIA CONFIGURATION

@@ -64,3 +64,4 @@ django-select2
 django-activeurl
 django-cookie-law
 django-tinycontent
+django_compressor

@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load cookielaw_tags %}
+{% load compress %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -45,9 +46,11 @@
 
         {# Additional CSS - specific to certain pages #}
         {% block extrastyles %}
+	{% compress css %}
 	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
 	<link href="{% static 'djng/css/styles.css' %}" rel="stylesheet" />
 	<link href="{% static 'djng/css/bootstrap3.css' %}" rel="stylesheet" />
+	{% endcompress %}
         {% endblock %}
 
         {% block extrahead %}{% endblock %}

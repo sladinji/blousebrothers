@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load category_tags %}
 {% load currency_filters %}
+{% load compress %}
 
 
 {% block styles %}
@@ -12,6 +13,7 @@
         files in your project, then set USE_LESS = True in your
         settings file. This will enable the on-the-fly less compiler.
     {% endcomment %}
+    {% compress css %}
     {% if use_less %}
         <link rel="stylesheet/less" type="text/css" href="{% static "oscar/less/styles.less" %}" />
     {% else %}
@@ -23,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "oscar/css/datetimepicker.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "cookielaw/css/cookielaw.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "css/project.css" %}" />
+    {% endcompress %}
 {% endblock %}
 
 {% block layout %}
@@ -138,6 +141,7 @@
 
 {# Local scripts #}
 {% block scripts %}
+    {% compress js %}
     {{ block.super }}
     <script type="text/javascript" src="{% static "js/project.js" %}"></script>
     <script type="text/javascript" src="{% static "cookielaw/js/cookielaw.js" %}"></script>
@@ -148,6 +152,7 @@
 
     <script src="{% static "oscar/js/bootstrap-datetimepicker/bootstrap-datetimepicker.js" %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static "oscar/js/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.all.js" %}" type="text/javascript" charset="utf-8"></script>
+    {% endcompress %}
 {% endblock %}
 
 {% block extrascripts %}
