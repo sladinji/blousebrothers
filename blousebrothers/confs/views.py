@@ -8,6 +8,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
+from django.core.mail import mail_admins
 from djng.views.crud import NgCRUDView
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
 from django.views.generic import (
@@ -266,6 +267,15 @@ class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
             request.user.wanabe_conferencier = True
             request.user.wanabe_conferencier_date = datetime.now()
             request.user.save()
+            mail_admins('Demande pour être conférencier',
+                       '''
+Nom : {}
+Email : {}
+Lien : 'https://blousebrothers.fr/admin/users/user/{}/change/'''.format(request.user.name,
+                                                                        request.user.email,
+                                                                        request.user.id),
+                        )
+
         return render(request, 'confs/wanabe_conferencier.html')
 
 
