@@ -326,3 +326,7 @@ ul li.active a {
 .qi-form {
 	margin-bottom: -10px;
 }
+
+.invalidquestion {
+	color: #d9534f;
+}
