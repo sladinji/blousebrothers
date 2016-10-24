@@ -33,7 +33,6 @@ from .models import (
 from .forms import ConferenceForm, ConferenceFinalForm
 
 
-
 class ConferenceDetailView(BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
@@ -65,6 +64,7 @@ class ConferenceDeleteView(BBConferencierReqMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('confs:list')
+
 
 class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView):
     template_name = 'confs/conference_update.html'
@@ -133,7 +133,6 @@ class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView
         return ret
 
 
-
 class ConferenceListView(BBConferencierReqMixin, ListView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
@@ -171,12 +170,13 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
+
 class ConferenceFinalView(BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_final.html'
     form_class = ConferenceFinalForm
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
-    model=Conference
+    model = Conference
 
     def get_success_url(self):
         return reverse('confs:list')
@@ -188,44 +188,52 @@ class ConferenceFinalView(BBConferencierReqMixin, UpdateView):
         else:
             txt = self.object.get_all_txt()
             for item in Item.objects.exclude(
-                id__in = self.object.items.all()
+                id__in=self.object.items.all()
             ).all():
                 for kw in item.kwords.all():
                     if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
                         items.append(item)
                         break
-        context = super().get_context_data(**{'items':items})
+        context = super().get_context_data(**{'items': items})
 
         return context
+
 
 class ConferenceEditView(BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
-    model=Conference
+    model = Conference
 
     def get_redirect_url(self):
-        return reverse('confs:detail',
+        return reverse('confs:update',
                        kwargs={'slug': self.request.conf.slug})
+
+    def get_success_url(self):
+        return reverse('confs:update',
+                       kwargs={'slug': self.object.slug})
+
 
 class ConferenceCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Conference
+
 
 class ConferenceImageCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
-        if 'conf' in self.request.GET :
+        if 'conf' in self.request.GET:
             return self.model.objects.filter(
                 conf_id=self.request.GET['conf']
             ).order_by('index', 'date_created')
+
 
 class QuestionCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = Question
 
     def get_queryset(self):
-        if 'conf' in self.request.GET :
+        if 'conf' in self.request.GET:
             return self.model.objects.filter(
                 conf_id=self.request.GET['conf']).order_by('index')
 
@@ -234,7 +242,7 @@ class QuestionImageCRUDView(BBConferencierReqMixin, NgCRUDView):
     model = QuestionImage
 
     def get_queryset(self):
-        if 'question_id' in self.request.GET :
+        if 'question_id' in self.request.GET:
             return self.model.objects.filter(
                 question_id=self.request.GET['question_id']
             ).order_by('index', 'date_created')
@@ -288,4 +296,3 @@ class UploadAnswerImage(BBConferencierReqMixin, TemplateView):
         answer.save()
         data = {"url": answer.explaination_image.url}
         return JsonResponse(data)
-
