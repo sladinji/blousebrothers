@@ -123,8 +123,6 @@ DEFAULT_FILE_STORAGE = 'config.settings.production.MediaRootS3BotoStorage'
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
 MEDIA_URL = 'https://s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
-COMPRESS_URL = 'https://s3.amazonaws.com/%s/compress/' % AWS_STORAGE_BUCKET_NAME
-COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 
 # Static Assets
