@@ -9811,11 +9811,11 @@ FOOTER
     border: none;
     padding-left: 0!important;
 }
-.footer .our-service ul li a{
-    color: #888888;
-}
-.footer .our-service ul li a:hover{
+.footer a{
     color: #c99947;
+}
+.footer a:hover{
+    color: #888888;
 }
 .footer .widget_social .social a{
     width: 44px;
@@ -9828,15 +9828,15 @@ FOOTER
     -o-border-radius: 50%;
     border-radius: 50%;
     margin: 0 3px;
-    color: #2c2c2c;
     text-align: center;
     font-size: 24px;
-    background-color: #fff;
     margin-bottom: 10px;
-}
-.footer .widget_social .social a:hover{
     background-color:#c99947;
     color: #fff; 
+}
+.footer .widget_social .social a:hover{
+    background-color: #fff;
+    color: #2c2c2c;
 }
 .footer .footer-bottom{
     margin-top: 60px;

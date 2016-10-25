@@ -293,6 +293,12 @@ ul li.active a {
 	color: #c99947;
 }
 
+ul.bb-ul li.active {
+	background-color: #c99947;
+}
+ul.bb-ul li.active a {
+	color: #fff;
+}
 .social-circle {
     background-repeat: no-repeat;
     background-position: 50%;

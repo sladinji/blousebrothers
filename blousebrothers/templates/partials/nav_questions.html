@@ -4,7 +4,7 @@
 Questions
 </header>
 <ul class="bb-ul">
-	<li ng-repeat="x in questions">
+	<li ng-repeat="x in questions" class="{{ x.pk == question.pk ? 'active' : ''}}">
 		<a href ng-click="question_selected(x)" class="{{ valid_q.indexOf(x.pk) !== -1 ? 'validquestion' : 'invalidquestion'}}">
 			<i class="fa fa-{{ valid_q.indexOf(x.pk) !== -1 ? 'check' : 'exclamation-triangle'}}  fa-fw"></i>
 			{{ $index + 1 }} : {{x.question || 'à compléter' | limitTo: 20}} ...
