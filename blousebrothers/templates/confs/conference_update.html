@@ -77,7 +77,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	    <form novalidate class="question-form">
 	      <div class="col-sm-12">
 	        <div class="col-sm-3">
-	          <label><select class="selectpicker" ng-model="question.coefficient"><option ng-repeat="option in [1,2,3,4,5,6,7,8,9,10]" value="{{option}}">{{option}}</option></select> Coefficient </label><br>
+			<strong>Coefficient : {{ question.coefficient }}</strong>
+			<input type="range" ng-model="question.coefficient" value="question.coefficient" max="10" min="1" step="1">
 	        </div>
 	        <div class="col-sm-9">
 	          <span class='well-title'>Question {{ question.index + 1 }} </span>
