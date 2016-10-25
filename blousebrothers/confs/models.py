@@ -11,7 +11,17 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.safestring import mark_safe
-from autoslug import AutoSlugField
+
+from autoslug import AutoSlugField as RealAutoSlugField
+
+class AutoSlugField(RealAutoSlugField):
+    # XXX: Work around https://bitbucket.org/neithere/django-autoslug/issues/34/django-migrations-fail-if-autoslugfield
+    def deconstruct(self):
+        name, path, args, kwargs = super(AutoSlugField, self).deconstruct()
+        if 'manager' in kwargs:
+            del kwargs['manager']
+        return name, path, args, kwargs
+
 
 
 class ConfManager(models.Manager):
