@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.safestring import mark_safe
-from oscar.models.fields import AutoSlugField
+from autoslug import AutoSlugField
 
 
 class ConfManager(models.Manager):
@@ -46,7 +46,7 @@ class Conference(models.Model):
     type = models.CharField(_("Type"), max_length=10, choices=TYPE_CHOICES,
                             blank=False, default='DP')
     slug = AutoSlugField(_('Slug'), max_length=128, unique=True,
-                         populate_from='title')
+                         populate_from='title', manager=all_objects)
     summary = models.CharField(_('Esprit du dossier'), blank=False, null=False, max_length=140,
                                help_text=_('Ex: "dossier très pointu et monothématique sur la fibrillation auriculaire"'
                                            ' ou "dossier transversal de révisions classiques sur lupus et grossesse" '))
