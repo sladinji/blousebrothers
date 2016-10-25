@@ -190,7 +190,7 @@ msgstr "Attention:"
 #: blousebrothers/templates/account/email.html:47
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
-"an e-mail address so you can receive notifications, reset your password, etc."
+"an e-mail address so you can receive notifications, your password, etc."
 msgstr ""
 "Vous n'avez pas encore indiqué d'adresse email. Vous devriez en indiquer une "
 "afin qu'il soit possible de vous renvoyer votre mot de passe, des notifications, etc"
@@ -304,7 +304,7 @@ msgstr "Changer le mot de passe"
 #: blousebrothers/templates/account/password_reset_done.html:6
 #: blousebrothers/templates/account/password_reset_done.html:12
 msgid "Password Reset"
-msgstr "Effacer le mot de passe"
+msgstr "Changer le mot de passe"
 
 #: blousebrothers/templates/account/password_reset.html:19
 msgid ""
@@ -316,7 +316,7 @@ msgstr ""
 
 #: blousebrothers/templates/account/password_reset.html:24
 msgid "Reset My Password"
-msgstr "Effacer mon mot de passe"
+msgstr "Changer mon mot de passe"
 
 #: blousebrothers/templates/account/password_reset.html:27
 msgid "Please contact us if you have any trouble resetting your password."
@@ -356,7 +356,7 @@ msgstr "Votre mot de passe a bien été changé"
 #: blousebrothers/templates/account/password_set.html:12
 #: blousebrothers/templates/account/password_set.html:17
 msgid "Set Password"
-msgstr ""
+msgstr "Définir le mot de passe"
 
 #: blousebrothers/templates/account/signup.html:14
 msgid "Signup"
