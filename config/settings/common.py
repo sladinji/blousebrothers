@@ -118,6 +118,7 @@ NEW_RELIC_APP_NAME = env('NEW_RELIC_APP_NAME', default="")
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ("""Julien Almarcha""", 'julien.almarcha@gmail.com'),
+    ("""Guillaume Debellemanière""", 'guillaumedebel@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
