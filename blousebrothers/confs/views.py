@@ -270,7 +270,8 @@ Lien : {}{}{}'''
 
     def get(self, request, *args, **kwargs):
         if 'Iwanabe' in request.GET:
-            request.user.wanabe_conferencier = True
+            request.user.is_conferencier = True
+            request.user.wanabe_conferencier = False
             request.user.wanabe_conferencier_date = datetime.now()
             request.user.save()
             msg = self.email_template.format(request.user.name,
@@ -282,7 +283,7 @@ Lien : {}{}{}'''
                                                      )
                                              )
             logger.info(msg)
-            mail_admins('Demande pour être conférencier', msg)
+            mail_admins('Passage conférencier', msg)
 
         return render(request, 'confs/wanabe_conferencier.html')
 

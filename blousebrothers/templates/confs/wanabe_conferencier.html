@@ -6,14 +6,14 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      {% if user.wanabe_conferencier %}
+      {% if user.is_conferencier %}
 
-      <h2>Votre demande à bien été prise en compte</h2>
-      <p> Un responsable va prendre contact avec toi afin de valider ta demande et t'expliquer dans les détails notre 
-      fonctionnement.
+      <h2>Tu peux maintenant rédiger des sujets</h2>
+      <p> 
           <strong> Assure toi d'avoir renseigné une adresse email ou un numéro de téléphone
-		  valide dans <a href="{% url "users:update" %}">ton profil</a>.
+		  valide dans <a href="{% url "users:update" %}">ton profil</a> 
 	  </strong>
+	  afin que nous puissions te contacter.
       </p>
       {% else %}
       <h2>Tu souhaites proposer des sujets ?</h2>
