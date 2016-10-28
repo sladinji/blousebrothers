@@ -72,7 +72,7 @@ class Conference(models.Model):
                                 validators=[MinValueValidator(Decimal(0.50)),
                                             MaxValueValidator(100)],
                                 help_text=mark_safe(
-                                    _("Une commission de 10% du prix de vente + 10 centimes est soustraite à chaque vente réalisée. <a href='/cgu'>Voir nos conditions générales d'utilisation</a>."))
+                                    _(""))
                                 )
     deleted = models.BooleanField(default=False)
 
