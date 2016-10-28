@@ -2,6 +2,7 @@
 
 {% get_providers as socialaccount_providers %}
 
+<div class="login social">
 {% for provider in socialaccount_providers %}
 {% if provider.id == "openid" %}
 {% for brand in provider.get_brands %}
@@ -10,5 +11,6 @@
 {% endfor %}
 {% endif %}
   <a title="Connexion avec {{provider.name}}" 
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img src="/static/images/{{provider.name|lower}}-button64.png"></img></a>
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name|lower}}"></i></a>
 {% endfor %}
+</div>

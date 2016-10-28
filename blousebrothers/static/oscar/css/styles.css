@@ -9817,7 +9817,7 @@ FOOTER
 .footer a:hover{
     color: #888888;
 }
-.footer .widget_social .social a{
+.social a{
     width: 44px;
     height: 44px;
     line-height: 44px;
@@ -9833,6 +9833,17 @@ FOOTER
     margin-bottom: 10px;
     background-color:#c99947;
     color: #fff; 
+}
+.login.social a{
+    width: 66px;
+    height: 66px;
+    line-height: 66px;
+    background-color: #000;
+    display: inline-block;
+    font-size: 38px;
+}
+.login.social a:hover{
+    background-color:#c99947;
 }
 .footer .widget_social .social a:hover{
     background-color: #fff;
