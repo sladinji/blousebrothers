@@ -97,7 +97,10 @@ class User(AbstractUser):
             return self.university and self.first_name and self.last_name and self.degree
         return True
 
+
 class University(models.Model):
+    class Meta:
+            ordering = ["name"]
     name = models.CharField(_("Nom"), max_length=128, blank=False, null=False)
     """University name"""
 
