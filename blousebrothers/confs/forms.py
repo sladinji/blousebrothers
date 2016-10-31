@@ -16,7 +16,7 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Conference
-        fields = ['items', 'specialities', 'price']
+        fields = ['items', 'specialities', 'price', 'for_sale']
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(

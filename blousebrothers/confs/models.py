@@ -75,6 +75,11 @@ class Conference(models.Model):
                                     _(""))
                                 )
     deleted = models.BooleanField(default=False)
+    for_sale = models.BooleanField(_("Accessible"), default=False,
+                                   help_text=_("Un sujet accessible apparaitra dans les recherches et pourra être "
+                                               "acheté au prix que vous avez fixé."
+                                               )
+                                   )
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
