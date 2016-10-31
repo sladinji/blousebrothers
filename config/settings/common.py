@@ -65,7 +65,9 @@ LOCAL_APPS = [
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + get_core_apps(
-      ['blousebrothers.dashboard']
+      ['blousebrothers.dashboard',
+       'blousebrothers.catalogue',
+       ]
 )
 SITE_ID = 1
 # MIDDLEWARE CONFIGURATION
