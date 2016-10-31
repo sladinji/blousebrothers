@@ -25,8 +25,8 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
         ),
         queryset=Item.objects.all(),
         required=True,
-        help_text=mark_safe(_('Ne sélectionnez que les items abordés de manière '
-                    '<strong>significative</strong> dans votre dossier'))
+        help_text=mark_safe(_('Ne sélectionner que les items abordés de manière '
+                    '<strong>significative</strong> dans le dossier'))
             )
     specialities = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(

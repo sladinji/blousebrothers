@@ -41,13 +41,13 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	        <form novalidate class="question-form">
 		  <div class="col-sm-12">
 		    <div class="col-sm-9">
-	              <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Cliquez ici pour éditer le titre du sujet"/><br />
+	              <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Clique ici pour éditer le titre du sujet"/><br />
 		    </div>
 		    <div class="col-sm-3">
 		      <span class='well-title'>Sujet</span>
 		    </div>
 		  </div>
-	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Cliquez ici pour rédiger l'énoncé" rows="10"></textarea><br />
+	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Clique ici pour rédiger l'énoncé" rows="10"></textarea><br />
 	        </form>
 	        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
 	              <div ng-if="isImagesDiplayed">
@@ -60,7 +60,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
 		  <div ng-repeat="image in conferenceimages">
 		    <img src="{{ static_media(image.image) }}"/>
-		    <input ng-model="image.caption" class="material_form form-control" placeholder="Cliquez ici pour éditer le légende de l'image" required="false" type="text"/>
+		    <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
 		    <a class="btn btn-danger" href="" ng-click="deleteimg(image, conferenceimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image &nbsp;</a>
 		  </div>
 		  <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'conf')"
@@ -84,12 +84,12 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	          <span class='well-title'>Question {{ question.index + 1 }} </span>
 	        </div>
 	      </div>
-	      <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Cliquez ici pour rédiger l'énoncé de la question"></textarea><br />
+	      <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Clique ici pour rédiger l'énoncé de la question"></textarea><br />
 	    </form>
 
 	    <div ng-repeat="image in questionimages">
 	      <img src="{{ static_media(image.image) }}"/>
-	      <input ng-model="image.caption" class="material_form form-control" placeholder="Cliquez ici pour éditer la légende de l'image" required="false" type="text"/>
+	      <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
 	      <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
 	    </div>
 
@@ -107,7 +107,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <div class="form-group">
 	       <div class="col-sm-12">
 		    <div class="col-sm-11">
-	              <input ng-model="answer.answer" class="material_form form-control" placeholder="Cliquez ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+	              <input ng-model="answer.answer" class="material_form form-control" placeholder="Clique ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
 		    </div>
 		    <div class="col-sm-1">
 		      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
@@ -120,7 +120,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <div class="form-group">
 	       <div class="well well-explaination col-sm-12">
 	         <legend>Explication</legend>
-	         <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]" placeholder="Cliquez ici pour rédiger l'explication"></text-angular>
+	         <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]" placeholder="Clique ici pour rédiger l'explication"></text-angular>
 	       </div>
 	     </div>
 	     <div ng-if="answer.explaination_image != ''">
