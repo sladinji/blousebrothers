@@ -1,5 +1,6 @@
 from decimal import Decimal as D
 from django.core.management.base import BaseCommand
+from django.core.files.base import ContentFile
 from oscar.core.loading import get_class, get_classes
 from oscar.apps.partner.models import Partner, StockRecord
 from blousebrothers.confs.models import Conference
@@ -31,6 +32,12 @@ class Command(BaseCommand):
         if conf.statement :
             prod.description += '\n' + conf.statement[:200] + "..."
         #prod.images.add(ProductImagei(
+        if conf.images.first() :
+            im = ProductImage(product=prod, display_order=1)
+            cim = conf.images.first()
+            #im.original.save(cim.image.filename, cim.image.read(), save=False)
+            im.original = cim.image
+            im.save()
         prod.conf = conf
         prod.save()
 

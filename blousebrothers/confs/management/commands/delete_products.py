@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
-from oscar.apps.catalogue.models import (
-    Product,
-    Category,
-    )
+from oscar.core.loading import get_class, get_classes
+
+Product, Category = get_classes('catalogue.models', ('Product', 'Category'))
 
 
 class Command(BaseCommand):
