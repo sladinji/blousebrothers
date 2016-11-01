@@ -19,6 +19,7 @@ class User(AbstractUser):
 
     DEGREE_LEVEL = (
         (None, '---'),
+        ('P1', _('P1')),
         ('P2', _('P2')),
         ('P3', _('P3')),
         ('M1', _('M1')),
