@@ -69,8 +69,6 @@ class Conference(models.Model):
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
                                 default=Decimal(0.50),
-                                validators=[MinValueValidator(Decimal(0.50)),
-                                            MaxValueValidator(100)],
                                 help_text=mark_safe(
                                     _(""))
                                 )
