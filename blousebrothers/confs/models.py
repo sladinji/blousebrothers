@@ -49,7 +49,8 @@ class Conference(models.Model):
     def __str__(self):
         return self.title
 
-    owner = models.ForeignKey('users.User', blank=False, null=False)
+    owner = models.ForeignKey('users.User', blank=False, null=False,
+                              related_name="created_confs")
     """ Owner/creator """
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     title = models.CharField(_('Titre'), blank=False, null=False, max_length=64)
