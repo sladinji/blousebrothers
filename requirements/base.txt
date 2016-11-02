@@ -64,4 +64,4 @@ django-select2
 django-activeurl
 django-cookie-law
 django-tinycontent
-
+stripe==1.38.0

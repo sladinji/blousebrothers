@@ -7,8 +7,12 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
-from shortuuidfield import ShortUUIDField
 from django.contrib import admin
+from django.dispatch import receiver
+from django.core.mail import mail_admins
+
+from allauth.account.signals import user_signed_up
+from shortuuidfield import ShortUUIDField
 
 AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
@@ -107,3 +111,24 @@ class University(models.Model):
 
     def __str__(self):
         return self.name
+
+email_template = '''
+Nom : {}
+Email : {}
+Lien : {}{}{}'''
+
+@receiver(user_signed_up, dispatch_uid="notify_signup")
+def notify_signup(request, user, **kwargs):
+    """
+    send a mail to admin
+    """
+    msg = email_template.format(user.name,
+                                user.email,
+                                'https://' if request.is_secure() else 'http://',
+                                request.get_host(),
+                                reverse('admin:users_user_change',
+                                        args=(user.id,)
+                                        )
+                                )
+    mail_admins('Nouvelle inscription', msg)
+

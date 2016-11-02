@@ -59,3 +59,6 @@ INSTALLED_APPS += ('django_extensions', )
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Your local stuff: Below this line define 3rd party library settings
+STRIPE_SECRET_KEY = "sk_test_2KQKtb6qy1MPyReB6Kr3petm"
+STRIPE_PUBLISHABLE_KEY = "pk_test_UbddRFpfPbpdIZqor6NZY5Zc"
+STRIPE_CURRENCY = "EUR"

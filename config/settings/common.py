@@ -68,6 +68,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + get_core_apps(
       ['blousebrothers.dashboard',
        'blousebrothers.catalogue',
+       'blousebrothers.checkout',
        ]
 )
 SITE_ID = 1
