@@ -67,6 +67,9 @@
       <div class="col-sm-12 {% if answer.correct %}correct{% else %}notcorrect{% endif %}">
 	      <strong>Réponse {{ answer.index | to_char }} <i class="fa fa-{% if answer.correct %}check"{% else %}times"{% endif %} aria-hidden="true"></i>:</strong> <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
 	      <strong>Explication :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | youtube | safe }}</p>
+	      {% if answer.explaination_image %}
+	      <img src="{{ answer.explaination_image.url }}"/>
+	      {% endif %}
       </div>
      {% endfor %}
    </div>
