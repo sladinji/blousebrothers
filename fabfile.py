@@ -1,10 +1,8 @@
 from __future__ import with_statement
 from fabric.api import *
 from fabric.contrib.console import confirm
-from fabric.context_managers import prefix
-from fabric.decorators import hosts
 
-env.hosts = ['blousebrothers.fr']
+env.hosts = ['dowst@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
 
 def deploy():
@@ -24,7 +22,7 @@ def futur():
             run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
     with cd(code_dir):
         run("git pull origin master")
-        with prefix("source preprodrc"):
+        with prefix("source blouserc"):
             run("docker-compose build")
             run("docker-compose up -d")
             run("docker-compose run django ./manage.py migrate")
@@ -41,10 +39,10 @@ def proddb():
             r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
 
     get("%s/backup.tgz" % code_dir)
-    local("cd blousebrothers.fr && tar xzf backup.tgz")
+    local("cd dowst@blousebrothers.fr && tar xzf backup.tgz")
     local("docker run --rm "
           "--volumes-from blousebrothers_postgres_1 "
-          "-v $(pwd)/blousebrothers.fr/backups:/backup "
+          "-v $(pwd)/dowst@blousebrothers.fr/backups:/backup "
           "blousebrothers_postgres cp /backup/%s /backups" % last)
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
