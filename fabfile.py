@@ -1,6 +1,8 @@
 from __future__ import with_statement
 from fabric.api import *
 from fabric.contrib.console import confirm
+from fabric.context_managers import prefix
+from fabric.decorators import hosts
 
 env.hosts = ['blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
@@ -14,6 +16,18 @@ def deploy():
         run("docker-compose build")
         run("docker-compose up -d")
         run("docker-compose run django ./manage.py migrate")
+
+@hosts('admin@futur.blousebrothers.fr')
+def futur():
+    with settings(warn_only=True):
+        if run("test -d %s" % code_dir).failed:
+            run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
+    with cd(code_dir):
+        run("git pull origin master")
+        with prefix("source preprodrc"):
+            run("docker-compose build")
+            run("docker-compose up -d")
+            run("docker-compose run django ./manage.py migrate")
 
 def proddb():
     """

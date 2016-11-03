@@ -1,0 +1,2 @@
+export COMPOSE_PROJECT_NAME=blousebrothers
+export COMPOSE_FILE=preprod.yml
