@@ -229,3 +229,38 @@ def auto_delete_question_image_on_delete(sender, instance, **kwargs):
     if instance.image:
         instance.image.delete()
 
+class Test(models.Model):
+    student = models.ForeignKey('users.User', blank=False, null=False,
+                              related_name="tests")
+    conf = models.ForeignKey('Conference', related_name='tests')
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    progress = models.PositiveIntegerField(_("Progression"), default=0)
+    result = models.PositiveIntegerField(_("Résultat"), default=0)
+    max_score = models.PositiveIntegerField(_("Résultat"), default=0)
+    score = models.PositiveIntegerField(_("Résultat"), default=0)
+    finished = models.BooleanField(default=False)
+    personal_note = models.TextField(_("Remarques personnelles"), blank=True, null=True,
+                                     help_text=_("Visible uniquement par toi, note ici les choses "
+                                                 "que tu veux retenir, ça pourra également te "
+                                                 "permettre de retrouver plus facilement ce dossier."
+
+                                                 )
+                                     )
+    date_started = models.DateTimeField(_("Début du test"), auto_now_add=True)
+    date_finished = models.DateTimeField(_("Fin du test"), auto_now_add=True)
+    time_taken = models.TimeField(_("Temps passé"))
+
+
+class TestAnswer(models.Model):
+    test = models.ForeignKey('Test', related_name='answers')
+    question = models.ForeignKey('Question', related_name='test_answers')
+    date_started = models.DateTimeField(_("Début"), auto_now_add=True)
+    date_finished = models.DateTimeField(_("Fin"), auto_now_add=True)
+    time_taken = models.TimeField(_("Temps passé"), default = 0)
+    given_answers = models.CharField(_("Réponses"), max_length=30, blank=True)
+    max_score = models.PositiveIntegerField(_("Résultat"), default=0)
+    score = models.PositiveIntegerField(_("Résultat"), default=0)
+
+    def set_score(self):
+        pass
+
