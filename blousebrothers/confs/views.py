@@ -12,6 +12,8 @@ from django.shortcuts import redirect, render
 from django.core.mail import mail_admins
 from djng.views.crud import NgCRUDView
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import Permission
 from django.views.generic import (
     DetailView,
     ListView,
@@ -21,8 +23,13 @@ from django.views.generic import (
     FormView,
     DeleteView,
 )
+from django.contrib.auth.mixins import UserPassesTestMixin
 
-from blousebrothers.shortcuts.auth import BBConferencierReqMixin
+from blousebrothers.shortcuts.auth import (
+    BBConferencierReqMixin,
+    ConferencePermissionMixin,
+    ConfRelatedObjPermissionMixin,
+)
 from blousebrothers.shortcuts.tools import analyse_conf
 from .models import (
     Conference,
@@ -51,7 +58,7 @@ class ConferenceRedirectView(BBConferencierReqMixin, RedirectView):
                        kwargs={'slug': self.request.conf.slug})
 
 
-class ConferenceDeleteView(BBConferencierReqMixin, DeleteView):
+class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, DeleteView):
     template_name = 'confs/conference_delete.html'
     model = Conference
 
@@ -69,7 +76,7 @@ class ConferenceDeleteView(BBConferencierReqMixin, DeleteView):
         return reverse('confs:list')
 
 
-class ConferenceUpdateView(BBConferencierReqMixin, JSONResponseMixin, UpdateView):
+class ConferenceUpdateView( BBConferencierReqMixin, JSONResponseMixin, UpdateView):
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
@@ -149,9 +156,11 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
             return self.model.objects.filter(owner=self.request.user).all()
 
 
-class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
+class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, CreateView, FormView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
+    model = Conference
+    permission_required = ['confs.add_conference']
 
     # send the user back to their own page after a successful update
     def get_redirect_url(self):
@@ -177,7 +186,7 @@ class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
-class ConferenceFinalView(BBConferencierReqMixin, UpdateView):
+class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_final.html'
     form_class = ConferenceFinalForm
     slug_field = 'slug'
@@ -205,7 +214,7 @@ class ConferenceFinalView(BBConferencierReqMixin, UpdateView):
         return context
 
 
-class ConferenceEditView(BBConferencierReqMixin, UpdateView):
+class ConferenceEditView( BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     slug_field = 'slug'
@@ -221,11 +230,11 @@ class ConferenceEditView(BBConferencierReqMixin, UpdateView):
                        kwargs={'slug': self.object.slug})
 
 
-class ConferenceCRUDView(BBConferencierReqMixin, NgCRUDView):
+class ConferenceCRUDView(ConferencePermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = Conference
 
 
-class ConferenceImageCRUDView(BBConferencierReqMixin, NgCRUDView):
+class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
@@ -235,7 +244,7 @@ class ConferenceImageCRUDView(BBConferencierReqMixin, NgCRUDView):
             ).order_by('index', 'date_created')
 
 
-class QuestionCRUDView(BBConferencierReqMixin, NgCRUDView):
+class QuestionCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = Question
 
     def get_queryset(self):
@@ -244,7 +253,7 @@ class QuestionCRUDView(BBConferencierReqMixin, NgCRUDView):
                 conf_id=self.request.GET['conf']).order_by('index')
 
 
-class QuestionImageCRUDView(BBConferencierReqMixin, NgCRUDView):
+class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = QuestionImage
 
     def get_queryset(self):
@@ -254,7 +263,7 @@ class QuestionImageCRUDView(BBConferencierReqMixin, NgCRUDView):
             ).order_by('index', 'date_created')
 
 
-class AnswerCRUDView(BBConferencierReqMixin, NgCRUDView):
+class AnswerCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = Answer
 
     def get_queryset(self):
@@ -273,6 +282,8 @@ Lien : {}{}{}'''
             request.user.is_conferencier = True
             request.user.wanabe_conferencier = False
             request.user.wanabe_conferencier_date = datetime.now()
+            permission = Permission.objects.get(name='Can add conference')
+            request.user.user_permissions.add(permission)
             request.user.save()
             msg = self.email_template.format(request.user.name,
                                              request.user.email,
@@ -288,7 +299,7 @@ Lien : {}{}{}'''
         return render(request, 'confs/wanabe_conferencier.html')
 
 
-class UploadQuestionImage(BBConferencierReqMixin, TemplateView):
+class UploadQuestionImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
 
     def post(self, request, **kwargs):
         question_id = kwargs['question_id']
@@ -299,7 +310,7 @@ class UploadQuestionImage(BBConferencierReqMixin, TemplateView):
         return JsonResponse(data)
 
 
-class UploadConferenceImage(BBConferencierReqMixin, TemplateView):
+class UploadConferenceImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
 
     def post(self, request, **kwargs):
         conference_id = kwargs['conference_id']
@@ -310,7 +321,7 @@ class UploadConferenceImage(BBConferencierReqMixin, TemplateView):
         return JsonResponse(data)
 
 
-class UploadAnswerImage(BBConferencierReqMixin, TemplateView):
+class UploadAnswerImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
 
     def post(self, request, **kwargs):
         answer = Answer.objects.get(pk=kwargs['answer_id'])

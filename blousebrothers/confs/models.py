@@ -247,7 +247,7 @@ class Test(models.Model):
                                                  )
                                      )
     date_started = models.DateTimeField(_("Début du test"), auto_now_add=True)
-    date_finished = models.DateTimeField(_("Fin du test"), auto_now_add=True)
+    date_finished = models.DateTimeField(_("Fin du test"), default=None)
     time_taken = models.TimeField(_("Temps passé"))
 
 
@@ -255,9 +255,10 @@ class TestAnswer(models.Model):
     test = models.ForeignKey('Test', related_name='answers')
     question = models.ForeignKey('Question', related_name='test_answers')
     date_started = models.DateTimeField(_("Début"), auto_now_add=True)
-    date_finished = models.DateTimeField(_("Fin"), auto_now_add=True)
+    date_finished = models.DateTimeField(_("Fin"), default=None)
     time_taken = models.TimeField(_("Temps passé"), default = 0)
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True)
+    """String representing a list of checked answer (ex: [0, 1, 3])"""
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
     score = models.PositiveIntegerField(_("Résultat"), default=0)
 
