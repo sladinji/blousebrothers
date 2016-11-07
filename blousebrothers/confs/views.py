@@ -37,6 +37,7 @@ from .models import (
     ConferenceImage,
     QuestionImage,
     Item,
+    Test,
 )
 from .forms import ConferenceForm, ConferenceFinalForm
 
@@ -45,8 +46,6 @@ logger = logging.getLogger(__name__)
 class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
 
 
 class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, DeleteView):
@@ -77,9 +76,6 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
     """
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
-    # These next two lines tell the view to index lookups by conf
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
 
     # send the user back to their own page after a successful update
     def get_redirect_url(self):
@@ -144,14 +140,15 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
 class ConferenceListView(BBConferencierReqMixin, ListView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
+    paginate_by = 10
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            return self.model.objects.all()
+            return self.model.objects.order_by('-edition_progress').all()
         else :
-            return self.model.objects.filter(owner=self.request.user).all()
+            qry = self.model.objects.filter(owner=self.request.user)
+            qry = qry.order_by('edition_progress')
+            return qry.all()
 
 
 class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, CreateView, FormView):
@@ -187,8 +184,6 @@ class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, Crea
 class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_final.html'
     form_class = ConferenceFinalForm
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
     model = Conference
 
     def get_success_url(self):
@@ -215,8 +210,6 @@ class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, Upd
 class ConferenceEditView( ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
     model = Conference
 
     def get_redirect_url(self):
@@ -254,5 +247,15 @@ Lien : {}{}{}'''
             mail_admins('Passage conférencier', msg)
 
         return render(request, 'confs/wanabe_conferencier.html')
+
+class BuyedConferenceListView(BBConferencierReqMixin, ListView):
+    model = Test
+    # These next two lines tell the view to index lookups by conf
+    paginate_by = 10
+
+    def get_queryset(self):
+        qry = self.model.objects.filter(student=self.request.user)
+        qry = qry.order_by('progress')
+        return qry.all()
 
 

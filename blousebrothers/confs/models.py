@@ -102,6 +102,17 @@ class Conference(models.Model):
                     self.items.add(item)
                     break
 
+    @property
+    def icono(self):
+        """
+        Number of images available in this conference.
+        """
+        conf = self.images.count()
+        question = QuestionImage.objects.filter(question__conf=self).count()
+        answer = Answer.objects.filter(question__conf=self).exclude(explaination_image='').count()
+        return conf + question + answer
+
+
 
 def conf_directory_path(conf_image, filename):
     return '{0}/conf_{1}/{2}'.format(conf_image.conf.owner.username,
