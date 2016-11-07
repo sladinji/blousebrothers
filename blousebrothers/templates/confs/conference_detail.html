@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load youtube %}
 {% load bbtricks %}
+{% load cropping %}
 
 {% block title %}{{ object.title}}{% endblock %}
 
@@ -37,7 +38,7 @@
 	  {% for image in object.images.all %}
 	  <div class="illustrations" id="images_div">
 		  <figure>
-		  <img src="{{ image.image.url }}"/>
+		  <img src="{% cropped_thumbnail image "cropping" %}">
 		  <figcaption>{{ image.caption }}</figcaption>
 		  </figure>
 	  </div>
@@ -58,7 +59,7 @@
       {% for image in question.images.all %}
       <div class="illustrations" id="images_div">
 	      <figure>
-	      <img src="{{ image.image.url }}"/>
+	      <img src="{% cropped_thumbnail image "cropping" %}">
 	      <figcaption>{{ image.caption }}</figcaption>
 	      </figure>
       </div>
@@ -68,7 +69,7 @@
 	      <strong>Réponse {{ answer.index | to_char }} <i class="fa fa-{% if answer.correct %}check"{% else %}times"{% endif %} aria-hidden="true"></i>:</strong> <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
 	      <strong>Explication :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | youtube | safe }}</p>
 	      {% if answer.explaination_image %}
-	      <img src="{{ answer.explaination_image.url }}"/>
+	      <img src="{% cropped_thumbnail answer "cropping" %}">
 	      {% endif %}
       </div>
      {% endfor %}

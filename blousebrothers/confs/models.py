@@ -9,10 +9,10 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.safestring import mark_safe
 
 from autoslug import AutoSlugField as RealAutoSlugField
+from image_cropping import ImageCropField, ImageRatioField
 
 class AutoSlugField(RealAutoSlugField):
     # XXX: Work around https://bitbucket.org/neithere/django-autoslug/issues/34/django-migrations-fail-if-autoslugfield
@@ -115,7 +115,8 @@ def conf_directory_path(conf_image, filename):
 
 
 class ConferenceImage(models.Model):
-    image = models.ImageField(_("Image"), upload_to=conf_directory_path, max_length=255)
+    image = ImageCropField(_("Image"), upload_to=conf_directory_path, max_length=255,)
+    cropping = ImageRatioField('image', '430x360', free_crop=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Légende"), max_length=200, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
@@ -186,8 +187,9 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers")
     answer = models.TextField(_("Proposition"), blank=True, null=True)
     explaination = models.TextField(_("Explication"), blank=True, null=True)
-    explaination_image = models.ImageField(_("Image"), upload_to=answer_image_directory_path, max_length=255,
+    explaination_image = ImageCropField(_("Image"), upload_to=answer_image_directory_path, max_length=255,
                                            blank=True, null=True)
+    cropping = ImageRatioField('explaination_image', '430x360', free_crop=True)
     correct = models.BooleanField(_("Correct"), default=False)
     ziw = models.BooleanField(_("Zéro si erreur"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
@@ -214,7 +216,8 @@ def question_image_directory_path(question_image, filename):
 
 
 class QuestionImage(models.Model):
-    image = models.ImageField(_("Image"), upload_to=question_image_directory_path, max_length=255)
+    image = ImageCropField(_("Image"), upload_to=question_image_directory_path, max_length=255,)
+    cropping = ImageRatioField('image', '430x360', free_crop=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=200, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)

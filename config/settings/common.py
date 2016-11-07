@@ -13,6 +13,7 @@ from oscar.defaults import *
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.conf import Settings as thumbnail_settings
 
 import environ
 
@@ -54,6 +55,8 @@ THIRD_PARTY_APPS = [
     'djng',
     'django_select2',
     'django_activeurl',
+    'easy_thumbnails',
+    'image_cropping',
 ]
 
 # Apps specific for this project go here.
@@ -314,3 +317,8 @@ OSCAR_SHOP_NAME = "BlouseBrothers"
 OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
+
+THUMBNAIL_PROCESSORS = (
+    'image_cropping.thumbnail_processors.crop_corners',
+    ) + thumbnail_settings.THUMBNAIL_PROCESSORS
+

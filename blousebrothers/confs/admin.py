@@ -1,10 +1,18 @@
 from django.contrib import admin
-from .models import Conference, Item, Question, Speciality, QuestionImage, ItemKeyWord
+from .models import (
+    Conference, Item, Question, Speciality, QuestionImage, ItemKeyWord, ConferenceImage,
+    Answer,
+)
 import nested_admin
+from image_cropping import ImageCroppingMixin
 # Register your models here.
 
+class AnswerInline(ImageCroppingMixin, nested_admin.NestedTabularInline):
+    model = Answer
+    exclude = ['answer', 'explaination']
+    extra = 1
 
-class QuestionImageInline(nested_admin.NestedTabularInline):
+class QuestionImageInline(ImageCroppingMixin, nested_admin.NestedTabularInline):
     model = QuestionImage
     exclude = ['order', 'date_created']
     extra = 1
@@ -12,8 +20,8 @@ class QuestionImageInline(nested_admin.NestedTabularInline):
 
 class QuestionInline(nested_admin.NestedTabularInline):
     model = Question
-    exclude = ['order']
-    inlines = [QuestionImageInline]
+    exclude = ['question']
+    inlines = [QuestionImageInline, AnswerInline]
     extra = 1
 
 
@@ -26,10 +34,15 @@ class ItemKWInlne(nested_admin.NestedTabularInline):
 class ItemAdmin(admin.ModelAdmin):
     inlines = [ItemKWInlne,]
 
-class ConferenceAdmin(nested_admin.NestedModelAdmin):
+class ConferenceImage(ImageCroppingMixin, nested_admin.NestedTabularInline):
+    model = ConferenceImage
+    exclude = []
+    extra = 1
+
+class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
     list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted')
     list_filter= ('deleted',)
-    inlines = [QuestionInline, ]
+    inlines = [ConferenceImage, QuestionInline, ]
     exclude = ['owner', 'summary', 'type']
     filter_horizontal = ['items', 'specialities']
     search_fields = ['summary', 'title', 'questions__answers__answer', 'questions__answers__explaination']
