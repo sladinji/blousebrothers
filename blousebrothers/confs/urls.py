@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 from django.conf.urls import url
 
 from . import views
+from . import crud
 
 urlpatterns = [
     # URL pattern for the ConferenceListView
@@ -54,39 +55,43 @@ urlpatterns = [
         view=views.ConferenceEditView.as_view(),
         name='edit'
     ),
-    url(r'^crud/conference/?$',
-        views.ConferenceCRUDView.as_view(),
-        name='conference_crud_view'),
-
-    url(r'^conference/upload_image/(?P<conference_id>[0-9]+)$',
-        views.UploadConferenceImage.as_view(),
-        name='up_conf_img'),
-
-    url(r'^crud/conferenceimage/?$',
-        views.ConferenceImageCRUDView.as_view(),
-        name='conferenceimage_crud_view'),
-
-    url(r'^crud/question/?$',
-        views.QuestionCRUDView.as_view(),
-        name='question_crud_view'),
-
-    url(r'^crud/questionimage/?$',
-        views.QuestionImageCRUDView.as_view(),
-        name='questionimage_crud_view'),
-
-    url(r'^crud/answer/?$',
-        views.AnswerCRUDView.as_view(),
-        name='answer_crud_view'),
-
-    url(r'^answer/upload_image/(?P<answer_id>[0-9]+)$',
-        views.UploadAnswerImage.as_view(),
-        name='up_answer_img'),
-
     url(r'^wanabe_conferencier/?$',
         views.HandleConferencierRequest.as_view(),
         name='wanabe_conferencier'),
 
+        #####  ############  #####
+         ###   # CRUD API #   ###
+          #    ############    #
+
+    url(r'^crud/conference/?$',
+        crud.ConferenceCRUDView.as_view(),
+        name='conference_crud_view'),
+
+    url(r'^conference/upload_image/(?P<conference_id>[0-9]+)$',
+        crud.UploadConferenceImage.as_view(),
+        name='up_conf_img'),
+
+    url(r'^crud/conferenceimage/?$',
+        crud.ConferenceImageCRUDView.as_view(),
+        name='conferenceimage_crud_view'),
+
+    url(r'^crud/question/?$',
+        crud.QuestionCRUDView.as_view(),
+        name='question_crud_view'),
+
+    url(r'^crud/questionimage/?$',
+        crud.QuestionImageCRUDView.as_view(),
+        name='questionimage_crud_view'),
+
+    url(r'^crud/answer/?$',
+        crud.AnswerCRUDView.as_view(),
+        name='answer_crud_view'),
+
+    url(r'^answer/upload_image/(?P<answer_id>[0-9]+)$',
+        crud.UploadAnswerImage.as_view(),
+        name='up_answer_img'),
+
     url(r'^question/upload_image/(?P<question_id>[0-9]+)$',
-        views.UploadQuestionImage.as_view(),
+        crud.UploadQuestionImage.as_view(),
         name='up_question_img'),
 ]

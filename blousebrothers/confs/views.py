@@ -10,7 +10,6 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.core.mail import mail_admins
-from djng.views.crud import NgCRUDView
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import Permission
@@ -230,47 +229,6 @@ class ConferenceEditView( BBConferencierReqMixin, UpdateView):
                        kwargs={'slug': self.object.slug})
 
 
-class ConferenceCRUDView(ConferencePermissionMixin, BBConferencierReqMixin, NgCRUDView):
-    model = Conference
-
-
-class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
-    model = ConferenceImage
-
-    def get_queryset(self):
-        if 'conf' in self.request.GET:
-            return self.model.objects.filter(
-                conf_id=self.request.GET['conf']
-            ).order_by('index', 'date_created')
-
-
-class QuestionCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
-    model = Question
-
-    def get_queryset(self):
-        if 'conf' in self.request.GET:
-            return self.model.objects.filter(
-                conf_id=self.request.GET['conf']).order_by('index')
-
-
-class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
-    model = QuestionImage
-
-    def get_queryset(self):
-        if 'question_id' in self.request.GET:
-            return self.model.objects.filter(
-                question_id=self.request.GET['question_id']
-            ).order_by('index', 'date_created')
-
-
-class AnswerCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
-    model = Answer
-
-    def get_queryset(self):
-        if 'question' in self.request.GET:
-            return self.model.objects.filter(question_id=self.request.GET['question']).order_by("index")
-
-
 class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
     email_template = '''
 Nom : {}
@@ -299,33 +257,3 @@ Lien : {}{}{}'''
         return render(request, 'confs/wanabe_conferencier.html')
 
 
-class UploadQuestionImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
-
-    def post(self, request, **kwargs):
-        question_id = kwargs['question_id']
-        qimg = QuestionImage(question_id=question_id)
-        qimg.image = request.FILES['file']
-        qimg.save()
-        data = {"url": qimg.image.url}
-        return JsonResponse(data)
-
-
-class UploadConferenceImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
-
-    def post(self, request, **kwargs):
-        conference_id = kwargs['conference_id']
-        cimg = ConferenceImage(conf_id=conference_id)
-        cimg.image = request.FILES['file']
-        cimg.save()
-        data = {"url": cimg.image.url}
-        return JsonResponse(data)
-
-
-class UploadAnswerImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
-
-    def post(self, request, **kwargs):
-        answer = Answer.objects.get(pk=kwargs['answer_id'])
-        answer.explaination_image = request.FILES['file']
-        answer.save()
-        data = {"url": answer.explaination_image.url}
-        return JsonResponse(data)
