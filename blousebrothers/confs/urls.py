@@ -14,12 +14,6 @@ urlpatterns = [
         name='list'
     ),
 
-    # URL pattern for the ConferenceRedirectView
-    url(
-        regex=r'^~redirect/$',
-        view=views.ConferenceRedirectView.as_view(),
-        name='redirect'
-    ),
 
     # URL pattern for the ConferenceDetailView
     url(
@@ -59,9 +53,9 @@ urlpatterns = [
         views.HandleConferencierRequest.as_view(),
         name='wanabe_conferencier'),
 
-        #####  ############  #####
-         ###   # CRUD API #   ###
-          #    ############    #
+    #   #####  ############  #####   #
+    #    ###   # CRUD API #   ###    #
+    #     #    ############    #     #
 
     url(r'^crud/conference/?$',
         crud.ConferenceCRUDView.as_view(),

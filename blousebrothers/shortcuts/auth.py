@@ -1,6 +1,8 @@
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
+
 from blousebrothers.confs.models import Conference, Question, Answer
 
 
@@ -41,6 +43,9 @@ class ConferencePermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
             return True
         self.object = self.get_object()
         return self.object.owner == self.request.user
+
+    def handle_no_permission(self):
+        raise PermissionDenied
 
 
 class ConfRelatedObjPermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):

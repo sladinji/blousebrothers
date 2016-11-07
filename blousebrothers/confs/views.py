@@ -42,22 +42,18 @@ from .forms import ConferenceForm, ConferenceFinalForm
 
 logger = logging.getLogger(__name__)
 
-class ConferenceDetailView(BBConferencierReqMixin, DetailView):
+class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
 
-class ConferenceRedirectView(BBConferencierReqMixin, RedirectView):
-    permanent = False
-
-    def get_redirect_url(self):
-        return reverse('confs:detail',
-                       kwargs={'slug': self.request.conf.slug})
-
-
 class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, DeleteView):
+    """
+    View displayed to confirm deletion. Object are just flaged as deleted but are not
+    removed from db. Need to use admin interface to do so.
+    """
     template_name = 'confs/conference_delete.html'
     model = Conference
 
@@ -75,7 +71,10 @@ class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, De
         return reverse('confs:list')
 
 
-class ConferenceUpdateView( BBConferencierReqMixin, JSONResponseMixin, UpdateView):
+class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, JSONResponseMixin, UpdateView):
+    """
+    Main Angular JS interface where you can edit question, images...
+    """
     template_name = 'confs/conference_update.html'
     form_class = ConferenceForm
     # These next two lines tell the view to index lookups by conf
@@ -213,7 +212,7 @@ class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, Upd
         return context
 
 
-class ConferenceEditView( BBConferencierReqMixin, UpdateView):
+class ConferenceEditView( ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     slug_field = 'slug'
