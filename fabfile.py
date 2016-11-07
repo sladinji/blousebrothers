@@ -47,3 +47,12 @@ def proddb():
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")
+
+def get_migrations():
+    """
+    Remove local migration files et grab them from prod, nice to get a clean migration set.
+    """
+    local("sudo rm -rf blousebrothers/users/migrations/*")
+    local("sudo rm -rf blousebrothers/confs/migrations/*")
+    get("%s/blousebrothers/users/migrations/*.py" % code_dir, "blousebrothers/users/migrations/")
+    get("%s/blousebrothers/confs/migrations/*.py" % code_dir, "blousebrothers/confs/migrations/")
