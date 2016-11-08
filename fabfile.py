@@ -17,6 +17,9 @@ def deploy():
 
 @hosts('admin@futur.blousebrothers.fr')
 def futur():
+    """
+    Deploy on futur
+    """
     with settings(warn_only=True):
         if run("test -d %s" % code_dir).failed:
             run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
@@ -56,3 +59,12 @@ def get_migrations():
     local("sudo rm -rf blousebrothers/confs/migrations/*")
     get("%s/blousebrothers/users/migrations/*.py" % code_dir, "blousebrothers/users/migrations/")
     get("%s/blousebrothers/confs/migrations/*.py" % code_dir, "blousebrothers/confs/migrations/")
+
+@hosts('admin@futur.blousebrothers.fr')
+def futur_publish_confs():
+    """
+    Publish_confs on futur.
+    """
+    with cd(code_dir):
+        with prefix("source blouserc"):
+            run("docker-compose run django ./manage.py publish_confs")
