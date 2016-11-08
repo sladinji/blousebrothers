@@ -45,10 +45,3 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         if not self.request.user.gave_all_required_info():
             messages.error(self.request, _('Pour être conférencier, vous devez compléter le formulaire ci-dessous.'))
         return super().get_context_data(**kwargs)
-
-
-class UserListView(LoginRequiredMixin, ListView):
-    model = User
-    # These next two lines tell the view to index lookups by username
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
