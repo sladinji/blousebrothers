@@ -9,16 +9,9 @@
         {% block product_image %}
 	{% if product.conf %}
             <div class="image_container">
-            <ul class="nav nav-list">
-                {% for spe in product.conf.specialities.all %}
-		<li>{{ spe }}</li>
-		{% endfor %}
-		{% if product.conf.icono %}
-		<li><i><strong>Icono : {{ product.conf.icono }} images</strong></i></li>
-		{% endif %}
-	    </ul>
-            ({{ product.conf.items.all | slice:":3" | join:", "}}
-            </div>
+	    {{ product.conf.summary }}
+	    <p><i><strong>Icono : {{ product.conf.icono }} images</strong></i></p>
+	    </div>
 	{% else %}
             <div class="image_container">
                 {% with image=product.primary_image %}
