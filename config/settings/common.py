@@ -322,3 +322,5 @@ THUMBNAIL_PROCESSORS = (
     'image_cropping.thumbnail_processors.crop_corners',
     ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
+MANGOPAY_CLIENT_ID = "blousebrothers"
+MANGOPAY_PASSPHRASE = "op38EBPRsdSkU0rbPuduaoU0Ny7vegjo5TEPsv6bEdApDLShFT"

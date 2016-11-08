@@ -235,3 +235,6 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
 DEFAULT_HTTP_PROTOCOL = 'https'
+
+MANGOPAY_DEBUG_MODE = False
+MANGOPAY_BASE_URL = "https://api.mangopay.com"
