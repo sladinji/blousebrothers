@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = [
     'django_activeurl',
     'easy_thumbnails',
     'image_cropping',
+    'mangopay',
 ]
 
 # Apps specific for this project go here.

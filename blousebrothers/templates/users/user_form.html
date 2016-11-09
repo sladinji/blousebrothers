@@ -4,6 +4,8 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
+<div class="row">
+  <div class="col-md-6 col-sm-12">
     <h1>Modifier mes informations</h1>
     <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
         {% csrf_token %}
@@ -19,4 +21,9 @@
     <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
     <br>
     {% endcomment %}
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <h1>Gérer mon porte-monnaie</h1>
+  </div>
+</div>
 {% endblock %}

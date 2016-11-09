@@ -7,6 +7,7 @@ COPY ./requirements /requirements
 
 RUN pip install -r /requirements/production.txt
 RUN easy_install  /requirements/django_django_csv_exports-1.0.0-py3.5.egg
+RUN easy_install  /requirements/django_mangopay-0.2.8-py3.5.egg
 COPY ./i18n_oscar/django.* /usr/local/lib/python3.5/site-packages/oscar/locale/fr/LC_MESSAGES/
 
 RUN groupadd -r django && useradd -r -g django django

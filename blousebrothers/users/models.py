@@ -7,9 +7,9 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
-from django.contrib import admin
 from django.dispatch import receiver
 from django.core.mail import mail_admins
+from django_countries.fields import CountryField
 
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
@@ -93,6 +93,8 @@ class User(AbstractUser):
     """Degree level"""
     friends = models.ManyToManyField('self')
     """Friends"""
+    country_of_residence = CountryField(_("Pays de résidence"), default="FR")
+    nationality = CountryField(_("Nationalité"), default="FR")
 
     def gave_all_required_info(self):
         """Used for permission management"""

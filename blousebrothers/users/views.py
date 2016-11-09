@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import User
 from blousebrothers.shortcuts.auth import BBRequirementMixin
+from mangopay.models import MangoPayNaturalUser
 
 
 class UserDetailView(BBRequirementMixin, DetailView):
@@ -27,7 +28,9 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    fields = ['first_name', 'last_name', 'email', 'university', 'degree', 'mobile']
+    fields = ['first_name', 'last_name', 'address1', 'address2', 'zip_code',
+              'city', 'birth_date', 'email', 'university', 'degree', 'mobile',
+              'country_of_residence', 'nationality']
 
     # we already imported User in the view code above, remember?
     model = User
@@ -44,4 +47,5 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         if not self.request.user.gave_all_required_info():
             messages.error(self.request, _('Pour être conférencier, vous devez compléter le formulaire ci-dessous.'))
+        mango_user = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
         return super().get_context_data(**kwargs)

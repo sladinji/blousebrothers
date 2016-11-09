@@ -67,4 +67,13 @@ django-tinycontent
 stripe==1.38.0
 django-image-cropping
 easy_thumbnails
+django-countries
+
+# mongopay
 django-mangopay
+money
+django-jsonfield
+django-money
+django-moneyfield
+django-filepicker
+mangopaysdk==2.1.1
