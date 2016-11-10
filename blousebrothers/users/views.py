@@ -47,5 +47,5 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         if not self.request.user.gave_all_required_info():
             messages.error(self.request, _('Pour être conférencier, vous devez compléter le formulaire ci-dessous.'))
-        mango_user = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
+        mango_user, __ = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
         return super().get_context_data(**kwargs)
