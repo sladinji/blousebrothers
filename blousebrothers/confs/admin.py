@@ -43,7 +43,7 @@ class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
     list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted')
     list_filter= ('deleted',)
     inlines = [ConferenceImage, QuestionInline, ]
-    exclude = ['owner', 'summary', 'type']
+    exclude = ['summary', 'type']
     filter_horizontal = ['items', 'specialities']
     search_fields = ['summary', 'title', 'questions__answers__answer', 'questions__answers__explaination']
 
