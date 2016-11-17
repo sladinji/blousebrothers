@@ -65,3 +65,11 @@ STRIPE_CURRENCY = "EUR"
 
 MANGOPAY_DEBUG_MODE = True
 MANGOPAY_BASE_URL = "https://api.sandbox.mangopay.com"
+
+NOTEBOOK_ARGUMENTS = [
+        # exposes IP and port
+        '--ip=0.0.0.0',
+        '--port=8888',
+        # disables the browser
+        '--no-browser',
+]

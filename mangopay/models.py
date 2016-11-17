@@ -693,6 +693,17 @@ class MangoPayCardRegistration(models.Model):
             "cardRegistrationURL": card_registration.CardRegistrationURL}
         return preregistration_data
 
+    def handle_registration_data(self, registrationData):
+        client = get_mangopay_api_client()
+        card_registration = client.cardRegistrations.Get(self.mangopay_id)
+        card_registration.RegistrationData = "data="+registrationData
+        card_registration = client.cardRegistrations.Update(card_registration)
+        if card_registration.Status == 'VALIDATED' :
+            self.save_mangopay_card_id(card_registration.CardId)
+        else:
+            raise Exception("Card registration error {}".format(card_registration.ResultCode))
+
+
     def save_mangopay_card_id(self, mangopay_card_id):
         self.mangopay_card.mangopay_id = mangopay_card_id
         self.mangopay_card.save()

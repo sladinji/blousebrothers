@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+ "{{ user.birth_date }}"<br>
+ {{ mangopay_user.nationality }}<br>
+ {{ balance }}<br>
+ {{ wallet.id}}<br>
+ {{ card_registration.get_preregistration_data }}<br>
+<div class="col-sm-12">
+  <h1>Gérer mon porte-monnaie</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h1>Modifier mes informations</h1>
+    <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn">Valider</button>
+          </div>
+        </div>
+    </form>
+    {% comment multiple emails disabled %}
+    <h1>Gestion des emails</h1>
+    <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
+    <br>
+    {% endcomment %}
+  </div>
+</div>
+
+<form action="{{card.cardRegistrationURL}}" method="post">
+    <input type="hidden" name="data" value="{{card.preregistrationData}}" />
+    <input type="hidden" name="accessKeyRef" value="{{card.accessKey}}" />
+    <input type="hidden" name="returnURL" value="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{% url 'users:update' %}" />
+
+    <label for="cardNumber">Card Number</label>
+    <input type="text" name="cardNumber" value="" />
+    <div class="clear"></div>
+
+    <label for="cardExpirationDate">Expiration Date</label>
+    <input type="text" name="cardExpirationDate" value="" />
+    <div class="clear"></div>
+
+    <label for="cardCvx">CVV</label>
+    <input type="text" name="cardCvx" value="" />
+    <div class="clear"></div>
+
+    <input type="submit" value="Pay" />
+</form>
+{% for card_registrion in  mangopay_user.mangopay_card_registrations.all %}
+{{ card_registration }}
+{% endfor %}
+{% endblock %}

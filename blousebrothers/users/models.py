@@ -56,7 +56,7 @@ class User(AbstractUser):
     """Reference to the sponsor user"""
     uuid = ShortUUIDField(unique=True, db_index=True)
     """UUID than can be used in public link to identify user"""
-    birth_date = models.DateField(_("Date de naissance"), blank=True, null=True)
+    birth_date = models.DateField(_("Date de naissance"), blank=False, null=True)
     """Birth date."""
     address1 = models.CharField(_("Adresse 1"), blank=True, null=True, max_length=50)
     """Address first line"""
@@ -93,8 +93,8 @@ class User(AbstractUser):
     """Degree level"""
     friends = models.ManyToManyField('self')
     """Friends"""
-    country_of_residence = CountryField(_("Pays de résidence"), default="FR")
-    nationality = CountryField(_("Nationalité"), default="FR")
+    country_of_residence = CountryField(_("Pays de résidence"), default="FR", blank=False)
+    nationality = CountryField(_("Nationalité"), default="FR", blank=False)
 
     def gave_all_required_info(self):
         """Used for permission management"""

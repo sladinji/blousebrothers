@@ -26,4 +26,10 @@ urlpatterns = [
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
+    # Wallet
+    url(
+        regex=r'^~wallet/$',
+        view=views.UserWalletView.as_view(),
+        name='wallet'
+    ),
 ]
