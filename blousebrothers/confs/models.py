@@ -261,8 +261,8 @@ class Test(models.Model):
                                                  )
                                      )
     date_started = models.DateTimeField(_("Début du test"), auto_now_add=True)
-    date_finished = models.DateTimeField(_("Fin du test"), default=None)
-    time_taken = models.TimeField(_("Temps passé"))
+    date_finished = models.DateTimeField(_("Fin du test"), null=True)
+    time_taken = models.TimeField(_("Temps passé"), null=True)
 
 
 class TestAnswer(models.Model):
