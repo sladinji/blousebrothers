@@ -1,13 +1,7 @@
 import logging
-from datetime import datetime
 
 from django.views.generic import TemplateView
 from django.http import JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.core.urlresolvers import reverse
-from django.core.mail import mail_admins
-from django.contrib.auth.models import Permission
 
 from djng.views.crud import NgCRUDView
 
@@ -15,6 +9,7 @@ from blousebrothers.shortcuts.auth import (
     BBConferencierReqMixin,
     ConferencePermissionMixin,
     ConfRelatedObjPermissionMixin,
+    TestPermissionMixin,
 )
 from .models import (
     Conference,
@@ -22,6 +17,8 @@ from .models import (
     Answer,
     ConferenceImage,
     QuestionImage,
+    Test,
+    TestAnswer,
 )
 
 logger = logging.getLogger(__name__)
@@ -29,6 +26,14 @@ logger = logging.getLogger(__name__)
 
 class ConferenceCRUDView(ConferencePermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = Conference
+
+
+class TestCRUDView(TestPermissionMixin, NgCRUDView):
+    model = Test
+
+
+class TestAnswerCRUDView(TestPermissionMixin, NgCRUDView):
+    model = TestAnswer
 
 
 class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):

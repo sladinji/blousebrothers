@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% load static %}{% load i18n %}
+{% block title %}{% trans 'Confs' %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+	<h2>{% trans 'Mes confs' %}</h2>
+
+    <div class="list-group">
+        {% for test in test_list %}
+          <a href="{% url 'confs:test' test.conf.slug %}" class="list-group-item">
+		  <h4 class="list-group-item-heading"><strong>{{ test.conf.title }}</strong> <i>- {{ test.conf.summary }} -</i></h4>
+          </a>
+	   <div class="progress">
+		<div class="progress-bar" role="progressbar" aria-valuenow="{{test.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{test.progress}}%">
+			{{test.progress}}%
+		</div>
+	   </div>
+
+        {% endfor %}
+
+    </div>
+    {% include 'partials/pagination.html' %}
+</div>
+
+{% endblock content %}

@@ -14,6 +14,12 @@ urlpatterns = [
         name='list'
     ),
 
+    # URL pattern for the TestUpdateView
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/workinout$',
+        view=views.TestUpdateView.as_view(),
+        name='test'
+    ),
 
     # URL pattern for the ConferenceDetailView
     url(
@@ -53,6 +59,11 @@ urlpatterns = [
         views.HandleConferencierRequest.as_view(),
         name='wanabe_conferencier'),
 
+    url(r'^gottowork/?$',
+        views.BuyedConferenceListView.as_view(),
+        name='my_confs'),
+
+
     #   #####  ############  #####   #
     #    ###   # CRUD API #   ###    #
     #     #    ############    #     #
@@ -60,6 +71,14 @@ urlpatterns = [
     url(r'^crud/conference/?$',
         crud.ConferenceCRUDView.as_view(),
         name='conference_crud_view'),
+
+    url(r'^crud/test/?$',
+        crud.TestCRUDView.as_view(),
+        name='test_crud_view'),
+
+    url(r'^crud/test_answer/?$',
+        crud.TestAnswerCRUDView.as_view(),
+        name='test_answer_crud_view'),
 
     url(r'^conference/upload_image/(?P<conference_id>[0-9]+)$',
         crud.UploadConferenceImage.as_view(),

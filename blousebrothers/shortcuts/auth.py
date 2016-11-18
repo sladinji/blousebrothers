@@ -35,6 +35,20 @@ class BBConferencierReqMixin(LoginRequiredMixin):
             return super().get(request, *args, **kwargs)
 
 
+class TestPermissionMixin(UserPassesTestMixin):
+    """
+    Base class to test check student access to a test.
+    """
+
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        self.object = self.get_object()
+        return self.object.student == self.request.user
+
+    def handle_no_permission(self):
+        raise PermissionDenied
+
 class ConferencePermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
     permission_required = ['confs.add_conference']
 

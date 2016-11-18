@@ -1,0 +1,136 @@
+{% extends "layout_angular.html" %}
+{% load static %}
+{% load i18n %}
+{% load tinycontent_tags %}
+{% block title %}{% trans 'Confs' %}{% endblock %}
+
+
+{% block content %}
+<div class="container">
+<toaster-container toaster-options="{'time-out': 1000}"></toaster-container>
+{% comment %}
+AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
+{% endcomment %}
+    <div class='row'>
+	<aside class="col-md-3 hidden-sm hidden-xs">
+	{% include 'partials/nav_questions.html' %}
+	</aside>
+
+	<div class="col-md-9" >
+	  <div ng-if="conference.type == 'QI'">
+		  {{conference.title}}<br/>
+	  </div>
+	  <div ng-if="conference.type == 'DCP'">
+	    <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
+	          <div ng-if="isSubjectDiplayed">
+	            <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer le sujet du DCP
+	          </div>
+	          <div ng-if="!isSubjectDiplayed">
+	            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher le sujet du DCP
+	          </div>
+	    </a>
+	    <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
+	        {% verbatim %}
+	        <form novalidate class="question-form">
+		  <div class="col-sm-12">
+		    <div class="col-sm-9">
+			    <p class="ititle"/>{{conference.title}}</p>
+		    </div>
+		    <div class="col-sm-3">
+		      <span class='well-title'>Sujet</span>
+		    </div>
+		  </div>
+	        {% endverbatim %}
+		  <p>{{object.conf.statement|linebreaks}}</p>
+	        {% verbatim %}
+	        </form>
+	        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
+	              <div ng-if="isImagesDiplayed">
+	                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
+	              </div>
+	              <div ng-if="!isImagesDiplayed">
+	                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher les illustrations
+	              </div>
+	        </a>
+		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
+		  <div ng-repeat="image in conferenceimages">
+		    <img src="{{ static_media(image.image) }}"/>
+		    <figcaption>{{image.caption}}</figcaption>
+		  </div>
+		  <br><br>
+		</div>
+	    </div>
+	    <br>
+	  </div>
+		
+	  
+	  <div class="well well-white" ng-if="question">
+	    <form novalidate class="question-form">
+	      <div class="col-sm-12">
+	        <div class="col-sm-12">
+	          <span class='well-title'>Question {{ question.index + 1 }} </span>
+	        </div>
+	      </div>
+	      <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Clique ici pour rédiger l'énoncé de la question"></textarea><br />
+	    </form>
+
+	    <div ng-repeat="image in questionimages">
+	      <img src="{{ static_media(image.image) }}"/>
+	      <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
+	      <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
+	    </div>
+	  </div>       
+	  <br>
+	  <form class="form-horizontal">
+	   <fieldset>
+	   <div class="well well-answer" ng-repeat="answer in answers">
+	     <div class="form-group">
+	       <div class="col-sm-12">
+		    <div class="col-sm-11">
+	              <label> <input type="checkbox" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
+		      <p>{{answer.answer}}</p>
+		    </div>
+		    <div class="col-sm-1">
+		      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
+		    </div>
+	       </div>
+	     </div>
+	   </div>
+	   </fieldset>
+	   </form>
+	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
+	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+ 	    {% endverbatim %}
+	   <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+ 	    {% verbatim %}
+	  <div ng-if="conference.edition_progress != 100">
+	    <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}%</h2>
+	  </div>
+	  <div ng-if="conference.edition_progress == 100">
+ 	    {% endverbatim %}
+            <a href="">
+ 	    {% verbatim %}
+	      <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}% passer à la dernière étape !</h2>
+	    </a>
+	  </div>
+	  <div class="progress">
+	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ conference.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ conference.edition_progress }}%">
+		<span class="sr-only">{{ conference.edition_progress }}% Complete</span>
+	    </div>
+	  </div>
+	  {% endverbatim %}
+	</div>
+    </div>
+	<aside class="hidden-md col-xs-12 hidden-lg">
+	  {% include 'partials/nav_questions.html' %}
+	</aside>
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+{% include 'partials/testjs.html' %}
+{% endblock %}
+
+{% block onbodyload %}
+{% endblock %}

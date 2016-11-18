@@ -28,6 +28,7 @@ from blousebrothers.shortcuts.auth import (
     BBConferencierReqMixin,
     ConferencePermissionMixin,
     ConfRelatedObjPermissionMixin,
+    TestPermissionMixin,
 )
 from blousebrothers.shortcuts.tools import analyse_conf
 from .models import (
@@ -258,4 +259,16 @@ class BuyedConferenceListView(BBConferencierReqMixin, ListView):
         qry = qry.order_by('progress')
         return qry.all()
 
+
+class TestUpdateView( TestPermissionMixin, JSONResponseMixin, UpdateView):
+    """
+    Main Angular JS interface where you can edit question, images...
+    """
+    model=Test
+    fields=[]
+
+    def get_object(self, queryset=None):
+        conf = Conference.objects.get(slug=self.kwargs['slug'])
+        obj = Test.objects.get(conf=conf, student=self.request.user)
+        return obj
 
