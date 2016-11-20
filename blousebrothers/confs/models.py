@@ -64,9 +64,11 @@ class Conference(models.Model):
     statement = models.TextField(_('Énoncé*'), blank=True, null=True)
     items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='conferences',
                                    help_text=_('Ne sélectionner que les items abordés de manière '
-                                               '<strong>significative</strong> dans votre dossier')
+                                               '<strong>significative</strong> dans votre dossier'),
+                                   blank=True,
                                    )
-    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences')
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences',
+                                          blank=True)
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
                                 default=Decimal(0.50),
