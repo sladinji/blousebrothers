@@ -13,7 +13,6 @@ class BasketAddView(CoreBasketAddView):
         offers_before = self.request.basket.applied_offers()
 
         Test.objects.create(conf=form.product.conf, student=self.request.user)
-        print("YES PAPA!!"*100)
 
         #self.request.basket.add_product(
         #    form.product, form.cleaned_data['quantity'],
