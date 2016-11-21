@@ -35,6 +35,15 @@ class TestCRUDView(TestPermissionMixin, NgCRUDView):
 class TestAnswerCRUDView(TestPermissionMixin, NgCRUDView):
     model = TestAnswer
 
+    def get_queryset(self):
+        if 'question' in self.request.GET:
+            question = Question.objects.get(self.request.GET['question'])
+            test = Test.objects.get(student = self.request.user, conf = question.conf)
+            return self.model.objects.get(
+                question_id=self.request.GET['question'],
+                test_id=test.id,
+            )
+
 
 class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
     model = ConferenceImage

@@ -58,6 +58,9 @@
 						<a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Confs créées' %}</a>
 					    </li>
 					    {% endif %}
+					    <li class="menu-item-has-children item-megamenu">
+						<a href="{% url 'confs:my_confs' %}"><span class="fa fa-check-circle-o"></span> {% trans 'Mes confs' %}</a>
+					    </li>
 					</ul>
 				        {% endif %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-right">

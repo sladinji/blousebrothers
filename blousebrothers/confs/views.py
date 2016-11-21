@@ -39,6 +39,7 @@ from .models import (
     QuestionImage,
     Item,
     Test,
+    TestAnswer,
 )
 from .forms import ConferenceForm, ConferenceFinalForm
 
@@ -252,7 +253,7 @@ Lien : {}{}{}'''
 
         return render(request, 'confs/wanabe_conferencier.html')
 
-class BuyedConferenceListView(BBConferencierReqMixin, ListView):
+class BuyedConferenceListView(LoginRequiredMixin, ListView):
     model = Test
     # These next two lines tell the view to index lookups by conf
     paginate_by = 10
@@ -272,6 +273,9 @@ class TestUpdateView( TestPermissionMixin, JSONResponseMixin, UpdateView):
 
     def get_object(self, queryset=None):
         conf = Conference.objects.get(slug=self.kwargs['slug'])
-        obj = Test.objects.get(conf=conf, student=self.request.user)
-        return obj
+        test = Test.objects.get(conf=conf, student=self.request.user)
+        if not test.answers.count() :
+            for question in conf.questions.all() :
+                TestAnswer.objects.create(question=question, test=test)
+        return test
 
