@@ -5,6 +5,7 @@ import os
 import uuid
 from decimal import Decimal
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -141,7 +142,7 @@ def auto_delete_conference_image_on_delete(sender, instance, **kwargs):
     """Deletes file from filesystem
     when corresponding `MediaFile` object is deleted.
     """
-    if instance.image:
+    if not settings.DEBUG and instance.image:
         instance.image.delete()
 
 
@@ -213,7 +214,7 @@ def auto_delete_answer_image_on_delete(sender, instance, **kwargs):
     """Deletes file from filesystem
     when corresponding `MediaFile` object is deleted.
     """
-    if instance.explaination_image:
+    if not settings.DEBUG and instance.explaination_image:
         instance.explaination_image.delete()
 
 
@@ -242,7 +243,7 @@ def auto_delete_question_image_on_delete(sender, instance, **kwargs):
     """Deletes file from filesystem
     when corresponding `MediaFile` object is deleted.
     """
-    if instance.image:
+    if not settings.DEBUG and instance.image:
         instance.image.delete()
 
 class Test(models.Model):
