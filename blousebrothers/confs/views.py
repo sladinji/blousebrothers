@@ -158,6 +158,9 @@ class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, Crea
     model = Conference
     permission_required = ['confs.add_conference']
 
+    def handle_no_permission(self):
+        return redirect("confs:wanabe_conferencier")
+
     # send the user back to their own page after a successful update
     def get_redirect_url(self):
         return reverse('confs:detail',
