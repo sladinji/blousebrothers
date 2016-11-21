@@ -82,6 +82,8 @@ class Conference(models.Model):
                                                "acheté au prix que vous avez fixé."
                                                )
                                    )
+    date_tuto = models.DateTimeField(_("Accès gratuit aux étudiants de ma ville le "),
+                                     blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})

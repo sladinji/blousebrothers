@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 from .models import User, University
 from blousebrothers.confs.models import Conference
 from django_csv_exports.admin import CSVExportAdmin
-
+from hijack_admin.admin import HijackUserAdminMixin
 
 class MyUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
@@ -102,7 +102,7 @@ class EditionProgressListFilter(admin.SimpleListFilter):
 
 
 @admin.register(User)
-class MyUserAdmin(AuthUserAdmin, CSVExportAdmin):
+class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
 
     form = MyUserChangeForm
     add_form = MyUserCreationForm
@@ -118,9 +118,10 @@ class MyUserAdmin(AuthUserAdmin, CSVExportAdmin):
                 obj.get_absolute_url(), obj.title, obj.edition_progress)
         return mark_safe(html)
 
-    list_display = ('username', 'date_joined', 'degree', 'email', 'is_conferencier', created_confs)
+    list_display = ('username', 'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
+                    'hijack_field',)
     csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile']
-    search_fields = ['name', 'is_conferencier', 'wanabe_conferencier']
+    search_fields = ['name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
                    'wanabe_conferencier', 'city', "degree", 'date_joined',
                    EditionProgressListFilter, FinishedButNotForSaleFilter)

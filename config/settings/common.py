@@ -60,6 +60,9 @@ THIRD_PARTY_APPS = [
     'easy_thumbnails',
     'image_cropping',
     'mangopay',
+    'hijack',
+    'compat',
+    'hijack_admin',
 ]
 
 # Apps specific for this project go here.
@@ -328,3 +331,6 @@ THUMBNAIL_PROCESSORS = (
 
 MANGOPAY_CLIENT_ID = "blousebrothers"
 MANGOPAY_PASSPHRASE = "op38EBPRsdSkU0rbPuduaoU0Ny7vegjo5TEPsv6bEdApDLShFT"
+
+HIJACK_ALLOW_GET_REQUESTS = True
+HIJACK_REGISTER_ADMIN = False

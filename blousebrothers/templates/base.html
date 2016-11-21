@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load cookielaw_tags %}
+{% load hijack_tags %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -48,6 +49,7 @@
 	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
 	<link href="{% static 'djng/css/styles.css' %}" rel="stylesheet" />
 	<link href="{% static 'djng/css/bootstrap3.css' %}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
         {% endblock %}
 
         {% block extrahead %}{% endblock %}
@@ -59,6 +61,7 @@
     </head>
 
     <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %}">
+	{% hijack_notification %}
         {# Main content goes in this 'layout' block #}
 	{% cookielaw_banner %}
         {% block layout %}{% endblock %}
