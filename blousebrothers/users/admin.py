@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from django import forms
+from datetime import datetime, timedelta
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
+from django import forms
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.safestring import mark_safe
@@ -32,15 +34,32 @@ class MyUserCreationForm(UserCreationForm):
         except User.DoesNotExist:
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
-from datetime import datetime, timedelta
 
-from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
+
+class FinishedButNotForSaleFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = _('"on attend quoi pour rendre accessible ?"')
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'finished'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('100', _('Dossier complet mais non accessible aux étudiants')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == '100':
+            return queryset.filter(created_confs__edition_progress__lt=100,
+                                   created_confs__for_sale=False,
+                                   )
+
 
 class EditionProgressListFilter(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
     # right admin sidebar just above the filter options.
-    title = _('Dossier en cours')
+    title = _('dossier en cours')
 
     # Parameter for the filter that will be used in the URL query.
     parameter_name = 'decade'
@@ -66,19 +85,19 @@ class EditionProgressListFilter(admin.SimpleListFilter):
         `self.value()`.
         """
         last_week = datetime.now()-timedelta(days=7)
-        last_month= datetime.now()-timedelta(days=30)
+        last_month = datetime.now()-timedelta(days=30)
         if self.value() == '1w':
             return queryset.filter(created_confs__edition_progress__lt=100,
-                                    created_confs__date_created__gte=last_week,
+                                   created_confs__date_created__gte=last_week,
                                    )
         if self.value() == '1m':
             return queryset.filter(created_confs__edition_progress__lt=100,
-                                    created_confs__date_created__lt=last_week,
-                                    created_confs__date_created__gte=last_month,
+                                   created_confs__date_created__lt=last_week,
+                                   created_confs__date_created__gte=last_month,
                                    )
         if self.value() == 'xm':
             return queryset.filter(created_confs__edition_progress__lt=100,
-                                    created_confs__date_created__lt=last_month,
+                                   created_confs__date_created__lt=last_month,
                                    )
 
 
@@ -99,12 +118,11 @@ class MyUserAdmin(AuthUserAdmin, CSVExportAdmin):
                 obj.get_absolute_url(), obj.title, obj.edition_progress)
         return mark_safe(html)
 
-    list_display = ('username', 'date_joined','degree', 'email', 'is_conferencier', created_confs)
-    csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone','mobile']
-
-
+    list_display = ('username', 'date_joined', 'degree', 'email', 'is_conferencier', created_confs)
+    csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile']
     search_fields = ['name', 'is_conferencier', 'wanabe_conferencier']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
-    'wanabe_conferencier','city', "degree", 'date_joined', EditionProgressListFilter)
+                   'wanabe_conferencier', 'city', "degree", 'date_joined',
+                   EditionProgressListFilter, FinishedButNotForSaleFilter)
 
 admin.site.register(University)
