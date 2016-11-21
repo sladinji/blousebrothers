@@ -9,11 +9,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
+from django.utils import six
 from oscar.defaults import *
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.conf import Settings as thumbnail_settings
+from boto.s3.connection import OrdinaryCallingFormat
 
 import environ
 

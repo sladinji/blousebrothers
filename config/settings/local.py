@@ -73,3 +73,48 @@ NOTEBOOK_ARGUMENTS = [
         # disables the browser
         '--no-browser',
 ]
+
+# STORAGE CONFIGURATION
+# ------------------------------------------------------------------------------
+# Uploaded Media Files
+# ------------------------
+# See: http://django-storages.readthedocs.io/en/latest/index.html
+INSTALLED_APPS += (
+    'storages',
+)
+
+AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
+AWS_AUTO_CREATE_BUCKET = False
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
+
+# AWS cache settings, don't change unless you know what you're doing:
+AWS_EXPIRY = 60 * 60 * 24 * 7
+
+# TODO See: https://github.com/jschneier/django-storages/issues/47
+# Revert the following and use str after the above-mentioned bug is fixed in
+# either django-storage-redux or boto
+AWS_HEADERS = {
+    'Cache-Control': six.b('max-age=%d, s-maxage=%d, must-revalidate' % (
+        AWS_EXPIRY, AWS_EXPIRY))
+}
+
+#  See:http://stackoverflow.com/questions/10390244/
+from storages.backends.s3boto import S3BotoStorage
+StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')
+MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')
+DEFAULT_FILE_STORAGE = 'config.settings.local.MediaRootS3BotoStorage'
+# URL that handles the media served from MEDIA_ROOT, used for managing
+# stored files.
+MEDIA_URL = 'https://s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
+
+
+# Static Assets
+# ------------------------
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
+
+
+

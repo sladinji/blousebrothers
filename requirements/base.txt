@@ -78,3 +78,8 @@ django-moneyfield
 django-filepicker
 mangopaysdk==2.1.1
 django-localflavor
+
+# Static and Media Storage
+# ------------------------------------------------
+boto==2.40.0
+django-storages-redux==1.3.2

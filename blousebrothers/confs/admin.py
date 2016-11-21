@@ -40,8 +40,8 @@ class ConferenceImage(ImageCroppingMixin, nested_admin.NestedTabularInline):
     extra = 1
 
 class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
-    list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted')
-    list_filter= ('deleted',)
+    list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted', 'for_sale')
+    list_filter= ('deleted','for_sale')
     inlines = [ConferenceImage, QuestionInline, ]
     exclude = ['summary', 'type']
     filter_horizontal = ['items', 'specialities']
