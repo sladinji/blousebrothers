@@ -13,7 +13,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 {% endcomment %}
     <div class='row'>
 	<aside class="col-md-3 hidden-sm hidden-xs">
-	{% include 'partials/nav_questions.html' %}
+	{% include 'partials/nav_test_questions.html' %}
 	</aside>
 
 	<div class="col-md-9" >
@@ -54,7 +54,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	        </a>
 		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
 		  <div ng-repeat="image in conferenceimages">
-		    <img src="{{ static_media(image.image) }}"/>
+		    <img src="{{static_media(image.image)}}"/>
 		    <figcaption>{{image.caption}}</figcaption>
 		  </div>
 		  <br><br>
@@ -65,14 +65,12 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		
 	  
 	  <div class="well well-white" ng-if="question">
-	    <form novalidate class="question-form">
+	    <div class="col-sm-12">
 	      <div class="col-sm-12">
-	        <div class="col-sm-12">
-	          <span class='well-title'>Question {{ question.index + 1 }} </span>
-	        </div>
+	        <span class='well-title'>Question {{ question.index + 1 }} </span>
 	      </div>
-	      <textarea type="text" class="no-border-form form-control" ng-model="question.question" placeholder="Clique ici pour rédiger l'énoncé de la question"></textarea><br />
-	    </form>
+	    </div>
+	    <p class="angular-with-newlines">{{question.question}}</p>
 
 	    <div ng-repeat="image in questionimages">
 	      <img src="{{ static_media(image.image) }}"/>
@@ -87,7 +85,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <div class="form-group">
 	       <div class="col-sm-12">
 		    <div class="col-sm-11">
-	              <label> <input type="checkbox" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
+			    <label> <input type="checkbox" ng-disabled="{{ question.answered }}" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
 		      <p>{{answer.answer}}</p>
 		    </div>
 		    <div class="col-sm-1">
@@ -122,7 +120,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	</div>
     </div>
 	<aside class="hidden-md col-xs-12 hidden-lg">
-	  {% include 'partials/nav_questions.html' %}
+	{% include 'partials/nav_test_questions.html' %}
 	</aside>
 </div>
 {% endblock content %}

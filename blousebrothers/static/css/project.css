@@ -427,3 +427,7 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd;
 }
+/* in the css file or in a style block */
+.angular-with-newlines {
+  white-space: pre-wrap;
+}

@@ -31,6 +31,7 @@ class ConferenceCRUDView(ConferencePermissionMixin, NgCRUDView):
 
 class StudentConferenceCRUDView(StudentConferencePermissionMixin, NgCRUDView):
     model = Conference
+    allowed_methods = ['GET']
 
 
 class TestCRUDView(TestPermissionMixin, NgCRUDView):
@@ -50,7 +51,7 @@ class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
             )
 
 
-class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, NgCRUDView):
+class BaseConferenceImageCRUDView(NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
@@ -58,6 +59,19 @@ class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, NgCRUDView):
             return self.model.objects.filter(
                 conf_id=self.request.GET['conf']
             ).order_by('index', 'date_created')
+
+
+class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BaseConferenceImageCRUDView):
+    """
+    Access for conferencier
+    """
+
+
+class StudentConferenceImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseConferenceImageCRUDView):
+    """
+    Access for student
+    """
+    allowed_methods = ['GET']
 
 
 class BaseQuestionCRUDView(NgCRUDView):
@@ -79,9 +93,19 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
     """
     CRUD view for student access
     """
+    allowed_methods = ['GET']
+
+    def serialize_queryset(self, queryset):
+        """
+        Set all question to false before returning it
+        """
+        object_data = super().serialize_queryset(queryset)
+        for obj in object_data:
+            obj["answered"] = False
+        return object_data
 
 
-class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, NgCRUDView):
+class BaseQuestionImageCRUDView(NgCRUDView):
     model = QuestionImage
 
     def get_queryset(self):
@@ -89,6 +113,19 @@ class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, NgCRUDView):
             return self.model.objects.filter(
                 question_id=self.request.GET['question_id']
             ).order_by('index', 'date_created')
+
+
+class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, BaseQuestionImageCRUDView):
+    """
+    CRUD view with conferencier access
+    """
+
+
+class StudentQuestionImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestionImageCRUDView):
+    """
+    CRUD view with conferencier access
+    """
+    allowed_methods = ['GET']
 
 
 class BaseAnswerCRUDView(NgCRUDView):
@@ -109,6 +146,26 @@ class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUD
     """
     Crud view for conferencier access
     """
+    allowed_methods = ['GET']
+
+    def serialize_queryset(self, queryset):
+        """
+        Prepare answers for student :
+            * turn them all false if not answered yet
+            * set them with given answers if they exist
+        """
+        object_data = super().serialize_queryset(queryset)
+        question = Question.objects.get(pk=self.request.GET['question'])
+        test = Test.objects.get(conf=question.conf, student=self.request.user)
+        answer = test.answers.get(test=test, question=question)
+        if answer :
+            for obj in object_data :
+                obj["correct"] = str(obj['index']) in answer.given_answers
+        else :
+            for obj in object_data:
+                obj["correct"] = False
+        return object_data
+
 
 
 class UploadQuestionImage(ConfRelatedObjPermissionMixin, TemplateView):

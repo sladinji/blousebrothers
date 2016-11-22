@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.utils.safestring import mark_safe
+from django.core.validators import int_list_validator
 
 from autoslug import AutoSlugField as RealAutoSlugField
 from image_cropping import ImageCropField, ImageRatioField
@@ -276,7 +277,8 @@ class TestAnswer(models.Model):
     date_started = models.DateTimeField(_("Début"), auto_now_add=True)
     date_finished = models.DateTimeField(_("Fin"), null=True)
     time_taken = models.PositiveIntegerField(_("Temps passé"), null=True)
-    given_answers = models.CharField(_("Réponses"), max_length=30, blank=True)
+    given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
+                                     validators=[int_list_validator])
     """String representing a list of checked answer (ex: [0, 1, 3])"""
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
     score = models.PositiveIntegerField(_("Résultat"), default=0)

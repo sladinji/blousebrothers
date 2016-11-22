@@ -92,6 +92,10 @@ urlpatterns = [
         crud.ConferenceImageCRUDView.as_view(),
         name='conferenceimage_crud_view'),
 
+    url(r'^crud/studentconferenceimage/?$',
+        crud.StudentConferenceImageCRUDView.as_view(),
+        name='student_conferenceimage_crud_view'),
+
     url(r'^crud/question/?$',
         crud.QuestionCRUDView.as_view(),
         name='question_crud_view'),
@@ -103,6 +107,10 @@ urlpatterns = [
     url(r'^crud/questionimage/?$',
         crud.QuestionImageCRUDView.as_view(),
         name='questionimage_crud_view'),
+
+    url(r'^crud/studentquestionimage/?$',
+        crud.StudentQuestionImageCRUDView.as_view(),
+        name='student_questionimage_crud_view'),
 
     url(r'^crud/answer/?$',
         crud.AnswerCRUDView.as_view(),
