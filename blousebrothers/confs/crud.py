@@ -6,9 +6,10 @@ from django.http import JsonResponse
 from djng.views.crud import NgCRUDView
 
 from blousebrothers.shortcuts.auth import (
-    BBConferencierReqMixin,
     ConferencePermissionMixin,
+    StudentConferencePermissionMixin,
     ConfRelatedObjPermissionMixin,
+    StudentConfRelatedObjPermissionMixin,
     TestPermissionMixin,
 )
 from .models import (
@@ -24,7 +25,11 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 
-class ConferenceCRUDView(ConferencePermissionMixin, BBConferencierReqMixin, NgCRUDView):
+class ConferenceCRUDView(ConferencePermissionMixin, NgCRUDView):
+    model = Conference
+
+
+class StudentConferenceCRUDView(StudentConferencePermissionMixin, NgCRUDView):
     model = Conference
 
 
@@ -32,20 +37,20 @@ class TestCRUDView(TestPermissionMixin, NgCRUDView):
     model = Test
 
 
-class TestAnswerCRUDView(TestPermissionMixin, NgCRUDView):
+class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
     model = TestAnswer
 
-    def get_queryset(self):
+    def get_object(self):
         if 'question' in self.request.GET:
-            question = Question.objects.get(self.request.GET['question'])
-            test = Test.objects.get(student = self.request.user, conf = question.conf)
+            question = Question.objects.get(pk=self.request.GET['question'])
+            test = Test.objects.get(student=self.request.user, conf=question.conf)
             return self.model.objects.get(
                 question_id=self.request.GET['question'],
                 test_id=test.id,
             )
 
 
-class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
+class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
@@ -55,7 +60,7 @@ class ConferenceImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMi
             ).order_by('index', 'date_created')
 
 
-class QuestionCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
+class BaseQuestionCRUDView(NgCRUDView):
     model = Question
 
     def get_queryset(self):
@@ -64,7 +69,19 @@ class QuestionCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, Ng
                 conf_id=self.request.GET['conf']).order_by('index')
 
 
-class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
+class QuestionCRUDView(ConfRelatedObjPermissionMixin, BaseQuestionCRUDView):
+    """
+    CRUD view for conferencier access
+    """
+
+
+class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestionCRUDView):
+    """
+    CRUD view for student access
+    """
+
+
+class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, NgCRUDView):
     model = QuestionImage
 
     def get_queryset(self):
@@ -74,7 +91,7 @@ class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixi
             ).order_by('index', 'date_created')
 
 
-class AnswerCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCRUDView):
+class BaseAnswerCRUDView(NgCRUDView):
     model = Answer
 
     def get_queryset(self):
@@ -82,7 +99,19 @@ class AnswerCRUDView(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, NgCR
             return self.model.objects.filter(question_id=self.request.GET['question']).order_by("index")
 
 
-class UploadQuestionImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
+class AnswerCRUDView(ConfRelatedObjPermissionMixin, BaseAnswerCRUDView):
+    """
+    Crud view for conferencier access
+    """
+
+
+class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUDView):
+    """
+    Crud view for conferencier access
+    """
+
+
+class UploadQuestionImage(ConfRelatedObjPermissionMixin, TemplateView):
 
     def post(self, request, **kwargs):
         question_id = kwargs['question_id']
@@ -93,7 +122,7 @@ class UploadQuestionImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin,
         return JsonResponse(data)
 
 
-class UploadConferenceImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
+class UploadConferenceImage(ConfRelatedObjPermissionMixin, TemplateView):
 
     def post(self, request, **kwargs):
         conference_id = kwargs['conference_id']
@@ -104,7 +133,7 @@ class UploadConferenceImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixi
         return JsonResponse(data)
 
 
-class UploadAnswerImage(ConfRelatedObjPermissionMixin, BBConferencierReqMixin, TemplateView):
+class UploadAnswerImage(ConfRelatedObjPermissionMixin, TemplateView):
 
     def post(self, request, **kwargs):
         answer = Answer.objects.get(pk=kwargs['answer_id'])

@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 
-from blousebrothers.confs.models import Conference, Question, Answer
+from blousebrothers.confs.models import Conference, Question, Answer, Test
 
 
 class BBRequirementMixin(LoginRequiredMixin):
@@ -62,8 +62,29 @@ class ConferencePermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
         raise PermissionDenied
 
 
-class ConfRelatedObjPermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
-    permission_required = ['confs.add_conference']
+class StudentConferencePermissionMixin(UserPassesTestMixin):
+    """
+    Check if student can access conf.
+    """
+
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        self.object = self.get_object()
+        return Test.objects.filter(
+            student=self.request.user,
+            conf=self.get_object(),
+        ).count() != 0
+
+    def handle_no_permission(self):
+        raise PermissionDenied
+
+
+
+class BaseConfRelatedObjPermissionMixin():
+    """
+    Base classe to get access associated conf objec
+    """
 
     def dispatch(self, request, *args, **kwargs):
         user_test_result = self.get_test_func()(**kwargs)
@@ -71,9 +92,7 @@ class ConfRelatedObjPermissionMixin(PermissionRequiredMixin, UserPassesTestMixin
             return self.handle_no_permission()
         return super(UserPassesTestMixin, self).dispatch(request, *args, **kwargs)
 
-    def test_func(self, **kwargs):
-        if self.request.user.is_superuser:
-            return True
+    def get_conf(self, **kwargs):
         if not kwargs :
             kwargs = self.request.GET
         if 'conf' in kwargs:
@@ -86,4 +105,29 @@ class ConfRelatedObjPermissionMixin(PermissionRequiredMixin, UserPassesTestMixin
             conf = Question.objects.get(id=kwargs['question']).conf
         if 'answer_id' in kwargs:
             conf = Answer.objects.get(id=kwargs['answer_id']).question.conf
+        return conf
+
+
+class ConfRelatedObjPermissionMixin(BaseConfRelatedObjPermissionMixin, PermissionRequiredMixin, UserPassesTestMixin):
+    permission_required = ['confs.add_conference']
+
+    def test_func(self, **kwargs):
+        if self.request.user.is_superuser:
+            return True
+        conf = self.get_conf()
         return conf.owner == self.request.user
+
+
+class StudentConfRelatedObjPermissionMixin(BaseConfRelatedObjPermissionMixin, UserPassesTestMixin):
+    """
+    Test if a requested object belong to a conference with access granted to user.
+    """
+
+    def test_func(self, **kwargs):
+        if self.request.user.is_superuser:
+            return True
+        return Test.objects.filter(
+            student=self.request.user,
+            conf=self.get_conf(),
+        ).count() != 0
+
