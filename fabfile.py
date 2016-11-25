@@ -36,7 +36,7 @@ def proddb():
     """
     with cd(code_dir):
         run("docker-compose run postgres backup")
-        backups = run("docker-compose run postgres list-backups").replace("\r\n",'\t').split('\t')[4:]
+        backups = run("docker-compose run postgres list-backups").replace("\r\n",'\t').split('\t')[3:]
         last = sorted(backups)[-1]
         run(r"docker run --rm --volumes-from blousebrothers_postgres_1 "
             r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
