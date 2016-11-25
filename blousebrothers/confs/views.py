@@ -285,6 +285,5 @@ class TestUpdateView( TestPermissionMixin, JSONResponseMixin, UpdateView):
         question = Question.objects.get(pk=answers[0]['question'])
         test = Test.objects.get(conf=question.conf, student=self.request.user)
         ta = TestAnswer.objects.get(test=test, question=question)
-        ta.answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
-        print(ta.answers)
+        ta.given_answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
         ta.save()

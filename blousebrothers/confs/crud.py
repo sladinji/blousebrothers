@@ -160,6 +160,7 @@ class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUD
         answer = test.answers.get(test=test, question=question)
         if answer :
             for obj in object_data :
+                print(obj["correct"], answer.given_answers)
                 obj["correct"] = str(obj['index']) in answer.given_answers
         else :
             for obj in object_data:
