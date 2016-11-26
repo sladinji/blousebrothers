@@ -100,8 +100,12 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
         Set all question to false before returning it
         """
         object_data = super().serialize_queryset(queryset)
-        for obj in object_data:
-            obj["answered"] = False
+        conf = Conference.objects.get(pk=self.request.GET['conf'])
+        test = Test.objects.get(conf=conf, student=self.request.user)
+        for obj in object_data :
+            obj["answered"] = bool(test.answers.get(question_id=obj["pk"]).given_answers)
+            if obj["answered"]:
+                print("YES>>>",obj)
         return object_data
 
 

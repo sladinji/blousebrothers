@@ -100,18 +100,22 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		});
 	}
     };
+
     $scope.question_selected = function(question){
 	//saveUpdates();
-	$scope.question['answered'] = true;
-	djangoRMI.send_answers($scope.answers);
     	$scope.question = question;
     	setAnswers(question);
 	setQuestionImages(question);
     }
+    $scope.valid_answer = function(question){
+	$scope.question['answered'] = true;
+	djangoRMI.send_answers($scope.answers);
+	$scope.question_selected(question);
+    }
     $scope.next_question = function(){
 	var iq = $scope.questions.indexOf($scope.question);
 	if ( iq < 14 ){
-		$scope.question_selected($scope.questions[iq + 1]);
+		$scope.valid_answer($scope.questions[iq + 1]);
 		$window.scrollTo(0, 0, 1000);
 	}
     }
