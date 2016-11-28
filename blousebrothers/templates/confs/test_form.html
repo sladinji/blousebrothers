@@ -54,7 +54,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	        </a>
 		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
 		  <div ng-repeat="image in conferenceimages">
-		    <img src="{{static_media(image.image)}}"/>
+		    <img ng-src="{{static_media(image.image)}}"/>
 		    <figcaption>{{image.caption}}</figcaption>
 		  </div>
 		  <br><br>
@@ -73,9 +73,8 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	    <p class="angular-with-newlines">{{question.question}}</p>
 
 	    <div ng-repeat="image in questionimages">
-	      <img src="{{ static_media(image.image) }}"/>
-	      <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
-	      <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
+	      <img ng-src="{{ static_media(image.image) }}"/>
+	      <figcaption>{{image.caption}}</figcaption>
 	    </div>
 	  </div>       
 	  <br>
