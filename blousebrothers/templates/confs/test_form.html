@@ -103,7 +103,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
 	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled="answer_not_given()">Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
  	    {% endverbatim %}
-	   <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="" ng-disabled="conference.edition_progress != 100">Terminer !<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+	    <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="{% url 'confs:result' object.conf.slug %}" ng-disabled="answer_not_given()">Terminer !<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
 	</div>
     </div>
 	<aside class="hidden-md col-xs-12 hidden-lg">

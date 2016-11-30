@@ -62,11 +62,13 @@ class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
 
 class TestAnswerInline(nested_admin.NestedTabularInline):
     model = TestAnswer
-    extra = 1
+    extra = 0
+    ordering = ('question__index',)
 
 
 class TestAdmin(nested_admin.NestedModelAdmin):
     inlines = [TestAnswerInline]
+    list_filter = ['student']
 
 
 admin.site.register(Conference, ConferenceAdmin)

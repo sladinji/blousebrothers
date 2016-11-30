@@ -21,6 +21,13 @@ urlpatterns = [
         name='test'
     ),
 
+    # URL pattern for the TestUpdateView
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/result$',
+        view=views.TestResult.as_view(),
+        name='result'
+    ),
+
     # URL pattern for the ConferenceDetailView
     url(
         regex=r'^(?P<slug>[\w.@+-]+)/$',

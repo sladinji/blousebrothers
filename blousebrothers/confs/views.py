@@ -318,3 +318,10 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         ta.save()
         test.time_taken = time_taken
         test.save()
+
+class TestResult(TestPermissionMixin, DetailView):
+    model = Test
+
+    def get_object(self, queryset=None):
+        conf = Conference.objects.get(slug=self.kwargs['slug'])
+        return Test.objects.get(conf=conf, student=self.request.user)

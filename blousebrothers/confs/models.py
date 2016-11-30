@@ -25,7 +25,6 @@ class AutoSlugField(RealAutoSlugField):
         return name, path, args, kwargs
 
 
-
 class ConfManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
@@ -186,6 +185,9 @@ class Question(models.Model):
         all_filled = len([a for a in self.answers.all() if a.answer]) == 5
         return one_good and all_filled
 
+    def __str__(self):
+        return str(self.index + 1)+ '. ' + self.question[:20] + '...'
+
 
 def answer_image_directory_path(answer_image, filename):
     return '{0}/conf_{1}/answers/{2}'.format(answer_image.question.conf.owner.username,
@@ -205,7 +207,7 @@ class Answer(models.Model):
     answer = models.TextField(_("Proposition"), blank=True, null=True)
     explaination = models.TextField(_("Explication"), blank=True, null=True)
     explaination_image = ImageCropField(_("Image"), upload_to=answer_image_directory_path, max_length=255,
-                                           blank=True, null=True)
+                                        blank=True, null=True)
     cropping = ImageRatioField('explaination_image', '430x360', free_crop=True)
     correct = models.BooleanField(_("Correct"), default=False)
     ziw = models.BooleanField(_("Zéro si erreur"), default=False)
