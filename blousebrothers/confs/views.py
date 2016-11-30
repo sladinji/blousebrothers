@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
+import time
 import re
 import logging
 
@@ -253,6 +254,7 @@ Lien : {}{}{}'''
 
         return render(request, 'confs/wanabe_conferencier.html')
 
+
 class BuyedConferenceListView(LoginRequiredMixin, ListView):
     model = Test
     # These next two lines tell the view to index lookups by conf
@@ -264,26 +266,55 @@ class BuyedConferenceListView(LoginRequiredMixin, ListView):
         return qry.all()
 
 
-class TestUpdateView( TestPermissionMixin, JSONResponseMixin, UpdateView):
+class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
     """
-    Main Angular JS interface where you can edit question, images...
+    Main test view.
     """
-    model=Test
-    fields=[]
+    model = Test
+    fields = []
+
+    def get_context_data(self, **kwargs):
+        """
+        Add time_taken var to context for timer initialization. time_taken units is
+        milliseconds as angularjs timer needs.
+        """
+        tt = self.get_object().time_taken
+        time_taken = (tt.hour * 3600 + tt.minute * 60 + tt.second) * 1000 if tt else 0
+        return super().get_context_data(time_taken=time_taken, **kwargs)
 
     def get_object(self, queryset=None):
+        """
+        TestAnswers are created here, when user starts his test.
+        """
         conf = Conference.objects.get(slug=self.kwargs['slug'])
         test = Test.objects.get(conf=conf, student=self.request.user)
-        if not test.answers.count() :
-            for question in conf.questions.all() :
+        if not test.answers.count():
+            for question in conf.questions.all():
                 TestAnswer.objects.create(question=question, test=test)
         return test
 
     @allow_remote_invocation
-    def send_answers(self, answers ):
-        # process in_data
+    def send_answers(self, data):
+        """
+        API to collect test's answers.
+
+        :param data: {'answers': [0..4] => list of checked answers indexes,
+                      'millis': time elapsed in milliseconds since test started,
+                      }
+        """
+        answers = data["answers"]
+        time_taken = datetime.fromtimestamp(data["millis"]/1000.0).time()
         question = Question.objects.get(pk=answers[0]['question'])
         test = Test.objects.get(conf=question.conf, student=self.request.user)
         ta = TestAnswer.objects.get(test=test, question=question)
+
         ta.given_answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
+        if test.time_taken :
+            last_time = test.time_taken.hour * 3600 + test.time_taken.minute * 60 + test.time_taken.second
+            this_time = time_taken.hour * 3600 + time_taken.minute * 60 + time_taken.second
+            ta.time_taken = datetime.fromtimestamp(this_time - last_time)
+        else:
+            ta.time_taken = time_taken
         ta.save()
+        test.time_taken = time_taken
+        test.save()

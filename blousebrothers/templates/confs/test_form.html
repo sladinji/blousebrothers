@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="container">
-<toaster-container toaster-options="{'time-out': 1000}"></toaster-container>
+<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 {% comment %}
 AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
 {% endcomment %}
@@ -65,11 +65,16 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		
 	  
 	  <div class="well well-white" ng-if="question">
-	    <div class="col-sm-12">
-	      <div class="col-sm-12">
+	      <div class="col-sm-6">
+		   <span ng-class="timer_class">
+		      <timer start-time="start_time" interval="1000">
+		      {{hhours}}:{{mminutes}}:{{sseconds}}
+		      </timer>
+		  </span>
+	      </div>
+	      <div class="col-sm-6">
 	        <span class='well-title'>Question {{ question.index + 1 }} </span>
 	      </div>
-	    </div>
 	    <p class="angular-with-newlines">{{question.question}}</p>
 
 	    <div ng-repeat="image in questionimages">
@@ -96,26 +101,9 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   </fieldset>
 	   </form>
 	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
-	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled="answer_not_given()">Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
  	    {% endverbatim %}
-	   <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
- 	    {% verbatim %}
-	  <div ng-if="conference.edition_progress != 100">
-	    <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}%</h2>
-	  </div>
-	  <div ng-if="conference.edition_progress == 100">
- 	    {% endverbatim %}
-            <a href="">
- 	    {% verbatim %}
-	      <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}% passer à la dernière étape !</h2>
-	    </a>
-	  </div>
-	  <div class="progress">
-	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ conference.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ conference.edition_progress }}%">
-		<span class="sr-only">{{ conference.edition_progress }}% Complete</span>
-	    </div>
-	  </div>
-	  {% endverbatim %}
+	   <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="" ng-disabled="conference.edition_progress != 100">Terminer !<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
 	</div>
     </div>
 	<aside class="hidden-md col-xs-12 hidden-lg">

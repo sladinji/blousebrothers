@@ -1,4 +1,6 @@
 import logging
+import datetime
+import time
 
 from django.views.generic import TemplateView
 from django.http import JsonResponse
@@ -36,6 +38,32 @@ class StudentConferenceCRUDView(StudentConferencePermissionMixin, NgCRUDView):
 
 class TestCRUDView(TestPermissionMixin, NgCRUDView):
     model = Test
+
+    def get_object(self):
+        if 'conf' in self.request.GET:
+            return self.model.objects.get(
+                student=self.request.user,
+                conf_id=self.request.GET['conf']
+            )
+
+    def get_queryset(self):
+        if 'conf' in self.request.GET:
+            return self.model.objects.get(
+                student=self.request.user,
+                conf_id=self.request.GET['conf']
+            )
+
+    def serialize_queryset(self, queryset):
+        """
+        Set all question to false before returning it
+        """
+        object_data = super().serialize_queryset(queryset)
+        ti = object_data['time_taken']
+        if ti :
+            object_data['time_taken'] = ti.hour * 3600 + ti.minute * 60 + ti.second
+        else :
+            object_data['time_taken'] = 0
+        return object_data
 
 
 class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
@@ -104,8 +132,6 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
         test = Test.objects.get(conf=conf, student=self.request.user)
         for obj in object_data :
             obj["answered"] = bool(test.answers.get(question_id=obj["pk"]).given_answers)
-            if obj["answered"]:
-                print("YES>>>",obj)
         return object_data
 
 
@@ -164,7 +190,6 @@ class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUD
         answer = test.answers.get(test=test, question=question)
         if answer :
             for obj in object_data :
-                print(obj["correct"], answer.given_answers)
                 obj["correct"] = str(obj['index']) in answer.given_answers
         else :
             for obj in object_data:

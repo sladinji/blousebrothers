@@ -4,9 +4,9 @@
 Questions
 </header>
 <ul class="bb-ul">
-	<li ng-repeat="x in questions" class="{{ x.pk == question.pk ? 'active' : ''}}" ng-show="x.answered">
-		<a href ng-click="question_selected(x)" class="{{ x.answered ? 'validquestion' : 'invalidquestion'}}">
-			<i class="fa fa-{{ x.answered ? 'check' : 'exclamation-triangle'}}  fa-fw"></i>
+	<li ng-repeat="x in questions" class="{{ x.pk == question.pk ? 'active' : ''}}" ng-show="show_question_in_menu(x)">
+		<a href ng-click="question_selected(x)">
+			<i class="fa fa-{{ x.answered ? 'check-circle-o' : 'question-circle'}}  fa-fw"></i>
 			{{ $index + 1 }} : {{x.question || 'à compléter' | limitTo: 20}} ...
 		</a>
 	</li>

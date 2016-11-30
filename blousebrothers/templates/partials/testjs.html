@@ -10,6 +10,9 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular-rangy.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular-sanitize.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular.min.js'></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
+<script type="text/javascript" src="{% static 'js/humanize-duration.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/angular-timer.min.js' %}"></script>
 <script type="text/javascript">
 var STATIC_URL = '{{ STATIC_URL|escapejs }}';
 var MEDIA_URL  = '{{ MEDIA_URL|escapejs }}';
@@ -21,7 +24,7 @@ function static_media(path) {
     return MEDIA_URL + path;
 }
 var conf_app = angular.module('djangular-bb', ['textAngular', 'toaster', 'ngAnimate', 'djng.rmi', 'ngResource',
-		'djng.forms', 'ngFileUpload']);
+		'djng.forms', 'ngFileUpload', 'timer']);
 {% if object %}
 var slug="{{ object.conf.slug }}"
 {% else %}
@@ -66,13 +69,15 @@ conf_app.config(function(djangoRMIProvider) {
     djangoRMIProvider.configure(tags);
 });
 
-
 conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI,
 			Conference, ConferenceImage, Question, QuestionImage, Answer, Upload, Test, TestAnswer) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.questionimages = [];
     $scope.static_media = static_media;
+    $scope.start_time = moment().diff(moment({{time_taken}}));
+    $scope.timer_class = "timer";
+    //     start_time = now - time taken last time
     var setAnswers = function(question) {
 	if (question != null){
 		Answer.query({question: question.pk}).$promise
@@ -107,23 +112,59 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     	setAnswers(question);
 	setQuestionImages(question);
     }
+    $scope.answer_not_given = function(){
+	    var ret = true;
+	    $scope.answers.forEach( function(answer){
+		    if (answer.correct){
+			    ret = false;
+		    }
+	    });
+	    return ret;
+    }
+    $scope.show_question_in_menu = function(question){
+	    if (question.answered){
+		    return true;
+	    }
+	    else{
+		    var index = $scope.questions.indexOf(question);
+		    if (index == 0){
+			    return true;
+		    }
+		    if (index > 0 && $scope.questions[index-1].answered == true){
+			    return true;
+		    }
+	    }
+	    return false;
+    }
+    var set_timer_class = function(tclass){
+	    $scope.timer_class = tclass;
+    }
+    $scope.$on('timer-tick', function (event, data) {
+	    $scope.timer = data;
+	    if ( data.millis > 1000 * 60 * 25){
+		    $scope.$apply(set_timer_class("timer red"));
+	    }
+	    else if( data.millis > 1000 * 60 * 20){
+		    $scope.$apply(set_timer_class("timer orange"));
+	    }
+    })
     $scope.valid_answer = function(question){
 	$scope.question['answered'] = true;
-	djangoRMI.send_answers($scope.answers);
+	djangoRMI.send_answers({'answers': $scope.answers, 'millis': $scope.timer.millis});
 	$scope.question_selected(question);
     }
     $scope.next_question = function(){
 	var iq = $scope.questions.indexOf($scope.question);
 	if ( iq < 14 ){
 		$scope.valid_answer($scope.questions[iq + 1]);
-		$window.scrollTo(0, 0, 1000);
+		$window.scrollTo(0, 200, 1000);
 	}
     }
     $scope.previous_question = function(){
 	var iq = $scope.questions.indexOf($scope.question);
 	if ( iq > 0 ){
 		$scope.question_selected($scope.questions[iq - 1]);
-		$window.scrollTo(0, 0);
+		$window.scrollTo(0, 200, 1000);
 	}
     }
 
@@ -132,28 +173,29 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	$scope.answers = [];
 	$scope.conferenceimages = [];
 	$scope.question = null;
-	if (slug != ""){
-		Conference.get({slug: slug}).$promise
-    		.then(function(result){
-    			$scope.conference = result;
-			Question.query({conf: $scope.conference.pk}).$promise
-    			.then(function(result){
-				$scope.questions = result;
-				$scope.question = $scope.questions[0];
-    				setAnswers($scope.question);
-				setQuestionImages($scope.question);
-    			})
-			setConferenceImage();
-			{% if user.is_superuser %}
-			setKeyWords();
-			{% endif %}
-    		})
+	Conference.get({slug: slug}).$promise
+  	  .then(function(result){
+	  	$scope.conference = result;
+		if({{time_taken}} > 0) {
+			toaster.pop('success', "Session restaurée au dernier point de progression.", "");
+		}
+	  	Question.query({conf: $scope.conference.pk}).$promise
+	  	.then(function(result){
+	  		$scope.questions = result;
+	  		$scope.questions.every( function(question, index){
+	  			// initialize context to last not answered question
+	  			$scope.question = question;
+	  			if(question.answered == false){
+	  				return false;//break
+	  			}
+	  			return true;
+	  		});
+	  		setAnswers($scope.question);
+	  		setQuestionImages($scope.question);
+	  	})
+	  	setConferenceImage();
+	  })
 	}
-	else{
-		$scope.showsubject = true;
-		console.log("AAAHAAH");
-	}
-    }
     // init model on load
     $scope.init_model();
 });

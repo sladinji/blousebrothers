@@ -334,7 +334,7 @@ ul.bb-ul li.active a {
 	margin-bottom: -10px;
 }
 
-.invalidquestion {
+.answeredquestion {
 	color: #d9534f;
 }
 
@@ -430,4 +430,27 @@ input[type=range]:focus::-ms-fill-upper {
 /* in the css file or in a style block */
 .angular-with-newlines {
   white-space: pre-wrap;
+}
+
+
+.timer {
+    font-size: 35px;
+    margin: 70px 0 100px;
+    opacity: 0.2;
+    font-weight: bold;
+}
+
+.btn.btn-success.btn-create-conf.pull-right {
+	margin-right: -25px;
+	margin-top: 12px;
+	margin-left: -26px;
+}
+
+.orange {
+    color: orange;
+    opacity: 0.8;
+}
+.red {
+    color: red;
+    opacity: 0.8;
 }

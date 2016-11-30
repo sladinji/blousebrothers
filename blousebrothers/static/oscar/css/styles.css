@@ -5372,8 +5372,8 @@ a.list-group-item-danger.active:focus {
 }
 .well {
   min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px;
+  padding: 4px;
+  margin-bottom: 3px;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
@@ -8673,7 +8673,7 @@ form,
 .table,
 .page-header,
 .sub-header {
-  margin: 0 0 20px;
+  margin: 0 0 4px;
 }
 ul,
 ol {

@@ -276,7 +276,7 @@ class TestAnswer(models.Model):
     question = models.ForeignKey('Question', related_name='test_answers')
     date_started = models.DateTimeField(_("Début"), auto_now_add=True)
     date_finished = models.DateTimeField(_("Fin"), null=True)
-    time_taken = models.PositiveIntegerField(_("Temps passé"), null=True)
+    time_taken = models.TimeField(_("Temps passé"), null=True)
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
                                      validators=[int_list_validator])
     """String representing a list of checked answer (ex: [0, 1, 3])"""
