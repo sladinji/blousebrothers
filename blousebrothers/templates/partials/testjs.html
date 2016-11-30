@@ -177,7 +177,10 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
   	  .then(function(result){
 	  	$scope.conference = result;
 		if({{time_taken}} > 0) {
-			toaster.pop('success', "Session restaurée au dernier point de progression.", "");
+			toaster.pop('success', "{% trans 'Session restaurée au dernier point de progression.' %}", "");
+		}
+		else{
+			toaster.pop('success', "{% trans 'Vous pouvez quitter et reprendre plus tard, votre progression est automatiquement sauvegardée.'  %}", "");
 		}
 	  	Question.query({conf: $scope.conference.pk}).$promise
 	  	.then(function(result){

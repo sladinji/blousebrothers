@@ -4,10 +4,12 @@
 {% load tinycontent_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
+{% block submenu %}
+{% endblock %}
 
 {% block content %}
 <div class="container">
-<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
+    <toaster-container toaster-options="{'time-out': 5000}"></toaster-container>
 {% comment %}
 AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
 {% endcomment %}
@@ -44,20 +46,22 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		  <p>{{object.conf.statement|linebreaks}}</p>
 	        {% verbatim %}
 	        </form>
-	        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
-	              <div ng-if="isImagesDiplayed">
-	                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
-	              </div>
-	              <div ng-if="!isImagesDiplayed">
-	                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher les illustrations
-	              </div>
-	        </a>
-		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
-		  <div ng-repeat="image in conferenceimages">
-		    <img ng-src="{{static_media(image.image)}}"/>
-		    <figcaption>{{image.caption}}</figcaption>
+		<div ng-show="conferenceimages.length > 0">
+	          <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
+	                <div ng-if="isImagesDiplayed">
+	                  <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
+	                </div>
+	                <div ng-if="!isImagesDiplayed">
+	                  <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher les illustrations
+	                </div>
+	          </a>
+		  <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
+		    <div ng-repeat="image in conferenceimages">
+		      <img ng-src="{{static_media(image.image)}}"/>
+		      <figcaption>{{image.caption}}</figcaption>
+		    </div>
+		    <br><br>
 		  </div>
-		  <br><br>
 		</div>
 	    </div>
 	    <br>
@@ -65,15 +69,15 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		
 	  
 	  <div class="well well-white" ng-if="question">
-	      <div class="col-sm-6">
+	      <div class="col-sm-6 col-xs-4">
 		   <span ng-class="timer_class">
 		      <timer start-time="start_time" interval="1000">
 		      {{hhours}}:{{mminutes}}:{{sseconds}}
 		      </timer>
 		  </span>
 	      </div>
-	      <div class="col-sm-6">
-	        <span class='well-title'>Question {{ question.index + 1 }} </span>
+	      <div class="col-sm-6 col-xs-8">
+		<span class='well-title'><span class="hidden-xs">Question </span>{{ question.index + 1 }} </span>
 	      </div>
 	    <p class="angular-with-newlines">{{question.question}}</p>
 
@@ -88,11 +92,11 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   <div class="well well-answer" ng-repeat="answer in answers">
 	     <div class="form-group">
 	       <div class="col-sm-12">
-		    <div class="col-sm-11">
+		    <div class="col-sm-11 col-xs-12">
 			    <label> <input type="checkbox" ng-disabled="{{ question.answered }}" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
 		      <p>{{answer.answer}}</p>
 		    </div>
-		    <div class="col-sm-1">
+		    <div class="col-sm-1 hidden-xs">
 		      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
 		    </div>
 	       </div>
@@ -100,15 +104,17 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	   </div>
 	   </fieldset>
 	   </form>
-	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
-	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled="answer_not_given()">Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
+	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled="answer_not_given()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
  	    {% endverbatim %}
 	    <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="{% url 'confs:result' object.conf.slug %}" ng-disabled="answer_not_given()">Terminer !<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
 	</div>
     </div>
+    <div class="row">
 	<aside class="hidden-md col-xs-12 hidden-lg">
 	{% include 'partials/nav_test_questions.html' %}
 	</aside>
+    </div>
 </div>
 {% endblock content %}
 
