@@ -159,6 +159,10 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		$scope.valid_answer($scope.questions[iq + 1]);
 		$window.scrollTo(0, 200, 1000);
 	}
+    	else if (iq == 14){
+		$scope.valid_answer($scope.questions[iq + 1]);
+    	  	window.location="{% url 'confs:result' object.conf.slug %}";
+      }
     }
     $scope.previous_question = function(){
 	var iq = $scope.questions.indexOf($scope.question);

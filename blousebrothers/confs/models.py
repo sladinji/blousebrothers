@@ -1,5 +1,6 @@
 from __future__ import unicode_literals, absolute_import
 
+import ast
 import re
 import os
 import uuid
@@ -188,6 +189,22 @@ class Question(models.Model):
     def __str__(self):
         return str(self.index + 1)+ '. ' + self.question[:20] + '...'
 
+    @property
+    def good_answers(self):
+        return self.answers.filter(correct=True)
+
+    @property
+    def bad_answers(self):
+        return self.answers.filter(correct=False)
+
+    @property
+    def good_index(self):
+        return [ x.index for x in self.good_answers]
+
+    @property
+    def bad_index(self):
+        return [ x.index for x in self.bad_answers]
+
 
 def answer_image_directory_path(answer_image, filename):
     return '{0}/conf_{1}/answers/{2}'.format(answer_image.question.conf.owner.username,
@@ -259,7 +276,7 @@ class Test(models.Model):
     progress = models.PositiveIntegerField(_("Progression"), default=0)
     result = models.PositiveIntegerField(_("Résultat"), default=0)
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
-    score = models.PositiveIntegerField(_("Résultat"), default=0)
+    score = models.PositiveIntegerField(_("Résultat"), null=True, default=None)
     finished = models.BooleanField(default=False)
     personal_note = models.TextField(_("Remarques personnelles"), blank=True, null=True,
                                      help_text=_("Visible uniquement par toi, note ici les choses "
@@ -268,23 +285,54 @@ class Test(models.Model):
 
                                                  )
                                      )
-    date_started = models.DateTimeField(_("Début du test"), auto_now_add=True)
-    date_finished = models.DateTimeField(_("Fin du test"), null=True)
     time_taken = models.TimeField(_("Temps passé"), null=True)
+
+    def set_score(self):
+        for t_answer in self.answers.all():
+            t_answer.set_score()
+        self.max_score = self.answers.aggregate(models.Sum('max_score')).get("max_score__sum")
+        self.score = self.answers.aggregate(models.Sum('score')).get("score__sum")
+        self.finished = True
+        self.save()
+
+    @property
+    def fatal_errors(self):
+        return [x for answer in self.answers for x in answer.fatals]
+
+    @property
+    def nb_errors(self):
+        return self.answers.aggregate(models.Sum('nb_errors')).get("nb_errors__sum")
 
 
 class TestAnswer(models.Model):
     test = models.ForeignKey('Test', related_name='answers')
     question = models.ForeignKey('Question', related_name='test_answers')
-    date_started = models.DateTimeField(_("Début"), auto_now_add=True)
-    date_finished = models.DateTimeField(_("Fin"), null=True)
     time_taken = models.TimeField(_("Temps passé"), null=True)
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
                                      validators=[int_list_validator])
     """String representing a list of checked answer (ex: [0, 1, 3])"""
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
-    score = models.PositiveIntegerField(_("Résultat"), default=0)
+    score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
+    nb_errors = models.PositiveIntegerField(_("Nombre d'erreurs"), default=0)
+    fatals = models.ManyToManyField('Answer', verbose_name=("Erreurs graves"))
 
     def set_score(self):
-        pass
-
+        self.max_score = self.question.coefficient
+        ga = ast.literal_eval(self.given_answers + ',')
+        omissions = [ans for ans in self.question.good_answers if ans.index not in ga]
+        errors = [ans for ans in self.question.bad_answers if ans.index in ga]
+        bga = omissions + errors
+        self.nb_errors = len(bga)
+        self.fatals.add(*[x for x in self.question.bad_answers
+                          if x.index in bga and x.ziw
+                          ]
+                        )
+        if sorted(ga) == sorted(self.question.good_index):
+            self.score = self.max_score
+        elif len(bga) > 2 or self.fatals:
+            self.score = 0
+        elif len(bga) == 2:
+            self.score = 0.2 * self.question.coefficient
+        elif len(bga) == 1:
+            self.score = 0.5 * self.question.coefficient
+        self.save()

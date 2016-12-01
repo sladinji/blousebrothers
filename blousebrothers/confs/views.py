@@ -324,4 +324,7 @@ class TestResult(TestPermissionMixin, DetailView):
 
     def get_object(self, queryset=None):
         conf = Conference.objects.get(slug=self.kwargs['slug'])
-        return Test.objects.get(conf=conf, student=self.request.user)
+        test = Test.objects.get(conf=conf, student=self.request.user)
+        if test.score == None :
+            test.set_score()
+        return test

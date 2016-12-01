@@ -26,11 +26,11 @@
   <div class="row">
   
     <div class="col-sm-12 ">
-	  <legend>Détails </legend>
-  	  <strong>Type :</strong> {{object.conf.type}}<br>
-  	  <strong>Items :</strong> {{object.conf.items.all | join:", "}}<br>
-  	  <strong>Specialités :</strong> {{object.conf.specialities.all | join:", "}}<br>
-  	  <strong>Esprit du dossier :</strong> {{object.conf.summary|default:"<i>aucun</i>"}}<br>
+	  <legend>Résultat</legend>
+	  <strong>Score :</strong> {{object.score}} / {{object.max_score}}<br>
+  	  <strong>Temps :</strong> {{object.time_taken }}<br>
+  	  <strong>Erreurs :</strong> {{object.nb_errors }}<br>
+  	  <strong>Erreurs graves: </strong> {{ object.fatal_errors | length }}<br>
 	  <br>
 	  {% if object.conf.type == 'DCP' %}
 	  <legend>Énoncé</legend><p> {{ object.conf.statement | default:"<i>aucun</i>"}}<p>
@@ -52,6 +52,7 @@
    
     {% for t_answer in object.answers.all|dictsort:"question.index" %}
     <div class="well well-white">
+	    <h1>{{ t_answer.score }} / {{ t_answer.max_score }}</h1>
 	    <legend>Question {{ t_answer.question.index | add:"1" }} {% if not t_answer.question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
       <div class="col-sm-12">
 	      <strong>Énoncé :</strong><p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p>
