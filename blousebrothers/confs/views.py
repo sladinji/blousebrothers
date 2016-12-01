@@ -273,12 +273,22 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
     model = Test
     fields = []
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.finished :
+            return redirect(
+                reverse('confs:result', kwargs={'slug': self.object.conf.slug})
+            )
+        else:
+            return super().get(request, *args, **kwargs)
+
+
     def get_context_data(self, **kwargs):
         """
         Add time_taken var to context for timer initialization. time_taken units is
         milliseconds as angularjs timer needs.
         """
-        tt = self.get_object().time_taken
+        tt = self.object.time_taken
         time_taken = (tt.hour * 3600 + tt.minute * 60 + tt.second) * 1000 if tt else 0
         return super().get_context_data(time_taken=time_taken, **kwargs)
 
@@ -324,7 +334,11 @@ class TestResult(TestPermissionMixin, DetailView):
 
     def get_object(self, queryset=None):
         conf = Conference.objects.get(slug=self.kwargs['slug'])
-        test = Test.objects.get(conf=conf, student=self.request.user)
+        test = Test.objects.prefetch_related(
+            "answers__question__answers",
+            "answers__question__images",
+        ).get(
+            conf=conf, student=self.request.user)
         if test.score == None :
             test.set_score()
         return test
