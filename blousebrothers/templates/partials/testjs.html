@@ -69,7 +69,7 @@ conf_app.config(function(djangoRMIProvider) {
     djangoRMIProvider.configure(tags);
 });
 
-conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI,
+conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, $location, djangoRMI,
 			Conference, ConferenceImage, Question, QuestionImage, Answer, Upload, Test, TestAnswer) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
@@ -150,8 +150,9 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     })
     $scope.valid_answer = function(question){
 	$scope.question['answered'] = true;
-	djangoRMI.send_answers({'answers': $scope.answers, 'millis': $scope.timer.millis});
+	var promise = djangoRMI.send_answers({'answers': $scope.answers, 'millis': $scope.timer.millis});
 	$scope.question_selected(question);
+	return promise;
     }
     $scope.next_question = function(){
 	var iq = $scope.questions.indexOf($scope.question);
@@ -160,8 +161,11 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		$window.scrollTo(0, 200, 1000);
 	}
     	else if (iq == 14){
-		$scope.valid_answer($scope.questions[iq + 1]);
-    	  	window.location="{% url 'confs:result' object.conf.slug %}";
+		$scope.valid_answer($scope.questions[iq + 1])
+		.success(function(result){
+			window.location="{% url 'confs:result' object.conf.slug %}";
+		});
+
       }
     }
     $scope.previous_question = function(){
