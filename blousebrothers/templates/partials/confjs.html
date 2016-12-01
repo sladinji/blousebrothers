@@ -127,7 +127,14 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     }
     $scope.uploadFiles = function(file, errFiles, type) {
         $scope.f = file;
-        $scope.errFile = errFiles && errFiles[0];
+        var errFile = errFiles && errFiles[0];
+	if(errFile){
+	    $scope.errorMsg = 'Error ' + errFile.$error +' : ' + errFile.$errorParam;
+	    if (errFile.$error == 'maxSize'){
+	      $scope.errorMsg = "L'image fait " + ~~(errFile.size / 1024 /1024) + "MB, il faut réduire sa taille pour qu'elle fasse moins de "+ errFile.$errorParam + ".";
+	    }
+	    toaster.pop('error', $scope.errorMsg, "");
+	}
         if (file) {
 	    var url = '';
 	    if ( type == 'question')
@@ -154,6 +161,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
             }, function (response) {
                 if (response.status > 0)
                     $scope.errorMsg = response.status + ': ' + response.data;
+		    toaster.pop('error', $scope.errorMsg, "");
             }, function (evt) {
                 file.progress = Math.min(100, parseInt(100.0 * 
                                          evt.loaded / evt.total));
@@ -170,14 +178,13 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	     $scope.written_q = out_data['written_q'];
 	     $scope.valid_q = out_data['valid_q'];
 	     $scope.conference = out_data['conference']
-  	     toaster.pop('success', "Sauvegarde auto OK", "");
 	     {% if user.is_superuser %}
 	     setKeyWords();
 	     {% endif %}
 
 	 })
 	 .error(function(out_data){
-  	     toaster.pop('erreur', "Echec de sauvegarde", "Nouvelle tentative dans quelques secondes...");
+  	     toaster.pop('error', "Echec de sauvegarde", "Nouvelle tentative dans quelques secondes...");
 	     timeout = $timeout(saveUpdates, 5000);  // 1000 = 1 second
 	 });
     };
@@ -206,6 +213,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		Conference.get({slug: slug}).$promise
     		.then(function(result){
     			$scope.conference = result;
+			toaster.pop('success', "{% trans 'Cette page enregistre en permanance tes modifications, no stress ;)' %}", "");
 			Question.query({conf: $scope.conference.pk}).$promise
     			.then(function(result){
 				$scope.questions = result;
