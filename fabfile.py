@@ -1,6 +1,6 @@
 from __future__ import with_statement
+import re
 from fabric.api import *
-from fabric.contrib.console import confirm
 import requests
 
 env.hosts = ['dowst@blousebrothers.fr']
@@ -11,9 +11,10 @@ def send_simple_message(msg):
     return requests.post(
                 "https://api.mailgun.net/v3/blousebrothers.fr/messages",
                 auth=("api", "key-0cb37ccb0c2de16fc921df70228346bc"),
-                data={"from": "Excited User <noreply@blousebrothers.fr>",
+                data={"from": "Futur Bot <noreply@blousebrothers.fr>",
                                     "to": ["julien.almarcha@gmail.com"],
-                                    "subject": "Hello",
+                                    "to": ["guillaume@blousebrothers.fr"],
+                      "subject": "http://futur.blousebrothers.fr:8000 updated",
                                     "text": msg})
 
 def deploy():
@@ -37,7 +38,8 @@ def futur():
     with cd(code_dir):
         run("git fetch origin master")
         logs = run("git log --pretty=oneline --abbrev-commit ..origin/master")
-        send_simple_message(logs)
+        logs =[ "* {}".format(x) for x in  re.findall(r'\[m (.*)\x1b', logs)]
+        send_simple_message("\n".join(logs))
         run("git merge")
         with prefix("source blouserc"):
             run("docker-compose build")
