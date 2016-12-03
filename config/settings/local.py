@@ -118,3 +118,17 @@ THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 
 
 
+# EMAIL
+# ------------------------------------------------------------------------------
+DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
+                         default='blousebrothers <noreply@blousebrothers.fr>')
+EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[blousebrothers] ')
+SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
+
+# Anymail with Mailgun
+INSTALLED_APPS += ("anymail", )
+ANYMAIL = {
+    "MAILGUN_API_KEY": 'key-0cb37ccb0c2de16fc921df70228346bc',
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
+
