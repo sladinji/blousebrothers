@@ -12,8 +12,7 @@ def send_simple_message(msg):
                 "https://api.mailgun.net/v3/blousebrothers.fr/messages",
                 auth=("api", "key-0cb37ccb0c2de16fc921df70228346bc"),
                 data={"from": "Futur Bot <noreply@blousebrothers.fr>",
-                                    "to": ["julien.almarcha@gmail.com"],
-                                    "to": ["guillaume@blousebrothers.fr"],
+                                    "to": ["julien.almarcha@gmail.com", "guillaume@blousebrothers.fr"],
                       "subject": "http://futur.blousebrothers.fr:8000 updated",
                                     "text": msg})
 
