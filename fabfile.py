@@ -24,7 +24,7 @@ def futur():
         if run("test -d %s" % code_dir).failed:
             run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
     with cd(code_dir):
-        run("git pull origin master")
+        run("./upgrade_and_notify.sh")
         with prefix("source blouserc"):
             run("docker-compose build")
             run("docker-compose up -d")
