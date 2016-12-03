@@ -1,9 +1,20 @@
 from __future__ import with_statement
 from fabric.api import *
 from fabric.contrib.console import confirm
+import requests
 
 env.hosts = ['dowst@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
+
+
+def send_simple_message(msg):
+    return requests.post(
+                "https://api.mailgun.net/v3/blousebrothers.fr/messages",
+                auth=("api", "key-0cb37ccb0c2de16fc921df70228346bc"),
+                data={"from": "Excited User <noreply@blousebrothers.fr>",
+                                    "to": ["julien.almarcha@gmail.com"],
+                                    "subject": "Hello",
+                                    "text": msg})
 
 def deploy():
     with settings(warn_only=True):
@@ -25,6 +36,10 @@ def futur():
             run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
     with cd(code_dir):
         run("./upgrade_and_notify.sh")
+        run("git fetch origin master")
+        logs = run("git log --pretty=oneline --abbrev-commit ..origin/master")
+        run("git merge")
+        send_simple_message(logs)
         with prefix("source blouserc"):
             run("docker-compose build")
             run("docker-compose up -d")
