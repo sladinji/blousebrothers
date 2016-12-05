@@ -209,9 +209,35 @@ ul.djng-field-errors li.valid::before {
 }
 
 .correct {
-	background-color: #fff;
+	color: #fff;
+	background: repeating-linear-gradient(
+	  45deg,
+	  #5d9634,
+	  #5d9634 10px,
+	  #538c2b 10px,
+	  #538c2b 20px
+	);	
 }
-
+.notcorrect {
+	color: #fff;
+	background: repeating-linear-gradient(
+	  45deg,
+	  #e91818,
+	  #e91818 10px,
+	  #f31e1e 10px,
+	  #f31e1e 20px
+	);	
+}
+.fatal {
+	color: #fff;
+	background: repeating-linear-gradient(
+	  45deg,
+	  #000000 ,
+	  #000000 10px,
+	  #191717 10px,
+	  #191717 20px
+	);	
+}
 .well-answer {
 	border: 1px dashed #bcbcbc;
 	background-color: #fff;
@@ -306,13 +332,7 @@ ul.bb-ul li.active a {
     width: 150px;
     height: 150px;
 }
-.notcorrect strong {
-	background-color: rgba(255, 0, 0, 0.52);
-}
 
-.correct strong {
-	background-color: rgba(24, 255, 0, 0.69);
-}
 
 .logobanner{
 	padding-left: 60px;

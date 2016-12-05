@@ -28,7 +28,7 @@
     <div class="col-sm-12 ">
 	  <legend>Résultat</legend>
 	  <strong>Score :</strong> {{object.score}} / {{object.max_score}}<br>
-  	  <strong>Temps :</strong> {{object.time_taken }}<br>
+  	  <strong>Temps :</strong> {{object.time_taken | time:"H:i:s" }}<br>
   	  <strong>Erreurs :</strong> {{object.nb_errors }}<br>
   	  <strong>Erreurs graves: </strong> {{ object.fatal_errors | length }}<br>
 	  <br>
@@ -66,9 +66,14 @@
       </div>
       {% endfor %}
       {% for answer in t_answer.question.answers.all %}
-      <div class="col-sm-12 {{ answer | is_good:t_answer }}">
-	      <strong>Réponse {{ answer.index | to_char }} <i class="fa fa-{% if answer.correct %}check"{% else %}times"{% endif %} aria-hidden="true"></i>:</strong> <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
-	      <strong>Explication :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | youtube | safe }}</p>
+      <div class="col-sm-12 {{ answer | is_good_css:t_answer }}">
+	      {% if forloop.counter0 %}<hr>{% endif %}
+	      <strong>
+		{{ answer | get_checked_fa:t_answer }}
+		Proposition {{ answer.index | to_char }} {{ answer | zero_cause_error_label:t_answer }}:
+	      </strong> 
+	      <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
+	      <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %} :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | youtube | safe }}</p>
 	      {% if answer.explaination_image %}
 	      <img src="{% cropped_thumbnail answer "cropping" %}">
 	      {% endif %}
