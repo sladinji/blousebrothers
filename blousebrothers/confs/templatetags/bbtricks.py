@@ -24,6 +24,13 @@ def zero_cause_error_label(answer, test_answer):
         return ""
 
 @register.filter
+def result_icon(answer, test_answer):
+    if is_good_css(answer, test_answer) == "correct":
+        return mark_safe('( <i class="fa fa-check-circle pull-right" aria-hidden="true"></i> zéro sur cette mauvaise réponse) ')
+    else:
+        return mark_safe('( <i class="fa fa-warning pull-right" aria-hidden="true"></i> zéro sur cette mauvaise réponse) ')
+
+@register.filter
 def get_checked_fa(answer, test_answer):
     if str(answer.index) in test_answer.given_answers :
         return mark_safe('<i class="fa fa-check-square-o" aria-hidden="true"></i>')

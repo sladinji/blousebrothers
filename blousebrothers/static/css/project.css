@@ -209,27 +209,32 @@ ul.djng-field-errors li.valid::before {
 }
 
 .correct {
-	color: #fff;
-	background: repeating-linear-gradient(
-	  45deg,
-	  #5d9634,
-	  #5d9634 10px,
-	  #538c2b 10px,
-	  #538c2b 20px
-	);	
+	color: #000;
+	background: #d6ffc6;
+	border: 1px solid #449d44;
+	margin: -1px;
+	padding: 10px;
 }
 .notcorrect {
-	color: #fff;
-	background: repeating-linear-gradient(
-	  45deg,
-	  #e91818,
-	  #e91818 10px,
-	  #f31e1e 10px,
-	  #f31e1e 20px
-	);	
+	color: #000;
+	background: #ffe0df;;
+	border: 1px solid #e03e2f;
+	margin: -1px;
+	padding: 10px;
+}
+.notcorrect .fa {
+	color: #e03e2f;
+	top: 4px;
+	left: 5.5px;
+}
+.correct .fa {
+	color: #449d44;
+	top: 4px;
+	left: 5.5px;
 }
 .fatal {
 	color: #fff;
+	padding: 10px;
 	background: repeating-linear-gradient(
 	  45deg,
 	  #000000 ,
