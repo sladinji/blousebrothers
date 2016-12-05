@@ -7,11 +7,6 @@
 
 {% block title %}{{ object.conf.title}}{% endblock %}
 
-{% block submenu %}
-      <a class="btn" href="{% url 'confs:edit' object.conf.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
-     Rédaction complétée à {{ object.conf.edition_progress }}%
-      <a class="btn btn-danger pull-right" href="{% url 'confs:delete' object.conf.slug %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer la conférence</a>
-{% endblock %}
 {% block content %}
 <div class="container">
 
@@ -51,11 +46,15 @@
     <h2>Questions</h2>
    
     {% for t_answer in object.answers.all|dictsort:"question.index" %}
-    <div class="well well-white">
-	    <h1>{{ t_answer.score }} / {{ t_answer.max_score }}</h1>
+    <div class="well well-white question">
+	    <h1>{{ t_answer.score }} / {{ t_answer.max_score }}
+	      <a class="pull-right commenting" data-toggle="modal" data-target="#myModal">
+		      <i class="fa fa-commenting" aria-hidden="true" data-question-id="{{ t_answer.question.id }}"></i>
+		</a>
+	    </h1>
 	    <legend>Question {{ t_answer.question.index | add:"1" }} {% if not t_answer.question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
       <div class="col-sm-12">
-	      <strong>Énoncé :</strong><p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p>
+	     <p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p>
       </div>
       {% for image in t_answer.question.images.all %}
       <div class="illustrations" id="images_div">
@@ -73,10 +72,20 @@
 		Proposition {{ answer.index | to_char }} {{ answer | zero_cause_error_label:t_answer }}:
 	      </strong> 
 	      <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
-	      <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %} :</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | youtube | safe }}</p>
+	      <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %}</strong> <p>{{ answer.explaination | default:"<i>aucune</i>" | youtube | safe }}</p>
 	      {% if answer.explaination_image %}
 	      <img src="{% cropped_thumbnail answer "cropping" %}">
 	      {% endif %}
+
+
+
+
+
+
+
+
+
+
       </div>
      {% endfor %}
    </div>
@@ -84,5 +93,73 @@
   </div>
 <!-- End Action buttons -->
 </div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="myModalLabel"><i class="fa fa-commenting" aria-hidden="true"></i> Signaler un problème</h4>
+	      </div>
+	      <div class="modal-body">
+		<textarea id="commenttextarea" name="textarea" rows="10" cols="50"></textarea>
+	      </div>
+	      <div class="modal-footer">
+		<button id="send_comment" type="button" class="btn btn-default" data-dismiss="modal">Envoyer</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 {% endblock content %}
 
+
+
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+var question_id_comment = 0;
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+$("a .fa-commenting").click( function(){
+	question_id_comment = $(this).data("question-id");
+});
+
+$("#send_comment").click(function(){
+	$.post(
+		"{% url 'confs:question_comment' %}",
+		{ 
+			question_id : question_id_comment,
+			comment :  $('textarea#commenttextarea').val(),
+		});
+
+});
+
+</script>
+{% endblock %}

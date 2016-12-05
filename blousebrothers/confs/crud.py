@@ -22,6 +22,7 @@ from .models import (
     QuestionImage,
     Test,
     TestAnswer,
+    QuestionComment,
 )
 
 logger = logging.getLogger(__name__)
@@ -196,6 +197,17 @@ class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUD
                 obj["correct"] = False
         return object_data
 
+
+
+class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, TemplateView):
+
+    def post(self, request, **kwargs):
+        QuestionComment.objects.create(
+            question_id = request.POST['question_id'],
+            student = request.user,
+            comment = request.POST['comment'],
+        )
+        return JsonResponse(dict(success=1))
 
 
 class UploadQuestionImage(ConfRelatedObjPermissionMixin, TemplateView):

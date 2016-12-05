@@ -474,3 +474,11 @@ input[type=range]:focus::-ms-fill-upper {
     color: red;
     opacity: 0.8;
 }
+
+.question .fa.fa-commenting {
+	font-size: 18pt;
+	margin-top: 5px;
+	cursor: pointer;
+	color: black;
+	opacity: 0.8;
+}

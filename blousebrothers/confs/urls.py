@@ -95,6 +95,10 @@ urlpatterns = [
         crud.UploadConferenceImage.as_view(),
         name='up_conf_img'),
 
+    url(r'^comment/question/?$',
+        crud.StudentQuestionCommentView.as_view(),
+        name='question_comment'),
+
     url(r'^crud/conferenceimage/?$',
         crud.ConferenceImageCRUDView.as_view(),
         name='conferenceimage_crud_view'),

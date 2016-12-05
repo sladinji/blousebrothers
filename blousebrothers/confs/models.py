@@ -216,6 +216,12 @@ def answer_image_directory_path(answer_image, filename):
                                                            )
                                              )
 
+class QuestionComment(models.Model):
+    question = models.ForeignKey(Question, related_name="comments")
+    student = models.ForeignKey('users.User', blank=False, null=False,
+                              related_name="comments")
+    comment = models.TextField(_("Explication"), blank=True, null=True)
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
 
 class Answer(models.Model):
     class Meta:

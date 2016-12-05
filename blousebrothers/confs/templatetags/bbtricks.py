@@ -19,7 +19,7 @@ def is_good_css(answer, test_answer):
 @register.filter
 def zero_cause_error_label(answer, test_answer):
     if is_good_css(answer, test_answer) == "fatal":
-        return "(zéro sur cette mauvaise réponse) "
+        return mark_safe('( <i class="fa fa-warning" aria-hidden="true"></i> zéro sur cette mauvaise réponse) ')
     else:
         return ""
 

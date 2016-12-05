@@ -95,6 +95,8 @@ class BaseConfRelatedObjPermissionMixin():
     def get_conf(self, **kwargs):
         if not kwargs :
             kwargs = self.request.GET
+        if not kwargs :
+            kwargs = self.request.POST
         if 'conf' in kwargs:
             conf = Conference.objects.get(id=kwargs['conf'])
         if 'conference_id' in kwargs:
