@@ -147,11 +147,13 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            return self.model.objects.order_by('-edition_progress').all()
+            qry = self.model.objects.order_by('-edition_progress')
         else :
             qry = self.model.objects.filter(owner=self.request.user)
             qry = qry.order_by('edition_progress')
-            return qry.all()
+        if self.request.GET.get('q', False):
+            qry = qry.filter(title__icontains=self.request.GET['q'])
+        return qry.all()
 
 
 class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, CreateView, FormView):
@@ -263,6 +265,8 @@ class BuyedConferenceListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         qry = self.model.objects.filter(student=self.request.user)
         qry = qry.order_by('progress')
+        if self.request.GET.get('q', False):
+            qry = qry.filter(conf__title__icontains=self.request.GET['q'])
         return qry.all()
 
 
@@ -327,6 +331,8 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
             ta.time_taken = time_taken
         ta.save()
         test.time_taken = time_taken
+        test.progress = test.answers.exclude(given_answers='').count()/test.answers.count() * 100
+        print(test.progress)
         test.save()
 
 class TestResult(TestPermissionMixin, DetailView):

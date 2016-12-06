@@ -2,6 +2,10 @@
 {% load static %}{% load i18n %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
+{% block submenu %}
+{% include 'partials/submenu_search.html' with action="confs:my_confs" %}
+{% endblock %}
+
 {% block content %}
 
 <div class="container">

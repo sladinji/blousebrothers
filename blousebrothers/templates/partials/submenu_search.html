@@ -1,7 +1,8 @@
 {% load i18n %}
 {% if user.is_authenticated %}
+{% url action as actionurl %}
 <div class="submenu">
-  <form method="get" action="{% url 'search:search' %}" class="box-search pull-left">
+	<form method="get" action="{{ actionurl }}" class="box-search pull-left">
   	<div class="inner">
   		{{ search_form.q }}
   		<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
