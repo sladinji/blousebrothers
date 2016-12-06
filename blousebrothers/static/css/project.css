@@ -209,14 +209,12 @@ ul.djng-field-errors li.valid::before {
 }
 
 .correct {
-	color: #000;
 	background: #d6ffc6;
 	border: 1px solid #449d44;
 	margin: -1px;
 	padding: 10px;
 }
 .notcorrect {
-	color: #000;
 	background: #ffe0df;;
 	border: 1px solid #e03e2f;
 	margin: -1px;

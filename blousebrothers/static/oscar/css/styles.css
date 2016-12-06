@@ -2704,10 +2704,6 @@ select[multiple].input-lg {
 .form-horizontal .checkbox {
   min-height: 27px;
 }
-.form-horizontal .form-group {
-  margin-left: -15px;
-  margin-right: -15px;
-}
 @media (min-width: 768px) {
   .form-horizontal .control-label {
     text-align: right;

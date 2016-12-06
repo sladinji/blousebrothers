@@ -282,7 +282,7 @@ class Test(models.Model):
     progress = models.PositiveIntegerField(_("Progression"), default=0)
     result = models.PositiveIntegerField(_("Résultat"), default=0)
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
-    score = models.PositiveIntegerField(_("Résultat"), null=True, default=None)
+    score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
     finished = models.BooleanField(default=False)
     personal_note = models.TextField(_("Remarques personnelles"), blank=True, null=True,
                                      help_text=_("Visible uniquement par toi, note ici les choses "
@@ -303,7 +303,7 @@ class Test(models.Model):
 
     @property
     def fatal_errors(self):
-        return [x for answer in self.answers for x in answer.fatals]
+        return [ x for ta in self.answers.all() for x in ta.fatals.all() ]
 
     @property
     def nb_errors(self):
@@ -316,7 +316,7 @@ class TestAnswer(models.Model):
     time_taken = models.TimeField(_("Temps passé"), null=True)
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
                                      validators=[int_list_validator])
-    """String representing a list of checked answer (ex: [0, 1, 3])"""
+    """String representing a list of checked answer (ex: "0, 1, 3")"""
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
     score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
     nb_errors = models.PositiveIntegerField(_("Nombre d'erreurs"), default=0)
@@ -329,16 +329,15 @@ class TestAnswer(models.Model):
         errors = [ans for ans in self.question.bad_answers if ans.index in ga]
         bga = omissions + errors
         self.nb_errors = len(bga)
-        self.fatals.add(*[x for x in self.question.bad_answers
-                          if x.index in bga and x.ziw
-                          ]
-                        )
+        fatals = [x for x in bga if x.ziw]
+        if fatals :
+            self.fatals.add(*fatals)
         if sorted(ga) == sorted(self.question.good_index):
             self.score = self.max_score
-        elif len(bga) > 2 or self.fatals:
+        elif len(bga) > 2 or fatals:
             self.score = 0
         elif len(bga) == 2:
-            self.score = 0.2 * self.question.coefficient
+            self.score = Decimal(0.2 * self.question.coefficient)
         elif len(bga) == 1:
-            self.score = 0.5 * self.question.coefficient
+            self.score = Decimal(0.5 * self.question.coefficient)
         self.save()

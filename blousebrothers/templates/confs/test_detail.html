@@ -22,7 +22,7 @@
   
     <div class="col-sm-12 ">
 	  <legend>Résultat</legend>
-	  <strong>Score :</strong> {{object.score}} / {{object.max_score}}<br>
+	  <strong>Score :</strong> <big>{{ object | score100 }}</big> / 100 ({{object.score}} / {{object.max_score}})<br>
   	  <strong>Temps :</strong> {{object.time_taken | time:"H:i:s" }}<br>
   	  <strong>Erreurs :</strong> {{object.nb_errors }}<br>
   	  <strong>Erreurs graves: </strong> {{ object.fatal_errors | length }}<br>
@@ -47,14 +47,14 @@
    
     {% for t_answer in object.answers.all|dictsort:"question.index" %}
     <div class="well well-white question">
-	    <h1>{{ t_answer.score }} / {{ t_answer.max_score }}
-	      <a class="pull-right commenting" data-toggle="modal" data-target="#myModal">
+	    <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score }} / {{ t_answer.max_score }}
+		    <a class="pull-right commenting" data-toggle="modal" data-target="#myModal">
 		      <i class="fa fa-commenting" aria-hidden="true" data-question-id="{{ t_answer.question.id }}"></i>
 		</a>
 	    </h1>
 	    <legend>Question {{ t_answer.question.index | add:"1" }} </legend>
       <div class="col-sm-12">
-	     <p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p>
+	      <big><p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p></big>
       </div>
       {% for image in t_answer.question.images.all %}
       <div class="illustrations" id="images_div">

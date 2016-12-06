@@ -339,6 +339,6 @@ class TestResult(TestPermissionMixin, DetailView):
             "answers__question__images",
         ).get(
             conf=conf, student=self.request.user)
-        if test.score == None :
+        if not test.finished:
             test.set_score()
         return test

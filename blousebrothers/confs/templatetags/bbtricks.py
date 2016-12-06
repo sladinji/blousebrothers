@@ -1,3 +1,4 @@
+from decimal import Decimal, ROUND_UP
 from string import ascii_uppercase
 from django import template
 from django.utils.safestring import mark_safe
@@ -25,10 +26,17 @@ def zero_cause_error_label(answer, test_answer):
 
 @register.filter
 def result_icon(answer, test_answer):
-    if is_good_css(answer, test_answer) == "correct":
-        return mark_safe('( <i class="fa fa-check-circle pull-right" aria-hidden="true"></i> zéro sur cette mauvaise réponse) ')
-    else:
-        return mark_safe('( <i class="fa fa-warning pull-right" aria-hidden="true"></i> zéro sur cette mauvaise réponse) ')
+    result = is_good_css(answer, test_answer)
+    icon = '<big><i class="fa fa-{} pull-right big" aria-hidden="true"></i></big>'
+    return {
+        "correct": mark_safe(icon.format('check-circle')),
+        "notcorrect": mark_safe(icon.format('warning')),
+        "fatal": mark_safe(icon.format('heartbeat')),
+    }[result]
+
+@register.filter
+def score100(test):
+    return Decimal(test.score * 100 / 15).quantize(Decimal('.01'), rounding=ROUND_UP)
 
 @register.filter
 def get_checked_fa(answer, test_answer):
