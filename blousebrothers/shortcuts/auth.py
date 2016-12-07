@@ -44,10 +44,11 @@ class TestPermissionMixin(UserPassesTestMixin):
         if self.request.user.is_superuser:
             return True
         self.object = self.get_object()
-        return self.object.student in (self.request.user, self.object.conf.owner)
+        return self.object.student == self.request.user
 
     def handle_no_permission(self):
         raise PermissionDenied
+
 
 class ConferencePermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
     permission_required = ['confs.add_conference']
