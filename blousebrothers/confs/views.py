@@ -50,6 +50,12 @@ class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, De
     model = Conference
     # These next two lines tell the view to index lookups by conf
 
+    def get_object(self, queryset=None):
+        obj = Conference.objects.prefetch_related(
+            "questions__answers",
+            "questions__images",
+        ).get(slug=self.kwargs['slug'])
+        return obj
 
 class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, DeleteView):
     """
@@ -165,6 +171,13 @@ class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, Crea
     def handle_no_permission(self):
         return redirect("confs:wanabe_conferencier")
 
+    def get_object(self, queryset=None):
+        obj = Conference.objects.prefetch_related(
+            "questions__answers",
+            "questions__images",
+        ).get(slug=self.kwargs['slug'])
+        return obj
+
     # send the user back to their own page after a successful update
     def get_redirect_url(self):
         return reverse('confs:detail',
@@ -211,8 +224,19 @@ class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, Upd
                         items.append(item)
                         break
         context = super().get_context_data(**{'items': items})
-
         return context
+
+    def form_valid(self, form):
+        """Create a Test instance for user to be able to test is conference"""
+        if not Test.objects.filter(
+            conf=self.object,
+            student=self.request.user
+        ).exists():
+            Test.objects.create(conf=self.object, student=self.request.user)
+        return super().form_valid(form)
+
+
+
 
 
 class ConferenceEditView( ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
