@@ -209,6 +209,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     $scope.$watch('conference', debounceSaveUpdates, true)
     $scope.$watch('question.question', debounceSaveUpdates)
     $scope.$watch('question.coefficient', debounceSaveUpdates)
+    $scope.$watch('question.explaination', debounceSaveUpdates)
     $scope.$watch('answers', debounceSaveUpdates, true)
     $scope.$watch('answersimages', debounceSaveUpdates, true)
     $scope.$watch('questionimages', debounceSaveUpdates, true)

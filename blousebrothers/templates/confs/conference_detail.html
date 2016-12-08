@@ -55,6 +55,7 @@
 	    <legend>Question {{ question.index | add:"1" }} {% if not question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
       <div class="col-sm-12">
 	      <strong>Énoncé :</strong><p>{{ question.question | default:"<i>aucun</i>"}}</p>
+	      <strong>Correction globale :</strong><p>{{ question.explaination| default:"<i>aucune</i>"}}</p>
       </div>
       {% for image in question.images.all %}
       <div class="illustrations" id="images_div">

@@ -21,8 +21,8 @@
   <div class="row">
   
     <div class="col-sm-12 ">
-	  <legend>Résultat</legend>
-	  <strong>Score :</strong> <big>{{ object | score100 }}</big> / 100 ({{object.score}} / {{object.max_score}})<br>
+	  <legend>Résultats</legend>
+	  <strong>Score :</strong> <big>{{ object | score100 }}</big> / 100 <br>
   	  <strong>Temps :</strong> {{object.time_taken | time:"H:i:s" }}<br>
   	  <strong>Erreurs :</strong> {{object.nb_errors }}<br>
   	  <strong>Erreurs graves: </strong> {{ object.fatal_errors | length }}<br>
@@ -47,7 +47,7 @@
    
     {% for t_answer in object.answers.all|dictsort:"question.index" %}
     <div class="well well-white question">
-	    <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score }} / {{ t_answer.max_score }}
+	    <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score |floatformat:2 }} / {{ t_answer.max_score }}
 		    <a class="pull-right commenting" data-toggle="modal" data-target="#myModal">
 		      <i class="fa fa-commenting" aria-hidden="true" data-question-id="{{ t_answer.question.id }}"></i>
 		</a>
@@ -64,6 +64,7 @@
 	      </figure>
       </div>
       {% endfor %}
+      <big><p>{{ t_answer.question.explaination| default:"<i>Pas d'explication globale pour cette question</i>"}}</p></big>
       {% for answer in t_answer.question.answers.all %}
       <div class="col-sm-12 {{ answer | is_good_css:t_answer }}">
 	      <strong>

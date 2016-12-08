@@ -103,6 +103,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  <form class="form-horizontal">
 	   <fieldset>
 	   <legend>Réponses {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque réponse et définissez au moins une réponse juste)'}} </legend>
+	      <textarea type="text" class="no-border-form form-control" ng-model="question.explaination" placeholder='Clique ici pour rédiger une "correction gloable" de la question posée'></textarea><br />
 	   <div class="well well-answer" ng-repeat="answer in answers">
 	     <div class="form-group">
 	       <div class="col-sm-12">
