@@ -5,6 +5,7 @@ import re
 import os
 import uuid
 from decimal import Decimal
+import logging
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -16,6 +17,9 @@ from django.core.validators import int_list_validator
 
 from autoslug import AutoSlugField as RealAutoSlugField
 from image_cropping import ImageCropField, ImageRatioField
+
+logger = logging.getLogger(__name__)
+
 
 class AutoSlugField(RealAutoSlugField):
     # XXX: Work around https://bitbucket.org/neithere/django-autoslug/issues/34/django-migrations-fail-if-autoslugfield
@@ -117,6 +121,25 @@ class Conference(models.Model):
         question = QuestionImage.objects.filter(question__conf=self).count()
         answer = Answer.objects.filter(question__conf=self).exclude(explaination_image='').count()
         return conf + question + answer
+
+    def check_images(self):
+        #TODO update when ans explaination image refactored as relation
+        def check_container(c):
+            for obj in c.images.all():
+                try:
+                    obj.image.size
+                except:
+                    logger.warning("Image {} does not exist. Delete it", obj.image)
+                    obj.delete()
+
+        check_container(self)
+        for question in self.questions.all():
+            check_container(question)
+            for ans in question.answers.all():
+                try:
+                    ans.explaination_image.size
+                except:
+                    logger.warning("Image {} does not exist. Delete it", ans.explaination_image)
 
 
 
