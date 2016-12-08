@@ -48,6 +48,10 @@ conf_app.factory('Answer', ['$resource', function($resource) {
 	return $resource('{% url 'confs:answer_crud_view' %}', {'pk': '@pk'}, {
 		        });
 }]);
+conf_app.factory('AnswerImage', ['$resource', function($resource) {
+	return $resource('{% url 'confs:answerimage_crud_view' %}', {'pk': '@pk'}, {
+		        });
+}]);
 conf_app.config(function($httpProvider) {
 	    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -60,10 +64,11 @@ conf_app.config(function(djangoRMIProvider) {
 
 
 conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI,
-			Conference, ConferenceImage, Question, QuestionImage, Answer, Upload) {
+			Conference, ConferenceImage, Question, QuestionImage, Answer, AnswerImage, Upload) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.questionimages = [];
+    $scope.answersimages = {};
     $scope.static_media = static_media;
     $scope.kwords = [];
     var setQuestionImages = function(question) {
@@ -74,24 +79,29 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		});
 	}
     };
+    var setAnswerImages = function(answer) {
+	if (answer != null){
+		AnswerImage.query({answer_id: answer.pk}).$promise
+		.then(function(result){
+			$scope.answersimages[answer.index] = result;
+		});
+	}
+    };
     var setConferenceImage = function() {
 	ConferenceImage.query({conf: $scope.conference.pk}).$promise
 	.then(function(result){
 		$scope.conferenceimages= result;
 	})
     };
-    var setKeyWords = function(){
-	djangoRMI.get_keywords($scope.conference)
-		.success(function(out_data) {
-			$scope.kwords = out_data;
-		});
-    }
     var setAnswers = function(question) {
 	if (question != null){
 		Answer.query({question: question.pk}).$promise
 		.then(function(result){
 			$scope.answers = result;
 			$scope.answers.length = 5;
+			result.forEach( function(answer){
+				setAnswerImages(answer);
+			});
 		});
 	}
     };
@@ -121,9 +131,12 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	  from.splice(from.indexOf(image), 1);
 	}
     }
-    $scope.deleteansimg = function(answer){
-	    djangoRMI.delete_anwser_explaination_image(answer);
-	    answer.explaination_image = "";
+    $scope.deleteansimg = function(image, index){
+	if ($window.confirm("Supprimer l'image ?")) {
+	  image.$remove();
+	  from = $scope.answersimages[index]
+	  from.splice(from.indexOf(image), 1);
+	}
     }
     $scope.uploadFiles = function(file, errFiles, type) {
         $scope.f = file;
@@ -156,7 +169,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		    else if ( type == 'conf')
 			setConferenceImage();
 		    else
-			setAnswers($scope.question);
+			setAnswerImages(type);
                 });
             }, function (response) {
                 if (response.status > 0)
@@ -172,15 +185,12 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     var timeout = null;
     var saveUpdates = function() {
       // .... save data to server
-      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers, $scope.conferenceimages, $scope.questionimages])
+      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers, $scope.conferenceimages, $scope.questionimages, $scope.answersimages])
 	 .success(function(out_data) {
 	     $scope.total_q = out_data['total_q'];
 	     $scope.written_q = out_data['written_q'];
 	     $scope.valid_q = out_data['valid_q'];
 	     $scope.conference = out_data['conference']
-	     {% if user.is_superuser %}
-	     setKeyWords();
-	     {% endif %}
 
 	 })
 	 .error(function(out_data){
@@ -200,6 +210,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     $scope.$watch('question.question', debounceSaveUpdates)
     $scope.$watch('question.coefficient', debounceSaveUpdates)
     $scope.$watch('answers', debounceSaveUpdates, true)
+    $scope.$watch('answersimages', debounceSaveUpdates, true)
     $scope.$watch('questionimages', debounceSaveUpdates, true)
     $scope.$watch('conferenceimages', debounceSaveUpdates, true)
     // END AUTO SAVE
@@ -222,9 +233,6 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 				setQuestionImages($scope.question);
     			})
 			setConferenceImage();
-			{% if user.is_superuser %}
-			setKeyWords();
-			{% endif %}
     		})
 	}
 	else{

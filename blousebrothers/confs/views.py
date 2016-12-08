@@ -36,6 +36,7 @@ from .models import (
     Conference,
     Question,
     Answer,
+    AnswerImage,
     ConferenceImage,
     QuestionImage,
     Item,
@@ -116,7 +117,7 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
     @allow_remote_invocation
     def sync_data(self, edit_data):
         # process in_data
-        conf, question, answers, images, qimages = edit_data
+        conf, question, answers, images, qimages, ansimages = edit_data
         conf.pop('items')
         conf.pop('specialities')
         conf_pk = conf.pop('pk')
@@ -124,6 +125,9 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
         Question.objects.filter(pk=question.pop('pk')).update(**question)
         for answer in answers:
             Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
+        for __, answers_images in ansimages.items():
+            for answer_image in answers_images:
+                AnswerImage.objects.filter(pk=answer_image.pop('pk')).update(**answer_image)
         for image in images:
             ConferenceImage.objects.filter(pk=image.pop('pk')).update(**image)
         for image in qimages:
@@ -359,7 +363,6 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         ta.save()
         test.time_taken = time_taken
         test.progress = test.answers.exclude(given_answers='').count()/test.answers.count() * 100
-        print(test.progress)
         test.save()
 
 class TestResult(TestPermissionMixin, DetailView):

@@ -199,10 +199,11 @@ class Speciality(models.Model):
 
 
 class Question(models.Model):
-    question = models.TextField(_("Enoncé"), blank=False, null=False, max_length=64)
+    question = models.TextField(_("Enoncé"), blank=False, null=False)
     conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     coefficient = models.PositiveIntegerField(_("Coéfficient"), default=1)
+    explaination = models.TextField(_("Remarque globale pour la correction"), blank=True, null=True)
 
     def is_valid(self):
         one_good = len([a for a in self.answers.all() if a.answer and a.correct]) >= 1
@@ -258,6 +259,26 @@ class Answer(models.Model):
     correct = models.BooleanField(_("Correct"), default=False)
     ziw = models.BooleanField(_("Zéro si erreur"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
+
+
+def answer_image_directory_path(answer_image, filename):
+    return '{0}/conf_{1}/answers/{2}'.format(answer_image.answer.question.conf.owner.username,
+                                               answer_image.answer.question.conf.id,
+                                               "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
+                                                                        filename
+                                                                        ),
+                                                             os.path.splitext(filename)[-1]
+                                                             )
+                                               )
+
+
+class AnswerImage(models.Model):
+    image = ImageCropField(_("Image"), upload_to=answer_image_directory_path, max_length=255,)
+    cropping = ImageRatioField('image', '430x360', free_crop=True)
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    index = models.PositiveIntegerField(_("Ordre"), default=0)
+    answer= models.ForeignKey('Answer', related_name='images')
 
 
 @receiver(models.signals.pre_delete, sender=Answer)

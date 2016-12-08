@@ -18,6 +18,7 @@ from .models import (
     Conference,
     Question,
     Answer,
+    AnswerImage,
     ConferenceImage,
     QuestionImage,
     Test,
@@ -198,45 +199,68 @@ class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUD
         return object_data
 
 
+class BaseAnswerImageCRUDView(NgCRUDView):
+    model = AnswerImage
+
+    def get_queryset(self):
+        if 'answer_id' in self.request.GET:
+            return self.model.objects.filter(
+                answer_id=self.request.GET['answer_id']
+            ).order_by('index', 'date_created')
+
+
+class AnswerImageCRUDView(ConfRelatedObjPermissionMixin, BaseAnswerImageCRUDView):
+    """
+    CRUD view with conferencier access
+    """
+
+
+class StudentAnswerImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerImageCRUDView):
+    """
+    Crud view for conferencier access
+    """
+    allowed_methods = ['GET']
+
 
 class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, TemplateView):
 
     def post(self, request, **kwargs):
         QuestionComment.objects.create(
-            question_id = request.POST['question_id'],
-            student = request.user,
-            comment = request.POST['comment'],
+            question_id=request.POST['question_id'],
+            student=request.user,
+            comment=request.POST['comment'],
         )
         return JsonResponse(dict(success=1))
 
 
-class UploadQuestionImage(ConfRelatedObjPermissionMixin, TemplateView):
+class BaseUploadImage(ConfRelatedObjPermissionMixin, TemplateView):
+    """
+    Base class for image upload (for conf, question, answer)
+    """
+    kwarg_id = ''
+    """Id of related object"""
+    image_class = None
+    """Class used to store image object"""
 
     def post(self, request, **kwargs):
-        question_id = kwargs['question_id']
-        qimg = QuestionImage(question_id=question_id)
-        qimg.image = request.FILES['file']
-        qimg.save()
-        data = {"url": qimg.image.url}
-        return JsonResponse(data)
+        fk_id = kwargs[self.kwarg_id]
+        obj = self.image_class(**{self.kwarg_id: fk_id})
+        obj.image = request.FILES['file']
+        obj.index = self.image_class.objects.filter(**{self.kwarg_id: fk_id}).count()
+        obj.save()
+        return JsonResponse({'url': obj.image.url})
 
 
-class UploadConferenceImage(ConfRelatedObjPermissionMixin, TemplateView):
-
-    def post(self, request, **kwargs):
-        conference_id = kwargs['conference_id']
-        cimg = ConferenceImage(conf_id=conference_id)
-        cimg.image = request.FILES['file']
-        cimg.save()
-        data = {"url": cimg.image.url}
-        return JsonResponse(data)
+class UploadQuestionImage(BaseUploadImage):
+    kwarg_id = 'question_id'
+    image_class = QuestionImage
 
 
-class UploadAnswerImage(ConfRelatedObjPermissionMixin, TemplateView):
+class UploadConferenceImage(BaseUploadImage):
+    kwarg_id = 'conference_id'
+    image_class = ConferenceImage
 
-    def post(self, request, **kwargs):
-        answer = Answer.objects.get(pk=kwargs['answer_id'])
-        answer.explaination_image = request.FILES['file']
-        answer.save()
-        data = {"url": answer.explaination_image.url}
-        return JsonResponse(data)
+
+class UploadAnswerImage(BaseUploadImage):
+    kwarg_id = 'answer_id'
+    image_class = AnswerImage
