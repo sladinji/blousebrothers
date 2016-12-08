@@ -2,7 +2,7 @@ import logging
 import datetime
 import time
 
-from django.views.generic import TemplateView
+from django.views.generic import FormView
 from django.http import JsonResponse
 
 from djng.views.crud import NgCRUDView
@@ -222,7 +222,7 @@ class StudentAnswerImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswe
     allowed_methods = ['GET']
 
 
-class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, TemplateView):
+class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, FormView):
 
     def post(self, request, **kwargs):
         QuestionComment.objects.create(
@@ -233,7 +233,7 @@ class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, TemplateV
         return JsonResponse(dict(success=1))
 
 
-class BaseUploadImage(ConfRelatedObjPermissionMixin, TemplateView):
+class BaseUploadImage(ConfRelatedObjPermissionMixin, FormView):
     """
     Base class for image upload (for conf, question, answer)
     """
