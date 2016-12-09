@@ -481,3 +481,10 @@ input[type=range]:focus::-ms-fill-upper {
 	color: black;
 	opacity: 0.8;
 }
+
+.table.table-striped ul {
+	padding: 0;
+ }
+.table.table-striped li {
+	list-style-type: none;
+ }

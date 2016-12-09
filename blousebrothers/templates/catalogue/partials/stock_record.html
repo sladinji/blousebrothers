@@ -15,7 +15,7 @@
 {% else %}
     <p class="price_color">&nbsp;</p>
 {% endif %}
-<p class="{{ session.availability.code }} availability">
-  Auteur : {{ product.conf.owner.username}}<br>
-</p>
+{% if product.conf %}
+<p>  Conférencier : {{ product.conf.owner.username}}</p>
+{% endif %}
 
