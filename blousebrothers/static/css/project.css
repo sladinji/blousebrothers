@@ -517,8 +517,16 @@ input[type=range]:focus::-ms-fill-upper {
 
 .signup .signin.slide1{
     background:url('/static/images/slide3_bg_right.jpg');
+    color: #fff;
+    background-size: 100% auto;
 }
 
+.signup .password.slide1{
+    background:url('/static/images/slide2_bg_left.jpg');
+    color: #fff;
+    background-repeat: cover;
+    background-size: 100% auto;
+}
 .signup .tester{
     margin-top:50px;
     width:200px;
@@ -689,6 +697,15 @@ footer a{
     }
     input{
 	font-size:16px;
+    }
+.signup .slide1{
+	background-size: auto 100%;
+    }
+.signup .signin.slide1{
+	background-size: auto 100%;
+    }
+.signup .password.slide1{
+	background-size: auto 100%;
     }
     
 }
