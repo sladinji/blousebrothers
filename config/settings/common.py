@@ -14,6 +14,8 @@ from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.conf import Settings as thumbnail_settings
+from boto.s3.connection import OrdinaryCallingFormat
+from django.utils import six
 
 import environ
 
