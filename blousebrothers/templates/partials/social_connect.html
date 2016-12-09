@@ -2,15 +2,14 @@
 
 {% get_providers as socialaccount_providers %}
 
-<div class="login social">
 {% for provider in socialaccount_providers %}
 {% if provider.id == "openid" %}
 {% for brand in provider.get_brands %}
-  <a title="Connexion avec {{brand.name}}" 
-<    href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"><img src="images/{{brand.name}}-button64.png"></img></a>
+  <a title="Connexion avec {{brand.name}}" href="{% provider_login_url provider.id openid=brand.openid_url process=process %}" class="btn btn-block btn-social btn-{{brand.name}}">
+  <span class="fa fa-{{brand.name}}"></span> Sign in with {{brand.name}}
+  </a>
 {% endfor %}
 {% endif %}
-  <a title="Connexion avec {{provider.name}}" 
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name|lower}}"></i></a>
+  <a title="Connexion avec {{provider.name}}"  class="btn btn-block btn-social btn-{{brand.name}}" 
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name|lower}}"></i> Sign in with {{provider.name}}</a>
 {% endfor %}
-</div>

@@ -9,57 +9,154 @@
 {% endblock main_header %}
 {% block header %}
 {% endblock header %}
-{% block main_container_class %}<div class="container_fluid parallax">{% endblock %}
 
+{% block main_container_class %}{% endblock %}
 {% block title %}{% trans "Signup" %}{% endblock title %}
 
-{% block content %}
+{% block content_wrapper %}
 
-<style>
-label {display: none;}
-</style>
-
-<div class="row top-header main-title">
-	<div class='col-md-4 hidden-sm hidden-xs logobanner'><img src="/static/images/logobanner.png" alt="" height="90px"></div>
-	<div class="col-md-4 text-center hidden-sm hidden-xs">Prépa ECNi<em> collaborative</em></span></div>
-	<div class="col-md-4 text-right small"><a href="{% url 'account_login' %}" class="btn btn-primary"><strong>J'ai déjà un compte, me connecter</strong></a> </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 well main-page">
-      <div class="socialaccount_ballot text-center">
-	      <p><strong>{% trans "Inscription" %}</strong></p>
-      {% get_providers as socialaccount_providers %}
-      {% if socialaccount_providers %}
-      <p>Via le réseau social de ton choix</p>
-	<ul class="socialaccount_providers text-center">
-	  {% include "partials/social_connect.html" with process="login" %}
-	</ul>
-
-      <p>Ou en créant ton compte ici</p>
-
+<div class="signup">
+<div class="slide1 slide container">
+      <div class="row">
+	<div class="col-lg-6 col-md-6 col-sd-12">      
+	  <div class="tester">Tester BlouseBrothers</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sd-12 button_account">      
+	  <a href="{% url 'account_login' %}" class="btn">J'ai déjà un compte, me connecter</a>
+	</div>
       </div>
+      <div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+	  <div class="tcenter">
+	    <img src="{% static "images/logo.png" %}"class="logo"><br>
+	    <h1>BlouseBrothers</h1>
+	    <h2>Plateforme ECNi collaborative</h2>
+	  </div>
+	  <br>
+	  <form action="{% url 'account_signup' %}" id="signup_form" method="post">
+	    {{ form.non_field_errors }}
+	    {% csrf_token %}
+	    {{ form.email.errors }}
+	    {{ form.email }}
+	    {{ form.username.errors }}
+	    {{ form.username }}
+	    {{ form.password1.errors }}
+	    {{ form.password1 }}
+	    {{ form.password2.errors }}
+	    {{ form.password2 }}
+	    <button class="btn">Créer mon compte</button>
+	    <br><br>
+	    {% get_providers as socialaccount_providers %}
+	    {% if socialaccount_providers %}
+	    {% include "partials/social_connect.html" with process="login" %}
+	    {% include "socialaccount/snippets/login_extra.html" %}
+	    {% endif %}
+	    <br><br>
+	  </form>
+	</div>
+	<div class="col-md-4"></div>
+      </div>
+    </div> <!-- end slide1 -->    
+    <!-- slide 2-->
+    <div class="slide2 slide container">
+      <div class="row">
+	<div class="col-md-6 bg_left tcenter">
+	  <div class="centrage">
+	    <h3>Indépendance</h3>
+	    <span class="txt_current">
+	      Les externes paient des gens qui paient des internes. <br>
+	      Et si on supprimait ce qui ne sert à rien? <br>
+	      Nous n'avons plus besoin des boîtes de conf.
+	    </span>
+	  </div>
+	</div>
+	<div class="col-md-6 bg_right tcenter">
+	  <div class="centrage">
+	    <h3>Autonomie</h3>
+	    <span class="txt_current">
+	      Tu es interne? Dépose tes dossiers sur la plateforme.<br>
+	      Tu es externe? Entraîne toi selon ton programme.<br>
+	      Les dossiers sont corrigés et les questions sont les bienvenues.
+	    </span>
+	  </div> <!-- centrage -->
+	</div> <!-- col 6-->
+      </div> <!-- row -->
+    </div> <!-- slide2 -->
 
-      {% include "socialaccount/snippets/login_extra.html" %}
+    <!-- slide 3-->
+    <div class="slide3 slide container">
+      <div class="row">
+	<div class="col-md-6 bg_left tcenter">
+	  <div class="centrage">
+	    <h3>Feedback</h3>
+	    <span class="txt_current">
+	      Les conférenciers et leurs dossiers sont notés par les étudiants.<br>
+	      La réputation des conférenciers sur la plateforme dépend de cette notation.<br>
+	      Les étudiants peuvent se baser sur ces notes pour faire leur choix.
+	    </span>
+	  </div>
+	</div>
+	<div class="col-md-6 bg_right tcenter">
+	  <div class="centrage">
+	    <h3>Equité</h3>
+	    <span class="txt_current">
+	      Les conférenciers gardent 90% de leurs ventes.<br>
+	      Ils peuvent aussi offrir leurs dossiers, ou donner leurs gains à une cause qui leur tient à coeur.<br>
+	      Pourquoi engraisser des boîtes de conf? Sérieusement?
+	    </span>
+	  </div> <!-- centrage -->
+	</div> <!-- col 6-->
+      </div> <!-- row -->
+    </div> <!-- slide3 -->
+</div><!-- signup -->
 
-      {% endif %}
-      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        <button id="sign-up-button" class="btn btn-primary btn-signup" type="submit">Création de compte »</button>
-      </form>
-    </div>
-    <div class="col-md-3"></div>
-  </div>
-</div>
+
+{% endblock content_wrapper %}
 
 
-{% endblock content %}
+{% block onbodyload %}
+
+$( document ).ready(function() {
+
+    if ($(window).width() > 767){
+	$('.slide').height($(window).height());
+	$('.slide2').css('line-height', $(window).height()+'px');
+	$('.slide2 .bg_right').height($(window).height());
+	$('.slide2 .bg_left').height($(window).height());
+	$('.slide3').css('line-height', $(window).height()+'px');
+	$('.slide3 .bg_right').height($(window).height());
+	$('.slide3 .bg_left').height($(window).height());
+    }
+    else {
+	//$('.slide').height($(window).height());
+	
+    }    
+    //   
+});
 
 
+function move_value(scrolled, start, end, value_start, value_end){
+    if (scrolled < start)
+	return value_start;
+    else if (scrolled > end)
+	return value_end;
 
+    end = end-start;
+    scrolled = scrolled-start;
+    start = 0;
+    if (value_end < value_start){ // on descend
+	return ((1-scrolled/end) * (value_start - value_end));
+    }
+    else{
+	return ((scrolled/end) * (value_end - value_start));
+    }
+}
+
+function alertModal(msg){
+    $('#myModal .modal-body p').html(msg);
+    $("#myModal").modal('show');
+
+}
+
+{% endblock %}
