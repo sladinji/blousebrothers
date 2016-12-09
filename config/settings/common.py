@@ -9,13 +9,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
-from django.utils import six
 from oscar.defaults import *
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.conf import Settings as thumbnail_settings
-from boto.s3.connection import OrdinaryCallingFormat
 
 import environ
 
@@ -63,6 +61,7 @@ THIRD_PARTY_APPS = [
     'hijack',
     'compat',
     'hijack_admin',
+    'analytical',
 ]
 
 # Apps specific for this project go here.
@@ -334,3 +333,18 @@ MANGOPAY_PASSPHRASE = "op38EBPRsdSkU0rbPuduaoU0Ny7vegjo5TEPsv6bEdApDLShFT"
 
 HIJACK_ALLOW_GET_REQUESTS = True
 HIJACK_REGISTER_ADMIN = False
+
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-88739323-1'
+GOOGLE_ANALYTICS_SITE_SPEED = True
+CLICKMAP_TRACKER_CODE = '4TRKW1HVZ7T0D5HJ16021016ZCV065RP'
+ANALYTICAL_INTERNAL_IPS = [ "109.190.133.24",
+                            "109.190.222.42",
+							"109.190.238.231",
+							"176.138.173.38",
+							"178.23.38.195",
+							"213.245.242.230",
+							"213.32.77.47",
+							"37.164.62.208",
+							"37.165.35.50",
+							"82.235.89.141",
+                           ]

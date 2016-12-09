@@ -86,3 +86,4 @@ django-storages-redux==1.3.2
 
 django-hijack
 django-hijack-admin
+django-analytical
