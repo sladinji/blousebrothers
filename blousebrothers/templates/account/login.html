@@ -6,52 +6,106 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
+{% block main_header %}
+{% endblock main_header %}
+{% block header %}
+{% endblock header %}
+
+{% block main_container_class %}{% endblock %}
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block connect_link %}
 <li class="menu-item-has-children item-megamenu"><a id="login_link" href="/"><i class="icon-signin"></i> {% trans "Inscription" %}</a></li>
 {% endblock %}
 
-{% block content %}
-</div>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h2>{% trans "Connexion" %}</h2>
-    </div>
-    <div class="col-md-6 text-right border-right-solid con-page">
-      {% get_providers as socialaccount_providers %}
-      {% if socialaccount_providers %}
-      <h3>Via le réseau social de ton choix</h3>
 
-      <div class="socialaccount_ballot">
 
-        <ul class="socialaccount_providers">
-          {% include "partials/social_connect.html" with process="login" %}
-        </ul>
 
+{% block content_wrapper %}
+
+<div class="signup">
+<div class="signin slide1 slide container">
+      <div class="row">
+	<div class="col-lg-6 col-md-6 col-sd-12">      
+	  <div class="tester">Tester BlouseBrothers</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sd-12 button_account">      
+	  <a href="{% url 'account_signup' %}" class="btn">Je n'ai pas encore de comtpe, m'inscrire</a>
+	</div>
       </div>
+      <div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+	  <div class="tcenter">
+	    <img src="{% static "images/logo.png" %}"class="logo"><br>
+	    <h1>BlouseBrothers</h1>
+	    <h2>Plateforme ECNi collaborative</h2>
+	  </div>
+	  <br>
+	  <form action="{% url 'account_login' %}" id="signin_form" method="post">
+	    {{ form.non_field_errors }}
+	    {% csrf_token %}
+	    {{ form.login.errors }}
+	    {{ form.login }}
+	    {{ form.password.errors }}
+	    {{ form.password }}
+	    <br><br>
+	    {% get_providers as socialaccount_providers %}
+	    {% if socialaccount_providers %}
+	    {% include "partials/social_connect.html" with process="login" %}
+	    {% include "socialaccount/snippets/login_extra.html" %}
+	    {% endif %}
+	    {% if redirect_field_value %}
+	      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	    {% endif %}
+	     <button id="sign-in-button" class="btn btn-primary" type="submit">{% trans "Log In" %}</button>
+	     <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
 
-      {% include "socialaccount/snippets/login_extra.html" %}
+	    <br><br>
+	  </form>
+	</div>
+	<div class="col-md-4"></div>
+      </div>
+    </div> <!-- end slide1 -->    
+</div><!-- signup -->
 
-      {% endif %}
 
-    </div>
-    <div class="col-md-6 con-page">
-      <h3>Via ton compte <span class="blouse-font"> BlouseBrothers</span></h3>
+{% endblock content_wrapper %}
 
-      <form class="login" method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        <button id="sign-in-button" class="btn btn-primary" type="submit">{% trans "Log In" %}</button>
-        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-      </form>
-    </div>
-  </div>
-</div>
+
+{% block onbodyload %}
+
+$( document ).ready(function() {
+
+    if ($(window).width() > 767){
+	$('.slide').height($(window).height());
+    }
+});
+
+
+function move_value(scrolled, start, end, value_start, value_end){
+    if (scrolled < start)
+	return value_start;
+    else if (scrolled > end)
+	return value_end;
+
+    end = end-start;
+    scrolled = scrolled-start;
+    start = 0;
+    if (value_end < value_start){ // on descend
+	return ((1-scrolled/end) * (value_start - value_end));
+    }
+    else{
+	return ((scrolled/end) * (value_end - value_start));
+    }
+}
+
+function alertModal(msg){
+    $('#myModal .modal-body p').html(msg);
+    $("#myModal").modal('show');
+
+}
+
 {% endblock %}
+
 

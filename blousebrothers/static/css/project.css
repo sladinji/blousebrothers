@@ -515,6 +515,10 @@ input[type=range]:focus::-ms-fill-upper {
     height:100%;
 }
 
+.signup .signin.slide1{
+    background:url('/static/images/slide3_bg_right.jpg');
+}
+
 .signup .tester{
     margin-top:50px;
     width:200px;
@@ -628,9 +632,10 @@ input{
 footer{
     border-top:1px solid #666;
     padding:20px;
+    background-color: #000;
 }
 footer a{
-    color:#666;
+    color:#fff;
     padding-right:12px;
 }
 
