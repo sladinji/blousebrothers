@@ -717,3 +717,15 @@ footer a{
 	width: 100%;
 }
 /* END FX SIGNUP */
+html, body {
+    height: 100%;
+    margin: 0; padding: 0;
+}
+body {
+    display : table;
+    width: 100%;
+}
+footer {
+    display : table-row;
+    height: 50px; /* à titre d'exemple */
+}
