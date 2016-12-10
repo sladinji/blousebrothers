@@ -64,7 +64,7 @@
 	      </figure>
       </div>
       {% endfor %}
-      <big><p>{{ t_answer.question.explaination| default:"<i>Pas d'explication globale pour cette question</i>"}}</p></big>
+      <big><p>{{ t_answer.question.explaination| default:""}}</p></big>
       {% for answer in t_answer.question.answers.all %}
       <div class="col-sm-12 {{ answer | is_good_css:t_answer }}">
 	      <strong>
