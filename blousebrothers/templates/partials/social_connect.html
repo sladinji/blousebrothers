@@ -11,5 +11,5 @@
 {% endfor %}
 {% endif %}
   <a title="Connexion avec {{provider.name}}"  class="btn btn-block btn-social btn-{{brand.name}}" 
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name|lower}}"></i> Sign in with {{provider.name}}</a>
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name|lower}}"></i> Connexion avec {{provider.name}}</a>
 {% endfor %}

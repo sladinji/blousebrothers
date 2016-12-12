@@ -554,6 +554,9 @@ input[type=range]:focus::-ms-fill-upper {
 .signup .logo{
     width:200px;
 }
+.signup h1{
+    font-family: 'lobster';
+}
 h1, h2{
     font-weight:100;
 }
