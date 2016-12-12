@@ -56,7 +56,7 @@ class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, De
             "questions__answers",
             "questions__images",
         ).get(slug=self.kwargs['slug'])
-        obj.check_images()
+        #obj.check_images()
 
         return obj
 

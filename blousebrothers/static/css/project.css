@@ -733,3 +733,10 @@ footer {
     display : table-row;
     height: 50px; /* à titre d'exemple */
 }
+
+/* editor */
+
+.ta-bb .ta-editor{
+    height: 200px;
+    border: none;
+}

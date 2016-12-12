@@ -1,30 +1,37 @@
 from django.contrib import admin
 from .models import (
     Conference, Item, Question, Speciality, QuestionImage, ItemKeyWord, ConferenceImage,
-    Answer, Test, TestAnswer
+    Answer, Test, TestAnswer, AnswerImage
 )
 import nested_admin
 from image_cropping import ImageCroppingMixin
 # Register your models here.
 
 
-class AnswerInline(ImageCroppingMixin, nested_admin.NestedTabularInline):
+class AnswerImageInline(ImageCroppingMixin, nested_admin.NestedTabularInline):
+    model = AnswerImage
+    exclude = ['date_created']
+    extra = 0
+
+
+class AnswerInline(nested_admin.NestedTabularInline):
     model = Answer
     exclude = ['answer', 'explaination']
-    extra = 1
+    inlines = [AnswerImageInline]
+    extra = 0
 
 
 class QuestionImageInline(ImageCroppingMixin, nested_admin.NestedTabularInline):
     model = QuestionImage
     exclude = ['order', 'date_created']
-    extra = 1
+    extra = 0
 
 
 class QuestionInline(nested_admin.NestedTabularInline):
     model = Question
     exclude = ['question']
     inlines = [QuestionImageInline, AnswerInline]
-    extra = 1
+    extra = 0
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -42,7 +49,7 @@ class ItemAdmin(admin.ModelAdmin):
 class ConferenceImage(ImageCroppingMixin, nested_admin.NestedTabularInline):
     model = ConferenceImage
     exclude = []
-    extra = 1
+    extra = 0
 
 
 class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
