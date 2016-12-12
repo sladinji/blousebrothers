@@ -65,7 +65,9 @@
 	{% analytical_body_top %}
 	{% hijack_notification %}
         {# Main content goes in this 'layout' block #}
+	{% if request %}
 	{% cookielaw_banner %}
+	{% endif %}
         {% block layout %}{% endblock %}
 	{% block angular_end %}{% endblock %}
 
