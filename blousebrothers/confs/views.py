@@ -135,12 +135,6 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
         return analyse_conf(Conference.objects.get(pk=conf_pk))
 
     @allow_remote_invocation
-    def delete_anwser_explaination_image(self, data):
-        ans = Answer.objects.get(pk=data['pk'])
-        ans.explaination_image.delete()
-        ans.save()
-
-    @allow_remote_invocation
     def get_keywords(self, data):
         cf = Conference.objects.get(pk=data['pk'])
         txt = cf.get_all_txt()

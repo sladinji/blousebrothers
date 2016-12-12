@@ -119,7 +119,7 @@ class Conference(models.Model):
         """
         conf = self.images.count()
         question = QuestionImage.objects.filter(question__conf=self).count()
-        answer = Answer.objects.filter(question__conf=self).exclude(explaination_image='').count()
+        answer = AnswerImage.objects.filter(answer__question__conf=self).count()
         return conf + question + answer
 
     def check_images(self):
@@ -136,10 +136,11 @@ class Conference(models.Model):
         for question in self.questions.all():
             check_container(question)
             for ans in question.answers.all():
-                try:
-                    ans.explaination_image.size
-                except:
-                    logger.warning("Image {} does not exist. Delete it", ans.explaination_image)
+                for image in ans.images.all():
+                    try:
+                        image.image.size
+                    except:
+                        logger.warning("Image {} does not exist. Delete it", image.image)
 
 
 
@@ -169,6 +170,7 @@ def auto_delete_conference_image_on_delete(sender, instance, **kwargs):
     when corresponding `MediaFile` object is deleted.
     """
     if not settings.DEBUG and instance.image:
+        print("auto_delete_conference_image_on_delete")
         instance.image.delete()
 
 
@@ -230,16 +232,6 @@ class Question(models.Model):
         return [ x.index for x in self.bad_answers]
 
 
-def answer_image_directory_path(answer_image, filename):
-    return '{0}/conf_{1}/answers/{2}'.format(answer_image.question.conf.owner.username,
-                                             answer_image.question.conf.id,
-                                             "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
-                                                                      filename
-                                                                      ),
-                                                           os.path.splitext(filename)[-1]
-                                                           )
-                                             )
-
 class QuestionComment(models.Model):
     question = models.ForeignKey(Question, related_name="comments")
     student = models.ForeignKey('users.User', blank=False, null=False,
@@ -247,15 +239,13 @@ class QuestionComment(models.Model):
     comment = models.TextField(_("Explication"), blank=True, null=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
 
+
 class Answer(models.Model):
     class Meta:
         ordering = ['index']
     question = models.ForeignKey(Question, related_name="answers")
     answer = models.TextField(_("Proposition"), blank=True, null=True)
     explaination = models.TextField(_("Explication"), blank=True, null=True)
-    explaination_image = ImageCropField(_("Image"), upload_to=answer_image_directory_path, max_length=255,
-                                        blank=True, null=True)
-    cropping = ImageRatioField('explaination_image', '430x360', free_crop=True)
     correct = models.BooleanField(_("Correct"), default=False)
     ziw = models.BooleanField(_("Zéro si erreur"), default=False)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
@@ -281,13 +271,14 @@ class AnswerImage(models.Model):
     answer= models.ForeignKey('Answer', related_name='images')
 
 
-@receiver(models.signals.pre_delete, sender=Answer)
+@receiver(models.signals.pre_delete, sender=AnswerImage)
 def auto_delete_answer_image_on_delete(sender, instance, **kwargs):
     """Deletes file from filesystem
     when corresponding `MediaFile` object is deleted.
     """
-    if not settings.DEBUG and instance.explaination_image:
-        instance.explaination_image.delete()
+    if not settings.DEBUG and instance.image:
+        print("auto_delete_answer_image_on_delete")
+        instance.image.delete()
 
 
 def question_image_directory_path(question_image, filename):
@@ -316,6 +307,7 @@ def auto_delete_question_image_on_delete(sender, instance, **kwargs):
     when corresponding `MediaFile` object is deleted.
     """
     if not settings.DEBUG and instance.image:
+        print("auto_delete_question_image_on_delete")
         instance.image.delete()
 
 class Test(models.Model):
