@@ -1,2 +1,79 @@
 {% extends "layout.html" %}
+{% load staticfiles %}
+{% block main_header %}
+{% endblock main_header %}
+{% block header %}
+{% endblock header %}
 {% block title %}{% block head_title %}{% endblock head_title %}{% endblock title %}
+
+
+{% block content_wrapper %}
+
+<div class="signup">
+<div class="{% block extra_slide_class %}{% endblock%}slide1 slide container">
+      <div class="row">
+	<div class="col-lg-6 col-md-6 col-sd-12">      
+	  <div class="tester">Tester BlouseBrothers</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sd-12 button_account">      
+	  {% block up_right_button %}
+	  <a href="{% url 'account_login' %}" class="btn">J'ai déjà un compte, me connecter</a>
+	  {% endblock %}
+	</div>
+      </div>
+      <div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+	  <div class="tcenter">
+	    <img src="{% static "images/logo.png" %}"class="logo"><br>
+	    <h1>BlouseBrothers</h1>
+	    <h2>Plateforme ECNi collaborative</h2>
+	  </div>
+	  <br>
+
+	  {% block content %}
+	  {% endblock %}
+	</div>
+	<div class="col-md-4"></div>
+      </div> <!-- row -->
+  </div> <!-- end slide1 -->    
+</div><!-- signup -->
+
+{% endblock content_wrapper %}
+
+{% block onbodyload %}
+
+$( document ).ready(function() {
+
+    if ($(window).width() > 767){
+	$('.slide').height($(window).height());
+    }
+});
+
+
+function move_value(scrolled, start, end, value_start, value_end){
+    if (scrolled < start)
+	return value_start;
+    else if (scrolled > end)
+	return value_end;
+
+    end = end-start;
+    scrolled = scrolled-start;
+    start = 0;
+    if (value_end < value_start){ // on descend
+	return ((1-scrolled/end) * (value_start - value_end));
+    }
+    else{
+	return ((scrolled/end) * (value_end - value_start));
+    }
+}
+
+function alertModal(msg){
+    $('#myModal .modal-body p').html(msg);
+    $("#myModal").modal('show');
+
+}
+
+{% endblock %}
+
+
