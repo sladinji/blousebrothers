@@ -238,29 +238,34 @@ class BaseUploadImage(ConfRelatedObjPermissionMixin, FormView):
     Base class for image upload (for conf, question, answer)
     """
     kwarg_id = ''
-    """Id of related object"""
+    """FK id name in request of related object"""
+    fk_name = ''
+    """fk name in model"""
     image_class = None
     """Class used to store image object"""
 
     def post(self, request, **kwargs):
         fk_id = kwargs[self.kwarg_id]
-        obj = self.image_class(**{self.kwarg_id: fk_id})
+        obj = self.image_class(**{self.fk_name: fk_id})
         obj.image = request.FILES['file']
-        obj.index = self.image_class.objects.filter(**{self.kwarg_id: fk_id}).count()
+        obj.index = self.image_class.objects.filter(**{self.fk_name: fk_id}).count()
         obj.save()
         return JsonResponse({'url': obj.image.url})
 
 
 class UploadQuestionImage(BaseUploadImage):
     kwarg_id = 'question_id'
+    fk_name = kwarg_id
     image_class = QuestionImage
 
 
 class UploadConferenceImage(BaseUploadImage):
     kwarg_id = 'conference_id'
+    fk_name = 'conf_id'
     image_class = ConferenceImage
 
 
 class UploadAnswerImage(BaseUploadImage):
     kwarg_id = 'answer_id'
+    fk_name = kwarg_id
     image_class = AnswerImage
