@@ -46,7 +46,7 @@
 $( document ).ready(function() {
 
     if ($(window).width() > 767){
-	$('.slide').height($(window).height());
+	$('.slide').css('min-height', $(window).height()+'px');
     }
 });
 

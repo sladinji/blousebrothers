@@ -71,7 +71,7 @@
 	    </span>
 	  </div>
 	</div>
-	<div class="co-xs-12 col-md-6 bg_right tcenter">
+	<div class="col-xs-12 col-md-6 bg_right tcenter">
 	  <div class="centrage">
 	    <h3>Autonomie</h3>
 	    <span class="txt_current">
@@ -119,20 +119,13 @@
 
 $( document ).ready(function() {
 
-    if ($(window).width() > 767){
-	$('.slide').height($(window).height());
+	$('.slide').css('min-height',$(window).height()+'px');
 	$('.slide2').css('line-height', $(window).height()+'px');
 	$('.slide2 .bg_right').height($(window).height());
 	$('.slide2 .bg_left').height($(window).height());
 	$('.slide3').css('line-height', $(window).height()+'px');
 	$('.slide3 .bg_right').height($(window).height());
 	$('.slide3 .bg_left').height($(window).height());
-    }
-    else {
-	//$('.slide').height($(window).height());
-	
-    }    
-    //   
 });
 
 

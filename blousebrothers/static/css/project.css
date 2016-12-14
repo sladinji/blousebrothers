@@ -711,7 +711,12 @@ footer a{
 .signup .password.slide1{
 	background-size: auto 100%;
     }
-    
+.signup .slide2 .bg_right{
+	width:100%;
+    }
+.signup .slide3 .bg_right{
+	width:100%;
+    }
 }
 
 .signup input{
