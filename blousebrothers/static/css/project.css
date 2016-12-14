@@ -475,12 +475,21 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .question .fa.fa-commenting {
-	font-size: 18pt;
-	margin-top: 5px;
-	cursor: pointer;
-	color: black;
-	opacity: 0.8;
+	font-size: 14pt;
 }
+
+.commenting{
+	cursor: pointer;
+	cursor: pointer;
+	opacity: 0.8;
+	color: black;
+	border: 1px solid #000;
+	background: transparent;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+
 
 .table.table-striped ul {
 	padding: 0;

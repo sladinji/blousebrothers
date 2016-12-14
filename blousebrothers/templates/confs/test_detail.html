@@ -47,11 +47,12 @@
    
     {% for t_answer in object.answers.all|dictsort:"question.index" %}
     <div class="well well-white question">
-	    <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score |floatformat:2 }} / {{ t_answer.max_score }}
-		    <a class="pull-right commenting" data-toggle="modal" data-target="#myModal">
-		      <i class="fa fa-commenting" aria-hidden="true" data-question-id="{{ t_answer.question.id }}"></i>
-		</a>
-	    </h1>
+	    <div class="col-sm-6">
+	      <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score |floatformat:2 }} / {{ t_answer.max_score }}</h1>
+	    </div>
+	    <div class="col-sm-6">
+	      <a class="pull-right commenting btn" data-toggle="modal" data-target="#myModal"> <i class="fa fa-commenting" aria-hidden="true" data-question-id="{{ t_answer.question.id }}"></i> Signaler un problème au Conférencier</a>
+	    </div>
 	    <legend>Question {{ t_answer.question.index | add:"1" }} </legend>
       <div class="col-sm-12">
 	      <big><p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p></big>
@@ -101,7 +102,7 @@
 		<textarea id="commenttextarea" name="textarea" rows="10" cols="50"></textarea>
 	      </div>
 	      <div class="modal-footer">
-		<button id="send_comment" type="button" class="btn btn-default" data-dismiss="modal">Envoyer</button>
+		<button id="send_comment" type="button" class="commenting btn btn-default" data-dismiss="modal">Envoyer</button>
 	      </div>
 	    </div>
 	  </div>
