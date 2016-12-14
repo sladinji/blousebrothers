@@ -28,15 +28,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	    </form>
 	  </div>
 	  <div ng-if="conference.type == 'DCP'">
-	    <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
-	          <div ng-if="isSubjectDiplayed">
-	            <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer le sujet du DCP
-	          </div>
-	          <div ng-if="!isSubjectDiplayed">
-	            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher le sujet du DCP
-	          </div>
-	    </a>
-	    <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
+	    <div id="subject" class="well well-white" >
 	        {% verbatim %}
 	        <form novalidate class="question-form">
 		  <div class="col-sm-12">

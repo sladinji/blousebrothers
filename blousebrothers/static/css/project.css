@@ -754,3 +754,14 @@ footer {
     height: 200px;
     border: none;
 }
+.ta-toolbar button{
+	cursor: pointer;
+	cursor: pointer;
+	opacity: 0.8;
+	color: black;
+	border: 1px solid #000;
+	background: transparent;
+	border-radius: 5px;
+	padding: 10px;
+}
+
