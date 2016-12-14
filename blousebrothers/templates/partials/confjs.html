@@ -225,7 +225,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		Conference.get({slug: slug}).$promise
     		.then(function(result){
     			$scope.conference = result;
-			toaster.pop('success', "{% trans 'Cette page enregistre en permanance tes modifications, no stress ;)' %}", "");
+			toaster.pop('success', "{% trans 'Cette page enregistre en permanence tes modifications, no stress ;)' %}", "");
 			Question.query({conf: $scope.conference.pk}).$promise
     			.then(function(result){
 				$scope.questions = result;
