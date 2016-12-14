@@ -772,26 +772,20 @@ footer {
     padding-left: 0px;
 }
 
-.btn.btn-primary.qadd-img {
-    margin-left: 12px;
-}
-
 .well-explaination .ta-toolbar.btn-toolbar {
 	margin-left: -16px;
 }
 
-.well-answer .btn.btn-primary {
+.well-answer .btn {
 	margin-left: 12px;
 }
-
-
-
 
 .well-answer label {
   display: block;
   padding-left: 15px;
 }
-.well-answer input {
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
   width: 13px;
   height: 13px;
   padding: 0;
