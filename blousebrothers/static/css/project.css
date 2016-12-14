@@ -167,6 +167,8 @@ ul.djng-field-errors li.valid::before {
 
 .well-explaination{
   background-color: lightgray;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .well-title{
@@ -184,6 +186,7 @@ ul.djng-field-errors li.valid::before {
 	margin-top: 15px;
 	margin-bottom: 15px;
 	border: none;
+	margin-left: 12px;
 }
 
 .btn-success {
@@ -764,4 +767,22 @@ footer {
 	border-radius: 5px;
 	padding: 10px;
 }
+
+.col-sm-3.coefficient {
+    padding-left: 0px;
+}
+
+.btn.btn-primary.qadd-img {
+    margin-left: 12px;
+}
+
+.well-explaination .ta-toolbar.btn-toolbar {
+	margin-left: -16px;
+}
+
+.well-answer .btn.btn-primary {
+	margin-left: 12px;
+}
+
+
 

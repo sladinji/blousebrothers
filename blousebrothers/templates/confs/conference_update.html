@@ -41,15 +41,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		  </div>
 	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Clique ici pour rédiger l'énoncé" rows="10"></textarea><br />
 	        </form>
-	        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
-	              <div ng-if="isImagesDiplayed">
-	                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
-	              </div>
-	              <div ng-if="!isImagesDiplayed">
-	                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher les illustrations
-	              </div>
-	        </a>
-		<div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
+		<div class="illustrations" id="images_div">
 		  <div ng-repeat="image in conferenceimages">
 		    <img ng-src="{{ static_media(image.image) }}"/>
 		    <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
@@ -68,7 +60,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  <div class="well well-white" ng-if="question">
 	    <form novalidate class="question-form">
 	      <div class="col-sm-12">
-	        <div class="col-sm-3">
+	        <div class="col-sm-3 coefficient">
 			<strong>Coefficient : {{ question.coefficient }}</strong>
 			<input type="range" ng-model="question.coefficient" value="question.coefficient" max="3" min="1" step="1">
 	        </div>
@@ -85,7 +77,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	      <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
 	    </div>
 
-  	    <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
+  	    <button class="btn btn-primary qadd-img" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
   	            accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
   	        <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
   	    <br><br>
@@ -113,7 +105,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <div class="form-group">
 	       <div class="well well-explaination col-sm-12">
 	         <legend>Explication</legend>
-	         <text-angular ng-model="answer.explaination" ta-toolbar="[['insertLink', 'insertVideo']]" placeholder="Clique ici pour rédiger l'explication"></text-angular>
+	         <text-angular ng-model="answer.explaination" ta-toolbar="[['undo', 'redo', 'insertLink', 'insertVideo']]" placeholder="Clique ici pour rédiger l'explication"></text-angular>
 	       </div>
 	     </div>
 	     <div ng-repeat="image in answersimages[answer.index]">
