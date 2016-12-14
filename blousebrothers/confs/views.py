@@ -209,7 +209,8 @@ class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, Upd
     model = Conference
 
     def get_success_url(self):
-        return reverse('confs:list')
+        return reverse('confs:test',
+                       kwargs={'slug': self.object.slug})
 
     def get_context_data(self, **kwargs):
         items = []
