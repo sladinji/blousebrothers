@@ -65,7 +65,17 @@
 	      </figure>
       </div>
       {% endfor %}
-      <big><p>{{ t_answer.question.explaination| default:""}}</p></big>
+      <legend>Réponses</legend>
+      <big><p>{{ t_answer.question.explaination| safe | default:""}}</p></big>
+      {% for image in t_answer.question.explaination_images.all %}
+      <div class="illustrations" id="images_div">
+	      <figure>
+	      <img src="{% cropped_thumbnail image "cropping" %}">
+	      <figcaption>{{ image.caption }}</figcaption>
+	      </figure>
+      </div>
+      {% endfor %}
+      
       {% for answer in t_answer.question.answers.all %}
       <div class="col-sm-12 {{ answer | is_good_css:t_answer }}">
 	      <strong>

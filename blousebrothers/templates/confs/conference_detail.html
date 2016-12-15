@@ -55,9 +55,17 @@
 	    <legend>Question {{ question.index | add:"1" }} {% if not question.is_valid %}<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{% endif %}</legend>
       <div class="col-sm-12">
 	      <strong>Énoncé :</strong><p>{{ question.question | default:"<i>aucun</i>" | safe }}</p>
-	      <strong>Correction globale :</strong><p>{{ question.explaination| default:"<i>aucune</i>" |safe }}</p>
       </div>
       {% for image in question.images.all %}
+      <div class="illustrations" id="images_div">
+	      <figure>
+	      <img src="{% cropped_thumbnail image "cropping" %}">
+	      <figcaption>{{ image.caption }}</figcaption>
+	      </figure>
+      </div>
+      {% endfor %}
+      <strong>Correction globale :</strong><p>{{ question.explaination| default:"<i>aucune</i>" |safe }}</p>
+      {% for image in question.explaination_images.all %}
       <div class="illustrations" id="images_div">
 	      <figure>
 	      <img src="{% cropped_thumbnail image "cropping" %}">

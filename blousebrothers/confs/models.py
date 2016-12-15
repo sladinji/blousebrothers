@@ -307,8 +307,26 @@ def auto_delete_question_image_on_delete(sender, instance, **kwargs):
     when corresponding `MediaFile` object is deleted.
     """
     if not settings.DEBUG and instance.image:
-        print("auto_delete_question_image_on_delete")
         instance.image.delete()
+
+
+class QuestionExplainationImage(models.Model):
+    image = ImageCropField(_("Image"), upload_to=question_image_directory_path, max_length=255,)
+    cropping = ImageRatioField('image', '430x360', free_crop=True)
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    index = models.PositiveIntegerField(_("Ordre"), default=0)
+    question = models.ForeignKey('Question', related_name='explaination_images')
+
+
+@receiver(models.signals.pre_delete, sender=QuestionExplainationImage)
+def auto_delete_question_image_on_delete(sender, instance, **kwargs):
+    """Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if not settings.DEBUG and instance.image:
+        instance.image.delete()
+
 
 class Test(models.Model):
     student = models.ForeignKey('users.User', blank=False, null=False,

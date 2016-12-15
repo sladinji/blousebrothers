@@ -1,6 +1,4 @@
 import logging
-import datetime
-import time
 
 from django.views.generic import FormView
 from django.http import JsonResponse
@@ -21,6 +19,7 @@ from .models import (
     AnswerImage,
     ConferenceImage,
     QuestionImage,
+    QuestionExplainationImage,
     Test,
     TestAnswer,
     QuestionComment,
@@ -160,6 +159,18 @@ class StudentQuestionImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseQue
     allowed_methods = ['GET']
 
 
+class BaseQuestionExplainationImageCRUDView(BaseQuestionImageCRUDView):
+    model = QuestionExplainationImage
+
+
+class QuestionImageExplainationCRUDView(ConfRelatedObjPermissionMixin, BaseQuestionExplainationImageCRUDView):
+    """What else ?"""
+
+
+class StudentQuestionExplainationImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestionExplainationImageCRUDView):
+    allowed_methods = ['GET']
+
+
 class BaseAnswerCRUDView(NgCRUDView):
     model = Answer
 
@@ -257,6 +268,12 @@ class UploadQuestionImage(BaseUploadImage):
     kwarg_id = 'question_id'
     fk_name = kwarg_id
     image_class = QuestionImage
+
+
+class UploadQuestionExplainationImage(BaseUploadImage):
+    kwarg_id = 'question_id'
+    fk_name = kwarg_id
+    image_class = QuestionExplainationImage
 
 
 class UploadConferenceImage(BaseUploadImage):

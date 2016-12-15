@@ -35,7 +35,7 @@ class BBConferencierReqMixin(LoginRequiredMixin):
             return super().get(request, *args, **kwargs)
 
 
-class TestPermissionMixin(UserPassesTestMixin):
+class TestPermissionMixin(LoginRequiredMixin, UserPassesTestMixin):
     """
     Base class to test check student access to a test.
     """
@@ -50,7 +50,7 @@ class TestPermissionMixin(UserPassesTestMixin):
         raise PermissionDenied
 
 
-class ConferencePermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
+class ConferencePermissionMixin(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
     permission_required = ['confs.add_conference']
 
     def test_func(self):
@@ -63,7 +63,7 @@ class ConferencePermissionMixin(PermissionRequiredMixin, UserPassesTestMixin):
         raise PermissionDenied
 
 
-class StudentConferencePermissionMixin(UserPassesTestMixin):
+class StudentConferencePermissionMixin(LoginRequiredMixin, UserPassesTestMixin):
     """
     Check if student can access conf.
     """

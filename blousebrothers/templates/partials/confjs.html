@@ -36,6 +36,10 @@ conf_app.factory('QuestionImage', ['$resource', function($resource) {
 	return $resource('{% url 'confs:questionimage_crud_view' %}', {'pk': '@pk'}, {
 		        });
 }]);
+conf_app.factory('QuestionExpImage', ['$resource', function($resource) {
+	return $resource('{% url 'confs:questionexplainationimage_crud_view' %}', {'pk': '@pk'}, {
+		        });
+}]);
 conf_app.factory('Conference', ['$resource', function($resource) {
 	return $resource('{% url 'confs:conference_crud_view' %}', {'pk': '@pk'}, {
 		        });
@@ -64,10 +68,11 @@ conf_app.config(function(djangoRMIProvider) {
 
 
 conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, djangoRMI,
-			Conference, ConferenceImage, Question, QuestionImage, Answer, AnswerImage, Upload) {
+			Conference, ConferenceImage, Question, QuestionImage, QuestionExpImage, Answer, AnswerImage, Upload) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.questionimages = [];
+    $scope.questionexpimages = [];
     $scope.answersimages = {};
     $scope.static_media = static_media;
     $scope.kwords = [];
@@ -76,6 +81,10 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		QuestionImage.query({question_id: question.pk}).$promise
 		.then(function(result){
 			$scope.questionimages = result;
+		});
+		QuestionExpImage.query({question_id: question.pk}).$promise
+		.then(function(result){
+			$scope.questionexpimages = result;
 		});
 	}
     };
@@ -152,6 +161,8 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 	    var url = '';
 	    if ( type == 'question')
 		url ='/sweethomechicago/question/upload_image/' + $scope.question.pk 
+	    else if ( type == 'questionexp')
+		url ='/sweethomechicago/question/upload_explainationimage/' + $scope.question.pk 
 	    else if ( type == 'conf')
 		url ='/sweethomechicago/conference/upload_image/' + $scope.conference.pk 
 	    else
@@ -164,7 +175,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
-		    if ( type == 'question')
+		    if ( type == 'question' || type == 'questionexp')
 			setQuestionImages($scope.question);
 		    else if ( type == 'conf')
 			setConferenceImage();

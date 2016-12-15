@@ -86,8 +86,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  <br>
 	  <form class="form-horizontal">
 	   <fieldset>
-	   <legend>Réponses {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque réponse et définissez au moins une réponse juste)'}} </legend>
-	      <text-angular ta-toolbar="[['undo', 'redo']]"  class="ta-bb" ng-model="question.explaination" placeholder='Clique ici pour rédiger une correction globale de la question posée'></text-angular><br />
+	   <legend>Propositions {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque proposition et définissez au moins une réponse juste)'}} </legend>
 	   <div class="well well-answer" ng-repeat="answer in answers">
 	     <div class="form-group">
 	       <div class="col-sm-12">
@@ -119,6 +118,19 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	         <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
 
 	   </div>
+	      <br>
+	      <legend>Explication globale</legend>
+	      <text-angular ta-toolbar="[['undo', 'redo']]"  class="ta-bb" ng-model="question.explaination" placeholder='Clique ici pour rédiger une correction globale de la question posée'></text-angular><br />
+	      <div ng-repeat="image in questionexpimages">
+		<img ng-src="{{ static_media(image.image) }}"/>
+		<input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
+		<a class="btn btn-danger" href="" ng-click="deleteimg(image, questionexpimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
+	      </div>
+
+	      <button class="btn btn-primary qadd-img" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'questionexp')"
+		      accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
+		  <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
+	      <br>
 	   </fieldset>
 	   </form>
 	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>

@@ -123,6 +123,14 @@ urlpatterns = [
         crud.StudentQuestionImageCRUDView.as_view(),
         name='student_questionimage_crud_view'),
 
+    url(r'^crud/questionexplainationimage/?$',
+        crud.QuestionImageExplainationCRUDView.as_view(),
+        name='questionexplainationimage_crud_view'),
+
+    url(r'^crud/studentquestionexplainationimage/?$',
+        crud.StudentQuestionImageCRUDView.as_view(),
+        name='student_questionexplainationimage_crud_view'),
+
     url(r'^crud/answer/?$',
         crud.AnswerCRUDView.as_view(),
         name='answer_crud_view'),
@@ -146,4 +154,8 @@ urlpatterns = [
     url(r'^question/upload_image/(?P<question_id>[0-9]+)$',
         crud.UploadQuestionImage.as_view(),
         name='up_question_img'),
+
+    url(r'^question/upload_explainationimage/(?P<question_id>[0-9]+)$',
+        crud.UploadQuestionExplainationImage.as_view(),
+        name='up_question_expimg'),
 ]
