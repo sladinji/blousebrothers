@@ -28,6 +28,12 @@ var slug="{{ object.slug }}"
 var slug=""
 {% endif %}
 
+conf_app.filter('htmlToPlaintext', function() {
+    return function(text) {
+	return text.replace(/<\/?[^>]+>/gi, '')
+    }
+  }
+);
 conf_app.factory('Question', ['$resource', function($resource) {
 	return $resource('{% url 'confs:question_crud_view' %}', {'pk': '@pk'}, {
 		        });
