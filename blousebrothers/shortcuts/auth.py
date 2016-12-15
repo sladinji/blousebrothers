@@ -6,7 +6,11 @@ from django.core.exceptions import PermissionDenied
 from blousebrothers.confs.models import Conference, Question, Answer, Test
 
 
-class BBRequirementMixin(LoginRequiredMixin):
+class BBLoginRequiredMixin(LoginRequiredMixin):
+    login_url = '/accounts/login/'
+
+
+class BBRequirementMixin(BBLoginRequiredMixin):
     """
     User has to give some info to access.
     """
@@ -18,7 +22,7 @@ class BBRequirementMixin(LoginRequiredMixin):
             return super().get(request, *args, **kwargs)
 
 
-class BBConferencierReqMixin(LoginRequiredMixin):
+class BBConferencierReqMixin(BBLoginRequiredMixin):
     """
     User has to be a conferencier to access.
     """
@@ -35,7 +39,7 @@ class BBConferencierReqMixin(LoginRequiredMixin):
             return super().get(request, *args, **kwargs)
 
 
-class TestPermissionMixin(LoginRequiredMixin, UserPassesTestMixin):
+class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     """
     Base class to test check student access to a test.
     """
@@ -46,11 +50,8 @@ class TestPermissionMixin(LoginRequiredMixin, UserPassesTestMixin):
         self.object = self.get_object()
         return self.object.student == self.request.user
 
-    def handle_no_permission(self):
-        raise PermissionDenied
 
-
-class ConferencePermissionMixin(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
+class ConferencePermissionMixin(BBLoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
     permission_required = ['confs.add_conference']
 
     def test_func(self):
@@ -59,11 +60,9 @@ class ConferencePermissionMixin(LoginRequiredMixin, PermissionRequiredMixin, Use
         self.object = self.get_object()
         return self.object.owner == self.request.user
 
-    def handle_no_permission(self):
-        raise PermissionDenied
 
 
-class StudentConferencePermissionMixin(LoginRequiredMixin, UserPassesTestMixin):
+class StudentConferencePermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     """
     Check if student can access conf.
     """
