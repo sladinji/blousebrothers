@@ -116,7 +116,7 @@ class ConfRelatedObjPermissionMixin(BaseConfRelatedObjPermissionMixin, Permissio
     def test_func(self, **kwargs):
         if self.request.user.is_superuser:
             return True
-        conf = self.get_conf()
+        conf = self.get_conf(**kwargs)
         return conf.owner == self.request.user
 
 
