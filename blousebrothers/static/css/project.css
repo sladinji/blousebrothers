@@ -762,10 +762,14 @@ footer {
 	cursor: pointer;
 	opacity: 0.8;
 	color: black;
-	border: 1px solid #000;
+	border: 1px solid #555;
 	background: transparent;
 	border-radius: 5px;
 	padding: 10px;
+}
+
+.ta-toolbar button .btn.active{
+	background-color: #fff;
 }
 
 .col-sm-3.coefficient {
@@ -796,3 +800,17 @@ footer {
   *overflow: hidden;
 }
 
+.ta-toolbar button .fa {
+	font-style: italic;
+	color: #555;
+	font-weight: bold;
+}
+
+.ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+}
