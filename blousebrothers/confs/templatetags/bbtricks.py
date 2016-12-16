@@ -36,7 +36,7 @@ def result_icon(answer, test_answer):
 
 @register.filter
 def score100(test):
-    return Decimal(test.score * 100 / 15).quantize(Decimal('.01'), rounding=ROUND_UP)
+    return Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
 
 @register.filter
 def get_checked_fa(answer, test_answer):
