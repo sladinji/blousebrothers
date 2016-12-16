@@ -84,7 +84,7 @@
 {{ answer | result_icon:t_answer }}
 	      </strong> 
 	      <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
-	      <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %}</strong> <p>{{ answer.explaination | youtube | safe }}</p>
+	      <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %}</strong> <p>{{ answer.explaination | default:"" | youtube | safe }}</p>
 	      {% for image in answer.images.all %}
 	      <div class="illustrations" id="images_div">
 	        <figure>
