@@ -21,6 +21,12 @@
   <div class="row">
   
     <div class="col-sm-12 ">
+	  {% if user == object.conf.owner or user.is_superuser %}
+	  <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
+	    {% csrf_token %}
+	    <button id="reset-test-button" class="btn btn-primary pull-right" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
+	  </form>
+	  {% endif %}
 	  <legend>Résultats</legend>
 	  <strong>Score :</strong> <big>{{ object | score100 }}</big> / 100 <br>
   	  <strong>Temps :</strong> {{object.time_taken | time:"H:i:s" }}<br>

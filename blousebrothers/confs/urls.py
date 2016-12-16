@@ -20,6 +20,12 @@ urlpatterns = [
         view=views.TestUpdateView.as_view(),
         name='test'
     ),
+    # URL pattern for the TestResetView
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/resettest$',
+        view=views.TestResetView.as_view(),
+        name='test_reset'
+    ),
 
     # URL pattern for the TestUpdateView
     url(

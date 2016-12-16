@@ -30,6 +30,7 @@ from blousebrothers.shortcuts.auth import (
     ConferencePermissionMixin,
     ConfRelatedObjPermissionMixin,
     TestPermissionMixin,
+    BBLoginRequiredMixin,
 )
 from blousebrothers.shortcuts.tools import analyse_conf
 from .models import (
@@ -376,3 +377,29 @@ class TestResult(TestPermissionMixin, DetailView):
         if not test.finished:
             test.set_score()
         return test
+
+
+class TestResetView(BBLoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Test
+    fields = ['id']
+
+    def test_func(self, **kwargs):
+        if self.request.user.is_superuser:
+            return True
+        obj = self.get_object()
+        return obj.conf.owner == self.request.user
+
+    def form_valid(self, form):
+        self.object.finished = False
+        self.object.progress = 0
+        self.object.answers.all().delete()
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('confs:test',
+                       kwargs={'slug': self.object.conf.slug})
+
+    def get_object(self, queryset=None):
+        conf = Conference.objects.get(slug=self.kwargs['slug'])
+        return Test.objects.get(conf=conf, student=self.request.user)
