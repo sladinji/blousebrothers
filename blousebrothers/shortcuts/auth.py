@@ -92,22 +92,26 @@ class BaseConfRelatedObjPermissionMixin():
             return self.handle_no_permission()
         return super(UserPassesTestMixin, self).dispatch(request, *args, **kwargs)
 
+    def get_conf_from_obj(self, obj):
+        return obj.conf
+
     def get_conf(self, **kwargs):
-        if not kwargs :
+        if not kwargs:
             kwargs = self.request.GET
-        if not kwargs :
+        if not kwargs:
             kwargs = self.request.POST
         if 'conf' in kwargs:
             conf = Conference.objects.get(id=kwargs['conf'])
-        if 'pk' in kwargs:
-            conf = Conference.objects.get(id=kwargs['pk'])
-        if 'conference_id' in kwargs:
+        elif 'conference_id' in kwargs:
             conf = Conference.objects.get(id=kwargs['conference_id'])
+        elif 'pk' in kwargs:
+            obj = self.model.objects.get(id=kwargs['pk'])
+            conf = self.get_conf_from_obj(obj)
         elif 'question_id' in kwargs:
             conf = Question.objects.get(id=kwargs['question_id']).conf
         elif 'question' in kwargs:
             conf = Question.objects.get(id=kwargs['question']).conf
-        if 'answer_id' in kwargs:
+        elif 'answer_id' in kwargs:
             conf = Answer.objects.get(id=kwargs['answer_id']).question.conf
         return conf
 

@@ -84,6 +84,7 @@ class BaseConferenceImageCRUDView(NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
+        print(self.request.GET)
         if 'conf' in self.request.GET:
             return self.model.objects.filter(
                 conf_id=self.request.GET['conf']
@@ -139,6 +140,9 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
 class BaseQuestionImageCRUDView(NgCRUDView):
     model = QuestionImage
 
+    def get_conf_from_obj(self, obj):
+        return obj.question.conf
+
     def get_queryset(self):
         if 'question_id' in self.request.GET:
             return self.model.objects.filter(
@@ -146,13 +150,13 @@ class BaseQuestionImageCRUDView(NgCRUDView):
             ).order_by('index', 'date_created')
 
 
-class QuestionImageCRUDView(ConfRelatedObjPermissionMixin, BaseQuestionImageCRUDView):
+class QuestionImageCRUDView(BaseQuestionImageCRUDView, ConfRelatedObjPermissionMixin):
     """
     CRUD view with conferencier access
     """
 
 
-class StudentQuestionImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestionImageCRUDView):
+class StudentQuestionImageCRUDView(BaseQuestionImageCRUDView, StudentConfRelatedObjPermissionMixin):
     """
     CRUD view with conferencier access
     """
@@ -162,30 +166,36 @@ class StudentQuestionImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseQue
 class BaseQuestionExplainationImageCRUDView(BaseQuestionImageCRUDView):
     model = QuestionExplainationImage
 
+    def get_conf_from_obj(self, obj):
+        return obj.question.conf
 
-class QuestionImageExplainationCRUDView(ConfRelatedObjPermissionMixin, BaseQuestionExplainationImageCRUDView):
+
+class QuestionImageExplainationCRUDView(BaseQuestionExplainationImageCRUDView, ConfRelatedObjPermissionMixin):
     """What else ?"""
 
 
-class StudentQuestionExplainationImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestionExplainationImageCRUDView):
+class StudentQuestionExplainationImageCRUDView(BaseQuestionExplainationImageCRUDView, StudentConfRelatedObjPermissionMixin):
     allowed_methods = ['GET']
 
 
 class BaseAnswerCRUDView(NgCRUDView):
     model = Answer
 
+    def get_conf_from_obj(self, obj):
+        return obj.question.conf
+
     def get_queryset(self):
         if 'question' in self.request.GET:
             return self.model.objects.filter(question_id=self.request.GET['question']).order_by("index")
 
 
-class AnswerCRUDView(ConfRelatedObjPermissionMixin, BaseAnswerCRUDView):
+class AnswerCRUDView(BaseAnswerCRUDView, ConfRelatedObjPermissionMixin):
     """
     Crud view for conferencier access
     """
 
 
-class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUDView):
+class StudentAnswerCRUDView(BaseAnswerCRUDView, StudentConfRelatedObjPermissionMixin):
     """
     Crud view for conferencier access
     """
@@ -213,6 +223,9 @@ class StudentAnswerCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerCRUD
 class BaseAnswerImageCRUDView(NgCRUDView):
     model = AnswerImage
 
+    def get_conf_from_obj(self, obj):
+        return obj.question.conf
+
     def get_queryset(self):
         if 'answer_id' in self.request.GET:
             return self.model.objects.filter(
@@ -220,13 +233,13 @@ class BaseAnswerImageCRUDView(NgCRUDView):
             ).order_by('index', 'date_created')
 
 
-class AnswerImageCRUDView(ConfRelatedObjPermissionMixin, BaseAnswerImageCRUDView):
+class AnswerImageCRUDView(BaseAnswerImageCRUDView, ConfRelatedObjPermissionMixin):
     """
     CRUD view with conferencier access
     """
 
 
-class StudentAnswerImageCRUDView(StudentConfRelatedObjPermissionMixin, BaseAnswerImageCRUDView):
+class StudentAnswerImageCRUDView(BaseAnswerImageCRUDView, StudentConfRelatedObjPermissionMixin):
     """
     Crud view for conferencier access
     """

@@ -202,7 +202,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     var timeout = null;
     var saveUpdates = function() {
       // .... save data to server
-      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers, $scope.conferenceimages, $scope.questionimages, $scope.answersimages])
+      djangoRMI.sync_data([$scope.conference, $scope.question, $scope.answers, $scope.conferenceimages, $scope.questionimages, $scope.answersimages, $scope.questionexpimages])
 	 .success(function(out_data) {
 	     $scope.total_q = out_data['total_q'];
 	     $scope.written_q = out_data['written_q'];
@@ -230,6 +230,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     $scope.$watch('answers', debounceSaveUpdates, true)
     $scope.$watch('answersimages', debounceSaveUpdates, true)
     $scope.$watch('questionimages', debounceSaveUpdates, true)
+    $scope.$watch('questionexpimages', debounceSaveUpdates, true)
     $scope.$watch('conferenceimages', debounceSaveUpdates, true)
     // END AUTO SAVE
 

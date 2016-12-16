@@ -39,6 +39,7 @@ from .models import (
     AnswerImage,
     ConferenceImage,
     QuestionImage,
+    QuestionExplainationImage,
     Item,
     Test,
     TestAnswer,
@@ -117,7 +118,7 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
     @allow_remote_invocation
     def sync_data(self, edit_data):
         # process in_data
-        conf, question, answers, images, qimages, ansimages = edit_data
+        conf, question, answers, images, qimages, ansimages, qexpimages = edit_data
         conf.pop('items')
         conf.pop('specialities')
         conf_pk = conf.pop('pk')
@@ -132,6 +133,8 @@ class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, J
             ConferenceImage.objects.filter(pk=image.pop('pk')).update(**image)
         for image in qimages:
             QuestionImage.objects.filter(pk=image.pop('pk')).update(**image)
+        for image in qexpimages:
+            QuestionExplainationImage.objects.filter(pk=image.pop('pk')).update(**image)
         return analyse_conf(Conference.objects.get(pk=conf_pk))
 
     @allow_remote_invocation
