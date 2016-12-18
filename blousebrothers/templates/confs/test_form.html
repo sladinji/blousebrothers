@@ -79,7 +79,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	      <div class="col-sm-6 col-xs-8">
 		<span class='well-title'><span class="hidden-xs">Question </span>{{ question.index + 1 }} </span>
 	      </div>
-	    <p class="angular-with-newlines">{{question.question}}</p>
+	    <p class="angular-with-newlines" ng-bind-html="question.question | safe"</p>
 
 	    <div ng-repeat="image in questionimages">
 	      <img ng-src="{{ static_media(image.image) }}"/>
