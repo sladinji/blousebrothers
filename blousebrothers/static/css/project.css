@@ -814,3 +814,29 @@ footer {
     font-size: 100%;
     margin:20px 0;
 }
+
+.catalogue .form-control{
+	padding: 0px;
+}
+
+.basket_summary .btn.btn-default {
+	margin: 0px;
+	padding: 8px;
+}
+.basket-items .input-group input{
+	margin-left: 0px;
+	padding: 2px;
+	width: 50px;
+	margin-right: 2px;
+}
+.basket-items .btn{
+	background-color: #fff;
+	border: 1px solid #ccc;
+	height: 34px;
+}
+.basket-items .btn:hover{
+	background-color: #000;
+}
+#place-order {
+	margin-top: -19px;
+}

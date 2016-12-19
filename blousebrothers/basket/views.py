@@ -10,6 +10,8 @@ BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 class BasketAddView(CoreBasketAddView):
 
     def form_valid(self, form):
+        if not form.product.conf :
+            return super().form_valid(form)
         offers_before = self.request.basket.applied_offers()
 
         Test.objects.create(conf=form.product.conf, student=self.request.user)
