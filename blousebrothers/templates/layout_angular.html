@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 {% load staticfiles %}
 
-{% block angular_start %}
-<div class="ng-scope" ng-app='djangular-bb' ng-controller="ConfFormCtrl" ng-cloak>
-{% endblock %}
-{% block angular_end %}
-</div>
+{% block body_class %}
+ng-scope" ng-app='djangular-bb' ng-cloak ng-controller="ConfFormCtrl
 {% endblock %}

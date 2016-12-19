@@ -37,7 +37,6 @@
     {% endif %}
   {% endblock %}
 
-  {% block angular_start %}{% endblock %}
   {% block main_header %}
 	<div class="container">
 		<div class="main-menu-wapper">
@@ -102,7 +101,9 @@
 				</div>
 
 			</div>
-		</div>
+		   </div>
+	       </div>
+	   </div>
     {% endblock main_header %}
     {# Main content of page - other layout templates may override this block #}
     {% block content_wrapper %}
@@ -134,7 +135,6 @@
         </div>
     {% endblock %}
 
-    {% block angular_end %}{% endblock %}
     {% include "partials/footer.html" %}
 {% endblock %}
 
