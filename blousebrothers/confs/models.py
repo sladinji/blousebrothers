@@ -7,11 +7,9 @@ import uuid
 from decimal import Decimal
 import logging
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.dispatch import receiver
 from django.utils.safestring import mark_safe
 from django.core.validators import int_list_validator
 
@@ -120,10 +118,11 @@ class Conference(models.Model):
         conf = self.images.count()
         question = QuestionImage.objects.filter(question__conf=self).count()
         answer = AnswerImage.objects.filter(answer__question__conf=self).count()
-        return conf + question + answer
+        qei = QuestionExplainationImage.objects.filter(question__conf=self).count()
+        return conf + question + answer + qei
 
     def check_images(self):
-        #TODO update when ans explaination image refactored as relation
+        # TODO update when ans explaination image refactored as relation
         def check_container(c):
             for obj in c.images.all():
                 try:
@@ -141,7 +140,6 @@ class Conference(models.Model):
                         image.image.size
                     except:
                         logger.warning("Image {} does not exist. Delete it", image.image)
-
 
 
 def conf_directory_path(conf_image, filename):
@@ -213,7 +211,7 @@ class Question(models.Model):
         return one_good and all_filled
 
     def __str__(self):
-        return str(self.index + 1)+ '. ' + self.question[:20] + '...'
+        return str(self.index + 1) + '. ' + self.question[:20] + '...'
 
     @property
     def good_answers(self):
@@ -225,17 +223,16 @@ class Question(models.Model):
 
     @property
     def good_index(self):
-        return [ x.index for x in self.good_answers]
+        return [x.index for x in self.good_answers]
 
     @property
     def bad_index(self):
-        return [ x.index for x in self.bad_answers]
+        return [x.index for x in self.bad_answers]
 
 
 class QuestionComment(models.Model):
     question = models.ForeignKey(Question, related_name="comments")
-    student = models.ForeignKey('users.User', blank=False, null=False,
-                              related_name="comments")
+    student = models.ForeignKey('users.User', blank=False, null=False, related_name="comments")
     comment = models.TextField(_("Explication"), blank=True, null=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
 
@@ -253,13 +250,13 @@ class Answer(models.Model):
 
 def answer_image_directory_path(answer_image, filename):
     return '{0}/conf_{1}/answers/{2}'.format(answer_image.answer.question.conf.owner.username,
-                                               answer_image.answer.question.conf.id,
-                                               "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
-                                                                        filename
-                                                                        ),
-                                                             os.path.splitext(filename)[-1]
-                                                             )
-                                               )
+                                             answer_image.answer.question.conf.id,
+                                             "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
+                                                                      filename
+                                                                      ),
+                                                           os.path.splitext(filename)[-1]
+                                                           )
+                                             )
 
 
 class AnswerImage(models.Model):
@@ -268,7 +265,7 @@ class AnswerImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=200, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
-    answer= models.ForeignKey('Answer', related_name='images')
+    answer = models.ForeignKey('Answer', related_name='images')
 
 
 @receiver(models.signals.pre_delete, sender=AnswerImage)
@@ -330,7 +327,7 @@ def auto_delete_question_image_on_delete(sender, instance, **kwargs):
 
 class Test(models.Model):
     student = models.ForeignKey('users.User', blank=False, null=False,
-                              related_name="tests")
+                                related_name="tests")
     conf = models.ForeignKey('Conference', related_name='tests')
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     progress = models.PositiveIntegerField(_("Progression"), default=0)
@@ -357,7 +354,7 @@ class Test(models.Model):
 
     @property
     def fatal_errors(self):
-        return [ x for ta in self.answers.all() for x in ta.fatals.all() ]
+        return [x for ta in self.answers.all() for x in ta.fatals.all()]
 
     @property
     def nb_errors(self):
@@ -384,7 +381,7 @@ class TestAnswer(models.Model):
         bga = omissions + errors
         self.nb_errors = len(bga)
         fatals = [x for x in bga if x.ziw]
-        if fatals :
+        if fatals:
             self.fatals.add(*fatals)
         if sorted(ga) == sorted(self.question.good_index):
             self.score = self.max_score
@@ -395,3 +392,16 @@ class TestAnswer(models.Model):
         elif len(bga) == 1:
             self.score = Decimal(0.5 * self.question.coefficient)
         self.save()
+
+class SubscriptionType(models.Model):
+    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
+    description = models.TextField(_('Description'), blank=True, null=True)
+    nb_month = models.IntegerField(_('Durée'), blank=True, null=True)
+    price = models.DecimalField(_("Prix"), max_digits=6, decimal_places=2, default=0)
+
+class Subscription(models.Model):
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
+    type = models.ForeignKey('SubscriptionType', related_name="subs", blank=False, null=False)
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    date_over = models.DateTimeField(_("Date created"), null=False)
+    price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
