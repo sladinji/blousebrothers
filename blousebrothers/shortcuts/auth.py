@@ -2,6 +2,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 from blousebrothers.confs.models import Conference, Question, Answer, Test
 
@@ -51,6 +53,20 @@ class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         return self.object.student == self.request.user
 
 
+class PassTestPermissionMixin(TestPermissionMixin):
+    """
+    Same as TestPermissionMixin but user also need a valid subscription
+    """
+
+    def test_func(self):
+        if not super().test_func():
+            return False
+        return [x for x in self.request.user.subs.all() if not x.is_past_due]
+
+    def handle_no_permission(self):
+        messages.error(self.request, _("Tu dois disposer d'un abonnement à jour pour faire une conf"))
+        return redirect("users:detail", **{'username':self.request.user.username})
+
 class ConferencePermissionMixin(BBLoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
     permission_required = ['confs.add_conference']
 
@@ -59,7 +75,6 @@ class ConferencePermissionMixin(BBLoginRequiredMixin, PermissionRequiredMixin, U
             return True
         self.object = self.get_object()
         return self.object.owner == self.request.user
-
 
 
 class StudentConferencePermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
@@ -78,7 +93,6 @@ class StudentConferencePermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin
 
     def handle_no_permission(self):
         raise PermissionDenied
-
 
 
 class BaseConfRelatedObjPermissionMixin():

@@ -1,0 +1,1 @@
+[{"model": "offer.range", "pk": 1, "fields": {"name": "Abonnements", "slug": "abonnements", "description": "<p>Abonnements permettant d'effectuer des ECN.</p>", "is_public": true, "includes_all_products": false, "proxy_class": "", "date_created": "2016-12-21T16:52:19.264Z", "excluded_products": [], "classes": [], "included_categories": [3]}}]

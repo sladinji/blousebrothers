@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
-import time
 import re
 import logging
 
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.core.mail import mail_admins
@@ -17,7 +16,6 @@ from django.contrib.auth.models import Permission
 from django.views.generic import (
     DetailView,
     ListView,
-    RedirectView,
     UpdateView,
     CreateView,
     FormView,
@@ -28,8 +26,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from blousebrothers.shortcuts.auth import (
     BBConferencierReqMixin,
     ConferencePermissionMixin,
-    ConfRelatedObjPermissionMixin,
     TestPermissionMixin,
+    PassTestPermissionMixin,
     BBLoginRequiredMixin,
 )
 from blousebrothers.shortcuts.tools import analyse_conf
@@ -49,6 +47,7 @@ from .forms import ConferenceForm, ConferenceFinalForm
 
 logger = logging.getLogger(__name__)
 
+
 class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
@@ -58,8 +57,6 @@ class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, De
             "questions__answers",
             "questions__images",
         ).get(slug=self.kwargs['slug'])
-        #obj.check_images()
-
         return obj
 
 
@@ -85,7 +82,7 @@ class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, De
         return reverse('confs:list')
 
 
-class ConferenceUpdateView( ConferencePermissionMixin, BBConferencierReqMixin, JSONResponseMixin, UpdateView):
+class ConferenceUpdateView(ConferencePermissionMixin, BBConferencierReqMixin, JSONResponseMixin, UpdateView):
     """
     Main Angular JS interface where you can edit question, images...
     """
@@ -159,7 +156,7 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
     def get_queryset(self):
         if self.request.user.is_superuser:
             qry = self.model.objects.order_by('-edition_progress')
-        else :
+        else:
             qry = self.model.objects.filter(owner=self.request.user)
             qry = qry.order_by('edition_progress')
         if self.request.GET.get('q', False):
@@ -242,10 +239,7 @@ class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, Upd
         return super().form_valid(form)
 
 
-
-
-
-class ConferenceEditView( ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
+class ConferenceEditView(ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     model = Conference
@@ -300,7 +294,7 @@ class BuyedConferenceListView(LoginRequiredMixin, ListView):
         return qry.all()
 
 
-class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
+class TestUpdateView(PassTestPermissionMixin, JSONResponseMixin, UpdateView):
     """
     Main test view.
     """
@@ -309,13 +303,12 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.finished :
+        if self.object.finished:
             return redirect(
                 reverse('confs:result', kwargs={'slug': self.object.conf.slug})
             )
         else:
             return super().get(request, *args, **kwargs)
-
 
     def get_context_data(self, **kwargs):
         """
@@ -353,7 +346,7 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         ta = TestAnswer.objects.get(test=test, question=question)
 
         ta.given_answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
-        if test.time_taken :
+        if test.time_taken:
             last_time = test.time_taken.hour * 3600 + test.time_taken.minute * 60 + test.time_taken.second
             this_time = time_taken.hour * 3600 + time_taken.minute * 60 + time_taken.second
             ta.time_taken = datetime.fromtimestamp(this_time - last_time)
@@ -363,6 +356,7 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         test.time_taken = time_taken
         test.progress = test.answers.exclude(given_answers='').count()/test.answers.count() * 100
         test.save()
+
 
 class TestResult(TestPermissionMixin, DetailView):
     model = Test
