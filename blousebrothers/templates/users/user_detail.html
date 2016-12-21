@@ -12,33 +12,51 @@
 
       <h2>{{ object.username }}</h2>
       <div class="well">
-      {% if user.socialaccount_set.all %}
-      <img class="social-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
-      {% endif %}
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
-      <p><label>{% trans 'First name' %} :</label> {{ object.first_name }}</p>
-      <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
-      <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
-      <p><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</p>
-      <p><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
+        {% if user.socialaccount_set.all %}
+        <img class="social-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+        {% endif %}
+        {% if object.name %}
+          <p>{{ object.name }}</p>
+        {% endif %}
+        <p><label>{% trans 'First name' %} :</label> {{ object.first_name }}</p>
+        <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
+        <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
+        <p><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</p>
+        <p><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
+	{% if object == request.user %}
+	<!-- Action buttons -->
+	<div class="row">
+
+	  <div class="col-sm-12 ">
+		  <a class="btn" href="{% url 'users:update' %}">{% trans "Modifier mes informations" %}</a>
+	    <!-- Your Stuff: Custom user template urls -->
+	  </div>
+
+	</div>
+	<!-- End Action buttons -->
+	{% endif %}
       </div>
+      <h2>Abonnement</h2>
+      <div class="well">
+      {% if not user.subs %}
+      <a href="#" class="btn">Prendre un abonnement</a>
+      {% else %}
+        {% for sub in user.subs.all %}
+        <legend>{{ sub.type.name }}</legend>
+        {{ sub.type.description | safe }}
+	<p><label>{% trans "Valable jusqu'au" %} :</label> {{ sub.date_over | date:"d F Y" }}</p>
+	{% if sub.is_past_due %}
+	  <a href="#" class="btn">Renouveler</a>
+	{% endif %}
+        <br>
+        {% endfor %}
+      {% endif %}
+      </div>
+      
+	
     </div>
   </div>
 
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12 ">
-	  <a class="btn btn-primary" href="{% url 'users:update' %}">{% trans "Modifier mes informations" %}</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
-{% endif %}
 
 
 </div>

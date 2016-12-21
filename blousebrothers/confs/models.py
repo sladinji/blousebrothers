@@ -5,6 +5,7 @@ import re
 import os
 import uuid
 from decimal import Decimal
+from datetime import date
 import logging
 
 from django.core.urlresolvers import reverse
@@ -367,3 +368,8 @@ class Subscription(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     date_over = models.DateTimeField(_("Date created"), null=False)
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
+
+
+    @property
+    def is_past_due(self):
+        return date.today() > self.date_over
