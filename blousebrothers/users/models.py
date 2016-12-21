@@ -18,6 +18,7 @@ AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
 AbstractUser._meta.get_field('email').blank = False
 
+
 @python_2_unicode_compatible
 class User(AbstractUser):
 
@@ -89,7 +90,7 @@ class User(AbstractUser):
     university = models.ForeignKey('University', blank=False, null=True, verbose_name=_("Ville de CHU actuelle"))
     """University"""
     degree = models.CharField(_("Niveau"), max_length=10, choices=DEGREE_LEVEL,
-                            blank=False, default=None, null=True)
+                              blank=False, default=None, null=True)
     """Degree level"""
     friends = models.ManyToManyField('self')
     """Friends"""
@@ -98,9 +99,9 @@ class User(AbstractUser):
 
     def gave_all_required_info(self):
         """Used for permission management"""
-        if self.is_superuser :
+        if self.is_superuser:
             return True
-        if self.wanabe_conferencier or self.is_conferencier :
+        if self.wanabe_conferencier or self.is_conferencier:
             return self.university and self.first_name and self.last_name and self.degree
         return True
 
@@ -119,6 +120,7 @@ Nom : {}
 Email : {}
 Lien : {}{}{}'''
 
+
 @receiver(user_signed_up, dispatch_uid="notify_signup")
 def notify_signup(request, user, **kwargs):
     """
@@ -133,4 +135,3 @@ def notify_signup(request, user, **kwargs):
                                         )
                                 )
     mail_admins('Nouvelle inscription', msg)
-
