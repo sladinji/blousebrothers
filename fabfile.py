@@ -35,10 +35,10 @@ def futur():
         if run("test -d %s" % code_dir).failed:
             run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
     with cd(code_dir):
-        run("git fetch origin master")
-        logs = run("git log --pretty=oneline --abbrev-commit ..origin/master")
-        logs =[ "* {}".format(x) for x in  re.findall(r'\[m (.*)\x1b', logs)]
-        send_simple_message("\n".join(logs))
+        run("git fetch")
+        run("git checkout {}".format(branch))
+        logs = run("git log --pretty=oneline --no-color --abbrev-commit ..origin/master")
+        send_simple_message(logs)
         run("git merge")
         with prefix("source blouserc"):
             run("docker-compose build")
