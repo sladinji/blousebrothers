@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% load bbtricks %}
+{% block content %}
+{% load purchase_info_tags %}
+{% load currency_filters %}
+
+
+<section id="pricing">
+
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+    <div class="title">
+        <h2>Abonnements</h2>
+    </div>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+
+    <div class="container"> <!-- Container -->
+        <div class="row">
+
+	    {% for sub in subs %}
+            <div class="col-md-4 col-sm-4 col-lg-4">
+              <div class="p-style1">
+                <div class="package">
+		  <h4>{{ sub.title }}</h4>
+		  {% purchase_info_for_product request sub as session %}
+		  <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
+                </div>
+                <ul class="inclusion">
+		  {{ sub.description | sub_desc_custo | safe }}
+		  <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray">Souscrire</a></li>
+                </ul>
+              </div>
+            </div>
+	    {% endfor %}
+
+        </div>
+    </div> <!-- End Container -->
+
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+  </section>
+{% endblock content %}

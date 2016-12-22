@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, RedirectView, UpdateView
+from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.apps import apps
 
 from .models import User
 from .forms import UserForm, WalletForm
@@ -13,6 +14,9 @@ from mangopay.models import (
     MangoPayCardRegistration,
     MangoPayWallet,
 )
+
+Product = apps.get_model('catalogue', 'Product')
+ProductClass = apps.get_model('catalogue', 'ProductClass')
 
 
 class UserDetailView(BBRequirementMixin, DetailView):
@@ -98,3 +102,12 @@ class UserWalletView(LoginRequiredMixin, UpdateView):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
 
+class Subscription(LoginRequiredMixin, TemplateView):
+    template_name='pages/subscription.html'
+
+    def get_context_data(self, **kwargs):
+        subs = Product.objects.filter(product_class=ProductClass.objects.get(name="Abonnements"))
+        return super().get_context_data(subs=subs)
+
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)

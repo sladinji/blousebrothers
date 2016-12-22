@@ -32,4 +32,10 @@ urlpatterns = [
         view=views.UserWalletView.as_view(),
         name='wallet'
     ),
+    # Subscription
+    url(
+        regex=r'^~subscription/(?P<sub_id>[\d]*)$',
+        view=views.Subscription.as_view(),
+        name='subscription'
+    ),
 ]

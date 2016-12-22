@@ -5,9 +5,11 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
+
 @register.filter
 def to_char(value):
     return ascii_uppercase[value]
+
 
 @register.filter
 def is_good_css(answer, test_answer):
@@ -17,12 +19,14 @@ def is_good_css(answer, test_answer):
     else:
         return "fatal" if answer.ziw else "notcorrect"
 
+
 @register.filter
 def zero_cause_error_label(answer, test_answer):
     if is_good_css(answer, test_answer) == "fatal":
         return mark_safe('( <i class="fa fa-warning" aria-hidden="true"></i> zéro sur cette mauvaise réponse) ')
     else:
         return ""
+
 
 @register.filter
 def result_icon(answer, test_answer):
@@ -34,13 +38,20 @@ def result_icon(answer, test_answer):
         "fatal": mark_safe(icon.format('heartbeat')),
     }[result]
 
+
 @register.filter
 def score100(test):
     return Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
 
+
 @register.filter
 def get_checked_fa(answer, test_answer):
-    if str(answer.index) in test_answer.given_answers :
+    if str(answer.index) in test_answer.given_answers:
         return mark_safe('<i class="fa fa-check-square-o" aria-hidden="true"></i>')
-    else :
+    else:
         return mark_safe('<i class="fa fa-square-o" aria-hidden="true"></i>')
+
+
+@register.filter
+def sub_desc_custo(desc):
+    return desc.replace('<p>', '<li>').replace('</p>', '</li>')

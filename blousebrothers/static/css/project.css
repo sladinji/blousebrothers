@@ -840,3 +840,30 @@ footer {
 #place-order {
 	margin-top: -19px;
 }
+
+/* Subscription */
+#pricing {
+    color: #666666;
+    height: auto;
+    text-align: center;
+    }
+#pricing .inclusion li {
+    display: block;
+    list-style-type: none;
+    padding: 10px;
+}
+.p-style1 {
+    border: 1px solid #858585;
+    margin-bottom: 20px;
+}
+.package {
+    color: #ffffff;
+    padding: 25px 0px;
+    background-color: #565d67;
+}
+.inclusion {
+    padding: 20px;
+}
+.space {
+    padding-top: 40px;
+}
