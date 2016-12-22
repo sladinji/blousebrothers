@@ -1,5 +1,4 @@
 from __future__ import with_statement
-import re
 from fabric.api import *
 import requests
 
@@ -38,8 +37,7 @@ def futur(branch='master'):
         run("git fetch")
         run("git checkout {}".format(branch))
         logs = run("git log --pretty=oneline --no-color --abbrev-commit ..origin/master")
-        logs =[ "* {}".format(x) for x in  re.findall(r'\[m (.*)\x1b', logs)]
-        send_simple_message("\n".join(logs))
+        send_simple_message(logs)
         run("git merge")
         with prefix("source blouserc"):
             run("docker-compose build")
