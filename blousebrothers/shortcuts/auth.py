@@ -61,7 +61,7 @@ class PassTestPermissionMixin(TestPermissionMixin):
     def test_func(self):
         if not super().test_func():
             return False
-        return [x for x in self.request.user.subs.all() if not x.is_past_due]
+        return self.request.user.has_valid_subscription()
 
     def handle_no_permission(self):
         messages.error(self.request, _("Tu dois disposer d'un abonnement à jour pour faire une conf"))

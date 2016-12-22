@@ -39,7 +39,7 @@
       <h2>Abonnement</h2>
       <div class="well">
       {% if not user.subs.all %}
-      <a href="{% url 'users:subscription' %}" class="btn">Choisir un abonnement</a>
+      <a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a>
       {% else %}
         {% for sub in user.subs.all %}
         <legend>{{ sub.type.name }}</legend>

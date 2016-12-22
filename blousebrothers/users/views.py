@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -102,12 +103,13 @@ class UserWalletView(LoginRequiredMixin, UpdateView):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
 
+
 class Subscription(LoginRequiredMixin, TemplateView):
-    template_name='pages/subscription.html'
+    template_name = 'pages/subscription.html'
 
-    def get_context_data(self, **kwargs):
-        subs = Product.objects.filter(product_class=ProductClass.objects.get(name="Abonnements"))
-        return super().get_context_data(subs=subs)
-
-    def get(self, *args, **kwargs):
-        return super().get(*args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        if kwargs['sub_id']:
+            sub = Product.objects.get(id=kwargs['sub_id'])
+            request.basket.add_product(sub, 1)
+            return redirect('/basket/')
+        return super().get(request, *args, **kwargs)

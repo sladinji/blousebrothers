@@ -109,6 +109,10 @@
         <p class="nonefound">{% trans "No products found." %}</p>
     {% endif %}
 
+{% if not user.has_valid_subscription %}
+{% include 'partials/subscriptions.html' %}
+{% endif %}
+
 {% endblock content %}
 
 {% block onbodyload %}

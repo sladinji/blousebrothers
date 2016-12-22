@@ -34,6 +34,9 @@ class User(AbstractUser):
         ('MEDECIN', _('Médecin')),
     )
 
+    def has_valid_subscription(self):
+        return [x for x in self.subs.all() if not x.is_past_due]
+
     def gen_sponsor_code():
         """
         Return a unique 8 numbers codes for user. Used as function to generate default value.
