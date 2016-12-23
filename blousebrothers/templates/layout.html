@@ -73,6 +73,7 @@
 	   					</ul>
 					</ul>
 	    					<ul class="boutique-nav main-menu clone-main-menu pull-right">
+							<li class="menu-item-has-children item-megamenu"><a id="wallet_link" href="{% url 'users:wallet' %}"><i class="icon-money"></i> {{ balance }}</a></li>
 							<li class="menu-item-has-children item-megamenu">
 							    {% if num_unread_notifications > 0 %}
 								{# If user has new notifications - we change account link to go to inbox #}

@@ -7,7 +7,7 @@
  "{{ user.birth_date }}"<br>
  {{ mangopay_user.nationality }}<br>
  {{ balance }}<br>
- {{ wallet.id}}<br>
+ wallet id :{{ wallet.id}}<br>
  {{ card_registration.get_preregistration_data }}<br>
 <div class="col-sm-12">
   <h1>Gérer mon porte-monnaie</h1>
@@ -61,13 +61,24 @@
       <input type="text" name="cardCvx" value="" />
       <div class="clear"></div>
   
-      <input type="submit" value="Pay" class="btn" />
+      <input type="submit" value="Enregister ma carte" class="btn" />
   </form>
   {% for card_registrion in  mangopay_user.mangopay_card_registrations.all %}
   {{ card_registration }}
   {% endfor %}
   </div>
   <div class="col-md-3"></div>
+  <div class="col-md-3"></div>
+  <div class="col-md-6 col-sm-12 well">
+    <form id='credit_form' class= "form-horizontal" action="{% url 'users:wallet' %}" method="post">
+	{% csrf_token %}
+        <label for="credit">Somme</label>
+        <input type="text" name="credit" value="" />
+        <div class="clear"></div>
+        <input type="submit" value="Créditer mon comte" class="btn" />
+    </form>
+  </div>
+  {% comment CREDIT %}{% endcomment %}
 </div>
 {% endif %}
 

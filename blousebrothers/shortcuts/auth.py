@@ -19,6 +19,7 @@ class BBRequirementMixin(BBLoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         if not request.user.gave_all_required_info():
+            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
             return redirect("users:update")
         else:
             return super().get(request, *args, **kwargs)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from decimal import Decimal
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView
@@ -10,17 +11,20 @@ from django.apps import apps
 from .models import User
 from .forms import UserForm, WalletForm
 from blousebrothers.shortcuts.auth import BBRequirementMixin
+from money import Money
 from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayCardRegistration,
+    MangoPayCard,
     MangoPayWallet,
+    MangoPayPayIn,
 )
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
 
 
-class UserDetailView(BBRequirementMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
@@ -59,11 +63,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
             card_registration.handle_registration_data(request.GET['data'])
         return super().get(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        if not self.request.user.gave_all_required_info():
-            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
-        return super().get_context_data(**kwargs)
-
 
 class UserWalletView(LoginRequiredMixin, UpdateView):
 
@@ -71,10 +70,27 @@ class UserWalletView(LoginRequiredMixin, UpdateView):
     template_name='users/mangopay_form.html'
     success_url='.'
 
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.gave_all_mangopay_info():
+            messages.error(self.request, 'Merci de compléter le formulaire ci-dessous '
+                           'pour pouvroir créditer ton compte.')
+            return redirect('users:update')
+        else:
+            return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        payin = MangoPayPayIn()
+        mangopay_user = MangoPayNaturalUser.objects.get(user=self.request.user)
+        payin.mangopay_user = mangopay_user
+        payin.mangopay_wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
+        payin.mangopay_card = mangopay_user.mangopay_card_registrations.first().mangopay_card
+        payin.debited_funds = Money(Decimal(1001), "EUR")
+        payin.fees = Money(0, "EUR")
+        payin.create(secure_mode_return_url=reverse('users:wallet'))
+
     def get_context_data(self, **kwargs):
 
-        if not self.request.user.gave_all_mangopay_info() :
-            return super().get_context_data(**kwargs)
 
         mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
         mangopay_user.birthday = self.request.user.birth_date

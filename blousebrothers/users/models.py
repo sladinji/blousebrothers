@@ -109,7 +109,8 @@ class User(AbstractUser):
         return True
 
     def gave_all_mangopay_info(self):
-        return self.birth_date and self.country_of_residence and self.nationality
+        return self.birth_date and self.country_of_residence and self.nationality \
+            and self.first_name and self.last_name
 
 
 class University(models.Model):
