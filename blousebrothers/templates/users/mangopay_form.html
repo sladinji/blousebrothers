@@ -11,12 +11,18 @@
  {{ card_registration.get_preregistration_data }}<br>
 <div class="col-sm-12">
   <h1>Gérer mon porte-monnaie</h1>
+  <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
 
 <div class="row">
-  <div class="col-sm-12">
-    <h1>Modifier mes informations</h1>
-    <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 col-sm-12 well">
+    {% if user.gave_all_mangopay_info %}
+    <h2>Modifier mes informations: </h2>
+    {% else %}
+    <h2>Nous avons déjà besoin de ces informations:</h2>
+    {% endif %}
+    <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="control-group">
@@ -26,33 +32,43 @@
         </div>
     </form>
     {% comment multiple emails disabled %}
-    <h1>Gestion des emails</h1>
+    <h2>Gestion des emails</h2>
     <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
     <br>
     {% endcomment %}
   </div>
+  <div class="col-md-3"></div>
 </div>
 
-<form action="{{card.cardRegistrationURL}}" method="post">
-    <input type="hidden" name="data" value="{{card.preregistrationData}}" />
-    <input type="hidden" name="accessKeyRef" value="{{card.accessKey}}" />
-    <input type="hidden" name="returnURL" value="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{% url 'users:update' %}" />
+{% if user.gave_all_mangopay_info %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 col-sm-12 well">
+  <form class= "form-horizontal" action="{{card.cardRegistrationURL}}" method="post">
+      <input type="hidden" name="data" value="{{card.preregistrationData}}" />
+      <input type="hidden" name="accessKeyRef" value="{{card.accessKey}}" />
+      <input type="hidden" name="returnURL" value="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{% url 'users:wallet' %}" />
+  
+      <label for="cardNumber">Card Number</label>
+      <input type="text" name="cardNumber" value="" />
+      <div class="clear"></div>
+  
+      <label for="cardExpirationDate">Expiration Date</label>
+      <input type="text" name="cardExpirationDate" value="" />
+      <div class="clear"></div>
+  
+      <label for="cardCvx">CVV</label>
+      <input type="text" name="cardCvx" value="" />
+      <div class="clear"></div>
+  
+      <input type="submit" value="Pay" class="btn" />
+  </form>
+  {% for card_registrion in  mangopay_user.mangopay_card_registrations.all %}
+  {{ card_registration }}
+  {% endfor %}
+  </div>
+  <div class="col-md-3"></div>
+</div>
+{% endif %}
 
-    <label for="cardNumber">Card Number</label>
-    <input type="text" name="cardNumber" value="" />
-    <div class="clear"></div>
-
-    <label for="cardExpirationDate">Expiration Date</label>
-    <input type="text" name="cardExpirationDate" value="" />
-    <div class="clear"></div>
-
-    <label for="cardCvx">CVV</label>
-    <input type="text" name="cardCvx" value="" />
-    <div class="clear"></div>
-
-    <input type="submit" value="Pay" />
-</form>
-{% for card_registrion in  mangopay_user.mangopay_card_registrations.all %}
-{{ card_registration }}
-{% endfor %}
 {% endblock %}

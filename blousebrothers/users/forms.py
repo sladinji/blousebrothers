@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from oscar.forms.widgets import DatePickerInput
 
 from .models import User
@@ -16,4 +17,4 @@ class WalletForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['birth_date', 'country_of_residence', 'nationality']
-    birth_date = forms.DateField(widget=DatePickerInput)
+    birth_date = forms.DateField(widget=DatePickerInput, label=_("Date de naissance"))

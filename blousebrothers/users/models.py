@@ -108,6 +108,9 @@ class User(AbstractUser):
             return self.university and self.first_name and self.last_name and self.degree
         return True
 
+    def gave_all_mangopay_info(self):
+        return self.birth_date and self.country_of_residence and self.nationality
+
 
 class University(models.Model):
     class Meta:

@@ -69,8 +69,13 @@ class UserWalletView(LoginRequiredMixin, UpdateView):
 
     form_class = WalletForm
     template_name='users/mangopay_form.html'
+    success_url='.'
 
     def get_context_data(self, **kwargs):
+
+        if not self.request.user.gave_all_mangopay_info() :
+            return super().get_context_data(**kwargs)
+
         mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
         mangopay_user.birthday = self.request.user.birth_date
         mangopay_user.country_of_residence = self.request.user.country_of_residence
@@ -104,10 +109,13 @@ class UserWalletView(LoginRequiredMixin, UpdateView):
         return User.objects.get(username=self.request.user.username)
 
 
-class Subscription(LoginRequiredMixin, TemplateView):
+class Subscription(TemplateView):
     template_name = 'pages/subscription.html'
 
     def get(self, request, *args, **kwargs):
+        """
+        Display subscriptions page or redirect to basket if subscription was clicked.
+        """
         if kwargs['sub_id']:
             sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.add_product(sub, 1)
