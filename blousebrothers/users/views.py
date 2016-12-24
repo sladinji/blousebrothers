@@ -10,14 +10,11 @@ from django.apps import apps
 
 from .models import User
 from .forms import UserForm, WalletForm
-from blousebrothers.shortcuts.auth import BBRequirementMixin
-from money import Money
 from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayCardRegistration,
-    MangoPayCard,
     MangoPayWallet,
-    MangoPayPayIn,
+    MangoPayPayInByCard,
 )
 
 Product = apps.get_model('catalogue', 'Product')
@@ -67,8 +64,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 class UserWalletView(LoginRequiredMixin, UpdateView):
 
     form_class = WalletForm
-    template_name='users/mangopay_form.html'
-    success_url='.'
+    template_name = 'users/mangopay_form.html'
+    success_url = '.'
 
     def get(self, request, *args, **kwargs):
         if not self.request.user.gave_all_mangopay_info():
@@ -79,19 +76,17 @@ class UserWalletView(LoginRequiredMixin, UpdateView):
             return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-
-        payin = MangoPayPayIn()
+        payin = MangoPayPayInByCard()
         mangopay_user = MangoPayNaturalUser.objects.get(user=self.request.user)
         payin.mangopay_user = mangopay_user
         payin.mangopay_wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
         payin.mangopay_card = mangopay_user.mangopay_card_registrations.first().mangopay_card
-        payin.debited_funds = Money(Decimal(1001), "EUR")
-        payin.fees = Money(0, "EUR")
-        payin.create(secure_mode_return_url=reverse('users:wallet'))
+        payin.debited_funds = Decimal('10.01')
+        payin.fees = 0
+        payin.create(secure_mode_return_url='https://blousebrothers.fr')
+        return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-
-
         mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
         mangopay_user.birthday = self.request.user.birth_date
         mangopay_user.country_of_residence = self.request.user.country_of_residence
