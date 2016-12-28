@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from oscar.forms.widgets import DatePickerInput
 
 from .models import User
-from .fields import CreditCardField, ExpiryDateField, VerificationValueField
 
 
 class UserForm(forms.ModelForm):
