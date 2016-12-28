@@ -10,7 +10,6 @@ ProductClass = apps.get_model('catalogue', 'ProductClass')
 
 def subscriptions(request):
         subs = Product.objects.filter(product_class=ProductClass.objects.get(name="Abonnements"))
-        print("B"*10)
         return {'subscriptions': subs}
 
 
