@@ -27,7 +27,7 @@ def deploy():
         run("docker-compose run django ./manage.py migrate")
 
 @hosts('admin@futur.blousebrothers.fr')
-def futur():
+def futur(branch='master'):
     """
     Deploy on futur
     """

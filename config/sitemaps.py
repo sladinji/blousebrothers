@@ -10,7 +10,11 @@ class StaticViewSitemap(sitemaps.Sitemap):
     changefreq = 'daily'
 
     def items(self):
-        return statics + list(Conference.objects.values_list("slug", flat=True))
+        return statics + list(
+            Conference.objects.filter(
+                for_sale=True
+            ).values_list("slug", flat=True)
+        )
 
     def location(self, item):
         if item not in statics:
