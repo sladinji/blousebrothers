@@ -7,20 +7,31 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from django.views import defaults as default_views
+from django.contrib.sitemaps.views import sitemap
+
 from oscar.app import application
+
+from .sitemaps import StaticViewSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^$', RedirectView.as_view(url='accounts/signup', permanent=True), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^hijack/', include('hijack.urls')),
+    url(r'^robots\.txt$', include('robots.urls')),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, include(admin.site.urls)),
 
     # User management
     url(r'^users/', include('blousebrothers.users.urls', namespace='users')),
-    url(r'^sweethomechicago/', include('blousebrothers.confs.urls', namespace='confs')),
+    url(r'^ecni/', include('blousebrothers.confs.urls', namespace='confs')),
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here

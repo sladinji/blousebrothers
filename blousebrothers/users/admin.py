@@ -128,7 +128,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     list_display = ('username', social_avatar,  'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
                     'hijack_field',)
     csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile']
-    search_fields = ['name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
+    search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
                    'wanabe_conferencier', 'city', "degree", 'date_joined',
                    EditionProgressListFilter, FinishedButNotForSaleFilter)

@@ -29,7 +29,7 @@ class BBConferencierReqMixin(BBLoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        if user.is_superuser:
+        if user.is_superuser or request.is_googlebot:
             return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info():
             return redirect("users:update")
@@ -51,11 +51,10 @@ class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         return self.object.student == self.request.user
 
 
-class ConferencePermissionMixin(BBLoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
-    permission_required = ['confs.add_conference']
+class ConferencePermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.is_googlebot:
             return True
         self.object = self.get_object()
         return self.object.owner == self.request.user

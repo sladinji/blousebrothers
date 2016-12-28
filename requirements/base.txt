@@ -87,3 +87,5 @@ django-storages-redux==1.3.2
 django-hijack
 django-hijack-admin
 django-analytical
+git+https://github.com/macropin/django-googlebot
+django-robots
