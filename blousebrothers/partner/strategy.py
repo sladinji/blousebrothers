@@ -3,9 +3,9 @@ This Oscar modules is overrided to define pricing strategy.
 """
 from decimal import Decimal as D
 
-from oscar.apps.partner import strategy, prices
+from oscar.apps.partner import strategy, prices, availability
 
-DEFAULT_RATE = D('0.2')
+DEFAULT_RATE = D('0.0')
 
 PRODUCT_CLASSES_RATES = {
     'cours': 0,
@@ -41,6 +41,7 @@ class FrenchFixedRateTax(object):
             tax=stockrecord.price_excl_tax * self.rate)
 
 
+
 class FRStrategy(
         strategy.UseFirstStockRecord,
         FrenchFixedRateTax,
@@ -52,3 +53,8 @@ class FRStrategy(
     - Enforce stock level.  Don't allow purchases when we don't have stock.
     - Charge FR VAT on prices.  Assume everything is standard-rated.
     """
+    def availability_policy(self, product, stockrecord):
+        if stockrecord.price_excl_tax == 0:
+            return availability.Available()
+        return availability.Unavailable()
+
