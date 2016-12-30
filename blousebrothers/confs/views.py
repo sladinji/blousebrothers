@@ -25,7 +25,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 
 from blousebrothers.shortcuts.auth import (
     BBConferencierReqMixin,
-    ConferencePermissionMixin,
+    ConferenceWritePermissionMixin,
+    ConferenceReadPermissionMixin,
     TestPermissionMixin,
     PassTestPermissionMixin,
     BBLoginRequiredMixin,
@@ -48,7 +49,7 @@ from .forms import ConferenceForm, ConferenceFinalForm
 logger = logging.getLogger(__name__)
 
 
-class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, DetailView):
+class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
 
@@ -60,7 +61,7 @@ class ConferenceDetailView(ConferencePermissionMixin, BBConferencierReqMixin, De
         return obj
 
 
-class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, DeleteView):
+class ConferenceDeleteView(ConferenceWritePermissionMixin, BBConferencierReqMixin, DeleteView):
     """
     View displayed to confirm deletion. Object are just flaged as deleted but are not
     removed from db. Need to use admin interface to do so.
@@ -82,7 +83,7 @@ class ConferenceDeleteView(ConferencePermissionMixin, BBConferencierReqMixin, De
         return reverse('confs:list')
 
 
-class ConferenceUpdateView(ConferencePermissionMixin, BBConferencierReqMixin, JSONResponseMixin, UpdateView):
+class ConferenceUpdateView(ConferenceWritePermissionMixin, BBConferencierReqMixin, JSONResponseMixin, UpdateView):
     """
     Main Angular JS interface where you can edit question, images...
     """
@@ -204,7 +205,7 @@ class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, Crea
             return self.render_to_response(self.get_context_data(form=form))
 
 
-class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
+class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_final.html'
     form_class = ConferenceFinalForm
     model = Conference
@@ -239,7 +240,7 @@ class ConferenceFinalView(ConferencePermissionMixin, BBConferencierReqMixin, Upd
         return super().form_valid(form)
 
 
-class ConferenceEditView(ConferencePermissionMixin, BBConferencierReqMixin, UpdateView):
+class ConferenceEditView(ConferenceWritePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     model = Conference

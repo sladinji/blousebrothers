@@ -27,12 +27,12 @@ class BBRequirementMixin(BBLoginRequiredMixin):
 
 class BBConferencierReqMixin(BBLoginRequiredMixin):
     """
-    User has to be a conferencier to access.
+    User has to be a conferencier (or googlebot) to access.
     """
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        if user.is_superuser:
+        if user.is_superuser or request.is_googlebot:
             return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info():
             return redirect("users:update")
@@ -68,14 +68,38 @@ class PassTestPermissionMixin(TestPermissionMixin):
         messages.error(self.request, _("Tu dois disposer d'un abonnement à jour pour faire une conf"))
         return redirect("users:detail", **{'username':self.request.user.username})
 
-class ConferencePermissionMixin(BBLoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
+
+class CanAddConfPermission(PermissionRequiredMixin):
+    """
+    User can create conference.
+    """
     permission_required = ['confs.add_conference']
 
+
+class IsConfOwner(UserPassesTestMixin):
+    """
+    User is conf owner, root or googlebot.
+    """
     def test_func(self):
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.is_googlebot:
             return True
         self.object = self.get_object()
         return self.object.owner == self.request.user
+
+
+class ConferenceReadPermissionMixin(BBLoginRequiredMixin, IsConfOwner):
+    """
+    Access granted if user is_conferencier or google bot (no add_conference required)
+    """
+
+
+class ConferenceWritePermissionMixin(BBLoginRequiredMixin, CanAddConfPermission, IsConfOwner):
+    """
+    Check if user is conference's owner and has add_conference permission
+    """
+
+    def handle_no_permission(self):
+        raise PermissionDenied
 
 
 class StudentConferencePermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
@@ -153,4 +177,3 @@ class StudentConfRelatedObjPermissionMixin(BaseConfRelatedObjPermissionMixin, Us
             student=self.request.user,
             conf=self.get_conf(),
         ).count() != 0
-

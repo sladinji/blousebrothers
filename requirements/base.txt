@@ -88,3 +88,5 @@ django-hijack
 django-hijack-admin
 django-analytical
 python-dateutil
+git+https://github.com/macropin/django-googlebot
+django-robots

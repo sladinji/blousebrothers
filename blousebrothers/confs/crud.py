@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from djng.views.crud import NgCRUDView
 
 from blousebrothers.shortcuts.auth import (
-    ConferencePermissionMixin,
+    ConferenceWritePermissionMixin,
     StudentConferencePermissionMixin,
     ConfRelatedObjPermissionMixin,
     StudentConfRelatedObjPermissionMixin,
@@ -28,7 +28,7 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 
-class ConferenceCRUDView(ConferencePermissionMixin, NgCRUDView):
+class ConferenceCRUDView(ConferenceWritePermissionMixin, NgCRUDView):
     model = Conference
 
 

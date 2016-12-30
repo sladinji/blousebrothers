@@ -122,26 +122,6 @@ class Conference(models.Model):
         qei = QuestionExplainationImage.objects.filter(question__conf=self).count()
         return conf + question + answer + qei
 
-    def check_images(self):
-        # TODO update when ans explaination image refactored as relation
-        def check_container(c):
-            for obj in c.images.all():
-                try:
-                    obj.image.size
-                except:
-                    logger.warning("Image {} does not exist. Delete it", obj.image)
-                    obj.delete()
-
-        check_container(self)
-        for question in self.questions.all():
-            check_container(question)
-            for ans in question.answers.all():
-                for image in ans.images.all():
-                    try:
-                        image.image.size
-                    except:
-                        logger.warning("Image {} does not exist. Delete it", image.image)
-
 
 def conf_directory_path(conf_image, filename):
     return '{0}/conf_{1}/{2}'.format(conf_image.conf.owner.username,
@@ -223,7 +203,8 @@ class Question(models.Model):
 
 class QuestionComment(models.Model):
     question = models.ForeignKey(Question, related_name="comments")
-    student = models.ForeignKey('users.User', blank=False, null=False, related_name="comments")
+    student = models.ForeignKey('users.User', blank=False, null=False,
+                                related_name="comments")
     comment = models.TextField(_("Explication"), blank=True, null=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
 
