@@ -1,6 +1,6 @@
-from django.db  import models
-
+from django.db import models
 from oscar.apps.catalogue.abstract_models import AbstractProduct
+
 
 class Product(AbstractProduct):
     conf = models.ForeignKey('confs.Conference', related_name='products', default=None,
