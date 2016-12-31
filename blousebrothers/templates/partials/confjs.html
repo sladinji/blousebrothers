@@ -166,13 +166,13 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
         if (file) {
 	    var url = '';
 	    if ( type == 'question')
-		url ='/ecni/question/upload_image/' + $scope.question.pk 
+		url ='{% url "confs:up_question_img" %}' + $scope.question.pk 
 	    else if ( type == 'questionexp')
-		url ='/ecni/question/upload_explainationimage/' + $scope.question.pk 
+		url ='{% url "confs:up_question_expimg" %}' + $scope.question.pk 
 	    else if ( type == 'conf')
-		url ='/ecni/conference/upload_image/' + $scope.conference.pk 
+		url ='{% url "confs:up_conf_img" %}' + $scope.conference.pk 
 	    else
-		url ='/ecni/answer/upload_image/' + type.pk 
+		url ='{% url "confs:up_answer_img" %}' + type.pk 
             file.upload = Upload.upload({
 		url: url,
                 data: {file: file}

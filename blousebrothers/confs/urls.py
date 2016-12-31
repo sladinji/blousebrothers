@@ -97,7 +97,7 @@ urlpatterns = [
         crud.TestAnswerCRUDView.as_view(),
         name='test_answer_crud_view'),
 
-    url(r'^conference/upload_image/(?P<conference_id>[0-9]+)$',
+    url(r'^conference/upload_image/(?P<conference_id>[0-9]+)?$',
         crud.UploadConferenceImage.as_view(),
         name='up_conf_img'),
 
@@ -153,15 +153,15 @@ urlpatterns = [
         crud.AnswerImageCRUDView.as_view(),
         name='answerimage_crud_view'),
 
-    url(r'^answer/upload_image/(?P<answer_id>[0-9]+)$',
+    url(r'^answer/upload_image/(?P<answer_id>[0-9]+)?$',
         crud.UploadAnswerImage.as_view(),
         name='up_answer_img'),
 
-    url(r'^question/upload_image/(?P<question_id>[0-9]+)$',
+    url(r'^question/upload_image/(?P<question_id>[0-9]+)?$',
         crud.UploadQuestionImage.as_view(),
         name='up_question_img'),
 
-    url(r'^question/upload_explainationimage/(?P<question_id>[0-9]+)$',
+    url(r'^question/upload_explainationimage/(?P<question_id>[0-9]+)?$',
         crud.UploadQuestionExplainationImage.as_view(),
         name='up_question_expimg'),
 ]
