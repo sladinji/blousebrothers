@@ -12,17 +12,20 @@
 
       <h2>{{ object.username }}</h2>
       <div class="well">
-        {% if user.socialaccount_set.all %}
-        <img class="social-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+        {% if object.socialaccount_set.all %}
+        <img class="social-circle" src="{{ object.socialaccount_set.all.0.get_avatar_url }}">
         {% endif %}
-        {% if object.name %}
-          <p>{{ object.name }}</p>
+        {% if object.bio %}
+	<p><i>{{ object.bio }}</i></p>
         {% endif %}
+	{% if object == request.user %}
         <p><label>{% trans 'First name' %} :</label> {{ object.first_name }}</p>
         <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
         <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
+        {% endif %}
         <p><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</p>
         <p><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
+	<p><label>{% trans 'Spécialité' %} :</label>{% if object.speciality %} {{ object.speciality  }} {% endif %}</p>
 	{% if object == request.user %}
 	<!-- Action buttons -->
 	<div class="row">

@@ -99,6 +99,12 @@ class User(AbstractUser):
     """Friends"""
     country_of_residence = CountryField(_("Pays de résidence"), default="FR", blank=False)
     nationality = CountryField(_("Nationalité"), default="FR", blank=False)
+    speciality = models.CharField(_("Spécialité"), max_length=128, blank=True, null=True)
+    bio = models.TextField(_("Bio visible par les utilisateurs"),
+                           blank=True, null=True,
+                           help_text=_("Important si tu es conférencier !"),
+                           )
+
 
     def gave_all_required_info(self):
         """Used for permission management"""

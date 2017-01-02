@@ -871,3 +871,8 @@ footer {
 form#alert_form {
     width: auto;
 }
+
+.product_pod a {
+    color: inherit;
+}
+

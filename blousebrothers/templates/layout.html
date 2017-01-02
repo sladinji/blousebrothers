@@ -48,11 +48,11 @@
 			</div>
 			<div class="col-sm-12 col-md-10 menu-wapper">
 				<div class="top-header">
-            				{% if not user.is_authenticated %}
+            				{% if not request.user.is_authenticated %}
 					<div class="slogan">BlouseBrothers</div>
 				        {% else %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-left">
-            				    {% if user.is_conferencier%}
+            				    {% if request.user.is_conferencier%}
 					    <li class="menu-item-has-children item-megamenu">
 						<a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Confs créées' %}</a>
 					    </li>
@@ -66,8 +66,8 @@
 					<div class="box-control">
 	    					<div class="con-menu">
 	    					<ul class="boutique-nav main-menu clone-main-menu">
-            					    {% if user.is_authenticated %}
-            					        {% if user.is_staff or perms.partner.dashboard_access %}
+            					    {% if request.user.is_authenticated %}
+            					        {% if request.user.is_staff or perms.partner.dashboard_access %}
 	    					            <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
             					        {% endif %}
 	   					</ul>

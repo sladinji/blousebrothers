@@ -8,6 +8,7 @@
     <article class="product_pod">
         {% block product_image %}
 	{% if product.conf %}
+	<a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
             <div class="image_container">
 	    {{ product.conf.summary }}
 	    <p><i><strong>Icono : {{ product.conf.icono }} images</strong></i></p>
@@ -36,8 +37,9 @@
         {% endblock %}
 
         {% block product_title %}
-            <h3><a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">{{ product.get_title|truncatewords:4 }}</a></h3>
+            <h3>{{ product.get_title|truncatewords:4 }}</h3>
         {% endblock %}
+	</a>
 
         {% block product_price %}
             <div class="product_price">

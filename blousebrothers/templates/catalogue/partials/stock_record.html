@@ -16,6 +16,6 @@
     <p class="price_color">&nbsp;</p>
 {% endif %}
 {% if product.conf %}
-<p>  Conférencier : {{ product.conf.owner.username}}</p>
+<p>  <a href="{% url 'users:detail' product.conf.owner.username %}">Conférencier : {{ product.conf.owner.username}}</a></p>
 {% endif %}
 
