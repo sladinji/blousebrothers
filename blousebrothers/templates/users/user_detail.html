@@ -33,9 +33,10 @@
 	  </div>
 
 	</div>
-	<!-- End Action buttons -->
 	{% endif %}
+	<!-- End Action buttons -->
       </div>
+      {% if object == request.user %}
       <h2>Abonnement</h2>
       <div class="well">
       {% if not user.subs.all %}
@@ -52,6 +53,7 @@
         {% endfor %}
       {% endif %}
       </div>
+      {% endif %}
       
 	
     </div>

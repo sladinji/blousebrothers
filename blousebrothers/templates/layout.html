@@ -79,11 +79,11 @@
 								{# If user has new notifications - we change account link to go to inbox #}
 								<a href="{% url 'customer:notifications-inbox' %}">
 								    <i class="icon-user"></i>
-								    {{ user.username }}
+								    {{ request.user.username }}
 								    <span class="label label-important">{{ num_unread_notifications }}</span>
 								</a>
 							    {% else %}
-							    <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {{ user.username }}</a>
+							    <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {{ request.user.username }}</a>
 							    {% endif %}
 							</li>
             					        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>

@@ -295,7 +295,7 @@ class BuyedConferenceListView(LoginRequiredMixin, ListView):
         return qry.all()
 
 
-class TestUpdateView(PassTestPermissionMixin, JSONResponseMixin, UpdateView):
+class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
     """
     Main test view.
     """

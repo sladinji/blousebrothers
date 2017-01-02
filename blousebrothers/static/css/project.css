@@ -867,3 +867,7 @@ footer {
 .space {
     padding-top: 40px;
 }
+
+form#alert_form {
+    width: auto;
+}

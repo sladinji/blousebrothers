@@ -66,6 +66,7 @@ THIRD_PARTY_APPS = [
     'hijack_admin',
     'analytical',
     'robots',
+    'cuser'
 ]
 
 # Apps specific for this project go here.
@@ -94,6 +95,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'cuser.middleware.CuserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'oscar.apps.basket.middleware.BasketMiddleware',

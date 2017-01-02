@@ -23,7 +23,7 @@
             {% csrf_token %}
             <p>{% trans "Tu peux être prévenu par email lorsque ce sujet sera disponible." %}</p>
             {% include "partials/form_fields.html" with form=alert_form %}
-            <button type="submit" class="btn btn-lg btn-info btn-add-to-basket" data-loading-text="{% trans 'Submitting...' %}">{% trans "Notify me" %} !</button>
+            <button type="submit" class="btn btn-lg btn-info btn-add-to-basket" data-loading-text="{% trans 'Submitting...' %}">{% trans "Prévenez moi quand le dossier sera disponible" %} !</button>
         </form>
     {% endif %}
     {% iffeature "wishlists" %}

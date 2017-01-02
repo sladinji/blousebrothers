@@ -22,15 +22,16 @@
 <article class="product_page"><!-- Start of product page -->
 
     <div class="row">
-
+	{% comment %}
         {% block product_gallery %}
         <div class="col-sm-6">
             {% include "catalogue/partials/gallery.html" %}
         </div>
         {% endblock %}
+	{% endcomment %}
 
         {% block product_main %}
-        <div class="col-sm-6 product_main">
+        <div class="col-sm-12 product_main">
             {% comment %}
             This is a but clunky here.  Better to have some kind of JS-driven dashboard menu that 
             pops out when clicked.  A bit like the Django-Debug-Toolbar button
@@ -53,7 +54,7 @@
             {% block product_basket_form %}
                 {% include "catalogue/partials/add_to_basket_form.html" %}
             {% endblock %}
-        </div><!-- /col-sm-6 -->
+        </div><!-- /col-sm-12 -->
         {% endblock %}
 
     </div><!-- /row -->
@@ -61,7 +62,7 @@
     {% block product_description %}
         {% if product.description %}
         <div id="product_description" class="sub-header">
-            <h2>{% trans "Description du sujet" %}</h2>
+            <h2>{% trans "Esprit du dossier" %}</h2>
         </div>
         <p>{{ product.description|safe }}</p>
         {% endif %}

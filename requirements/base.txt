@@ -90,3 +90,4 @@ django-analytical
 python-dateutil
 git+https://github.com/macropin/django-googlebot
 django-robots
+django-cuser
