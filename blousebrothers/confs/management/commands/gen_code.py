@@ -1,9 +1,15 @@
+import csv
+import codecs
+from urllib.request import urlopen
 from datetime import datetime, timedelta
+
 from django.core.management.base import BaseCommand
+from django.db import IntegrityError
 from oscar.core.loading import get_class, get_classes
-Range, Condition, ConditionalOffer, Benefit, Offer, = get_classes(
-    'offer.models', ("Range", "Condition", "ConditionalOffer", "Benefit", "Offer", ))
-Voucher = get_class('catalogue.models', 'Voucher')
+
+Range, Condition, ConditionalOffer, Benefit, = get_classes(
+    'offer.models', ("Range", "Condition", "ConditionalOffer", "Benefit"))
+Voucher = get_class('voucher.models', 'Voucher')
 
 
 def create_promo(
@@ -44,8 +50,23 @@ def create_promo(
 
 
 class Command(BaseCommand):
-	help = "Create code promo abonnement 15 euros"
+    help = "Create code promo abonnement 15 euros"
 
-	def handle(self, *args, **options):
-		create_promo(**options)
+    def add_arguments(self, parser):
+        parser.add_argument('url', type=str)
 
+    def handle(self, *args, **options):
+        data = urlopen(options['url'])
+        decoder = codecs.getreader("utf-8")
+        reader = csv.DictReader(decoder(data))
+
+        with open("code.csv", "w") as out:
+            writer = csv.DictWriter(out, reader.fieldnames + ['CODE15EUR'])
+            writer.writeheader()
+            for row in reader:
+                code = "Just-4-" + row['Email'].split('@')[0]
+                try:
+                    create_promo(code=code)
+                except IntegrityError as err:
+                    self.stdout.write(self.style.ERROR(err))
+                writer.writerow(dict(CODE15EUR=code, **row))
