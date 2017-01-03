@@ -37,8 +37,8 @@ def futur(branch='master'):
     with cd(code_dir):
         run("git fetch")
         run("git checkout {}".format(branch))
-        logs = run("git log --pretty=oneline --no-color --abbrev-commit ..origin/master")
-        logs =[ "* {}".format(x) for x in  re.findall(r'\[m (.*)\x1b', logs)]
+        logs = run("git log --pretty=oneline --no-color --abbrev-commit ..origin/{}".format(branch))
+        logs =[ "* {}".format(x) for x in  re.findall(r'(.*)', logs)]
         print(logs)
         send_simple_message(logs)
         run("git merge")
