@@ -1,6 +1,7 @@
 from __future__ import with_statement
 from fabric.api import *
 import requests
+import re
 
 env.hosts = ['dowst@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
@@ -37,6 +38,8 @@ def futur(branch='master'):
         run("git fetch")
         run("git checkout {}".format(branch))
         logs = run("git log --pretty=oneline --no-color --abbrev-commit ..origin/master")
+        logs =[ "* {}".format(x) for x in  re.findall(r'\[m (.*)\x1b', logs)]
+        print(logs)
         send_simple_message(logs)
         run("git merge")
         with prefix("source blouserc"):
