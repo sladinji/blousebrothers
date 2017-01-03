@@ -1,0 +1,18 @@
+{% extends "oscar/dashboard/catalogue/product_list.html" %}
+{% load i18n %}
+
+{% block header %}
+    <div class="page-header action">
+        <h1>{% trans "Products" %}</h1>
+	<div class="well">
+		<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png"> 
+			<strong>Ne pas oublier que les codes promos fonctionnent par gamme</strong><br>
+		<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f644.png"> 
+		faire attention à ne pas se planter lors de l'ajout d'un nouvel abonnement<br>
+		<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f481-2642.png"> 
+		<i>faire une gamme à part pour chaque abonnement si besoin au risque d'avoir une promo 
+		de -15€ qui s'applique sur un abonnement à 6€ !</i>
+		<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f631.png"/>
+	</div>
+    </div>
+{% endblock header %}
