@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 import logging
 
+from django.apps import apps
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -47,6 +48,7 @@ from .models import (
 from .forms import ConferenceForm, ConferenceFinalForm
 
 logger = logging.getLogger(__name__)
+Product = apps.get_model('catalogue', 'Product')
 
 
 class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin, DetailView):
@@ -372,6 +374,12 @@ class TestResult(TestPermissionMixin, DetailView):
         if not test.finished:
             test.set_score()
         return test
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        product = Product.objects.get(conf=self.object.conf)
+        ctx.update(product=product)
+        return ctx
 
 
 class TestResetView(BBLoginRequiredMixin, UserPassesTestMixin, UpdateView):

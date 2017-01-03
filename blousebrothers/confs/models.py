@@ -304,6 +304,15 @@ class Test(models.Model):
     def nb_errors(self):
         return self.answers.aggregate(models.Sum('nb_errors')).get("nb_errors__sum")
 
+    def has_review(self):
+        """
+        Check if test was reviewed by user.
+        """
+        from django.apps import apps
+        Product = apps.get_model('catalogue', 'Product')
+        product = Product.objects.get(conf=self.conf)
+        return product.has_review_by(self.student)
+
 
 class TestAnswer(models.Model):
     test = models.ForeignKey('Test', related_name='answers')

@@ -14,6 +14,14 @@
     <div class="col-sm-12">
 
       <h2>{{ object.conf.title}}</h2>
+      {% if object.has_review %}
+      <legend>Résultats</legend>
+      <strong>Score :</strong> <big>{{ object | score100 }}</big> / 100 <br>
+      <strong>Temps :</strong> {{object.time_taken | time:"H:i:s" }}<br>
+      <strong>Erreurs :</strong> {{object.nb_errors }}<br>
+      <strong>Erreurs graves :</strong> {{ object.fatal_errors | length }}<br>
+      <br>
+      {% endif %}
     </div>
   </div>
 
@@ -27,12 +35,7 @@
 	    <button id="reset-test-button" class="btn btn-primary pull-right" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
 	  </form>
 	  {% endif %}
-	  <legend>Résultats</legend>
-	  <strong>Score :</strong> <big>{{ object | score100 }}</big> / 100 <br>
-  	  <strong>Temps :</strong> {{object.time_taken | time:"H:i:s" }}<br>
-  	  <strong>Erreurs :</strong> {{object.nb_errors }}<br>
-  	  <strong>Erreurs graves: </strong> {{ object.fatal_errors | length }}<br>
-	  <br>
+
 	  {% if object.conf.type == 'DCP' %}
 	  <legend>Énoncé</legend><p> {{ object.conf.statement | default:"<i>aucun</i>"}}<p>
 	  <legend>Illustrations</legend>
@@ -103,6 +106,10 @@
      {% endfor %}
    </div>
    {% endfor %}
+	  {% if not object.has_review %}
+	    {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
+	    <a class="btn btn-success" href="{{ add_review_url }}#addreview"><i class="fa fa-edit" aria-hidden="true"></i> Laisse un avis pour accéder à ta note !</a>
+	  {% endif %}
   </div>
 <!-- End Action buttons -->
 </div>
