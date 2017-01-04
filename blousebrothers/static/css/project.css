@@ -875,4 +875,22 @@ form#alert_form {
 .product_pod a {
     color: inherit;
 }
+button.stripe-button-el {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding: 0;
+}
+
+button.stripe-button-el span {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
 

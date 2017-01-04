@@ -1,5 +1,6 @@
 {% extends 'oscar/checkout/payment_details.html' %}
 {% load currency_filters %}
+{% load staticfiles %}
 
 {% block payment_details_content %}
 
@@ -7,7 +8,11 @@
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="{{ stripe_publishable_key }}" data-amount="{{ order_total_incl_tax_cents }}"
             data-name="{{ shop_name }}"
-            data-description="{{ basket.num_items }} items ({{ order_total.incl_tax|currency }})">
+            data-description="{{ basket.num_items }} items ({{ order_total.incl_tax|currency }})"
+            data-image="{% static "images/apple-icon-120x120.png" %}"
+            data-locale="auto"
+            data-email="{{ user.email }}"
+            data-label="Payer par carte">
     </script>
 </form>
 
