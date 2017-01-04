@@ -283,6 +283,7 @@ ACCOUNT_LOGOUT_ON_GET=True
 
 ACCOUNT_ALLOW_REGISTRATION = True
 ACCOUNT_ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
+ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 SOCIALACCOUNT_ADAPTER = 'blousebrothers.users.adapters.SocialAccountAdapter'
 

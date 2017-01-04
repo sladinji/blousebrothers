@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
+
+from django.apps import apps
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django.apps import apps
+from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
 
 from .models import User
 from .forms import UserForm, PayInForm, CardRegistrationForm
@@ -132,8 +134,16 @@ class UserWalletView(LoginRequiredMixin, FormView):
         return User.objects.get(username=self.request.user.username)
 
 
-class Subscription(TemplateView):
+class Subscription(LoginRequiredMixin, TemplateView):
     template_name = 'pages/subscription.html'
+    permission_denied_message = _("Merci de t'identifier ou de créer un compte pour soucrire à un abonnement")
+
+    def handle_no_permission(self):
+        messages.info(self.request, self.permission_denied_message)
+        return super().handle_no_permission()
+
+    def get_login_url(self):
+        return reverse("account_signup")
 
     def get(self, request, *args, **kwargs):
         """

@@ -894,3 +894,6 @@ button.stripe-button-el span {
     border-bottom-left-radius: 0px;
 }
 
+.alert {
+    border-radius: 0;
+}
