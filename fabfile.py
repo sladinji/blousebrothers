@@ -29,7 +29,7 @@ def deploy():
 
 
 @hosts('admin@futur.blousebrothers.fr')
-def futur(branch='master'):
+def futur(branch='master',reset='no'):
     """
     Deploy on futur
     """
@@ -47,6 +47,11 @@ def futur(branch='master'):
             run("docker-compose build")
             run("docker-compose up -d")
             run("docker-compose run django ./manage.py migrate")
+            if reset == 'yes':
+                run("fab proddb")
+                run("docker-compose run django ./manage.py migrate")
+                run('docker-compose run django ./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
+                run('docker-compose run django ./manage.py publish_confs')
 
 
 def proddb():
