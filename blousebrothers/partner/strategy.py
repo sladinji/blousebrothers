@@ -41,7 +41,6 @@ class FrenchFixedRateTax(object):
             tax=stockrecord.price_excl_tax * self.rate)
 
 
-
 class FRStrategy(
         strategy.UseFirstStockRecord,
         FrenchFixedRateTax,
@@ -54,7 +53,7 @@ class FRStrategy(
     - Charge FR VAT on prices.  Assume everything is standard-rated.
     """
     def availability_policy(self, product, stockrecord):
-        if stockrecord.price_excl_tax == 0:
-            return availability.Available()
-        return availability.Unavailable()
+        if product.product_class.name != 'Abonnements' and stockrecord.price_excl_tax != 0:
+            return availability.Unavailable()
+        return availability.Available()
 

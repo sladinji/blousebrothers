@@ -13,7 +13,6 @@ Voucher = get_class('voucher.models', 'Voucher')
 
 
 def create_promo(
-    range=Range.objects.get(name="Abonnements"),
     type='Absolute',
     value=15,
     name='Offre de lancement',
@@ -21,6 +20,7 @@ def create_promo(
     start_datetime='03/01/2017 12:30:46',
     usage='Single use'
 ):
+    range, __ = Range.objects.get_or_create(name="Abonnements")
 
     start_datetime = datetime.strptime(start_datetime, "%d/%m/%Y %H:%M:%S")
     condition = Condition.objects.create(

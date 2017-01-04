@@ -9,8 +9,13 @@ ProductClass = apps.get_model('catalogue', 'ProductClass')
 
 
 def subscriptions(request):
-        subs = Product.objects.filter(product_class=ProductClass.objects.get(name="Abonnements"))
-        return {'subscriptions': subs}
+    pclass, __ = ProductClass.objects.get_or_create(
+        name="Abonnements",
+        requires_shipping=False,
+        track_stock=False,
+    )
+    subs = Product.objects.filter(product_class=pclass)
+    return {'subscriptions': subs}
 
 
 def balance(request):
