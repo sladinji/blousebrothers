@@ -913,3 +913,18 @@ footer .content{
     -o-transform: rotate(33deg);
     writing-mode: lr-tb;
 }
+.demo-header {
+    top: -7px;
+    position: relative;
+    font-style: italic;
+    text-decoration: underline;
+    left: -8px;
+}
+
+.presale a {
+    color: #da6f1e;
+    font-size: 39px;
+}
+.page-header.action .submenu {
+    padding: 0;
+}
