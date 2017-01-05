@@ -898,3 +898,18 @@ footer .content{
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+.demo {
+    position: absolute;
+    left: 72%;
+    top: 17%;
+    font-family: monospace;
+    font-style: oblique;
+    color: #da6f1e;
+    font-size: 49px;
+    font-weight: bold;
+    -webkit-transform: rotate(33deg);
+    -moz-transform: rotate(33deg);
+    -o-transform: rotate(33deg);
+    writing-mode: lr-tb;
+}
