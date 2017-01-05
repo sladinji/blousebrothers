@@ -549,7 +549,7 @@ input[type=range]:focus::-ms-fill-upper {
     text-align:center;
     color:#fff;
     font-size:20px;
-    line-height:200px;
+    line-height:219px;
 }
 
 .signup .btn{
@@ -614,20 +614,11 @@ h1, h2{
     display:inline-block;
     line-height:1.2; /* on rÃ©tablit le line-height */
 }
-.signup .slide2 h1{
+.signup h1{
     color:#fff;
     font-size:60px;
 }
-.signup .slide2 h3{
-    color:#fff;
-    font-size:60px;
-    font-weight:100;
-}
-.signup .slide3 h1{
-    color:#fff;
-    font-size:60px;
-}
-.signup .slide3 h3{
+.signup h3{
     color:#fff;
     font-size:60px;
     font-weight:100;
@@ -748,7 +739,7 @@ body {
 }
 footer {
     display : table-row;
-    height: 50px; /* à titre d'exemple */
+    height: 51px; /* à titre d'exemple */
 }
 
 /* editor */
@@ -843,9 +834,11 @@ footer {
 
 /* Subscription */
 #pricing {
-    color: #666666;
     height: auto;
     text-align: center;
+    }
+.signup #pricing {
+    color: #fff;
     }
 #pricing .inclusion li {
     display: block;
@@ -860,6 +853,9 @@ footer {
     color: #ffffff;
     padding: 25px 0px;
     background-color: #565d67;
+}
+.package h4{
+	font-size: 25px;
 }
 .inclusion {
     padding: 20px;
@@ -896,4 +892,9 @@ button.stripe-button-el span {
 
 .alert {
     border-radius: 0;
+}
+
+footer .content{
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

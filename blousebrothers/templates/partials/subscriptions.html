@@ -7,7 +7,7 @@
 
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="title">
-        <h2 id="subscriptions">Abonnements</h2>
+        <h3 id="subscriptions">Abonnements</h3>
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 
@@ -24,7 +24,7 @@
                 </div>
                 <ul class="inclusion">
 		  {{ sub.description | sub_desc_custo | safe }}
-		  <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray">Souscrire</a></li>
+          <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray"><i class="fa fa-check-circle" aria-hidden="true"></i> Souscrire</a></li>
                 </ul>
               </div>
             </div>

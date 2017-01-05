@@ -12,32 +12,33 @@
 <div class="signup">
 <div class="{% block extra_slide_class %}{% endblock%}slide1 slide container">
       <div class="row">
-	<div class="col-lg-6 col-md-6 col-sd-12">      
-	  <div class="tester">Tester BlouseBrothers</div>
-	</div>
-	<div class="col-lg-6 col-md-6 col-sd-12 button_account">      
-	  {% block up_right_button %}
-	  <a href="{% url 'account_login' %}" class="btn">J'ai déjà un compte, me connecter</a>
-	  {% endblock %}
-	</div>
-      </div>
-      <div class="row">
-	<div class="col-md-4"></div>
-	<div class="col-md-4">
-	  <div class="tcenter">
-	    <img src="{% static "images/logo.png" %}"class="logo"><br>
-	    <h1>BlouseBrothers</h1>
-	    <h2>Plateforme ECNi collaborative</h2>
-	    {% include "partials/alert_messages.html" %}
-	  </div>
-	  <br>
+	    <div class="col-lg-6 col-md-6 col-sd-12">      
+            <div class="tester"><a class="btn" href="{% url 'catalogue:index' %}"><i class="fa fa-rocket" aria-hidden="true"></i> Tester BlouseBrothers</a></div>
+	    </div>
+	    <div class="col-lg-6 col-md-6 col-sd-12 button_account">      
+	      {% block up_right_button %}
+	      <a href="{% url 'account_login' %}" class="btn">J'ai déjà un compte, me connecter</a>
+	      {% endblock %}
+	    </div>
+          </div>
+          <div class="row">
+	    <div class="col-md-4"></div>
+	    <div class="col-md-4">
+	      <div class="tcenter">
+	        <img src="{% static "images/logo.png" %}"class="logo"><br>
+	        <h1>BlouseBrothers</h1>
+	        <h2>Plateforme ECNi collaborative</h2>
+	        {% include "partials/alert_messages.html" %}
+	      </div>
+	      <br>
 
-	  {% block content %}
-	  {% endblock %}
-	</div>
-	<div class="col-md-4"></div>
+	      {% block content %}
+	      {% endblock %}
+	    </div>
+	    <div class="col-md-4"></div>
       </div> <!-- row -->
   </div> <!-- end slide1 -->    
+  {% block extra_slides%}{% endblock extra_slides%}
 </div><!-- signup -->
 
 {% endblock content_wrapper %}

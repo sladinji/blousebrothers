@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "account/base.html" %}
 
 {% load account %}
 {% load socialaccount %}
@@ -13,52 +13,30 @@
 {% block main_container_class %}{% endblock %}
 {% block title %}{% trans "Signup" %}{% endblock title %}
 
-{% block content_wrapper %}
+{% block content%}
+  <form action="{% url 'account_signup' %}" id="signup_form" method="post">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    {{ form.email.errors }}
+    {{ form.email }}
+    {{ form.username.errors }}
+    {{ form.username }}
+    {{ form.password1.errors }}
+    {{ form.password1 }}
+    {{ form.password2.errors }}
+    {{ form.password2 }}
+    <button class="btn">Créer mon compte</button>
+    <br><br>
+    {% get_providers as socialaccount_providers %}
+    {% if socialaccount_providers %}
+    {% include "partials/social_connect.html" with process="login" %}
+    {% include "socialaccount/snippets/login_extra.html" %}
+    {% endif %}
+    <br><br>
+  </form>
+{% endblock content %}
 
-<div class="signup">
-<div class="slide1 slide container">
-      <div class="row">
-	<div class="col-lg-6 col-md-6 col-sd-12">      
-	  <div class="tester"><a href="{% url 'catalogue:index' %}">Tester BlouseBrothers</a></div>
-	</div>
-	<div class="col-lg-6 col-md-6 col-sd-12 button_account">      
-	  <a href="{% url 'account_login' %}" class="btn">J'ai déjà un compte, me connecter</a>
-	</div>
-      </div>
-      <div class="row">
-	<div class="col-md-4"></div>
-	<div class="col-md-4">
-	  <div class="tcenter">
-	    <img src="{% static "images/logo.png" %}"class="logo"><br>
-	    <h1>BlouseBrothers</h1>
-	    <h2>Plateforme ECNi collaborative</h2>
-	    {% include "partials/alert_messages.html" %}
-	  </div>
-	  <br>
-	  <form action="{% url 'account_signup' %}" id="signup_form" method="post">
-	    {{ form.non_field_errors }}
-	    {% csrf_token %}
-	    {{ form.email.errors }}
-	    {{ form.email }}
-	    {{ form.username.errors }}
-	    {{ form.username }}
-	    {{ form.password1.errors }}
-	    {{ form.password1 }}
-	    {{ form.password2.errors }}
-	    {{ form.password2 }}
-	    <button class="btn">Créer mon compte</button>
-	    <br><br>
-	    {% get_providers as socialaccount_providers %}
-	    {% if socialaccount_providers %}
-	    {% include "partials/social_connect.html" with process="login" %}
-	    {% include "socialaccount/snippets/login_extra.html" %}
-	    {% endif %}
-	    <br><br>
-	  </form>
-	</div>
-	<div class="col-md-4"></div>
-      </div>
-    </div> <!-- end slide1 -->    
+{% block extra_slides %}
     <!-- slide 2-->
     <div class="slide2 slide container">
       <div class="row">
@@ -110,11 +88,14 @@
 	</div> <!-- col 6-->
       </div> <!-- row -->
     </div> <!-- slide3 -->
-</div><!-- signup -->
 
+<div class="signup slide1 slide container">
 {% include 'partials/subscriptions.html' %}
+</div>
 
-{% endblock content_wrapper %}
+{% endblock extra_slides%}
+
+
 
 
 {% block onbodyload %}
