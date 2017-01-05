@@ -6,12 +6,14 @@
 
 {% block product %}
     <article class="product_pod">
-        {% block product_image %}
-	{% if product.conf %}
 	<a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
+    {% block product_title %}
+        <h3>{{ product.get_title|truncatewords:4 }}</h3>
+    {% endblock %}
+    {% block product_image %}
+	{% if product.conf %}
             <div class="image_container">
 	    {{ product.conf.summary }}
-	    <p><i><strong>Icono : {{ product.conf.icono }} images</strong></i></p>
 	    </div>
 	{% else %}
             <div class="image_container">
@@ -24,6 +26,7 @@
 	{% endif %}
         {% endblock %}
 
+	    <p class="icono"><i>Icono : {{ product.conf.icono }} images</i></p>
         {% block product_review %}
             {% iffeature "reviews" %}
                 <p class="star-rating {{ product.rating|as_stars }}">
@@ -36,9 +39,6 @@
             {% endiffeature %}
         {% endblock %}
 
-        {% block product_title %}
-            <h3>{{ product.get_title|truncatewords:4 }}</h3>
-        {% endblock %}
 	</a>
 
         {% block product_price %}

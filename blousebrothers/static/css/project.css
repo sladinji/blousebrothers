@@ -848,7 +848,10 @@ footer {
 .p-style1 {
     border: 1px solid #858585;
     margin-bottom: 20px;
+	box-shadow: 4px 7px 8px 0px #858585;
 }
+
+
 .package {
     color: #ffffff;
     padding: 25px 0px;
@@ -925,6 +928,51 @@ footer .content{
     color: #da6f1e;
     font-size: 39px;
 }
+
+/* Product catalogue */
+
 .page-header.action .submenu {
     padding: 0;
+}
+
+.product-compact .col-xs-6.col-sm-4.col-md-3.col-lg-3 {
+    border: 1px solid #858585;
+    margin: 9px;
+    box-shadow: 4px 7px 8px 0px #858585;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 31%;
+}
+.product-compact h3 {
+    color: #ffffff;
+    padding: 25px 6px;
+    background-color: #565d67;
+	margin-top: 0;
+	max-height: 70px;
+}
+
+.product_pod{
+	margin: 0;
+}
+
+.product_pod .btn{
+	margin: 0px 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+}
+.image_container {
+    font-family: sans-serif;
+    min-height: 137px;
+}
+.product_pod .image_container {
+    margin-top: 10px
+}
+.product_pod .price_color {
+    min-height: 21px;
+}
+p.icono {
+    font-family: sans-serif;
+}
+p.author_name {
+    margin-bottom: 5px;
 }
