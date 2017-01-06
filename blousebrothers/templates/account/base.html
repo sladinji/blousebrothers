@@ -26,9 +26,9 @@
 	    <div class="col-md-4">
 	      <div class="tcenter">
 	        <img src="{% static "images/logo.png" %}"class="logo"><br>
-	        <h1>BlouseBrothers</h1><span class="demo">Démo</span>
+            <h1>BlouseBrothers</h1><span class="demo">J-{{ dday }}</span>
 	        <h2>Plateforme ECNi collaborative</h2>
-            <span class="presale"><a href="/#subscriptions">Préventes ouvertes !</a></span>
+            <span class="presale"><a class="btn" href="{% url 'subscriptions' %}"><i class="fa fa-hand-scissors-o" aria-hidden="true"></i> Préventes ouvertes !</a></span>
 	        {% include "partials/alert_messages.html" %}
 	      </div>
 	      <br>

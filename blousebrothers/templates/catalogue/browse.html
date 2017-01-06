@@ -44,9 +44,6 @@
                         {% endfor %}
                 {% endif %}
                 {% endfor %}
-                {% if not user.has_valid_subscription %}
-                <li><a href="#subscriptions">Abonnements</a>
-                {% endif %}
             </ul>
         </div>
     {% endif %}
@@ -113,10 +110,6 @@
     {% else %}
         <p class="nonefound">{% trans "No products found." %}</p>
     {% endif %}
-
-{% if not user.has_valid_subscription %}
-{% include 'partials/subscriptions.html' %}
-{% endif %}
 
 {% endblock content %}
 

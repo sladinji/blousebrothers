@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^$', RedirectView.as_view(url='accounts/signup', permanent=True), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^subscriptions/$', TemplateView.as_view(template_name='pages/subscription.html'), name='subscriptions'),
     url(r'^hijack/', include('hijack.urls')),
     url(r'^robots\.txt$', include('robots.urls')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

@@ -49,7 +49,7 @@
 			<div class="col-sm-12 col-md-10 menu-wapper">
 				<div class="top-header">
             				{% if not request.user.is_authenticated %}
-					<div class="slogan">BlouseBrothers</div><span class="demo-header">Démo</span>
+					<div class="slogan">BlouseBrothers</div><span class="demo-header">J-{{ dday }}</span>
 				        {% else %}
 					<ul class="boutique-nav main-menu clone-main-menu pull-left">
             				    {% if request.user.is_conferencier%}

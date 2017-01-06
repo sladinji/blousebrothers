@@ -740,8 +740,9 @@ body {
     width: 100%;
 }
 footer {
-    display : table-row;
-    height: 51px; /* à titre d'exemple */
+    display: table-row;
+    height: 69px;
+    line-height: 29px;
 }
 
 /* editor */
@@ -847,14 +848,6 @@ footer {
     list-style-type: none;
     padding: 10px;
 }
-.p-style1 {
-    border: 1px solid #858585;
-    margin-bottom: 20px;
-	box-shadow: 4px 7px 8px 0px #858585;
-}
-.signup .p-style1 {
-	box-shadow: none;
-}
 
 .package {
     color: #ffffff;
@@ -939,7 +932,7 @@ footer .content{
     padding: 0;
 }
 
-.product-compact h3 {
+.product-compact .product_pod h3 {
     color: #ffffff;
     padding: 25px 6px;
     background-color: #565d67;
@@ -952,17 +945,26 @@ footer .content{
 }
 
 .product_pod {
-	margin: 0;
-    border: 1px solid #858585;
-    margin: 4px 0px;
-    box-shadow: 4px 7px 8px 0px #858585;
+    margin: 0;
+    margin: 8px 0px;
     padding-left: 0px;
     padding-right: 0px;
+	height: 395px;
+}
+.p-style1, .product_pod {
+    box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
+    border: 1px solid rgba(133, 133, 133, 0.31);
+}
+.p-style1 {
+    margin-bottom: 20px;
+}
+.signup .p-style1 {
+	box-shadow: none;
 }
 
 .product_pod .btn{
 	margin: 0px 10px;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	padding: 10px;
 }
 .image_container {
@@ -970,12 +972,13 @@ footer .content{
     min-height: 119px;
 }
 .product_pod .image_container {
-    margin-top: 10px
+    margin-top: 10px;
+    padding: 0px 25px;
 }
 .product_pod .price_color {
     min-height: 21px;
 	font-weight: bold;
-	margin-bottom: 4px;
+	margin-bottom: -2px;
 }
 p.icono {
     font-family: sans-serif;
@@ -992,4 +995,7 @@ p.author_name {
 }
 .breadcrumb {
 	border-radius: 0px;
+}
+.pager li > a, .pager li > span {
+    border-radius: 0px;
 }

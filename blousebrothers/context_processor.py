@@ -18,6 +18,12 @@ def subscriptions(request):
     return {'subscriptions': subs}
 
 
+def dday(request):
+    from datetime import datetime
+    d = datetime(2017, 1, 23) - datetime.now()
+    return {'dday': d.days}
+
+
 def balance(request):
     try:
         mangopay_user = MangoPayNaturalUser.objects.get(user=request.user)
