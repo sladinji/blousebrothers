@@ -852,7 +852,9 @@ footer {
     margin-bottom: 20px;
 	box-shadow: 4px 7px 8px 0px #858585;
 }
-
+.signup .p-style1 {
+	box-shadow: none;
+}
 
 .package {
     color: #ffffff;
