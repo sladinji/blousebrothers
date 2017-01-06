@@ -932,7 +932,7 @@ footer .content{
     padding: 0;
 }
 
-.product-compact .product_pod h3 {
+.product-compact h3, .product_pod h3 {
     color: #ffffff;
     padding: 25px 6px;
     background-color: #565d67;
@@ -998,4 +998,7 @@ p.author_name {
 }
 .pager li > a, .pager li > span {
     border-radius: 0px;
+}
+.btn-add-to-basket {
+    width: initial;
 }
