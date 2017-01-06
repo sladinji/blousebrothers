@@ -8,7 +8,7 @@
     <article class="product_pod">
 	<a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
     {% block product_title %}
-        <h3>{{ product.get_title|truncatewords:4 }}</h3>
+        <h3>{{ product.get_title }}</h3>
     {% endblock %}
     {% block product_image %}
 	{% if product.conf %}

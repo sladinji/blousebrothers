@@ -20,4 +20,9 @@ class Product(AbstractProduct):
         else:
             return False
 
+    def get_title(self):
+        if self.conf:
+            return self.conf.title
+        return super().get_title()
+
 from oscar.apps.catalogue.models import *  # noqa
