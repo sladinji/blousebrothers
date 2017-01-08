@@ -3,7 +3,7 @@ from fabric.api import *
 import requests
 import re
 
-env.hosts = ['dowst@blousebrothers.fr']
+env.hosts = ['admin@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
 
 
@@ -28,7 +28,7 @@ def deploy():
         run("docker-compose run django ./manage.py migrate")
 
 
-@hosts('admin@futur.blousebrothers.fr')
+@hosts('dowst@futur.blousebrothers.fr')
 def futur(branch='master',reset='no'):
     """
     Deploy on futur
@@ -86,7 +86,7 @@ def get_migrations():
     get("%s/blousebrothers/confs/migrations/*.py" % code_dir, "blousebrothers/confs/migrations/")
 
 
-@hosts('admin@futur.blousebrothers.fr')
+@hosts('dowst@futur.blousebrothers.fr')
 def futur_publish_confs():
     """
     Publish_confs on futur.
@@ -96,7 +96,7 @@ def futur_publish_confs():
             run("docker-compose run django ./manage.py publish_confs")
 
 
-@hosts('admin@futur.blousebrothers.fr')
+@hosts('dowst@futur.blousebrothers.fr')
 def futur_gen_code():
     with cd(code_dir):
         with prefix("source blouserc"):
