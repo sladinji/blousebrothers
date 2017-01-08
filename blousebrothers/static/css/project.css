@@ -650,9 +650,10 @@ footer{
     border-top:1px solid #666;
     padding:20px;
     background-color: #000;
+    color: RGB(200, 200, 200);
 }
 footer a{
-    color:#fff;
+    color: RGB(200, 200, 200);
     padding-right:12px;
 }
 
@@ -1001,4 +1002,15 @@ p.author_name {
 }
 .btn-add-to-basket {
     width: initial;
+}
+footer .content.row {
+    margin: 0;
+}
+
+footer .col-sm-12.text-center {
+    padding-top: 10px;
+    color
+}
+footer .col-sm-6.col-md-2.text-center {
+    padding-top: 10px;
 }
