@@ -1002,3 +1002,7 @@ p.author_name {
 .btn-add-to-basket {
     width: initial;
 }
+.btn-getscore {
+    margin: 76px 0;
+    font-size: xx-large;
+}
