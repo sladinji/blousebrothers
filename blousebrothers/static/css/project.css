@@ -650,9 +650,10 @@ footer{
     border-top:1px solid #666;
     padding:20px;
     background-color: #000;
+    color: RGB(200, 200, 200);
 }
 footer a{
-    color:#fff;
+    color: RGB(200, 200, 200);
     padding-right:12px;
 }
 
@@ -949,7 +950,7 @@ footer .content{
     margin: 8px 0px;
     padding-left: 0px;
     padding-right: 0px;
-	height: 395px;
+	height: 422px;
 }
 .p-style1, .product_pod {
     box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
@@ -1005,4 +1006,14 @@ p.author_name {
 .btn-getscore {
     margin: 76px 0;
     font-size: xx-large;
+footer .content.row {
+    margin: 0;
+}
+
+footer .col-sm-12.text-center {
+    padding-top: 10px;
+    color
+}
+footer .col-sm-6.col-md-2.text-center {
+    padding-top: 10px;
 }
