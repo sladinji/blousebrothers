@@ -896,8 +896,8 @@ button.stripe-button-el span {
 }
 
 footer .content{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 11px;
+    padding-bottom: 0px;
 }
 
 .demo {
@@ -924,7 +924,8 @@ footer .content{
 
 .presale a {
     color: #da6f1e;
-    font-size: 39px;
+    font-size: 35px;
+    margin-bottom: 20px;
 }
 
 /* Product catalogue */
