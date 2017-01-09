@@ -1,0 +1,54 @@
+{% extends "catalogue/detail.html" %}
+{% load i18n %}
+
+{% block product_review %}
+    <div id="addreview" class="review_add">
+        <form id="add_review_form" method="post" action="./#addreview">
+            <fieldset>
+                <legend>{% trans "Laisser un avis sur le dossier" %}</legend>
+                {% csrf_token %}
+                
+                {% include 'partials/form_field.html' with field=form.title %}
+
+                {% for score_form in form.scores %}
+                <div class="reviewrating form-group {% if score_form.errors %}error{% endif %}">
+                    <label for="{{ score_form.auto_id }}" class="control-label required">
+                        {{ score_form.label|safe }}
+                    </label>
+                    <div class="controls">
+                        {{ score_form }}
+                        <div class="star-rating {% if score_form.value == '1' %}One{% elif score_form.value == '2' %}Two{% elif score_form.value == '3' %}Three{% elif score_form.value == '4' %}Four{% elif score_form.value == '5' %}Five{% endif %}">
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                        </div>
+
+                        {% for error in score_form.errors %}
+                            <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {% comment %}
+                    {% include 'partials/form_field.html' with field=form.score %}
+                    {% endcomment %}
+                </div>
+                {% endfor %}
+
+                {% include 'partials/form_field.html' with field=form.body %}
+                {% if form.name %}
+                    {% include 'partials/form_field.html' with field=form.name %}
+                {% endif %}
+                {% if form.email %}
+                    {% include 'partials/form_field.html' with field=form.email %}
+                {% endif %}
+
+
+                <button type="submit" class="btn btn-primary btn-lg" data-loading-text="{% trans 'Saving...' %}">{% trans "Save review" %}</button>
+                {% trans "or" %}
+                <a href="{{ product.get_absolute_url }}">{% trans "cancel" %}</a>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
