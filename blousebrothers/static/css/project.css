@@ -523,13 +523,18 @@ input[type=range]:focus::-ms-fill-upper {
     position:relative;
 }
 
-.signup .slide1{
-    background:url('/static/images/slide1_bg.jpg');
+.signup .slide1 .slide4{
     background-size:cover;
     width:100%;
     height:100%;
 }
 
+.signup .slide1{
+    background:url('/static/images/slide1_bg.jpg');
+}
+.signup .slide4{
+    background:url('/static/images/slide4_bg.jpg');
+}
 .signup .signin.slide1{
     background:url('/static/images/slide3_bg_right.jpg');
     color: #fff;
