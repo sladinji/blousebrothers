@@ -1,0 +1,23 @@
+{% load bbtricks %}
+<div class="user_score text-center row">
+    <div class="col-sm-6">
+        <h6>SCORE</h6>
+        <div class="short-separator"></div>
+        <h2>
+            <big>{{ object | score100 }}</big> / 100 
+        </h2>
+    </div>
+    <div class="col-sm-6">
+        <h6>CLASSEMENT</h6>
+        <div class="short-separator"></div>
+        <h2>
+            <big>{{ object.position }}</big> / {{ object.total }}
+        </h2>
+    </div>
+    <div class="col-sm-12">
+        <p>TEMPS : {{object.time_taken | time:"H:i:s" }}</p>
+        <p>ERREURS : {{object.nb_errors }}</p>
+        <p>ERREURS GRAVES : {{object.fatal_errors | length }}</p>
+    </div>
+</div>
+

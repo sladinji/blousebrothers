@@ -25,7 +25,7 @@ class ProductReview(AbstractProductReview):
     def scores(self):
         return (
             (_("Intérêt global du dossier"), self.interest_score,),
-            (_("Clareté du dossier"), self.clarity_score,),
+            (_("Clarté du dossier"), self.clarity_score,),
             (_("Qualité de la correction"), self.correction_score,),
         )
 

@@ -2,6 +2,9 @@ from django.db import models
 from django.db.models import Count, Sum
 from oscar.apps.catalogue.abstract_models import AbstractProduct
 from django.utils.translation import ugettext_lazy as _
+from cuser.middleware import CuserMiddleware
+
+from blousebrothers.confs.models import Test
 
 
 class Product(AbstractProduct):
@@ -55,7 +58,7 @@ class Product(AbstractProduct):
     def ratings(self):
         return (
             (_("Intérêt global du dossier"), self.interest_rating,),
-            (_("Clareté du dossier"), self.clarity_rating,),
+            (_("Clarté du dossier"), self.clarity_rating,),
             (_("Qualité de la correction"), self.correction_rating,),
         )
 
@@ -63,5 +66,9 @@ class Product(AbstractProduct):
         if self.conf:
             return self.conf.title
         return super().get_title()
+
+    def user_test(self):
+        user = CuserMiddleware.get_user()
+        return Test.objects.get(student=user, conf=self.conf)
 
 from oscar.apps.catalogue.models import *  # noqa

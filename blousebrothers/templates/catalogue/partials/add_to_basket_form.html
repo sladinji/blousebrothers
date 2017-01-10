@@ -23,7 +23,4 @@
             <button type="submit" class="btn btn-lg btn-info btn-add-to-basket" data-loading-text="{% trans 'Submitting...' %}">{% trans "Prévenez moi quand le dossier sera disponible" %} !</button>
         </form>
     {% endif %}
-    {% iffeature "wishlists" %}
-        {% include "catalogue/partials/add_to_wishlist.html" %}
-    {% endiffeature %}
 {% endif %}

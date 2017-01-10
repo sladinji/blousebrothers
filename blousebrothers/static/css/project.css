@@ -1007,6 +1007,7 @@ p.author_name {
 .btn-getscore {
     margin: 76px 0;
     font-size: xx-large;
+}
 footer .content.row {
     margin: 0;
 }
@@ -1017,4 +1018,17 @@ footer .col-sm-12.text-center {
 }
 footer .col-sm-6.col-md-2.text-center {
     padding-top: 10px;
+}
+
+.short-separator {
+    background-color: #fbb027;
+    height: 2px!important;
+    width: 130px!important;
+    margin: auto;
+}
+.user_score {
+    margin: 50px 100px;
+    padding: 50px 0px;
+    border: 1px solid rgba(133, 133, 133, 0.31);
+    box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
 }

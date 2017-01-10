@@ -288,6 +288,18 @@ class Test(models.Model):
                                      )
     time_taken = models.TimeField(_("Temps passé"), null=True)
 
+    def position(self):
+        """
+        Classement
+        """
+        return Test.objects.filter(conf=self.conf, finished=True, result__gt=self.result).count() + 1
+
+    def total(self):
+        """
+        Total of this test
+        """
+        return Test.objects.filter(conf=self.conf, finished=True).count()
+
     def set_score(self):
         for t_answer in self.answers.all():
             t_answer.set_score()

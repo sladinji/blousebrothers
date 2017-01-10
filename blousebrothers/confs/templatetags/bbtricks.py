@@ -54,4 +54,7 @@ def get_checked_fa(answer, test_answer):
 
 @register.filter
 def sub_desc_custo(desc):
+    """
+    Make product's description display nice in subscription capsule
+    """
     return desc.replace('<p>', '<li>').replace('</p>', '</li>')
