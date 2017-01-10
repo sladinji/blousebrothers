@@ -263,7 +263,7 @@ Email : {}
 Lien : {}{}{}'''
 
     def get(self, request, *args, **kwargs):
-        if 'Iwanabe' in request.GET:
+        if not request.user.is_conferencier:
             request.user.is_conferencier = True
             request.user.wanabe_conferencier = False
             request.user.wanabe_conferencier_date = datetime.now()
@@ -280,6 +280,9 @@ Lien : {}{}{}'''
                                              )
             logger.info(msg)
             mail_admins('Passage conférencier', msg)
+        return redirect(
+                reverse('confs:create')
+            )
 
         return render(request, 'confs/wanabe_conferencier.html')
 

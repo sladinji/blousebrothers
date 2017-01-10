@@ -7,7 +7,9 @@
   		<button class="button-search" type="submit"><span class="pe-7s-search"></span></button>
   	</div>
   </form>
-  {% if user.is_authenticated and action != 'search:search' %}
-    <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
+  {% block sub_menu_search %}
+  {% if not hide_search %}
+  <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
   {% endif %}
+  {% endblock %}
 </div>

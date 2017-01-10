@@ -35,6 +35,7 @@ class BBConferencierReqMixin(BBLoginRequiredMixin):
         if user.is_superuser or request.is_googlebot:
             return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info():
+            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
             return redirect("users:update")
         if not user.is_conferencier:
             return redirect("confs:wanabe_conferencier")
