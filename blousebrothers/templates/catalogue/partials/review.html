@@ -13,6 +13,7 @@
             </span>
             <a href="{{ review.get_absolute_url }}">{{ review.title }}</a>
         </h3>
+        {% include "catalogue/reviews/partials/review_scores.html" %}
     </header>
 
     <p>{{ review.body|striptags }}</p>

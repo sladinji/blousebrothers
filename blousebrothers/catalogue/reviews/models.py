@@ -1,5 +1,3 @@
-import math
-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from oscar.apps.catalogue.reviews.abstract_models import AbstractProductReview
@@ -24,14 +22,18 @@ class ProductReview(AbstractProductReview):
         _("Difficulté du dossier"), choices=DIFFICULTY_CHOICES,
         default=0)
 
+    def scores(self):
+        return (
+            (_("Intérêt global du dossier"), self.interest_score,),
+            (_("Clareté du dossier"), self.clarity_score,),
+            (_("Qualité de la correction"), self.correction_score,),
+        )
 
 
 @receiver(pre_save, sender=ProductReview)
-def set_score(sender, instance, *args, **kwargs):
-        instance.score = math.ceil(
-            (instance.interest_score + instance.clarity_score + instance.correction_score)
-            /3
-        )
+def set_score(sender, pr, *args, **kwargs):
+    total = pr.interest_score + pr.clarity_score + pr.correction_score
+    pr.score = round(total / 3, 0)
 
 
 
