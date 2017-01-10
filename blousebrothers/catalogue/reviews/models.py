@@ -31,11 +31,10 @@ class ProductReview(AbstractProductReview):
 
 
 @receiver(pre_save, sender=ProductReview)
-def set_score(sender, pr, *args, **kwargs):
+def set_score(sender, instance, *args, **kwargs):
+    pr = instance
     total = pr.interest_score + pr.clarity_score + pr.correction_score
     pr.score = round(total / 3, 0)
-
-
 
 
 from oscar.apps.catalogue.reviews.models import *  # noqa

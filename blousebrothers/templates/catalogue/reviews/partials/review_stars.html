@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% if product.rating != None %}
-    <p class="star-rating {{ product.rating|as_stars }}">
+    <h3 class="star-rating {{ product.rating|as_stars }}">
         <i class="icon-star"></i>
         <i class="icon-star"></i>
         <i class="icon-star"></i>
@@ -16,7 +16,19 @@
                     {{ num_reviews }} avis
                 {% endblocktrans %}
         </a></small>
+    </h3>
+    <p>
         &nbsp;
+        {% for label, score in product.ratings %}
+                        <p class="star-rating {{ score|as_stars }}">
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            {{ label }}
+                        </p>
+        {% endfor %}
 {% else %}
     <p>
 {% endif %}

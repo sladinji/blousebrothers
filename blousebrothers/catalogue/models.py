@@ -1,11 +1,17 @@
 from django.db import models
+from django.db.models import Count, Sum
 from oscar.apps.catalogue.abstract_models import AbstractProduct
+from django.utils.translation import ugettext_lazy as _
 
 
 class Product(AbstractProduct):
     conf = models.ForeignKey('confs.Conference', related_name='products', default=None,
                              null=True)
     for_sale = models.BooleanField(default=False)
+    interest_rating = models.SmallIntegerField(_("Intérêt global du dossier"), default=0)
+    clarity_rating = models.SmallIntegerField(_("Clarté du dossier"), default=0)
+    correction_rating = models.SmallIntegerField(_("Qualité de la correction"), default=0)
+    difficulty_rating = models.SmallIntegerField(_("Difficulté du dossier"), default=0)
 
     def is_review_permitted(self, user):
         """
@@ -19,6 +25,39 @@ class Product(AbstractProduct):
             return not self.has_review_by(user)
         else:
             return False
+
+    def update_rating(self):
+        """
+        Recalculate rating field
+        """
+        self.rating = self.calculate_rating()
+        self.interest_rating = self.calculate_rating('interest_score')
+        self.clarity_rating = self.calculate_rating('clarity_score')
+        self.correction_rating = self.calculate_rating('correction_score')
+        self.save()
+    update_rating.alters_data = True
+
+    def calculate_rating(self, field='score'):
+        """
+        Calculate rating value
+        """
+        result = self.reviews.filter(
+            status=self.reviews.model.APPROVED
+        ).aggregate(
+            sum=Sum(field), count=Count('id'))
+        reviews_sum = result['sum'] or 0
+        reviews_count = result['count'] or 0
+        rating = None
+        if reviews_count > 0:
+            rating = float(reviews_sum) / reviews_count
+        return rating
+
+    def ratings(self):
+        return (
+            (_("Intérêt global du dossier"), self.interest_rating,),
+            (_("Clareté du dossier"), self.clarity_rating,),
+            (_("Qualité de la correction"), self.correction_rating,),
+        )
 
     def get_title(self):
         if self.conf:
