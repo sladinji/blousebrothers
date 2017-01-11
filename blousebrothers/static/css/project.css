@@ -1040,3 +1040,21 @@ footer .col-sm-6.col-md-2.text-center {
 .page-header {
         padding-bottom: 0px;
 }
+
+/* Rules */
+
+.fourteen {
+        margin: 50px 64px;
+}
+
+h3.s-component-content.s-font-heading {
+    color: #c9a893;
+    margin-bottom: 9px;
+}
+h1.rules {
+    text-align: center;
+}
+
+a.btn.btn-rules {
+    margin-left: 14px;
+}

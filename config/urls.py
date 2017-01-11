@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^hijack/', include('hijack.urls')),
     url(r'^robots\.txt', include('robots.urls')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^rules/$', TemplateView.as_view(template_name='pages/regledujeu.html'), name='regledujeu'),
 
 
     # Django Admin, use {% url 'admin:index' %}

@@ -7,12 +7,6 @@ Keep the same header and footer as the standard layout template but override the
 main content area to split it into a sidebar and a content block
 {% endcomment %}
 
-{% block submenu %}
-  {% if user.is_authenticated %}
-    <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
-  {% endif %}
-{% endblock %}
-
 {% block content_wrapper %}
 <div class="container-fluid page">
     <div class="page_inner">
