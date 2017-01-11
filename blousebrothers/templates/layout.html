@@ -73,9 +73,7 @@ settings file. This will enable the on-the-fly less compiler.
                                 </ul>
                     </ul>
                     <ul class="boutique-nav main-menu clone-main-menu pull-right">
-                        {% comment %}
                         <li class="menu-item-has-children item-megamenu"><a id="wallet_link" href="{% url 'users:wallet' %}"><i class="icon-money"></i> {{ balance }}</a></li>
-                        {% endcomment %}
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}
