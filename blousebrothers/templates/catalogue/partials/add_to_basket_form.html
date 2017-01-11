@@ -10,7 +10,7 @@
     <form id="add_to_basket_form" action="{% url 'basket:add' pk=product.pk  %}" method="post" class="add-to-basket">
         {% csrf_token %}
         {% include "partials/form_fields.html" with form=basket_form %}
-        <button type="submit" class="btn btn-lg btn-primary btn-add-to-basket" value="{% trans "Ajouter à mes confs" %}" data-loading-text="{% trans 'Adding...' %}">{% trans "Ajouter à mes confs" %}</button>
+        <button type="submit" class="btn btn-lg btn-primary btn-add-to-basket" value="{% trans "Go" %}" data-loading-text="{% trans 'Démarrage...' %}">{% trans "Go" %}</button>
     </form>
 {% else %}
     {% if has_active_alert %}

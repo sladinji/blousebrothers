@@ -37,4 +37,7 @@ class BasketAddView(CoreBasketAddView):
             sender=self, product=form.product, user=self.request.user,
             request=self.request)
 
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.get_success_url(form.product))
+
+    def get_success_url(self, product=None):
+        return reverse('confs:test', kwargs={"slug": product.conf.slug})

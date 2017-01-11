@@ -58,3 +58,7 @@ def sub_desc_custo(desc):
     Make product's description display nice in subscription capsule
     """
     return desc.replace('<p>', '<li>').replace('</p>', '</li>')
+
+@register.filter
+def already_done(user, conf):
+    return user.already_done(conf)
