@@ -2,15 +2,18 @@
 {% load static %}{% load i18n %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
-{% block submenu %}
-{% include 'partials/submenu_search.html' with actionurl="confs:list" %}
-{% endblock %}
-
 {% block content %}
 <div class="container">
 
-	<h2>{% trans 'Confs créées' %}</h2>
-	<p><i>{% trans 'Éditer mes conférences' %}</i></p>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{% trans 'Confs créées' %}</h2>
+            <p><i>{% trans 'Éditer mes conférences' %}</i></p>
+        </div>
+        <div class="col-md-6">
+            {% include 'partials/submenu_search.html' with actionurl="confs:list" %}
+        </div>
+    </div>
 
     <div class="list-group">
         {% for conference in conference_list %}

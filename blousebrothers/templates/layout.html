@@ -97,7 +97,7 @@
 	
 					</div>
 					{% block submenu %}
-					{% include 'partials/submenu_search.html' with action="search:search" %}
+                    <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
 					{% endblock %}
 				</div>
 

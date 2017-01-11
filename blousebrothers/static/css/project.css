@@ -1037,3 +1037,6 @@ footer .col-sm-6.col-md-2.text-center {
     border: 1px solid rgba(133, 133, 133, 0.31);
     box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
 }
+.page-header {
+        padding-bottom: 0px;
+}
