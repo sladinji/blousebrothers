@@ -38,6 +38,12 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
         label=_("Matières abordées"),
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.type == 'LCA':
+            self.fields.pop('items')
+            self.fields.pop('specialities')
+
 
 class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
 

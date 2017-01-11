@@ -25,15 +25,17 @@
     <div id="subject" class="col-md-9" >
         <div class="tabbable dashboard col-md-12">
             <h1>Félicitations, c'est presque terminé !</h1>
-            {% if items %}
-            Voici une liste d'items pouvant correspondre au {{object.type}} "<strong>{{object.title}}</strong>" :
-            <ul class="list">
-                {% for item in items %}
-                <li>{{ item.name }}</li>
-                {%endfor%}
-            </ul>
-            {% else %}
-            Voici les items pouvant correspondre au {{ object.type }} "<strong>{{ object.title }}</strong>" (ajuste la sélection en ajoutant ou en retirant des items) :
+            {% if object.type != 'LCA' %}
+                {% if items %}
+                Voici une liste d'items pouvant correspondre au {{object.type}} "<strong>{{object.title}}</strong>" :
+                <ul class="list">
+                    {% for item in items %}
+                    <li>{{ item.name }}</li>
+                    {%endfor%}
+                </ul>
+                {% else %}
+                Voici les items pouvant correspondre au {{ object.type }} "<strong>{{ object.title }}</strong>" (ajuste la sélection en ajoutant ou en retirant des items) :
+                {% endif %}
             {% endif %}
             <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'confs:final' object.slug %}">
                 {% csrf_token %}

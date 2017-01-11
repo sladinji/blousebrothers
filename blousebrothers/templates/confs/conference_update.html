@@ -27,7 +27,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	    <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br/>
 	    </form>
 	  </div>
-	  <div ng-if="conference.type == 'DCP'">
+	  <div ng-if="conference.type == 'DCP' || conference.type == 'LCA'">
 	    <div id="subject" class="well well-white" >
 	        {% verbatim %}
 	        <form novalidate class="question-form">
@@ -39,7 +39,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 		      <span class='well-title'>Sujet</span>
 		    </div>
 		  </div>
-	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="Clique ici pour rédiger l'énoncé" rows="10"></textarea><br />
+	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="{{ conf_place_holder }}" rows="10"></textarea><br />
 	        </form>
 		<div class="illustrations" id="images_div">
 		  <div ng-repeat="image in conferenceimages">

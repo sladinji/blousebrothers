@@ -94,7 +94,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	     <div class="form-group">
 	       <div class="col-sm-12">
 		    <div class="col-sm-11 col-xs-12">
-			    <label> <input type="checkbox" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ question.answered }}" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
+			    <label> <input type="checkbox" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
 		      <p>{{answer.answer}}</p>
 		    </div>
 		    <div class="col-sm-1 hidden-xs">

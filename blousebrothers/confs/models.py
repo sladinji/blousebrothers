@@ -49,6 +49,7 @@ class Conference(models.Model):
     TYPE_CHOICES = (
         ('DCP', _('DCP')),
         ('QI', _('QI')),
+        ('LCA', _('LCA')),
     )
 
     def __str__(self):
