@@ -299,7 +299,7 @@ msgstr "Adresse des partenaires"
 #: templates/oscar/dashboard/users/alerts/list.html:44
 #: templates/oscar/dashboard/users/alerts/partials/alert.html:6
 msgid "Product"
-msgstr "Sujet"
+msgstr "Dossier"
 
 #: apps/analytics/abstract_models.py:24 apps/analytics/reports.py:20
 #: templates/oscar/dashboard/reports/partials/product_report.html:9
@@ -326,11 +326,11 @@ msgstr "Score"
 
 #: apps/analytics/abstract_models.py:37
 msgid "Product record"
-msgstr "Enregistrement de sujet"
+msgstr "Enregistrement de dossier"
 
 #: apps/analytics/abstract_models.py:38
 msgid "Product records"
-msgstr "Enregistrements de sujets"
+msgstr "Enregistrements de dossiers"
 
 #: apps/analytics/abstract_models.py:41
 #, python-format
@@ -339,7 +339,7 @@ msgstr "Enregistrement pour '%s'"
 
 #: apps/analytics/abstract_models.py:54
 msgid "Product Views"
-msgstr "Vues du sujet"
+msgstr "Vues du dossier"
 
 #: apps/analytics/abstract_models.py:60 apps/analytics/reports.py:65
 #: apps/order/abstract_models.py:283 defaults.py:136
@@ -382,11 +382,11 @@ msgstr "Ajouts d'utilisateur"
 
 #: apps/analytics/abstract_models.py:87
 msgid "User product view"
-msgstr "Sujet vu par l'utilisateur"
+msgstr "Dossier vu par l'utilisateur"
 
 #: apps/analytics/abstract_models.py:88
 msgid "User product views"
-msgstr "Sujets vus par l'utilisateur"
+msgstr "Dossiers vus par l'utilisateur"
 
 #: apps/analytics/abstract_models.py:91
 #, python-format
@@ -422,7 +422,7 @@ msgstr "Ajouts au panier"
 
 #: apps/analytics/reports.py:39
 msgid "Product analytics"
-msgstr "Statistiques Sujet"
+msgstr "Statistiques Dossier"
 
 #: apps/analytics/reports.py:61 apps/basket/reports.py:19
 #: apps/catalogue/abstract_models.py:49 apps/catalogue/abstract_models.py:92
@@ -472,7 +472,7 @@ msgstr "Date d'enregistrement"
 #: apps/analytics/reports.py:63
 #: templates/oscar/dashboard/reports/partials/user_report.html:11
 msgid "Product views"
-msgstr "Vues du sujet"
+msgstr "Vues du dossier"
 
 #: apps/analytics/reports.py:66
 #: templates/oscar/dashboard/reports/partials/user_report.html:14
@@ -664,7 +664,7 @@ msgstr "Lignes du panier"
 #: apps/basket/abstract_models.py:636
 #, python-format
 msgid "Basket #%(basket_id)d, Product #%(product_id)d, quantity %(quantity)d"
-msgstr "Panier #%(basket_id)d, Sujet #%(product_id)d', quantité %(quantity)d"
+msgstr "Panier #%(basket_id)d, Dossier #%(product_id)d', quantité %(quantity)d"
 
 #: apps/basket/abstract_models.py:644
 #, python-format
@@ -739,7 +739,7 @@ msgstr "écart"
 
 #: apps/basket/forms.py:207
 msgid "Please select a valid product"
-msgstr "Merci de sélectionner un sujet valide"
+msgstr "Merci de sélectionner un dossier valide"
 
 #: apps/basket/forms.py:224
 #, python-format
@@ -752,7 +752,7 @@ msgstr "En raison de limitations techniques nous ne pouvons pas acheminer plus d
 msgid ""
 "This product cannot be added to the basket as its currency isn't the same as"
 " other products in your basket"
-msgstr "Ce sujet ne peut être ajouté à votre panier car sa monnaie n'est pas la même que les autres sujets dans votre panier"
+msgstr "Ce dossier ne peut être ajouté à votre panier car sa monnaie n'est pas la même que les autres dossiers dans votre panier"
 
 #: apps/basket/middleware.py:170
 msgid ""
@@ -894,11 +894,11 @@ msgstr "Options"
 
 #: apps/catalogue/abstract_models.py:73 apps/catalogue/abstract_models.py:578
 msgid "Product class"
-msgstr "Classe de sujet"
+msgstr "Classe de dossier"
 
 #: apps/catalogue/abstract_models.py:74
 msgid "Product classes"
-msgstr "Classes de sujet"
+msgstr "Classes de dossier"
 
 #: apps/catalogue/abstract_models.py:93 apps/catalogue/abstract_models.py:288
 #: apps/offer/abstract_models.py:39 apps/promotions/models.py:224
@@ -936,27 +936,27 @@ msgstr "Catégories"
 
 #: apps/catalogue/abstract_models.py:236
 msgid "Product category"
-msgstr "Catégorie Sujet"
+msgstr "Catégorie Dossier"
 
 #: apps/catalogue/abstract_models.py:237
 msgid "Product categories"
-msgstr "Catégories de sujet"
+msgstr "Catégories de dossier"
 
 #: apps/catalogue/abstract_models.py:261
 msgid "Stand-alone product"
-msgstr "Sujet canonique"
+msgstr "Dossier canonique"
 
 #: apps/catalogue/abstract_models.py:262 apps/catalogue/abstract_models.py:277
 msgid "Parent product"
-msgstr "Sujet parent"
+msgstr "Dossier parent"
 
 #: apps/catalogue/abstract_models.py:263
 msgid "Child product"
-msgstr "Sujet enfant"
+msgstr "Dossier enfant"
 
 #: apps/catalogue/abstract_models.py:266
 msgid "Product structure"
-msgstr "Structure du sujet"
+msgstr "Structure du dossier"
 
 #: apps/catalogue/abstract_models.py:270 apps/dashboard/catalogue/forms.py:47
 #: apps/dashboard/orders/forms.py:71 apps/order/abstract_models.py:448
@@ -971,14 +971,14 @@ msgstr "UPC"
 msgid ""
 "Universal Product Code (UPC) is an identifier for a product which is not "
 "specific to a particular  supplier. Eg an ISBN for a book."
-msgstr "Universal Product Code (UPC) est l'identifiant d'un sujet qui n'est pas spécifique à un fournisseur. Ex l'ISBN pour un livre"
+msgstr "Universal Product Code (UPC) est l'identifiant d'un dossier qui n'est pas spécifique à un fournisseur. Ex l'ISBN pour un livre"
 
 #: apps/catalogue/abstract_models.py:278
 msgid ""
 "Only choose a parent product if you're creating a child product.  For "
 "example if this is a size 4 of a particular t-shirt.  Leave blank if this is"
 " a stand-alone product (i.e. there is only one version of this product)."
-msgstr "Choisir seulement un sujet parent si il s'agit d'un sujet enfant. Par exemple, si c''est une taille 4 d'un t-shirt particulier. Laissez ce champ vide s'il s'agit d'un sujet canonique (c'est à dire qu'il n'existe qu'une seule version de ce sujet)."
+msgstr "Choisir seulement un dossier parent si il s'agit d'un dossier enfant. Par exemple, si c''est une taille 4 d'un t-shirt particulier. Laissez ce champ vide s'il s'agit d'un dossier canonique (c'est à dire qu'il n'existe qu'une seule version de ce dossier)."
 
 #: apps/catalogue/abstract_models.py:285 apps/catalogue/abstract_models.py:568
 #: apps/order/abstract_models.py:445 apps/wishlists/abstract_models.py:121
@@ -992,11 +992,11 @@ msgstr "Titre"
 #: apps/dashboard/catalogue/tables.py:23
 #: templates/oscar/dashboard/catalogue/product_class_delete.html:12
 msgid "Product type"
-msgstr "Type de sujet"
+msgstr "Type de dossier"
 
 #: apps/catalogue/abstract_models.py:295
 msgid "Choose what type of product this is"
-msgstr "Choisissez la catégorie du sujet"
+msgstr "Choisissez la catégorie du dossier"
 
 #: apps/catalogue/abstract_models.py:299
 #: templates/oscar/dashboard/catalogue/product_update.html:76
@@ -1009,11 +1009,11 @@ msgstr "Attributs"
 msgid ""
 "A product attribute is something that this product may have, such as a size,"
 " as specified by its class"
-msgstr "Un attribut de sujet est ce que ce sujet peut avoir, par exemple la taille, si cela est spécifié dans sa classe"
+msgstr "Un attribut de dossier est ce que ce dossier peut avoir, par exemple la taille, si cela est spécifié dans sa classe"
 
 #: apps/catalogue/abstract_models.py:304
 msgid "Product options"
-msgstr "Options du sujet"
+msgstr "Options du dossier"
 
 #: apps/catalogue/abstract_models.py:305
 msgid ""
@@ -1025,11 +1025,11 @@ msgstr "Les options sont des valeurs qui peuvent être associées à un élémen
 #: apps/catalogue/abstract_models.py:312
 #: templates/oscar/dashboard/catalogue/product_update.html:298
 msgid "Recommended products"
-msgstr "Sujets recommandés"
+msgstr "Dossiers recommandés"
 
 #: apps/catalogue/abstract_models.py:313
 msgid "These are products that are recommended to accompany the main product."
-msgstr "Les sujets suivants sont recommandés pour aller avec le sujet principal."
+msgstr "Les dossiers suivants sont recommandés pour aller avec le dossier principal."
 
 #: apps/catalogue/abstract_models.py:318 defaults.py:225
 msgid "Rating"
@@ -1045,7 +1045,7 @@ msgstr "Réduction possible ?"
 
 #: apps/catalogue/abstract_models.py:337
 msgid "This flag indicates if this product can be used in an offer or not"
-msgstr "Ce drapeau indique si le sujet peut être utilisé dans une offre ou non"
+msgstr "Ce drapeau indique si le dossier peut être utilisé dans une offre ou non"
 
 #: apps/catalogue/abstract_models.py:348 apps/dashboard/catalogue/views.py:85
 #: apps/promotions/models.py:274 defaults.py:110
@@ -1058,59 +1058,59 @@ msgstr "Ce drapeau indique si le sujet peut être utilisé dans une offre ou non
 #: templates/oscar/dashboard/promotions/handpickedproductlist_form.html:5
 #: templates/oscar/dashboard/ranges/range_product_list.html:21
 msgid "Products"
-msgstr "Sujets"
+msgstr "Dossiers"
 
 #: apps/catalogue/abstract_models.py:405
 msgid "Your product must have a title."
-msgstr "Votre sujet doit avoir un titre."
+msgstr "Votre dossier doit avoir un titre."
 
 #: apps/catalogue/abstract_models.py:407
 msgid "Your product must have a product class."
-msgstr "Votre sujet doit avec une classe."
+msgstr "Votre dossier doit avec une classe."
 
 #: apps/catalogue/abstract_models.py:409
 msgid "Only child products can have a parent."
-msgstr "Seuls les sujets enfants peuvent avoir un parent."
+msgstr "Seuls les dossiers enfants peuvent avoir un parent."
 
 #: apps/catalogue/abstract_models.py:416
 msgid "A child product needs a parent."
-msgstr "Un sujet enfant a besoin d'un parent."
+msgstr "Un dossier enfant a besoin d'un parent."
 
 #: apps/catalogue/abstract_models.py:419
 msgid "You can only assign child products to parent products."
-msgstr "Vous pouvez seulement attribuer des sujets enfants à des sujets parents."
+msgstr "Vous pouvez seulement attribuer des dossiers enfants à des dossiers parents."
 
 #: apps/catalogue/abstract_models.py:422
 msgid "A child product can't have a product class."
-msgstr "Un sujet enfant ne peut pas avoir une classe de sujet."
+msgstr "Un dossier enfant ne peut pas avoir une classe de dossier."
 
 #: apps/catalogue/abstract_models.py:425
 msgid "A child product can't have a category assigned."
-msgstr "Un sujet enfant ne peut pas avoir une catégorie attribuée."
+msgstr "Un dossier enfant ne peut pas avoir une catégorie attribuée."
 
 #: apps/catalogue/abstract_models.py:429
 msgid "A child product can't have options."
-msgstr "Un sujet enfant ne peut pas avoir d'options."
+msgstr "Un dossier enfant ne peut pas avoir d'options."
 
 #: apps/catalogue/abstract_models.py:438
 msgid "A parent product can't have stockrecords."
-msgstr "Un sujet parent ne peut avoir d'enregistrements de stock."
+msgstr "Un dossier parent ne peut avoir d'enregistrements de stock."
 
 #: apps/catalogue/abstract_models.py:466
 msgid "The specified parent product is a child product."
-msgstr "Le sujet parent spécifié est un sujet enfant."
+msgstr "Le dossier parent spécifié est un dossier enfant."
 
 #: apps/catalogue/abstract_models.py:469
 msgid "One can't add a child product to a product with stock records."
-msgstr "Il n'est pas possible d'ajouter un sujet enfant à un sujet avec des enregistrements dans le stock."
+msgstr "Il n'est pas possible d'ajouter un dossier enfant à un dossier avec des enregistrements dans le stock."
 
 #: apps/catalogue/abstract_models.py:689
 msgid "Primary product"
-msgstr "Sujet Primaire"
+msgstr "Dossier Primaire"
 
 #: apps/catalogue/abstract_models.py:691
 msgid "Recommended product"
-msgstr "Sujet recommandé"
+msgstr "Dossier recommandé"
 
 #: apps/catalogue/abstract_models.py:693
 msgid "Ranking"
@@ -1120,15 +1120,15 @@ msgstr "Classement"
 msgid ""
 "Determines order of the products. A product with a higher value will appear "
 "before one with a lower ranking."
-msgstr "Détermine l'ordre des sujets. Un sujet avec une valeur plus élevée apparaîtra avant ceux ayant une valeur moins importante."
+msgstr "Détermine l'ordre des dossiers. Un dossier avec une valeur plus élevée apparaîtra avant ceux ayant une valeur moins importante."
 
 #: apps/catalogue/abstract_models.py:702
 msgid "Product recommendation"
-msgstr "Recommandation de sujet"
+msgstr "Recommandation de dossier"
 
 #: apps/catalogue/abstract_models.py:703
 msgid "Product recomendations"
-msgstr "Recommandations de sujet"
+msgstr "Recommandations de dossier"
 
 #: apps/catalogue/abstract_models.py:731
 #, python-format
@@ -1217,13 +1217,13 @@ msgstr "Requis"
 
 #: apps/catalogue/abstract_models.py:830
 msgid "Product attribute"
-msgstr "Attribut de sujet"
+msgstr "Attribut de dossier"
 
 #: apps/catalogue/abstract_models.py:831
 #: templates/oscar/dashboard/catalogue/product_class_form.html:40
 #: templates/oscar/dashboard/catalogue/product_class_form.html:85
 msgid "Product attributes"
-msgstr "Attributs de Sujet"
+msgstr "Attributs de Dossier"
 
 #: apps/catalogue/abstract_models.py:886
 msgid "Must be str or unicode"
@@ -1284,11 +1284,11 @@ msgstr "Option"
 
 #: apps/catalogue/abstract_models.py:986
 msgid "Product attribute value"
-msgstr "Valeur d'attribut d sujet"
+msgstr "Valeur d'attribut d dossier"
 
 #: apps/catalogue/abstract_models.py:987
 msgid "Product attribute values"
-msgstr "Valeurs d'attribut de sujet"
+msgstr "Valeurs d'attribut de dossier"
 
 #: apps/catalogue/abstract_models.py:1052
 msgid "Attribute option group"
@@ -1330,15 +1330,15 @@ msgstr "Légende"
 msgid ""
 "An image with a display order of zero will be the primary image for a "
 "product"
-msgstr "Une image avec un ordre d'affichage de zéro sera l'image principale d'un sujet"
+msgstr "Une image avec un ordre d'affichage de zéro sera l'image principale d'un dossier"
 
 #: apps/catalogue/abstract_models.py:1185
 msgid "Product image"
-msgstr "Image du sujet"
+msgstr "Image du dossier"
 
 #: apps/catalogue/abstract_models.py:1186
 msgid "Product images"
-msgstr "Images Sujet"
+msgstr "Images Dossier"
 
 #: apps/catalogue/config.py:8 apps/dashboard/catalogue/config.py:8
 #: defaults.py:106
@@ -1395,11 +1395,11 @@ msgstr "Delta Votes"
 
 #: apps/catalogue/reviews/abstract_models.py:77
 msgid "Product review"
-msgstr "Commentaire du Sujet"
+msgstr "Commentaire du Dossier"
 
 #: apps/catalogue/reviews/abstract_models.py:78
 msgid "Product reviews"
-msgstr "Commentaires du Sujet"
+msgstr "Commentaires du Dossier"
 
 #: apps/catalogue/reviews/abstract_models.py:96
 msgid "Anonymous reviews must include a name and an email"
@@ -1460,15 +1460,15 @@ msgstr "Trier par"
 
 #: apps/catalogue/reviews/views.py:32
 msgid "You have already reviewed this product!"
-msgstr "Vous avez déjà laissé un commentaire sur ce sujet!"
+msgstr "Vous avez déjà laissé un commentaire sur ce dossier!"
 
 #: apps/catalogue/reviews/views.py:34
 msgid "You can't leave a review for this product."
-msgstr "Vous ne pouvez pas laisser d'avis pour ce sujet."
+msgstr "Vous ne pouvez pas laisser d'avis pour ce dossier."
 
 #: apps/catalogue/reviews/views.py:59
 msgid "Thank you for reviewing this product"
-msgstr "Merci d'avoir laissé une appréciation sur ce sujet"
+msgstr "Merci d'avoir laissé une appréciation sur ce dossier"
 
 #: apps/catalogue/reviews/views.py:97
 msgid "Thanks for voting!"
@@ -1490,7 +1490,7 @@ msgstr "Le numéro de page est invalide."
 
 #: apps/catalogue/views.py:135 templates/oscar/partials/nav_primary.html:45
 msgid "All products"
-msgstr "Tous les sujets"
+msgstr "Tous les dossiers"
 
 #: apps/checkout/config.py:8
 #: templates/oscar/basket/partials/basket_quick.html:39
@@ -1761,7 +1761,7 @@ msgstr "Date de clôture"
 
 #: apps/customer/abstract_models.py:347
 msgid "Product alert"
-msgstr "Alerte du sujet"
+msgstr "Alerte du dossier"
 
 #: apps/customer/abstract_models.py:348
 #: templates/oscar/dashboard/users/alerts/delete.html:17
@@ -1770,13 +1770,13 @@ msgstr "Alerte du sujet"
 #: templates/oscar/dashboard/users/alerts/list.html:21
 #: templates/oscar/dashboard/users/alerts/update.html:16
 msgid "Product alerts"
-msgstr "Alertes du sujet"
+msgstr "Alertes du dossier"
 
 #: apps/customer/alerts/views.py:21
 #: templates/oscar/customer/baseaccountpage.html:42
 #: templates/oscar/customer/partials/nav_account.html:32
 msgid "Product Alerts"
-msgstr "Alertes du sujet"
+msgstr "Alertes du dossier"
 
 #: apps/customer/alerts/views.py:69
 msgid "An alert has been created"
@@ -1923,7 +1923,7 @@ msgstr "Il existe déjà une alerte de stock active pour %s"
 
 #: apps/customer/forms.py:413
 msgid "You already have an active alert for this product"
-msgstr "Vous avez déjà une alerte active pour ce sujet"
+msgstr "Vous avez déjà une alerte active pour ce dossier"
 
 #: apps/customer/notifications/views.py:93
 #, python-format
@@ -2082,7 +2082,7 @@ msgstr "Créer une nouvelle liste d'envies"
 
 #: apps/customer/wishlists/views.py:102
 msgid "The requested product no longer exists"
-msgstr "Le sujet demandé n'existe plus"
+msgstr "Le dossier demandé n'existe plus"
 
 #: apps/customer/wishlists/views.py:121
 #, python-format
@@ -2135,7 +2135,7 @@ msgstr "'%(title)s' a été déplacé dans votre liste d'envies '%(name)s'"
 
 #: apps/dashboard/catalogue/forms.py:32
 msgid "Create a new product of type"
-msgstr "Créer un nouveau sujet de type"
+msgstr "Créer un nouveau dossier de type"
 
 #: apps/dashboard/catalogue/forms.py:33
 msgid "-- Choose type --"
@@ -2143,7 +2143,7 @@ msgstr "-- Choisissez le type --"
 
 #: apps/dashboard/catalogue/forms.py:49
 msgid "Product title"
-msgstr "Titre du sujet"
+msgstr "Titre du dossier"
 
 #: apps/dashboard/catalogue/forms.py:152
 msgid ""
@@ -2153,11 +2153,11 @@ msgstr ""
 
 #: apps/dashboard/catalogue/forms.py:367
 msgid "Stand-alone and parent products must have at least one category"
-msgstr "Les sujets canoniques et parents doivent avoir au moins une catégorie"
+msgstr "Les dossiers canoniques et parents doivent avoir au moins une catégorie"
 
 #: apps/dashboard/catalogue/forms.py:371
 msgid "A child product should not have categories"
-msgstr "Un sujet enfant ne doit pas avoir de catégorie"
+msgstr "Un dossier enfant ne doit pas avoir de catégorie"
 
 #: apps/dashboard/catalogue/forms.py:460
 msgid "Select an option group"
@@ -2215,16 +2215,16 @@ msgstr[1] ""
 
 #: apps/dashboard/catalogue/views.py:84
 msgid "Product search results"
-msgstr "Résultats de la recherche de sujet"
+msgstr "Résultats de la recherche de dossier"
 
 #: apps/dashboard/catalogue/views.py:157
 msgid "Please choose a product type"
-msgstr "Merci de choisir un type de sujet"
+msgstr "Merci de choisir un type de dossier"
 
 #: apps/dashboard/catalogue/views.py:275
 #, python-format
 msgid "Create new %(product_class)s product"
-msgstr "Créer un nouveau sujet %(product_class)s"
+msgstr "Créer un nouveau dossier %(product_class)s"
 
 #: apps/dashboard/catalogue/views.py:278
 #, python-format
@@ -2234,7 +2234,7 @@ msgstr "Créer une nouvelle variante de %(parent_product)s"
 #: apps/dashboard/catalogue/views.py:284
 #, python-format
 msgid "Editing variant of %(parent_product)s"
-msgstr "Editer la variante du sujet %(parent_product)s"
+msgstr "Editer la variante du dossier %(parent_product)s"
 
 #: apps/dashboard/catalogue/views.py:375 apps/dashboard/catalogue/views.py:661
 msgid "Your submitted data was not valid - please correct the errors below"
@@ -2242,21 +2242,21 @@ msgstr "Les données envoyées ne sont pas valides - merci de corriger les erreu
 
 #: apps/dashboard/catalogue/views.py:439
 msgid "Delete product variant?"
-msgstr "Supprimer la variante du sujet?"
+msgstr "Supprimer la variante du dossier?"
 
 #: apps/dashboard/catalogue/views.py:441
 msgid "Delete product?"
-msgstr "Supprimer le sujet ?"
+msgstr "Supprimer le dossier ?"
 
 #: apps/dashboard/catalogue/views.py:485
 #, python-format
 msgid "Deleted product variant '%s'"
-msgstr "Supprimer la variante '%s' du sujet"
+msgstr "Supprimer la variante '%s' du dossier"
 
 #: apps/dashboard/catalogue/views.py:491
 #, python-format
 msgid "Deleted product '%s'"
-msgstr "Le sujet '%s' a été supprimé"
+msgstr "Le dossier '%s' a été supprimé"
 
 #: apps/dashboard/catalogue/views.py:513
 #, python-format
@@ -2290,31 +2290,31 @@ msgstr "La catégorie a été supprimée avec succès"
 
 #: apps/dashboard/catalogue/views.py:691
 msgid "Add a new product type"
-msgstr "Ajouter un type de sujet"
+msgstr "Ajouter un type de dossier"
 
 #: apps/dashboard/catalogue/views.py:694
 msgid "Product type created successfully"
-msgstr "Type de sujet créé"
+msgstr "Type de dossier créé"
 
 #: apps/dashboard/catalogue/views.py:703
 #, python-format
 msgid "Update product type '%s'"
-msgstr "Mettre à jour le type de sujet '%s'"
+msgstr "Mettre à jour le type de dossier '%s'"
 
 #: apps/dashboard/catalogue/views.py:706
 msgid "Product type updated successfully"
-msgstr "Le type de sujet a été mis à jour avec succès."
+msgstr "Le type de dossier a été mis à jour avec succès."
 
 #: apps/dashboard/catalogue/views.py:722 apps/offer/abstract_models.py:785
 #: defaults.py:114
 #: templates/oscar/dashboard/catalogue/product_class_list.html:23
 msgid "Product Types"
-msgstr "Types de sujets"
+msgstr "Types de dossiers"
 
 #: apps/dashboard/catalogue/views.py:734
 #, python-format
 msgid "Delete product type '%s'"
-msgstr "Supprimer le type de sujet '%s'"
+msgstr "Supprimer le type de dossier '%s'"
 
 #: apps/dashboard/catalogue/views.py:739
 #, python-format
@@ -2324,11 +2324,11 @@ msgstr "Impossible de supprimer '%s'"
 #: apps/dashboard/catalogue/views.py:741
 #, python-format
 msgid "%i products are still assigned to this type"
-msgstr "Les sujets %i sont déjà rattachés à ce type de sujet"
+msgstr "Les dossiers %i sont déjà rattachés à ce type de dossier"
 
 #: apps/dashboard/catalogue/views.py:746
 msgid "Product type deleted successfully"
-msgstr "Type de sujet supprimé"
+msgstr "Type de dossier supprimé"
 
 #: apps/dashboard/communications/config.py:8
 msgid "Communications dashboard"
@@ -2336,7 +2336,7 @@ msgstr "Tableau de bord des communications"
 
 #: apps/dashboard/communications/forms.py:15
 msgid "Email subject template"
-msgstr "Modèle de sujet d'e-mail"
+msgstr "Modèle de dossier d'e-mail"
 
 #: apps/dashboard/communications/forms.py:17
 msgid "Email body text template"
@@ -2599,7 +2599,7 @@ msgstr "Nom du client"
 
 #: apps/dashboard/orders/forms.py:70
 msgid "Product name"
-msgstr "Nom du sujet"
+msgstr "Nom du dossier"
 
 #: apps/dashboard/orders/forms.py:72 apps/order/abstract_models.py:419
 #: apps/partner/abstract_models.py:102
@@ -3030,7 +3030,7 @@ msgstr "Créer un nouveau bloc de contenu %s"
 
 #: apps/dashboard/promotions/views.py:202
 msgid "Product list content block created"
-msgstr "Promotion d'une liste de sujet créée"
+msgstr "Promotion d'une liste de dossier créée"
 
 #: apps/dashboard/promotions/views.py:220
 msgid "Update content block"
@@ -3056,7 +3056,7 @@ msgstr "Bloc de contenu supprimé de la page '%s'"
 
 #: apps/dashboard/promotions/views.py:318
 msgid "Product list promotion updated"
-msgstr "Liste de sujets de la promotion mis à jour"
+msgstr "Liste de dossiers de la promotion mis à jour"
 
 #: apps/dashboard/promotions/views.py:333
 msgid "Content block deleted successfully"
@@ -3068,7 +3068,7 @@ msgstr "Tableau de bord des gammes"
 
 #: apps/dashboard/ranges/forms.py:25
 msgid "Product SKUs or UPCs"
-msgstr "Code sujet SKU ou UPC"
+msgstr "Code dossier SKU ou UPC"
 
 #: apps/dashboard/ranges/forms.py:27
 msgid "You can paste in a selection of SKUs or UPCs"
@@ -3089,12 +3089,12 @@ msgstr "Vous devez fournir soit une ligne de codes SKU/UPC ou d'un fichier"
 #: apps/dashboard/ranges/forms.py:59 apps/dashboard/ranges/views.py:161
 #, python-format
 msgid "The products with SKUs or UPCs matching %s are already in this range"
-msgstr "Les sujets avec les codes SKU ou UPC correspondant à %s sont déjà dans la gamme"
+msgstr "Les dossiers avec les codes SKU ou UPC correspondant à %s sont déjà dans la gamme"
 
 #: apps/dashboard/ranges/forms.py:67
 #, python-format
 msgid "No products exist with a SKU or UPC matching %s"
-msgstr "Aucun sujet n'existe avec un code SKU ou UPC correspondant à %s"
+msgstr "Aucun dossier n'existe avec un code SKU ou UPC correspondant à %s"
 
 #: apps/dashboard/ranges/views.py:50
 msgid "Create range"
@@ -3108,20 +3108,20 @@ msgstr "Gamme supprimée"
 #, python-format
 msgid "Removed %d product from range"
 msgid_plural "Removed %d products from range"
-msgstr[0] "%d sujet retiré de la gamme"
-msgstr[1] "%d sujets retirés de la gamme"
+msgstr[0] "%d dossier retiré de la gamme"
+msgstr[1] "%d dossiers retirés de la gamme"
 
 #: apps/dashboard/ranges/views.py:154
 #, python-format
 msgid "%d product added to range"
 msgid_plural "%d products added to range"
-msgstr[0] "%d sujet ajouté à la gamme"
-msgstr[1] "%d sujets ajoutés à la gamme"
+msgstr[0] "%d dossier ajouté à la gamme"
+msgstr[1] "%d dossiers ajoutés à la gamme"
 
 #: apps/dashboard/ranges/views.py:168
 #, python-format
 msgid "No product(s) were found with SKU or UPC matching %s"
-msgstr "Aucun sujet n'a été trouvé avec un UPC ou SKU correspondant à %s"
+msgstr "Aucun dossier n'a été trouvé avec un UPC ou SKU correspondant à %s"
 
 #: apps/dashboard/reports/config.py:8
 msgid "Reports dashboard"
@@ -3270,11 +3270,11 @@ msgstr " avec un email de client correspondant à '%s'"
 
 #: apps/dashboard/users/views.py:220
 msgid "Product alert saved"
-msgstr "Alerte de sujet enregistrée"
+msgstr "Alerte de dossier enregistrée"
 
 #: apps/dashboard/users/views.py:230
 msgid "Product alert deleted"
-msgstr "Alerte de sujet supprimée"
+msgstr "Alerte de dossier supprimée"
 
 #: apps/dashboard/vouchers/config.py:8
 msgid "Vouchers dashboard"
@@ -3300,15 +3300,15 @@ msgstr "Usage"
 
 #: apps/dashboard/vouchers/forms.py:28
 msgid "Which products get a discount?"
-msgstr "Quels sujets reçoivent une réduction ?"
+msgstr "Quels dossiers reçoivent une réduction ?"
 
 #: apps/dashboard/vouchers/forms.py:32
 msgid "Percentage off of products in range"
-msgstr "% de réduction des sujets de la gamme"
+msgstr "% de réduction des dossiers de la gamme"
 
 #: apps/dashboard/vouchers/forms.py:33
 msgid "Fixed amount off of products in range"
-msgstr "Montant fixe de réduction des sujets de la gamme"
+msgstr "Montant fixe de réduction des dossiers de la gamme"
 
 #: apps/dashboard/vouchers/forms.py:35 apps/offer/abstract_models.py:403
 msgid "Discount is a percentage off of the shipping cost"
@@ -3555,19 +3555,19 @@ msgstr "Gamme"
 
 #: apps/offer/abstract_models.py:395
 msgid "Discount is a percentage off of the product's value"
-msgstr "La réduction est un % de la valeur du sujet"
+msgstr "La réduction est un % de la valeur du dossier"
 
 #: apps/offer/abstract_models.py:396
 msgid "Discount is a fixed amount off of the product's value"
-msgstr "La réduction est un montant fixe retiré de la valeur du sujet"
+msgstr "La réduction est un montant fixe retiré de la valeur du dossier"
 
 #: apps/offer/abstract_models.py:397
 msgid "Discount is to give the cheapest product for free"
-msgstr "La réduction consiste à offrir le sujet le moins cher"
+msgstr "La réduction consiste à offrir le dossier le moins cher"
 
 #: apps/offer/abstract_models.py:399
 msgid "Get the products that meet the condition for a fixed price"
-msgstr "Obtenir pour un prix fixe les sujets qui correspondent à la condition"
+msgstr "Obtenir pour un prix fixe les dossiers qui correspondent à la condition"
 
 #: apps/offer/abstract_models.py:418
 msgid "Max Affected Items"
@@ -3590,7 +3590,7 @@ msgstr "Profits"
 
 #: apps/offer/abstract_models.py:502
 msgid "Multibuy benefits require a product range"
-msgstr "Les avantages sur achats groupés nécessitent une gamme de sujet"
+msgstr "Les avantages sur achats groupés nécessitent une gamme de dossier"
 
 #: apps/offer/abstract_models.py:505
 msgid "Multibuy benefits don't require a value"
@@ -3602,7 +3602,7 @@ msgstr "Les avantages sur achats groupés ne nécessitent pas d'attribut 'maximu
 
 #: apps/offer/abstract_models.py:514
 msgid "Percentage benefits require a product range"
-msgstr "Un avantage en pourcentage nécessite une gamme de sujet"
+msgstr "Un avantage en pourcentage nécessite une gamme de dossier"
 
 #: apps/offer/abstract_models.py:517 apps/offer/abstract_models.py:535
 msgid "Percentage discount cannot be greater than 100"
@@ -3615,7 +3615,7 @@ msgstr "Une valeur de réduction est requise"
 #: apps/offer/abstract_models.py:525 apps/offer/abstract_models.py:538
 #: apps/offer/abstract_models.py:548
 msgid "No range should be selected as this benefit does not apply to products"
-msgstr "Aucune gamme ne doit être sélectionnée, cet avantage ne s'appliquant pas aux sujets"
+msgstr "Aucune gamme ne doit être sélectionnée, cet avantage ne s'appliquant pas aux dossiers"
 
 #: apps/offer/abstract_models.py:529 apps/offer/abstract_models.py:542
 #: apps/offer/abstract_models.py:552
@@ -3629,7 +3629,7 @@ msgstr "Aucune gamme ne doit être sélectionnée car la gamme de condition sera
 
 #: apps/offer/abstract_models.py:564
 msgid "Fixed discount benefits require a product range"
-msgstr "Les bénéfices d'une remise constante nécessitent une gamme de sujet"
+msgstr "Les bénéfices d'une remise constante nécessitent une gamme de dossier"
 
 #: apps/offer/abstract_models.py:567
 msgid "Fixed discount benefits require a value"
@@ -3663,15 +3663,15 @@ msgstr "Les gammes publiques ont une page accessible par l'utilisateur"
 
 #: apps/offer/abstract_models.py:775
 msgid "Includes all products?"
-msgstr "Inclus tous les sujets ?"
+msgstr "Inclus tous les dossiers ?"
 
 #: apps/offer/abstract_models.py:779
 msgid "Included Products"
-msgstr "Sujets inclus"
+msgstr "Dossiers inclus"
 
 #: apps/offer/abstract_models.py:782
 msgid "Excluded Products"
-msgstr "Sujets exclus"
+msgstr "Dossiers exclus"
 
 #: apps/offer/abstract_models.py:788
 msgid "Included Categories"
@@ -3728,11 +3728,11 @@ msgstr "Nombre de SKU dupliqués"
 
 #: apps/offer/abstract_models.py:1019
 msgid "Range Product Uploaded File"
-msgstr "Fichier envoyé pour la gamme de sujet"
+msgstr "Fichier envoyé pour la gamme de dossier"
 
 #: apps/offer/abstract_models.py:1020
 msgid "Range Product Uploaded Files"
-msgstr "Fichiers envoyés pour la gamme de sujet"
+msgstr "Fichiers envoyés pour la gamme de dossier"
 
 #: apps/offer/benefits.py:30
 #, python-format
@@ -3763,7 +3763,7 @@ msgstr "Avantages de remise en valeur absolue"
 #: apps/offer/benefits.py:178
 #, python-format
 msgid "The products that meet the condition are sold for %(amount)s"
-msgstr "Les sujets qui correspondent aux conditions sont vendus pour %(amount)s"
+msgstr "Les dossiers qui correspondent aux conditions sont vendus pour %(amount)s"
 
 #: apps/offer/benefits.py:189
 msgid "Fixed price benefit"
@@ -3776,7 +3776,7 @@ msgstr "Avantages de prix fixe"
 #: apps/offer/benefits.py:241
 #, python-format
 msgid "Cheapest product from %(range)s is free"
-msgstr "Le sujet le moins cher de %(range)s est gratuit"
+msgstr "Le dossier le moins cher de %(range)s est gratuit"
 
 #: apps/offer/benefits.py:256
 msgid "Multibuy discount benefit"
@@ -3842,8 +3842,8 @@ msgstr "Conditions de nombre"
 #, python-format
 msgid "Buy %(delta)d more product from %(range)s"
 msgid_plural "Buy %(delta)d more products from %(range)s"
-msgstr[0] "Acheter %(delta)d sujet en plus dans %(range)s"
-msgstr[1] "Acheter %(delta)d sujets en plus dans %(range)s"
+msgstr[0] "Acheter %(delta)d dossier en plus dans %(range)s"
+msgstr[1] "Acheter %(delta)d dossiers en plus dans %(range)s"
 
 #: apps/offer/conditions.py:112
 #, python-format
@@ -4051,12 +4051,12 @@ msgstr "Ligne de Commande"
 
 #: apps/order/abstract_models.py:512
 msgid "<missing product>"
-msgstr "<sujet manquant>"
+msgstr "<dossier manquant>"
 
 #: apps/order/abstract_models.py:513
 #, python-format
 msgid "Product '%(name)s', quantity '%(qty)s'"
-msgstr "Sujet '%(name)s', quantité '%(qty)s'"
+msgstr "Dossier '%(name)s', quantité '%(qty)s'"
 
 #: apps/order/abstract_models.py:540
 #, python-format
@@ -4635,7 +4635,7 @@ msgstr "Multi Images"
 
 #: apps/promotions/models.py:235 apps/promotions/models.py:236
 msgid "Single product"
-msgstr "Sujet simple"
+msgstr "Dossier simple"
 
 #: apps/promotions/models.py:246
 msgctxt "Promotion product list title"
@@ -4648,19 +4648,19 @@ msgstr "Texte du lien"
 
 #: apps/promotions/models.py:256
 msgid "Product list"
-msgstr "Liste de sujets"
+msgstr "Liste de dossiers"
 
 #: apps/promotions/models.py:257
 msgid "Product lists"
-msgstr "Listes de sujets"
+msgstr "Listes de dossiers"
 
 #: apps/promotions/models.py:285
 msgid "Hand Picked Product List"
-msgstr "Liste de sujets sélectionnés manuellement"
+msgstr "Liste de dossiers sélectionnés manuellement"
 
 #: apps/promotions/models.py:286
 msgid "Hand Picked Product Lists"
-msgstr "Listes de sujets sélectionnés manuellement"
+msgstr "Listes de dossiers sélectionnés manuellement"
 
 #: apps/promotions/models.py:292
 msgid "List"
@@ -4668,7 +4668,7 @@ msgstr "Liste"
 
 #: apps/promotions/models.py:300 apps/promotions/models.py:301
 msgid "Ordered product"
-msgstr "Sujet commandé"
+msgstr "Dossier commandé"
 
 #: apps/promotions/models.py:309
 msgid "Bestselling products"
@@ -4676,7 +4676,7 @@ msgstr "Meilleures ventes"
 
 #: apps/promotions/models.py:310
 msgid "Recently added products"
-msgstr "Sujets récemment ajoutés"
+msgstr "Dossiers récemment ajoutés"
 
 #: apps/promotions/models.py:312 apps/shipping/abstract_models.py:195
 #: templates/oscar/checkout/shipping_methods.html:24
@@ -4685,15 +4685,15 @@ msgstr "Méthode"
 
 #: apps/promotions/models.py:314
 msgid "Number of Products"
-msgstr "Nombre de Sujets"
+msgstr "Nombre de Dossiers"
 
 #: apps/promotions/models.py:329
 msgid "Automatic product list"
-msgstr "Liste automatique de sujets"
+msgstr "Liste automatique de dossiers"
 
 #: apps/promotions/models.py:330
 msgid "Automatic product lists"
-msgstr "Listes automatiques de sujets"
+msgstr "Listes automatiques de dossiers"
 
 #: apps/promotions/models.py:336 apps/promotions/models.py:355
 msgid "Tabbed Block"
@@ -4701,11 +4701,11 @@ msgstr "Bloc indenté"
 
 #: apps/promotions/models.py:342
 msgid "Ordered Product List"
-msgstr "Liste de sujets commandés"
+msgstr "Liste de dossiers commandés"
 
 #: apps/promotions/models.py:343
 msgid "Ordered Product Lists"
-msgstr "Listes de sujets commandés"
+msgstr "Listes de dossiers commandés"
 
 #: apps/promotions/models.py:350
 msgctxt "Tabbed block title"
@@ -5130,7 +5130,7 @@ msgstr "60+"
 
 #: management/commands/oscar_send_alerts.py:16
 msgid "Check for products that are back in stock and send out alerts"
-msgstr "Vérifier les sujets de nouveau disponible en stock en envoyer les alertes"
+msgstr "Vérifier les dossiers de nouveau disponible en stock en envoyer les alertes"
 
 #: templates/oscar/403.html:5 templates/oscar/403.html.py:9
 msgid "Permission denied!"
@@ -5592,26 +5592,26 @@ msgstr "<strong>0</strong> résultats."
 #: templates/oscar/dashboard/ranges/range_product_list.html:125
 #: templates/oscar/offer/detail.html:61 templates/oscar/offer/range.html:40
 msgid "No products found."
-msgstr "Aucun sujet trouvé."
+msgstr "Aucun dossier trouvé."
 
 #: templates/oscar/catalogue/detail.html:68
 msgid "Edit this product"
-msgstr "Modifier ce sujet"
+msgstr "Modifier ce dossier"
 
 #: templates/oscar/catalogue/detail.html:93
 msgid "Product Description"
-msgstr "Description de Sujet"
+msgstr "Description de Dossier"
 
 #: templates/oscar/catalogue/detail.html:101
 msgid "Product Information"
-msgstr "Information du Sujet"
+msgstr "Information du Dossier"
 
 #: templates/oscar/catalogue/detail.html:110
 #: templates/oscar/dashboard/catalogue/product_class_form.html:16
 #: templates/oscar/dashboard/catalogue/product_class_list.html:9
 #: templates/oscar/dashboard/orders/line_detail.html:47
 msgid "Product Type"
-msgstr "Type de sujet"
+msgstr "Type de dossier"
 
 #: templates/oscar/catalogue/detail.html:120
 msgid "Price (incl. tax)"
@@ -5639,11 +5639,11 @@ msgid ""
 "This product does not have any reviews yet -\n"
 "                            <a href=\"%(add_review_url)s#addreview\">be the first to write one</a>.\n"
 "                        "
-msgstr "Ce sujet n'a pas encore reçu d'avis -\n                            <a href=\"%(add_review_url)s#addreview\">soyez le premier à en écrire un</a>.\n                        "
+msgstr "Ce dossier n'a pas encore reçu d'avis -\n                            <a href=\"%(add_review_url)s#addreview\">soyez le premier à en écrire un</a>.\n                        "
 
 #: templates/oscar/catalogue/detail.html:164
 msgid "This product does not have any reviews yet"
-msgstr "Ce sujet n'a pas encore d'avis"
+msgstr "Ce dossier n'a pas encore d'avis"
 
 #: templates/oscar/catalogue/detail.html:183
 msgid "Recommended items"
@@ -5657,11 +5657,11 @@ msgstr "Ajouter au panier"
 
 #: templates/oscar/catalogue/partials/add_to_basket_form.html:20
 msgid "You have an active stock alert for this product."
-msgstr "Vous avez déjà une alerte active pour ce sujet"
+msgstr "Vous avez déjà une alerte active pour ce dossier"
 
 #: templates/oscar/catalogue/partials/add_to_basket_form.html:24
 msgid "You can get an email alert when this product is back in stock."
-msgstr "Vous pouvez recevoir une alerte par mail lorsque ce sujet sera de nouveau en stock."
+msgstr "Vous pouvez recevoir une alerte par mail lorsque ce dossier sera de nouveau en stock."
 
 #: templates/oscar/catalogue/partials/add_to_basket_form.html:26
 #: templates/oscar/catalogue/partials/review.html:40
@@ -5707,7 +5707,7 @@ msgid ""
 "\n"
 "                    <span class=\"pull-left\">Product is in <a href=\"%(url)s\">'%(name)s'</a> wishlist.</span>\n"
 "                "
-msgstr "\n                    <span class=\"pull-left\">Le sujet est dans la liste d'envies <a href=\"%(url)s\">'%(name)s'</a>.</span>\n                "
+msgstr "\n                    <span class=\"pull-left\">Le dossier est dans la liste d'envies <a href=\"%(url)s\">'%(name)s'</a>.</span>\n                "
 
 #: templates/oscar/catalogue/partials/add_to_wishlist.html:41
 #: templates/oscar/customer/wishlists/wishlists_delete_product.html:32
@@ -5719,7 +5719,7 @@ msgstr "Suppression..."
 
 #: templates/oscar/catalogue/partials/add_to_wishlist.html:46
 msgid "Please login to add products to a wish list."
-msgstr "Logez-vous pour ajouter des sujets à une liste d'envies."
+msgstr "Logez-vous pour ajouter des dossiers à une liste d'envies."
 
 #: templates/oscar/catalogue/partials/review.html:23
 #, python-format
@@ -5806,7 +5806,7 @@ msgstr "Avis Clients"
 
 #: templates/oscar/catalogue/reviews/review_form.html:8
 msgid "Leave a product review"
-msgstr "Laisser un avis sur le sujet"
+msgstr "Laisser un avis sur le dossier"
 
 #: templates/oscar/catalogue/reviews/review_form.html:47
 #: templates/oscar/checkout/shipping_address.html:41
@@ -5844,7 +5844,7 @@ msgstr "Valider"
 
 #: templates/oscar/catalogue/reviews/review_list.html:53
 msgid "This product does not have any reviews yet."
-msgstr "Ce sujet n'a pas encore d'avis."
+msgstr "Ce dossier n'a pas encore d'avis."
 
 #: templates/oscar/checkout/checkout.html:34
 #: templates/oscar/checkout/checkout.html:65
@@ -6226,7 +6226,7 @@ msgstr "Il n'y a aucune adresse dans votre carnet d'adresse."
 
 #: templates/oscar/customer/alerts/alert_list.html:6
 msgid "You do not have any active alerts for out-of-stock products."
-msgstr "Vous n'avez aucune alerte active sur des sujets en rupture de stock."
+msgstr "Vous n'avez aucune alerte active sur des dossiers en rupture de stock."
 
 #: templates/oscar/customer/alerts/alert_list.html:29
 #: templates/oscar/dashboard/catalogue/product_class_form.html:134
@@ -6268,7 +6268,7 @@ msgid ""
 "\n"
 "Thanks for your interest,\n"
 "The %(site_name)s Team\n"
-msgstr "\nCet e-mail vous informe que nous avons désactivé votre alerte automatique et vous ne\nrecevrez plus aucun e-mail concernant ce sujet.\n\nMerci pour votre intérêt,\nL'équipe %(site_name)s\n"
+msgstr "\nCet e-mail vous informe que nous avons désactivé votre alerte automatique et vous ne\nrecevrez plus aucun e-mail concernant ce dossier.\n\nMerci pour votre intérêt,\nL'équipe %(site_name)s\n"
 
 #: templates/oscar/customer/alerts/emails/alert_subject.txt:1
 #, python-format
@@ -6540,7 +6540,7 @@ msgstr "Merci de vous être enregistré."
 
 #: templates/oscar/customer/history/recently_viewed_products.html:7
 msgid "Products you recently viewed"
-msgstr "Sujets récemment consultés"
+msgstr "Dossiers récemment consultés"
 
 #: templates/oscar/customer/login_registration.html:5
 #: templates/oscar/customer/login_registration.html:13
@@ -6761,7 +6761,7 @@ msgstr "\nEtes vous sûr de vouloir supprimer l'adresse %(name)s ?\n    "
 
 #: templates/oscar/customer/wishlists/wishlists_delete_product.html:18
 msgid "Remove product"
-msgstr "Retirer sujet"
+msgstr "Retirer dossier"
 
 #: templates/oscar/customer/wishlists/wishlists_delete_product.html:26
 #, python-format
@@ -6778,7 +6778,7 @@ msgstr "Action"
 
 #: templates/oscar/customer/wishlists/wishlists_detail.html:70
 msgid "View product"
-msgstr "Voir le sujet"
+msgstr "Voir le dossier"
 
 #: templates/oscar/customer/wishlists/wishlists_detail.html:86
 #, python-format
@@ -6814,7 +6814,7 @@ msgstr "\nAprès avoir créé votre nouvelle liste d'envies, <strong>%(title)s</
 
 #: templates/oscar/customer/wishlists/wishlists_list.html:10
 msgid "Number of products"
-msgstr "Nombre de sujets"
+msgstr "Nombre de dossiers"
 
 #: templates/oscar/customer/wishlists/wishlists_list.html:26
 msgid "Wish list settings"
@@ -6881,7 +6881,7 @@ msgid ""
 "\n"
 "                    Created product variant '%(name)s'.\n"
 "                "
-msgstr "\n                    La variante du sujet '%(name)s' a été créé.\n                "
+msgstr "\n                    La variante du dossier '%(name)s' a été créé.\n                "
 
 #: templates/oscar/dashboard/catalogue/messages/product_saved.html:14
 #, python-format
@@ -6897,7 +6897,7 @@ msgid ""
 "\n"
 "                    Updated product variant '%(name)s'.\n"
 "                "
-msgstr "\n        La variante du sujet '%(name)s' a été mis à jour.\n    "
+msgstr "\n        La variante du dossier '%(name)s' a été mis à jour.\n    "
 
 #: templates/oscar/dashboard/catalogue/messages/product_saved.html:24
 #, python-format
@@ -6913,7 +6913,7 @@ msgid ""
 "\n"
 "                Created product '%(name)s'.\n"
 "            "
-msgstr "\n        Le sujet '%(name)s' a été créé.\n    "
+msgstr "\n        Le dossier '%(name)s' a été créé.\n    "
 
 #: templates/oscar/dashboard/catalogue/messages/product_saved.html:37
 #, python-format
@@ -6921,7 +6921,7 @@ msgid ""
 "\n"
 "                Updated product '%(name)s'.\n"
 "            "
-msgstr "\n        Le sujet '%(name)s' a été mis à jour.\n    "
+msgstr "\n        Le dossier '%(name)s' a été mis à jour.\n    "
 
 #: templates/oscar/dashboard/catalogue/messages/product_saved.html:48
 #: templates/oscar/dashboard/pages/messages/saved.html:10
@@ -6935,25 +6935,25 @@ msgstr "Le visualiser sur le site"
 
 #: templates/oscar/dashboard/catalogue/product_class_delete.html:14
 msgid "Delete product type?"
-msgstr "Supprimer le type de sujet?"
+msgstr "Supprimer le type de dossier?"
 
 #: templates/oscar/dashboard/catalogue/product_class_delete.html:24
 msgid ""
 "Please make sure all products are assigned to another type before deletion."
-msgstr "Merci de vous assurer que tous les sujets sont rattachés à un autre type de sujet avant la suppression."
+msgstr "Merci de vous assurer que tous les dossiers sont rattachés à un autre type de dossier avant la suppression."
 
 #: templates/oscar/dashboard/catalogue/product_class_delete.html:27
 msgid "Delete product type"
-msgstr "Supprimer le type de sujet"
+msgstr "Supprimer le type de dossier"
 
 #: templates/oscar/dashboard/catalogue/product_class_delete.html:33
 #, python-format
 msgid "Delete product type <strong>%(name)s</strong> - are you sure?"
-msgstr "Supprimer le type de sujet <strong>%(name)s</strong> - êtes-vous sûr?"
+msgstr "Supprimer le type de dossier <strong>%(name)s</strong> - êtes-vous sûr?"
 
 #: templates/oscar/dashboard/catalogue/product_class_form.html:5
 msgid "Create product type"
-msgstr "Créer un type de sujet"
+msgstr "Créer un type de dossier"
 
 #: templates/oscar/dashboard/catalogue/product_class_form.html:34
 #: templates/oscar/dashboard/catalogue/product_update.html:59
@@ -6963,15 +6963,15 @@ msgstr "Sections"
 #: templates/oscar/dashboard/catalogue/product_class_form.html:39
 #: templates/oscar/dashboard/catalogue/product_class_form.html:53
 msgid "Product Class details"
-msgstr "Détails de la classe de sujet"
+msgstr "Détails de la classe de dossier"
 
 #: templates/oscar/dashboard/catalogue/product_class_list.html:15
 msgid "Create new product type"
-msgstr "Créer un nouveau type de sujet"
+msgstr "Créer un nouveau type de dossier"
 
 #: templates/oscar/dashboard/catalogue/product_class_list.html:16
 msgid "Product types"
-msgstr "Types de sujets"
+msgstr "Types de dossiers"
 
 #: templates/oscar/dashboard/catalogue/product_class_list.html:27
 msgid "Requires shipping"
@@ -6983,11 +6983,11 @@ msgstr "Suivre le stock?"
 
 #: templates/oscar/dashboard/catalogue/product_class_list.html:46
 msgid "Edit product type"
-msgstr "Éditer le type de sujet"
+msgstr "Éditer le type de dossier"
 
 #: templates/oscar/dashboard/catalogue/product_class_list.html:57
 msgid "There are no product types."
-msgstr "Il n'y a pas de type de sujet."
+msgstr "Il n'y a pas de type de dossier."
 
 #: templates/oscar/dashboard/catalogue/product_delete.html:37
 #, python-format
@@ -6995,7 +6995,7 @@ msgid ""
 "\n"
 "                    Delete product variant <strong>%(title)s</strong> - are you sure?\n"
 "                "
-msgstr "\n                    Supprimer la variante du sujet <strong>%(title)s</strong> - êtes vous sûr?\n                "
+msgstr "\n                    Supprimer la variante du dossier <strong>%(title)s</strong> - êtes vous sûr?\n                "
 
 #: templates/oscar/dashboard/catalogue/product_delete.html:41
 #, python-format
@@ -7003,23 +7003,23 @@ msgid ""
 "\n"
 "                    Delete product <strong>%(title)s</strong> - are you sure?\n"
 "                "
-msgstr "\n                    Supprimer le sujet <strong>%(title)s</strong> - êtes vous sûr?\n                "
+msgstr "\n                    Supprimer le dossier <strong>%(title)s</strong> - êtes vous sûr?\n                "
 
 #: templates/oscar/dashboard/catalogue/product_delete.html:49
 msgid "This will also delete the following child products:"
-msgstr "Ceci supprimera également les sujets enfants suivants :"
+msgstr "Ceci supprimera également les dossiers enfants suivants :"
 
 #: templates/oscar/dashboard/catalogue/product_list.html:32
 msgid "Create new product"
-msgstr "Créer un nouveau sujet"
+msgstr "Créer un nouveau dossier"
 
 #: templates/oscar/dashboard/catalogue/product_list.html:37
 msgid "New Product"
-msgstr "Nouveau sujet"
+msgstr "Nouveau dossier"
 
 #: templates/oscar/dashboard/catalogue/product_list.html:44
 msgid "Search Products"
-msgstr "Rechercher Sujets"
+msgstr "Rechercher Dossiers"
 
 #: templates/oscar/dashboard/catalogue/product_list.html:60
 #: templates/oscar/dashboard/offers/offer_list.html:31
@@ -7041,13 +7041,13 @@ msgid ""
 "                            You are currently editing a product variant of\n"
 "                            <a href=\"%(parent_url)s\">%(title)s</a>.\n"
 "                        "
-msgstr "\n                            Vous êtes en train d'éditer une variante du sujet\n                            <a href=\"%(parent_url)s\">%(title)s</a>.\n                        "
+msgstr "\n                            Vous êtes en train d'éditer une variante du dossier\n                            <a href=\"%(parent_url)s\">%(title)s</a>.\n                        "
 
 #: templates/oscar/dashboard/catalogue/product_update.html:71
 #: templates/oscar/dashboard/catalogue/product_update.html:101
 #: templates/oscar/dashboard/orders/line_detail.html:33
 msgid "Product details"
-msgstr "Détails sujet"
+msgstr "Détails dossier"
 
 #: templates/oscar/dashboard/catalogue/product_update.html:79
 msgid "Images"
@@ -7064,7 +7064,7 @@ msgstr "Vente incitative"
 
 #: templates/oscar/dashboard/catalogue/product_update.html:146
 msgid "Product Type:"
-msgstr "Type de sujet:"
+msgstr "Type de dossier:"
 
 #: templates/oscar/dashboard/catalogue/product_update.html:167
 msgid "Upload, change or remove images"
@@ -7105,15 +7105,15 @@ msgstr "Ajouter une variante"
 
 #: templates/oscar/dashboard/catalogue/product_update.html:278
 msgid "This product does not have any variants."
-msgstr "Ce sujet n'a pas de variantes."
+msgstr "Ce dossier n'a pas de variantes."
 
 #: templates/oscar/dashboard/catalogue/product_update.html:280
 msgid "One can't add variants to this product at this point."
-msgstr "Il n'est pas possible ajouter des variantes de ce sujet à ce stade."
+msgstr "Il n'est pas possible ajouter des variantes de ce dossier à ce stade."
 
 #: templates/oscar/dashboard/catalogue/product_update.html:282
 msgid "This is likely because this product still has stock records."
-msgstr "C'est probablement parce que ce sujet a encore des enregistrements dans le stock."
+msgstr "C'est probablement parce que ce dossier a encore des enregistrements dans le stock."
 
 #: templates/oscar/dashboard/catalogue/product_update.html:326
 msgid "Save and add another variant"
@@ -7221,7 +7221,7 @@ msgstr "Total clients"
 
 #: templates/oscar/dashboard/index.html:31
 msgid "Total Products"
-msgstr "Total sujets"
+msgstr "Total dossiers"
 
 #: templates/oscar/dashboard/index.html:35
 msgid "Latest Orders (last 24 hours)"
@@ -7285,7 +7285,7 @@ msgstr "Catalogue et stock"
 
 #: templates/oscar/dashboard/index.html:148
 msgid "Total products"
-msgstr "Total sujets"
+msgstr "Total dossiers"
 
 #: templates/oscar/dashboard/index.html:152
 msgid "<em>Open</em> stock alerts"
@@ -7509,7 +7509,7 @@ msgstr "Commande #%(number)s - Ligne #%(id)s"
 
 #: templates/oscar/dashboard/orders/line_detail.html:57
 msgid "Product Options"
-msgstr "Option du sujet"
+msgstr "Option du dossier"
 
 #: templates/oscar/dashboard/orders/line_detail.html:70
 msgid "Partner details"
@@ -7542,7 +7542,7 @@ msgstr "Statut"
 #: templates/oscar/dashboard/orders/line_detail.html:122
 #: templates/oscar/dashboard/orders/line_detail.html:153
 msgid "No shipping events have occurred."
-msgstr "Aucun évènement de livraison ne s'est sujet."
+msgstr "Aucun évènement de livraison ne s'est dossier."
 
 #: templates/oscar/dashboard/orders/line_detail.html:130
 msgid "Shipping events"
@@ -7554,7 +7554,7 @@ msgstr "Evènements de paiement"
 
 #: templates/oscar/dashboard/orders/line_detail.html:182
 msgid "No payment events have occurred."
-msgstr "Aucun évènement de paiement ne s'est sujet."
+msgstr "Aucun évènement de paiement ne s'est dossier."
 
 #: templates/oscar/dashboard/orders/order_detail.html:8
 #, python-format
@@ -7691,7 +7691,7 @@ msgstr "Pas d'évènement de livraison."
 
 #: templates/oscar/dashboard/orders/order_detail.html:404
 msgid "Product:"
-msgstr "Sujet :"
+msgstr "Dossier :"
 
 #: templates/oscar/dashboard/orders/order_detail.html:404
 msgid "quantity"
@@ -8216,7 +8216,7 @@ msgstr "\n<p>Gamme <strong>%(name)s</strong> enregistrée.</p>\n"
 
 #: templates/oscar/dashboard/ranges/messages/range_saved.html:7
 msgid "Edit included products"
-msgstr "Editer les sujets inclus"
+msgstr "Editer les dossiers inclus"
 
 #: templates/oscar/dashboard/ranges/range_delete.html:7
 #, python-format
@@ -8234,15 +8234,15 @@ msgstr "Créer une nouvelle gamme"
 
 #: templates/oscar/dashboard/ranges/range_form.html:38
 msgid "Save and edit products"
-msgstr "Enregistrer et modifier des sujets"
+msgstr "Enregistrer et modifier des dossiers"
 
 #: templates/oscar/dashboard/ranges/range_list.html:32
 msgid "Num products"
-msgstr "Nombre de sujets"
+msgstr "Nombre de dossiers"
 
 #: templates/oscar/dashboard/ranges/range_list.html:71
 msgid "Edit products"
-msgstr "Modifier sujets"
+msgstr "Modifier dossiers"
 
 #: templates/oscar/dashboard/ranges/range_list.html:86
 msgid "No ranges found."
@@ -8251,21 +8251,21 @@ msgstr "Aucune gamme trouvée."
 #: templates/oscar/dashboard/ranges/range_product_list.html:7
 #, python-format
 msgid "Products in range '%(name)s'"
-msgstr "Sujets dans la gamme '%(name)s'"
+msgstr "Dossiers dans la gamme '%(name)s'"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:26
 msgid "products"
-msgstr "sujets"
+msgstr "dossiers"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:32
 msgid ""
 "This range contains all products. To add products manually, please unselect "
 "the 'Includes All Products' option on the edit range page."
-msgstr "Cette gamme contient tous les sujets. Pour ajouter des sujets manuellement, merci de de-sélectionner l'option 'Inclure Tous les Sujets' sur la page d'édition de la gamme."
+msgstr "Cette gamme contient tous les dossiers. Pour ajouter des dossiers manuellement, merci de de-sélectionner l'option 'Inclure Tous les Dossiers' sur la page d'édition de la gamme."
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:36
 msgid "Add products"
-msgstr "Ajouter sujets"
+msgstr "Ajouter dossiers"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:46
 msgid "Running..."
@@ -8281,15 +8281,15 @@ msgstr "Nom de fichier"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:59
 msgid "New products"
-msgstr "Nouveaux sujets"
+msgstr "Nouveaux dossiers"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:60
 msgid "Duplicate products"
-msgstr "Sujets en double"
+msgstr "Dossiers en double"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:61
 msgid "Unknown products"
-msgstr "Sujets inconnus"
+msgstr "Dossiers inconnus"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:62
 msgid "Date uploaded"
@@ -8297,19 +8297,19 @@ msgstr "Date d'envoi"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:85
 msgid "Products in range"
-msgstr "Sujets dans la gamme"
+msgstr "Dossiers dans la gamme"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:88
 msgid "Remove selected products"
-msgstr "Retirer les sujets sélectionnés"
+msgstr "Retirer les dossiers sélectionnés"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:96
 msgid "Is product discountable?"
-msgstr "Le sujet peut-il avoir une réduction ?"
+msgstr "Le dossier peut-il avoir une réduction ?"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:123
 msgid "Products in Range"
-msgstr "Sujets dans la gamme"
+msgstr "Dossiers dans la gamme"
 
 #: templates/oscar/dashboard/ranges/range_product_list.html:133
 msgid "Edit range"
@@ -8379,7 +8379,7 @@ msgstr "Titre"
 
 #: templates/oscar/dashboard/reviews/review_list.html:75
 msgid "[Product deleted]"
-msgstr "[Sujet supprimé]"
+msgstr "[Dossier supprimé]"
 
 #: templates/oscar/dashboard/reviews/review_list.html:125
 msgid "No reviews found."
@@ -8487,7 +8487,7 @@ msgstr "Applicable aux pays"
 
 #: templates/oscar/dashboard/shipping/weight_based_detail.html:47
 msgid "Default product weight (kg)"
-msgstr "Poids par défaut du sujet (kg)"
+msgstr "Poids par défaut du dossier (kg)"
 
 #: templates/oscar/dashboard/shipping/weight_based_detail.html:55
 msgid "Edit shipping method"
@@ -8552,7 +8552,7 @@ msgstr "Supprimer l'alerte #%(id)s ?"
 #: templates/oscar/dashboard/users/alerts/update.html:28
 #, python-format
 msgid "Product alert #%(id)s"
-msgstr "Alerte sujet #%(id)s"
+msgstr "Alerte dossier #%(id)s"
 
 #: templates/oscar/dashboard/users/alerts/delete.html:36
 msgid "Are you sure that you want to delete this alert?"
@@ -8560,7 +8560,7 @@ msgstr "Etes vous sûr de vouloir supprimer cette alerte ?"
 
 #: templates/oscar/dashboard/users/alerts/list.html:26
 msgid "Search product alerts"
-msgstr "Rechercher les alertes de ce sujet"
+msgstr "Rechercher les alertes de ce dossier"
 
 #: templates/oscar/dashboard/users/alerts/list.html:33
 msgid "reset"
@@ -8615,7 +8615,7 @@ msgstr "Date d'inscription"
 
 #: templates/oscar/dashboard/users/detail.html:64
 msgid "Products viewed"
-msgstr "Sujets consultés"
+msgstr "Dossiers consultés"
 
 #: templates/oscar/dashboard/users/detail.html:68
 #: templates/oscar/dashboard/vouchers/voucher_detail.html:47
@@ -8652,7 +8652,7 @@ msgstr "Ce client n'a enregistré aucune adresse."
 
 #: templates/oscar/dashboard/users/detail.html:176
 msgid "Product ID"
-msgstr "ID Sujet"
+msgstr "ID Dossier"
 
 #: templates/oscar/dashboard/users/detail.html:192
 msgid "This customer has not written any reviews yet."
@@ -8759,7 +8759,7 @@ msgstr "Aucune offre de site pour le moment."
 
 #: templates/oscar/offer/list.html:40
 msgid "Browse products in offer"
-msgstr "Parcourir les sujets de l'offre"
+msgstr "Parcourir les dossiers de l'offre"
 
 #: templates/oscar/partials/image_input_widget.html:7
 #: templates/oscar/partials/image_input_widget.html:10
@@ -8891,7 +8891,7 @@ msgid ""
 "\n"
 "        Products matching \"%(q)s\"\n"
 "    "
-msgstr "\n        Sujets correspondant à \"%(q)s\"\n    "
+msgstr "\n        Dossiers correspondant à \"%(q)s\"\n    "
 
 #: templates/oscar/search/results.html:54
 #, python-format

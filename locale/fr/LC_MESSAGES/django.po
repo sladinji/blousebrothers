@@ -91,7 +91,7 @@ msgstr ""
 
 #: blousebrothers/confs/models.py:77
 msgid ""
-"Un sujet accessible apparaitra dans les recherches et pourra être acheté au "
+"Un dossier accessible apparaitra dans les recherches et pourra être acheté au "
 "prix que vous avez fixé."
 msgstr ""
 
@@ -150,7 +150,7 @@ msgid "Libellé"
 msgstr ""
 
 #: blousebrothers/dashboard/catalogue/forms.py:9
-msgid "Créer un nouveau sujet de type"
+msgid "Créer un nouveau dossier de type"
 msgstr ""
 
 #: blousebrothers/dashboard/catalogue/forms.py:10
@@ -482,11 +482,11 @@ msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_list.html:25
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:20
-msgid "Sujets"
+msgid "Dossiers"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_list.html:32
-msgid "Créer un nouveau sujet"
+msgid "Créer un nouveau dossier"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_list.html:37
@@ -494,7 +494,7 @@ msgid "Submitting..."
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_list.html:37
-msgid "Nouveau sujet"
+msgid "Nouveau dossier"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:44
@@ -511,7 +511,7 @@ msgid "Sections"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:71
-msgid "Énoncé du sujet"
+msgid "Énoncé du dossier"
 msgstr ""
 
 #: blousebrothers/templates/dashboard/catalogue/product_update.html:73
@@ -765,7 +765,7 @@ msgstr ""
 
 #: blousebrothers/templates/partials/nav_primary.html:45
 msgid "All products"
-msgstr "Tous les sujets"
+msgstr "Tous les dossiers"
 
 #: blousebrothers/templates/partials/nav_primary.html:64
 msgid "Offers"
@@ -784,7 +784,7 @@ msgid "Search"
 msgstr ""
 
 #: blousebrothers/templates/partials/submenu_conf_edit.html:12
-msgid "Choix du type de sujet"
+msgid "Choix du type de dossier"
 msgstr ""
 
 #: blousebrothers/templates/partials/submenu_conf_edit.html:23
@@ -927,159 +927,153 @@ msgstr "Français"
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "User product views"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Parent product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Child product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "All orders"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Delete product?"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Deleted product '%s'"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "All alerts"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "All partners"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "All Alerts"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "All vouchers"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Includes all products?"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Included Products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Excluded Products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Single product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Bestselling products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "No products found."
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Remove product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "View product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Number of products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "New Product"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Total Products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Total products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Product:"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "All Orders"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Num products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
-#, fuzzy
 #~| msgid "All products"
 #~ msgid "Edit products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
-#, fuzzy
 #~| msgid "All products"
 #~ msgid "products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
-#, fuzzy
 #~| msgid "All products"
 #~ msgid "Add products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
-#, fuzzy
 #~| msgid "All products"
 #~ msgid "New products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
-#, fuzzy
 #~| msgid "All products"
 #~ msgid "Duplicate products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
 
-#, fuzzy
 #~| msgid "All products"
 #~ msgid "Unknown products"
-#~ msgstr "Tous les sujets"
+#~ msgstr "Tous les dossiers"
