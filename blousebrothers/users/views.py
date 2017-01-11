@@ -72,7 +72,7 @@ class UserWalletView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.gave_all_mangopay_info():
             messages.error(self.request, 'Merci de compléter le formulaire ci-dessous '
-                           'pour pouvroir créditer ton compte.')
+                           'pour pouvoir créditer ton compte.')
             return redirect('users:update')
         else:
             return super().get(request, *args, **kwargs)

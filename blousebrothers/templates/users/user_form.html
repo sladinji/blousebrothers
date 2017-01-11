@@ -33,3 +33,29 @@
   </div>
 </div>
 {% endblock %}
+
+{% block extrascripts %}
+<script type="text/javascript">
+//on change hide all divs linked to select and show only linked to selected option
+$('#id_degree').change(function(){
+    if ( $(this).val() == 'MEDECIN' || $(this).val() == 'INTERNE'){
+        $('#div_id_speciality').slideDown();
+    }
+    else{
+        $('#div_id_speciality').slideUp();
+    }
+});
+</script>
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    $('#div_id_speciality').addClass('collapse');
+
+    if ( $('#id_degree').val() == 'MEDECIN' || $('#id_degree').val() == 'INTERNE'){
+        $('#div_id_speciality').slideDown();
+    }
+    else{
+        $('#div_id_speciality').slideUp();
+    }
+{% endblock %}
