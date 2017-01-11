@@ -37,6 +37,7 @@ class Product(AbstractProduct):
         self.interest_rating = self.calculate_rating('interest_score')
         self.clarity_rating = self.calculate_rating('clarity_score')
         self.correction_rating = self.calculate_rating('correction_score')
+        self.difficulty_rating = self.calculate_rating('difficulty_score')
         self.save()
     update_rating.alters_data = True
 

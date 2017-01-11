@@ -29,12 +29,10 @@
                             <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
                         {% endfor %}
                     </div>
-
-                    {% comment %}
-                    {% include 'partials/form_field.html' with field=form.score %}
-                    {% endcomment %}
                 </div>
                 {% endfor %}
+                
+                <label>{% trans "Difficulté" %}</label> {{ form.difficulty_score }} <strong>/ 10</strong>
 
                 {% include 'partials/form_field.html' with field=form.body %}
                 {% if form.name %}

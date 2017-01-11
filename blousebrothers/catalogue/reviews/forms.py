@@ -9,7 +9,7 @@ class ProductReviewForm(CoreProductReviewForm):
     class Meta:
         model = ProductReview
         fields = ('title', 'interest_score', 'clarity_score', 'correction_score',
-                  'body', 'name', 'email')
+                  'difficulty_score', 'body', 'name', 'email')
         labels = {
             'body': _('Commentaires libres'),
             'title': _('Titre'),
