@@ -60,7 +60,7 @@ def score100(test):
 
 @register.filter
 def get_test_url(test):
-    if test.has_review():
+    if not test.finished or test.has_review():
         return reverse('confs:test', kwargs={'slug': test.conf.slug})
     else:
         product = Product.objects.get(conf=test.conf)

@@ -1078,3 +1078,39 @@ a.score{
     float: left;
     margin: -14px 0;
 }
+
+@media (max-width: 991px){
+    .score{
+        float: none;
+        margin: 0;
+    }
+
+    .logo-wrapper {
+        text-align: center;
+    }
+    .top-header {
+        padding-top: 0px!important;
+    }
+}
+
+.mobile-navigation {
+    display: none;
+}
+/*
+@media (max-width: 767px){
+    .mobile-navigation {
+        display: inline-block;
+        margin-top: 7px;
+    }
+    .main-menu.pull-left{
+        display: none;
+    }
+}
+*/
+.logo {
+    margin-top: 16px;
+}
+
+.tips.tips-bottom.bb-container.bb-light-grey {
+    margin-bottom: 20px;
+}

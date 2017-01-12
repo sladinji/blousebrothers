@@ -41,38 +41,29 @@ settings file. This will enable the on-the-fly less compiler.
 <div class="container-fluid">
     <div class="main-menu-wapper">
         <div class="row">
-            <div class="col-sm-12 col-md-2 logo-wapper">
+            <div class="col-sm-12 col-md-2 logo-wrapper">
                 <div class="logo">
                     <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=160px alt=""></a>
                 </div>
             </div>
             <div class="col-sm-12 col-md-10 menu-wapper">
                 <div class="top-header">
+                    <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
                     {% if not request.user.is_authenticated %}
                     <div class="slogan">BlouseBrothers</div><span class="demo-header">J-{{ dday }}</span>
                     {% else %}
                     <ul class="boutique-nav main-menu clone-main-menu pull-left">
+                        <li class="menu-item-has-children item-megamenu">
+                            <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
+                        </li>
                         {% if request.user.is_conferencier%}
                         <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Confs créées' %}</a>
                         </li>
                         {% endif %}
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'confs:my_confs' %}"><span class="fa fa-check-circle-o"></span> {% trans 'Mes confs' %}</a>
+                            <a href="{% url 'confs:my_confs' %}"><span class="fa fa-check-circle-o"></span> {% trans 'Confs achetées' %}</a>
                         </li>
-                    </ul>
-                    {% endif %}
-                    <ul class="boutique-nav main-menu clone-main-menu pull-right">
-                        <div class="box-control">
-                            <div class="con-menu">
-                                <ul class="boutique-nav main-menu clone-main-menu">
-                                    {% if request.user.is_authenticated %}
-                                    {% if request.user.is_staff or perms.partner.dashboard_access %}
-                                    <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
-                                    {% endif %}
-                                </ul>
-                    </ul>
-                    <ul class="boutique-nav main-menu clone-main-menu pull-right">
                         <li class="menu-item-has-children item-megamenu"><a id="wallet_link" href="{% url 'users:wallet' %}"><i class="icon-money"></i> {{ balance }}</a></li>
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
@@ -86,25 +77,35 @@ settings file. This will enable the on-the-fly less compiler.
                             <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {{ request.user.username }}</a>
                             {% endif %}
                         </li>
+                        {% if request.user.is_staff or perms.partner.dashboard_access %}
+                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
+                        {% endif %}
+                        {% endif %}
+                    </ul>
+                    <ul class="boutique-nav main-menu clone-main-menu pull-right">
+                        {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
                         {% else %}
                         {% block connect_link %}
+                        <li class="menu-item-has-children item-megamenu">
+                            <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
+                        </li>
                         <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
                         {% endblock connect_link %}
                         {% endif %}
                     </ul>
-                            </div>
-
-                        </div>
-                        {% block submenu %}
-                        <a class="btn btn-rules" href="{% url 'regledujeu' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a>
-                        <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
-                        {% endblock %}
                 </div>
 
             </div>
+            {% block submenu %}
+            <a class="btn btn-rules" href="{% url 'regledujeu' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a>
+            <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
+            {% endblock %}
         </div>
+
     </div>
+</div>
+</div>
 </div>
 {% endblock main_header %}
 {# Main content of page - other layout templates may override this block #}
