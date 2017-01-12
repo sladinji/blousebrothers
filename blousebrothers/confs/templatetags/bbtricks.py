@@ -66,7 +66,7 @@ def get_test_url(test):
         product = Product.objects.get(conf=test.conf)
         return reverse('catalogue:reviews-add', kwargs={
             'product_slug': product.slug, 'product_pk': product.id}
-        )
+        ) + '#addreview'
 
 
 @register.filter

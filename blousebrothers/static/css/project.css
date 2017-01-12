@@ -1078,6 +1078,9 @@ a.score{
     float: left;
     margin: -14px 0;
 }
+.user_score .score{
+    float: none;
+}
 
 @media (max-width: 991px){
     .score{

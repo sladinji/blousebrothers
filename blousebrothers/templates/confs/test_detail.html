@@ -55,8 +55,8 @@
 	    <div class="col-sm-6">
 	      <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score |floatformat:2 }} / {{ t_answer.max_score }}</h1>
 	    </div>
-	    <div class="col-sm-6">
-	      <a class="pull-right commenting btn" data-toggle="modal" data-target="#myModal"> <i class="fa fa-commenting" aria-hidden="true" data-question-id="{{ t_answer.question.id }}"></i> Signaler un problème au Conférencier</a>
+	    <div class="col-sm-6" id="btn-comment" data-question-id="{{ t_answer.question.id }}">
+	      <a class="pull-right commenting btn" data-toggle="modal" data-target="#myModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Signaler un problème au Conférencier</a>
 	    </div>
 	    <legend>Question {{ t_answer.question.index | add:"1" }} </legend>
       <div class="col-sm-12">
@@ -165,7 +165,7 @@ $.ajaxSetup({
         }
     }
 });
-$("a .fa-commenting").click( function(){
+$("#btn-comment").click( function(){
 	question_id_comment = $(this).data("question-id");
 });
 
