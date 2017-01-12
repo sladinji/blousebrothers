@@ -14,7 +14,7 @@ Voucher = get_class('voucher.models', 'Voucher')
 
 def create_promo(
     type='Absolute',
-    value=15,
+    value=5,
     name='Offre de lancement',
     code='CODETEST',
     start_datetime='03/01/2017 12:30:46',
@@ -50,7 +50,7 @@ def create_promo(
 
 
 class Command(BaseCommand):
-    help = "Create code promo abonnement 15 euros"
+    help = "Create code promo abonnement 5 euros"
 
     def add_arguments(self, parser):
         parser.add_argument('url', type=str)
@@ -61,7 +61,7 @@ class Command(BaseCommand):
         reader = csv.DictReader(decoder(data))
 
         with open("code.csv", "w") as out:
-            writer = csv.DictWriter(out, reader.fieldnames + ['CODE15EUR'])
+            writer = csv.DictWriter(out, reader.fieldnames + ['CODE5EUR'])
             writer.writeheader()
             for row in reader:
                 code = "Just-4-" + row['Email'].split('@')[0]
@@ -69,4 +69,4 @@ class Command(BaseCommand):
                     create_promo(code=code)
                 except IntegrityError as err:
                     self.stdout.write(self.style.ERROR(err))
-                writer.writerow(dict(CODE15EUR=code, **row))
+                writer.writerow(dict(CODE5EUR=code, **row))

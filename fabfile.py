@@ -101,3 +101,12 @@ def futur_gen_code():
     with cd(code_dir):
         with prefix("source blouserc"):
             run('./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
+
+
+@hosts('dowst@futur.blousebrothers.fr')
+def futur_syncdb():
+    with cd(code_dir):
+        with prefix("source blouserc"):
+            run('fab proddb')
+    futur_publish_confs()
+    futur_gen_code()
