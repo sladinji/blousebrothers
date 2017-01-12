@@ -237,8 +237,8 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 # ------------------------------------------------------------------------------
 DEFAULT_HTTP_PROTOCOL = 'https'
 
-STRIPE_SECRET_KEY = "sk_test_2KQKtb6qy1MPyReB6Kr3petm"
-STRIPE_PUBLISHABLE_KEY = "pk_test_UbddRFpfPbpdIZqor6NZY5Zc"
+STRIPE_SECRET_KEY = "sk_live_torhubBPo167OAXtfBOdTLTN"
+STRIPE_PUBLISHABLE_KEY = "pk_live_I6LrnYAd6sPuGXsLLv3W3V75"
 STRIPE_CURRENCY = "EUR"
 
 MANGOPAY_DEBUG_MODE = False
