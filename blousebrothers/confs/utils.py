@@ -27,13 +27,13 @@ def load_conf(conf):
     prod.description = conf.summary
     if conf.statement:
         prod.description += '\n' + conf.statement[:200] + "..."
-        if conf.images.first():
-            im = ProductImage(product=prod, display_order=1)
-            cim = conf.images.first()
-            im.original = cim.image
-            im.save()
-            prod.conf = conf
-            prod.save()
+        #if conf.images.first():
+        #    im = ProductImage(product=prod, display_order=1)
+        #    cim = conf.images.first()
+        #    im.original = cim.image
+        #    im.save()
+        #    prod.conf = conf
+        #    prod.save()
 
     ProductCategory.objects.get_or_create(product=prod, category=cat)
     partner, _ = Partner.objects.get_or_create(name="NOUS")
