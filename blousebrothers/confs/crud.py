@@ -2,6 +2,7 @@ import logging
 
 from django.views.generic import FormView
 from django.http import JsonResponse
+from django.core.mail import EmailMultiAlternatives
 
 from djng.views.crud import NgCRUDView
 
@@ -254,6 +255,33 @@ class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, FormView)
             student=request.user,
             comment=request.POST['comment'],
         )
+        q = Question.objects.get(pk=request.POST['question_id'])
+        body = """Bonjour,
+
+{username} a une remarque sur la question {index} de la conference {title}:
+
+{comment}
+
+---
+
+Vous pouvez lui répondre directement directement via cet email.
+"""
+
+        tags = dict(username=request.user.username,
+                    index=q.index + 1,
+                    title=q.conf.title,
+                    comment=request.POST['comment'],
+                    )
+        body = body.format(**tags)
+
+        msg = EmailMultiAlternatives(
+            'Question conférence "{}"'.format(q.conf.title),
+            body,
+            request.user.email,
+            [q.conf.owner.email, ],
+        )
+        msg.esp_extra = {"sender_domain": "blousebrothers.fr"}
+        msg.send()
         return JsonResponse(dict(success=1))
 
 

@@ -5,13 +5,12 @@ import re
 import os
 import uuid
 from decimal import Decimal
+from datetime import date
 import logging
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.dispatch import receiver
 from django.utils.safestring import mark_safe
 from django.core.validators import int_list_validator
 
@@ -50,6 +49,7 @@ class Conference(models.Model):
     TYPE_CHOICES = (
         ('DCP', _('DCP')),
         ('QI', _('QI')),
+        ('LCA', _('LCA')),
     )
 
     def __str__(self):
@@ -120,7 +120,8 @@ class Conference(models.Model):
         conf = self.images.count()
         question = QuestionImage.objects.filter(question__conf=self).count()
         answer = AnswerImage.objects.filter(answer__question__conf=self).count()
-        return conf + question + answer
+        qei = QuestionExplainationImage.objects.filter(question__conf=self).count()
+        return conf + question + answer + qei
 
 
 def conf_directory_path(conf_image, filename):
@@ -182,7 +183,7 @@ class Question(models.Model):
         return one_good and all_filled
 
     def __str__(self):
-        return str(self.index + 1)+ '. ' + self.question[:20] + '...'
+        return str(self.index + 1) + '. ' + self.question[:20] + '...'
 
     @property
     def good_answers(self):
@@ -194,17 +195,17 @@ class Question(models.Model):
 
     @property
     def good_index(self):
-        return [ x.index for x in self.good_answers]
+        return [x.index for x in self.good_answers]
 
     @property
     def bad_index(self):
-        return [ x.index for x in self.bad_answers]
+        return [x.index for x in self.bad_answers]
 
 
 class QuestionComment(models.Model):
     question = models.ForeignKey(Question, related_name="comments")
     student = models.ForeignKey('users.User', blank=False, null=False,
-                              related_name="comments")
+                                related_name="comments")
     comment = models.TextField(_("Explication"), blank=True, null=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
 
@@ -222,13 +223,13 @@ class Answer(models.Model):
 
 def answer_image_directory_path(answer_image, filename):
     return '{0}/conf_{1}/answers/{2}'.format(answer_image.answer.question.conf.owner.username,
-                                               answer_image.answer.question.conf.id,
-                                               "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
-                                                                        filename
-                                                                        ),
-                                                             os.path.splitext(filename)[-1]
-                                                             )
-                                               )
+                                             answer_image.answer.question.conf.id,
+                                             "{}{}".format(uuid.uuid5(uuid.NAMESPACE_DNS,
+                                                                      filename
+                                                                      ),
+                                                           os.path.splitext(filename)[-1]
+                                                           )
+                                             )
 
 
 class AnswerImage(models.Model):
@@ -237,7 +238,7 @@ class AnswerImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=200, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
-    answer= models.ForeignKey('Answer', related_name='images')
+    answer = models.ForeignKey('Answer', related_name='images')
 
 
 def question_image_directory_path(question_image, filename):
@@ -271,7 +272,7 @@ class QuestionExplainationImage(models.Model):
 
 class Test(models.Model):
     student = models.ForeignKey('users.User', blank=False, null=False,
-                              related_name="tests")
+                                related_name="tests")
     conf = models.ForeignKey('Conference', related_name='tests')
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     progress = models.PositiveIntegerField(_("Progression"), default=0)
@@ -288,6 +289,18 @@ class Test(models.Model):
                                      )
     time_taken = models.TimeField(_("Temps passé"), null=True)
 
+    def position(self):
+        """
+        Classement
+        """
+        return Test.objects.filter(conf=self.conf, finished=True, result__gt=self.result).count() + 1
+
+    def total(self):
+        """
+        Total of this test
+        """
+        return Test.objects.filter(conf=self.conf, finished=True).count()
+
     def set_score(self):
         for t_answer in self.answers.all():
             t_answer.set_score()
@@ -298,11 +311,20 @@ class Test(models.Model):
 
     @property
     def fatal_errors(self):
-        return [ x for ta in self.answers.all() for x in ta.fatals.all() ]
+        return [x for ta in self.answers.all() for x in ta.fatals.all()]
 
     @property
     def nb_errors(self):
         return self.answers.aggregate(models.Sum('nb_errors')).get("nb_errors__sum")
+
+    def has_review(self):
+        """
+        Check if test was reviewed by user.
+        """
+        from django.apps import apps
+        Product = apps.get_model('catalogue', 'Product')
+        product = Product.objects.get(conf=self.conf)
+        return product.has_review_by(self.student)
 
 
 class TestAnswer(models.Model):
@@ -325,7 +347,7 @@ class TestAnswer(models.Model):
         bga = omissions + errors
         self.nb_errors = len(bga)
         fatals = [x for x in bga if x.ziw]
-        if fatals :
+        if fatals:
             self.fatals.add(*fatals)
         if sorted(ga) == sorted(self.question.good_index):
             self.score = self.max_score
@@ -336,3 +358,21 @@ class TestAnswer(models.Model):
         elif len(bga) == 1:
             self.score = Decimal(0.5 * self.question.coefficient)
         self.save()
+
+class SubscriptionType(models.Model):
+    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
+    description = models.TextField(_('Description'), blank=True, null=True)
+    nb_month = models.IntegerField(_('Durée'), blank=True, null=True)
+    price = models.DecimalField(_("Prix"), max_digits=6, decimal_places=2, default=0)
+
+class Subscription(models.Model):
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
+    type = models.ForeignKey('SubscriptionType', related_name="subs", blank=False, null=False)
+    date_created = models.DateField(_("Date created"), auto_now_add=True)
+    date_over = models.DateField(_("Date created"), null=False)
+    price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
+
+
+    @property
+    def is_past_due(self):
+        return date.today() > self.date_over

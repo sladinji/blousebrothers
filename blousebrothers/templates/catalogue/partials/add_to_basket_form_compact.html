@@ -1,6 +1,7 @@
 {% load basket_tags %}
 {% load i18n %}
 {% load purchase_info_tags %}
+{% load bbtricks %}
 
 {% purchase_info_for_product request product as session %}
 
@@ -9,9 +10,18 @@
     <form action="{% url 'basket:add' pk=product.pk %}" method="post">
         {% csrf_token %}
         {{ basket_form.as_p }}
-        <button type="submit" class="btn btn-primary btn-block" data-loading-text="{% trans 'Adding...' %}">{% trans "Ajouter à mes confs" %}</button>
+        <button type="submit" class="btn btn-gray" data-loading-text="{% trans 'Démarrage...' %}">
+  {% if product.conf %}
+    {% if user|already_done:product.conf %}
+        {% trans "Résultat" %}</button>
+    {% else %}
+        {% trans "Go !" %}</button>
+    {% endif %}
+  {% else %}
+  	{% trans "Add to basket" %}</button>
+  {% endif %}
     </form>
 {% else %}
-    <span class="btn btn-default btn-block disabled">{% trans "Add to basket" %}</span>
+    <span class="btn btn-default btn-block disabled">{% trans "Bientôt disponible !" %}</span>
 {% endif %}
 

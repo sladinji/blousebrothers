@@ -3,32 +3,37 @@
 {% load bbtricks %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
-{% block submenu %}
-{% include 'partials/submenu_search.html' with action="confs:my_confs" %}
-{% endblock %}
 
 {% block content %}
 
 <div class="container">
 
-	<h2>{% trans 'Mes confs' %}</h2>
-	<p><i>{% trans 'Retrouve ici les Confs que tu as achetées' %}</i></p>
+    <div class="row theader">
+        <div class="col-md-6">
+            <h2>{% trans 'Mes confs' %}</h2>
+            <p>{% trans 'Retrouve ici les Confs que tu as achetées' %}</p>
+        </div>
+        <div class="col-md-6">
+            {% include 'partials/submenu_search.html' with action="confs:my_confs" %}
+        </div>
+    </div>
 
     <div class="list-group">
         {% for test in test_list %}
-          <a href="{% url 'confs:test' test.conf.slug %}" class="list-group-item">
-		  <h4 class="list-group-item-heading">
-			  <strong>{{ test.conf.title }}</strong> <i>- {{ test.conf.summary }} -</i>
-			  {% if test.finished %}
-			  <strong><big>{{ test | score100 }}</big> / 100</strong>
-			  {% endif %}
-		  </h4>
-          </a>
-	   <div class="progress">
-		<div class="progress-bar" role="progressbar" aria-valuenow="{{test.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{test.progress}}%">
-			{{test.progress}}%
-		</div>
-	   </div>
+        <a href="{{ test | get_test_url }}" class="list-group-item">
+            <h4 class="list-group-item-heading">
+                <strong>{{ test.conf.title }}</strong><br>
+                {% if test.finished %}
+                {{ test | score100 }}
+                {% endif %}
+                <i>- {{ test.conf.summary }} -</i>
+            </h4>
+        </a>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{test.progress}}%">
+                {{test.progress}}%
+            </div>
+        </div>
 
         {% endfor %}
 

@@ -1,1 +1,1 @@
-default_app_config = 'netalis.partner.config.PartnerConfig'
+default_app_config = 'blousebrothers.partner.config.PartnerConfig'

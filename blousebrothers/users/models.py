@@ -34,6 +34,12 @@ class User(AbstractUser):
         ('MEDECIN', _('Médecin')),
     )
 
+    def has_valid_subscription(self):
+        return [x for x in self.subs.all() if not x.is_past_due]
+
+    def already_done(self, conf):
+        return self.tests.filter(conf=conf)
+
     def gen_sponsor_code():
         """
         Return a unique 8 numbers codes for user. Used as function to generate default value.
@@ -96,6 +102,12 @@ class User(AbstractUser):
     """Friends"""
     country_of_residence = CountryField(_("Pays de résidence"), default="FR", blank=False)
     nationality = CountryField(_("Nationalité"), default="FR", blank=False)
+    speciality = models.CharField(_("Spécialité"), max_length=128, blank=True, null=True)
+    bio = models.TextField(_("Bio visible par les utilisateurs"),
+                           blank=True, null=True,
+                           help_text=_("Important si tu es conférencier !"),
+                           )
+
 
     def gave_all_required_info(self):
         """Used for permission management"""
@@ -104,6 +116,10 @@ class User(AbstractUser):
         if self.wanabe_conferencier or self.is_conferencier:
             return self.university and self.first_name and self.last_name and self.degree
         return True
+
+    def gave_all_mangopay_info(self):
+        return self.birth_date and self.country_of_residence and self.nationality \
+            and self.first_name and self.last_name
 
 
 class University(models.Model):

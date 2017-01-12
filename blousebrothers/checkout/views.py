@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.apps import apps
 from django.conf import settings
 from django.utils.decorators import method_decorator
@@ -32,6 +33,8 @@ class PaymentDetailsView(CorePaymentDetailsView):
         return ctx
 
     def handle_payment(self, order_number, total, **kwargs):
+        if total.excl_tax == Decimal('0.00'):
+            return
         stripe_ref = Facade().charge(
             order_number,
             total,

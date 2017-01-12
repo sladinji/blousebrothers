@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 import logging
 
+from django.apps import apps
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -28,6 +29,7 @@ from blousebrothers.shortcuts.auth import (
     ConferenceWritePermissionMixin,
     ConferenceReadPermissionMixin,
     TestPermissionMixin,
+    PassTestPermissionMixin,
     BBLoginRequiredMixin,
 )
 from blousebrothers.shortcuts.tools import analyse_conf
@@ -46,6 +48,7 @@ from .models import (
 from .forms import ConferenceForm, ConferenceFinalForm
 
 logger = logging.getLogger(__name__)
+Product = apps.get_model('catalogue', 'Product')
 
 
 class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin, DetailView):
@@ -260,7 +263,7 @@ Email : {}
 Lien : {}{}{}'''
 
     def get(self, request, *args, **kwargs):
-        if 'Iwanabe' in request.GET:
+        if not request.user.is_conferencier:
             request.user.is_conferencier = True
             request.user.wanabe_conferencier = False
             request.user.wanabe_conferencier_date = datetime.now()
@@ -277,6 +280,9 @@ Lien : {}{}{}'''
                                              )
             logger.info(msg)
             mail_admins('Passage conférencier', msg)
+        return redirect(
+                reverse('confs:create')
+            )
 
         return render(request, 'confs/wanabe_conferencier.html')
 
@@ -372,16 +378,20 @@ class TestResult(TestPermissionMixin, DetailView):
             test.set_score()
         return test
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        product = Product.objects.get(conf=self.object.conf)
+        ctx.update(product=product)
+        return ctx
+
 
 class TestResetView(BBLoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Test
     fields = ['id']
 
     def test_func(self, **kwargs):
-        if self.request.user.is_superuser:
-            return True
         obj = self.get_object()
-        return obj.conf.owner == self.request.user
+        return obj.student == self.request.user
 
     def form_valid(self, form):
         self.object.finished = False

@@ -66,6 +66,7 @@ THIRD_PARTY_APPS = [
     'hijack_admin',
     'analytical',
     'robots',
+    'cuser'
 ]
 
 # Apps specific for this project go here.
@@ -80,8 +81,10 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + get_core_apps(
       ['blousebrothers.dashboard',
        'blousebrothers.catalogue',
+       'blousebrothers.catalogue.reviews',
        'blousebrothers.checkout',
        'blousebrothers.basket',
+       'blousebrothers.partner',
        ]
 )
 SITE_ID = 1
@@ -93,6 +96,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'cuser.middleware.CuserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'oscar.apps.basket.middleware.BasketMiddleware',
@@ -219,6 +223,9 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+                'blousebrothers.context_processor.subscriptions',
+                'blousebrothers.context_processor.balance',
+                'blousebrothers.context_processor.dday',
             ],
         },
     },
@@ -277,6 +284,7 @@ ACCOUNT_LOGOUT_ON_GET=True
 
 ACCOUNT_ALLOW_REGISTRATION = True
 ACCOUNT_ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
+ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 SOCIALACCOUNT_ADAPTER = 'blousebrothers.users.adapters.SocialAccountAdapter'
 

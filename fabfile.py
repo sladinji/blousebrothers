@@ -1,9 +1,9 @@
 from __future__ import with_statement
-import re
 from fabric.api import *
 import requests
+import re
 
-env.hosts = ['dowst@blousebrothers.fr']
+env.hosts = ['admin@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
 
 
@@ -12,9 +12,10 @@ def send_simple_message(msg):
                 "https://api.mailgun.net/v3/blousebrothers.fr/messages",
                 auth=("api", "key-0cb37ccb0c2de16fc921df70228346bc"),
                 data={"from": "Futur Bot <noreply@blousebrothers.fr>",
-                                    "to": ["julien.almarcha@gmail.com", "guillaume@blousebrothers.fr"],
+                      "to": ["julien.almarcha@gmail.com", "guillaume@blousebrothers.fr"],
                       "subject": "http://futur.blousebrothers.fr:8000 updated",
-                                    "text": msg})
+                      "text": msg})
+
 
 def deploy():
     with settings(warn_only=True):
@@ -26,8 +27,9 @@ def deploy():
         run("docker-compose up -d")
         run("docker-compose run django ./manage.py migrate")
 
-@hosts('admin@futur.blousebrothers.fr')
-def futur(branch='master'):
+
+@hosts('dowst@futur.blousebrothers.fr')
+def futur(branch='master',reset='no'):
     """
     Deploy on futur
     """
@@ -37,13 +39,20 @@ def futur(branch='master'):
     with cd(code_dir):
         run("git fetch")
         run("git checkout {}".format(branch))
-        logs = run("git log --pretty=oneline --no-color --abbrev-commit ..origin/master")
-        send_simple_message(logs)
+        logs = run("git log --pretty=oneline --abbrev-commit ..origin/{}".format(branch))
+        logs = ["* {}".format(x) for x in re.findall(r'\[m (.*)\x1b', logs)]
+        send_simple_message("\n".join(logs))
         run("git merge")
         with prefix("source blouserc"):
             run("docker-compose build")
             run("docker-compose up -d")
             run("docker-compose run django ./manage.py migrate")
+            if reset == 'yes':
+                run("fab proddb")
+                run("docker-compose run django ./manage.py migrate")
+                run('docker-compose run django ./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
+                run('docker-compose run django ./manage.py publish_confs')
+
 
 def proddb():
     """
@@ -51,20 +60,21 @@ def proddb():
     """
     with cd(code_dir):
         run("docker-compose run postgres backup")
-        backups = run("docker-compose run postgres list-backups").replace("\r\n",'\t').split('\t')[3:]
+        backups = run("docker-compose run postgres list-backups").replace("\r\n", '\t').split('\t')[3:]
         last = sorted(backups)[-1]
         run(r"docker run --rm --volumes-from blousebrothers_postgres_1 "
             r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
 
     get("%s/backup.tgz" % code_dir)
-    local("cd dowst@blousebrothers.fr && tar xzf backup.tgz")
+    local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
     local("docker run --rm "
           "--volumes-from blousebrothers_postgres_1 "
-          "-v $(pwd)/dowst@blousebrothers.fr/backups:/backup "
+          "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
           "blousebrothers_postgres cp /backup/%s /backups" % last)
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")
+
 
 def get_migrations():
     """
@@ -75,7 +85,8 @@ def get_migrations():
     get("%s/blousebrothers/users/migrations/*.py" % code_dir, "blousebrothers/users/migrations/")
     get("%s/blousebrothers/confs/migrations/*.py" % code_dir, "blousebrothers/confs/migrations/")
 
-@hosts('admin@futur.blousebrothers.fr')
+
+@hosts('dowst@futur.blousebrothers.fr')
 def futur_publish_confs():
     """
     Publish_confs on futur.
@@ -83,3 +94,19 @@ def futur_publish_confs():
     with cd(code_dir):
         with prefix("source blouserc"):
             run("docker-compose run django ./manage.py publish_confs")
+
+
+@hosts('dowst@futur.blousebrothers.fr')
+def futur_gen_code():
+    with cd(code_dir):
+        with prefix("source blouserc"):
+            run('./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
+
+
+@hosts('dowst@futur.blousebrothers.fr')
+def futur_syncdb():
+    with cd(code_dir):
+        with prefix("source blouserc"):
+            run('fab proddb')
+    futur_publish_confs()
+    futur_gen_code()

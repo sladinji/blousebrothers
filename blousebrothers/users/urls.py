@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -27,9 +28,16 @@ urlpatterns = [
         name='update'
     ),
     # Wallet
+    url(r'^~wallet/$', TemplateView.as_view(template_name='pages/wallet_teaser.html'), name='wallet'),
+    #url(
+    #    regex=r'^~wallet/$',
+    #    view=views.UserWalletView.as_view(),
+    #    name='wallet'
+    #),
+    # Subscription
     url(
-        regex=r'^~wallet/$',
-        view=views.UserWalletView.as_view(),
-        name='wallet'
+        regex=r'^~subscription/(?P<sub_id>[\d]*)$',
+        view=views.Subscription.as_view(),
+        name='subscription'
     ),
 ]

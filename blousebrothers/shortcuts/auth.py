@@ -2,6 +2,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 from blousebrothers.confs.models import Conference, Question, Answer, Test
 
@@ -17,6 +19,7 @@ class BBRequirementMixin(BBLoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         if not request.user.gave_all_required_info():
+            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
             return redirect("users:update")
         else:
             return super().get(request, *args, **kwargs)
@@ -32,6 +35,7 @@ class BBConferencierReqMixin(BBLoginRequiredMixin):
         if user.is_superuser or request.is_googlebot:
             return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info():
+            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
             return redirect("users:update")
         if not user.is_conferencier:
             return redirect("confs:wanabe_conferencier")
@@ -49,6 +53,21 @@ class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
             return True
         self.object = self.get_object()
         return self.object.student == self.request.user
+
+
+class PassTestPermissionMixin(TestPermissionMixin):
+    """
+    Same as TestPermissionMixin but user also need a valid subscription
+    """
+
+    def test_func(self):
+        if not super().test_func():
+            return False
+        return self.request.user.has_valid_subscription()
+
+    def handle_no_permission(self):
+        messages.error(self.request, _("Tu dois disposer d'un abonnement à jour pour faire une conf"))
+        return redirect("users:detail", **{'username':self.request.user.username})
 
 
 class CanAddConfPermission(PermissionRequiredMixin):

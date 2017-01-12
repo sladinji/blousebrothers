@@ -1,4 +1,5 @@
 from oscar.apps.catalogue.managers import BrowsableProductManager as BaseBrowsableProductManager
+from cuser.middleware import CuserMiddleware
 
 
 class BrowsableProductManager(BaseBrowsableProductManager):
@@ -11,4 +12,8 @@ class BrowsableProductManager(BaseBrowsableProductManager):
         Remove suscription
         """
         qs = super().get_queryset()
-        return qs.exclude(product_class__name='Abonnements')
+        user = CuserMiddleware.get_user()
+        if not user or not user.is_staff :
+            qs = qs.exclude(product_class__name='Abonnements')
+        qs = qs.order_by('stockrecords__price_excl_tax')
+        return qs

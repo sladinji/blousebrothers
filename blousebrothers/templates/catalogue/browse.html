@@ -5,6 +5,9 @@
 {% load category_tags %}
 {% load product_tags %}
 {% load i18n %}
+{% load bbtricks %}
+{% load purchase_info_tags %}
+{% load currency_filters %}
 
 {% block title %}
     {% if summary %}{{ summary }} |{% endif %} {{ block.super }}
@@ -47,6 +50,23 @@
             </ul>
         </div>
     {% endif %}
+    
+    <section id="pricing">
+        {% for sub in subscriptions %}
+        <div class="p-style1 column_left">
+            <div class="package">
+                <h4>{{ sub.title }}</h4>
+                {% purchase_info_for_product request sub as session %}
+                <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
+            </div>
+            <ul class="inclusion">
+                {{ sub.description | sub_desc_custo | safe }}
+                <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray"><i class="fa fa-check-circle" aria-hidden="true"></i> Souscrire</a></li>
+            </ul>
+        </div>
+        {% endfor %}
+    </section>
+
     {% if has_facets %}
         <h4>{% trans "Refine by" %}</h4>
         <div class="side_categories">
@@ -98,10 +118,10 @@
 
     {% if products %}
         <section>
-            <div>
+            <div class="product-compact">
                 <ol class="row">
                     {% for product in products %}
-                        <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">{% render_product product %}</li>
+                        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">{% render_product product %}</li>
                     {% endfor %}
                 </ol>
                 {% include "partials/pagination.html" %}

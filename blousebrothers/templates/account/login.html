@@ -21,7 +21,6 @@
 {% endblock %}
 
 {% block content %}
-
 	  <form action="{% url 'account_login' %}" id="signin_form" method="post">
 	    {{ form.non_field_errors }}
 	    {% csrf_token %}

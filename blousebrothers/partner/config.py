@@ -2,4 +2,4 @@ from oscar.apps.partner import config
 
 
 class PartnerConfig(config.PartnerConfig):
-    name = 'netalis.partner'
+    name = 'blousebrothers.partner'

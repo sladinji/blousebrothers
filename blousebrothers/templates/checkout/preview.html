@@ -1,22 +1,28 @@
 {% extends 'oscar/checkout/preview.html' %}
 {% load currency_filters %}
+{% load thumbnail %}
+{% load purchase_info_tags %}
+{% load i18n %}
+
+{% block shipping_address %}
+{% endblock shipping_address %}
 
 {% block payment_method %}
 <div class="span6">
 	<div class="sub-header">
-		<h2>Payment</h2>
+		<h2>{% trans 'Payment' %}</h2>
 	</div>
 	<div class="well well-success">
-		<p>{{ order_total.incl_tax|currency }} will be debited from your bankcard.</p>
+		<p>{{ order_total.incl_tax|currency }} {% trans 'seront débités sur votre carte.'%}</p>
 		<div class="alert-actions">
-			<a href="{% url 'checkout:payment-details' %}" class="btn">Change payment details</a>
+			<a href="{% url 'checkout:payment-details' %}" class="btn">{% trans 'Changer de mode de paiement' %}</a>
 		</div>
 	</div>
 </div>
 {% endblock %}
 
 {% block place_order %}
-<h3>Please review the information below, then click "Place Order"</h3>
+<h3>{% trans 'Si tout est OK pour toi, clique sur commander.' %}</h3>
 <form method="post" action="{% url 'checkout:preview' %}">
 	{% csrf_token %}
 
@@ -26,7 +32,71 @@
 	</div>
 
     <div class="form-actions">
-        <button id='place-order' type="submit" value="Place order" class="pull-right btn btn-primary btn-large js-disable-on-click">Place order</button>
+        <button id='place-order' type="submit" value="Place order" class="pull-right btn btn-primary btn-large js-disable-on-click">{% trans 'Commander' %}</button>
     </div>
 </form>
 {% endblock place_order %}
+
+{% block order_contents %}
+    <div class="sub-header">
+	{% block order_contents_actions %}
+	    <a href="{% url 'basket:summary' %}" class="pull-right">
+		{% trans "Modifier ma commande" %}
+	    </a>
+	{% endblock %}
+
+	<h2>{% trans "Order contents" %}</h2>
+    </div>
+    <div class="basket-title">
+	<div class="row">
+	    <p class="col-sm-9 h4">{% trans "Item" %}</p>
+	    <p class="col-sm-1 h4 align-center">{% trans "Quantity" %}</p>
+	    <p class="col-sm-2 h4 align-right">{% trans "Total" %}</p>
+	</div>
+    </div>
+    {% for line in basket.all_lines %}
+	{% purchase_info_for_line request line as session %}
+	<div class="basket-items">
+	    <div class="row">
+		<div class="col-sm-2">
+		    <div class="image_container">
+		    </div>
+		</div>
+		<div class="col-sm-7">
+		    <h3><a href="{{ line.product.get_absolute_url }}">{{ line.description }}</a></h3>
+		</div>
+		<div class="col-sm-1 align-center">
+		    {{ line.quantity }}
+		</div>
+		<div class="col-sm-2 align-right">
+		    <p class="price_color">
+			{% if not show_tax_separately and line.is_tax_known %}
+			    {{ line.line_price_incl_tax|currency:basket.currency }}
+			{% else %}
+			    {{ line.line_price_excl_tax|currency:basket.currency }}
+			{% endif %}
+		    </p>
+		</div>
+	    </div>
+	</div>
+    {% endfor %}
+
+    <div class="row">
+	<div class="col-sm-6">&nbsp;</div>
+	<div class="col-sm-6">
+	    <div class="sub-header">
+		<h2>{% trans 'Totals' %}</h2>
+	    </div>
+	    {% include 'basket/partials/basket_totals.html' %}
+	</div>
+    </div>
+
+{% endblock order_contents %}
+
+{% block shipping_method %}
+{% endblock shipping_method %}
+
+{% block payment_details %}
+{% endblock payment_details %}
+
+

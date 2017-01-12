@@ -243,6 +243,12 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 		Conference.get({slug: slug}).$promise
     		.then(function(result){
     			$scope.conference = result;
+                if (result['type'] == 'LCA'){
+                    $scope.conf_place_holder = "Indique le lien vers le texte complet de l'article, ainsi que son titre, les auteurs, le journal et l'année de publication";
+                }
+                else{
+                    $scope.conf_place_holder = "Clique ici pour rédiger l'énoncé";
+                }
 			toaster.pop('success', "{% trans 'Cette page enregistre en permanence tes modifications, no stress ;)' %}", "");
 			Question.query({conf: $scope.conference.pk}).$promise
     			.then(function(result){
