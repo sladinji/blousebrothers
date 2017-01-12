@@ -380,8 +380,11 @@ class TestResult(TestPermissionMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        product = Product.objects.get(conf=self.object.conf)
-        ctx.update(product=product)
+        try :
+            product = Product.objects.get(conf=self.object.conf)
+            ctx.update(product=product)
+        except :
+            ctx.update(product=None)
         return ctx
 
 
