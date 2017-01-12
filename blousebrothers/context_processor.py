@@ -20,7 +20,7 @@ def subscriptions(request):
 
 def dday(request):
     from datetime import datetime
-    d = datetime(2017, 1, 23) - datetime.now()
+    d = datetime(2017, 2, 14) - datetime.now()
     return {'dday': d.days}
 
 
