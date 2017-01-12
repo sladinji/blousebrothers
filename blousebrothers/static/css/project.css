@@ -564,6 +564,11 @@ input[type=range]:focus::-ms-fill-upper {
     border:1px solid #fff;
     color:#fff;
 }
+.signup .btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
 .signup .btn:hover, .btn:focus{
     color:#fff;
     opacity:0.8;

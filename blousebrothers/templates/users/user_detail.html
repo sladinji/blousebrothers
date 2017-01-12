@@ -12,9 +12,11 @@
 
       <h2>{{ object.username }}</h2>
       <div class="well">
+        {% comment option à mettre %}
         {% if object.socialaccount_set.all %}
         <img class="social-circle" src="{{ object.socialaccount_set.all.0.get_avatar_url }}">
         {% endif %}
+        {% endcomment %}
         {% if object.bio %}
 	<p><i>{{ object.bio }}</i></p>
         {% endif %}
