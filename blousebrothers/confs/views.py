@@ -390,10 +390,8 @@ class TestResetView(BBLoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['id']
 
     def test_func(self, **kwargs):
-        if self.request.user.is_superuser:
-            return True
         obj = self.get_object()
-        return obj.conf.owner == self.request.user
+        return obj.student == self.request.user
 
     def form_valid(self, form):
         self.object.finished = False
