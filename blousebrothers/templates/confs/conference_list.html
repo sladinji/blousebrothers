@@ -5,10 +5,10 @@
 {% block content %}
 <div class="container">
 
-    <div class="row">
+    <div class="row theader">
         <div class="col-md-6">
             <h2>{% trans 'Confs créées' %}</h2>
-            <p><i>{% trans 'Éditer mes conférences' %}</i></p>
+            <p>{% trans 'Éditer mes conférences' %}</p>
         </div>
         <div class="col-md-6">
             {% include 'partials/submenu_search.html' with actionurl="confs:list" %}
@@ -17,14 +17,16 @@
 
     <div class="list-group">
         {% for conference in conference_list %}
-          <a href="{% url 'confs:detail' conference.slug %}" class="list-group-item">
-		  <h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong> <i>- {{ conference.summary }} -</i></h4>
-          </a>
-	   <div class="progress">
-		<div class="progress-bar" role="progressbar" aria-valuenow="{{conference.edition_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{conference.edition_progress}}%">
-			{{conference.edition_progress}}%
-		</div>
-	   </div>
+        <a href="{% url 'confs:detail' conference.slug %}" class="list-group-item">
+            <h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong><br>
+                <i>- {{ conference.summary }} -</i>
+            </h4>
+        </a>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{conference.edition_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{conference.edition_progress}}%">
+                {{conference.edition_progress}}%
+            </div>
+        </div>
 
         {% endfor %}
 

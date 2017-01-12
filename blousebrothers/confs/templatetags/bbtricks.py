@@ -1,9 +1,13 @@
 from decimal import Decimal, ROUND_UP
 from string import ascii_uppercase
+
 from django import template
+from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
+from oscar.core.loading import get_model
 
 register = template.Library()
+Product = get_model('catalogue', 'Product')
 
 
 @register.filter
@@ -41,7 +45,28 @@ def result_icon(answer, test_answer):
 
 @register.filter
 def score100(test):
-    return Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
+    if test.has_review():
+        score = Decimal(test.score * 100 / test.max_score)
+        span = '<span class="score"><big>{}</big> / 100</span>'.format(
+            score.quantize(Decimal('.01'), rounding=ROUND_UP)
+        )
+        return mark_safe(span)
+    else:
+        return mark_safe(
+            '<span class="score" href="{}#addreview">'
+            'Laisse un avis pour accéder à ta note !</span>'
+          )
+
+
+@register.filter
+def get_test_url(test):
+    if test.has_review():
+        return reverse('confs:test', kwargs={'slug': test.conf.slug})
+    else:
+        product = Product.objects.get(conf=test.conf)
+        return reverse('catalogue:reviews-add', kwargs={
+            'product_slug': product.slug, 'product_pk': product.id}
+        )
 
 
 @register.filter
@@ -61,4 +86,7 @@ def sub_desc_custo(desc):
 
 @register.filter
 def already_done(user, conf):
-    return user.already_done(conf)
+    try :
+        return user.already_done(conf)
+    except :
+        return False

@@ -1058,3 +1058,23 @@ h1.rules {
 a.btn.btn-rules {
     margin-left: 14px;
 }
+.row.theader {
+    margin: 14px 0px;
+}
+.theader p {
+    line-height: 3;
+}
+.list-group-item-heading i {
+    font-family: sans-serif;
+}
+h4.list-group-item-heading {
+    text-align: center;
+}
+a.score{
+    float: left;
+    margin: 0;
+}
+.score{
+    float: left;
+    margin: -14px 0;
+}
