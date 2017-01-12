@@ -66,10 +66,10 @@ def proddb():
             r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
 
     get("%s/backup.tgz" % code_dir)
-    local("cd dowst@blousebrothers.fr && tar xzf backup.tgz")
+    local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
     local("docker run --rm "
           "--volumes-from blousebrothers_postgres_1 "
-          "-v $(pwd)/dowst@blousebrothers.fr/backups:/backup "
+          "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
           "blousebrothers_postgres cp /backup/%s /backups" % last)
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
