@@ -10,13 +10,16 @@ ProductClass, Product, Category, ProductCategory, ProductImage = get_classes(
 
 
 class Command(BaseCommand):
-    help = 'Create products from confs'
+    help = 'Create products from a given conf slug'
+
+    def add_arguments(self, parser):
+        parser.add_argument('slug', type=str)
 
     def handle(self, *args, **options):
-        for conf in Conference.objects.filter(edition_progress=100):
-            load_conf(conf)
-            self.stdout.write(
-                self.style.SUCCESS('{} "{}" created ({}€)'.format(
-                    conf.type, conf.title, conf.price)
-                )
+        conf = Conference.objects.get(slug=options['slug'])
+        load_conf(conf)
+        self.stdout.write(
+            self.style.SUCCESS('{} "{}" created ({}€)'.format(
+                conf.type, conf.title, conf.price)
             )
+        )
