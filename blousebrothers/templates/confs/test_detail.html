@@ -60,7 +60,7 @@
 	    </div>
 	    <legend>Question {{ t_answer.question.index | add:"1" }} </legend>
       <div class="col-sm-12">
-	      <big><p>{{ t_answer.question.question | default:"<i>aucun</i>"}}</p></big>
+	      <big><p>{{ t_answer.question.question | default:"<i>aucun</i>" | safe}}</p></big>
       </div>
       {% for image in t_answer.question.images.all %}
       <div class="illustrations" id="images_div">
