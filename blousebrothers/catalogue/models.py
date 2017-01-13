@@ -70,6 +70,7 @@ class Product(AbstractProduct):
 
     def user_test(self):
         user = CuserMiddleware.get_user()
-        return Test.objects.get(student=user, conf=self.conf)
+        if not user.is_anonymous():
+            return Test.objects.get(student=user, conf=self.conf)
 
 from oscar.apps.catalogue.models import *  # noqa
