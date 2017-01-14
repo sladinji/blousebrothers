@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if quantity == 1 %}
-    <strong>{{ product.get_title }}</strong> est maintentant disponible dans <a href="{% url 'confs:my_confs' %}">"mes confs"</a>
+    <strong>{{ product.get_title }}</strong> est maintenant disponible dans <a href="{% url 'confs:my_confs' %}">"CONFS ACHETÉES"</a>
 {% else %}
     {% blocktrans with title=product.get_title quantity=quantity %}
     <strong>{{ quantity }}</strong> copies of <strong>{{ title }}</strong>
