@@ -362,3 +362,5 @@ ANALYTICAL_INTERNAL_IPS = [ "109.190.133.24",
 							"37.165.35.50",
 							"82.235.89.141",
                            ]
+
+#STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True

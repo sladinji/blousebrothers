@@ -1,11 +1,15 @@
 from django.contrib import admin
 from .models import (
     Conference, Item, Question, Speciality, QuestionImage, ItemKeyWord, ConferenceImage,
-    Answer, Test, TestAnswer, AnswerImage
+    Answer, Test, TestAnswer, AnswerImage, QuestionComment
 )
 import nested_admin
 from image_cropping import ImageCroppingMixin
 # Register your models here.
+
+
+class QuestionCommentAdmin(admin.ModelAdmin):
+    pass
 
 
 class AnswerImageInline(ImageCroppingMixin, nested_admin.NestedTabularInline):
@@ -83,3 +87,4 @@ admin.site.register(Test, TestAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Speciality)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(QuestionComment, QuestionCommentAdmin)
