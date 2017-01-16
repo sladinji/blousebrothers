@@ -17,6 +17,7 @@
 
     <div class="list-group">
         {% for conference in conference_list %}
+        {% include 'catalogue/partials/share_product.html' with product=conference.products.all|first %}
         <a href="{% url 'confs:detail' conference.slug %}" class="list-group-item">
             <h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong><br>
                 <i>- {{ conference.summary }} -</i>

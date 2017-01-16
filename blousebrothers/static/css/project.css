@@ -1122,3 +1122,20 @@ a.score{
 .tips.tips-bottom.bb-container.bb-light-grey {
     margin-bottom: 20px;
 }
+/* LIKES */
+.facebook-this,.gplus-this,.tweet-this {
+    display: inline-block;
+    margin-top: 5px;
+} 
+span.btn-share {
+    background-color: #3b5998;
+    padding: 4px;
+    color: white;
+    padding: 5px 10px;
+}
+span.btn-share.btn-gplus {
+    background-color: #d34836;
+}
+span.btn-share.btn-twitter {
+    background-color: #4099FF;
+}

@@ -2,7 +2,6 @@
 {% load i18n %}
 {% load purchase_info_tags %}
 {% load bbtricks %}
-{% load social_share %}
 
 {% purchase_info_for_product request product as session %}
 
@@ -26,5 +25,4 @@
     <span class="btn btn-default btn-block disabled">{% trans "Bientôt disponible !" %}</span>
 {% endif %}
 
-{% post_to_facebook product "Post to Facebook!" %}
 
