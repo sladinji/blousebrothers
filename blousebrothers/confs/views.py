@@ -352,6 +352,9 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         ta = TestAnswer.objects.get(test=test, question=question)
 
         ta.given_answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
+        raise Exception("NO ANSWER GIVEN")
+        if not ta.given_answers :
+            raise Exception("NO ANSWER GIVEN")
         if test.time_taken:
             last_time = test.time_taken.hour * 3600 + test.time_taken.minute * 60 + test.time_taken.second
             this_time = time_taken.hour * 3600 + time_taken.minute * 60 + time_taken.second
@@ -362,6 +365,7 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         test.time_taken = time_taken
         test.progress = test.answers.exclude(given_answers='').count()/test.answers.count() * 100
         test.save()
+        return {'success' : True}
 
 
 class TestResult(TestPermissionMixin, DetailView):

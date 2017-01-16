@@ -66,7 +66,8 @@ THIRD_PARTY_APPS = [
     'hijack_admin',
     'analytical',
     'robots',
-    'cuser'
+    'cuser',
+    'django_social_share',
 ]
 
 # Apps specific for this project go here.
