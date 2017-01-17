@@ -352,7 +352,6 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         ta = TestAnswer.objects.get(test=test, question=question)
 
         ta.given_answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
-        raise Exception("NO ANSWER GIVEN")
         if not ta.given_answers :
             raise Exception("NO ANSWER GIVEN")
         if test.time_taken:
