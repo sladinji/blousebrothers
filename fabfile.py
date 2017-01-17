@@ -42,7 +42,7 @@ def futur(branch='master',reset='no'):
         logs = run("git log --pretty=oneline --abbrev-commit ..origin/{}".format(branch))
         logs = ["* {}".format(x) for x in re.findall(r'\[m (.*)\x1b', logs)]
         send_simple_message("\n".join(logs))
-        run("git merge")
+        run("git merge origin/{}".format(branch))
         with prefix("source blouserc"):
             run("docker-compose build")
             run("docker-compose up -d")
