@@ -14,6 +14,11 @@ from django_countries.fields import CountryField
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
 
+from mangopay.models import (
+    MangoPayNaturalUser,
+    MangoPayWallet,
+)
+
 AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
 AbstractUser._meta.get_field('email').blank = False
@@ -120,6 +125,26 @@ class User(AbstractUser):
     def gave_all_mangopay_info(self):
         return self.birth_date and self.country_of_residence and self.nationality \
             and self.first_name and self.last_name
+
+    @property
+    def mangopay_user(self):
+        mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
+        if mpu_created:
+            mangopay_user.birthday = self.birth_date
+            mangopay_user.country_of_residence = self.country_of_residence
+            mangopay_user.nationality = self.nationality
+            mangopay_user.save()
+            mangopay_user.create()
+        return mangopay_user
+
+    @property
+    def wallet(self):
+        wallet, w_created = MangoPayWallet.objects.get_or_create(mangopay_user=self.mangopay_user)
+        if w_created:
+            wallet.mangopay_user = self.mangopay_user
+            wallet.save()
+            wallet.create(description="{}'s Wallet".format(self.username))
+        return wallet
 
 
 class University(models.Model):

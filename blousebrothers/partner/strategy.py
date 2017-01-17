@@ -53,7 +53,7 @@ class FRStrategy(
     - Charge FR VAT on prices.  Assume everything is standard-rated.
     """
     def availability_policy(self, product, stockrecord):
-        if product.product_class.name != 'Abonnements' and stockrecord.price_excl_tax != 0:
-            return availability.Unavailable()
-        return availability.Available()
+        if product.conf and product.conf.for_sale and product.conf.owner.gave_all_mangopay_info():
+            return availability.Available()
+        return availability.Unavailable()
 

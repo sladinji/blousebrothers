@@ -5,8 +5,11 @@ from django.http import HttpResponseRedirect
 from oscar.apps.basket.views import BasketAddView as CoreBasketAddView
 from oscar.core.loading import get_class
 from blousebrothers.confs.models import Test
+from money import Money
+from mangopay.models import MangoPayTransfer, MangoPayWallet
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
+selector = get_class('partner.strategy', 'Selector')()
 
 
 class BasketAddView(CoreBasketAddView):
@@ -20,7 +23,18 @@ class BasketAddView(CoreBasketAddView):
                              extra_tags='safe noicon')
             return HttpResponseRedirect(reverse("account_signup"))
 
-        Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
+        __, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
+
+        if created :
+            info = selector.strategy().fetch_for_product(form.product)
+            transfer = MangoPayTransfer()
+            transfer.mangopay_credited_wallet = form.product.conf.owner.wallet
+            transfer.mangopay_debited_wallet = self.request.user.wallet
+            transfer.debited_funds = info.price.incl_tax
+            transfer.save()
+
+            transfer.create()
+
 
         # self.request.basket.add_product(
         #    form.product, form.cleaned_data['quantity'],

@@ -88,21 +88,10 @@ class UserWalletView(LoginRequiredMixin, FormView):
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
-        if mpu_created:
-            mangopay_user.birthday = self.request.user.birth_date
-            mangopay_user.country_of_residence = self.request.user.country_of_residence
-            mangopay_user.nationality = self.request.user.nationality
-            mangopay_user.save()
-            mangopay_user.create()
-        # WALLET
-        wallet, w_created = MangoPayWallet.objects.get_or_create(mangopay_user=mangopay_user)
-        if w_created:
-            wallet.mangopay_user = mangopay_user
-            wallet.save()
-            wallet.create(description="{}'s Wallet".format(self.request.user.username))
         # CARD REGISTRATION
-        card_registration, cr_created = MangoPayCardRegistration.objects.get_or_create(mangopay_user=mangopay_user)
+        card_registration, cr_created = MangoPayCardRegistration.objects.get_or_create(
+            mangopay_user=self.request.user.mangopay_user
+        )
         if cr_created:
             card_registration.create("EUR")
             pd = card_registration.get_preregistration_data()
@@ -119,9 +108,10 @@ class UserWalletView(LoginRequiredMixin, FormView):
         if 'errorCode' in self.request.GET:
             messages.error(self.request, self.request.GET['errorCode'])
 
-        return super().get_context_data(wallet=wallet, mangopay_user=mangopay_user,
+        return super().get_context_data(wallet=self.request.user.wallet,
+                                        mangopay_user=self.request.user.mangopay_user,
                                         card_registration=card_registration,
-                                        card=pd, balance=wallet.balance(),
+                                        card=pd, balance=self.request.user.wallet.balance(),
                                         no_card_registred=card_registration.mangopay_card.mangopay_id==None,
                                         cr_form=cr_form, **kwargs)
 
