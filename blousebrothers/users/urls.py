@@ -28,12 +28,12 @@ urlpatterns = [
         name='update'
     ),
     # Wallet
-    url(r'^~wallet/$', TemplateView.as_view(template_name='pages/wallet_teaser.html'), name='wallet'),
-    #url(
-    #    regex=r'^~wallet/$',
-    #    view=views.UserWalletView.as_view(),
-    #    name='wallet'
-    #),
+    #url(r'^~wallet/$', TemplateView.as_view(template_name='pages/wallet_teaser.html'), name='wallet'),
+    url(
+        regex=r'^~wallet/$',
+        view=views.UserWalletView.as_view(),
+        name='wallet'
+    ),
     # Subscription
     url(
         regex=r'^~subscription/(?P<sub_id>[\d]*)$',

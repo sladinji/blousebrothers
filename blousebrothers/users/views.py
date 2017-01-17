@@ -53,15 +53,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
 
-    def get(self, request, *args, **kwargs):
-        if 'data' in request.GET:
-            mpu = request.user.mangopay_users.first()
-            card_registration = mpu.mangopay_card_registrations.order_by('-id').first()
-            if card_registration.mangopay_card.mangopay_id:
-                raise Exception("Mango pay id already exist ???")
-            card_registration.handle_registration_data(request.GET['data'])
-        return super().get(request, *args, **kwargs)
-
 
 class UserWalletView(LoginRequiredMixin, FormView):
 
@@ -74,8 +65,13 @@ class UserWalletView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Merci de compléter le formulaire ci-dessous '
                            'pour pouvoir créditer ton compte.')
             return redirect('users:update')
-        else:
-            return super().get(request, *args, **kwargs)
+        elif 'data' in request.GET:
+            mpu = request.user.mangopay_users.first()
+            card_registration = mpu.mangopay_card_registrations.order_by('-id').first()
+            if card_registration.mangopay_card.mangopay_id:
+                raise Exception("Mango pay id already exist ???")
+            card_registration.handle_registration_data(request.GET['data'])
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         if 'sub_credit' in request.POST:
@@ -93,32 +89,32 @@ class UserWalletView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self.request.user)
-        mangopay_user.birthday = self.request.user.birth_date
-        mangopay_user.country_of_residence = self.request.user.country_of_residence
-        mangopay_user.nationality = self.request.user.nationality
-        mangopay_user.save()
         if mpu_created:
+            mangopay_user.birthday = self.request.user.birth_date
+            mangopay_user.country_of_residence = self.request.user.country_of_residence
+            mangopay_user.nationality = self.request.user.nationality
+            mangopay_user.save()
             mangopay_user.create()
         # WALLET
         wallet, w_created = MangoPayWallet.objects.get_or_create(mangopay_user=mangopay_user)
-        wallet.mangopay_user = mangopay_user
-        wallet.save()
-
         if w_created:
+            wallet.mangopay_user = mangopay_user
+            wallet.save()
             wallet.create(description="{}'s Wallet".format(self.request.user.username))
         # CARD REGISTRATION
-
         card_registration, cr_created = MangoPayCardRegistration.objects.get_or_create(mangopay_user=mangopay_user)
         if cr_created:
             card_registration.create("EUR")
+            pd = card_registration.get_preregistration_data()
+            pd.update(data=pd['preregistrationData'], accessKeyRef=pd['accessKey'])
+            returnURL = "https://" if self.request.is_secure() else "http://"
+            returnURL += self.request.get_host() + reverse('users:wallet')
+            pd.update(returnURL=returnURL)
+            cr_form = CardRegistrationForm(initial=pd)
         else:
             card_registration.mangopay_card.request_card_info()
-        pd = card_registration.get_preregistration_data()
-        pd.update(data=pd['preregistrationData'], accessKeyRef=pd['accessKey'])
-        returnURL = "https://" if self.request.is_secure() else "http://"
-        returnURL += self.request.get_host() + reverse('users:wallet')
-        pd.update(returnURL=returnURL)
-        cr_form = CardRegistrationForm(initial=pd)
+            cr_form = None
+            pd = None
 
         if 'errorCode' in self.request.GET:
             messages.error(self.request, self.request.GET['errorCode'])
@@ -126,7 +122,7 @@ class UserWalletView(LoginRequiredMixin, FormView):
         return super().get_context_data(wallet=wallet, mangopay_user=mangopay_user,
                                         card_registration=card_registration,
                                         card=pd, balance=wallet.balance(),
-                                        no_card_registred=cr_created,
+                                        no_card_registred=card_registration.mangopay_card.mangopay_id==None,
                                         cr_form=cr_form, **kwargs)
 
     def get_object(self):
