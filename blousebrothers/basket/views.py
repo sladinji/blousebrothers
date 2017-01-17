@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -25,7 +26,7 @@ class BasketAddView(CoreBasketAddView):
 
         __, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
 
-        if created :
+        if created:
             info = selector.strategy().fetch_for_product(form.product)
             transfer = MangoPayTransfer()
             transfer.mangopay_credited_wallet = form.product.conf.owner.wallet
@@ -33,8 +34,10 @@ class BasketAddView(CoreBasketAddView):
             transfer.debited_funds = info.price.incl_tax
             transfer.save()
 
-            transfer.create()
-
+            transfer.create(fees=Money(info.price.incl_tax * Decimal('0.1'),
+                                       str(transfer.debited_funds.currency)
+                                       )
+                            )
 
         # self.request.basket.add_product(
         #    form.product, form.cleaned_data['quantity'],
