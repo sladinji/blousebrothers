@@ -87,8 +87,7 @@ class UserWalletView(LoginRequiredMixin, FormView):
             payin.create(secure_mode_return_url='https://blousebrothers.fr')
         return self.get(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        # CARD REGISTRATION
+    def get_card_registration(self):
         card_registration, cr_created = MangoPayCardRegistration.objects.get_or_create(
             mangopay_user=self.request.user.mangopay_user
         )
@@ -104,6 +103,10 @@ class UserWalletView(LoginRequiredMixin, FormView):
             card_registration.mangopay_card.request_card_info()
             cr_form = None
             pd = None
+        return card_registration, cr_form, pd
+
+    def get_context_data(self, **kwargs):
+        card_registration, cr_form, pd = self.get_card_registration()
 
         if 'errorCode' in self.request.GET:
             messages.error(self.request, self.request.GET['errorCode'])

@@ -11,13 +11,16 @@ from django.dispatch import receiver
 from django.core.mail import mail_admins
 from django_countries.fields import CountryField
 
+from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
 
 from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayWallet,
+    MangoPayTransfer,
 )
+from blousebrothers.catalogue.models import Product
 
 AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
@@ -145,6 +148,18 @@ class User(AbstractUser):
             wallet.save()
             wallet.create(description="{}'s Wallet".format(self.username))
         return wallet
+
+
+class Transaction(models.Model):
+    conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sells')
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    transfer = models.ForeignKey(MangoPayTransfer, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    credited_funds = MoneyField(default=0, default_currency="EUR",
+                                decimal_places=2, max_digits=12)
+    fees = MoneyField(default=0, default_currency="EUR",
+                      decimal_places=2, max_digits=12)
+    create_timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
 
 class University(models.Model):

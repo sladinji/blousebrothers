@@ -23,9 +23,6 @@
         </div>
     </form>
   </div>
-</div>
-
-<div class="row">
   <div class="col-md-6 col-sm-12 well">
   {% if no_card_registred %}
     <h2>Ajouter une carte de paiement</h2>
@@ -44,8 +41,45 @@
 	  <p><label>{% trans "Valide jusqu'au" %} :</label> {{ card_registration.mangopay_card.expiration_date }}</p>
 	  <p><label>{% trans 'État' %} :</label> {{ card_registration.mangopay_card.validity }}</p>
     </div>
-  {% endif %}
+	{% endif %}
   </div>
+  {% if user.is_conferencier %}
+  <div class="col-sm-12">
+	  <h2>Ventes</h2>
+	  <table class="table table-striped table-bordered table-hover">
+		  <caption>
+			  <h3 class="pull-left"><i class="icon-shopping-cart icon-large"></i>
+				  {% if search_filters %}
+				  {% trans "Order Search Results" %}
+				  {% else %}
+				  {% trans "Ventes" %}
+				  {% endif %}
+			  </h3>
+		  </caption>
+
+		  <thead>
+			  <tr>
+				  <th>{% trans "Conférence" %}</th>
+				  <th>{% trans "Etudiant" %}</th>
+				  <th>{% trans "Date" %}</th>
+				  <th>{% trans "Crédit" %}</th>
+				  <th>{% trans "Frais" %}</th>
+			  </tr>
+		  </thead>
+		  <tbody>
+			  {% for sell in user.sells.all %}
+			  <tr>
+				  <td><a href="{% url 'catalogue:reviews-list' product_slug=sell.product.slug product_pk=sell.product.id %}">{{ sell.product }}</a></td>
+				  <td>{{ sell.student }}</td>
+				  <td>{{ sell.create_timestamp }}</td>
+				  <td>{{ sell.credited_funds }}</td>
+				  <td>{{ sell.fees }}</td>
+			  </tr>
+			  {% endfor %}
+		  </tbody>
+	  </table>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}

@@ -6,8 +6,9 @@ from django.http import HttpResponseRedirect
 from oscar.apps.basket.views import BasketAddView as CoreBasketAddView
 from oscar.core.loading import get_class
 from blousebrothers.confs.models import Test
+from blousebrothers.users.models import Transaction
 from money import Money
-from mangopay.models import MangoPayTransfer, MangoPayWallet
+from mangopay.models import MangoPayTransfer
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
@@ -33,11 +34,17 @@ class BasketAddView(CoreBasketAddView):
             transfer.mangopay_debited_wallet = self.request.user.wallet
             transfer.debited_funds = info.price.incl_tax
             transfer.save()
+            fees = info.price.incl_tax * Decimal('0.1')
 
-            transfer.create(fees=Money(info.price.incl_tax * Decimal('0.1'),
-                                       str(transfer.debited_funds.currency)
-                                       )
-                            )
+            transfer.create(fees=Money(fees, str(transfer.debited_funds.currency)))
+            Transaction.objects.create(
+                conferencier=form.product.conf.owner,
+                student=self.request.user,
+                transfer=transfer,
+                credited_funds=info.price.incl_tax - fees,
+                fees=fees,
+                product=form.product,
+            )
 
         # self.request.basket.add_product(
         #    form.product, form.cleaned_data['quantity'],
