@@ -71,6 +71,7 @@ class UserWalletView(LoginRequiredMixin, FormView):
             if card_registration.mangopay_card.mangopay_id:
                 raise Exception("Mango pay id already exist ???")
             card_registration.handle_registration_data(request.GET['data'])
+            return redirect(reverse('users:wallet'))
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -93,7 +94,6 @@ class UserWalletView(LoginRequiredMixin, FormView):
             payin.create(secure_mode_return_url='https://blousebrothers.fr')
             if payin.status == 'FAILED':
                 messages.error(self.request, 'Le paiement a échoué (référence de la transaction : {})'.format(payin.mangopay_id))
-            print(payin.status)
             if payin.status == 'SUCCEEDED':
                 messages.success(self.request, 'Le paiement a bien été pris en compte')
         return self.get(request, *args, **kwargs)

@@ -130,7 +130,7 @@
     <div class="col-sm-12">
         <div class="bar-caption"><h1>{% trans "Gérer mon porte-monnaie" %}</h1></div>
     </div>
-    {% if user.mangopay_user.mangopay_card_registrations.count > 1 %}
+    {% if user.has_at_least_one_card %}
     <div class="col-md-6 col-sm-12">
         <h2>Créditer mon compte</h2>
         <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">

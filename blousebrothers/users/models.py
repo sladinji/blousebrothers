@@ -144,6 +144,10 @@ class User(AbstractUser):
     def has_more_than_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
                     if x.mangopay_card.mangopay_id]) > 1
+    @property
+    def has_at_least_one_card(self):
+        return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
+                    if x.mangopay_card.mangopay_id]) > 0
 
     @property
     def wallet(self):
