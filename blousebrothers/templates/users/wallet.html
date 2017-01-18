@@ -162,7 +162,8 @@
         <div class="col-md-4 col-sm-9 well">
             <p><label>{% trans 'Numéro de carte' %} :</label> {{ card_registration.mangopay_card.alias }}</p>
             <p><label>{% trans "Valide jusqu'au" %} :</label> {{ card_registration.mangopay_card.expiration_date }}</p>
-            <p><label>{% trans 'État' %} :</label> {{ card_registration.mangopay_card.validity }}</p>
+            <p><label>{% trans 'Valide' %} :</label> {{ card_registration.mangopay_card.is_valid | yesno:"oui,non" }}</p>
+            <p><label>{% trans 'État' %} :</label> {{ card_registration.mangopay_card.is_active | yesno:"active,inactive"}}</p>
         </div>
         {% endif %}
         {% endfor %}
