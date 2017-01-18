@@ -131,21 +131,25 @@ class User(AbstractUser):
 
     @property
     def mangopay_user(self):
-        mangopay_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
+
+        mp_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
         if mpu_created:
-            mangopay_user.birthday = self.birth_date
-            mangopay_user.country_of_residence = self.country_of_residence
-            mangopay_user.nationality = self.nationality
-            mangopay_user.save()
-            mangopay_user.create()
-        return mangopay_user
+            mp_user.birthday = self.birth_date
+            mp_user.country_of_residence = self.country_of_residence
+            mp_user.nationality = self.nationality
+            mp_user.create()
+        return mp_user
+
+    @property
+    def has_more_than_one_card(self):
+        return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
+                    if x.mangopay_card.mangopay_id]) > 1
 
     @property
     def wallet(self):
         wallet, w_created = MangoPayWallet.objects.get_or_create(mangopay_user=self.mangopay_user)
         if w_created:
             wallet.mangopay_user = self.mangopay_user
-            wallet.save()
             wallet.create(description="{}'s Wallet".format(self.username))
         return wallet
 

@@ -20,21 +20,30 @@
 
     <div class="list-group">
         {% for test in test_list %}
-        <a href="{{ test | get_test_url }}" class="list-group-item">
-            <h4 class="list-group-item-heading">
-                <strong>{{ test.conf.title }}</strong><br>
-                {% if test.finished %}
-                {{ test | score100 }}
+        {% if not test.available %}
+        <div class="list-group-item">
+            CE DOSSIER N'EST PLUS DISPONIBLE
+        {% else %}
+            <a href="{{ test | get_test_url }}" class="list-group-item">
                 {% endif %}
-                <i>- {{ test.conf.summary }} -</i>
-            </h4>
-        </a>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{test.progress}}%">
-                {{test.progress}}%
+                <h4 class="list-group-item-heading">
+                    <strong>{{ test.conf.title }}</strong><br>
+                    {% if test.finished %}
+                    {{ test | score100 }}
+                    {% endif %}
+                    <i>- {{ test.conf.summary }} -</i>
+                </h4>
+                {% if test.available %}
+            </a>
+            {% endif %}
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{test.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{test.progress}}%">
+                    {{test.progress}}%
+                </div>
             </div>
+        {% if not test.available %}
         </div>
-
+        {% endif %}
         {% endfor %}
 
     </div>

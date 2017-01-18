@@ -10,6 +10,7 @@ import logging
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.core.validators import int_list_validator
@@ -321,10 +322,20 @@ class Test(models.Model):
         """
         Check if test was reviewed by user.
         """
-        from django.apps import apps
-        Product = apps.get_model('catalogue', 'Product')
-        product = Product.objects.get(conf=self.conf)
-        return product.has_review_by(self.student)
+        try:
+            Product = apps.get_model('catalogue', 'Product')
+            product = Product.objects.get(conf=self.conf)
+            return product.has_review_by(self.student)
+        except:
+            return False
+
+    def available(self):
+        try:
+            Product = apps.get_model('catalogue', 'Product')
+            Product.objects.get(conf=self.conf)
+            return True
+        except:
+            return False
 
 
 class TestAnswer(models.Model):

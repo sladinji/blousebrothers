@@ -56,7 +56,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class UserWalletView(LoginRequiredMixin, FormView):
 
-    template_name = 'users/mangopay_form.html'
+    template_name = 'users/wallet.html'
     success_url = '.'
     form_class = PayInForm
 
@@ -76,33 +76,47 @@ class UserWalletView(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         if 'sub_credit' in request.POST:
             credit = request.POST['credit']
-            print(credit)
             payin = MangoPayPayInByCard()
             mangopay_user = MangoPayNaturalUser.objects.get(user=self.request.user)
             payin.mangopay_user = mangopay_user
             payin.mangopay_wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
-            payin.mangopay_card = mangopay_user.mangopay_card_registrations.first().mangopay_card
+            if 'card_id' in request.POST:
+                payin.mangopay_card = mangopay_user.mangopay_card_registrations.get(
+                    mangopay_card__id=request.POST['card_id']
+                ).mangopay_card
+            else:
+                payin.mangopay_card = mangopay_user.mangopay_card_registrations.exclude(
+                    mangopay_card__mangopay_id__isnull=True
+                ).first().mangopay_card
             payin.debited_funds = Decimal(credit)
             payin.fees = 0
             payin.create(secure_mode_return_url='https://blousebrothers.fr')
+            if payin.status == 'FAILED':
+                messages.error(self.request, 'Le paiement a échoué (référence de la transaction : {})'.format(payin.mangopay_id))
+            print(payin.status)
+            if payin.status == 'SUCCEEDED':
+                messages.success(self.request, 'Le paiement a bien été pris en compte')
         return self.get(request, *args, **kwargs)
 
+
+class CreditWallet (LoginRequiredMixin, FormView):
+    form_class = PayInForm
+    template_name = 'users/mangopay_form.html'
+
+    def get_success_url(self):
+        return reverse('users:wallet')
+
     def get_card_registration(self):
-        card_registration, cr_created = MangoPayCardRegistration.objects.get_or_create(
+        card_registration = MangoPayCardRegistration.objects.create(
             mangopay_user=self.request.user.mangopay_user
         )
-        if cr_created:
-            card_registration.create("EUR")
-            pd = card_registration.get_preregistration_data()
-            pd.update(data=pd['preregistrationData'], accessKeyRef=pd['accessKey'])
-            returnURL = "https://" if self.request.is_secure() else "http://"
-            returnURL += self.request.get_host() + reverse('users:wallet')
-            pd.update(returnURL=returnURL)
-            cr_form = CardRegistrationForm(initial=pd)
-        else:
-            card_registration.mangopay_card.request_card_info()
-            cr_form = None
-            pd = None
+        card_registration.create("EUR")
+        pd = card_registration.get_preregistration_data()
+        pd.update(data=pd['preregistrationData'], accessKeyRef=pd['accessKey'])
+        returnURL = "https://" if self.request.is_secure() else "http://"
+        returnURL += self.request.get_host() + reverse('users:wallet')
+        pd.update(returnURL=returnURL)
+        cr_form = CardRegistrationForm(initial=pd)
         return card_registration, cr_form, pd
 
     def get_context_data(self, **kwargs):
@@ -115,7 +129,6 @@ class UserWalletView(LoginRequiredMixin, FormView):
                                         mangopay_user=self.request.user.mangopay_user,
                                         card_registration=card_registration,
                                         card=pd, balance=self.request.user.wallet.balance(),
-                                        no_card_registred=card_registration.mangopay_card.mangopay_id==None,
                                         cr_form=cr_form, **kwargs)
 
     def get_object(self):
