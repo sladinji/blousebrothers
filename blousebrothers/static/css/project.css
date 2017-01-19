@@ -1139,3 +1139,31 @@ span.btn-share.btn-gplus {
 span.btn-share.btn-twitter {
     background-color: #4099FF;
 }
+/* CONFS CRÉES */
+.stats {
+  list-style: none;
+  overflow: hidden;
+  text-align: right;
+  margin: 0px;
+  padding: 0px;
+  min-height: 63px;
+}
+.stats .stat {
+  padding: 10px 10px;
+  border-left: solid 2px #fcfcfc;
+  height: 100%;
+}
+.stats .stat:first-child {
+  border-left: none;
+}
+.stats .stat .value {
+  font-size: 120%;
+  color: #428bca;
+}
+.stats .stat em {
+  color: #888;
+  display: block;
+}
+.panel-body {
+    padding: 15px;
+}

@@ -164,6 +164,7 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
             qry = qry.order_by('edition_progress')
         if self.request.GET.get('q', False):
             qry = qry.filter(title__icontains=self.request.GET['q'])
+        qry = qry.prefetch_related('owner__sells')
         return qry.all()
 
 

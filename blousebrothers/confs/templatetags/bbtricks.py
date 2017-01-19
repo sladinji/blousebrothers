@@ -1,9 +1,11 @@
 from decimal import Decimal, ROUND_UP
 from string import ascii_uppercase
+import datetime
 
 from django import template
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
+from django.db.models import Sum
 from oscar.core.loading import get_model
 
 register = template.Library()
@@ -17,8 +19,8 @@ def to_char(value):
 
 @register.filter
 def is_good_css(answer, test_answer):
-    if answer.correct and str(answer.index) in test_answer.given_answers or\
-    not answer.correct and str(answer.index) not in test_answer.given_answers :
+    if answer.correct and str(answer.index) in test_answer.given_answers \
+            or not answer.correct and str(answer.index) not in test_answer.given_answers:
         return "correct"
     else:
         return "fatal" if answer.ziw else "notcorrect"
@@ -87,9 +89,37 @@ def sub_desc_custo(desc):
     """
     return desc.replace('<p>', '<li>').replace('</p>', '</li>')
 
+
 @register.filter
 def already_done(user, conf):
-    try :
+    try:
         return user.already_done(conf)
-    except :
+    except:
         return False
+
+
+@register.filter
+def today_sells(conf):
+    today = datetime.date.today()
+    qs = conf.owner.sells.filter(product__conf=conf)
+    qs = qs.filter(create_timestamp__day=today.day,
+                   create_timestamp__month=today.month,
+                   create_timestamp__year=today.year)
+    return qs.count()
+
+
+@register.filter
+def week_sells(conf):
+    last_week = datetime.date.today() - datetime.timedelta(days=7)
+    qs = conf.owner.sells.filter(product__conf=conf)
+    qs = qs.filter(create_timestamp__gte=last_week)
+    return qs.count()
+
+
+@register.filter
+def month_revenu(conf):
+    today = datetime.date.today()
+    qs = conf.owner.sells.filter(product__conf=conf)
+    qs = qs.filter(create_timestamp__month=today.month,
+                   create_timestamp__year=today.year)
+    return qs.aggregate(Sum('credited_funds'))['credited_funds__sum']
