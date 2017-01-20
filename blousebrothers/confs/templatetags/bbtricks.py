@@ -99,9 +99,9 @@ def already_done(user, conf):
 
 
 @register.filter
-def today_sells(conf):
+def today_sales(conf):
     today = datetime.date.today()
-    qs = conf.owner.sells.filter(product__conf=conf)
+    qs = conf.owner.sales.filter(product__conf=conf)
     qs = qs.filter(create_timestamp__day=today.day,
                    create_timestamp__month=today.month,
                    create_timestamp__year=today.year)
@@ -109,9 +109,9 @@ def today_sells(conf):
 
 
 @register.filter
-def week_sells(conf):
+def week_sales(conf):
     last_week = datetime.date.today() - datetime.timedelta(days=7)
-    qs = conf.owner.sells.filter(product__conf=conf)
+    qs = conf.owner.sales.filter(product__conf=conf)
     qs = qs.filter(create_timestamp__gte=last_week)
     return qs.count()
 
@@ -119,7 +119,7 @@ def week_sells(conf):
 @register.filter
 def month_revenu(conf):
     today = datetime.date.today()
-    qs = conf.owner.sells.filter(product__conf=conf)
+    qs = conf.owner.sales.filter(product__conf=conf)
     qs = qs.filter(create_timestamp__month=today.month,
                    create_timestamp__year=today.year)
     return qs.aggregate(Sum('credited_funds'))['credited_funds__sum']

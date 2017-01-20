@@ -21,6 +21,7 @@ from mangopay.models import (
     MangoPayTransfer,
 )
 from blousebrothers.catalogue.models import Product
+from blousebrothers.confs.models import Conference
 
 AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
@@ -119,8 +120,6 @@ class User(AbstractUser):
 
     def gave_all_required_info(self):
         """Used for permission management"""
-        if self.is_superuser:
-            return True
         if self.wanabe_conferencier or self.is_conferencier:
             return self.university and self.first_name and self.last_name and self.degree
         return True
@@ -158,11 +157,12 @@ class User(AbstractUser):
         return wallet
 
 
-class Transaction(models.Model):
-    conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sells')
+class Sale(models.Model):
+    conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sales')
+    conf = models.ForeignKey(Conference, on_delete=models.SET_NULL, related_name='sales', null=True)
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     transfer = models.ForeignKey(MangoPayTransfer, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='sells')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='sales')
     credited_funds = MoneyField(default=0, default_currency="EUR",
                                 decimal_places=2, max_digits=12)
     fees = MoneyField(default=0, default_currency="EUR",

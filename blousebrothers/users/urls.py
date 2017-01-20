@@ -35,9 +35,9 @@ urlpatterns = [
         name='wallet'
     ),
     url(
-        regex=r'^~creditwallet/$',
-        view=views.CreditWallet.as_view(),
-        name='creditwallet'
+        regex=r'^~addcard/$',
+        view=views.AddCardView.as_view(),
+        name='addcard'
     ),
     # Subscription
     url(
