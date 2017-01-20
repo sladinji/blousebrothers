@@ -208,7 +208,7 @@ ul.djng-field-errors li.valid::before {
 }
 
 .progress-bar {
-  background-color: #c99947;
+  background-color: #ddd;
 }
 
 .correct {
@@ -1125,7 +1125,7 @@ a.score{
 /* LIKES */
 .facebook-this,.gplus-this,.tweet-this {
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 7px;
 } 
 span.btn-share {
     background-color: #3b5998;
@@ -1140,6 +1140,13 @@ span.btn-share.btn-twitter {
     background-color: #4099FF;
 }
 /* CONFS CRÉES */
+.conf-price {
+    position: absolute;
+    right: 42px;
+    color: #428bca;
+    top: 35px;
+    font-size: 18pt;
+}
 .stats {
   list-style: none;
   overflow: hidden;
@@ -1171,6 +1178,28 @@ span.btn-share.btn-twitter {
 .alert .alertinner {
     position: initial;
 }
+a.share {
+    font-size: 51px;
+    position: absolute;
+    color: #4281a4;
+}
+.share-group {
+    margin: 60px 0px;
+    position: absolute;
+}
+.share-group ul {
+    list-style: none;
+    padding: 0;
+}
+.share-group li {
+    margin-top: 0px;
+}
+.conf-title {
+    padding-top: 15px;
+    padding-left: 41px;
+    padding-right: 96px;
+}
+}
 /* WALLET */
 .quick-pay{
     list-style: none;
@@ -1194,4 +1223,12 @@ ul.quick-pay {
     max-width: 260px;
     border-radius: 15px;
     text-align: left;
+}
+.review-share ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+}
+.review-share li {
+    margin: 0 5px;
 }

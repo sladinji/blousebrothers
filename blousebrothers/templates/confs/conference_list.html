@@ -21,12 +21,20 @@
     <div class="list-group">
         {% for conference in conference_list %}
         <div class="list-group-item">
-            {% include 'catalogue/partials/share_product.html' with product=conference.products.first %}
-            <a href="{% url 'confs:detail' conference.slug %}">
-			<h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong><br>
-				<i>- {{ conference.summary }} -</i>
-			</h4>
-            </a>
+            <a href="#share_{{conference.slug}}" data-toggle="collapse" class="share"><i class="fa fa-share-alt-square" aria-hidden="true"></i></a>
+            <div id="share_{{conference.slug}}" class="collapse share-group">
+                {% include 'catalogue/partials/share_product.html' with product=conference.products.first %}
+            </div>
+            <div class="conf-title">
+                <a href="{% url 'confs:detail' conference.slug %}" >
+                    <h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong><br>
+                        <i>- {{ conference.summary }} -</i>
+                    </h4>
+                </a>
+            </div>
+            <div class="conf-price">
+                {{ conference.price }} €
+            </div>
 
 
 			<div class="panel-body">
