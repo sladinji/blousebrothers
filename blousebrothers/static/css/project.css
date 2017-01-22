@@ -1199,7 +1199,6 @@ a.share {
     padding-left: 41px;
     padding-right: 96px;
 }
-}
 /* WALLET */
 .quick-pay{
     list-style: none;
@@ -1209,7 +1208,7 @@ a.share {
 .quick-pay .btn {
     min-width: 82px;
 }
-ul.quick-pay {
+.quick-pay ul{
     padding-left: 0px;
 }
 .panel-body.cards {
