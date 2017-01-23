@@ -46,12 +46,16 @@ class BasketAddView(CoreBasketAddView):
         Debit user wallet according to given test and redirect to user according to transfer result.
         """
         info = selector.strategy().fetch_for_product(form.product)
+
+        if info.price.excl_tax == 0:
+            return self.redirect_success(form)
+
         transfer = MangoPayTransfer()
         transfer.mangopay_credited_wallet = form.product.conf.owner.wallet
         transfer.mangopay_debited_wallet = self.request.user.wallet
-        transfer.debited_funds = info.price.incl_tax
+        transfer.debited_funds = info.price.excl_tax
         transfer.save()
-        fees = info.price.incl_tax * Decimal('0.1')
+        fees = info.price.excl_tax * Decimal('0.1')
         transfer.create(fees=Money(fees, str(transfer.debited_funds.currency)))
         if transfer.status == "FAILED":
             test.delete()
@@ -70,7 +74,7 @@ class BasketAddView(CoreBasketAddView):
                 conferencier=form.product.conf.owner,
                 student=self.request.user,
                 transfer=transfer,
-                credited_funds=info.price.incl_tax - fees,
+                credited_funds=info.price.excl_tax - fees,
                 fees=fees,
                 product=form.product,
                 conf=form.product.conf,
