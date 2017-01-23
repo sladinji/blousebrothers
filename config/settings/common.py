@@ -68,6 +68,7 @@ THIRD_PARTY_APPS = [
     'robots',
     'cuser',
     'django_social_share',
+    'termsandconditions',
 ]
 
 # Apps specific for this project go here.
@@ -104,13 +105,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'googlebot.middleware.GooglebotMiddleware',
+    'termsandconditions.middleware.TermsAndConditionsRedirectMiddleware',
+
 
 )
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-    'sites': 'blousebrothers.contrib.sites.migrations'
+    'sites': 'blousebrothers.contrib.sites.migrations',
+    # local path for migration for the termsandconditions
+    'termsandconditions': 'blousebrothers.termsandconditions.migrations',
 }
 
 # DEBUG
@@ -352,16 +357,21 @@ HIJACK_REGISTER_ADMIN = False
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-88739323-1'
 GOOGLE_ANALYTICS_SITE_SPEED = True
 CLICKMAP_TRACKER_CODE = '4TRKW1HVZ7T0D5HJ16021016ZCV065RP'
-ANALYTICAL_INTERNAL_IPS = [ "109.190.133.24",
-                            "109.190.222.42",
-							"109.190.238.231",
-							"176.138.173.38",
-							"178.23.38.195",
-							"213.245.242.230",
-							"213.32.77.47",
-							"37.164.62.208",
-							"37.165.35.50",
-							"82.235.89.141",
+ANALYTICAL_INTERNAL_IPS = ["109.190.133.24",
+                           "109.190.222.42",
+                           "109.190.238.231",
+                           "176.138.173.38",
+                           "178.23.38.195",
+                           "213.245.242.230",
+                           "213.32.77.47",
+                           "37.164.62.208",
+                           "37.165.35.50",
+                           "82.235.89.141",
                            ]
 
-#STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
+# STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
+
+# TERMS AND CONDITIONS
+TERMS_BASE_TEMPLATE = 'account/base.html'
+TERMS_EXCLUDE_URL_LIST = {'/', '/terms/required/', '/logout/', '/login/', '/cgu/'}
+TERMS_EXCLUDE_URL_PREFIX_LIST = {'/catfish/','/admin/', '/dashboard'}

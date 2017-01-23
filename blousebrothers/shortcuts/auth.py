@@ -4,11 +4,16 @@ from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMi
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
+from termsandconditions.decorators import terms_required
+
 
 from blousebrothers.confs.models import Conference, Question, Answer, Test
+from django.utils.decorators import method_decorator
 
 
-class BBLoginRequiredMixin(LoginRequiredMixin):
+
+@method_decorator(terms_required, name='dispatch')
+class BBLoginRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     login_url = '/accounts/login/'
 
 

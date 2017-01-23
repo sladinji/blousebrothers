@@ -11,6 +11,7 @@
 
 <div class="signup">
 <div class="{% block extra_slide_class %}{% endblock%}slide1 slide container">
+	  {% block first_row %}
       <div class="row">
 	    <div class="col-lg-6 col-md-6 col-sd-12">      
             <div class="tester"><a class="btn" href="{% url 'catalogue:index' %}"><i class="fa fa-rocket" aria-hidden="true"></i> Tester BlouseBrothers</a></div>
@@ -21,6 +22,7 @@
 	      {% endblock %}
 	    </div>
       </div>
+	  {% endblock first_row %}
       <div class="row">
 	    <div class="col-md-4"></div>
 	    <div class="col-md-4">
@@ -32,9 +34,13 @@
 	      </div>
 	    </div>
 	    <div class="col-md-4"></div>
+      </div> <!-- row -->
+      <div class="row">
+		{% block presale %}
 	    <div class="col-md-12 tcenter">
           <span class="presale"><a class="btn btn-success" href="{% url 'subscriptions' %}"><i class="fa fa-hand-scissors-o" aria-hidden="true"></i> Préventes ouvertes !</a></span>
 	    </div>
+		{% endblock %}
 	    <div class="col-md-4"></div>
 	    <div class="col-md-4">
 	      {% block content %}

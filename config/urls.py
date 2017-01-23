@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^rules/$', TemplateView.as_view(template_name='pages/regledujeu.html'), name='regledujeu'),
 
+    # Terms and Conditions
+    url(r'^terms/', include('termsandconditions.urls')),
+
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, include(admin.site.urls)),

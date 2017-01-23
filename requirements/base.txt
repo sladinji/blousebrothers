@@ -92,3 +92,4 @@ git+https://github.com/macropin/django-googlebot
 django-robots
 django-cuser
 django-social-share
+django-termsandconditions
