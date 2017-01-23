@@ -102,7 +102,7 @@
      {% endfor %}
    </div>
    {% endfor %}
-	  {% if product and not object.has_review %}
+	  {% if product and not object.has_review and not user == object.conf.owner %}
 	    {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
         <div class="text-center">
 	      <a class="btn btn-success btn-getscore" href="{{ add_review_url }}#addreview"><i class="fa fa-edit" aria-hidden="true"></i> Laisse un avis pour accéder à ta note !</a>

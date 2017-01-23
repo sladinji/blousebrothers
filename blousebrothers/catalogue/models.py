@@ -24,7 +24,8 @@ class Product(AbstractProduct):
         Override this if you want to alter the default behaviour; e.g. enforce
         that a user purchased the product to be allowed to leave a review.
         """
-        if user.is_authenticated() and self.conf and user.tests.filter(conf=self.conf):
+        if user.is_authenticated() and self.conf and user.tests.filter(conf=self.conf) \
+                and not self.conf.owner == user:
             return not self.has_review_by(user)
         else:
             return False

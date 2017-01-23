@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 
 
 @method_decorator(terms_required, name='dispatch')
-class BBLoginRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+class BBLoginRequiredMixin(LoginRequiredMixin):
     login_url = '/accounts/login/'
 
 
