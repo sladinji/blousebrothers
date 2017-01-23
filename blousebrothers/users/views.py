@@ -72,7 +72,7 @@ class UserWalletView(LoginRequiredMixin, FormView):
                 raise Exception("Mango pay id already exist ???")
             card_registration.handle_registration_data(request.GET['data'])
             return redirect(reverse('users:wallet'))
-        elif not request.user.has_at_least_one_card:
+        elif not request.user.has_at_least_one_card and not request.user.is_conferencier:
             return redirect(reverse('users:addcard'))
         return super().get(request, *args, **kwargs)
 
