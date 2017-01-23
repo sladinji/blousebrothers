@@ -28,12 +28,14 @@
             <div class="conf-title">
                 <a href="{% url 'confs:detail' conference.slug %}" >
                     <h4 class="list-group-item-heading"><strong>{{ conference.title }}</strong><br>
-                        <i>- {{ conference.summary }} -</i>
+                        <div class="hidden-xs"><i>- {{ conference.summary }} -</i></div>
                     </h4>
                 </a>
             </div>
             <div class="conf-price">
+                <a href="{% url 'confs:final' conference.slug %}#div_id_price" >
                 {{ conference.price }} €
+                </a>
             </div>
 
 

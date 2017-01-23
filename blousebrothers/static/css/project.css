@@ -1147,6 +1147,11 @@ span.btn-share.btn-twitter {
     top: 35px;
     font-size: 18pt;
 }
+.conf-title {
+    padding-top: 15px;
+    padding-left: 41px;
+    padding-right: 96px;
+}
 .stats {
   list-style: none;
   overflow: hidden;
@@ -1194,10 +1199,21 @@ a.share {
 .share-group li {
     margin-top: 0px;
 }
-.conf-title {
-    padding-top: 15px;
-    padding-left: 41px;
-    padding-right: 96px;
+@media (max-width: 767px){
+    .conf-price {
+        position: initial;
+        text-align: center;
+        right: 0px;
+        padding-left: 50px;
+    }
+    .conf-title {
+        padding-top: 15px;
+        padding-left: 82px;
+        padding-right: 41px;
+    }
+    .share-group li {
+        margin: -12px 0;
+    }
 }
 /* WALLET */
 .quick-pay{

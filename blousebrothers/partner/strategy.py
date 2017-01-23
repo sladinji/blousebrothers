@@ -33,6 +33,10 @@ class FrenchFixedRateTax(object):
         self.rate = PRODUCT_CLASSES_RATES.get(
             product.get_product_class().slug,
             DEFAULT_RATE)
+        if product.conf:
+            return prices.FixedPrice(
+                currency='EUR',
+                excl_tax=product.conf.price)
         if not stockrecord:
             return prices.Unavailable()
         return prices.FixedPrice(
