@@ -33,6 +33,7 @@ from blousebrothers.shortcuts.auth import (
     BBLoginRequiredMixin,
 )
 from blousebrothers.shortcuts.tools import analyse_conf
+from blousebrothers.confs.utils import create_product
 from .models import (
     Conference,
     Question,
@@ -242,6 +243,8 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
             student=self.request.user
         ).exists():
             Test.objects.create(conf=self.object, student=self.request.user)
+        if Product.objects.filter(conf=self.object).count() == 0:
+            create_product(self.object)
         return super().form_valid(form)
 
 
