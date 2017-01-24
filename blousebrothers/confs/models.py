@@ -83,10 +83,15 @@ class Conference(models.Model):
                                     _(""))
                                 )
     deleted = models.BooleanField(default=False)
-    for_sale = models.BooleanField(_("Accessible"), default=False,
-                                   help_text=_("Un sujet accessible apparaitra dans les recherches et pourra être "
-                                               "acheté au prix que vous avez fixé."
-                                               )
+    for_sale = models.BooleanField(_("Publier"), default=False,
+                                   help_text=mark_safe(
+                                       _("Publier mon dossier avec les paramètres sélectionnés. Je certifie que "
+                                         "le matériel de ma conférence est original et je dégage BlouseBrothers "
+                                         "de toute responsabilité concernant son contenu. Je suis au courant de "
+                                         "mes obligations en matière de fiscalité, détaillées dans les "
+                                         "<a href='/cgu/'>conditions générales d'utilisation</a>."
+                                         )
+                                   )
                                    )
     date_tuto = models.DateTimeField(_("Accès gratuit aux étudiants de ma ville le "),
                                      blank=True, null=True)
