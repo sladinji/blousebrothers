@@ -282,7 +282,6 @@ class Test(models.Model):
     conf = models.ForeignKey('Conference', related_name='tests')
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     progress = models.PositiveIntegerField(_("Progression"), default=0)
-    result = models.PositiveIntegerField(_("Résultat"), default=0)
     max_score = models.PositiveIntegerField(_("Résultat"), default=0)
     score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
     finished = models.BooleanField(default=False)
@@ -299,7 +298,7 @@ class Test(models.Model):
         """
         Classement
         """
-        return Test.objects.filter(conf=self.conf, finished=True, result__gt=self.result).count() + 1
+        return Test.objects.filter(conf=self.conf, finished=True, score__gt=self.score).count() + 1
 
     def total(self):
         """
