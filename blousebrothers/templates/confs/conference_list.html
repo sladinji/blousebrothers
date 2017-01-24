@@ -42,7 +42,7 @@
 			<div class="panel-body">
 				<ul class="col-md-12 stats">
 					<li class="stat col-md-3 col-sm-3 col-xs-6">
-                        <span><b class="value">{{ conference.products.first.stats.num_views }}</b><br> Consultations</span>
+                        <span><b class="value">{{ conference.products.first.stats.num_views | default:0 }}</b><br> Consultations</span>
 						<em>Depuis le début</em>
 					</li>
 					<li class="stat col-md-3 col-sm-3 col-xs-6">
@@ -54,7 +54,7 @@
 						<em>Aujourd'hui</em>
 					</li>
 					<li class="stat col-md-3 col-sm-3 col-xs-6">
-						<span><b class="value">{{ conference | month_revenu | currency }}</b><br> Revenus</span>
+						<span><b class="value">{{ conference | month_revenu | default:0 | currency }}</b><br> Revenus</span>
 						<em>Ce mois</em>
 					</li>
 				</ul>

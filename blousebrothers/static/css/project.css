@@ -1142,7 +1142,7 @@ span.btn-share.btn-twitter {
 /* CONFS CRÉES */
 .conf-price {
     position: absolute;
-    right: 42px;
+    right: 39px;
     color: #428bca;
     top: 35px;
     font-size: 18pt;
@@ -1162,7 +1162,7 @@ span.btn-share.btn-twitter {
 }
 .stats .stat {
   padding: 10px 10px;
-  border-left: solid 2px #fcfcfc;
+  border-left: solid 2px #f5f5f5;
   height: 100%;
 }
 .stats .stat:first-child {
@@ -1191,6 +1191,7 @@ a.share {
 .share-group {
     margin: 60px 0px;
     position: absolute;
+    z-index: 1000;
 }
 .share-group ul {
     list-style: none;
@@ -1204,7 +1205,7 @@ a.share {
         position: initial;
         text-align: center;
         right: 0px;
-        padding-left: 50px;
+        padding-left: 43px;
     }
     .conf-title {
         padding-top: 15px;
