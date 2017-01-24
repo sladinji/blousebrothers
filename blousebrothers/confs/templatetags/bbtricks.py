@@ -99,6 +99,15 @@ def already_done(user, conf):
 
 
 @register.filter
+def test_finished(user, conf):
+    try:
+        test = user.tests.get(conf=conf)
+        return test.finished
+    except:
+        return False
+
+
+@register.filter
 def today_sales(conf):
     today = datetime.date.today()
     qs = conf.owner.sales.filter(product__conf=conf)

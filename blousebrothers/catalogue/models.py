@@ -74,4 +74,10 @@ class Product(AbstractProduct):
         if not user.is_anonymous():
             return Test.objects.get(student=user, conf=self.conf)
 
+    def needs_confirmation(self):
+        user = CuserMiddleware.get_user()
+        if not self.conf or self.conf.price == 0 or user.already_done(self.conf):
+            return False
+        return True
+
 from oscar.apps.catalogue.models import *  # noqa

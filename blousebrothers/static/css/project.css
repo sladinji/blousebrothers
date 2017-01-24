@@ -1248,3 +1248,6 @@ a.share {
 .review-share li {
     margin: 0 5px;
 }
+.modal-content {
+    border-radius: 0px;
+}

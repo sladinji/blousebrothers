@@ -80,6 +80,7 @@
 {% endblock %}
 
 {% block content %}
+{% include "confs/partials/confirm_go.html" %}
 
     <form method="get" class="form-horizontal">
         {# Render other search params in a hidden block #}
@@ -132,6 +133,11 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block extrascripts %}
+    {{ block.super }}
+	{% include 'confs/partials/confirm_go_js.html' %}
+{% endblock %}
 
 {% block onbodyload %}
     {{ block.super }}

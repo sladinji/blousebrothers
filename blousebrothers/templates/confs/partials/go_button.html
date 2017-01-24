@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load currency_filters %}
+{% load bbtricks %}
+
+{% if not product.needs_confirmation %}
+
+<form action="{% url 'basket:add' pk=product.pk %}" method="post">
+{% csrf_token %}
+{{ basket_form.as_p }}
+<input id="id_quantity" name="quantity" type="hidden" value="1">
+{% endif %}
+	<button {% if not product.needs_confirmation %}
+        type="submit" data-loading-text="{% trans 'Démarrage...' %}" 
+        {% else %} 
+                      data-toggle="modal" data-productTitle="{{product.conf.title}}" data-target="#confirm-go" data-productId="{{product.pk}}" data-productPrice="{{ session.price.excl_tax|currency:session.price.currency }}"
+        {% endif %} 
+        class="btn btn-gray">
+		{% if product.conf %}
+			{% if user|already_done:product.conf %}
+                {% if user|test_finished:product.conf %}
+                    {% trans "Résultat" %}</button>
+                {% else %}
+                    {% trans "Reprendre" %}</button>
+                {% endif %}
+			{% else %}
+				{% trans "Go !" %}</button>
+			{% endif %}
+		{% else %}
+			{% trans "Add to basket" %}</button>
+		{% endif %}
+{% if not product.needs_confirmation %}
+</form>
+{% endif %}
+

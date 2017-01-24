@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="modal fade" id="confirm-go" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="confirm-go-form" method="post">
+            {% csrf_token %}
+            <input id="id_quantity" name="quantity" type="hidden" value="1">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Confiramation achat "<i class="productTitle">"</i></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Tu as choisi une conf à <b><i class="productPrice"></i></b>. Cette somme sera débitée de ton compte BlouseBrothers.</p>
+                    <p>Souhaites-tu continuer ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success btn-ok" data-loading-text="{% trans 'Go...' %}">Continuer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
