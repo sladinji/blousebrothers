@@ -261,6 +261,13 @@ ul.djng-field-errors li.valid::before {
     width: 100%;
     vertical-align: middle;
 }
+div#btn-comment {
+    text-align: center;
+    padding: 10px 0;
+}
+.well.well-white.question {
+    margin-bottom: 20px;
+}
 .well-answer-title {
     position: relative;
     text-align: right;
@@ -515,18 +522,6 @@ input[type=range]:focus::-ms-fill-upper {
 .question .fa.fa-commenting {
 	font-size: 14pt;
 }
-
-.commenting{
-	cursor: pointer;
-	cursor: pointer;
-	opacity: 0.8;
-	color: black;
-	border: 1px solid #000;
-	background: transparent;
-	border-radius: 5px;
-	padding: 10px;
-}
-
 
 
 .table.table-striped ul {

@@ -15,25 +15,26 @@
 
       <h2>{{ object.conf.title}}</h2>
       <br>
-      {% if object.has_review %}
+      {% if object.has_review or user == object.conf.owner %}
       {% include 'confs/partials/test_result.html' %}
       {% endif %}
+    </div>
+    <div class="text-center">
+        <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
+            {% csrf_token %}
+            <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
+        </form>
     </div>
   </div>
 
 <!-- Action buttons -->
   <div class="row">
   
-    <div class="col-sm-12">
-      <div class="text-center">
-          <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
-              {% csrf_token %}
-              <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
-          </form>
-      </div>
+    <div class="col-sm-12 txt-grey">
 
 	  {% if object.conf.type == 'DCP' %}
-	  <legend>Énoncé</legend><p> {{ object.conf.statement | default:"<i>aucun</i>"}}<p>
+	  <legend>Énoncé</legend>{{ object.conf.statement | default:"<i>aucun</i>"}}
+	  {% if object.conf.images.all %}
 	  <legend>Illustrations</legend>
 	  {% for image in object.conf.images.all %}
 	  <div class="illustrations" id="images_div">
@@ -42,38 +43,23 @@
 		  <figcaption>{{ image.caption }}</figcaption>
 		  </figure>
 	  </div>
-	  {% empty %}
-	  <i>Aucune</i>
 	  {% endfor %}
+	  {% endif %}
 	  {% endif %}
       <!-- Your Stuff: Custom user template urls -->
     </div>
-    <h2>Questions</h2>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
    
     {% for t_answer in object.answers.all|dictsort:"question.index" %}
     <div class="well well-white question">
 	    <div class="col-sm-6">
-	      <h1 id="question-{{t_answer.question.index | add:"1"}}">{{ t_answer.score |floatformat:2 }} / {{ t_answer.max_score }}</h1>
+            <h2>Question {{ t_answer.question.index | add:"1" }} </h2>
 	    </div>
-	    <div class="col-sm-6" id="btn-comment" data-question-id="{{ t_answer.question.id }}">
-	      <a class="pull-right commenting btn" data-toggle="modal" data-target="#myModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Signaler un problème au Conférencier</a>
-	    </div>
-	    <legend>Question {{ t_answer.question.index | add:"1" }} </legend>
-      <div class="col-sm-12">
+      <div class="col-sm-12 txt-grey">
 	      <big><p>{{ t_answer.question.question | default:"<i>aucun</i>" | safe}}</p></big>
       </div>
       {% for image in t_answer.question.images.all %}
-      <div class="illustrations" id="images_div">
-	      <figure>
-	      <img src="{% cropped_thumbnail image "cropping" %}">
-	      <figcaption>{{ image.caption }}</figcaption>
-	      </figure>
-      </div>
-      {% endfor %}
-      <legend>Réponses</legend>
-      <big><p>{{ t_answer.question.explaination| default:"" | safe }}</p></big>
-      {% for image in t_answer.question.explaination_images.all %}
-      <div class="illustrations" id="images_div">
+      <div class="col-sm-12 illustrations" id="images_div">
 	      <figure>
 	      <img src="{% cropped_thumbnail image "cropping" %}">
 	      <figcaption>{{ image.caption }}</figcaption>
@@ -100,30 +86,68 @@
 	      {% endfor %}
       </div>
      {% endfor %}
+
+     <div class="col-sm-12">
+         <big><p>{{ t_answer.question.explaination| default:"" | safe }}</p></big>
+         {% for image in t_answer.question.explaination_images.all %}
+         <div class="illustrations" id="images_div">
+             <figure>
+                 <img src="{% cropped_thumbnail image "cropping" %}">
+                 <figcaption>{{ image.caption }}</figcaption>
+             </figure>
+         </div>
+         {% endfor %}
+     </div>
+
+     <div class="col-sm-12" id="btn-comment" data-question-id="{{ t_answer.question.id }}">
+         <a class="btn btn-primary" data-toggle="modal" data-target="#commentModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier concernant la question {{ t_answer.question.index | add:"1" }} </a>
+     </div>
    </div>
    {% endfor %}
-	  {% if product and not object.has_review and not user == object.conf.owner %}
-	    {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
-        <div class="text-center">
-	      <a class="btn btn-success btn-getscore" href="{{ add_review_url }}#addreview"><i class="fa fa-edit" aria-hidden="true"></i> Laisse un avis pour accéder à ta note !</a>
-        </div>
-	  {% endif %}
+
+   <div class="col-sm-12" id="btn-comment" data-question-id="0">
+     <a class="commenting btn btn-getscore" data-toggle="modal" data-target="#thxModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Remercier le conférencier</a>
+   </div>
+   {% if product and not object.has_review and not user == object.conf.owner %}
+   {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
+
+   <div class="text-center">
+       <a class="btn btn-success btn-getscore" href="{{ add_review_url }}#addreview"><i class="fa fa-edit" aria-hidden="true"></i> Laisse un avis pour accéder à ta note !</a>
+   </div>
+   {% endif %}
   </div>
 <!-- End Action buttons -->
 </div>
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" id="myModalLabel"><i class="fa fa-commenting" aria-hidden="true"></i> Signaler un problème</h4>
+		<h4 class="modal-title" id="commentModalLabel"><i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier</h4>
 	      </div>
 	      <div class="modal-body">
 		<textarea id="commenttextarea" name="textarea" rows="10" cols="50"></textarea>
 	      </div>
 	      <div class="modal-footer">
 		<button id="send_comment" type="button" class="commenting btn btn-default" data-dismiss="modal">Envoyer</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="thxModal" tabindex="-1" role="dialog" aria-labelledby="thxModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="thxModalLabel"><i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier</h4>
+	      </div>
+	      <div class="modal-body">
+		<textarea id="thxtextarea" name="textarea" rows="10" cols="50"></textarea>
+	      </div>
+	      <div class="modal-footer">
+		<button id="btn-send-thx" type="button" class="commenting btn btn-default" data-dismiss="modal">Envoyer</button>
 	      </div>
 	    </div>
 	  </div>
@@ -169,6 +193,15 @@ $("#btn-comment").click( function(){
 	question_id_comment = $(this).data("question-id");
 });
 
+$("#btn-send-thx").click(function(){
+	$.post(
+		"{% url 'confs:question_comment' %}",
+		{ 
+            conf_id : {{ object.conf.pk }},
+			comment :  $('textarea#thxtextarea').val(),
+		});
+
+});
 $("#send_comment").click(function(){
 	$.post(
 		"{% url 'confs:question_comment' %}",

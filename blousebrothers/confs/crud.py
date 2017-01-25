@@ -249,13 +249,39 @@ class StudentAnswerImageCRUDView(BaseAnswerImageCRUDView, StudentConfRelatedObjP
 
 class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, FormView):
 
-    def post(self, request, **kwargs):
+    def send_thx(self, request, conf):
+        body = """Bonjour,
+
+{username} vous envoie un message concernant la conference {title}:
+
+{comment}
+
+---
+
+Vous pouvez lui répondre directement directement via cet email.
+"""
+
+        tags = dict(username=request.user.username,
+                    title=conf.title,
+                    comment=request.POST['comment'],
+                    )
+        body = body.format(**tags)
+
+        msg = EmailMultiAlternatives(
+            'Remerciement conférence"{}"'.format(conf.title),
+            body,
+            request.user.email,
+            [conf.owner.email, ],
+        )
+        msg.esp_extra = {"sender_domain": "blousebrothers.fr"}
+        msg.send()
+
+    def send_comment(request, q):
         QuestionComment.objects.create(
             question_id=request.POST['question_id'],
             student=request.user,
             comment=request.POST['comment'],
         )
-        q = Question.objects.get(pk=request.POST['question_id'])
         body = """Bonjour,
 
 {username} a une remarque sur la question {index} de la conference {title}:
@@ -282,6 +308,16 @@ Vous pouvez lui répondre directement directement via cet email.
         )
         msg.esp_extra = {"sender_domain": "blousebrothers.fr"}
         msg.send()
+
+    def post(self, request, **kwargs):
+
+        if 'conf_id' in request.POST:
+            conf = Conference.objects.get(pk=request.POST['conf_id'])
+            self.send_thx(request, conf)
+        else:
+            q = Question.objects.get(pk=request.POST['question_id'])
+            self.send_comment(request, q)
+
         return JsonResponse(dict(success=1))
 
 
