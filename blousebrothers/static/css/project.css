@@ -240,10 +240,42 @@ ul.djng-field-errors li.valid::before {
 	margin: -1px;
 	background: #fff;
 }
-.well-answer {
+.btn-answer {
 	border: 1px dashed #bcbcbc;
 	background-color: #fff;
 	border-radius: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+}
+.btn-answer .fa {
+    font-size: 19px;
+}
+.btn-checked {
+    background-color: #ceffce;
+}
+.answer-label {
+    display: table-cell;
+    padding-left: 10px;
+    width: 100%;
+    vertical-align: middle;
+}
+.well-answer-title {
+    position: relative;
+    text-align: right;
+    display: inline-block;
+    font-size: 23px;
+    font-weight: bold;
+    opacity: 0.2;
+    z-index: 1000;
+    margin-top: -4px;
+    margin-left: -1px;
+    vertical-align: middle;
+}
+.btn-check-cell {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .well {
@@ -345,10 +377,11 @@ ul.bb-ul li.active a {
 	padding-top: 9px;
 }
 
-@media print {
-  .content {
-    display: none;  /* hide whole page */
-  }
+@media (max-width: 991px) {
+    .test-main-col{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }
 
 .txt-grey {

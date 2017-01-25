@@ -18,7 +18,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	{% include 'partials/nav_test_questions.html' %}
 	</aside>
 
-	<div class="col-md-9" >
+	<div class="col-md-9 test-main-col" >
 	  <div ng-if="conference.type == 'QI'">
 		  {{conference.title}}<br/>
 	  </div>
@@ -89,21 +89,18 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	  <br>
 	  <form class="form-horizontal">
 	   <fieldset>
-	   <div class="well well-answer" ng-repeat="answer in answers">
-         <label for="answer{{ans_label[answers.indexOf(answer)]}}">
-	     <div class="form-group">
-	       <div class="col-sm-12">
-		    <div class="col-sm-11 col-xs-12">
-			    <label> <input type="checkbox" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}" ng-model="answer.correct"/> Proposition {{ans_label[answers.indexOf(answer)]}}</label>
-		      <p>{{answer.answer}}</p>
-		    </div>
-		    <div class="col-sm-1 hidden-xs">
-		      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
-		    </div>
-	       </div>
-	     </div>
-         </label>
-	   </div>
+           <div ng-repeat="answer in answers">
+               <button type="button" class="btn-answer" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}" ng-click="answer.correct = !answer.correct" ng-class="{'btn-checked': answer.correct}"> 
+                   <div class="answer-label">
+                       {{answer.answer}}
+                   </div>
+                   <div class="btn-check-cell">
+                       <i ng-if="answer.correct" class="fa fa-check-square-o" aria-hidden="true"></i>
+                       <i ng-if="!answer.correct" class="fa fa-square-o" aria-hidden="true"></i>
+                       <span class='well-answer-title'>{{ans_label[answers.indexOf(answer)]}}</span>
+                   </div>
+               </button>
+           </div>
 	   </fieldset>
 	   </form>
 	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
@@ -113,7 +110,7 @@ AngularJS Toaster is an AngularJS port of the toastr non-blocking notification j
 	</div>
     </div>
     <div class="row">
-	<aside class="hidden-md col-xs-12 hidden-lg">
+	<aside class="hidden-md col-xs-12 hidden-lg test-main-col">
 	{% include 'partials/nav_test_questions.html' %}
 	</aside>
     </div>
