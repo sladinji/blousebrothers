@@ -1,7 +1,10 @@
+# -*- encoding: utf8 -*-
+
 from __future__ import with_statement
 from fabric.api import *
 import requests
 import re
+import fabric
 
 env.hosts = ['admin@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
@@ -18,6 +21,10 @@ def send_simple_message(msg):
 
 
 def deploy():
+    if not fabric.contrib.console.confirm("Deploy to production ?"):
+        return
+    if not fabric.contrib.console.confirm("Sérieux ?"):
+        return
     with settings(warn_only=True):
         if run("test -d %s" % code_dir).failed:
             run("git clone git@github.com:sladinji/blousebrothers.git %s" % code_dir)
