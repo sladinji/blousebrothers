@@ -6,7 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 
 from djng.views.crud import NgCRUDView
 
-from blousebrothers.shortcuts.auth import (
+from blousebrothers.auth import (
     ConferenceWritePermissionMixin,
     StudentConferencePermissionMixin,
     ConfRelatedObjPermissionMixin,

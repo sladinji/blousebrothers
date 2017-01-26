@@ -24,7 +24,7 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import UserPassesTestMixin
 
-from blousebrothers.shortcuts.auth import (
+from blousebrothers.auth import (
     BBConferencierReqMixin,
     ConferenceWritePermissionMixin,
     ConferenceReadPermissionMixin,
@@ -32,7 +32,7 @@ from blousebrothers.shortcuts.auth import (
     PassTestPermissionMixin,
     BBLoginRequiredMixin,
 )
-from blousebrothers.shortcuts.tools import analyse_conf
+from blousebrothers.tools import analyse_conf, get_full_url
 from blousebrothers.confs.utils import create_product
 from .models import (
     Conference,
@@ -266,7 +266,7 @@ class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
     email_template = '''
 Nom : {}
 Email : {}
-Lien : {}{}{}'''
+Lien : {}'''
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_conferencier:
@@ -276,14 +276,11 @@ Lien : {}{}{}'''
             permission = Permission.objects.get(name='Can add conference')
             request.user.user_permissions.add(permission)
             request.user.save()
-            msg = self.email_template.format(request.user.name,
-                                             request.user.email,
-                                             'https://' if request.is_secure() else 'http://',
-                                             request.get_host(),
-                                             reverse('admin:users_user_change',
-                                                     args=(request.user.id,)
-                                                     )
-                                             )
+            msg = self.email_template.format(
+                request.user.name,
+                request.user.email,
+                get_full_url(request, 'admin:users_user_change', args=(request.user.id,))
+            )
             logger.info(msg)
             mail_admins('Passage conférencier', msg)
         return redirect(

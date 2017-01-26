@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
+from django.http import HttpResponseRedirect
 
 from .models import User
 from .forms import UserForm, PayInForm, CardRegistrationForm
@@ -18,6 +19,7 @@ from mangopay.models import (
     MangoPayWallet,
     MangoPayPayInByCard,
 )
+from blousebrothers.tools import get_full_url
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
@@ -54,6 +56,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return User.objects.get(username=self.request.user.username)
 
 
+class Needs3DS(Exception):
+    pass
+
+
 class UserWalletView(LoginRequiredMixin, FormView):
 
     template_name = 'users/wallet.html'
@@ -65,7 +71,15 @@ class UserWalletView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Merci de compléter le formulaire ci-dessous '
                            'pour pouvoir créditer ton compte.')
             return redirect('users:update')
+        elif 'transactionId' in request.GET:
+            # handle 3DS redirection
+            payin = MangoPayPayInByCard.objects.get(mangopay_id=request.GET['transactionId'])
+            payin.get()
+            self.handle_payin_status(payin)
+
+
         elif 'data' in request.GET:
+            # handle mango redirection after new card added
             mpu = request.user.mangopay_users.first()
             card_registration = mpu.mangopay_card_registrations.order_by('-id').first()
             if card_registration.mangopay_card.mangopay_id:
@@ -75,6 +89,19 @@ class UserWalletView(LoginRequiredMixin, FormView):
         elif not request.user.has_at_least_one_card and not request.user.is_conferencier:
             return redirect(reverse('users:addcard'))
         return super().get(request, *args, **kwargs)
+
+    def handle_payin_status(self, payin):
+        if payin.status == 'SUCCEEDED':
+            messages.success(
+                self.request,
+                'Le paiement de {}€ a bien été pris en compte (référence : {})'.format(
+                    payin.debited_funds, payin.mangopay_id)
+            )
+        else:
+            messages.error(self.request,
+                           'Le paiement a échoué (référence : {})'.format(
+                               payin.mangopay_id)
+                           )
 
     def payin(self, credit, request):
         payin = MangoPayPayInByCard()
@@ -91,20 +118,13 @@ class UserWalletView(LoginRequiredMixin, FormView):
             ).first().mangopay_card
         payin.debited_funds = Decimal(credit)
         payin.fees = 0
-        payin.create(secure_mode_return_url='https://blousebrothers.fr')
-        if payin.status == 'FAILED':
-            messages.error(self.request,
-                           'Le paiement a échoué (référence de la transaction : {})'.format(payin.mangopay_id)
-                           )
-        elif payin.status == 'SUCCEEDED':
-            messages.success(
-                self.request,
-                'Le paiement de {}€ a bien été pris en compte (référence : {})'.format(credit, payin.mangopay_id)
-            )
-        else:
-            messages.error(self.request,
-                           'Le paiement a échoué (référence de la transaction : {})'.format(payin.mangopay_id)
-                           )
+        payin.create(secure_mode_return_url=get_full_url(request, 'users:wallet'))
+
+        if payin.secure_mode_redirect_url:
+            raise Needs3DS(payin)
+
+        self.handle_payin_status(payin)
+
 
     def post(self, request, *args, **kwargs):
         credit = None
@@ -114,10 +134,13 @@ class UserWalletView(LoginRequiredMixin, FormView):
                 credit = x
                 break
 
-        if credit:
+        if not credit and 'sub_credit' in request.POST:
+            credit = request.POST['credit']
+
+        try:
             self.payin(credit, request)
-        elif 'sub_credit' in request.POST:
-            self.payin(request.POST['credit'], request)
+        except Needs3DS as ex:
+            return HttpResponseRedirect(ex.args[0].secure_mode_redirect_url)
 
         return self.get(request, *args, **kwargs)
 

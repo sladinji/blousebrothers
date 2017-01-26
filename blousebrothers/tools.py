@@ -1,4 +1,6 @@
 from django.forms.models import model_to_dict
+from django.core.urlresolvers import reverse
+
 
 def analyse_conf(conf):
     total_q = len(conf.questions.all())
@@ -9,10 +11,18 @@ def analyse_conf(conf):
     conf.edition_progress = int(progress)
     conf.save()
     confdict = model_to_dict(conf)
-    confdict.update(pk=conf.id)# to be compatible with djng rest api
+    confdict.update(pk=conf.id)  # to be compatible with djng rest api
     return {
         'total_q': total_q,
         'written_q': [q.id for q in written_q],
         'valid_q': [q.id for q in valid_q],
         'conference': confdict,
     }
+
+
+def get_full_url(request, view_name, **kwargs):
+    return '{}{}{}'.format(
+        'https://' if request.is_secure() else 'http://',
+        request.get_host(),
+        reverse(view_name, **kwargs)
+    )

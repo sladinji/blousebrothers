@@ -30,4 +30,4 @@ def balance(request):
         wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
         return {'balance': wallet.balance()}
     except:
-        return {'balance': 'EUR 0.00'}
+        return {'balance': 'Activer mes crédits'}

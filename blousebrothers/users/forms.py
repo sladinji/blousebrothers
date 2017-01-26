@@ -26,7 +26,7 @@ class WalletForm(forms.ModelForm):
 
 class PayInForm(forms.Form):
     credit = forms.DecimalField(label=_('Montant en euros'),
-                                max_value=Decimal('99.99'),
+                                max_value=Decimal('250.0'),
                                 min_value=Decimal('5.00'),
                                 help_text=_('Minimum 5€'),
                                 )
