@@ -8,6 +8,7 @@ from django import forms
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.safestring import mark_safe
+from django.db.models import Q
 from .models import User, University
 from blousebrothers.confs.models import Conference
 from django_csv_exports.admin import CSVExportAdmin
@@ -39,20 +40,28 @@ class MyUserCreationForm(UserCreationForm):
 class FinishedButNotForSaleFilter(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
     # right admin sidebar just above the filter options.
-    title = _('"on attend quoi pour rendre accessible ?"')
+    title = _('"On se réveille !"')
 
     # Parameter for the filter that will be used in the URL query.
-    parameter_name = 'finished'
+    parameter_name = 'wake-up'
 
     def lookups(self, request, model_admin):
         return (
-            ('100', _('Dossier complet mais non accessible aux étudiants')),
+            ('NA', _('Dossier complet mais non accessible aux étudiants')),
+            ('MANGO', _('Infos pour Mango manquantes (ddn, pays de résidence, nationalité, prénom, nom)')),
         )
 
     def queryset(self, request, queryset):
-        if self.value() == '100':
-            return queryset.filter(created_confs__edition_progress__lt=100,
+        if self.value() == 'NA':
+            return queryset.filter(created_confs__edition_progress=100,
                                    created_confs__for_sale=False,
+                                   ).distinct()
+        elif self.value() == 'MANGO':
+            return queryset.filter(Q(birth_date__isnull=True) |
+                                   Q(country_of_residence__isnull=True) |
+                                   Q(nationality__isnull=True) |
+                                   Q(first_name__isnull=True) |
+                                   Q(last_name__isnull=True)
                                    )
 
 
@@ -111,11 +120,18 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
             'wanabe_conferencier_date', 'degree', 'mobile')}),
     ) + AuthUserAdmin.fieldsets
 
+    def get_queryset(self, request):
+        my_model = super().get_queryset(request)
+        my_model = my_model.prefetch_related('created_confs', 'socialaccount_set')
+        return my_model
+
     def created_confs(self):
         html = ""
         for obj in Conference.objects.filter(owner__id=self.id):
-            html += '<p><a href="{}">{} ({}%)</a></p>'.format(
-                obj.get_absolute_url(), obj.title, obj.edition_progress)
+            html += '<p><a href="{}">{} ({}%) {}'.format(
+                obj.get_absolute_url(), obj.title, obj.edition_progress,
+                'A' if obj.for_sale else 'NA',
+            )
         return mark_safe(html)
 
     def social_avatar(self):
