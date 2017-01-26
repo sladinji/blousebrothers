@@ -71,12 +71,12 @@ class UserWalletView(LoginRequiredMixin, FormView):
             messages.error(self.request, 'Merci de compléter le formulaire ci-dessous '
                            'pour pouvoir créditer ton compte.')
             return redirect('users:update')
+
         elif 'transactionId' in request.GET:
             # handle 3DS redirection
             payin = MangoPayPayInByCard.objects.get(mangopay_id=request.GET['transactionId'])
             payin.get()
             self.handle_payin_status(payin)
-
 
         elif 'data' in request.GET:
             # handle mango redirection after new card added
@@ -86,8 +86,10 @@ class UserWalletView(LoginRequiredMixin, FormView):
                 raise Exception("Mango pay id already exist ???")
             card_registration.handle_registration_data(request.GET['data'])
             return redirect(reverse('users:wallet'))
+
         elif not request.user.has_at_least_one_card and not request.user.is_conferencier:
             return redirect(reverse('users:addcard'))
+
         return super().get(request, *args, **kwargs)
 
     def handle_payin_status(self, payin):
@@ -124,7 +126,6 @@ class UserWalletView(LoginRequiredMixin, FormView):
             raise Needs3DS(payin)
 
         self.handle_payin_status(payin)
-
 
     def post(self, request, *args, **kwargs):
         credit = None
