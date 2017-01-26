@@ -4,7 +4,13 @@
 
 {% purchase_info_for_product request product as session %}
 
-{% if session.price.exists %}
+{% if product.conf %}
+    {% if product.conf.price == 0 %}
+        <p class="price_color">{% trans "Free" %}</p>
+    {% else %}
+        <p class="price_color">{{ product.conf.price|currency }}</p>
+    {% endif %}
+{% elif session.price.exists %}
     {% if session.price.excl_tax == 0 %}
         <p class="price_color">{% trans "Free" %}</p>
     {% elif session.price.is_tax_known %}

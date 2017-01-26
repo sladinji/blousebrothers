@@ -74,6 +74,7 @@ class Product(AbstractProduct):
         if not user.is_anonymous():
             return Test.objects.get(student=user, conf=self.conf)
 
+    @property
     def needs_confirmation(self):
         user = CuserMiddleware.get_user()
         if not self.conf or self.conf.price == 0 or user.already_done(self.conf) or self.reviews.count() <= 5:
