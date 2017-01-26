@@ -34,6 +34,10 @@ class FrenchFixedRateTax(object):
             product.get_product_class().slug,
             DEFAULT_RATE)
         if product.conf:
+            if product.reviews.count() <= 5:
+                return prices.FixedPrice(
+                    currency='EUR',
+                    excl_tax=0)
             return prices.FixedPrice(
                 currency='EUR',
                 excl_tax=product.conf.price)

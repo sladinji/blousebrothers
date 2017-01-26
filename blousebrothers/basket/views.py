@@ -13,6 +13,7 @@ from mangopay.models import MangoPayTransfer
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
 
+
 class MangoTransfertException(Exception):
     pass
 
@@ -60,7 +61,7 @@ class BasketAddView(CoreBasketAddView):
         if transfer.status == "FAILED":
             test.delete()
             if transfer.result_code == "001001":
-                messages.error(self.request, _("Merci de créditer ton compte pour pouvoir faire cette conférence"),
+                messages.error(self.request, _("Merci de créditer ton compte pour pouvoir faire cette conférence (prix : {})").format(info.price.excl_tax),
                                extra_tags='safe noicon')
                 return HttpResponseRedirect(reverse("users:wallet") + '?next={}'.format(self.request.path))
             else:

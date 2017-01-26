@@ -76,7 +76,7 @@ class Product(AbstractProduct):
 
     def needs_confirmation(self):
         user = CuserMiddleware.get_user()
-        if not self.conf or self.conf.price == 0 or user.already_done(self.conf):
+        if not self.conf or self.conf.price == 0 or user.already_done(self.conf) or self.reviews.count() <= 5:
             return False
         return True
 
