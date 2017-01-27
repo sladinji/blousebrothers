@@ -93,3 +93,4 @@ django-robots
 django-cuser
 django-social-share
 django-termsandconditions
+django-meta

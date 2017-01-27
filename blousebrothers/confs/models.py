@@ -17,6 +17,8 @@ from django.core.validators import int_list_validator
 
 from autoslug import AutoSlugField as RealAutoSlugField
 from image_cropping import ImageCropField, ImageRatioField
+from meta.models import ModelMeta
+
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +45,7 @@ class AdminConfManager(models.Manager):
         return super().get_queryset()
 
 
-class Conference(models.Model):
+class Conference(ModelMeta, models.Model):
     objects = ConfManager()
     all_objects = AdminConfManager()
 
@@ -96,6 +98,12 @@ class Conference(models.Model):
     date_tuto = models.DateTimeField(_("Accès gratuit aux étudiants de ma ville le "),
                                      blank=True, null=True)
 
+    _metadata = {
+        'title': 'title',
+        'description': 'summary',
+        'keywords': 'get_items',
+    }
+
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
 
@@ -117,6 +125,13 @@ class Conference(models.Model):
                 if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
                     self.items.add(item)
                     break
+
+    def get_items(self):
+        """used by django-meta for keywords"""
+        return [x.name for x in self.items.all()]
+
+    def get_author(self):
+        return self.owner.name
 
     @property
     def icono(self):

@@ -69,6 +69,7 @@ THIRD_PARTY_APPS = [
     'cuser',
     'django_social_share',
     'termsandconditions',
+    'meta', #SEO
 ]
 
 # Apps specific for this project go here.
@@ -375,3 +376,11 @@ ANALYTICAL_INTERNAL_IPS = ["109.190.133.24",
 TERMS_BASE_TEMPLATE = 'account/base.html'
 TERMS_EXCLUDE_URL_LIST = {'/', '/terms/required/', '/logout/', '/login/', '/cgu/'}
 TERMS_EXCLUDE_URL_PREFIX_LIST = {'/catfish/','/admin/', '/dashboard'}
+
+# SEO
+META_INCLUDE_KEYWORDS=[ "ecni", "iecn", "ecn", "dossier clinique progressif", "dossiers cliniques progressifs",
+                       "question isolée", "questions isolées", "lca", "lecture critique d'articles",
+                       "lecture critique d'article", "Epreuves Classantes Nationales", "examen classant national",
+                       "conférences"]
+META_SITE_PROTOCOL = 'https'
+META_USE_SITES = True
