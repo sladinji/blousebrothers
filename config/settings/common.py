@@ -68,6 +68,7 @@ THIRD_PARTY_APPS = [
     'robots',
     'cuser',
     'django_social_share',
+    'meta', #SEO
 ]
 
 # Apps specific for this project go here.
@@ -365,3 +366,9 @@ ANALYTICAL_INTERNAL_IPS = [ "109.190.133.24",
                            ]
 
 #STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
+META_INCLUDE_KEYWORDS=[ "ecni", "iecn", "ecn", "dossier clinique progressif", "dossiers cliniques progressifs",
+                       "question isolée", "questions isolées", "lca", "lecture critique d'articles",
+                       "lecture critique d'article", "Epreuves Classantes Nationales", "examen classant national",
+                       "conférences"]
+META_SITE_PROTOCOL = 'https'
+META_USE_SITES = True

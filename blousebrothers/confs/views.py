@@ -62,6 +62,11 @@ class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin
         ).get(slug=self.kwargs['slug'])
         return obj
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(self, **kwargs)
+        context['meta'] = self.get_object().as_meta(self.request)
+        return context
+
 
 class ConferenceDeleteView(ConferenceWritePermissionMixin, BBConferencierReqMixin, DeleteView):
     """
