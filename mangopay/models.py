@@ -549,13 +549,14 @@ class MangoPayPayInByCard(MangoPayPayIn):
     def _get_payment_details(self):
         payment_details = PayInPaymentDetailsCard()
         payment_details.CardType = "CB_VISA_MASTERCARD"
+        #payment_details.CardType = "MAESTRO"
         return payment_details
 
     def _get_execution_details(self):
         execution_details = PayInExecutionDetailsDirect()
         execution_details.CardId = self.mangopay_card.mangopay_id
         execution_details.SecureModeReturnURL = self.secure_mode_return_url
-        execution_details.SecureMode = "DEFAULT"
+        execution_details.SecureMode = "FORCE"
         return execution_details
 
     def _update(self, pay_in):
