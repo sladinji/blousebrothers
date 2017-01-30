@@ -32,12 +32,12 @@ class BBRequirementMixin(BBLoginRequiredMixin):
 
 class BBConferencierReqMixin(BBLoginRequiredMixin):
     """
-    User has to be a conferencier (or googlebot) to access.
+    User has to be a conferencier to access.
     """
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        if user.is_superuser or request.is_googlebot:
+        if user.is_superuser:
             return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info():
             messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
@@ -84,10 +84,10 @@ class CanAddConfPermission(PermissionRequiredMixin):
 
 class IsConfOwner(UserPassesTestMixin):
     """
-    User is conf owner, root or googlebot.
+    User is conf owner, root.
     """
     def test_func(self):
-        if self.request.user.is_superuser or self.request.is_googlebot:
+        if self.request.user.is_superuser:
             return True
         self.object = self.get_object()
         return self.object.owner == self.request.user
@@ -95,7 +95,7 @@ class IsConfOwner(UserPassesTestMixin):
 
 class ConferenceReadPermissionMixin(BBLoginRequiredMixin, IsConfOwner):
     """
-    Access granted if user is_conferencier or google bot (no add_conference required)
+    Access granted if user is_conferencier or (no add_conference required)
     """
 
 

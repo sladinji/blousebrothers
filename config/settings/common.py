@@ -341,7 +341,7 @@ HAYSTACK_CONNECTIONS = {
 
 OSCAR_DEFAULT_CURRENCY = 'EUR'
 OSCAR_SHOP_NAME = "BlouseBrothers"
-OSCAR_SHOP_TAGLINE = 'Prépa iECN Collaborative'
+OSCAR_SHOP_TAGLINE = 'Prépa ECNi Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
 
@@ -384,3 +384,5 @@ META_INCLUDE_KEYWORDS=[ "ecni", "iecn", "ecn", "dossier clinique progressif", "d
                        "conférences"]
 META_SITE_PROTOCOL = 'https'
 META_USE_SITES = True
+META_USE_OG_PROPERTIES = True
+META_USE_TWITTER_PROPERTIES = True

@@ -109,24 +109,30 @@
                 <td>{{ product.num_approved_reviews }}</td>
             </tr>
         {% endiffeature %}
-	{% if product.conf %}
-	    <tr>
+        {% if product.conf %}
+            <tr>
                 <th>{% trans "Matières abordées" %}</th>
-		<td><ul>{% for spe in product.conf.specialities.all %}
-			    <li>{{ spe }}</li>
-			{% endfor %}
-		    </ul>
-		</td>
+                <td><ul>{% for spe in product.conf.specialities.all %}
+                        <li>{{ spe }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
-	    <tr>
+            <tr>
                 <th>{% trans "Items abordés" %}</th>
-		<td><ul>{% for item in product.conf.items.all %}
-			    <li>{{ item }}</li>
-			{% endfor %}
-		    </ul>
-		</td>
+                <td><ul>{% for item in product.conf.items.all %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
-	{% endif %}
+            {% if request.is_googlebot %}
+            <tr>
+                <th>article full content just for indexing</th>
+                <td>{{ product.conf.get_all_txt |safe }}</td>
+            </tr>
+            {%endif%}
+        {% endif %}
 	    
     </table>
     {% endblock %}

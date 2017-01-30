@@ -102,6 +102,8 @@ class Conference(ModelMeta, models.Model):
         'title': 'title',
         'description': 'summary',
         'keywords': 'get_items',
+        'og_author_url': "get_author_url",
+        "gplus_author": "get_author_gplus",
     }
 
     def get_absolute_url(self):
@@ -128,10 +130,32 @@ class Conference(ModelMeta, models.Model):
 
     def get_items(self):
         """used by django-meta for keywords"""
-        return [x.name for x in self.items.all()]
+        return [x.name for x in self.items.all()] + [x.name for x in self.specialities.all()]
 
     def get_author(self):
-        return self.owner.name
+        """
+        Retrieve the author object. This is meant to be overridden in the model
+        to return the actual author instance (e.g.: the user object).
+        """
+        class Author(object):
+            fb_url = None
+            twitter_profile = None
+            gplus_profile = None
+            full_name = None
+
+            def get_full_name(self):  # pragma: no cover
+                return self.full_name
+
+        author = Author()
+
+        for provider in ["google", "facebook"]:
+            try :
+                author.fb_url = self.owner.socialaccount_set.get(provider=provider).extra_data["link"]
+                author.full_name = self.owner.socialaccount_set.get(provider=provider).extra_data["name"]
+                break
+            except:
+                pass
+        return author
 
     @property
     def icono(self):
