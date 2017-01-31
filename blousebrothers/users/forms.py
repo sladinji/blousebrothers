@@ -9,9 +9,10 @@ from .models import User
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'address1', 'address2', 'zip_code',
-                  'city', 'email', 'university', 'degree', 'speciality', 'bio', 'mobile',
-                  'birth_date', 'country_of_residence', 'nationality',
+        fields = ['first_name', 'last_name',
+                  'birth_date', 'country_of_residence', 'nationality', 'email',
+                  'address1', 'address2', 'zip_code',
+                  'city', 'university', 'degree', 'speciality', 'bio', 'mobile',
                   ]
     birth_date = forms.DateField(widget=DatePickerInput, label=_("Date de naissance"))
 
