@@ -11,8 +11,9 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name',
                   'birth_date', 'country_of_residence', 'nationality', 'email',
+                  'university', 'degree',
                   'address1', 'address2', 'zip_code',
-                  'city', 'university', 'degree', 'speciality', 'bio', 'mobile',
+                  'city', 'speciality', 'bio', 'mobile',
                   ]
     birth_date = forms.DateField(widget=DatePickerInput, label=_("Date de naissance"))
 
