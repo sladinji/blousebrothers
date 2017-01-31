@@ -24,7 +24,7 @@ class BBRequirementMixin(BBLoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         if not request.user.gave_all_required_info():
-            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
+            messages.error(self.request, "Pour être conférencier, il suffit de compléter le formulaire ci-dessous. C'est gratuit et sans engagement.")
             return redirect("users:update")
         else:
             return super().get(request, *args, **kwargs)
@@ -40,7 +40,7 @@ class BBConferencierReqMixin(BBLoginRequiredMixin):
         if user.is_superuser:
             return super().get(request, *args, **kwargs)
         if not user.gave_all_required_info():
-            messages.error(self.request, 'Pour être conférencier, vous devez compléter le formulaire ci-dessous.')
+            messages.error(self.request, "Pour être conférencier, il suffit de compléter le formulaire ci-dessous. C'est gratuit et sans engagement")
             return redirect("users:update")
         if not user.is_conferencier:
             return redirect("confs:wanabe_conferencier")
