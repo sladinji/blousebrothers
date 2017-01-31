@@ -1,0 +1,5 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %} {{ inviter }} t'as invité à le rejoindre sur BlouseBrothers{% endblocktrans %}
+{% endautoescape %}
+

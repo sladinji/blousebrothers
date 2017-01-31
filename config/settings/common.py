@@ -372,3 +372,4 @@ META_INCLUDE_KEYWORDS=[ "ecni", "iecn", "ecn", "dossier clinique progressif", "d
                        "conférences"]
 META_SITE_PROTOCOL = 'https'
 META_USE_SITES = True
+INVITATIONS_INVITATION_EXPIRY = 30
