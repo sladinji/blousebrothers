@@ -56,6 +56,9 @@ settings file. This will enable the on-the-fly less compiler.
                     {% endif %}
                     <div class="collapse navbar-collapse nav-primary">
                         <ul class="boutique-nav main-menu clone-main-menu pull-left">
+                            <li class="menu-item-has-children item-megamenu">
+                                <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> Catalogue</a>
+                            </li>
                             {% if request.user.is_authenticated %}
                             {% if request.user.is_conferencier%}
                             <li class="menu-item-has-children item-megamenu">
@@ -99,7 +102,7 @@ settings file. This will enable the on-the-fly less compiler.
             </div>
             {% block submenu %}
             <a class="btn btn-rules" href="{% url 'regledujeu' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a>
-            <a class="btn btn-success btn-create-conf pull-right" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
+            <a class="btn btn-success btn-create-conf pull-right" id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
             {% endblock %}
         </div>
 

@@ -23,11 +23,7 @@
                     {% trans "Reprendre" %}</button>
                 {% endif %}
 			{% else %}
-                {% if product.reviews.count <= 5 %}
-                    {% trans "Gratuit : à évaluer" %}</button>
-                {% else %}
                     {% trans "Go !" %}</button>
-                {% endif %}
 			{% endif %}
 		{% else %}
 			{% trans "Add to basket" %}</button>

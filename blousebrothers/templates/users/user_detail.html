@@ -4,59 +4,10 @@
 {% load tinycontent_tags %}
 {% load crispy_forms_tags %}
 
-{% block title %}User: {{ object.username }}{% endblock %}
+{% block title %}{{ object.username }}{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-share"></i> Parrainage</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        {% tinycontent 'regleparrainage' %}
-                        {% endtinycontent %}
-                        <form class="form-horizontal" method="post" action="{% url 'users:invitation' %}">
-                            {% csrf_token %}
-                            {{ invit_form | crispy }}
-                            <button type="submit" class="btn">Envoyer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% if object == request.user %}
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-file"></i> Abonnement</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        {% if not user.subs.all %}
-                        <a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a>
-                        {% else %}
-                        {% for sub in user.subs.all %}
-                        <legend>{{ sub.type.name }}</legend>
-                        {{ sub.type.description | safe }}
-                        <p><label>{% trans "Valable jusqu'au" %} :</label> {{ sub.date_over | date:"d F Y" }}</p>
-                        {% if sub.is_past_due %}
-                        <a href="#" class="btn">Renouveler</a>
-                        {% endif %}
-                        <br>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="row">
         <div class="col-md-12">
@@ -65,7 +16,7 @@
                     <h2><i class="fa fa-user"></i> Profil</h2>
                     {% if object == request.user %}
                     <ul class="nav navbar-right panel_toolbox">
-                        <li><a href="{% url 'users:update' %}"><i class="fa fa-edit"></i></a>
+                        <li><a class="btn" href="{% url 'users:update' %}"><i class="fa fa-edit"></i> Éditer mon profil</a>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -92,6 +43,59 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-share"></i> Parrainage</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% tinycontent 'regleparrainage' %}
+                        {% endtinycontent %}
+                        <form class="form-horizontal" method="post" action="{% url 'users:invitation' %}">
+                            {% csrf_token %}
+                            {{ invit_form | crispy }}
+                            <button type="submit" class="btn pull-right">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% if object == request.user %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-file"></i> Abonnement</h2>
+                    {% if not user.subs.all %}
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a></li>
+                        </li>
+                    </ul>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% for sub in user.subs.all %}
+                        <legend>{{ sub.type.name }}</legend>
+                        {{ sub.type.description | safe }}
+                        <p><label>{% trans "Valable jusqu'au" %} :</label> {{ sub.date_over | date:"d F Y" }}</p>
+                        {% if sub.is_past_due %}
+                        <a href="#" class="btn">Renouveler</a>
+                        {% endif %}
+                        <br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>

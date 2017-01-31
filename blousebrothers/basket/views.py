@@ -30,7 +30,8 @@ class BasketAddView(CoreBasketAddView):
             messages.warning(self.request, _("Merci de te connecter pour pouvoir faire un dossier"),
                              extra_tags='safe noicon')
             return HttpResponseRedirect(reverse("account_signup"))
-        if not self.request.user.gave_all_mangopay_info():
+        free_conf = form.product.conf.owner.username == "BlouseBrothers"
+        if not free_conf and not self.request.user.gave_all_mangopay_info():
             messages.warning(self.request, _("Merci de compléter ce formulaire pour pouvoir continuer"),
                              extra_tags='safe noicon')
             return HttpResponseRedirect(reverse("users:update") + '?next={}'.format(self.request.path))
