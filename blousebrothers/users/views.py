@@ -10,9 +10,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
 from django.http import HttpResponseRedirect
+from invitations.models import Invitation
+from django.db.utils import IntegrityError
 
 from .models import User
-from .forms import UserForm, PayInForm, CardRegistrationForm
+from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm
 from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayCardRegistration,
@@ -30,6 +32,12 @@ class UserDetailView(DetailView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['invit_form'] = EmailInvitationForm()
+        return context
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
@@ -55,6 +63,28 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
 
+
+class UserSendInvidation(LoginRequiredMixin, FormView):
+    form_class = EmailInvitationForm
+
+    def form_valid(self, form):
+        try:
+            invite = Invitation.create(form.cleaned_data["email"], inviter=self.request.user)
+            invite.send_invitation(self.request)
+            messages.success(self.request, "L'invitation à bien été envoyée à"
+                            " {}.".format(form.cleaned_data["email"]))
+        except IntegrityError:
+            messages.error(self.request, "L'invitation n'a pas été envoyée car"
+                           " {} a déjà été parrainé.".format(
+                form.cleaned_data["email"])
+            )
+
+        return super().form_valid(form)
+
+    # send the user back to their own page after a successful update
+    def get_success_url(self):
+        return reverse('users:detail',
+                       kwargs={'username': self.request.user.username})
 
 class Needs3DS(Exception):
     pass
@@ -203,3 +233,5 @@ class Subscription(LoginRequiredMixin, TemplateView):
             request.basket.add_product(sub, 1)
             return redirect('/basket/')
         return super().get(request, *args, **kwargs)
+
+

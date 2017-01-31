@@ -93,3 +93,4 @@ django-cuser
 django-social-share
 django-termsandconditions
 django-meta
+django-invitations

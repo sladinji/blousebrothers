@@ -31,6 +31,8 @@ class PayInForm(forms.Form):
                                 help_text=_('Minimum 5€'),
                                 )
 
+class EmailInvitationForm(forms.Form):
+    email = forms.EmailField(label=_('Email de votre filleul'))
 
 class CardRegistrationForm(forms.Form):
     cardRegistrationURL = forms.CharField(widget=forms.HiddenInput())

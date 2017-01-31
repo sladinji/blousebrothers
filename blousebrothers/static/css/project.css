@@ -57,8 +57,7 @@ img {
 	padding: 0;
 	margin-top: -17px;
 	font-family: 'lobster';
-	font-size: 48px;
-	color: #222;
+	font-size: 3em;
 }
 
 .main-title {
@@ -771,8 +770,16 @@ footer a{
 }
 /* END FX SIGNUP */
 html, body {
+	color: #73879C;
     height: 100%;
-    margin: 0; padding: 0;
+    margin: 0; 
+    padding: 0;
+}
+.main-menu>li>a {
+    color: #73879C;
+}
+legend {
+    color: #73879C;
 }
 body {
     display : table;
@@ -1278,4 +1285,72 @@ a.share {
 }
 .modal-content {
     border-radius: 0px;
+}
+
+/* Profile */
+.x_panel {
+    width: 100%;
+    padding: 10px 17px;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    transition: all .2s ease;
+}
+
+.x_title {
+    border-bottom: 2px solid #E6E9ED;
+    padding: 1px 5px 6px;
+}
+.x_title h2 {
+    margin: 5px 0 6px;
+    float: left;
+    display: block;
+}
+.nav > li {
+    position: relative;
+    display: block;
+}
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+ul.quick-list li {
+	padding-left: 10px;
+	list-style: none;
+	margin: 0;
+	padding-bottom: 6px;
+	padding-top: 4px;
+}
+.dashboard-widget-content .sidebar-widget {
+	width: 50%;
+	display: inline-block;
+	vertical-align: top;
+	background: #fff;
+	border: 1px solid #abd9ea;
+	border-radius: 5px;
+	text-align: center;
+	float: right;
+	padding: 2px;
+	margin-top: 10px;
+}
+.logo .fa.fa-bars {
+    font-size: 24px;
+}
+
+.main-menu > li > a {
+    font-size: inherit;
+}
+@media (max-width: 767px){
+    .main-menu > li {
+        display: block;
+        padding: 0 20px;
+    }
+    .main-menu > li:first-child {
+        padding: 0 20px;
+    }
 }

@@ -1,73 +1,99 @@
 {% extends "layout.html" %}
 {% load static %}
 {% load i18n %}
+{% load tinycontent_tags %}
+{% load crispy_forms_tags %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block content %}
 <div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
-      <h2>{{ object.username }}</h2>
-      <div class="well">
-        {% comment option à mettre %}
-        {% if object.socialaccount_set.all %}
-        <img class="social-circle" src="{{ object.socialaccount_set.all.0.get_avatar_url }}">
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-share"></i> Parrainage</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% tinycontent 'regleparrainage' %}
+                        {% endtinycontent %}
+                        <form class="form-horizontal" method="post" action="{% url 'users:invitation' %}">
+                            {% csrf_token %}
+                            {{ invit_form | crispy }}
+                            <button type="submit" class="btn">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if object == request.user %}
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-file"></i> Abonnement</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% if not user.subs.all %}
+                        <a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a>
+                        {% else %}
+                        {% for sub in user.subs.all %}
+                        <legend>{{ sub.type.name }}</legend>
+                        {{ sub.type.description | safe }}
+                        <p><label>{% trans "Valable jusqu'au" %} :</label> {{ sub.date_over | date:"d F Y" }}</p>
+                        {% if sub.is_past_due %}
+                        <a href="#" class="btn">Renouveler</a>
+                        {% endif %}
+                        <br>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endif %}
-        {% endcomment %}
-        {% if object.bio %}
-	<p><i>{{ object.bio }}</i></p>
-        {% endif %}
-	{% if object == request.user %}
-        <p><label>{% trans 'First name' %} :</label> {{ object.first_name }}</p>
-        <p><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</p>
-        <p><label>{% trans 'Email address' %} :</label> {{ object.email }}</p>
-        {% endif %}
-        <p><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</p>
-        <p><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</p>
-        {% if object.degree == 'INTERNE' or object.degree == 'MEDECIN' %}
-        <p><label>{% trans 'Spécialité' %} :</label>{% if object.speciality %} {{ object.speciality  }} {% endif %}</p>
-        {% endif %}
-	{% if object == request.user %}
-	<!-- Action buttons -->
-	<div class="row">
-
-	  <div class="col-sm-12 ">
-		  <a class="btn" href="{% url 'users:update' %}">{% trans "Modifier mes informations" %}</a>
-	    <!-- Your Stuff: Custom user template urls -->
-	  </div>
-
-	</div>
-	{% endif %}
-	<!-- End Action buttons -->
-      </div>
-      {% if object == request.user %}
-      <h2>Abonnement</h2>
-      <div class="well">
-      {% if not user.subs.all %}
-      <a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a>
-      {% else %}
-        {% for sub in user.subs.all %}
-        <legend>{{ sub.type.name }}</legend>
-        {{ sub.type.description | safe }}
-	<p><label>{% trans "Valable jusqu'au" %} :</label> {{ sub.date_over | date:"d F Y" }}</p>
-	{% if sub.is_past_due %}
-	  <a href="#" class="btn">Renouveler</a>
-	{% endif %}
-        <br>
-        {% endfor %}
-      {% endif %}
-      </div>
-      {% endif %}
-      
-	
     </div>
-  </div>
-
-
-
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-user"></i> Profil</h2>
+                    {% if object == request.user %}
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a href="{% url 'users:update' %}"><i class="fa fa-edit"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% endif %}
+                        <ul class="quick-list">
+                            {% if object == request.user %}
+                            <li><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</li>
+                            <li><label>{% trans 'First name' %} :</label> {{ object.first_name }}</li>
+                            <li><label>{% trans 'Email address' %} :</label> {{ object.email }}</li>
+                            {% endif %}
+                            <li><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</li>
+                            <li><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</li>
+                            {% if object.degree == 'INTERNE' or object.degree == 'MEDECIN' %}
+                            <li><label>{% trans 'Spécialité' %} :</label>{% if object.speciality %} {{ object.speciality  }} {% endif %}</li>
+                            {% endif %}
+                        </ul>
+                        {% if object.bio %}
+                        <p><i>{{ object.bio }}</i></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
 {% endblock content %}
 

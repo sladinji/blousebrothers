@@ -45,4 +45,10 @@ urlpatterns = [
         view=views.Subscription.as_view(),
         name='subscription'
     ),
+    # Inviations
+    url(
+        regex=r'^~invitation/$',
+        view=views.UserSendInvidation.as_view(),
+        name='invitation'
+    ),
 ]

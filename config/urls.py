@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^robots\.txt', include('robots.urls')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^rules/$', TemplateView.as_view(template_name='pages/regledujeu.html'), name='regledujeu'),
+    url(r'^invitations/', include('invitations.urls', namespace='invitations')),
+
 
     # Terms and Conditions
     url(r'^terms/', include('termsandconditions.urls')),

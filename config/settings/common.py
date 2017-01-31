@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = [
     'django_social_share',
     'termsandconditions',
     'meta', #SEO
+    'invitations',
 ]
 
 # Apps specific for this project go here.
