@@ -49,6 +49,7 @@ class FinishedButNotForSaleFilter(admin.SimpleListFilter):
         return (
             ('NA', _('Dossier complet mais non accessible aux étudiants')),
             ('MANGO', _('Infos pour Mango manquantes (ddn, pays de résidence, nationalité, prénom, nom)')),
+            ('ADDRESS', _('Adresse non précisée')),
         )
 
     def queryset(self, request, queryset):
@@ -62,6 +63,10 @@ class FinishedButNotForSaleFilter(admin.SimpleListFilter):
                                    Q(nationality__isnull=True) |
                                    Q(first_name__isnull=True) |
                                    Q(last_name__isnull=True)
+                                   )
+        elif self.value() == 'ADDRESS':
+            return queryset.filter(Q(address1__isnull=True) |
+                                   Q(address1="")
                                    )
 
 
@@ -146,7 +151,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile']
     search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
-                   'wanabe_conferencier', 'city', "degree", 'date_joined',
+                   'wanabe_conferencier', 'university', "degree", 'date_joined',
                    EditionProgressListFilter, FinishedButNotForSaleFilter)
 
 admin.site.register(University)
