@@ -1,0 +1,78 @@
+{% extends 'account/email/email_base.html' %}
+
+{% block body %}
+<div style="color:#ffffff;line-height:120%;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    <div style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;line-height:14px;color:#ffffff;text-align:left;">
+
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(230, 185, 255); font-size: 12px; line-height: 14px;">
+            <strong>
+                <span style="font-size: 24px; line-height: 28px;">﻿<span style="color: rgb(255, 204, 153); font-size: 24px; line-height: 28px;">Hello,</span>
+                </span>
+            </strong>
+        </span>
+        <br>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">&nbsp;</span>
+        <br>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">&nbsp;</span>
+        <br>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
+            <strong>
+                <span style="line-height: 21px; font-size: 18px;">{{ inviter }} t'as invité à le rejoindre sur BlouseBrothers.</span>
+            </strong>
+        </span>
+        </p>
+        <br>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
+            <strong>
+                <span style="line-height: 21px; font-size: 18px;">BlouseBrothers est une plateforme collaborative d'entrainement aux ECNi. Nous voulons remplacer les prépas ECNi trop chères par un système collaboratif plus juste !
+                </span>
+            </strong>
+        </span>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="font-size: 18px; line-height: 21px; color: rgb(255, 204, 153);">&nbsp;</span>
+        <br>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
+            <strong>
+                <span style="line-height: 21px; font-size: 18px;">Cette invitation te permet de bénéficier de réduction sur tous les abonnements. Il suffit de cliquer sur le lien ci-dessous, puis de créer ton compte :
+                </span>
+            </strong>
+        </span>
+        </p>
+        <br>
+        <p style="margin: 0;font-size: 12px;line-height: 14px; text-align: center;">
+        <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
+            <strong>
+                <span style="line-height: 21px; font-size: 18px;">
+                    <a href="{{ invite_url }}" style="color: orange;text-align: center;">Accepter l'invitation de {{ inviter }}</a>
+                </span>
+            </strong>
+        </span>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">&nbsp;</span>
+        <br>
+        </p>
+        <p style="margin: 0;font-size: 12px;line-height: 14px">
+        <span style="color: rgb(230, 185, 255); font-size: 18px; line-height: 21px;">
+            <strong>
+                <span style="line-height: 21px; font-size: 18px;">
+                    <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">A très vite sur BlouseBrothers ! <br>
+                        <br> Guillaume et Julien.</span> <br>
+                </span>
+            </strong>
+        </span>
+        </p>
+    </div>
+</div>
+{% endblock body %}

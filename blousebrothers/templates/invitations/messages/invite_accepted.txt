@@ -1,4 +1,4 @@
 {% load i18n %}
 {% autoescape off %}
-{% blocktrans %}Ton parrainage a bien été pris en compte.{% endblocktrans %}
+{% blocktrans %}Ton parrainage a bien été pris en compte. Merci de compléter le formulaire ci-dessous pour finaliser ton inscription.{% endblocktrans %}
 {% endautoescape %}

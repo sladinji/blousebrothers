@@ -3,7 +3,7 @@
 Bienvenue sur BlouseBrothers.
  
  
-Merci de confirmer ton adresse en cliquant sur ce lien : {{ activate_url }}
+Merci de confirmer ton adresse email en cliquant sur ce lien : {{ activate_url }}
 
 Tu es interne (ou externe confiant) ?
 Dépose tes dossiers et garde 90% de tes ventes. Aucun frais, aucun engagement.
