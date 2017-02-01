@@ -39,8 +39,8 @@
                         </li>
                     </ul>
                     {% if user.has_more_than_one_card %}
-                    <select id="card_id" name="card_id" required>
-                        <option  value="" selected="selected">---Choisir une carte---</option>
+                    <select class="select form-control" id="card_id" name="card_id" >
+                        <option  value="" selected="selected">Choisir une carte...</option>
                         {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
                         {% if card_registration.mangopay_card.mangopay_id %}
                         {{ card_registration.mangopay_card.request_card_info | default:"" }}
