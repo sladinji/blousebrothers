@@ -59,5 +59,8 @@ class FRStrategy(
     def availability_policy(self, product, stockrecord):
         if product.conf and product.conf.for_sale and product.conf.owner.gave_all_mangopay_info():
             return availability.Available()
-        return availability.Unavailable()
+        elif product.conf :
+            return availability.Unavailable()
+        else:
+            return availability.Available()
 
