@@ -8,58 +8,88 @@
 {% block content %}
 <div class="container">
     <div class="row theader">
-        <div class="col-sm-12">
-            <div class="bar-caption"><h2>{{ balance }}</h2></div>
+        <div class="col-sm-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-bank"></i> Crédits actuels : {{ balance }}</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="col-md-12 stats">
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">{{ user.wallet.balance | default:0 | currency }}</b><br> 
+                                    Personnel</span>
+                                <em>(que j'ai gagné ou ajouté)</em>
+                            </li>
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">{{ user.wallet_bonus.balance | default:0 | currency }}</b><br> 
+                                    Bonus</span>
+                                <em>(parrainage, abonnement...)</em>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
 
-   <div class="row">
         {% if user.has_at_least_one_card %}
-        <div class="col-md-6 col-sm-12">
-            <h2>Créditer mon compte</h2>
-            <div class="panel-body">
-                <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
-                    {% csrf_token %}
-                    <ul class="quick-pay collapse in">
-                        <li class="quick-pay">
-                            <button type="submit" name='sub_credit_5' class="btn">5€</button>
-                        </li>
-                        <li class="quick-pay">
-                            <button type="submit" name='sub_credit_10' class="btn">10€</button>
-                        </li>
-                        <li class="quick-pay">
-                            <button type="submit" name='sub_credit_15' class="btn">15€</button>
-                        </li>
-                        <li class="quick-pay">
-                            <button type="submit" name='sub_credit_20' class="btn">20€</button>
-                        </li>
-                        <li class="quick-pay">
-                            <a href="#other" class="btn" name='autre' class="btn" data-toggle="collapse">Autre</a>
-                        </li>
-                    </ul>
-                    {% if user.has_more_than_one_card %}
-                    <select class="select form-control" id="card_id" name="card_id" >
-                        <option  value="" selected="selected">Choisir une carte...</option>
-                        {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                        {% if card_registration.mangopay_card.mangopay_id %}
-                        {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                        <option value="{{ card_registration.mangopay_card.id }}">{{ card_registration.mangopay_card.alias }}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                    {% endif %}
-                    <div id="other" class="collapse">
-                        {{ form|crispy }}
-                        <div class="control-group">
-                            <div class="controls">
-                                <button type="submit" name='sub_credit' class="btn">Valider</button>
+            <div class="col-md-6 col-sm-12">
+                <div class="x_panel tile fixed_height_320">
+                    <div class="x_title">
+                        <h2><i class="fa fa-plus"></i> Créditer mon compte</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="dashboard-widget-content">
+                            <div class="panel-body">
+                                <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
+                                    {% csrf_token %}
+                                    <ul class="quick-pay collapse in">
+                                        <li class="quick-pay">
+                                            <button type="submit" name='sub_credit_5' class="btn">5€</button>
+                                        </li>
+                                        <li class="quick-pay">
+                                            <button type="submit" name='sub_credit_10' class="btn">10€</button>
+                                        </li>
+                                        <li class="quick-pay">
+                                            <button type="submit" name='sub_credit_15' class="btn">15€</button>
+                                        </li>
+                                        <li class="quick-pay">
+                                            <button type="submit" name='sub_credit_20' class="btn">20€</button>
+                                        </li>
+                                        <li class="quick-pay">
+                                            <a href="#other" class="btn" name='autre' class="btn" data-toggle="collapse">Autre</a>
+                                        </li>
+                                    </ul>
+                                    {% if user.has_more_than_one_card %}
+                                    <select class="select form-control" id="card_id" name="card_id" >
+                                        <option  value="" selected="selected">Choisir une carte...</option>
+                                        {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
+                                        {% if card_registration.mangopay_card.mangopay_id %}
+                                        {{ card_registration.mangopay_card.request_card_info | default:"" }}
+                                        <option value="{{ card_registration.mangopay_card.id }}">{{ card_registration.mangopay_card.alias }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    {% endif %}
+                                    <div id="other" class="collapse">
+                                        {{ form|crispy }}
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <button type="submit" name='sub_credit' class="btn">Valider</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
+
         <div class="col-md-6 col-sm-12">
             <h2>Cartes enregistrées</h2>
             <div class="panel-body cards">
@@ -84,7 +114,6 @@
         {% else %}
         <a href="{% url 'users:addcard' %}" class="btn">Ajouter une carte</a>
         {% endif %}
-    </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 
 

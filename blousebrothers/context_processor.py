@@ -27,8 +27,6 @@ def dday(request):
 
 def balance(request):
     try:
-        mangopay_user = MangoPayNaturalUser.objects.get(user=request.user)
-        wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
-        return {'balance': wallet.balance()}
+        return {'balance': request.user.wallet.balance() + request.user.wallet_bonus.balance()}
     except:
         return {'balance': mark_safe('<span style="color:orange;">Activer porte-monnaie</span>')}

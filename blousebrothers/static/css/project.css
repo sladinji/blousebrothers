@@ -1260,7 +1260,7 @@ a.share {
 .quick-pay .btn {
     min-width: 82px;
 }
-.quick-pay ul{
+.quick-pay.collapse.in {
     padding-left: 0px;
 }
 .panel-body.cards {
@@ -1359,4 +1359,7 @@ ul.quick-list li {
 }
 .well.well-answer.ng-scope {
     margin-top: 40px;
+}
+.space12 {
+    padding-top: 12px;
 }

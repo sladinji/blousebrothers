@@ -117,16 +117,17 @@ class User(AbstractUser):
                            help_text=_("Important si tu es conférencier !"),
                            )
 
-
+    @property
     def gave_all_required_info(self):
         """Used for permission management"""
         if self.wanabe_conferencier or self.is_conferencier:
             return self.university and self.first_name and self.last_name and self.degree
         return True
 
+    @property
     def gave_all_mangopay_info(self):
-        return self.birth_date and self.country_of_residence and self.nationality \
-            and self.first_name and self.last_name
+        return bool(self.birth_date and self.country_of_residence and self.nationality \
+            and self.first_name and self.last_name)
 
     @property
     def mangopay_user(self):
@@ -143,18 +144,27 @@ class User(AbstractUser):
     def has_more_than_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
                     if x.mangopay_card.mangopay_id]) > 1
+
     @property
     def has_at_least_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
                     if x.mangopay_card.mangopay_id]) > 0
 
-    @property
-    def wallet(self):
+    def _get_or_create_wallet(self, description):
+        print(description)
         wallet, w_created = MangoPayWallet.objects.get_or_create(mangopay_user=self.mangopay_user)
         if w_created:
             wallet.mangopay_user = self.mangopay_user
-            wallet.create(description="{}'s Wallet".format(self.username))
+            wallet.create(description=description)
         return wallet
+
+    @property
+    def wallet(self):
+        return self._get_or_create_wallet("{}'s personal wallet".format(self.username))
+
+    @property
+    def wallet_bonus(self):
+        return self._get_or_create_wallet("{}'s bonus wallet".format(self.username))
 
 
 class Sale(models.Model):
