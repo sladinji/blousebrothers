@@ -113,6 +113,7 @@
                 </dl>
             </div>
         </div>
+        {% comment tableau récap %}
         <div class="col-md-4">
             <table class="table table-striped table-bordered table-hover">
                 <caption><i class="icon-group icon-large"></i> {% trans "Étudiants" %}</caption>
@@ -169,6 +170,7 @@
                 </tr>
             </table>
         </div>
+        {% endcomment %}
 
         <div class="col-sm-12">
             <table class="table table-striped table-bordered table-hover">
@@ -177,7 +179,7 @@
                         {% if search_filters %}
                         {% trans "Résultats de la recherche" %}
                         {% else %}
-                        {% trans "Détails" %}
+                        {% trans "Détails des ventes effectuées" %}
                         {% endif %}
                     </h3>
                 </caption>
