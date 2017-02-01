@@ -1,4 +1,5 @@
 from django.apps import apps
+from django.utils.safestring import mark_safe
 from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayWallet,
@@ -30,4 +31,4 @@ def balance(request):
         wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
         return {'balance': wallet.balance()}
     except:
-        return {'balance': 'Activer mes crédits'}
+        return {'balance': mark_safe('<span style="color:orange;">Activer porte-monnaie</span>')}

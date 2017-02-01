@@ -34,7 +34,7 @@ class PayInForm(forms.Form):
                                 )
 
 class EmailInvitationForm(forms.Form):
-    email = forms.EmailField(label=_('Email de votre filleul'))
+    email = forms.EmailField(label=_('Email de ton filleul'))
 
 class CardRegistrationForm(forms.Form):
     cardRegistrationURL = forms.CharField(widget=forms.HiddenInput())

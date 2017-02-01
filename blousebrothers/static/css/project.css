@@ -207,7 +207,7 @@ ul.djng-field-errors li.valid::before {
 }
 
 .progress-bar {
-  background-color: #ddd;
+  background-color: #3cc72d;
 }
 
 .correct {
@@ -847,7 +847,7 @@ footer {
 }
 
 .ta-editor {
-    min-height: 300px;
+    min-height: 93px;
     height: auto;
     overflow: auto;
     font-family: inherit;
@@ -1356,4 +1356,7 @@ ul.quick-list li {
 }
 #btn-create-conf {
     margin-right: 94px;
+}
+.well.well-answer.ng-scope {
+    margin-top: 40px;
 }

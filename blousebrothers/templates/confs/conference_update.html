@@ -10,155 +10,160 @@
 
 {% block content %}
 <div class="container">
-<toaster-container toaster-options="{'time-out': 10000}"></toaster-container>
-{% comment %}
-AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
-{% endcomment %}
+    <toaster-container toaster-options="{'time-out': 10000}"></toaster-container>
+    {% comment %}
+    AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
+    {% endcomment %}
     <div class='row'>
-	<aside class="col-md-3 hidden-sm hidden-xs">
-	{% include 'partials/nav_questions.html' %}
-	{% tinycontent 'redaction_tips' %}
-	{% endtinycontent %}
-	</aside>
+        <aside class="col-md-3 hidden-sm hidden-xs">
+            {% include 'partials/nav_questions.html' %}
+            {% tinycontent 'redaction_tips' %}
+            {% endtinycontent %}
+        </aside>
 
-	<div class="col-md-9" >
-	  <div ng-if="conference.type == 'QI'">
-	    <form novalidate class="qi-form question-form">
-	    <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br/>
-	    </form>
-	  </div>
-	  <div ng-if="conference.type == 'DCP' || conference.type == 'LCA'">
-	    <div id="subject" class="well well-white" >
-	        {% verbatim %}
-	        <form novalidate class="question-form">
-		  <div class="col-sm-12">
-		    <div class="col-sm-9">
-	              <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Clique ici pour éditer le titre du sujet"/><br />
-		    </div>
-		    <div class="col-sm-3">
-		      <span class='well-title'>Sujet</span>
-		    </div>
-		  </div>
-	        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="{{ conf_place_holder }}" rows="10"></textarea><br />
-	        </form>
-		<div class="illustrations" id="images_div">
-		  <div ng-repeat="image in conferenceimages">
-		    <img ng-src="{{ static_media(image.image) }}"/>
-		    <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
-		    <a class="btn btn-danger" href="" ng-click="deleteimg(image, conferenceimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image &nbsp;</a>
-		  </div>
-		  <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'conf')"
-			  accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
-		      <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
-		  <br><br>
-		</div>
-	    </div>
-	    <br>
-	  </div>
-		
-	  
-	  <div class="well well-white" ng-if="question">
-	    <form novalidate class="question-form">
-	      <div class="col-sm-12">
-	        <div class="col-sm-3 coefficient">
-			<strong>Coefficient : {{ question.coefficient }}</strong>
-			<input type="range" ng-model="question.coefficient" value="question.coefficient" max="3" min="1" step="1">
-	        </div>
-	        <div class="col-sm-9">
-	          <span class='well-title'>Question {{ question.index + 1 }} </span>
-	        </div>
-	      </div>
-	      <text-angular ta-toolbar="[['undo', 'redo']]" class="ta-bb" ng-model="question.question" placeholder="Clique ici pour rédiger l'énoncé de la question"></text-angular><br />
-	    </form>
+        <div class="col-md-9" >
+            <div ng-if="conference.type == 'QI'">
+                <form novalidate class="qi-form question-form">
+                    <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Titre"/><br/>
+                </form>
+            </div>
+            <div ng-if="conference.type == 'DCP' || conference.type == 'LCA'">
+                <div id="subject" class="well well-white" >
+                    {% verbatim %}
+                    <form novalidate class="question-form">
+                        <div class="col-sm-12">
+                            <div class="col-sm-9">
+                                <input type="text" class="ititle no-border-form form-control" ng-model="conference.title" placeholder="Clique ici pour éditer le titre du sujet"/><br />
+                            </div>
+                    <div class="col-sm-3">
+                        <span class='well-title'>Sujet</span>
+                    </div>
+                        </div>
+                        <textarea type="text" class="no-border-form form-control" ng-model="conference.statement" placeholder="{{ conf_place_holder }}" rows="5"></textarea><br />
+                    </form>
+                    <div class="illustrations" id="images_div">
+                        <div ng-repeat="image in conferenceimages">
+                            <img ng-src="{{ static_media(image.image) }}"/>
+                            <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
+                            <a class="btn btn-danger" href="" ng-click="deleteimg(image, conferenceimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image &nbsp;</a>
+                        </div>
+                        <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'conf')"
+                                                                    accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
+                            <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
+                        <br><br>
+                    </div>
+                </div>
+                <br>
+            </div>
 
-	    <div ng-repeat="image in questionimages">
-	      <img ng-src="{{ static_media(image.image) }}"/>
-	      <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
-	      <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
-	    </div>
 
-  	    <button class="btn btn-primary qadd-img" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
-  	            accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
-  	        <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
-  	    <br><br>
-  
-	  </div>       
-	  <br>
-	  <form class="form-horizontal">
-	   <fieldset>
-	   <legend>Propositions {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque proposition et définissez au moins une réponse juste)'}} </legend>
-	   <div class="well well-answer" ng-repeat="answer in answers">
-	     <div class="form-group">
-	       <div class="col-sm-12">
-		    <div class="col-sm-11">
-	              <input ng-model="answer.answer" class="material_form form-control" placeholder="Clique ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
-		    </div>
-		    <div class="col-sm-1">
-		      <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
-		    </div>
-	            <label><input type="checkbox" ng-model="answer.correct"/> Correcte ?</label><br>
-	            <label><input type="checkbox" ng-model="answer.ziw"/> Zéro si erreur</label><br>
-		    <i>Caractères spéciaux :</i> ® × ÷ ± ≠ ‰ √ ≤ ≥ < > α β γ δ Δ ε θ κ λ µ π ρ σ Σ φ ϕ Ψ ω Ω
-	       </div>
-	     </div>
-	     <div class="form-group">
-	       <div class="well well-explaination col-sm-12">
-	         <legend>Explication</legend>
-	         <text-angular ng-model="answer.explaination" ta-toolbar="[['undo', 'redo', 'insertLink', 'insertVideo']]" placeholder="Clique ici pour rédiger l'explication"></text-angular>
-	       </div>
-	     </div>
-	     <div ng-repeat="image in answersimages[answer.index]">
-	       <img ng-src="{{ static_media(image.image) }}"/>
-	       <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
-	       <a class="btn btn-danger" href="" ng-click="deleteansimg(image, answer.index )"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
-	     </div>
+            <div class="well well-white" ng-if="question">
+                <form novalidate class="question-form">
+                    <div class="col-sm-12">
+                        <div class="col-sm-3 coefficient">
+                            <strong>Coefficient : {{ question.coefficient }}</strong>
+                            <input type="range" ng-model="question.coefficient" value="question.coefficient" max="3" min="1" step="1">
+                        </div>
+                        <div class="col-sm-9">
+                            <span class='well-title'>Question {{ question.index + 1 }} </span>
+                        </div>
+                    </div>
+                    <text-angular ta-toolbar="[['undo', 'redo']]" class="ta-bb" ng-model="question.question" placeholder="Clique ici pour rédiger l'énoncé de la question"></text-angular><br />
+                </form>
 
-	     <button class="btn btn-primary" type="file" ngf-select="selected_answer = uploadFiles($file, $invalidFiles, answer)"
-	             accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
-	         <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
+                <div ng-repeat="image in questionimages">
+                    <img ng-src="{{ static_media(image.image) }}"/>
+                    <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
+                    <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
+                </div>
 
-	   </div>
-	      <br>
-	      <legend>Explication globale</legend>
-	      <text-angular ta-toolbar="[['undo', 'redo']]"  class="ta-bb" ng-model="question.explaination" placeholder='Clique ici pour rédiger une correction globale de la question posée'></text-angular><br />
-	      <div ng-repeat="image in questionexpimages">
-		<img ng-src="{{ static_media(image.image) }}"/>
-		<input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
-		<a class="btn btn-danger" href="" ng-click="deleteimg(image, questionexpimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
-	      </div>
+                <button class="btn btn-primary qadd-img" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'question')"
+                                                                     accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
+                    <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
+                <br><br>
 
-	      <button class="btn btn-primary qadd-img" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'questionexp')"
-		      accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
-		  <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
-	      <br>
-	   </fieldset>
-	   </form>
-	   <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
-	   <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
- 	    {% endverbatim %}
-	   <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="{% url 'confs:final' object.slug %}" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
- 	    {% verbatim %}
-	  <div ng-if="conference.edition_progress != 100">
-	    <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}%</h2>
-	  </div>
-	  <div ng-if="conference.edition_progress == 100">
- 	    {% endverbatim %}
-            <a href="{% url 'confs:final' object.slug %}">
- 	    {% verbatim %}
-	      <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}% passer à la dernière étape !</h2>
-	    </a>
-	  </div>
-	  <div class="progress">
-	     <div class="progress-bar" role="progressbar" aria-valuenow="{{ conference.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ conference.edition_progress }}%">
-		<span class="sr-only">{{ conference.edition_progress }}% Complete</span>
-	    </div>
-	  </div>
-	  {% endverbatim %}
-	</div>
+            </div>       
+            <br>
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend>Propositions {{ valid_q.indexOf(question.pk) !== -1 ? '' : '(complétez chaque proposition et définissez au moins une réponse juste)'}} </legend>
+                    <div class="well well-answer" ng-repeat="answer in answers">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="col-sm-11">
+                                    <input ng-model="answer.answer" class="material_form form-control" placeholder="Clique ici pour rédiger la réponse {{ans_label[answers.indexOf(answer)]}}" required="true" type="text"/>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class='well-title'>{{ans_label[answers.indexOf(answer)]}}</span>
+                                </div>
+                                <table><tr>
+                                        <td> <label><input type="checkbox" ng-model="answer.correct"/> Correcte ?</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="checkbox" ng-model="answer.ziw"/> Zéro si erreur</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <i>Caractères spéciaux :</i> ® × ÷ ± ≠ ‰ √ ≤ ≥ < > α β γ δ Δ ε θ κ λ µ π ρ σ Σ φ ϕ Ψ ω Ω
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="well well-explaination col-sm-12">
+                                <legend>Explication</legend>
+                                <text-angular ng-model="answer.explaination" ta-toolbar="[['undo', 'redo', 'insertLink', 'insertVideo']]" placeholder="Clique ici pour rédiger l'explication"></text-angular>
+                            </div>
+                        </div>
+                        <div ng-repeat="image in answersimages[answer.index]">
+                            <img ng-src="{{ static_media(image.image) }}"/>
+                            <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
+                            <a class="btn btn-danger" href="" ng-click="deleteansimg(image, answer.index )"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
+                        </div>
+
+                        <button class="btn btn-primary" type="file" ngf-select="selected_answer = uploadFiles($file, $invalidFiles, answer)"
+                                                                    accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
+                            <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
+                    </div>
+                    <br>
+                    <legend>Explication globale</legend>
+                    <text-angular ta-toolbar="[['undo', 'redo']]"  class="ta-bb" ng-model="question.explaination" placeholder='Clique ici pour rédiger une correction globale de la question posée'></text-angular><br />
+                    <div ng-repeat="image in questionexpimages">
+                        <img ng-src="{{ static_media(image.image) }}"/>
+                        <input ng-model="image.caption" class="material_form form-control" placeholder="Clique ici pour éditer la légende de l'image" required="false" type="text"/>
+                        <a class="btn btn-danger" href="" ng-click="deleteimg(image, questionexpimages)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Supprimer l'image&nbsp;&nbsp;</a>
+                    </div>
+
+                    <button class="btn btn-primary qadd-img" type="file" ngf-select="uploadFiles($file, $invalidFiles, 'questionexp')"
+                                                                         accept="image/*" ngf-max-height="5000" ngf-max-size="5MB">
+                        <span class="glyphicon glyphicon-open" aria-hidden="true"></span> Ajouter une image</button>
+                    <br>
+                </fieldset>
+            </form>
+            <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
+            <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+            {% endverbatim %}
+            <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="{% url 'confs:final' object.slug %}" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+            {% verbatim %}
+            <div ng-if="conference.edition_progress != 100">
+                <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}%</h2>
+            </div>
+            <div ng-if="conference.edition_progress == 100">
+                {% endverbatim %}
+                <a href="{% url 'confs:final' object.slug %}">
+                    {% verbatim %}
+                    <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}% passer à la dernière étape !</h2>
+                </a>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ conference.edition_progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ conference.edition_progress }}%">
+                    <span class="sr-only">{{ conference.edition_progress }}% Complete</span>
+                </div>
+            </div>
+            {% endverbatim %}
+        </div>
     </div>
-	<aside class="hidden-md col-xs-12 hidden-lg">
-	  {% include 'partials/nav_questions.html' %}
-	</aside>
+    <aside class="hidden-md col-xs-12 hidden-lg">
+        {% include 'partials/nav_questions.html' %}
+    </aside>
 
 
 </div>
