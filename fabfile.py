@@ -56,9 +56,6 @@ def futur(branch='master',reset='no'):
             run("docker-compose run django ./manage.py migrate")
             if reset == 'yes':
                 run("fab proddb")
-                run("docker-compose run django ./manage.py migrate")
-                run('docker-compose run django ./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
-                run('docker-compose run django ./manage.py publish_confs')
 
 
 def proddb():
@@ -81,6 +78,7 @@ def proddb():
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")
+    run("docker-compose run django ./manage.py migrate")
 
 
 def get_migrations():
@@ -116,4 +114,3 @@ def futur_syncdb():
         with prefix("source blouserc"):
             run('fab proddb')
     futur_publish_confs()
-    futur_gen_code()
