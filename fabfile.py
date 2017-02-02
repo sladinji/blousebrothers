@@ -80,7 +80,7 @@ def proddb():
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")
-    run("docker-compose run django ./manage.py migrate")
+    local("docker-compose run django ./manage.py migrate")
 
 
 def get_migrations():
