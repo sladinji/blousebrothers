@@ -18,6 +18,10 @@ class MangoTransfertException(Exception):
     pass
 
 
+class MangoNoEnoughCredit(Exception):
+    pass
+
+
 class BasketAddView(CoreBasketAddView):
     """
     Debit user wallet if product is a conference.
@@ -39,11 +43,27 @@ class BasketAddView(CoreBasketAddView):
         test, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
 
         if created:
-            return self.debit_wallet(form, test)
+            try:
+                return self.debit_wallet(form, test, self.request.user.wallet_bonus)
+            except:
+                try:
+                    return self.debit_wallet(form, test, self.request.user.wallet)
+                except MangoNoEnoughCredit as ex_credit:
+                    messages.error(self.request,
+                                   _(
+                                       "Merci de créditer ton compte pour pouvoir faire cette conférence (prix : {} €)"
+                                   ).format(ex_credit.args[0]),
+                                   extra_tags='safe noicon'
+                                   )
+                    test.delete()
+                    return HttpResponseRedirect(reverse("users:wallet") + '?next={}'.format(self.request.path))
+                except Exception as ex:
+                    test.delete()
+                    raise ex
 
         return self.redirect_success(form)
 
-    def debit_wallet(self, form, test):
+    def debit_wallet(self, form, test, debited_wallet):
         """
         Debit user wallet according to given test and redirect to user according to transfer result.
         """
@@ -54,17 +74,14 @@ class BasketAddView(CoreBasketAddView):
 
         transfer = MangoPayTransfer()
         transfer.mangopay_credited_wallet = form.product.conf.owner.wallet
-        transfer.mangopay_debited_wallet = self.request.user.wallet
+        transfer.mangopay_debited_wallet = debited_wallet
         transfer.debited_funds = info.price.excl_tax
         transfer.save()
         fees = info.price.excl_tax * Decimal('0.1')
         transfer.create(fees=Money(fees, str(transfer.debited_funds.currency)))
         if transfer.status == "FAILED":
-            test.delete()
             if transfer.result_code == "001001":
-                messages.error(self.request, _("Merci de créditer ton compte pour pouvoir faire cette conférence (prix : {})").format(info.price.excl_tax),
-                               extra_tags='safe noicon')
-                return HttpResponseRedirect(reverse("users:wallet") + '?next={}'.format(self.request.path))
+                raise MangoNoEnoughCredit(info.price.excl_tax)
             else:
                 raise MangoTransfertException(
                     "status : {status}result_code : {result_code} mangopay_id : {mangopay_id}".format(
@@ -83,7 +100,6 @@ class BasketAddView(CoreBasketAddView):
             )
             return self.redirect_success(form)
         else:
-            test.delete()
             raise MangoTransfertException(
                 "status : {status}result_code : {result_code} mangopay_id : {mangopay_id}".format(
                     transfer.__dict__

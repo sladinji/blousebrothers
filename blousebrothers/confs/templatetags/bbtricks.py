@@ -138,3 +138,7 @@ def month_revenu(conf):
     qs = qs.filter(create_timestamp__month=today.month,
                    create_timestamp__year=today.year)
     return qs.aggregate(Sum('credited_funds'))['credited_funds__sum']
+
+@register.filter
+def wallet_clean(wallet_balance):
+    return str(wallet_balance).replace("EUR ","")

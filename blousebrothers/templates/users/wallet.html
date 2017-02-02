@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load currency_filters %}
 {% load i18n %}
+{% load bbtricks %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
@@ -11,20 +12,21 @@
         <div class="col-sm-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                    <h2><i class="fa fa-bank"></i> Crédits actuels : {{ balance }}</h2>
+                    <h2><i class="fa fa-bank"></i> Crédits actuels : {{ balance | wallet_clean | currency }}</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <div class="dashboard-widget-content">
                     <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                    Provenance :
                         <ul class="col-md-12 stats">
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{{ user.wallet.balance | default:0 | currency }}</b><br> 
+                                <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b><br> 
                                     Personnel</span>
                                 <em>(que j'ai gagné ou ajouté)</em>
                             </li>
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{{ user.wallet_bonus.balance | default:0 | currency }}</b><br> 
+                                <span><b class="value">{{ user.wallet_bonus.balance | wallet_clean | currency }}</b><br> 
                                     Bonus</span>
                                 <em>(parrainage, abonnement...)</em>
                             </li>
