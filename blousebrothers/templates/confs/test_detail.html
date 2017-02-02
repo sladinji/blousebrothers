@@ -99,7 +99,7 @@
          {% endfor %}
      </div>
 
-     <div class="col-sm-12" id="btn-comment" data-question-id="{{ t_answer.question.id }}">
+     <div class="col-sm-12 btn-comment" data-question-id="{{ t_answer.question.id }}">
          <a class="btn btn-primary" data-toggle="modal" data-target="#commentModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier concernant la question {{ t_answer.question.index | add:"1" }} </a>
      </div>
    </div>
@@ -189,7 +189,7 @@ $.ajaxSetup({
         }
     }
 });
-$("#btn-comment").click( function(){
+$(".btn-comment").on('click', function(){
 	question_id_comment = $(this).data("question-id");
 });
 

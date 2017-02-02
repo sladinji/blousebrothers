@@ -276,7 +276,7 @@ Vous pouvez lui répondre directement directement via cet email.
         msg.esp_extra = {"sender_domain": "blousebrothers.fr"}
         msg.send()
 
-    def send_comment(request, q):
+    def send_comment(self, request, q):
         QuestionComment.objects.create(
             question_id=request.POST['question_id'],
             student=request.user,

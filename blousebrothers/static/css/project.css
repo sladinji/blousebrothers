@@ -1,4 +1,4 @@
-/* These styles are generated from project.scss. */
+)/* These styles are generated from project.scss. */
 
 img {
   max-width: 100%;
@@ -260,7 +260,7 @@ ul.djng-field-errors li.valid::before {
     width: 100%;
     vertical-align: middle;
 }
-div#btn-comment {
+.btn-comment {
     text-align: center;
     padding: 10px 0;
 }
