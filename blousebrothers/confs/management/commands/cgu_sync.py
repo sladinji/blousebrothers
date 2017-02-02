@@ -9,5 +9,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         cgu = TermsAndConditions.objects.last()
-        cgu.text = FlatPage.objects.get(title='CGU').content
+        cgu.text = FlatPage.objects.get(title='CGU-CGV').content
         cgu.save()
