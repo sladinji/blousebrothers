@@ -9,6 +9,7 @@ from .models import(
     Conference,
     Item,
     Speciality,
+    Test,
 )
 
 
@@ -52,3 +53,11 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
         fields = ['title', 'type', 'summary']
 
     form_name = 'conf_form'
+
+
+class RefundForm(ModelForm, Bootstrap3FormMixin):
+    class Meta:
+        model = Test
+        fields = []
+    msg = forms.CharField(label=_('Message'), widget=forms.Textarea)
+

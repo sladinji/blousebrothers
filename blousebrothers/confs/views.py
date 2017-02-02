@@ -4,13 +4,14 @@ from datetime import datetime
 import re
 import logging
 
+from django.contrib import messages
 from django.apps import apps
+from django.core.mail import mail_admins
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
-from django.core.mail import mail_admins
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import Permission
@@ -46,7 +47,7 @@ from .models import (
     Test,
     TestAnswer,
 )
-from .forms import ConferenceForm, ConferenceFinalForm
+from .forms import ConferenceForm, ConferenceFinalForm, RefundForm
 
 logger = logging.getLogger(__name__)
 Product = apps.get_model('catalogue', 'Product')
@@ -421,3 +422,36 @@ class TestResetView(BBLoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_object(self, queryset=None):
         conf = Conference.objects.get(slug=self.kwargs['slug'])
         return Test.objects.get(conf=conf, student=self.request.user)
+
+
+class RefundView(TestPermissionMixin, UpdateView):
+    model = Test
+    form_class = RefundForm
+    template_name = 'confs/refund_form.html'
+    email_template = '''
+DEMANDE DE REMBOURSEMENT DE CONF
+
+Nom : {}
+Email : {}
+Lien : {}
+Conf : {}
+Msg : {}'''
+
+    def form_valid(self, form):
+        msg = self.email_template.format(
+            self.request.user.name,
+            self.request.user.email,
+            get_full_url(self.request, 'admin:users_user_change', args=(self.request.user.id,)),
+            self.object.conf.title,
+            form.fields['msg'],
+        )
+        mail_admins('Demande de remboursement', msg)
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        conf = Conference.objects.get(slug=self.kwargs['slug'])
+        return Test.objects.get(conf=conf, student=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, "Ta demande à bien été transmise, on te recontacte très vite.")
+        return reverse('catalogue:index')

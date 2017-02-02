@@ -19,5 +19,6 @@
         <p>ERREURS : {{object.nb_errors }}</p>
         <p>ERREURS GRAVES : {{object.fatal_errors | length }}</p>
     </div>
+    <a class="btn" href="{% url "confs:ask_refund" object.conf.slug %}">Je ne suis pas satisfait de la qualité de cette conférence et je demande un remboursement</a>
 </div>
 

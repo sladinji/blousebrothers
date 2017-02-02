@@ -33,6 +33,13 @@ urlpatterns = [
         view=views.TestResult.as_view(),
         name='result'
     ),
+    # URL pattern for the RefundView
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/askrefund$',
+        view=views.RefundView.as_view(),
+        name='ask_refund'
+    ),
+
 
     # URL pattern for the ConferenceDetailView
     url(
