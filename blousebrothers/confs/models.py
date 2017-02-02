@@ -418,6 +418,7 @@ class SubscriptionType(models.Model):
     description = models.TextField(_('Description'), blank=True, null=True)
     nb_month = models.IntegerField(_('Durée'), blank=True, null=True)
     price = models.DecimalField(_("Prix"), max_digits=6, decimal_places=2, default=0)
+    bonus = models.DecimalField(_("Montant crédit wallet"), max_digits=6, decimal_places=2, default=0)
 
 class Subscription(models.Model):
     user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
@@ -425,6 +426,7 @@ class Subscription(models.Model):
     date_created = models.DateField(_("Date created"), auto_now_add=True)
     date_over = models.DateField(_("Date created"), null=False)
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
+    bonus_taken = models.BooleanField(default=False)
 
 
     @property

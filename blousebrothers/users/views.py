@@ -137,9 +137,12 @@ class UserWalletView(LoginRequiredMixin, FormView):
 
     def payin(self, credit, request):
         payin = MangoPayPayInByCard()
-        mangopay_user = MangoPayNaturalUser.objects.get(user=self.request.user)
+        mangopay_user = self.request.user.mangopay_user
         payin.mangopay_user = mangopay_user
-        payin.mangopay_wallet = MangoPayWallet.objects.get(mangopay_user=mangopay_user)
+        wallet = self.request.user.wallet
+        if self.request.user.is_superuser:
+            wallet = self.request.user.wallet_bonus
+        payin.mangopay_wallet = wallet
         if 'card_id' in request.POST:
             if not request.POST['card_id']:
                 # safari does not handle required html tag...

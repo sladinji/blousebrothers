@@ -14,6 +14,7 @@ from django_countries.fields import CountryField
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
+from money import Money
 
 from mangopay.models import (
     MangoPayNaturalUser,
@@ -151,8 +152,10 @@ class User(AbstractUser):
                     if x.mangopay_card.mangopay_id]) > 0
 
     def _get_or_create_wallet(self, description):
-        print(description)
-        wallet, w_created = MangoPayWallet.objects.get_or_create(mangopay_user=self.mangopay_user)
+        wallet, w_created = MangoPayWallet.objects.get_or_create(
+            mangopay_user=self.mangopay_user,
+            description=description
+        )
         if w_created:
             wallet.mangopay_user = self.mangopay_user
             wallet.create(description=description)
@@ -165,6 +168,20 @@ class User(AbstractUser):
     @property
     def wallet_bonus(self):
         return self._get_or_create_wallet("{}'s bonus wallet".format(self.username))
+
+    def handle_bonus(self, subscription):
+        if subscription.bonus_taken:
+            return
+        bb = User.objects.get(username="BlouseBrothers")
+        transfer = MangoPayTransfer()
+        transfer.mangopay_credited_wallet = self.wallet_bonus
+        transfer.mangopay_debited_wallet = bb.wallet_bonus
+        transfer.debited_funds = subscription.type.bonus
+        transfer.save()
+        transfer.create()
+        if transfer.status == 'SUCCEEDED':
+            subscription.bonus_taken = True
+            subscription.save()
 
 
 class Sale(models.Model):

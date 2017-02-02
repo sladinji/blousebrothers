@@ -88,6 +88,7 @@
                     </div>
                 </div>
             </div>
+        {% endif %}
         </div>
 
         <div class="col-md-6 col-sm-12">
@@ -111,9 +112,6 @@
                 <a href="{% url 'users:addcard' %}" class="btn">Ajouter une carte</a>
             </div>
         </div>
-        {% else %}
-        <a href="{% url 'users:addcard' %}" class="btn">Ajouter une carte</a>
-        {% endif %}
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 
 

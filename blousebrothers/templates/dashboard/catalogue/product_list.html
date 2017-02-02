@@ -13,9 +13,12 @@
             <ul>
                 <li> Ajouter au type de produit abonnement un attribut email_msg de type "texte riche"</li>
                 <li> Mettre le contenu du message dans cet attribut pour chaque produit (<a href="https://github.com/sladinji/blousebrothers/issues/223">voir ticket 223</a>)</li>
+                <li> Ajouter au type de produit abonnement un attribut bonus de type "texte"</li>
             </ul>
 	  </div>
 	  <div class="well">
+	  	<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png"/> 
+        <strong>Chaque abonnement doit être un sous type de "Abonnements" (cf. <a href="https://github.com/sladinji/blousebrothers/blob/master/blousebrothers/checkout/signals.py">blousebrothers.checkout.signals</a>)</strong><br>
 	  	<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png"/> 
 	  		<strong>Ne pas oublier que les codes promos fonctionnent par gamme</strong><br>
 	  	<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f644.png"/> 
@@ -23,7 +26,7 @@
 	  	<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f481-2642.png"/> 
 	  	<i>faire une gamme à part pour chaque abonnement si besoin au risque d'avoir une promo 
 	  	de -15€ qui s'applique sur un abonnement à 6€ !</i>
-	  	<img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f631.png"/>
+        <img height="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f631.png"/><br>
 	  </div>
     </div>
 {% endblock header %}

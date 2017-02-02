@@ -20,6 +20,7 @@ def handle_subscription(sender, **kwargs):
                 name=line.product.title,
                 description=line.product.description,
                 price=line.line_price_before_discounts_incl_tax,
+                bonus=line.product.attr.bonus,
             )
             sub = Subscription(
                 user=line.order.user,
@@ -28,3 +29,4 @@ def handle_subscription(sender, **kwargs):
             sub.date_over = date.today() + relativedelta(months=+line.product.attr.month)
             sub.price_paid = line.unit_price_incl_tax
             sub.save()
+            line.order.user.handle_bonus(sub)
