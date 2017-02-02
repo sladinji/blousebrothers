@@ -442,8 +442,9 @@ Msg : {}'''
             self.request.user.name,
             self.request.user.email,
             get_full_url(self.request, 'admin:users_user_change', args=(self.request.user.id,)),
+            get_full_url(self.request, 'confs:detail', args=(self.object.conf.slug,)),
             self.object.conf.title,
-            form.fields['msg'],
+            form.cleaned_data['msg'],
         )
         mail_admins('Demande de remboursement', msg)
         return super().form_valid(form)

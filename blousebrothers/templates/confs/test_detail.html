@@ -105,12 +105,13 @@
    </div>
    {% endfor %}
 
+   {% comment %}
    <div class="col-sm-12" id="btn-comment" data-question-id="0">
      <a class="commenting btn btn-getscore" data-toggle="modal" data-target="#thxModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Remercier le conférencier</a>
    </div>
+   {% endcomment %}
    {% if product and not object.has_review and not user == object.conf.owner %}
    {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
-
    <div class="text-center">
        <a class="btn btn-success btn-getscore" href="{{ add_review_url }}#addreview"><i class="fa fa-edit" aria-hidden="true"></i> Laisse un avis pour accéder à ta note !</a>
    </div>
