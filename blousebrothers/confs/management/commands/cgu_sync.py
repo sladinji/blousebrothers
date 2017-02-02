@@ -10,6 +10,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cgu = TermsAndConditions.objects.last()
         if not cgu :
-            cgu = TermsAndConditions()
+            cgu = TermsAndConditions.create_default_terms()
         cgu.text = FlatPage.objects.get(title='CGU-CGV').content
         cgu.save()
