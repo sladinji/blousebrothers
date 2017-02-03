@@ -1,5 +1,10 @@
+import logging
+
 from django.forms.models import model_to_dict
 from django.core.urlresolvers import reverse
+from django.contrib import messages
+
+logger = logging.getLogger(__name__)
 
 
 def analyse_conf(conf):
@@ -26,3 +31,18 @@ def get_full_url(request, view_name, **kwargs):
         request.get_host(),
         reverse(view_name, **kwargs)
     )
+
+
+def check_bonus(request):
+    try:
+        bonus = request.user.handle_bonus()
+        if bonus:
+            messages.success(
+                request,
+                "Les {} € de bonus de ton abonnement t'ont été crédités.".format(bonus)
+            )
+    except Exception as ex:
+        logger.error(ex, exc_info=True, extra={
+            # Optionally pass a request and we'll grab any information we can
+            'request': request,
+        })

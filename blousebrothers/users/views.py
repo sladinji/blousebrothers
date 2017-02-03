@@ -62,7 +62,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         Call handle bonus if new info allow to create mangopay wallet.
         """
         super().form_valid(form)
-        check_bonus()
+        check_bonus(self.request)
         return HttpResponseRedirect(self.get_success_url())
 
     def get_form_class(self):
