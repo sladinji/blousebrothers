@@ -6,10 +6,15 @@
 {% block content %}
 <div class="row">
   <div class="col-sm-12">
-    <h1>Modifier mes informations</h1>
+    {% if user.gave_all_mangopay_info %}
+    <h1>Profil</h1>
+    {% else %}
+    <h1>Informations obligatoires pour porte-monnaie électronique</h1>
+    {% endif %}
     <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
         {% csrf_token %}
         {{ form|crispy }}
+        {% if user.gave_all_mangopay_info %}
         <div class="form-group">
             <label class="control-label ">
                 Code Tutorat de Ville
@@ -19,6 +24,7 @@
             </div> 
         </div>
         <p class="help-block">Bientôt disponible (cette fonctionnalité te permettra d'accéder gratuitement, même sans aucun abonnement actif, à toutes les confs faites par les internes tuteurs de ta ville si ton tutorat est partenaire)</p>
+        {% endif %}
         <div class="control-group">
           <div class="controls">
             <button type="submit" class="btn">Valider</button>
@@ -30,6 +36,11 @@
     <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
     <br>
     {% endcomment %}
+    {% if not user.gave_all_mangopay_info %}
+    <p>La gestion de votre porte-monnaie est confiée à <a href="https://www.mangopay.com">MangoPay</a>.
+    <strong>Aucune donnée bancaire n'est stockée ni ne transite via notre site.</strong>
+    Votre argent n'est pas stocké sur notre compte.</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

@@ -14,14 +14,14 @@ from invitations.models import Invitation
 from django.db.utils import IntegrityError
 
 from .models import User
-from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm
+from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm, UserSmallerForm
 from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayCardRegistration,
     MangoPayWallet,
     MangoPayPayInByCard,
 )
-from blousebrothers.tools import get_full_url
+from blousebrothers.tools import get_full_url, check_bonus
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
@@ -32,7 +32,6 @@ class UserDetailView(DetailView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -49,11 +48,6 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-
-    form_class = UserForm
-
-    # we already imported User in the view code above, remember?
-
     # send the user back to their own page after a successful update
     def get_success_url(self):
         return reverse('users:detail',
@@ -62,6 +56,20 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
+
+    def form_valid(self, form):
+        """
+        Call handle bonus if new info allow to create mangopay wallet.
+        """
+        super().form_valid(form)
+        check_bonus()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_form_class(self):
+        if self.request.user.gave_all_mangopay_info:
+            return UserForm
+        else:
+            return UserSmallerForm
 
 
 class UserSendInvidation(LoginRequiredMixin, FormView):

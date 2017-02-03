@@ -47,14 +47,14 @@ def result_icon(answer, test_answer):
 
 @register.filter
 def score100(test):
-    if test.has_review() or test.student == test.conf.owner :
+    product = test.conf.products.first()
+    if not product or test.has_review() or test.student == test.conf.owner :
         score = Decimal(test.score * 100 / test.max_score)
         span = '<span class="score"><big>{}</big> / 100</span>'.format(
             score.quantize(Decimal('.01'), rounding=ROUND_UP)
         )
         return mark_safe(span)
     else:
-        product = test.conf.products.first()
         return mark_safe(
             '<a class="score" href="{}#addreview">'
             'Laisse un avis pour accéder à ta note !</a>'.format(
@@ -63,7 +63,7 @@ def score100(test):
                 )
             )
 
-          )
+        )
 
 
 @register.filter

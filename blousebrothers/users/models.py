@@ -10,6 +10,7 @@ from django.core.validators import RegexValidator
 from django.dispatch import receiver
 from django.core.mail import mail_admins
 from django_countries.fields import CountryField
+from django.contrib import messages
 
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
@@ -170,8 +171,17 @@ class User(AbstractUser):
     def wallet_bonus(self):
         return self._get_or_create_wallet("{}'s bonus wallet".format(self.username))
 
-    def handle_bonus(self, subscription):
-        if subscription.bonus_taken or not self.gave_all_mangopay_info:
+    @property
+    def subscription(self):
+        subs =  [x for x in self.subs.all() if not x.is_past_due]
+        if subs :
+            return subs[0]
+
+    def handle_bonus(self, subscription=None):
+        if not subscription :
+            subscription = self.subscription
+
+        if subscription and subscription.bonus_taken or not self.gave_all_mangopay_info:
             return
         bb = User.objects.get(username="BlouseBrothers")
         transfer = MangoPayTransfer()
@@ -183,6 +193,7 @@ class User(AbstractUser):
         if transfer.status == 'SUCCEEDED':
             subscription.bonus_taken = True
             subscription.save()
+            return subscription.type.bonus
 
 
 class Sale(models.Model):

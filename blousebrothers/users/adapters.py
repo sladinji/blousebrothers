@@ -2,6 +2,7 @@
 from django.conf import settings
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from blousebrothers.tools import check_bonus
 
 
 class AccountAdapter(DefaultAccountAdapter):
@@ -9,6 +10,7 @@ class AccountAdapter(DefaultAccountAdapter):
         return getattr(settings, 'ACCOUNT_ALLOW_REGISTRATION', True)
 
     def get_login_redirect_url(self, request):
+        check_bonus(request)
         if 'next' in request.GET:
             return request.GET['next']
         return super().get_login_redirect_url(request)

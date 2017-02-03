@@ -18,6 +18,12 @@ class UserForm(forms.ModelForm):
     birth_date = forms.DateField(widget=DatePickerInput, label=_("Date de naissance"))
 
 
+class UserSmallerForm(UserForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'birth_date', 'country_of_residence', 'nationality']
+
+
 class WalletForm(forms.ModelForm):
     class Meta:
         model = User
@@ -33,8 +39,10 @@ class PayInForm(forms.Form):
                                 help_text=_('Minimum 5€'),
                                 )
 
+
 class EmailInvitationForm(forms.Form):
     email = forms.EmailField(label=_('Email de ton filleul'))
+
 
 class CardRegistrationForm(forms.Form):
     cardRegistrationURL = forms.CharField(widget=forms.HiddenInput())
@@ -45,4 +53,4 @@ class CardRegistrationForm(forms.Form):
     cardExpirationDate = forms.CharField(label=_("Date d'expiration"), required=True,
                                          help_text="ex. : 1219")
     cardCvx = forms.CharField(label=_("Code de vérification"), required=True,
-                                         help_text="code à 3 chiffres au dos de la carte")
+                              help_text="code à 3 chiffres au dos de la carte")
