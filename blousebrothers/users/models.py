@@ -133,13 +133,14 @@ class User(AbstractUser):
     @property
     def mangopay_user(self):
 
-        mp_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
-        if mpu_created:
-            mp_user.birthday = self.birth_date
-            mp_user.country_of_residence = self.country_of_residence
-            mp_user.nationality = self.nationality
-            mp_user.create()
-        return mp_user
+        if self.gave_all_mangopay_info :
+            mp_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
+            if mpu_created:
+                mp_user.birthday = self.birth_date
+                mp_user.country_of_residence = self.country_of_residence
+                mp_user.nationality = self.nationality
+                mp_user.create()
+            return mp_user
 
     @property
     def has_more_than_one_card(self):
@@ -170,7 +171,7 @@ class User(AbstractUser):
         return self._get_or_create_wallet("{}'s bonus wallet".format(self.username))
 
     def handle_bonus(self, subscription):
-        if subscription.bonus_taken:
+        if subscription.bonus_taken or not self.gave_all_mangopay_info:
             return
         bb = User.objects.get(username="BlouseBrothers")
         transfer = MangoPayTransfer()
