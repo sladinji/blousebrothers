@@ -42,7 +42,7 @@ class BasketAddView(CoreBasketAddView):
 
         test, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
 
-        if created:
+        if created and not free_conf:
             try:
                 return self.debit_wallet(form, test, self.request.user.wallet_bonus)
             except:
