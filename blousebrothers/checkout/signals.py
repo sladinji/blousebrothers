@@ -8,6 +8,14 @@ from oscar.apps.checkout.signals import post_checkout
 SubscriptionType = apps.get_model('confs', 'SubscriptionType')
 Subscription = apps.get_model('confs', 'Subscription')
 
+def check_sponsor(request, user):
+    """
+    Check if user was sponsorised to give bonus to the sponsor.
+    """
+    invitation = Invitation.objects.filter(email=user.email, accepted=True)
+    if invitation :
+        sponsor = invitation.inviter
+
 
 @receiver(post_checkout)
 def handle_subscription(sender, **kwargs):

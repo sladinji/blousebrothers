@@ -40,6 +40,11 @@ class BasketAddView(CoreBasketAddView):
                              extra_tags='safe noicon')
             return HttpResponseRedirect(reverse("users:update") + '?next={}'.format(self.request.path))
 
+        if not free_conf and not self.request.user.has_valid_subscription():
+            messages.warning(self.request, _("Merci de souscrire à un abonnement pour continuer."),
+                             extra_tags='safe noicon')
+            return HttpResponseRedirect('/subscriptions')
+
         test, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
 
         if created and not free_conf:
