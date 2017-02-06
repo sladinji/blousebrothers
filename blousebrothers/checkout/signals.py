@@ -11,7 +11,7 @@ Subscription = apps.get_model('confs', 'Subscription')
 
 
 def handle_bonus(user, sub):
-    bonus = user.handle_subscription_bonus(sub):
+    bonus = user.handle_subscription_bonus(sub)
     if bonus:
         ctx = dict(bonus=bonus)
         msg_plain = render_to_string('confs/email/bonus.txt', ctx)
