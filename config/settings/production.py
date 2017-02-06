@@ -237,9 +237,10 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 # ------------------------------------------------------------------------------
 DEFAULT_HTTP_PROTOCOL = 'https'
 
-STRIPE_SECRET_KEY = "sk_live_torhubBPo167OAXtfBOdTLTN"
-STRIPE_PUBLISHABLE_KEY = "pk_live_I6LrnYAd6sPuGXsLLv3W3V75"
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
 STRIPE_CURRENCY = "EUR"
 
 MANGOPAY_DEBUG_MODE = False
 MANGOPAY_BASE_URL = "https://api.mangopay.com"
+MANGOPAY_PASSPHRASE = env('MANGOPAY_PASSPHRASE')
