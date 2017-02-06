@@ -71,7 +71,7 @@
         <div class="col-md-12">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                    <h2><i class="fa fa-file"></i> Abonnement</h2>
+                    <h2{% if not user.subscription %} style="color:red;"{% endif %}><i class="fa fa-file"></i> Abonnement</h2>
                     {% if not user.subs.all %}
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a></li>
