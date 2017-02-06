@@ -413,12 +413,15 @@ class TestAnswer(models.Model):
             self.score = Decimal(0.5 * self.question.coefficient)
         self.save()
 
+
 class SubscriptionType(models.Model):
     name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
     description = models.TextField(_('Description'), blank=True, null=True)
     nb_month = models.IntegerField(_('Durée'), blank=True, null=True)
     price = models.DecimalField(_("Prix"), max_digits=6, decimal_places=2, default=0)
     bonus = models.DecimalField(_("Montant crédit wallet"), max_digits=6, decimal_places=2, default=0)
+    product = models.ForeignKey('catalogue.Product', null=False, related_name="subscription")
+
 
 class Subscription(models.Model):
     user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
@@ -427,7 +430,6 @@ class Subscription(models.Model):
     date_over = models.DateField(_("Date created"), null=False)
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
     bonus_taken = models.BooleanField(default=False)
-
 
     @property
     def is_past_due(self):

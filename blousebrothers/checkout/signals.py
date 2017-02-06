@@ -16,16 +16,13 @@ def handle_subscription(sender, **kwargs):
     """
     for line in kwargs['order'].lines.all():
         if 'abonnement' in line.product.product_class.name.lower():
-            subtype, __ = SubscriptionType.objects.get_or_create(
-                name=line.product.title,
-                description=line.product.description,
-                price=line.line_price_before_discounts_incl_tax,
-                bonus=line.product.attr.bonus,
-            )
-            sub = Subscription(
-                user=line.order.user,
-                type=subtype,
-            )
+            subtype, __ = SubscriptionType.objects.get_or_create(product=line.product)
+            subtype.name = line.product.title
+            subtype.description = line.product.description
+            subtype.price = line.line_price_before_discounts_incl_tax
+            subtype.bonus = line.product.attr.bonus
+            subtype.save()
+            sub = Subscription(user=line.order.user, type=subtype)
             sub.date_over = date.today() + relativedelta(months=+line.product.attr.month)
             sub.price_paid = line.unit_price_incl_tax
             sub.save()
