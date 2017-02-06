@@ -372,7 +372,7 @@ ANALYTICAL_INTERNAL_IPS = ["109.190.133.24",
                            "82.235.89.141",
                            ]
 
-# STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
+STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
 
 # TERMS AND CONDITIONS
 TERMS_BASE_TEMPLATE = 'account/base.html'
