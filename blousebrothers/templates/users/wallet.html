@@ -9,6 +9,10 @@
 {% block content %}
 <div class="container">
     <div class="row theader">
+    {% if not user.has_valid_subscription %}
+	{% tinycontent 'wallet_subscription_info' %}
+	{% endtinycontent %}
+    {% endif %}
         <div class="col-sm-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
