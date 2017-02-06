@@ -126,8 +126,10 @@ class UserWalletView(LoginRequiredMixin, FormView):
             return redirect(reverse('users:wallet'))
 
         elif not request.user.has_at_least_one_card and not request.user.is_conferencier:
+            check_bonus(request)
             return redirect(reverse('users:addcard'))
 
+        check_bonus(request)
         return super().get(request, *args, **kwargs)
 
     def handle_payin_status(self, payin):

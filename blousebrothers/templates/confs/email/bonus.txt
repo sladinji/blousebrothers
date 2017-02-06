@@ -1,0 +1,8 @@
+Bonjour,
+
+Ton compte vient d'être créditer des {{ bonus }} € compris dans ton abonnement.
+Tu peux les utiliser dès maintenant.
+
+A très vite,
+
+Guillaume et Julien.

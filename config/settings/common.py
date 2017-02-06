@@ -143,6 +143,7 @@ EMAIL_SUBJECT_PREFIX = env("DJANGO_EMAIL_SUBJECT_PREFIX", default='[blousebrothe
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 NEW_RELIC_LICENSE_KEY = env('NEW_RELIC_LICENSE_KEY', default="")
 NEW_RELIC_APP_NAME = env('NEW_RELIC_APP_NAME', default="")
+MAILGUN_SENDER_DOMAIN='blousebrothers.fr'
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------

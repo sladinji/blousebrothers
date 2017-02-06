@@ -16,6 +16,7 @@ from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
 from money import Money
+from invitations.models import Invitation
 
 from mangopay.models import (
     MangoPayNaturalUser,
@@ -238,3 +239,6 @@ def notify_signup(request, user, **kwargs):
                                         )
                                 )
     mail_admins('Nouvelle inscription', msg)
+
+# Override Invitation model to be able to send multiple invitation to same user
+models.EmailField(unique=False).contribute_to_class(Invitation, 'email')

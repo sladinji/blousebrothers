@@ -3,6 +3,8 @@ import logging
 from django.forms.models import model_to_dict
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +42,16 @@ def check_bonus(request):
             messages.success(
                 request,
                 "Les {} € de bonus de ton abonnement t'ont été crédités.".format(bonus)
+            )
+            ctx = dict(bonus=bonus)
+            msg_plain = render_to_string('confs/email/bonus.txt', ctx)
+            msg_html = render_to_string('confs/email/bonus.html', ctx)
+            send_mail(
+                    'Crédit BlouseBrothers',
+                    msg_plain,
+                    'noreply@blousebrothers.fr',
+                    [request.user.email],
+                    html_message=msg_html,
             )
     except Exception as ex:
         logger.error(ex, exc_info=True, extra={
