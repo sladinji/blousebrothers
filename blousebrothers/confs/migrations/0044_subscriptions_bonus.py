@@ -14,17 +14,28 @@ def fix_subscription(apps, schema_editor):
     sub.save()
 
     # Update Abo product type
+
     Product = apps.get_model('catalogue', 'Product')
     ProductAttribute = apps.get_model('catalogue', 'ProductAttribute')
+    ProductAttributeValue = apps.get_model('catalogue', 'ProductAttributeValue')
+
     abo = Product.objects.filter(title__icontains='abo').get()
     pclass = abo.product_class
+
     bonus = ProductAttribute(name='bonus', code='bonus', type='text')
     bonus.save()
     email_msg = ProductAttribute(name='email_msg', code='email_msg', type='richtext')
     email_msg.save()
-    pclass.attributes.add(bonus, email_msg)
+    bonus_sponsor = ProductAttribute(name='bonus_sponsor', code='bonus_sponsor', type='text')
+    bonus_sponsor.save()
+    pclass.attributes.add(bonus, email_msg, bonus_sponsor)
     pclass.save()
 
+    #add a 2€ bonus attribute to presale subscription
+    mybonus = ProductAttributeValue(attribute=bonus, value_text='2.00', product=abo)
+    mybonus.save()
+    abo.attribute_values.add(mybonus)
+    abo.save()
 
 
 class Migration(migrations.Migration):
