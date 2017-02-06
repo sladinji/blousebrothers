@@ -15,7 +15,7 @@ def subscriptions(request):
         requires_shipping=False,
         track_stock=False,
     )
-    subs = Product.objects.filter(product_class=pclass)
+    subs = Product.objects.filter(product_class=pclass).exclude(id=46)
     return {'subscriptions': subs}
 
 

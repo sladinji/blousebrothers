@@ -178,23 +178,34 @@ class User(AbstractUser):
         if subs :
             return subs[0]
 
-    def handle_bonus(self, subscription=None):
-        if not subscription :
-            subscription = self.subscription
-
-        if subscription and subscription.bonus_taken or not self.gave_all_mangopay_info:
-            return
+    def give_bonus(self, amount):
         bb = User.objects.get(username="BlouseBrothers")
         transfer = MangoPayTransfer()
         transfer.mangopay_credited_wallet = self.wallet_bonus
         transfer.mangopay_debited_wallet = bb.wallet_bonus
-        transfer.debited_funds = subscription.type.bonus
+        transfer.debited_funds = amount
         transfer.save()
         transfer.create()
         if transfer.status == 'SUCCEEDED':
-            subscription.bonus_taken = True
-            subscription.save()
-            return subscription.type.bonus
+            return True
+
+    def handle_subscription_bonus(self, subscription=None):
+        if not subscription :
+            subscription = self.subscription
+
+        if subscription and subscription.bonus_taken or not self.gave_all_mangopay_info:
+            if self.give_bonus(subscription.type.bonus):
+                subscription.bonus_taken = True
+                subscription.save()
+                return subscription.type.bonus
+
+    def handle_sponsor_bonus(self, subscription=None):
+        if not subscription :
+            subscription = self.subscription
+        invitation = Invitation.objects.filter(email=user.email, accepted=True)
+        if invitation :
+            if invitation.inviter.give_bonus(subscription.type.bonus_sponsor):
+                return invitation
 
 
 class Sale(models.Model):

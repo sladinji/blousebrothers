@@ -1,0 +1,9 @@
+Hello,
+
+Ton filleul {{ sponsored.username }} ({{ sponsored.email }}) a accepté ton parrainage et a pris un abonnement "{{ sub.type.name }}".
+Grâce à lui, ton compte vient d'être crédité du bonus associé de {{ bonus }} €.
+Tu peux les utiliser dès maintenant.
+
+A très vite,
+
+Guillaume et Julien.

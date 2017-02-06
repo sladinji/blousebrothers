@@ -252,13 +252,13 @@ class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, FormView)
     def send_thx(self, request, conf):
         body = """Bonjour,
 
-{username} vous envoie un message concernant la conference {title}:
+{username} t'envoie un message concernant la conference {title}:
 
 {comment}
 
 ---
 
-Vous pouvez lui répondre directement directement via cet email.
+Tu peux lui répondre directement directement via cet email.
 """
 
         tags = dict(username=request.user.username,
@@ -290,7 +290,7 @@ Vous pouvez lui répondre directement directement via cet email.
 
 ---
 
-Vous pouvez lui répondre directement directement via cet email.
+Tu peux lui répondre directement directement via cet email.
 """
 
         tags = dict(username=request.user.username,

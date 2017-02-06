@@ -156,7 +156,7 @@ class UserWalletView(LoginRequiredMixin, FormView):
         if 'card_id' in request.POST:
             if not request.POST['card_id']:
                 # safari does not handle required html tag...
-                messages.error(self.request, 'Vous devez sélectionner une carte de paiement.')
+                messages.error(self.request, 'Tu dois sélectionner une carte de paiement.')
                 return
             payin.mangopay_card = mangopay_user.mangopay_card_registrations.get(
                 mangopay_card__id=request.POST['card_id']

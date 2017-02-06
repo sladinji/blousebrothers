@@ -37,7 +37,7 @@ def get_full_url(request, view_name, **kwargs):
 
 def check_bonus(request):
     try:
-        bonus = request.user.handle_bonus()
+        bonus = request.user.handle_subscription_bonus()
         if bonus:
             messages.success(
                 request,

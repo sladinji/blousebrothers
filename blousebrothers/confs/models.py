@@ -420,6 +420,7 @@ class SubscriptionType(models.Model):
     nb_month = models.IntegerField(_('Durée'), blank=True, null=True)
     price = models.DecimalField(_("Prix"), max_digits=6, decimal_places=2, default=0)
     bonus = models.DecimalField(_("Montant crédit wallet"), max_digits=6, decimal_places=2, default=0)
+    bonus_sponsor = models.DecimalField(_("Montant parrainage"), max_digits=6, decimal_places=2, default=0)
     product = models.ForeignKey('catalogue.Product', null=False, related_name="subscription")
 
 

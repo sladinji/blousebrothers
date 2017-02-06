@@ -1,12 +1,18 @@
 
 from django.db import migrations
 from decimal import Decimal
+from dateutil.relativedelta import relativedelta
+from datetime import date
 
 
 def fix_subscription(apps, schema_editor):
-    """ Create test for conferencier to be able to test their own confs"""
     Subscription = apps.get_model('confs', 'Subscription')
     SubscriptionType = apps.get_model('confs', 'SubscriptionType')
+
+    # update presale sub past due date
+    pdate = date.today() + relativedelta(months=+12)
+    Subscription.objects.all().update(date_over=pdate)
+
     Subscription.objects.all().update(type_id=5)
     SubscriptionType.objects.exclude(id=5).delete()
     sub = SubscriptionType.objects.first()
