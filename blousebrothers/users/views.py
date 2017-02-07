@@ -222,7 +222,7 @@ class AddCardView(LoginRequiredMixin, FormView):
         return super().get_context_data(wallet=self.request.user.wallet,
                                         mangopay_user=self.request.user.mangopay_user,
                                         card_registration=card_registration,
-                                        card=pd, balance=self.request.user.wallet.balance(),
+                                        card=pd,
                                         cr_form=cr_form, **kwargs)
 
     def get_object(self):

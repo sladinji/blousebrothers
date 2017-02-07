@@ -234,7 +234,6 @@ TEMPLATES = [
                 'oscar.core.context_processors.metadata',
                 'blousebrothers.context_processor.subscriptions',
                 'blousebrothers.context_processor.balance',
-                'blousebrothers.context_processor.dday',
             ],
         },
     },

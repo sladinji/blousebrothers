@@ -1,9 +1,5 @@
 from django.apps import apps
 from django.utils.safestring import mark_safe
-from mangopay.models import (
-    MangoPayNaturalUser,
-    MangoPayWallet,
-)
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
@@ -17,12 +13,6 @@ def subscriptions(request):
     )
     subs = Product.objects.filter(product_class=pclass).exclude(id=46)
     return {'subscriptions': subs}
-
-
-def dday(request):
-    from datetime import datetime
-    d = datetime(2017, 2, 14) - datetime.now()
-    return {'dday': d.days}
 
 
 def balance(request):
