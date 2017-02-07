@@ -245,7 +245,7 @@ def notify_signup(request, user, **kwargs):
                                 user.email,
                                 'https://' if request.is_secure() else 'http://',
                                 request.get_host(),
-                                reverse('admin:users_user_change',
+                                reverse('dashboard:user-detail',
                                         args=(user.id,)
                                         )
                                 )

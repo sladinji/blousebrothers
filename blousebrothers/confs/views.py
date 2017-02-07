@@ -439,11 +439,10 @@ Msg : {}'''
 
     def form_valid(self, form):
         msg = self.email_template.format(
-            self.request.user.name,
+            self.request.user.username,
             self.request.user.email,
-            get_full_url(self.request, 'admin:users_user_change', args=(self.request.user.id,)),
+            get_full_url(self.request, 'dashboard:user-detail', args=(self.request.user.id,)),
             get_full_url(self.request, 'confs:detail', args=(self.object.conf.slug,)),
-            self.object.conf.title,
             form.cleaned_data['msg'],
         )
         mail_admins('Demande de remboursement', msg)
