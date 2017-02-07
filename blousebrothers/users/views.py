@@ -125,10 +125,6 @@ class UserWalletView(LoginRequiredMixin, FormView):
             card_registration.handle_registration_data(request.GET['data'])
             return redirect(reverse('users:wallet'))
 
-        elif not request.user.has_at_least_one_card and not request.user.is_conferencier:
-            check_bonus(request)
-            return redirect(reverse('users:addcard'))
-
         check_bonus(request)
         return super().get(request, *args, **kwargs)
 
