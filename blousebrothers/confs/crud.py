@@ -291,6 +291,8 @@ Tu peux lui répondre directement directement via cet email.
 ---
 
 Tu peux lui répondre directement directement via cet email.
+Nous te conseillons de modifier ta correction si la question
+est pertinente afin d'éviter qu'elle ne revienne plusieurs fois.
 """
 
         tags = dict(username=request.user.username,
