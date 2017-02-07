@@ -1,1 +1,3 @@
-{{ order.line.first.product.attr.email_msg }}
+{% for line in order.lines.all %}
+{{ line.product.attr.email_msg }}
+{% endfor %}
