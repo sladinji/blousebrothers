@@ -43,7 +43,6 @@ def fix_subscription(apps, schema_editor):
     abo.attribute_values.add(mybonus)
     abo.save()
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
