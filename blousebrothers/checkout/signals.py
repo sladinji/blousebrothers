@@ -23,8 +23,14 @@ def handle_subscription(sender, **kwargs):
             subtype.name = line.product.title
             subtype.description = line.product.description
             subtype.price = line.line_price_before_discounts_incl_tax
-            subtype.bonus = line.product.attr.bonus
-            subtype.bonus_sponsor = line.product.attr.bonus_sponsor
+            try:
+                subtype.bonus = line.product.attr.bonus
+            except:
+                pass
+            try:
+                subtype.bonus_sponsor = line.product.attr.bonus_sponsor
+            except:
+                pass
             subtype.save()
             sub = Subscription(user=line.order.user, type=subtype)
             sub.date_over = date.today() + relativedelta(months=+line.product.attr.month)
