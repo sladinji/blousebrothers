@@ -174,7 +174,7 @@ class User(AbstractUser):
 
     @property
     def subscription(self):
-        subs = [x for x in self.subs.all() if not x.is_past_due]
+        subs = [x for x in self.subs.all().order_by('-date_created') if not x.is_past_due]
         if subs:
             return subs[0]
 
@@ -202,9 +202,13 @@ class User(AbstractUser):
     def handle_sponsor_bonus(self, subscription=None):
         if not subscription:
             subscription = self.subscription
+        if subscription.bonus_sponsor_taken:
+            return
         invitation = Invitation.objects.filter(email=self.email, accepted=True).first()
         if invitation:
             if invitation.inviter.give_bonus(subscription.type.bonus_sponsor):
+                subscription.bonus_sponsor_taken = True
+                subscription.save()
                 return invitation
 
 

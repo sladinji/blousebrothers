@@ -431,6 +431,7 @@ class Subscription(models.Model):
     date_over = models.DateField(_("Date created"), null=False)
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
     bonus_taken = models.BooleanField(default=False)
+    bonus_sponsor_taken = models.BooleanField(default=False)
 
     @property
     def is_past_due(self):
