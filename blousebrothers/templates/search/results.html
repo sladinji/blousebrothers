@@ -1,0 +1,11 @@
+{% extends "oscar/search/results.html" %}
+
+{% block content %}
+    {% include "confs/partials/confirm_go.html" %}
+    {{ block.super }}
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+	{% include 'confs/partials/confirm_go_js.html' %}
+{% endblock %}
