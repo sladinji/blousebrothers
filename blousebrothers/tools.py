@@ -35,14 +35,17 @@ def get_full_url(request, view_name, **kwargs):
     )
 
 
-def check_bonus(request):
+def check_bonus(request=None, user=None, sub=None):
+    if request and not user:
+        user = request.user
     try:
-        bonus = request.user.handle_subscription_bonus()
+        bonus = user.handle_subscription_bonus(sub)
         if bonus:
-            messages.success(
-                request,
-                "Les {} € de bonus de ton abonnement t'ont été crédités.".format(bonus)
-            )
+            if request:
+                messages.success(
+                    request,
+                    "Les {} € de bonus de ton abonnement t'ont été crédités.".format(bonus)
+                )
             ctx = dict(bonus=bonus)
             msg_plain = render_to_string('confs/email/bonus.txt', ctx)
             msg_html = render_to_string('confs/email/bonus.html', ctx)
@@ -50,7 +53,29 @@ def check_bonus(request):
                     'Crédit BlouseBrothers',
                     msg_plain,
                     'noreply@blousebrothers.fr',
-                    [request.user.email],
+                    [user.email],
+                    html_message=msg_html,
+            )
+    except Exception as ex:
+        logger.error(ex, exc_info=True, extra={
+            # Optionally pass a request and we'll grab any information we can
+            'request': request,
+        })
+    try:
+        invitation = user.handle_sponsor_bonus(sub)
+        if invitation:
+            ctx = dict(sponsored=user,
+                       sponsor=invitation.inviter,
+                       bonus=sub.type.bonus_sponsor,
+                       sub=sub,
+                       )
+            msg_plain = render_to_string('confs/email/bonus_sponsor.txt', ctx)
+            msg_html = render_to_string('confs/email/bonus_sponsor.html', ctx)
+            send_mail(
+                    'Bonus filleul',
+                    msg_plain,
+                    'noreply@blousebrothers.fr',
+                    [invitation.inviter.email],
                     html_message=msg_html,
             )
     except Exception as ex:

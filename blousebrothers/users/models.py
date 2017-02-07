@@ -174,8 +174,8 @@ class User(AbstractUser):
 
     @property
     def subscription(self):
-        subs =  [x for x in self.subs.all() if not x.is_past_due]
-        if subs :
+        subs = [x for x in self.subs.all() if not x.is_past_due]
+        if subs:
             return subs[0]
 
     def give_bonus(self, amount):
@@ -190,7 +190,7 @@ class User(AbstractUser):
             return True
 
     def handle_subscription_bonus(self, subscription=None):
-        if not subscription :
+        if not subscription:
             subscription = self.subscription
 
         if subscription and subscription.bonus_taken or not self.gave_all_mangopay_info:
@@ -200,10 +200,10 @@ class User(AbstractUser):
                 return subscription.type.bonus
 
     def handle_sponsor_bonus(self, subscription=None):
-        if not subscription :
+        if not subscription:
             subscription = self.subscription
-        invitation = Invitation.objects.filter(email=user.email, accepted=True)
-        if invitation :
+        invitation = Invitation.objects.filter(email=self.email, accepted=True)
+        if invitation:
             if invitation.inviter.give_bonus(subscription.type.bonus_sponsor):
                 return invitation
 
