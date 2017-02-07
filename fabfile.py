@@ -61,7 +61,7 @@ def futur(branch='master',reset='no'):
             run("docker-compose run django ./manage.py cgu_sync")
 
 
-def proddb():
+def proddb(pre=False):
     """
     Dump prod db and load it load loacally.
     """
@@ -73,20 +73,37 @@ def proddb():
             r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
 
     get("%s/backup.tgz" % code_dir)
-    load_last_dump(last)
+    if not pre:
+        load_last_dump(last)
+    return last
 
 
-def load_last_dump(last=None):
+@hosts('dowst@futur.blousebrothers.fr')
+def preproddb():
+    """
+    Dump prrprod and loat it locallly.
+    """
+    with prefix("source blouserc"):
+        last = proddb(pre=True)
+    load_last_dump(last, pre=True)
+
+
+def load_last_dump(last=None, pre=False):
     if not last:
         backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
-        print "#" * 20
-        print backups
         last = sorted(backups)[-1]
-    local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
-    local("docker run --rm "
-          "--volumes-from blousebrothers_postgres_1 "
-          "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
-          "blousebrothers_postgres cp /backup/%s /backups" % last)
+    if pre:
+        local("cd dowst@futur.blousebrothers.fr && tar xzf backup.tgz")
+        local("docker run --rm "
+              "--volumes-from blousebrothers_postgres_1 "
+              "-v $(pwd)/dowst@futur.blousebrothers.fr/backups:/backup "
+              "blousebrothers_postgres cp /backup/%s /backups" % last)
+    else:
+        local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
+        local("docker run --rm "
+              "--volumes-from blousebrothers_postgres_1 "
+              "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
+              "blousebrothers_postgres cp /backup/%s /backups" % last)
     local("docker-compose stop django")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")

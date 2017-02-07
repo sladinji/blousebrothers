@@ -38,6 +38,8 @@ def get_full_url(request, view_name, **kwargs):
 def check_bonus(request=None, user=None, sub=None):
     if request and not user:
         user = request.user
+    if not sub:
+        sub = user.subscription
     try:
         bonus = user.handle_subscription_bonus(sub)
         if bonus:
