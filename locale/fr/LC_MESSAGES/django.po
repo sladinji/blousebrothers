@@ -822,27 +822,27 @@ msgstr ""
 
 #: blousebrothers/users/models.py:22
 msgid "P1"
-msgstr "Première année"
+msgstr "Première année de médecine"
 
 #: blousebrothers/users/models.py:23
 msgid "P2"
-msgstr "Deuxième année"
+msgstr "Deuxième année de médecine"
 
 #: blousebrothers/users/models.py:24
 msgid "P3"
-msgstr "Troisième année"
+msgstr "Troisième année de médecine"
 
 #: blousebrothers/users/models.py:25
 msgid "M1"
-msgstr "Quatrième année"
+msgstr "Quatrième année de médecine"
 
 #: blousebrothers/users/models.py:26
 msgid "M2"
-msgstr "Cinquième année"
+msgstr "Cinquième année de médecine"
 
 #: blousebrothers/users/models.py:27
 msgid "M3"
-msgstr "Sixième année"
+msgstr "Sixième année de médecine"
 
 #: blousebrothers/users/models.py:28
 msgid "Interne"
