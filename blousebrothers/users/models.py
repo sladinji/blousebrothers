@@ -202,7 +202,7 @@ class User(AbstractUser):
     def handle_sponsor_bonus(self, subscription=None):
         if not subscription:
             subscription = self.subscription
-        if subscription.bonus_sponsor_taken:
+        if not subscription or subscription.bonus_sponsor_taken:
             return
         invitation = Invitation.objects.filter(email=self.email, accepted=True).first()
         if invitation:
