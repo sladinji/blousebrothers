@@ -8,14 +8,14 @@
 
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="title">
-        <h3 id="subscriptions">Abonnements</h3>
+        <h1 id="subscriptions">Abonnements</h1>
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 
     <div class="container"> <!-- Container -->
         <div class="row">
 
-        <div class="col-md-6 col-sm-12">
+        <div class="col-sm-12">
 	    {% for sub in subscriptions %}
             <div class="col-sm-12">
               <div class="p-style1">
@@ -31,10 +31,6 @@
               </div>
             </div>
 	    {% endfor %}
-        </div>
-        <div class="col-md-6 col-sm-12 subscription_pitch">
-        {% tinycontent 'subscription_pitch' %}
-        {% endtinycontent %}
         </div>
     </div> <!-- End Container -->
 
