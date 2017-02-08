@@ -9,10 +9,12 @@ from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.safestring import mark_safe
 from django.db.models import Q
-from .models import User, University
-from blousebrothers.confs.models import Conference
+from django.core.urlresolvers import reverse
 from django_csv_exports.admin import CSVExportAdmin
 from hijack_admin.admin import HijackUserAdminMixin
+
+from .models import User, University
+from blousebrothers.confs.models import Conference
 
 class MyUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
@@ -133,9 +135,10 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     def created_confs(self):
         html = ""
         for obj in Conference.objects.filter(owner__id=self.id):
-            html += '<p><a href="{}">{} ({}%) {}'.format(
+            html += '<p><a href="{}">{}</a> ({}%) {} <a href="{}"><big>✍</big></a></p>'.format(
                 obj.get_absolute_url(), obj.title, obj.edition_progress,
                 'A' if obj.for_sale else 'NA',
+                reverse('admin:confs_conference_change', args=(obj.id,)),
             )
         return mark_safe(html)
 
