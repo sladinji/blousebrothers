@@ -62,7 +62,7 @@ class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
     list_filter = ('deleted', 'for_sale', 'edition_progress', 'no_fees')
     inlines = []
     filter_horizontal = ['items', 'specialities']
-    search_fields = ['summary', 'title', 'questions__answers__answer', 'questions__answers__explaination']
+    search_fields = ['owner__username', 'owner__email', 'summary', 'title']
     list_editable = ('no_fees',)
 
     def get_queryset(self, request):
