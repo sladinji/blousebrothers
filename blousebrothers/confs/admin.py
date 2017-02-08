@@ -58,11 +58,12 @@ class ConferenceImage(ImageCroppingMixin, nested_admin.NestedTabularInline):
 
 class ConferenceAdmin(ImageCroppingMixin, nested_admin.NestedModelAdmin):
     readonly_fields = ('date_created',)
-    list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted', 'for_sale', 'no_fees')
+    list_display = ('title', 'summary', 'owner', 'edition_progress', 'deleted', 'for_sale', 'no_fees', 'date_created')
     list_filter = ('deleted', 'for_sale', 'edition_progress', 'no_fees')
     inlines = []
     filter_horizontal = ['items', 'specialities']
     search_fields = ['summary', 'title', 'questions__answers__answer', 'questions__answers__explaination']
+    list_editable = ('no_fees',)
 
     def get_queryset(self, request):
         """
