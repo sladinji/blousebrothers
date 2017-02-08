@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -82,7 +82,11 @@ class BasketAddView(CoreBasketAddView):
         transfer.mangopay_debited_wallet = debited_wallet
         transfer.debited_funds = info.price.excl_tax
         transfer.save()
-        fees = info.price.excl_tax * Decimal('0.1')
+        if test.conf.no_fees:
+            fees = 0
+        else:
+            fees = info.price.excl_tax * Decimal('0.1')
+            fees = fees.quantize(Decimal('0.01'), ROUND_HALF_UP)
         transfer.create(fees=Money(fees, str(transfer.debited_funds.currency)))
         if transfer.status == "FAILED":
             if transfer.result_code == "001001":

@@ -84,7 +84,8 @@ class Conference(ModelMeta, models.Model):
                                 help_text=mark_safe(
                                     _(""))
                                 )
-    deleted = models.BooleanField(default=False)
+    deleted = models.BooleanField(_("Supprimée"), default=False)
+    no_fees = models.BooleanField(_("Pas de frais"), default=False)
     for_sale = models.BooleanField(_("Publier"), default=False,
                                    help_text=mark_safe(
                                        _("Publier mon dossier avec les paramètres sélectionnés. Je certifie que "
