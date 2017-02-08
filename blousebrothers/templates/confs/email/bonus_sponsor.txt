@@ -1,4 +1,4 @@
-Hello,
+Hello {{ sponsor.username }},
 
 Ton filleul {{ sponsored.username }} ({{ sponsored.email }}) a accepté ton parrainage et a pris un abonnement "{{ sub.type.name }}".
 Grâce à lui, ton compte vient d'être crédité du bonus associé de {{ bonus }} €.

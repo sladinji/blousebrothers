@@ -10,15 +10,15 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
 from django.http import HttpResponseRedirect
-from invitations.models import Invitation
 from django.db.utils import IntegrityError
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from invitations.models import Invitation
 
 from .models import User
 from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm, UserSmallerForm
 from mangopay.models import (
-    MangoPayNaturalUser,
     MangoPayCardRegistration,
-    MangoPayWallet,
     MangoPayPayInByCard,
 )
 from blousebrothers.tools import get_full_url, check_bonus
@@ -80,12 +80,12 @@ class UserSendInvidation(LoginRequiredMixin, FormView):
             invite = Invitation.create(form.cleaned_data["email"], inviter=self.request.user)
             invite.send_invitation(self.request)
             messages.success(self.request, "L'invitation à bien été envoyée à"
-                            " {}.".format(form.cleaned_data["email"]))
+                             " {}.".format(form.cleaned_data["email"]))
         except IntegrityError:
             messages.error(self.request, "L'invitation n'a pas été envoyée car"
                            " {} a déjà été parrainé.".format(
-                form.cleaned_data["email"])
-            )
+                               form.cleaned_data["email"])
+                           )
 
         return super().form_valid(form)
 
@@ -93,6 +93,7 @@ class UserSendInvidation(LoginRequiredMixin, FormView):
     def get_success_url(self):
         return reverse('users:detail',
                        kwargs={'username': self.request.user.username})
+
 
 class Needs3DS(Exception):
     pass
@@ -132,8 +133,18 @@ class UserWalletView(LoginRequiredMixin, FormView):
         if payin.status == 'SUCCEEDED':
             messages.success(
                 self.request,
-                'Le paiement de {}€ a bien été pris en compte (référence : {})'.format(
+                'Le transfert de {} a bien été pris en compte (référence : {})'.format(
                     payin.debited_funds, payin.mangopay_id)
+            )
+            ctx = dict(payin=payin, user=self.request.user)
+            msg_plain = render_to_string('confs/email/confirm_credit.txt', ctx)
+            msg_html = render_to_string('confs/email/confirm_credit.html', ctx)
+            send_mail(
+                    'Confirmation Crédit [réf. {}]'.format(payin.mangopay_id),
+                    msg_plain,
+                    'noreply@blousebrothers.fr',
+                    [self.request.user.email],
+                    html_message=msg_html,
             )
         else:
             messages.error(self.request,
@@ -246,5 +257,3 @@ class Subscription(LoginRequiredMixin, TemplateView):
             request.basket.add_product(sub, 1)
             return redirect('/basket/')
         return super().get(request, *args, **kwargs)
-
-

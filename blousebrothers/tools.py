@@ -50,11 +50,11 @@ def check_bonus(request=None, user=None, sub=None):
                     request,
                     "Les {} € de bonus de ton abonnement t'ont été crédités.".format(bonus)
                 )
-            ctx = dict(bonus=bonus)
+            ctx = dict(bonus=bonus, user=user)
             msg_plain = render_to_string('confs/email/bonus.txt', ctx)
             msg_html = render_to_string('confs/email/bonus.html', ctx)
             send_mail(
-                    'Crédit BlouseBrothers',
+                    'Bonus BlouseBrothers',
                     msg_plain,
                     'noreply@blousebrothers.fr',
                     [user.email],
