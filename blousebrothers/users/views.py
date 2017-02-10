@@ -16,7 +16,15 @@ from django.template.loader import render_to_string
 from invitations.models import Invitation
 
 from .models import User
-from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm, UserSmallerForm, IbanForm
+from .forms import (
+    UserForm,
+    PayInForm,
+    CardRegistrationForm,
+    EmailInvitationForm,
+    UserSmallerForm,
+    IbanForm,
+    PayOutForm,
+)
 from mangopay.models import (
     MangoPayCardRegistration,
     MangoPayPayInByCard,
@@ -99,10 +107,15 @@ class Needs3DS(Exception):
     pass
 
 
-class UserWalletView(LoginRequiredMixin, FormView):
+class BaseWalletFormView(LoginRequiredMixin, FormView):
+
+    def get_success_url(self):
+        return reverse('users:wallet')
+
+
+class UserWalletView(BaseWalletFormView):
 
     template_name = 'users/wallet.html'
-    success_url = '.'
     form_class = PayInForm
 
     def get(self, request, *args, **kwargs):
@@ -200,16 +213,9 @@ class UserWalletView(LoginRequiredMixin, FormView):
         return self.get(request, *args, **kwargs)
 
 
-class AddIbanView(LoginRequiredMixin, FormView):
+class AddIbanView(BaseWalletFormView):
     form_class = IbanForm
     template_name = 'users/addiban_form.html'
-
-    def get_success_url(self):
-        return reverse('users:wallet')
-
-    def get_object(self):
-        # Only get the User record for the user making the request
-        return User.objects.get(username=self.request.user.username)
 
     def form_valid(self, form):
         self.request.user.create_bank_account(
@@ -219,16 +225,48 @@ class AddIbanView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class AddCardView(LoginRequiredMixin, FormView):
+class PayOutView(BaseWalletFormView):
+    form_class = PayOutForm
+    template_name = 'users/payout_form.html'
+
+    def form_valid(self, form):
+        payout = self.request.user.payout(form.cleaned_data['debited_funds'])
+        if payout.status == 'CREATED':
+            messages.success(self.request,
+                             "Le retrait de {} € est validé, le transfert devrait être effectif sous peu.".format(
+                                 form.cleaned_data["debited_funds"],
+                             )
+                             )
+            ctx = dict(payout=payout, user=self.request.user)
+            msg_plain = render_to_string('confs/email/confirm_payout.txt', ctx)
+            msg_html = render_to_string('confs/email/confirm_payout.html', ctx)
+            send_mail(
+                    'Confirmation Retrait [réf. {}]'.format(payout.mangopay_id),
+                    msg_plain,
+                    'noreply@blousebrothers.fr',
+                    [self.request.user.email],
+                    html_message=msg_html,
+            )
+        else:
+            messages.error(self.request,
+                           'Le transfert a échoué (référence : {})'.format(
+                               payout.mangopay_id)
+                           )
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(max_value=self.request.user.wallet.balance().amount)
+        return kwargs
+
+
+class AddCardView(BaseWalletFormView):
     """
     Card information are directly sent to MangoPay. This view just display
     a form that send data to MangoPay.
     """
     form_class = PayInForm
     template_name = 'users/addcard_form.html'
-
-    def get_success_url(self):
-        return reverse('users:wallet')
 
     def get_card_registration(self):
         card_registration = MangoPayCardRegistration.objects.create(
@@ -254,10 +292,6 @@ class AddCardView(LoginRequiredMixin, FormView):
                                         card_registration=card_registration,
                                         card=pd,
                                         cr_form=cr_form, **kwargs)
-
-    def get_object(self):
-        # Only get the User record for the user making the request
-        return User.objects.get(username=self.request.user.username)
 
 
 class Subscription(LoginRequiredMixin, TemplateView):

@@ -125,8 +125,7 @@
                         {% endif %}
                     </div>
                     {% if user.bank_account %}
-                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Changer de RIB</a>
-                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-download"></i> Retirer de mon compte perso</a>
+                    <a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
                     {% else %}
                     <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
                     {% endif %}

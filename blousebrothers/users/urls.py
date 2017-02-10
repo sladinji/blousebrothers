@@ -40,6 +40,12 @@ urlpatterns = [
         view=views.AddIbanView.as_view(),
         name='addiban'
     ),
+    # PAYOUT
+    url(
+        regex=r'^~transfert/$',
+        view=views.PayOutView.as_view(),
+        name='payout'
+    ),
     # Credit Card
     url(
         regex=r'^~addcard/$',

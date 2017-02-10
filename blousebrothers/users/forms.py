@@ -41,6 +41,16 @@ class PayInForm(forms.Form):
                                 )
 
 
+class PayOutForm(forms.Form):
+    debited_funds = forms.DecimalField(label=_('Montant en euros'))
+
+    def __init__(self, **kwargs):
+        max_value = kwargs.pop('max_value')
+        super().__init__(**kwargs)
+        self.fields['debited_funds'].max_value = Decimal(max_value)
+        self.fields['debited_funds'].help_text = "Maximum {} €".format(max_value)
+
+
 class IbanForm(forms.Form):
     iban = IBANFormField(label=_("IBAN"), required=True)
     bic = BICFormField(label=_("BIC"), required=True)

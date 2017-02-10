@@ -10,7 +10,6 @@ from django.core.validators import RegexValidator
 from django.dispatch import receiver
 from django.core.mail import mail_admins
 from django_countries.fields import CountryField
-from django.contrib import messages
 
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
@@ -23,6 +22,7 @@ from mangopay.models import (
     MangoPayWallet,
     MangoPayTransfer,
     MangoPayBankAccount,
+    MangoPayPayOut,
 )
 from blousebrothers.catalogue.models import Product
 from blousebrothers.confs.models import Conference
@@ -130,13 +130,12 @@ class User(AbstractUser):
 
     @property
     def gave_all_mangopay_info(self):
-        return bool(self.birth_date and self.country_of_residence and self.nationality \
-            and self.first_name and self.last_name)
+        return bool(self.birth_date and self.country_of_residence and self.nationality and
+                    self.first_name and self.last_name)
 
     @property
     def mangopay_user(self):
-
-        if self.gave_all_mangopay_info :
+        if self.gave_all_mangopay_info:
             mp_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
             if mpu_created:
                 mp_user.birthday = self.birth_date
@@ -228,12 +227,29 @@ class User(AbstractUser):
         }
 
     def create_bank_account(self, iban, bic):
+        """
+        Create user's bank account.
+        """
         bank_account = MangoPayBankAccount()
         bank_account.mangopay_user = self.mangopay_user
         bank_account.iban = iban
         bank_account.bic = bic
         bank_account.address = self.mango_address
         bank_account.create()
+
+    def payout(self, debited_funds):
+        """
+        Transfer money from user's wallet to his bank account.
+        """
+        payout = MangoPayPayOut()
+        payout.mangopay_user = self.mangopay_user
+        payout.mangopay_wallet = self.wallet
+        payout.mangopay_bank_account = self.bank_account
+        payout.debited_funds = debited_funds
+        payout.fees = 0
+        payout.save()
+        payout.create()
+        return payout
 
 
 class Sale(models.Model):
@@ -278,4 +294,3 @@ def notify_signup(request, user, **kwargs):
                                         )
                                 )
     mail_admins('Nouvelle inscription', msg)
-

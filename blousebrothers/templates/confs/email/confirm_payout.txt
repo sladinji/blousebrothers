@@ -1,0 +1,6 @@
+Hello {{ user.username }},
+
+Ton retrait de {{ payout.debited_funds }} a bien été effectué. Le transfert devrait être effectif sous peu sur ton compte (référence du transfert : {{ payout.mangopay_id }}).
+Merci pour ta confiance et à tout de suite sur BlouseBrothers.
+
+Guillaume et Julien.

@@ -70,7 +70,7 @@ class BasketAddView(CoreBasketAddView):
 
     def debit_wallet(self, form, test, debited_wallet):
         """
-        Debit user wallet according to given test and redirect to user according to transfer result.
+        Debit user wallet according to given test.
         """
         info = selector.strategy().fetch_for_product(form.product)
 
