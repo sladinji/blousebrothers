@@ -34,6 +34,13 @@ urlpatterns = [
         view=views.UserWalletView.as_view(),
         name='wallet'
     ),
+    # IBAN
+    url(
+        regex=r'^~addbankaccount/$',
+        view=views.AddIbanView.as_view(),
+        name='addiban'
+    ),
+    # Credit Card
     url(
         regex=r'^~addcard/$',
         view=views.AddCardView.as_view(),

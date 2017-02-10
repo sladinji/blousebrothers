@@ -2,6 +2,7 @@ from decimal import Decimal
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from oscar.forms.widgets import DatePickerInput
+from localflavor.generic.forms import IBANFormField, BICFormField
 
 from .models import User
 
@@ -38,6 +39,11 @@ class PayInForm(forms.Form):
                                 min_value=Decimal('5.00'),
                                 help_text=_('Minimum 5€'),
                                 )
+
+
+class IbanForm(forms.Form):
+    iban = IBANFormField(label=_("IBAN"), required=True)
+    bic = BICFormField(label=_("BIC"), required=True)
 
 
 class EmailInvitationForm(forms.Form):

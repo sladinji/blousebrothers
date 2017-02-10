@@ -65,12 +65,13 @@ THIRD_PARTY_APPS = [
     'compat',
     'hijack_admin',
     'analytical',
-    'robots',
-    'cuser',
-    'django_social_share',
-    'termsandconditions',
-    'meta', #SEO
-    'invitations',
+    'robots',  # generate robots.txt file for google
+    'cuser',  # current user middleware
+    'django_social_share',  # facebook twitter button
+    'termsandconditions',  # CGU-CGV
+    'meta',  # SEO
+    'invitations',  # Sponsoring
+    'localflavor',  # IbanField
 ]
 
 # Apps specific for this project go here.
@@ -143,7 +144,7 @@ EMAIL_SUBJECT_PREFIX = env("DJANGO_EMAIL_SUBJECT_PREFIX", default='[blousebrothe
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 NEW_RELIC_LICENSE_KEY = env('NEW_RELIC_LICENSE_KEY', default="")
 NEW_RELIC_APP_NAME = env('NEW_RELIC_APP_NAME', default="")
-MAILGUN_SENDER_DOMAIN='blousebrothers.fr'
+MAILGUN_SENDER_DOMAIN = 'blousebrothers.fr'
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -180,7 +181,7 @@ LANGUAGES = (
       ('fr', _('French')),
 )
 LOCALE_PATHS = (
-        '/app/locale', # replace with correct path here
+        '/app/locale',  # replace with correct path here
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
@@ -288,7 +289,7 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
-ACCOUNT_LOGOUT_ON_GET=True
+ACCOUNT_LOGOUT_ON_GET = True
 
 ACCOUNT_ALLOW_REGISTRATION = True
 ACCOUNT_ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
@@ -296,28 +297,28 @@ ADAPTER = 'blousebrothers.users.adapters.AccountAdapter'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 SOCIALACCOUNT_ADAPTER = 'blousebrothers.users.adapters.SocialAccountAdapter'
 
-SOCIALACCOUNT_PROVIDERS = \
-        {'facebook':
-                {'METHOD': 'oauth2',
-                         'SCOPE': ['email', 'public_profile', 'user_friends'],
-                         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-                         'FIELDS': [
-                                         'id',
-                                         'email',
-                                         'name',
-                                         'first_name',
-                                         'last_name',
-                                         'verified',
-                                         'locale',
-                                         'timezone',
-                                         'link',
-                                         'gender',
-                                         'updated_time'],
-                         'EXCHANGE_TOKEN': True,
-                         'LOCALE_FUNC': lambda request: 'fr_FR',
-                         'VERIFIED_EMAIL': False,
-                         'VERSION': 'v2.6'}
-         }
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook':
+    {'METHOD': 'oauth2',
+     'SCOPE': ['email', 'public_profile', 'user_friends'],
+     'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+     'FIELDS': [
+         'id',
+         'email',
+         'name',
+         'first_name',
+         'last_name',
+         'verified',
+         'locale',
+         'timezone',
+         'link',
+         'gender',
+         'updated_time'],
+     'EXCHANGE_TOKEN': True,
+     'LOCALE_FUNC': lambda request: 'fr_FR',
+     'VERIFIED_EMAIL': False,
+     'VERSION': 'v2.6'}
+}
 
 
 # Custom user app defaults
@@ -375,13 +376,13 @@ STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
 # TERMS AND CONDITIONS
 TERMS_BASE_TEMPLATE = 'account/base.html'
 TERMS_EXCLUDE_URL_LIST = {'/', '/terms/required/', '/logout/', '/login/', '/cgu/'}
-TERMS_EXCLUDE_URL_PREFIX_LIST = {'/catfish/','/admin/', '/dashboard'}
+TERMS_EXCLUDE_URL_PREFIX_LIST = {'/catfish/', '/admin/', '/dashboard'}
 
 # SEO
-META_INCLUDE_KEYWORDS=[ "ecni", "iecn", "ecn", "dossier clinique progressif", "dossiers cliniques progressifs",
-                       "question isolée", "questions isolées", "lca", "lecture critique d'articles",
-                       "lecture critique d'article", "Epreuves Classantes Nationales", "examen classant national",
-                       "conférences"]
+META_INCLUDE_KEYWORDS = ["ecni", "iecn", "ecn", "dossier clinique progressif", "dossiers cliniques progressifs",
+                         "question isolée", "questions isolées", "lca", "lecture critique d'articles",
+                         "lecture critique d'article", "Epreuves Classantes Nationales", "examen classant national",
+                         "conférences"]
 META_SITE_PROTOCOL = 'https'
 META_USE_SITES = True
 META_USE_OG_PROPERTIES = True

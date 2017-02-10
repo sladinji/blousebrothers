@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% load currency_filters %}
+{% load i18n %}
+
+{% block title %}Ajout carte de paiement{% endblock %}
+
+{% block content %}
+<div class="col-md-6 col-sm-12">
+    <div class="x_panel tile fixed_height_320">
+        <div class="x_title">
+            <h2><i class="fa fa-plus"></i> Ajouter mon RIB</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="dashboard-widget-content">
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" action="{% url 'users:addiban' %}">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <button type="submit" name='sub_iban' class="btn">Valider</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -16,7 +16,7 @@ from django.template.loader import render_to_string
 from invitations.models import Invitation
 
 from .models import User
-from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm, UserSmallerForm
+from .forms import UserForm, PayInForm, CardRegistrationForm, EmailInvitationForm, UserSmallerForm, IbanForm
 from mangopay.models import (
     MangoPayCardRegistration,
     MangoPayPayInByCard,
@@ -200,7 +200,30 @@ class UserWalletView(LoginRequiredMixin, FormView):
         return self.get(request, *args, **kwargs)
 
 
+class AddIbanView(LoginRequiredMixin, FormView):
+    form_class = IbanForm
+    template_name = 'users/addiban_form.html'
+
+    def get_success_url(self):
+        return reverse('users:wallet')
+
+    def get_object(self):
+        # Only get the User record for the user making the request
+        return User.objects.get(username=self.request.user.username)
+
+    def form_valid(self, form):
+        self.request.user.create_bank_account(
+            form.cleaned_data['iban'],
+            form.cleaned_data['bic']
+        )
+        return super().form_valid(form)
+
+
 class AddCardView(LoginRequiredMixin, FormView):
+    """
+    Card information are directly sent to MangoPay. This view just display
+    a form that send data to MangoPay.
+    """
     form_class = PayInForm
     template_name = 'users/addcard_form.html'
 

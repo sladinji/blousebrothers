@@ -22,6 +22,7 @@ from mangopay.models import (
     MangoPayNaturalUser,
     MangoPayWallet,
     MangoPayTransfer,
+    MangoPayBankAccount,
 )
 from blousebrothers.catalogue.models import Product
 from blousebrothers.confs.models import Conference
@@ -173,6 +174,10 @@ class User(AbstractUser):
         return self._get_or_create_wallet("{}'s bonus wallet".format(self.username))
 
     @property
+    def bank_account(self):
+        return MangoPayBankAccount.objects.filter(mangopay_user=self.mangopay_user).first()
+
+    @property
     def subscription(self):
         subs = [x for x in self.subs.all().order_by('-date_created') if not x.is_past_due]
         if subs:
@@ -210,6 +215,25 @@ class User(AbstractUser):
                 subscription.bonus_sponsor_taken = True
                 subscription.save()
                 return invitation
+
+    @property
+    def mango_address(self):
+        return {
+            "AddressLine1": self.address1,
+            "AddressLine2": self.address2,
+            "City": self.city,
+            "Region": "",
+            "PostalCode": self.zip_code,
+            "Country": self.country_of_residence.code,
+        }
+
+    def create_bank_account(self, iban, bic):
+        bank_account = MangoPayBankAccount()
+        bank_account.mangopay_user = self.mangopay_user
+        bank_account.iban = iban
+        bank_account.bic = bic
+        bank_account.address = self.mango_address
+        bank_account.create()
 
 
 class Sale(models.Model):

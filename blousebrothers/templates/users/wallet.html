@@ -8,22 +8,23 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
+<div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
-    <div class="row theader">
-    {% if not user.has_valid_subscription %}
-	{% tinycontent 'wallet_subscription_info' %}
-	{% endtinycontent %}
-    {% endif %}
-        <div class="col-sm-6">
+    <div class="row">
+        {% if not user.has_valid_subscription %}
+        {% tinycontent 'wallet_subscription_info' %}
+        {% endtinycontent %}
+        {% endif %}
+        <div class="col-md-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                    <h2><i class="fa fa-bank"></i> Crédits actuels : {{ balance | wallet_clean | currency }}</h2>
+                    <h2><i class="fa fa-cubes"></i> Crédits actuels : {{ balance | wallet_clean | currency }}</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <div class="dashboard-widget-content">
-                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                    Provenance :
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        Provenance :
                         <ul class="col-md-12 stats">
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b><br> 
@@ -42,86 +43,125 @@
         </div>
 
         {% if user.has_at_least_one_card %}
-            <div class="col-md-6 col-sm-12">
-                <div class="x_panel tile fixed_height_320">
-                    <div class="x_title">
-                        <h2><i class="fa fa-plus"></i> Créditer mon compte</h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="dashboard-widget-content">
-                            <div class="panel-body">
-                                <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
-                                    {% csrf_token %}
-                                    <ul class="quick-pay collapse in">
-                                        <li class="quick-pay">
-                                            <button type="submit" name='sub_credit_5' class="btn">5€</button>
-                                        </li>
-                                        <li class="quick-pay">
-                                            <button type="submit" name='sub_credit_10' class="btn">10€</button>
-                                        </li>
-                                        <li class="quick-pay">
-                                            <button type="submit" name='sub_credit_15' class="btn">15€</button>
-                                        </li>
-                                        <li class="quick-pay">
-                                            <button type="submit" name='sub_credit_20' class="btn">20€</button>
-                                        </li>
-                                        <li class="quick-pay">
-                                            <a href="#other" class="btn" name='autre' class="btn" data-toggle="collapse">Autre</a>
-                                        </li>
-                                    </ul>
-                                    {% if user.has_more_than_one_card %}
-                                    <select class="select form-control" id="card_id" name="card_id" >
-                                        <option  value="" selected="selected">Choisir une carte...</option>
-                                        {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                                        {% if card_registration.mangopay_card.mangopay_id %}
-                                        {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                                        <option value="{{ card_registration.mangopay_card.id }}">{{ card_registration.mangopay_card.alias }}</option>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </select>
+        <div class="col-md-6 col-sm-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-plus"></i> Créditer mon compte</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
+                                {% csrf_token %}
+                                <ul class="quick-pay collapse in">
+                                    <li class="quick-pay">
+                                        <button type="submit" name='sub_credit_5' class="btn">5€</button>
+                                    </li>
+                                    <li class="quick-pay">
+                                        <button type="submit" name='sub_credit_10' class="btn">10€</button>
+                                    </li>
+                                    <li class="quick-pay">
+                                        <button type="submit" name='sub_credit_15' class="btn">15€</button>
+                                    </li>
+                                    <li class="quick-pay">
+                                        <button type="submit" name='sub_credit_20' class="btn">20€</button>
+                                    </li>
+                                    <li class="quick-pay">
+                                        <a href="#other" class="btn" name='autre' class="btn" data-toggle="collapse">Autre</a>
+                                    </li>
+                                </ul>
+                                {% if user.has_more_than_one_card %}
+                                <select class="select form-control" id="card_id" name="card_id" >
+                                    <option  value="" selected="selected">Choisir une carte...</option>
+                                    {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
+                                    {% if card_registration.mangopay_card.mangopay_id %}
+                                    {{ card_registration.mangopay_card.request_card_info | default:"" }}
+                                    <option value="{{ card_registration.mangopay_card.id }}">{{ card_registration.mangopay_card.alias }}</option>
                                     {% endif %}
-                                    <div id="other" class="collapse">
-                                        {{ form|crispy }}
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <button type="submit" name='sub_credit' class="btn">Valider</button>
-                                            </div>
+                                    {% endfor %}
+                                </select>
+                                {% endif %}
+                                <div id="other" class="collapse">
+                                    {{ form|crispy }}
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <button type="submit" name='sub_credit' class="btn">Valider</button>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         {% endif %}
-        </div>
+    </div>
 
-        <div class="col-md-6 col-sm-12">
-            <h2>Cartes enregistrées</h2>
-            <div class="panel-body cards">
-                <ul class="quick-pay">
-                    {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                    {% if card_registration.mangopay_card.mangopay_id %}
-                    {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                    <li class="quick-pay">
-                        <p><label>{% trans 'Numéro de carte' %} :</label> {{ card_registration.mangopay_card.alias }}</p>
-                        <p><label>{% trans "Valide jusqu'au" %} :</label> {{ card_registration.mangopay_card.expiration_date }}</p>
-                        <p><label>{% trans 'Valide' %} :</label> {{ card_registration.mangopay_card.is_valid | yesno:"oui,non" }}</p>
-                        <p><label>{% trans 'État' %} :</label> {{ card_registration.mangopay_card.is_active | yesno:"active,inactive"}}</p>
-                    </li>
+    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-bank"></i> Compte bancaire </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        {% if user.bank_account %}
+                        <ul class="col-md-12 stats">
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">IBAN</b><br> 
+                                    {{ user.bank_account.iban }}</span>
+                            </li>
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">BIC</b><br> 
+                                    {{ user.bank_account.bic }}</span>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% if user.bank_account %}
+                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Changer de RIB</a>
+                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-download"></i> Retirer de mon compte perso</a>
+                    {% else %}
+                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
                     {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="col-sm-12">
-                <a href="{% url 'users:addcard' %}" class="btn">Ajouter une carte</a>
+                </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-credit-card"></i> Cartes enregistrées</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="col-md-12 stats">
+                            {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
+                            {% if card_registration.mangopay_card.mangopay_id %}
+                            {{ card_registration.mangopay_card.request_card_info | default:"" }}
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">{% trans 'Numéro de carte' %}</b><br> 
+                                    {{ card_registration.mangopay_card.alias }}</span>
+                                <em>{% trans "Valide jusqu'au" %} {{ card_registration.mangopay_card.expiration_date }}</em>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <a href="{% url 'users:addcard' %}" class="btn"><i class="fa fa-plus"></i> Ajouter une carte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="space"></div> <!-- 40px Vertical Spacing -->
-
-
 
     {% if user.is_conferencier %}
     <div class="row">

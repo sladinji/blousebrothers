@@ -397,7 +397,7 @@ class MangoPayBankAccount(models.Model):
         mangopay_bank_account.OwnerName = \
             self.mangopay_user.user.get_full_name()
 
-        mangopay_bank_account.OwnerAddress = str(self.address)
+        mangopay_bank_account.OwnerAddress = self.address
 
         if self.account_type == BA_BIC_IBAN:
             # BIC / IBAN type requires setting IBAN and BIC codes only
