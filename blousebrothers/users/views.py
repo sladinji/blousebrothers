@@ -41,11 +41,6 @@ class UserDetailView(DetailView):
     slug_field = 'username'
     slug_url_kwarg = 'username'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['invit_form'] = EmailInvitationForm()
-        return context
-
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
@@ -94,13 +89,10 @@ class UserSendInvidation(LoginRequiredMixin, FormView):
                            " {} a déjà été parrainé.".format(
                                form.cleaned_data["email"])
                            )
-
         return super().form_valid(form)
 
-    # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('users:detail',
-                       kwargs={'username': self.request.user.username})
+        return self.request.POST['current_url']
 
 
 class Needs3DS(Exception):

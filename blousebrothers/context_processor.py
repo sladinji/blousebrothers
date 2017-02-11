@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.utils.safestring import mark_safe
+from blousebrothers.users.forms import EmailInvitationForm
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
@@ -20,3 +21,7 @@ def balance(request):
         return {'balance': request.user.wallet.balance() + request.user.wallet_bonus.balance()}
     except:
         return {'balance': mark_safe('<span style="color:orange;">Activer porte-monnaie</span>')}
+
+
+def invit_form(request):
+    return {'invit_form': EmailInvitationForm()}

@@ -10,7 +10,7 @@
 <div class="container">
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                     <h2><i class="fa fa-user"></i> Profil</h2>
@@ -21,6 +21,7 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
+                <div class="space"></div> <!-- 40px Vertical Spacing -->
                 <div class="x_content">
                     <div class="dashboard-widget-content">
                         {% endif %}
@@ -43,32 +44,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            {% include 'partials/sponsor_form.html' %}
+        </div>
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="row">
-        <div class="col-md-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-share"></i> Parrainage</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        {% tinycontent 'regleparrainage' %}
-                        {% endtinycontent %}
-                        <form class="form-horizontal" method="post" action="{% url 'users:invitation' %}">
-                            {% csrf_token %}
-                            {{ invit_form | crispy }}
-                            <button type="submit" class="btn pull-right">Envoyer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         {% if object == request.user %}
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                     <h2{% if not user.subscription %} style="color:red;"{% endif %}><i class="fa fa-file"></i> Abonnement</h2>

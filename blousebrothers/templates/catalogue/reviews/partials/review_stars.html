@@ -1,42 +1,57 @@
 {% load reviews_tags %}
 {% load i18n %}
 
-{% if product.rating != None %}
-    <h3 class="star-rating {{ product.rating|as_stars }}">
-        <i class="icon-star"></i>
-        <i class="icon-star"></i>
-        <i class="icon-star"></i>
-        <i class="icon-star"></i>
-        <i class="icon-star"></i>
+<div class="row">
+    <div class="col-md-3">
+        {% block product_stock_record %}
+            {% include "catalogue/partials/stock_record.html" with verbose=1 %}
+        {% endblock %}
 
-        <small><a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}">
-                {% blocktrans count product.num_approved_reviews as num_reviews %}
+        {% if product.rating != None %}
+        <h3 class="star-rating {{ product.rating|as_stars }}">
+            <i class="icon-star"></i>
+            <i class="icon-star"></i>
+            <i class="icon-star"></i>
+            <i class="icon-star"></i>
+            <i class="icon-star"></i>
+
+            <small><a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}">
+                    {% blocktrans count product.num_approved_reviews as num_reviews %}
                     {{ num_reviews }} avis
-                {% plural %}
+                    {% plural %}
                     {{ num_reviews }} avis
-                {% endblocktrans %}
-        </a></small>
-    </h3>
-    <p>
+                    {% endblocktrans %}
+                </a></small>
+        </h3>
+        <p>
         &nbsp;
         {% for label, score in product.ratings %}
-                        <p class="star-rating {{ score|as_stars }}">
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            {{ label }}
-                        </p>
+        <p class="star-rating {{ score|as_stars }}">
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        {{ label }}
+        </p>
         {% endfor %}
         <big>{{ product.difficulty_rating }}</big> / 10 <span class="star-rating">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Difficulté</span>
-{% else %}
-    <p>
-{% endif %}
+        {% else %}
+        <p>
+        {% endif %}
 
-{% if product|is_review_permitted:user %}
-    <a id="write_review" href="{% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id %}#addreview" class="btn btn-success btn-sm">
-        {% trans "Write a review" %}
-    </a>
-{% endif %}
-</p>
+        {% if product|is_review_permitted:user %}
+        <a id="write_review" href="{% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id %}#addreview" class="btn btn-success btn-sm">
+            {% trans "Write a review" %}
+        </a>
+        {% endif %}
+        </p>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="col-md-9">
+        {% include 'partials/sponsor_form.html' %}
+    </div>
+    {% endif %}
+
+</div>
