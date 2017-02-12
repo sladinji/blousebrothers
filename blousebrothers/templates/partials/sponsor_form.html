@@ -1,0 +1,21 @@
+{% load tinycontent_tags %}
+{% load crispy_forms_tags %}
+
+<div class="x_panel tile fixed_height_320">
+    <div class="x_title">
+        <h2><i class="fa fa-thumbs-o-up"></i> Parrainage</h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="dashboard-widget-content">
+            {% tinycontent 'regleparrainage' %}
+            {% endtinycontent %}
+            <form class="form-horizontal" method="post" action="{% url 'users:invitation' %}">
+                {% csrf_token %}
+                {{ invit_form | crispy }}
+                <input name="current_url" type="hidden" value="{{request.path}}"></input>
+                <button type="submit" class="btn pull-right">Envoyer</button>
+            </form>
+        </div>
+    </div>
+</div>
