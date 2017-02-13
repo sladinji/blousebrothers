@@ -10,7 +10,6 @@
 {% tinycontent 'ask_refund' %}
 {% endtinycontent %}
 
-{{ object }}
 <form class="form" method="post" action="{% url "confs:ask_refund" object.conf.slug %}">
     {% csrf_token %}
     {{ form | crispy }}
