@@ -108,6 +108,7 @@ def load_last_dump(last=None, pre=False):
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")
     local("docker-compose run django ./manage.py migrate")
+    local("docker-compose run django ./manage.py mango_reset")
 
 
 def get_migrations():

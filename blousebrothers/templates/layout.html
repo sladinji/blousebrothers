@@ -79,7 +79,7 @@ settings file. This will enable the on-the-fly less compiler.
                                     <span class="label label-important">{{ num_unread_notifications }}</span>
                                 </a>
                                 {% else %}
-                                <a href="{% url 'users:redirect' %}"{% if not user.subscription %} style="color:red;"{% endif %}><i class="icon-user"></i> {{ request.user.username }}</a>
+                                <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {{ request.user.username }}</a>
                                 {% endif %}
                             </li>
                             {% if request.user.is_staff or perms.partner.dashboard_access %}

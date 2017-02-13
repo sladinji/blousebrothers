@@ -11,7 +11,6 @@ from blousebrothers.confs.models import Conference, Question, Answer, Test
 from django.utils.decorators import method_decorator
 
 
-
 @method_decorator(terms_required, name='dispatch')
 class BBLoginRequiredMixin(LoginRequiredMixin):
     login_url = '/accounts/login/'
@@ -60,19 +59,19 @@ class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         return self.object.student == self.request.user
 
 
-class PassTestPermissionMixin(TestPermissionMixin):
+class MangoPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     """
-    Same as TestPermissionMixin but user also need a valid subscription
+    Check if user gave all info to deal with mangopay.
     """
+
+    msg_access_denied = 'Merci de compléter le formulaire ci-dessous pour pouvoir créditer ton compte.'
 
     def test_func(self):
-        if not super().test_func():
-            return False
-        return self.request.user.has_valid_subscription()
+        return self.request.user.gave_all_mangopay_info
 
     def handle_no_permission(self):
-        messages.error(self.request, _("Tu dois disposer d'un abonnement à jour pour faire une conf"))
-        return redirect("users:detail", **{'username':self.request.user.username})
+        messages.error(self.request, self.msg_access_denied)
+        return redirect('users:update')
 
 
 class CanAddConfPermission(PermissionRequiredMixin):

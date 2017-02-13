@@ -7,13 +7,13 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from invitations.models import Invitation
+from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 
 from .models import User
 from .forms import (
@@ -42,7 +42,7 @@ class UserDetailView(DetailView):
     slug_url_kwarg = 'username'
 
 
-class UserRedirectView(LoginRequiredMixin, RedirectView):
+class UserRedirectView(BBLoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
@@ -50,7 +50,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
                        kwargs={'username': self.request.user.username})
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(BBLoginRequiredMixin, UpdateView):
     # send the user back to their own page after a successful update
     def get_success_url(self):
         return reverse('users:detail',
@@ -75,7 +75,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
             return UserSmallerForm
 
 
-class UserSendInvidation(LoginRequiredMixin, FormView):
+class UserSendInvidation(BBLoginRequiredMixin, FormView):
     form_class = EmailInvitationForm
 
     def form_valid(self, form):
@@ -99,7 +99,7 @@ class Needs3DS(Exception):
     pass
 
 
-class BaseWalletFormView(LoginRequiredMixin, FormView):
+class BaseWalletFormView(MangoPermissionMixin, FormView):
 
     def get_success_url(self):
         return reverse('users:wallet')
@@ -111,12 +111,7 @@ class UserWalletView(BaseWalletFormView):
     form_class = PayInForm
 
     def get(self, request, *args, **kwargs):
-        if not self.request.user.gave_all_mangopay_info:
-            messages.error(self.request, 'Merci de compléter le formulaire ci-dessous '
-                           'pour pouvoir créditer ton compte.')
-            return redirect('users:update')
-
-        elif 'transactionId' in request.GET:
+        if 'transactionId' in request.GET:
             # handle 3DS redirection
             payin = MangoPayPayInByCard.objects.get(mangopay_id=request.GET['transactionId'])
             payin.get()
@@ -208,6 +203,7 @@ class UserWalletView(BaseWalletFormView):
 class AddIbanView(BaseWalletFormView):
     form_class = IbanForm
     template_name = 'users/addiban_form.html'
+    msg_access_denied = 'Merci de compléter le formulaire ci-dessous pour pouvoir ajouter un RIB.'
 
     def form_valid(self, form):
         self.request.user.create_bank_account(
@@ -286,7 +282,7 @@ class AddCardView(BaseWalletFormView):
                                         cr_form=cr_form, **kwargs)
 
 
-class Subscription(LoginRequiredMixin, TemplateView):
+class Subscription(BBLoginRequiredMixin, TemplateView):
     template_name = 'pages/subscription.html'
     permission_denied_message = _("Merci de t'identifier ou de créer un compte pour soucrire à un abonnement")
 

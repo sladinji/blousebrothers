@@ -49,38 +49,6 @@
         </div>
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
-    <div class="row">
-        {% if object == request.user %}
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2{% if not user.subscription %} style="color:red;"{% endif %}><i class="fa fa-file"></i> Abonnement</h2>
-                    {% if not user.subs.all %}
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a href="{% url 'users:subscription' '' %}" class="btn">Choisir un abonnement</a></li>
-                        </li>
-                    </ul>
-                    {% endif %}
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        {% for sub in user.subs.all %}
-                        <legend>{{ sub.type.name }}</legend>
-                        {{ sub.type.description | safe }}
-                        <p><label>{% trans "Valable jusqu'au" %} :</label> {{ sub.date_over | date:"d F Y" }}</p>
-                        {% if sub.is_past_due %}
-                        <a href="#" class="btn">Renouveler</a>
-                        {% endif %}
-                        <br>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
 {% endblock content %}
 

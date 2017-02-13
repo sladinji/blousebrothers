@@ -11,10 +11,6 @@
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
     <div class="row">
-        {% if not user.has_valid_subscription %}
-        {% tinycontent 'wallet_subscription_info' %}
-        {% endtinycontent %}
-        {% endif %}
         <div class="col-md-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
@@ -34,14 +30,73 @@
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.wallet_bonus.balance | wallet_clean | currency }}</b><br> 
                                     Bonus</span>
-                                <em>(parrainage, abonnement...)</em>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-credit-card"></i> Cartes enregistrées</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="col-md-12 stats">
+                            {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
+                            {% if card_registration.mangopay_card.mangopay_id %}
+                            {{ card_registration.mangopay_card.request_card_info | default:"" }}
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">{% trans 'Numéro de carte' %}</b><br> 
+                                    {{ card_registration.mangopay_card.alias }}</span>
+                                <em>{% trans "Valide jusqu'au" %} {{ card_registration.mangopay_card.expiration_date }}</em>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <a href="{% url 'users:addcard' %}" class="btn"><i class="fa fa-plus"></i> Ajouter une carte</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-bank"></i> Compte bancaire </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        {% if user.bank_account %}
+                        <ul class="col-md-12 stats">
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">IBAN</b><br> 
+                                    {{ user.bank_account.iban }}</span>
+                            </li>
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">BIC</b><br> 
+                                    {{ user.bank_account.bic }}</span>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% if user.bank_account %}
+                    <a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
+                    {% else %}
+                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
         {% if user.has_at_least_one_card %}
         <div class="col-md-6 col-sm-12">
             <div class="x_panel tile fixed_height_320">
@@ -97,67 +152,6 @@
             </div>
         </div>
         {% endif %}
-    </div>
-
-    <div class="space12"></div> <!-- 40px Vertical Spacing -->
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-bank"></i> Compte bancaire </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        {% if user.bank_account %}
-                        <ul class="col-md-12 stats">
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">IBAN</b><br> 
-                                    {{ user.bank_account.iban }}</span>
-                            </li>
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">BIC</b><br> 
-                                    {{ user.bank_account.bic }}</span>
-                            </li>
-                        </ul>
-                        {% endif %}
-                    </div>
-                    {% if user.bank_account %}
-                    <a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
-                    {% else %}
-                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-credit-card"></i> Cartes enregistrées</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        <ul class="col-md-12 stats">
-                            {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                            {% if card_registration.mangopay_card.mangopay_id %}
-                            {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{% trans 'Numéro de carte' %}</b><br> 
-                                    {{ card_registration.mangopay_card.alias }}</span>
-                                <em>{% trans "Valide jusqu'au" %} {{ card_registration.mangopay_card.expiration_date }}</em>
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <a href="{% url 'users:addcard' %}" class="btn"><i class="fa fa-plus"></i> Ajouter une carte</a>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="space"></div> <!-- 40px Vertical Spacing -->

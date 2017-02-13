@@ -30,7 +30,6 @@ from blousebrothers.auth import (
     ConferenceWritePermissionMixin,
     ConferenceReadPermissionMixin,
     TestPermissionMixin,
-    PassTestPermissionMixin,
     BBLoginRequiredMixin,
 )
 from blousebrothers.tools import analyse_conf, get_full_url
@@ -392,21 +391,17 @@ class TestResult(TestPermissionMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        try :
+        try:
             product = Product.objects.get(conf=self.object.conf)
             ctx.update(product=product)
-        except :
+        except:
             ctx.update(product=None)
         return ctx
 
 
-class TestResetView(BBLoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class TestResetView(TestPermissionMixin, UpdateView):
     model = Test
     fields = ['id']
-
-    def test_func(self, **kwargs):
-        obj = self.get_object()
-        return obj.student == self.request.user
 
     def form_valid(self, form):
         self.object.finished = False

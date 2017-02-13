@@ -47,8 +47,6 @@ class User(AbstractUser):
         ('MEDECIN', _('Médecin')),
     )
 
-    def has_valid_subscription(self):
-        return [x for x in self.subs.all() if not x.is_past_due]
 
     def already_done(self, conf):
         return self.tests.filter(conf=conf)
@@ -78,13 +76,13 @@ class User(AbstractUser):
     """UUID than can be used in public link to identify user"""
     birth_date = models.DateField(_("Date de naissance"), blank=False, null=True)
     """Birth date."""
-    address1 = models.CharField(_("Adresse 1"), blank=True, null=True, max_length=50)
+    address1 = models.CharField(_("Adresse 1"), blank=False, null=True, max_length=50)
     """Address first line"""
     address2 = models.CharField(_("Adresse 2"), blank=True, max_length=50)
     """Address second line"""
-    city = models.CharField(_("Ville"), blank=True, null=True, max_length=50)
+    city = models.CharField(_("Ville"), blank=False, null=True, max_length=50)
     """City"""
-    zip_code = models.CharField(_("Code postal"), blank=True, null=True, max_length=20)
+    zip_code = models.CharField(_("Code postal"), blank=False, null=True, max_length=20)
     """ Zip code"""
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$',
@@ -131,7 +129,8 @@ class User(AbstractUser):
     @property
     def gave_all_mangopay_info(self):
         return bool(self.birth_date and self.country_of_residence and self.nationality and
-                    self.first_name and self.last_name)
+                    self.first_name and self.last_name and self.address1 and self.city and
+                    self.zip_code)
 
     @property
     def mangopay_user(self):

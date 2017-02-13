@@ -10,7 +10,7 @@ from .models import User
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name',
+        fields = ['last_name', 'first_name',
                   'birth_date', 'country_of_residence', 'nationality', 'email',
                   'university', 'degree',
                   'address1', 'address2', 'zip_code',
@@ -22,7 +22,8 @@ class UserForm(forms.ModelForm):
 class UserSmallerForm(UserForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'birth_date', 'country_of_residence', 'nationality']
+        fields = ['last_name', 'first_name', 'address1', 'address2', 'zip_code', 'city', 'country_of_residence',
+                  'nationality', 'birth_date', ]
 
 
 class WalletForm(forms.ModelForm):
