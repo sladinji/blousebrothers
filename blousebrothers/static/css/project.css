@@ -1363,3 +1363,12 @@ ul.quick-list li {
 .space12 {
     padding-top: 12px;
 }
+
+/* FORUM */
+.breadcrumb {
+	padding: 8px 15px;
+	margin-bottom: 20px;
+	list-style: none;
+	background-color: transparent;
+	border-radius: 4px;
+}

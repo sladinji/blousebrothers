@@ -139,6 +139,12 @@ def month_revenu(conf):
                    create_timestamp__year=today.year)
     return qs.aggregate(Sum('credited_funds'))['credited_funds__sum']
 
+
 @register.filter
 def wallet_clean(wallet_balance):
-    return str(wallet_balance).replace("EUR ","")
+    return str(wallet_balance).replace("EUR ", "")
+
+
+@register.filter(name='addcss')
+def addcss(field, css):
+    return field.as_widget(attrs={"class": css})

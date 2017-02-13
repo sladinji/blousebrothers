@@ -99,7 +99,7 @@ settings file. This will enable the on-the-fly less compiler.
                 </div>
 
             </div>
-            {% block submenu %}
+            {% block breadcrumb %}
             <a class="btn btn-rules" href="{% url 'regledujeu' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a>
             <a class="btn btn-success btn-create-conf pull-right" id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a>
             {% endblock %}
