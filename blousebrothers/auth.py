@@ -98,7 +98,7 @@ class ConferenceReadPermissionMixin(BBLoginRequiredMixin, IsConfOwner):
     """
 
 
-class ConferenceWritePermissionMixin(BBLoginRequiredMixin, CanAddConfPermission, IsConfOwner):
+class ConferenceWritePermissionMixin(BBLoginRequiredMixin, IsConfOwner):
     """
     Check if user is conference's owner and has add_conference permission
     """

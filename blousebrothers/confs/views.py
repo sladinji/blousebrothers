@@ -91,7 +91,7 @@ class ConferenceDeleteView(ConferenceWritePermissionMixin, BBConferencierReqMixi
         return reverse('confs:list')
 
 
-class ConferenceUpdateView(ConferenceWritePermissionMixin, BBConferencierReqMixin, JSONResponseMixin, UpdateView):
+class ConferenceUpdateView(ConferenceWritePermissionMixin, JSONResponseMixin, UpdateView):
     """
     Main Angular JS interface where you can edit question, images...
     """
@@ -176,14 +176,10 @@ class ConferenceListView(BBConferencierReqMixin, ListView):
         return qry.all()
 
 
-class ConferenceCreateView(PermissionRequiredMixin, BBConferencierReqMixin, CreateView, FormView):
+class ConferenceCreateView(BBLoginRequiredMixin, CreateView, FormView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     model = Conference
-    permission_required = ['confs.add_conference']
-
-    def handle_no_permission(self):
-        return redirect("confs:wanabe_conferencier")
 
     def get_object(self, queryset=None):
         obj = Conference.objects.prefetch_related(
