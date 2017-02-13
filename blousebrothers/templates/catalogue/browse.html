@@ -54,6 +54,7 @@
     <section id="pricing">
         {% include "partials/sponsor_form.html" %}
         <div class="space"></div> <!-- 40px Vertical Spacing -->
+        {% comment remove subs %}
         {% for sub in subscriptions %}
         <div class="p-style1 column_left">
             <div class="package">
@@ -67,6 +68,7 @@
             </ul>
         </div>
         {% endfor %}
+        {% endcomment %}
     </section>
 
     {% if has_facets %}
