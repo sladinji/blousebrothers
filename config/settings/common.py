@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = [
     'meta',  # SEO
     'invitations',  # Sponsoring
     'localflavor',  # IbanField
+    'pybb',
 ]
 
 # Apps specific for this project go here.
@@ -109,6 +110,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'googlebot.middleware.GooglebotMiddleware',
     'termsandconditions.middleware.TermsAndConditionsRedirectMiddleware',
+    'pybb.middleware.PybbMiddleware',
 
 
 )
@@ -233,6 +235,7 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+                'pybb.context_processors.processor',
                 'blousebrothers.context_processor.subscriptions',
                 'blousebrothers.context_processor.balance',
                 'blousebrothers.context_processor.invit_form',
@@ -389,3 +392,5 @@ META_USE_SITES = True
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 INVITATIONS_INVITATION_EXPIRY = 30
+
+PYBB_TEMPLATE="layout.html"

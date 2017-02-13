@@ -29,6 +29,9 @@ urlpatterns = [
     url(r'^invitations/', include('invitations.urls', namespace='invitations')),
 
 
+    # Forum
+    url(r'^forum/', include('pybb.urls', namespace='pybb')),
+
     # Terms and Conditions
     url(r'^terms/', include('termsandconditions.urls')),
 

@@ -94,3 +94,7 @@ django-social-share
 django-termsandconditions
 django-meta
 django-invitations
+
+# Forum
+pybbm
+bbcode
