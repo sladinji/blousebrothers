@@ -34,7 +34,11 @@
             </div>
             <div class="conf-price">
                 <a href="{% url 'confs:final' conference.slug %}#div_id_price" >
-                {{ conference.price }} €
+                    {% if conference.for_sale %}
+                    {{ conference.price }} €
+                    {% else %}
+                    NON PUBLIÉE
+                    {% endif %}
                 </a>
             </div>
 
