@@ -6,7 +6,7 @@ Bienvenue sur BlouseBrothers.
 Merci de confirmer ton adresse email en cliquant sur ce lien : {{ activate_url }}
 
 Tu es interne (ou externe confiant) ?
-Dépose tes dossiers et garde 90% de tes ventes. Aucun frais, aucun engagement.
+Dépose tes dossiers et garde 70% de tes ventes. Aucun frais, aucun engagement.
  
 Tu es externe? Achète uniquement les dossiers qui te conviennent, selon ton programme. Evalue chaque dossier pour les suivants. Accède à la correction, à ta note et à ton classement.
  
