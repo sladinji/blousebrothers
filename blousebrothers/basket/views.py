@@ -80,7 +80,7 @@ class BasketAddView(CoreBasketAddView):
         if test.conf.no_fees:
             fees = 0
         else:
-            fees = info.price.excl_tax * Decimal('0.1')
+            fees = info.price.excl_tax * Decimal('0.3')
             fees = fees.quantize(Decimal('0.01'), ROUND_HALF_UP)
         transfer.create(fees=Money(fees, str(transfer.debited_funds.currency)))
         if transfer.status == "FAILED":
