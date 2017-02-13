@@ -87,6 +87,7 @@ settings file. This will enable the on-the-fly less compiler.
                             {% endif %}
                             {% endif %}
                             {% if request.user.is_authenticated %}
+                            <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'pybb:index' %}"><i class="fa fa-weixin"></i> {% trans "Forum" %}</a></li>
                             <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
                             {% else %}
                             {% block connect_link %}
