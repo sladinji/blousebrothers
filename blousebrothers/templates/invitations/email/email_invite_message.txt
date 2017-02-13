@@ -6,9 +6,8 @@ Hello,
 
 {{ inviter }} t'as invité à le rejoindre sur BlouseBrothers.
 
-BlouseBrothers est une plateforme collaborative d'entrainement aux ECNi. Nous voulons remplacer les prépas ECNi trop chères par un système collaboratif plus juste !
-Il suffit de cliquer sur le lien ci-dessous, puis de crér ton compte :
-Si tu t'abonnes ton parrain va recevoir du crédit. Toi aussi tu pourras parrainer après avoir créé ton compte. Il te suffit de cliquer sur le lien ci-dessous :
+BlouseBrothers est une plateforme collaborative d'entrainement aux ECNi. 
+Nous voulons remplacer les prépas ECNi trop chères par un système collaboratif plus juste !
 
 {{ invite_url }}
 
