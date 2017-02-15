@@ -16,6 +16,7 @@ from hijack_admin.admin import HijackUserAdminMixin
 from .models import User, University
 from blousebrothers.confs.models import Conference
 
+
 class MyUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
@@ -80,6 +81,22 @@ class FinishedButNotForSaleFilter(admin.SimpleListFilter):
                                     )
 
 
+class GotCBFilter(admin.SimpleListFilter):
+    title = _("Paie sa conf")
+    parameter_name = 'serious'
+
+    def lookups(self, request, model_admin):
+        return(('CB', _("A poser sa carte")),
+               ('NOCB', _("N'a pas poser sa carte")),
+               )
+
+    def queryset(self, request, queryset):
+        if self.value() == "CB":
+            return queryset.filter(mangopay_users__mangopay_card_registrations__mangopay_card__mangopay_id__isnull=False)
+        if self.value() == "NOCB":
+            return queryset.exclude(mangopay_users__mangopay_card_registrations__mangopay_card__mangopay_id__isnull=False)
+
+
 class EditionProgressListFilter(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
     # right admin sidebar just above the filter options.
@@ -131,9 +148,9 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
     fieldsets = (
-            ('Addresse', {'fields': ('address1', 'address2', 'zip_code', 'city')}),
-            ('Profil', {'fields': ('is_conferencier', 'wanabe_conferencier',
-            'wanabe_conferencier_date', 'degree', 'mobile')}),
+        ('Addresse', {'fields': ('address1', 'address2', 'zip_code', 'city')}),
+        ('Profil', {'fields': ('is_conferencier', 'wanabe_conferencier',
+                               'wanabe_conferencier_date', 'degree', 'mobile')}),
     ) + AuthUserAdmin.fieldsets
 
     def get_queryset(self, request):
@@ -152,11 +169,11 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
         return mark_safe(html)
 
     def social_avatar(self):
-        html=""
-        if self.socialaccount_set.all() :
+        html = ""
+        if self.socialaccount_set.all():
             avatar = self.socialaccount_set.first().get_avatar_url()
             html = '<img style="width:150px;height:150px;border-radius:50%;" src="{}">'.format(avatar)
-        return mark_safe(html)
+            return mark_safe(html)
 
     list_display = ('username', social_avatar,  'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
                     'hijack_field',)
@@ -165,6 +182,6 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
                    'wanabe_conferencier', 'university', "degree", 'date_joined',
-                   EditionProgressListFilter, FinishedButNotForSaleFilter)
+                   EditionProgressListFilter, FinishedButNotForSaleFilter, GotCBFilter)
 
 admin.site.register(University)

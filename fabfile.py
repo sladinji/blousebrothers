@@ -88,7 +88,7 @@ def preproddb():
     load_last_dump(last, pre=True)
 
 
-def load_last_dump(last=None, pre=False):
+def load_last_dump(last=None, pre=False, mangoreset='yes'):
     if not last:
         backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
         last = sorted(backups)[-1]
@@ -108,7 +108,8 @@ def load_last_dump(last=None, pre=False):
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
     local("docker-compose start django")
     local("docker-compose run django ./manage.py migrate")
-    local("docker-compose run django ./manage.py mango_reset")
+    if mangoreset=='yes':
+        local("docker-compose run django ./manage.py mango_reset")
 
 
 def get_migrations():
