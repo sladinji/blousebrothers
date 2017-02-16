@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
+import logging
 
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
@@ -14,7 +15,6 @@ from django_countries.fields import CountryField
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
-from money import Money
 from invitations.models import Invitation
 
 from mangopay.models import (
@@ -26,6 +26,8 @@ from mangopay.models import (
 )
 from blousebrothers.catalogue.models import Product
 from blousebrothers.confs.models import Conference
+
+logger = logging.getLogger(__name__)
 
 AbstractUser._meta.get_field('first_name').blank = False
 AbstractUser._meta.get_field('last_name').blank = False
@@ -46,7 +48,6 @@ class User(AbstractUser):
         ('INTERNE', _('Interne')),
         ('MEDECIN', _('Médecin')),
     )
-
 
     def already_done(self, conf):
         return self.tests.filter(conf=conf)
@@ -284,12 +285,15 @@ def notify_signup(request, user, **kwargs):
     """
     send a mail to admin
     """
-    msg = email_template.format(user.name,
-                                user.email,
-                                'https://' if request.is_secure() else 'http://',
-                                request.get_host(),
-                                reverse('dashboard:user-detail',
-                                        args=(user.id,)
-                                        )
-                                )
-    mail_admins('Nouvelle inscription', msg)
+    try:
+        msg = email_template.format(user.name,
+                                    user.email,
+                                    'https://' if request.is_secure() else 'http://',
+                                    request.get_host(),
+                                    reverse('dashboard:user-detail',
+                                            args=(user.id,)
+                                            )
+                                    )
+        mail_admins('Nouvelle inscription', msg)
+    except:
+        logger.exception("Error sending email info for new inscription")

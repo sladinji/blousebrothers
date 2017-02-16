@@ -42,7 +42,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    url(r'^ecn/', include(application.urls)),
+    url(r'^$', view=allauth.account.views.SignupView.as_view(), name='home'),
+    url(r'', include(application.urls)),
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^select2/', include('django_select2.urls')),
 
@@ -60,4 +61,3 @@ if settings.DEBUG:
     ]
 
 
-urlpatterns += [url(r'^', view=allauth.account.views.SignupView.as_view(), name='home')]
