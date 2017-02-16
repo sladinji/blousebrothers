@@ -67,10 +67,6 @@ conf_app.factory('Test', ['$resource', function($resource) {
     return $resource('{% url 'confs:test_crud_view' %}', {'pk': '@pk'}, {
     });
 }]);
-conf_app.factory('TestAnswer', ['$resource', function($resource) {
-    return $resource('{% url 'confs:test_answer_crud_view' %}', {'pk': '@pk'}, {
-    });
-}]);
 conf_app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -82,7 +78,7 @@ conf_app.config(function(djangoRMIProvider) {
 });
 
 conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $timeout, $window, $location, djangoRMI,
-            Conference, ConferenceImage, Question, QuestionImage, Answer, Upload, Test, TestAnswer) {
+            Conference, ConferenceImage, Question, QuestionImage, Answer, Upload, Test) {
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
     $scope.questionimages = [];
@@ -96,10 +92,6 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
                 .then(function(result){
                     $scope.answers = result;
                     $scope.answers.length = 5;
-                });
-            TestAnswer.query({question: question.pk}).$promise
-                .then(function(result){
-                    $scope.test_answer = result;
                 });
         }
     };
