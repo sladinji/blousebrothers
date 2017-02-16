@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = [
     'meta',  # SEO
     'invitations',  # Sponsoring
     'localflavor',  # IbanField
+    'disqus', #  Forum
 ]
 
 # Apps specific for this project go here.
@@ -389,3 +390,7 @@ META_USE_SITES = True
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 INVITATIONS_INVITATION_EXPIRY = 30
+
+# DISQUS
+DISQUS_API_KEY = 'ZrL5cW1Ej4uUYOUx3kIjkK9T2m3lxp4mBHU5WdIG5WzqFmuCpgFfXHmo779whvLh'
+DISQUS_WEBSITE_SHORTNAME = 'blousebrothers'

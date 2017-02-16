@@ -179,6 +179,8 @@
     {% recently_viewed_products current_product=product %}
 
 </article><!-- End of product page -->
+{% load disqus_tags %}
+{% disqus_dev %}
 {% endblock content %}
 
 {% block extrascripts %}
