@@ -5,5 +5,4 @@ from oscar.apps.catalogue.reviews.views import CreateProductReview as CoreCreate
 class CreateProductReview(CoreCreateProductReview):
 
     def get_success_url(self):
-        return reverse("catalogue:detail", kwargs={'product_slug': self.product.slug,
-                                                   'pk': self.product.id})
+        return reverse("confs:result", kwargs={'slug': self.product.conf.slug}) +'#result'
