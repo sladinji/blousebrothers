@@ -56,7 +56,7 @@ settings file. This will enable the on-the-fly less compiler.
                     <div class="slogan">BlouseBrothers</div>
                     {% endif %}
                     <div class="collapse navbar-collapse nav-primary">
-                        <ul class="boutique-nav main-menu clone-main-menu pull-left">
+                        <ul class="boutique-nav main-menu clone-main-menu {% if not request.user.is_authenticated %} pull-right{% else%} pull-left{% endif %}">
                             <li class="menu-item-has-children item-megamenu">
                                 <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
                             </li>
@@ -90,7 +90,7 @@ settings file. This will enable the on-the-fly less compiler.
                             <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
                             {% else %}
                             {% block connect_link %}
-                            <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
+                            <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'account_login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
                             {% endblock connect_link %}
                             {% endif %}
                         </ul>

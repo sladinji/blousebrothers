@@ -5,9 +5,10 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.contrib.sitemaps.views import sitemap
+import allauth.account.views
 
 from oscar.app import application
 
@@ -19,7 +20,6 @@ sitemaps = {
 
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^$', RedirectView.as_view(url='accounts/signup', permanent=True), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^subscriptions/$', TemplateView.as_view(template_name='pages/subscription.html'), name='subscriptions'),
     url(r'^hijack/', include('hijack.urls')),
@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    url(r'', include(application.urls)),
+    url(r'^ecn/', include(application.urls)),
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^select2/', include('django_select2.urls')),
 
@@ -58,3 +58,6 @@ if settings.DEBUG:
         url(r'^404/$', default_views.page_not_found, kwargs={'exception': Exception('Page not Found')}),
         url(r'^500/$', default_views.server_error),
     ]
+
+
+urlpatterns += [url(r'^', view=allauth.account.views.SignupView.as_view(), name='home')]
