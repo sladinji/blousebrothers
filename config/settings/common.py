@@ -350,19 +350,19 @@ OSCAR_SEARCH_FACETS = {
         ('rating', {'name': _('Rating'), 'field': 'rating'}),
     ]),
     'queries': OrderedDict([
-        ('price_range',
-         {
-             'name': _('Price range'),
-             'field': 'price',
-             'queries': [
-                 # This is a list of (name, query) tuples where the name will
-                 # be displayed on the front-end.
-                 (_('0 to 20'), u'[0 TO 20]'),
-                 (_('20 to 40'), u'[20 TO 40]'),
-                 (_('40 to 60'), u'[40 TO 60]'),
-                 (_('60+'), u'[60 TO *]'),
-             ]
-         }),
+    #    ('price_range',
+    #     {
+    #         'name': _('Price range'),
+    #         'field': 'price',
+    #         'queries': [
+    #             # This is a list of (name, query) tuples where the name will
+    #             # be displayed on the front-end.
+    #             (_('0 to 20'), u'[0 TO 20]'),
+    #             (_('20 to 40'), u'[20 TO 40]'),
+    #             (_('40 to 60'), u'[40 TO 60]'),
+    #             (_('60+'), u'[60 TO *]'),
+    #         ]
+    #     }),
     ])
 }
 

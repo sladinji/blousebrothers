@@ -149,6 +149,8 @@
 
     <field name="category" type="text_en" indexed="true" stored="true" multiValued="true" />
 
+    <field name="items" type="text_en" indexed="true" stored="true" multiValued="true" />
+
     <field name="text" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
     <field name="num_in_stock_exact" type="long" indexed="true" stored="true" multiValued="false" />
