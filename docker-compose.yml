@@ -3,6 +3,7 @@ version: '2'
 volumes:
   postgres_data: {}
   postgres_backup: {}
+  solr_data: {}
 
 services:
   postgres:
@@ -20,6 +21,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - solr
     command: /gunicorn.sh
     env_file: .env
 
@@ -53,4 +55,15 @@ services:
 
   redis:
     image: redis:latest
+
+  solr:
+    image: solr
+    ports:
+     - "8983:8983"
+    volumes:
+      - solr_cfg/:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - mycore
 

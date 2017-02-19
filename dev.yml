@@ -30,8 +30,18 @@ services:
       - "8888:8888"
     links:
       - postgres
+      - solr
 
-
+  solr:
+    image: solr
+    ports:
+        - "8983:8983"
+    volumes:
+        - ./solr_cfg/:/opt/solr/server/solr/mycores
+    entrypoint:
+        - docker-entrypoint.sh
+        - solr-precreate
+        - mycore
 
 
 

@@ -95,3 +95,4 @@ django-termsandconditions
 django-meta
 django-invitations
 django-disqus
+pysolr
