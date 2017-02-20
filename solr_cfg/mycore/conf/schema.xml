@@ -145,39 +145,45 @@
     <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
 
+	<field name="upc" type="text_en" indexed="true" stored="true" multiValued="false" />
+
     <field name="price_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
+    <field name="date_created" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="suggestions" type="string" indexed="true" stored="true" multiValued="false" />
+
+    <field name="price" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="category" type="text_en" indexed="true" stored="true" multiValued="true" />
 
-    <field name="items" type="text_en" indexed="true" stored="true" multiValued="true" />
+    <field name="rating" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="conf_items" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="spe" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="title" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
     <field name="text" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
     <field name="num_in_stock_exact" type="long" indexed="true" stored="true" multiValued="false" />
 
+    <field name="product_class" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="num_in_stock" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="product_class_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
     <field name="category_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
-    <field name="upc" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="conf_items_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
-    <field name="date_created" type="date" indexed="true" stored="true" multiValued="false" />
-
-    <field name="title" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
-
-    <field name="price" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="suggestions" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="spe_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="rating_exact" type="long" indexed="true" stored="true" multiValued="false" />
 
     <field name="date_updated" type="date" indexed="true" stored="true" multiValued="false" />
-
-    <field name="num_in_stock" type="long" indexed="true" stored="true" multiValued="false" />
-
-    <field name="rating" type="long" indexed="true" stored="true" multiValued="false" />
-
-    <field name="product_class" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="product_class_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 

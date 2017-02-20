@@ -91,6 +91,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + get_core_apps(
        'blousebrothers.checkout',
        'blousebrothers.basket',
        'blousebrothers.partner',
+       'blousebrothers.search',
        ]
 )
 SITE_ID = 1
@@ -342,12 +343,16 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
         'URL': 'http://solr:8983/solr/mycore',
         'INCLUDE_SPELLING': True,
+        'EXCLUDED_INDEXES': ['oscar.apps.search.search_indexes.ProductIndex',
+                             'blousebrothers.search.search_indexes.CoreProductIndex',],
     },
 }
 OSCAR_SEARCH_FACETS = {
     'fields': OrderedDict([
         ('product_class', {'name': _('Type'), 'field': 'product_class'}),
         ('rating', {'name': _('Rating'), 'field': 'rating'}),
+        ('spe', {'name': 'Spécialité', 'field': 'spe'}),
+        ('conf_items', {'name': 'Items', 'field': 'conf_items'}),
     ]),
     'queries': OrderedDict([
     #    ('price_range',
@@ -363,7 +368,7 @@ OSCAR_SEARCH_FACETS = {
     #             (_('60+'), u'[60 TO *]'),
     #         ]
     #     }),
-    ])
+    ]),
 }
 
 OSCAR_DEFAULT_CURRENCY = 'EUR'
@@ -419,3 +424,5 @@ DISQUS_API_KEY = 'ZrL5cW1Ej4uUYOUx3kIjkK9T2m3lxp4mBHU5WdIG5WzqFmuCpgFfXHmo779whv
 DISQUS_PUBLIC_KEY = 'ZrL5cW1Ej4uUYOUx3kIjkK9T2m3lxp4mBHU5WdIG5WzqFmuCpgFfXHmo779whvLh'
 DISQUS_SECRET_KEY = 'CA69jaIVIPCWKhZH353BA0sRdkn4PyhU5Yl5Xmmc1f5bvaKmQ6lnUreaJVX0BcHu'
 DISQUS_WEBSITE_SHORTNAME = 'blousebrothers'
+
+# HAYSTACK
