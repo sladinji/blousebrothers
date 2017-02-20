@@ -35,6 +35,7 @@ def deploy():
         run("docker-compose up -d")
         run("docker-compose run django ./manage.py migrate")
         run("docker-compose run django ./manage.py cgu_sync")
+        run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
 @hosts('dowst@futur.blousebrothers.fr')
@@ -59,6 +60,7 @@ def futur(branch='master',reset='no'):
             if reset == 'yes':
                 run("fab proddb")
             run("docker-compose run django ./manage.py cgu_sync")
+            run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
 def proddb(pre=False):

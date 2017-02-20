@@ -57,11 +57,11 @@ services:
     image: redis:latest
 
   solr:
-    image: solr:6
+    image: ./compose/solr
     ports:
      - "8983:8983"
     volumes:
-      - solr_cfg/:/opt/solr/server/solr/mycores
+      - solr_data:/opt/solr/server/solr/mycores/data
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate

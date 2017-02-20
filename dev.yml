@@ -3,6 +3,7 @@ version: '2'
 volumes:
   postgres_data_dev: {}
   postgres_backup_dev: {}
+  solr_data_dev: {}
 
 services:
   postgres:
@@ -33,11 +34,11 @@ services:
       - solr
 
   solr:
-    image: solr:6
+    build: ./compose/solr
     ports:
         - "8983:8983"
     volumes:
-        - ./solr_cfg/:/opt/solr/server/solr/mycores
+        - solr_data_dev:/opt/solr/server/solr/mycores/mycore/data
     entrypoint:
         - docker-entrypoint.sh
         - solr-precreate
