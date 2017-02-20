@@ -8912,7 +8912,13 @@ msgid_plural ""
 "                    Found <strong>%(num_results)s</strong> results. \n"
 "                "
 msgstr[0] ""
+"\n"
+"                   <strong>%(num_results)s</strong> résultat trouvé.\n"
+"                "
 msgstr[1] ""
+"\n"
+"<strong>%(num_results)s</strong> résultats trouvés. \n"
+"                "
 
 #: templates/oscar/search/results.html:69
 msgid "Found <strong>0</strong> results."
