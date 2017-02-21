@@ -1,0 +1,6 @@
+{% if object.conf %}
+{{ object.conf.get_all_txt | safe }}
+{% else %}
+{{ object.title }}
+{{ object.description|default:"" }}
+{% endif %}

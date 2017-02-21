@@ -26,3 +26,11 @@ class ProductIndex(CoreProductIndex):
         if not obj.conf:
             return
         return [spe.name for spe in obj.conf.specialities.all()]
+
+    def prepare(self, obj):
+        prepared_data = super(ProductIndex, self).prepare(obj)
+
+        # Use title to for spelling suggestions
+        prepared_data['suggestions'] = prepared_data['title']
+
+        return prepared_data
