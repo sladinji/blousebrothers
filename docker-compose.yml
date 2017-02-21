@@ -57,7 +57,7 @@ services:
     image: redis:latest
 
   solr:
-    image: ./compose/solr
+    build: ./compose/solr
     ports:
      - "8983:8983"
     volumes:
