@@ -3,6 +3,17 @@ from haystack import indexes
 
 
 class ProductIndex(CoreProductIndex):
+    """
+    When ProductIndex is modifed, you need to update solr schema.xml by running :
+
+    $> ./manage.py build_solr_schema
+
+    Then you need to sync compose/solr/solr_cfg/mycore/conf/schema.xml with new output.
+    But just add the new items, not all the differences !
+    In fact you can only just edit existing schema. And then rebuild index :
+
+    $> ./manage.py rebuild_index --noinput
+    """
     conf_items = indexes.MultiValueField(null=True, faceted=True)
     spe = indexes.MultiValueField(null=True, faceted=True)
 
