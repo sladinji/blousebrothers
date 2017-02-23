@@ -1,14 +1,18 @@
+from datetime import datetime
+
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import Permission
+from django.utils.decorators import method_decorator
+from django.core.mail import mail_admins
 from termsandconditions.decorators import terms_required
 
-
 from blousebrothers.confs.models import Conference, Question, Answer, Test
-from django.utils.decorators import method_decorator
+from blousebrothers.tools import get_full_url
 
 
 @method_decorator(terms_required, name='dispatch')
@@ -16,35 +20,46 @@ class BBLoginRequiredMixin(LoginRequiredMixin):
     login_url = '/accounts/login/'
 
 
-class BBRequirementMixin(BBLoginRequiredMixin):
-    """
-    User has to give some info to access.
-    """
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.gave_all_required_info:
-            messages.error(self.request, "Pour être conférencier, il suffit de compléter le formulaire ci-dessous. C'est gratuit et sans engagement.")
-            return redirect("users:update")
-        else:
-            return super().get(request, *args, **kwargs)
-
-
-class BBConferencierReqMixin(BBLoginRequiredMixin):
+class BBConferencierReqMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     """
     User has to be a conferencier to access.
     """
 
-    def get(self, request, *args, **kwargs):
-        user = request.user
-        if user.is_superuser:
-            return super().get(request, *args, **kwargs)
-        if not user.gave_all_required_info:
-            messages.error(self.request, "Pour être conférencier, il suffit de compléter le formulaire ci-dessous. C'est gratuit et sans engagement")
-            return redirect("users:update")
+    email_template = '''
+    -Nom : {}
+    -Email : {}
+    -Lien : {}'''
+
+    def check_conferencier(self, user):
         if not user.is_conferencier:
-            return redirect("confs:wanabe_conferencier")
-        else:
-            return super().get(request, *args, **kwargs)
+            user.is_conferencier = True
+            user.wanabe_conferencier = False
+            user.wanabe_conferencier_date = datetime.now()
+            permission = Permission.objects.get(name='Can add conference')
+            user.user_permissions.add(permission)
+            user.save()
+            msg = self.email_template.format(
+                user.name,
+                user.email,
+                get_full_url(self.request, 'admin:users_user_change', args=(user.id,))
+            )
+            mail_admins('Passage conférencier', msg)
+
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        if not self.request.user.gave_all_required_info:
+            return False
+        self.check_conferencier(self.request.user)
+        return True
+
+    def handle_no_permission(self):
+        messages.warning(self.request,
+                         _("Avant de pouvoir publier une conférence, merci de compléter le formulaire ci-dessous. "
+                           "Ces informations sont nécessaires pour activer ton compte. "
+                           "C'est gratuit et sans engagement")
+                         )
+        return redirect("users:update")
 
 
 class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
@@ -64,7 +79,7 @@ class MangoPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     Check if user gave all info to deal with mangopay.
     """
 
-    msg_access_denied = 'Merci de compléter le formulaire ci-dessous pour pouvoir créditer ton compte.'
+    msg_access_denied = _('Merci de compléter le formulaire ci-dessous pour pouvoir créditer ton compte.')
 
     def test_func(self):
         return self.request.user.gave_all_mangopay_info
@@ -81,30 +96,29 @@ class CanAddConfPermission(PermissionRequiredMixin):
     permission_required = ['confs.add_conference']
 
 
-class IsConfOwner(UserPassesTestMixin):
+class IsConfOwner(BBConferencierReqMixin):
     """
     User is conf owner, root.
     """
     def test_func(self):
+        if not super().test_func():
+            return False
         if self.request.user.is_superuser:
             return True
         self.object = self.get_object()
         return self.object.owner == self.request.user
 
 
-class ConferenceReadPermissionMixin(BBLoginRequiredMixin, IsConfOwner):
+class ConferenceReadPermissionMixin(IsConfOwner):
     """
     Access granted if user is_conferencier or (no add_conference required)
     """
 
 
-class ConferenceWritePermissionMixin(BBLoginRequiredMixin, IsConfOwner):
+class ConferenceWritePermissionMixin(IsConfOwner):
     """
     Check if user is conference's owner and has add_conference permission
     """
-
-    def handle_no_permission(self):
-        raise PermissionDenied
 
 
 class StudentConferencePermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):

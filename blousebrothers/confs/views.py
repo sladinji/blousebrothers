@@ -7,14 +7,11 @@ import logging
 from django.contrib import messages
 from django.apps import apps
 from django.core.mail import mail_admins
-from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.models import Permission
 from django.views.generic import (
     DetailView,
     ListView,
@@ -23,7 +20,6 @@ from django.views.generic import (
     FormView,
     DeleteView,
 )
-from django.contrib.auth.mixins import UserPassesTestMixin
 
 from blousebrothers.auth import (
     BBConferencierReqMixin,
@@ -263,34 +259,6 @@ class ConferenceEditView(ConferenceWritePermissionMixin, BBConferencierReqMixin,
                        kwargs={'slug': self.object.slug})
 
 
-class HandleConferencierRequest(LoginRequiredMixin, TemplateView):
-    email_template = '''
-Nom : {}
-Email : {}
-Lien : {}'''
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_conferencier:
-            request.user.is_conferencier = True
-            request.user.wanabe_conferencier = False
-            request.user.wanabe_conferencier_date = datetime.now()
-            permission = Permission.objects.get(name='Can add conference')
-            request.user.user_permissions.add(permission)
-            request.user.save()
-            msg = self.email_template.format(
-                request.user.name,
-                request.user.email,
-                get_full_url(request, 'admin:users_user_change', args=(request.user.id,))
-            )
-            logger.info(msg)
-            mail_admins('Passage conférencier', msg)
-        return redirect(
-                reverse('confs:create')
-            )
-
-        return render(request, 'confs/wanabe_conferencier.html')
-
-
 class BuyedConferenceListView(LoginRequiredMixin, ListView):
     model = Test
     # These next two lines tell the view to index lookups by conf
@@ -356,7 +324,7 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         ta = TestAnswer.objects.get(test=test, question=question)
 
         ta.given_answers = ','.join([str(answer['index']) for answer in answers if answer['correct']])
-        if not ta.given_answers :
+        if not ta.given_answers:
             raise Exception("NO ANSWER GIVEN")
         if test.time_taken:
             last_time = test.time_taken.hour * 3600 + test.time_taken.minute * 60 + test.time_taken.second
@@ -368,7 +336,7 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         test.time_taken = time_taken
         test.progress = test.answers.exclude(given_answers='').count()/test.answers.count() * 100
         test.save()
-        return {'success' : True}
+        return {'success': True}
 
 
 class TestResult(TestPermissionMixin, DetailView):

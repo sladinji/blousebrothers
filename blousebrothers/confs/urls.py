@@ -75,10 +75,6 @@ urlpatterns = [
         view=views.ConferenceEditView.as_view(),
         name='edit'
     ),
-    url(r'^wanabe_conferencier/?$',
-        views.HandleConferencierRequest.as_view(),
-        name='wanabe_conferencier'),
-
     url(r'^gottowork/?$',
         views.BuyedConferenceListView.as_view(),
         name='my_confs'),
