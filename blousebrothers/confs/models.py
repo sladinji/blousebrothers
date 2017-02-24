@@ -80,7 +80,7 @@ class Conference(ModelMeta, models.Model):
                                           blank=True)
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
-                                default=Decimal(0.50),
+                                default=Decimal(1.00),
                                 help_text=mark_safe(
                                     _(""))
                                 )
@@ -150,7 +150,7 @@ class Conference(ModelMeta, models.Model):
         author = Author()
 
         for provider in ["google", "facebook"]:
-            try :
+            try:
                 author.fb_url = self.owner.socialaccount_set.get(provider=provider).extra_data["link"]
                 author.full_name = self.owner.socialaccount_set.get(provider=provider).extra_data["name"]
                 break
