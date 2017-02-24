@@ -8,9 +8,9 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.contrib.sitemaps.views import sitemap
-import allauth.account.views
-
 from oscar.app import application
+
+import blousebrothers.users.views
 
 from .sitemaps import StaticViewSitemap
 
@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    url(r'^$', view=allauth.account.views.SignupView.as_view(), name='home'),
+    url(r'^$', view=blousebrothers.users.views.SignupView.as_view(), name='home'),
     url(r'', include(application.urls)),
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^select2/', include('django_select2.urls')),

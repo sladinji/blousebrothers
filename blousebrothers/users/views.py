@@ -13,6 +13,9 @@ from django.db.utils import IntegrityError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from invitations.models import Invitation
+from meta.views import MetadataMixin
+import allauth.account.views
+
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 
 from .models import User
@@ -302,3 +305,10 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
             request.basket.add_product(sub, 1)
             return redirect('/basket/')
         return super().get(request, *args, **kwargs)
+
+
+class SignupView(MetadataMixin, allauth.account.views.SignupView):
+    title = 'BlouseBrothers prépa ECNi collaborative'
+    description = """Plateforme collaborative d'entraînement aux ECNi. Etudiant: n'achète que les dossiers dont tu as
+    besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:
+    dépose tes dossiers et garde 70% des gains."""

@@ -409,9 +409,12 @@ TERMS_EXCLUDE_URL_LIST = {'/', '/terms/required/', '/logout/', '/login/', '/cgu/
 TERMS_EXCLUDE_URL_PREFIX_LIST = {'/catfish/', '/admin/', '/dashboard'}
 
 # SEO
-META_INCLUDE_KEYWORDS = ["ecni", "iecn", "ecn", "dossier clinique progressif", "dossiers cliniques progressifs",
+META_INCLUDE_KEYWORDS = ["Entraînement aux ECN", "préparation en ligne aux ECNi",  "ecni", "iecn", "ecn", "prépa ecn",
+                         "prépa ECNi", "préparation ECN", "boite de confs",
+                         "dossier clinique progressif", "dossiers cliniques progressifs",
                          "question isolée", "questions isolées", "lca", "lecture critique d'articles",
                          "lecture critique d'article", "Epreuves Classantes Nationales", "examen classant national",
+                         "blouse brother", "blouse brothers", "blouses brothers",
                          "conférences"]
 META_SITE_PROTOCOL = 'https'
 META_USE_SITES = True
