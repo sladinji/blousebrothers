@@ -24,7 +24,9 @@
     </aside>
     <div id="subject" class="col-md-9" >
         <div class="tabbable dashboard col-md-12">
+            <div class="space"></div>
             <h1>Félicitations, c'est presque terminé !</h1>
+            <div class="space"></div>
             {% if object.type != 'LCA' %}
                 {% if items %}
                 Voici une liste d'items pouvant correspondre au {{object.type}} "<strong>{{object.title}}</strong>" :
@@ -71,6 +73,7 @@
                     </div>
                 </div>
             </form>
+            <i>Ta conférence sera accessible sur le catalogue dans quelques minutes. Tu peux égalemnt la retirer à tout moment.</i>
         </div>
     </div>
 </div>
