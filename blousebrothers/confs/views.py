@@ -302,7 +302,10 @@ class TestUpdateView(TestPermissionMixin, JSONResponseMixin, UpdateView):
         TestAnswers are created here, when user starts his test.
         """
         conf = Conference.objects.get(slug=self.kwargs['slug'])
-        test = Test.objects.get(conf=conf, student=self.request.user)
+        if conf.owner.username == "BlouseBrothers":
+            test, __ = Test.objects.get_or_create(conf=conf, student=self.request.user)
+        else:
+            test = Test.objects.get(conf=conf, student=self.request.user)
         if not test.answers.count():
             for question in conf.questions.all():
                 TestAnswer.objects.create(question=question, test=test)

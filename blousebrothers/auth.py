@@ -70,8 +70,14 @@ class TestPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         if self.request.user.is_superuser:
             return True
-        self.object = self.get_object()
+        try:
+            self.object = self.get_object()
+        except:
+            return False
         return self.object.student == self.request.user
+
+    def handle_no_permission(self):
+        return redirect("catalogue:index")
 
 
 class MangoPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
