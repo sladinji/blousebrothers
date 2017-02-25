@@ -20,7 +20,7 @@ def balance(request):
     try:
         return {'balance': request.user.wallet.balance() + request.user.wallet_bonus.balance()}
     except:
-        return {'balance': mark_safe('<span style="color:orange;">Activer porte-monnaie</span>')}
+        return {'balance': mark_safe('<span style="color:orange;">Activer mon compte</span>')}
 
 
 def invit_form(request):
