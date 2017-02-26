@@ -4,6 +4,8 @@
 {% load hijack_tags %}
 {% load analytical %}
 {% load google_analytics %}
+{% load piwik %}
+
 {% load meta %}
 
 <!DOCTYPE html>
@@ -98,6 +100,7 @@
 
         {# Page meta-data - this is populated by the 'metadata' template context processor #}
         <!-- {% trans "Version:" %} {{ version }} -->
-	{% analytical_body_bottom %}
+        {% piwik %}
+        {% analytical_body_bottom %}
     </body>
 </html>
