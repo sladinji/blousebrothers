@@ -255,7 +255,7 @@ class User(AbstractUser):
 class Sale(models.Model):
     conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sales')
     conf = models.ForeignKey(Conference, on_delete=models.SET_NULL, related_name='sales', null=True)
-    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="purchases")
     transfer = models.ForeignKey(MangoPayTransfer, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='sales')
     credited_funds = MoneyField(default=0, default_currency="EUR",
