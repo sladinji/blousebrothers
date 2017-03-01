@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load activeurl %}
 
+<div class="space12"></div> <!-- 40px Vertical Spacing -->
 {% activeurl %}
 <div class="submenu">
   <ul>
@@ -9,7 +10,7 @@
 	{% if object %}
        	<a href="{% url 'confs:edit' object.slug %}">
 	{% endif %}
-	       	{% trans "Choix du type de sujet" %}
+	       	{% trans "Type de sujet" %}
 	{% if object %}
 	</a>
 	{% endif %}
@@ -20,7 +21,7 @@
 	{% if object %}
 	<a href="{% url 'confs:update' object.slug %}">
 	{% endif %}
-	       	{% trans "Rédaction des questions" %}
+	       	{% trans "Rédaction" %}
 	{% if object %}
 	</a>
 	{% endif %}
@@ -35,11 +36,11 @@
 	{% endverbatim %}
        	  <a href="{% url 'confs:final' object.slug %}">
 	{% verbatim %}
-	    <span class="numtip">3</span> Finalisation {{ conference.edition_progress | number : 0 }}%
+	    <span class="numtip">3</span> Fin {{ conference.edition_progress | number : 0 }}%
 	  </a>
 	</div>
 	<div ng-if="conference.edition_progress != 100">
-	  <span class="numtip">3</span> Finalisation {{ conference.edition_progress | number : 0 }}%
+	  <span class="numtip">3</span> Fin {{ conference.edition_progress | number : 0 }}%
 	</div>
 	{% endverbatim %}
 	{% else %}
@@ -48,7 +49,7 @@
 		<span class="numtip">3</span> Finalisation {{ object.edition_progress }}%
 	</a>
 	{% else %}
-	<span class="numtip">3</span> Finalisation 
+	<span class="numtip">3</span> Fin 
 	{% endif %}
 	{% endif %}
     </li>

@@ -16,7 +16,7 @@
 <head>
 	{% analytical_head_top %}
         <title>{% if display_version %}[{% trans "Build" %} {{ version }}] {% endif %}{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.7, user-scalable=no">
         {% include 'meta/meta.html' %}
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="created" content="{% now "jS M Y h:i" %}" />
