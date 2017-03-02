@@ -400,6 +400,7 @@ ANALYTICAL_INTERNAL_IPS = ["109.190.133.24",
                            "37.164.62.208",
                            "37.165.35.50",
                            "82.235.89.141",
+                           "212.234.238.49",
                            ]
 
 STRIPE_CHARGE_AND_CAPTURE_IN_ONE_STEP = True
