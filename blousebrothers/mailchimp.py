@@ -52,11 +52,14 @@ def sync(qs=None, name='BlouseBrothers'):
     for user in qs:
         needs_comment = "no"
         last_test = user.tests.last()
-        if last_test and not last_test.has_review():
-            product = last_test.conf.products.first()
-            needs_comment = reverse('catalogue:reviews-add', kwargs={
-                    'product_slug': product.slug, 'product_pk': product.id}
-                )
+        try:
+            if last_test and not last_test.has_review() and last_test.conf.owner != user:
+                product = last_test.conf.products.first()
+                needs_comment = reverse('catalogue:reviews-add', kwargs={
+                        'product_slug': product.slug, 'product_pk': product.id}
+                    )
+        except Exception as ex:
+            print(ex)
 
         merge_fields = {
             'FNAME': user.first_name,
