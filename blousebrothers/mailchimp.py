@@ -2,6 +2,7 @@ import hashlib
 from datetime import datetime, timedelta
 from mailchimp3 import MailChimp
 from blousebrothers.users.models import User
+from django.core.urlresolvers import reverse
 
 # MailChimp clien API
 
@@ -35,6 +36,7 @@ tags = {
     "nom conf entamee recente": "MMERGE18",
     "nombre jours depuis dernier achat": "MMERGE6",
     "MANGO_PAY": "MMERGE19",
+    "needs_comment": "MMERGE20",
 }
 
 
@@ -48,6 +50,14 @@ def sync(qs=None, name='BlouseBrothers'):
     if not qs:
         qs = User.objects.all()
     for user in qs:
+        needs_comment = "no"
+        last_test = user.tests.last()
+        if last_test and not last_test.has_review():
+            product = last_test.conf.products.first()
+            needs_comment = reverse('catalogue:reviews-add', kwargs={
+                    'product_slug': product.slug, 'product_pk': product.id}
+                )
+
         merge_fields = {
             'FNAME': user.first_name,
             'LNAME': user.last_name,
@@ -57,6 +67,7 @@ def sync(qs=None, name='BlouseBrothers'):
             tags["nombre ventes total"]: user.sales.count(),
             tags["nombre achats total"]: user.purchases.count(),
             tags["MANGO_PAY"]: 'OK' if user.gave_all_mangopay_info else 'NOK',
+            tags["needs_comment"]: needs_comment,
         }
         print(merge_fields)
 
