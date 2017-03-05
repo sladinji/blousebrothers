@@ -1,25 +1,27 @@
 {% load i18n bbtricks %}
-<dl>
-    <dt class="nav-header">{{ name }}</dt>
-    {% for item in items|sort_items %}
+<dt type="button" class="nav-header" data-toggle="collapse" data-target="#nav-items-{{name}}"><i class="fa fa-bars"></i> {{ name }}</dt><br>
+<div class="navbar-collapse collapse" id="nav-items-{{name}}">
+    <dl>
+        {% for item in items|sort_items %}
         <dd>
-            {% if item.selected %}
-                <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
-                <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.deselect_url }}" />
-                <strong>{{ item.name }}</strong>
-            {% else %}
-                {% if item.disabled %}
-                    <input type="checkbox" name="{{ item.name }}" disabled />
-                    {{ item.name }}
-                {% else %}
-                    <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
-                    <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.select_url }}" />
-                    <a href="{{ item.select_url }}">{{ item.name }}</a>
-                {% endif %}
-            {% endif %}
-            {% if item.show_count %}
-                ({{ item.count }})
-            {% endif %}
+        {% if item.selected %}
+        <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
+        <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.deselect_url }}" />
+        <strong>{{ item.name }}</strong>
+        {% else %}
+        {% if item.disabled %}
+        <input type="checkbox" name="{{ item.name }}" disabled />
+        {{ item.name }}
+        {% else %}
+        <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
+        <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.select_url }}" />
+        <a href="{{ item.select_url }}">{{ item.name }}</a>
+        {% endif %}
+        {% endif %}
+        {% if item.show_count %}
+        ({{ item.count }})
+        {% endif %}
         </dd>
-    {% endfor %}
-</dl>
+        {% endfor %}
+    </dl>
+</div>

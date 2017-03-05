@@ -25,6 +25,7 @@
 {% endblock breadcrumbs %}
 
 {% block column_left %}
+    {% comment %}
     {% category_tree as tree_categories %}
     {% if tree_categories %}
         <h4>{% trans "Show results for" %}</h4>
@@ -50,6 +51,7 @@
             </ul>
         </div>
     {% endif %}
+    {% endcomment %}
     
     <section id="pricing">
         {% include "partials/sponsor_form.html" %}
