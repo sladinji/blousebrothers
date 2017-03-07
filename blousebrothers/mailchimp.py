@@ -64,12 +64,12 @@ def sync(qs=None, name='BlouseBrothers'):
         merge_fields = {
             'FNAME': user.first_name,
             'LNAME': user.last_name,
-            tags['ville']: user.university.name if user.university else '',
+            tags['ville']: user.university.name if user.university else None,
             tags['pseudo']: user.username,
-            tags['is_conferencier']: 'yes' if user.is_conferencier else 'no',
+            tags['is_conferencier']: 'yes' if user.is_conferencier else None,
             tags["nombre ventes total"]: user.sales.count(),
             tags["nombre achats total"]: user.purchases.count(),
-            tags["MANGO_PAY"]: 'OK' if user.gave_all_mangopay_info else 'NOK',
+            tags["MANGO_PAY"]: 'OK' if user.gave_all_mangopay_info else None,
             tags["needs_comment"]: needs_comment,
         }
         print(merge_fields)
