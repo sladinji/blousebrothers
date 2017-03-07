@@ -58,8 +58,6 @@ services:
 
   solr:
     build: ./compose/solr
-    ports:
-     - "8983:8983"
     volumes:
       - solr_data:/opt/solr/server/solr/mycores/data
     entrypoint:
