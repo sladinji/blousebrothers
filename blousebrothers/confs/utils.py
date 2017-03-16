@@ -20,10 +20,9 @@ def create_product(conf):
                                                              requires_shipping=False,
                                                              track_stock=False)
     # Now we got all we need to create product
-    prod, _ = Product.objects.get_or_create(structure=Product.STANDALONE,
-                                            title=conf.title,
-                                            product_class=prod_class,
-                                            )
+    prod, _ = Product.objects.get_or_create(structure=Product.STANDALONE, conf=conf)
+    prod.title = conf.title
+    prod.product_class = prod_class
     prod.description = conf.summary
     if conf.statement:
         prod.description += '\n' + conf.statement[:200] + "..."
