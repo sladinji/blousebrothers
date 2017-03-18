@@ -185,7 +185,7 @@ class ConferenceImage(models.Model):
     image = ImageCropField(_("Image"), upload_to=conf_directory_path, max_length=255,)
     cropping = ImageRatioField('image', '430x360', free_crop=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
-    caption = models.CharField(_("Légende"), max_length=200, blank=True)
+    caption = models.CharField(_("Légende"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     conf = models.ForeignKey('Conference', related_name='images')
 
@@ -282,7 +282,7 @@ class AnswerImage(models.Model):
     image = ImageCropField(_("Image"), upload_to=answer_image_directory_path, max_length=255,)
     cropping = ImageRatioField('image', '430x360', free_crop=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
-    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    caption = models.CharField(_("Libellé"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     answer = models.ForeignKey('Answer', related_name='images')
 
@@ -302,7 +302,7 @@ class QuestionImage(models.Model):
     image = ImageCropField(_("Image"), upload_to=question_image_directory_path, max_length=255,)
     cropping = ImageRatioField('image', '430x360', free_crop=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
-    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    caption = models.CharField(_("Libellé"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     question = models.ForeignKey('Question', related_name='images')
 
@@ -311,7 +311,7 @@ class QuestionExplainationImage(models.Model):
     image = ImageCropField(_("Image"), upload_to=question_image_directory_path, max_length=255,)
     cropping = ImageRatioField('image', '430x360', free_crop=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
-    caption = models.CharField(_("Libellé"), max_length=200, blank=True)
+    caption = models.CharField(_("Libellé"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     question = models.ForeignKey('Question', related_name='explaination_images')
 
