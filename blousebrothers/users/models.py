@@ -159,7 +159,8 @@ class User(AbstractUser):
             mangopay_user=self.mangopay_user,
             description=description
         )
-        if w_created:
+        # Sychronize with MangoPay
+        if w_created or not wallet.mangopay_id:
             wallet.mangopay_user = self.mangopay_user
             wallet.create(description=description)
         return wallet
