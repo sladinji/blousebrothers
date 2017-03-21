@@ -13,6 +13,7 @@ class BrowsableProductManager(BaseBrowsableProductManager):
         """
         qs = super().get_queryset()
         qs = qs.exclude(conf__deleted=True)
+        qs = qs.exclude(conf__for_sale=False)
         user = CuserMiddleware.get_user()
         if not user or not user.is_staff:
             qs = qs.exclude(product_class__name='Abonnements')

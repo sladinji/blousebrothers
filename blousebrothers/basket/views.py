@@ -111,7 +111,10 @@ class BasketAddView(CoreBasketAddView):
             )
 
     def get_success_url(self, product=None):
-        return reverse('confs:test', kwargs={"slug": product.conf.slug})
+        if product and product.conf :
+            return reverse('confs:test', kwargs={"slug": product.conf.slug})
+        else:
+            return super().get_success_url(product)
 
     def redirect_success(self, form):
         messages.success(self.request, self.get_success_message(form),
