@@ -179,6 +179,14 @@
     {% recently_viewed_products current_product=product %}
 
 </article><!-- End of product page -->
+{% if product.conf %}
+{% load disqus_tags %}
+{% set_disqus_identifier "result_" product.conf.slug %}
+{% disqus_dev %}
+{% disqus_sso %}
+{% set_disqus_developer 1 %}
+{% disqus_show_comments %}
+{% endif %}
 {% endblock content %}
 
 {% block extrascripts %}
