@@ -39,7 +39,8 @@ tags = {
     "MANGO_PAY": "MMERGE19",
     "needs_comment": "MMERGE20",
     "6w_since_last_buy": "MMERGE21",
-    "wallet_bonus": "MERGE22",
+    "wallet_bonus": "MMERGE22",
+    "ping_10mn": "MMERGE23",
 }
 
 
@@ -117,8 +118,11 @@ def sync(qs=None, name='BlouseBrothers'):
             tags["3w_since_last_buy"]: no_buy_since(user, 21),
             tags["6w_since_last_buy"]: no_buy_since(user, 42),
             tags["nombre jours depuis dernier achat"]: days_since_last_purchase(user),
+            tags["ping_10mn"]: 'no' if datetime.now() - user.date_joined.replace(tzinfo=None) < timedelta(minutes=10) else 'yes',
+
         }
         print(merge_fields)
+        print(merge_fields['MMERGE23'])
 
         try:
             client.lists.members.create_or_update(
