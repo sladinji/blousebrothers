@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load bbtricks %}
 {% load currency_filters %}
+{% load disqus_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block content %}
@@ -54,8 +55,11 @@
 						<em>Cette semaine</em>
 					</li>
 					<li class="stat col-md-3 col-sm-3 col-xs-6">
-						<span><b class="value">{{ conference | today_sales }}</b><br> Achats</span>
-						<em>Aujourd'hui</em>
+						<span><b class="value"><a href="{{ conference.products.first.get_absolute_url }}#disqus_thread" data-disqus-identifier="result_{{ conference.slug }}">Pas de commentaire</a>
+                        {% disqus_num_replies %}
+</b></span>
+                        
+						<em>Sur le forum</em>
 					</li>
 					<li class="stat col-md-3 col-sm-3 col-xs-6">
 						<span><b class="value">{{ conference | month_revenu | default:0 | currency }}</b><br> Revenus</span>
