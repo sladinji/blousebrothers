@@ -66,18 +66,15 @@ def days_since_last_purchase(user):
 def sync(qs=None, name='BlouseBrothers'):
     if not qs:
         qs = User.objects.all()
+    now = datetime.now()
     for user in qs:
         # ACHATS DES 30 DERNIERS JOURS
-        purchase30 = user.purchases.filter(
-            create_timestamp__gt=datetime.now() - timedelta(days=30)
-        ).count()
+        purchase30 = user.purchases.filter(create_timestamp__gt=now - timedelta(days=30)).count()
         # VENTES DES 30 DERNIERS JOURS
-        sales30 = user.sales.filter(
-            create_timestamp__gt=datetime.now() - timedelta(days=30)
-        ).count()
+        sales30 = user.sales.filter(create_timestamp__gt=now - timedelta(days=30)).count()
         #  GAINS DES 30 DERNIERS JOURS
         won30 = user.sales.filter(
-            create_timestamp__gt=datetime.now() - timedelta(days=10)
+            create_timestamp__gt=now - timedelta(days=10)
         ).aggregate(won=Sum('credited_funds'))['won']
         # DERNIER TEST COMMENTÉ ?
         needs_comment = None
@@ -118,11 +115,11 @@ def sync(qs=None, name='BlouseBrothers'):
             tags["3w_since_last_buy"]: no_buy_since(user, 21),
             tags["6w_since_last_buy"]: no_buy_since(user, 42),
             tags["nombre jours depuis dernier achat"]: days_since_last_purchase(user),
-            tags["ping_10mn"]: 'no' if datetime.now() - user.date_joined.replace(tzinfo=None) < timedelta(minutes=10) else 'yes',
+            tags["ping_10mn"]: 'no' if now - user.date_joined.replace(tzinfo=None) < timedelta(minutes=10) else 'yes',
 
         }
+        merge_fields = {k: v for k, v in merge_fields.items() if v}
         print(merge_fields)
-        print(merge_fields['MMERGE23'])
 
         try:
             client.lists.members.create_or_update(
