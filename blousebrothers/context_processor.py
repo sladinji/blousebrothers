@@ -4,6 +4,7 @@ from blousebrothers.users.forms import EmailInvitationForm
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
+invit_form = EmailInvitationForm()
 
 
 def subscriptions(request):
@@ -24,4 +25,11 @@ def balance(request):
 
 
 def invit_form(request):
-    return {'invit_form': EmailInvitationForm()}
+    """
+    Invit form is included in man views. It can be updated (required field missing...) so
+    we use global var and reset it before return.
+    """
+    global invit_form
+    ret = {'invit_form': invit_form}
+    invit_form = EmailInvitationForm()
+    return ret

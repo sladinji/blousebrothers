@@ -17,6 +17,7 @@ from meta.views import MetadataMixin
 import allauth.account.views
 
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
+import blousebrothers.context_processor
 
 from .models import User
 from .forms import (
@@ -96,6 +97,10 @@ class UserSendInvidation(BBLoginRequiredMixin, FormView):
 
     def get_success_url(self):
         return self.request.POST['current_url']
+
+    def form_invalid(self, form):
+        blousebrothers.context_processor.invit_form = form
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
 
 
 class Needs3DS(Exception):

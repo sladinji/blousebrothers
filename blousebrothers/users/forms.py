@@ -58,7 +58,7 @@ class IbanForm(forms.Form):
 
 
 class EmailInvitationForm(forms.Form):
-    email = forms.EmailField(label=_('Email de ton filleul'))
+    email = forms.EmailField(label=_('Email de ton filleul'), required=True)
 
 
 class CardRegistrationForm(forms.Form):
