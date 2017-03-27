@@ -21,7 +21,4 @@
 {% else %}
     <p class="price_color">&nbsp;</p>
 {% endif %}
-{% if product.conf %}
-<p class="author_name">  <a href="{% url 'users:detail' product.conf.owner.username %}">{{ product.conf.owner.username}}</a></p>
-{% endif %}
 

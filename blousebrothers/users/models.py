@@ -183,6 +183,10 @@ class User(AbstractUser):
         if subs:
             return subs[0]
 
+    @property
+    def products(self):
+        return Product.objects.filter(conf__owner=self)
+
     def give_bonus(self, amount):
         bb = User.objects.get(username="BlouseBrothers")
         transfer = MangoPayTransfer()

@@ -19,6 +19,9 @@
             {% include 'confs/partials/test_result.html' %}
             {% endif %}
         </div>
+        <div id="result">
+        {% include 'confs/partials/test_result.html' with object=object %}
+        </div>
         <div class="text-center">
             <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
                 {% csrf_token %}
@@ -110,9 +113,6 @@
             <a class="commenting btn btn-getscore" data-toggle="modal" data-target="#thxModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Remercier le conférencier</a>
         </div>
         {% endcomment %}
-        <div id="result">
-        {% include 'confs/partials/test_result.html' with object=object %}
-        </div>
     </div>
     <!-- End Action buttons -->
 </div>

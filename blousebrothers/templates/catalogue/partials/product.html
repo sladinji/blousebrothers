@@ -5,50 +5,50 @@
 {% load staticfiles %}
 
 {% block product %}
-    <article class="product_pod">
-	<a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
-    {% block product_title %}
+<article class="product_pod">
+    <a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
+        {% block product_title %}
         <h3>{{ product.get_title }}</h3>
-    {% endblock %}
-    {% block product_image %}
-	{% if product.conf %}
-            <div class="image_container">
-	    {{ product.conf.summary }}
-	    </div>
-	{% else %}
-            <div class="image_container">
-                {% with image=product.primary_image %}
-                    {% thumbnail image.original "x155" upscale=False as thumb %}
-                    <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="thumbnail"></a>
-                    {% endthumbnail %}
-                {% endwith %}
-            </div>
-	{% endif %}
         {% endblock %}
-
-	    <p class="icono"><i>Icono : {{ product.conf.icono }} images</i></p>
+        {% block product_image %}
+        {% if product.conf %}
+        <div class="image_container">
+            {{ product.conf.summary }}
+        </div>
+        {% else %}
+        <div class="image_container">
+            {% with image=product.primary_image %}
+            {% thumbnail image.original "x155" upscale=False as thumb %}
+            <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="thumbnail"></a>
+            {% endthumbnail %}
+            {% endwith %}
+        </div>
+        {% endif %}
+        {% endblock %}
         {% block product_review %}
-            {% iffeature "reviews" %}
-                <p class="star-rating {{ product.rating|as_stars }}">
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                </p>
-            {% endiffeature %}
+        {% iffeature "reviews" %}
+        <p class="star-rating {{ product.rating|as_stars }}">
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        <i class="icon-star"></i>
+        </p>
+        {% endiffeature %}
         {% endblock %}
 
-	</a>
+    </a>
 
-        {% block product_price %}
-            <div class="product_price">
-                {% include "catalogue/partials/stock_record.html" %}
-                {% if not product.is_parent %}
-                    {% include "catalogue/partials/add_to_basket_form_compact.html" %}
-                {% endif %}
-            </div>
-        {% endblock %}
-    </article>
+    {% block product_price %}
+    <div class="product_price">
+        {% comment %}
+        {% include "catalogue/partials/stock_record.html" %}
+        {% endcomment %}
+        {% if not product.is_parent %}
+        {% include "catalogue/partials/add_to_basket_form_compact.html" %}
+        {% endif %}
+    </div>
+    {% endblock %}
+</article>
 {% endblock %}
 

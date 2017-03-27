@@ -188,24 +188,6 @@ ul.djng-field-errors li.valid::before {
 	margin-left: 12px;
 }
 
-.btn-success {
-  color: #fff;
-  background-color: #24E27A;
-  border-color: #06D6A0;
-}
-
-.btn-warning {
-  color: #fff;
-  background-color: #f0ad4e;
-  border-color: #eea236;
-}
-
-.btn-info {
-  color: #fff;
-  background-color: #4281a4;
-  border-color: #46b8da;
-}
-
 .progress-bar {
   background-color: #3cc72d;
 }
@@ -238,15 +220,6 @@ ul.djng-field-errors li.valid::before {
 	border: 10px solid #000;
 	margin: -1px;
 	background: #fff;
-}
-.btn-answer {
-	border: 1px dashed #bcbcbc;
-	background-color: #fff;
-	border-radius: 0px;
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 10px;
-    text-align: left;
 }
 .btn-answer .fa {
     font-size: 19px;
@@ -530,6 +503,13 @@ input[type=range]:focus::-ms-fill-upper {
 	list-style-type: none;
  }
 
+.btn {
+    background: none;
+    border: 1px solid #568EBC;
+    color: #568EBC;
+    box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
+    border: 1px solid rgba(133, 133, 133, 0.31);
+}
 /*FX SIGNUP*/
 .signup .tright{
     text-align:right;
@@ -590,6 +570,8 @@ input[type=range]:focus::-ms-fill-upper {
     background:none;
     border:1px solid #fff;
     color:#fff;
+    box-shadow: none;
+
 }
 .signup .btn-success {
   color: #fff;
@@ -597,7 +579,6 @@ input[type=range]:focus::-ms-fill-upper {
   border-color: #4cae4c;
 }
 .signup .btn:hover, .btn:focus{
-    color:#fff;
     opacity:0.8;
 }
 .signup .slide1 .btn{
@@ -996,7 +977,7 @@ footer .content{
     margin: 8px 0px;
     padding-left: 0px;
     padding-right: 0px;
-	height: 422px;
+	height: 340px;
 }
 .p-style1, .product_pod {
     box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
@@ -1068,7 +1049,7 @@ footer .col-sm-6.col-md-2.text-center {
 .short-separator {
     background-color: #fbb027;
     height: 2px!important;
-    width: 130px!important;
+    width: 220px!important;
     margin: auto;
 }
 .user_score {

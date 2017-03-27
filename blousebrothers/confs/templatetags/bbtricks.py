@@ -56,8 +56,9 @@ def score100(test):
         return mark_safe(span)
     else:
         return mark_safe(
-            '<a class="score" href="{}#addreview">'
-            'Laisse un avis pour accéder à ta note !</a>'.format(
+            '<br>'
+            '<a class="btn score" href="{}#addreview">'
+            'Laisse un avis <br>pour accéder à ta note !</a>'.format(
                 reverse('catalogue:reviews-add', kwargs={
                     'product_slug': product.slug, 'product_pk': product.id}
                 )

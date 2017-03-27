@@ -917,7 +917,7 @@ a {
 }
 a:hover,
 a:focus {
-  color: #F0577C;
+  color: #f8ce00;
   text-decoration: none;
 }
 a:focus {
@@ -10540,7 +10540,7 @@ FOOTER
     position: relative;
 }
 .main-menu>li>a:hover{
-    color: #F0577C;
+    color: #f8ce00;
 }
 .main-menu>li:hover>a:before, 
 .main-menu>li.current-menu-item>a:before, 
@@ -10809,7 +10809,7 @@ FOOTER
 	outline: none;
 }
 .btn:hover, input[type="submit"]:hover {
-	background-color: #F0577C;
+	background-color: #E8B510;
 	color: #fff;
 }
 

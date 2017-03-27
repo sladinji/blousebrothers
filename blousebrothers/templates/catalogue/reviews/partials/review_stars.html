@@ -1,9 +1,11 @@
 {% load reviews_tags %}
 {% load i18n %}
 
+{% comment %}
 {% block product_stock_record %}
 {% include "catalogue/partials/stock_record.html" with verbose=1 %}
 {% endblock %}
+{% endcomment %}
 
 {% if product.rating != None %}
 <h3 class="star-rating {{ product.rating|as_stars }}">

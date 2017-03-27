@@ -5,6 +5,7 @@ $('#confirm-go').on('show.bs.modal', function(e) {
   console.log(data);
   $('.productPrice', this).text(data.productprice);
   $('.productTitle', this).text(data.producttitle);
+  $('.productURL', this).attr('href', data.producturl);
   $(this).find('#confirm-go-form').attr('action', "/basket/add/" + data.productid +"/");
 });
 </script>
