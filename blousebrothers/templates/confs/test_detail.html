@@ -15,9 +15,6 @@
 
             <h2>{{ object.conf.title}}</h2>
             <br>
-            {% if object.has_review or user == object.conf.owner %}
-            {% include 'confs/partials/test_result.html' %}
-            {% endif %}
         </div>
         <div id="result">
         {% include 'confs/partials/test_result.html' with object=object %}
@@ -33,7 +30,7 @@
     <!-- Action buttons -->
     <div class="row">
 
-        <div class="col-sm-12 txt-grey">
+        <div class="col-xs-12 txt-grey">
 
             {% if object.conf.type == 'DCP' %}
             <legend>Énoncé</legend>{{ object.conf.statement | default:"<i>aucun</i>"}}

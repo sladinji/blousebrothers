@@ -221,6 +221,15 @@ ul.djng-field-errors li.valid::before {
 	margin: -1px;
 	background: #fff;
 }
+.btn-answer {
+    border: 1px dashed #bcbcbc;
+    background-color: #fff;
+    border-radius: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+}
 .btn-answer .fa {
     font-size: 19px;
 }
@@ -1056,7 +1065,6 @@ footer .col-sm-6.col-md-2.text-center {
     margin: 50px 100px;
     padding: 50px 0px;
     border: 1px solid rgba(133, 133, 133, 0.31);
-    box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
 }
 .page-header {
         padding-bottom: 0px;
