@@ -4437,6 +4437,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   margin: 20px 0;
   list-style: none;
   text-align: center;
+  font-size: 18pt;
 }
 .pager li {
   display: inline;
@@ -4448,6 +4449,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 15px;
+  box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
+
 }
 .pager li > a:hover,
 .pager li > a:focus {
