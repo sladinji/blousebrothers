@@ -36,7 +36,7 @@ class BasketAddView(CoreBasketAddView):
             return HttpResponseRedirect(reverse("account_signup"))
         free_conf = form.product.conf.owner.username == "BlouseBrothers"
         if not free_conf and not self.request.user.gave_all_mangopay_info:
-            messages.warning(self.request, _("Merci de compléter ce formulaire pour pouvoir continuer"),
+            messages.success(self.request, _("Merci de compléter ce formulaire pour pouvoir continuer"),
                              extra_tags='safe noicon')
             return HttpResponseRedirect(reverse("users:update") + '?next={}'.format(self.request.path))
 
@@ -48,13 +48,12 @@ class BasketAddView(CoreBasketAddView):
             except:
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)
-                except MangoNoEnoughCredit as ex_credit:
-                    messages.error(self.request,
-                                   _(
-                                       "Merci de créditer ton compte pour pouvoir faire cette conférence (prix : {} €)"
-                                   ).format(ex_credit.args[0]),
-                                   extra_tags='safe noicon'
-                                   )
+                except MangoNoEnoughCredit:
+                    if self.request.user.has_at_least_one_card:
+                        msg = _("Merci de créditer ton compte. Tout est sécurisé par Mangopay.")
+                    else:
+                        msg = _("Merci d'ajouter une carte et de créditer ton compte. Tout est sécurisé par Mangopay.")
+                    messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
                     return HttpResponseRedirect(reverse("users:wallet") + '?next={}'.format(self.request.path))
                 except Exception as ex:

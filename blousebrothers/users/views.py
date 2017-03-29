@@ -71,6 +71,10 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         """
         super().form_valid(form)
         check_bonus(self.request)
+        if isinstance(form, UserSmallerForm):
+            messages.success(self.request, "C'est presque fini, il ne reste plus qu'à créditer ton compte.")
+            return redirect(reverse('users:wallet'))
+
         return HttpResponseRedirect(self.get_success_url())
 
     def get_form_class(self):
