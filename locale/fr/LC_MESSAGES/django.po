@@ -1741,7 +1741,7 @@ msgstr ""
 
 #: mangopay/constants.py:107
 msgid "Insufficient wallet balance"
-msgstr ""
+msgstr "Crédit Portefeuille Insuffisant"
 
 #: mangopay/constants.py:108
 msgid "Author is not the wallet owner"
@@ -1749,43 +1749,43 @@ msgstr ""
 
 #: mangopay/constants.py:109
 msgid "Transaction amount is higher than maximum permitted amount"
-msgstr ""
+msgstr "Transaction supérieure au maximum autorisé"
 
 #: mangopay/constants.py:110
 msgid "Transaction amount is lower than minimum permitted amount"
-msgstr ""
+msgstr "Transaction inférieure au minimum autorisé"
 
 #: mangopay/constants.py:111
 msgid "Invalid transaction amount"
-msgstr ""
+msgstr "Montant invalide"
 
 #: mangopay/constants.py:112
 msgid "Credited Funds must be more than 0"
-msgstr ""
+msgstr "Le montant du crédit doit être supérieur à 0"
 
 #: mangopay/constants.py:114
 msgid "User has not been redirected"
-msgstr ""
+msgstr "L'utilisateur n'a pas été redirigé"
 
 #: mangopay/constants.py:115
 msgid "User canceled the payment"
-msgstr ""
+msgstr "Paiement annulé par l'utilisateur"
 
 #: mangopay/constants.py:117
 msgid "Transaction has already been successfully refunded"
-msgstr ""
+msgstr "La transaction a déjà été remboursée avec succès"
 
 #: mangopay/constants.py:118
 msgid "The refund cannot exceed initial transaction amount"
-msgstr ""
+msgstr "Le remboursement ne peut pas excéder le montant initial de la transaction"
 
 #: mangopay/constants.py:119
 msgid "The refunded fees cannot exceed initial fee amount"
-msgstr ""
+msgstr "Le remboursement ne peut pas excéder le montant initial de la transaction"
 
 #: mangopay/constants.py:120
 msgid "Balance of client fee wallet insufficient"
-msgstr ""
+msgstr "Crédit insuffisant sur le portefeuille client"
 
 #: mangopay/constants.py:121
 msgid ""
@@ -1795,19 +1795,19 @@ msgstr ""
 
 #: mangopay/constants.py:123 mangopay/constants.py:205
 msgid "Invalid card number"
-msgstr ""
+msgstr "Numéro de carte invalide"
 
 #: mangopay/constants.py:124
 msgid "Invalid cardholder name"
-msgstr ""
+msgstr "Nom du possesseur de la carte invalide"
 
 #: mangopay/constants.py:125
 msgid "Invalid PIN code"
-msgstr ""
+msgstr "code PIN invalide"
 
 #: mangopay/constants.py:126
 msgid "Invalid PIN format"
-msgstr ""
+msgstr "Format PIN invalide"
 
 #: mangopay/constants.py:127
 msgid "Token input Error"
@@ -1815,11 +1815,11 @@ msgstr ""
 
 #: mangopay/constants.py:128
 msgid "Card number: invalid format"
-msgstr ""
+msgstr "Format de numéro de carte invalide"
 
 #: mangopay/constants.py:129
 msgid "Expiry date: missing or invalid format"
-msgstr ""
+msgstr "Date d'expiration: format invalide"
 
 #: mangopay/constants.py:130
 msgid "CSC: missing or invalid format"
@@ -1831,99 +1831,99 @@ msgstr ""
 
 #: mangopay/constants.py:132
 msgid "Registration data : Invalid format"
-msgstr ""
+msgstr "Format invalide données d'enregistrement"
 
 #: mangopay/constants.py:133
 msgid "The user did not complete the transaction"
-msgstr ""
+msgstr "Transaction non complétée par l'utilisateur"
 
 #: mangopay/constants.py:134
 msgid "The transaction has been cancelled by the user"
-msgstr ""
+msgstr "Transaction annulée par l'utilisateur"
 
 #: mangopay/constants.py:135
 msgid "User is filling in the payment card details"
-msgstr ""
+msgstr "L'utilisateur remplit les détails de la carte de paiement"
 
 #: mangopay/constants.py:136
 msgid "User has not been redirected then the payment session has expired"
-msgstr ""
+msgstr "L'utilisateur n'a pas été redirigé et la session de paiement a été annulée"
 
 #: mangopay/constants.py:137
 msgid "User has let the payment session expire without paying"
-msgstr ""
+msgstr "L'utilisateur a laissé la session de paiement expirer sans payer"
 
 #: mangopay/constants.py:139
 msgid ""
 "Transaction refused by the bank. No more funds or limit has been reached"
-msgstr ""
+msgstr "Transaction refusée par la banque. Fonds insuffisants ou limite atteinte"
 
 #: mangopay/constants.py:141
 msgid "Transaction refused by the bank. Amount limit has been reached"
-msgstr ""
+msgstr "Transaction refusée par la banque. Limite de montant atteinte"
 
 #: mangopay/constants.py:143
 msgid "Transaction refused by the terminal"
-msgstr ""
+msgstr "Transaction refusée par le terminal"
 
 #: mangopay/constants.py:144
 msgid ""
 "Transaction refused by the bank. The card spent amount limit has been reached"
-msgstr ""
+msgstr "Transaction refusée par la banque. Limite de dépenses de la carte atteinte"
 
 #: mangopay/constants.py:146
 msgid "The card has expired"
-msgstr ""
+msgstr "La carte a expirée"
 
 #: mangopay/constants.py:147
 msgid "The card is inactive."
-msgstr ""
+msgstr "La carte est inactive"
 
 #: mangopay/constants.py:148
 msgid "The card is not active"
-msgstr ""
+msgstr "La carte n'est pas active"
 
 #: mangopay/constants.py:149
 msgid ""
 "Maximum number of attempts reached. Too much attempts for the same "
 "transaction"
-msgstr ""
+msgstr "Nombre limite d'essai atteint"
 
 #: mangopay/constants.py:151
 msgid "Maximum amount exceeded. This is a card limitation on spent amount"
-msgstr ""
+msgstr "Montant maximum dépassé."
 
 #: mangopay/constants.py:153
 msgid ""
 "Maximum Uses Exceeded. Maximum attempts with this cards reached. You must "
 "try again after 24 hours."
-msgstr ""
+msgstr "Nombre limite d'essai atteint. Essayez dans 24h"
 
 #: mangopay/constants.py:155
 msgid "Debit limit exceeded. This is a card limitation on spent amount"
-msgstr ""
+msgstr "Limite de débit atteinte"
 
 #: mangopay/constants.py:157
 msgid "Amount limit. TThe contribution transaction has failed"
-msgstr ""
+msgstr "Limite de montant atteinte"
 
 #: mangopay/constants.py:158
 msgid "Debit limit exceeded"
-msgstr ""
+msgstr "Limite de débit excédée"
 
 #: mangopay/constants.py:159
 msgid ""
 "Transaction refused. The transaction has been refused by the bank. Contact "
 "your bank in order to have more information about it."
-msgstr ""
+msgstr "Transaction refusée. Contactez votre banque"
 
 #: mangopay/constants.py:162
 msgid "Secure mode: 3DSecure authentication is not available"
-msgstr ""
+msgstr "3Dsecure non disponible"
 
 #: mangopay/constants.py:163
 msgid "Secure mode: 3DSecure authentication has failed"
-msgstr ""
+msgstr "échec du 3Dsecure"
 
 #: mangopay/constants.py:165
 msgid "Token processing error. The token has not been created"
@@ -1935,7 +1935,7 @@ msgstr ""
 
 #: mangopay/constants.py:167
 msgid "The user is blocked due to KYC limitation."
-msgstr ""
+msgstr "Utilisateur bloqué en raison de renseignements insuffisants"
 
 #: mangopay/constants.py:168
 msgid "Fraud policy error"
@@ -1943,7 +1943,7 @@ msgstr ""
 
 #: mangopay/constants.py:169
 msgid "Counterfeit Card"
-msgstr ""
+msgstr "Carte contrefaite"
 
 #: mangopay/constants.py:170
 msgid ""
@@ -1963,27 +1963,27 @@ msgstr ""
 
 #: mangopay/constants.py:177
 msgid "Security violation"
-msgstr ""
+msgstr "Violation de sécurité"
 
 #: mangopay/constants.py:178
 msgid "Fraud suspected by the bank"
-msgstr ""
+msgstr "Fraude suspectée par la banque"
 
 #: mangopay/constants.py:179
 msgid "Opposition on bank account"
-msgstr ""
+msgstr "Opposition sur le compte en banque"
 
 #: mangopay/constants.py:180
 msgid "Transaction blocked by Fraud Policy"
-msgstr ""
+msgstr "Transaction bloquée par contrôle de fraude"
 
 #: mangopay/constants.py:181
 msgid "Wallet blocked by Fraud policy"
-msgstr ""
+msgstr "Portefeuille bloqué par contrôle de fraude"
 
 #: mangopay/constants.py:182
 msgid "User blocked by Fraud policy"
-msgstr ""
+msgstr "Utilisateur bloqué par contrôle de fraude"
 
 #: mangopay/constants.py:183
 msgid "PSP configuration error"
@@ -1998,11 +1998,11 @@ msgstr ""
 
 #: mangopay/constants.py:188
 msgid "Bank technical error"
-msgstr ""
+msgstr "Erreur technique de la banque"
 
 #: mangopay/constants.py:189
 msgid "Technical error"
-msgstr ""
+msgstr "Erreur technique"
 
 #: mangopay/constants.py:191
 msgid "Internal Error. There is an issue on the tokenization server (PSP side)"
@@ -2014,19 +2014,19 @@ msgstr ""
 
 #: mangopay/constants.py:195
 msgid "Username/Password is incorrect"
-msgstr ""
+msgstr "Pseudo/Mot de passe incorrect"
 
 #: mangopay/constants.py:196
 msgid "Account is locked or inactive"
-msgstr ""
+msgstr "Compte bloqué ou inactivé"
 
 #: mangopay/constants.py:197
 msgid "This card is not active"
-msgstr ""
+msgstr "Carte inactive"
 
 #: mangopay/constants.py:198
 msgid "Card expired"
-msgstr ""
+msgstr "Carte expirée"
 
 #: mangopay/constants.py:200
 msgid "Client certificate is disabled"
@@ -2044,15 +2044,15 @@ msgstr ""
 
 #: mangopay/constants.py:206
 msgid "Invalid date format"
-msgstr ""
+msgstr "Format de date invalide"
 
 #: mangopay/constants.py:207
 msgid "Invalid CSC number"
-msgstr ""
+msgstr "Numéro CSC invalide"
 
 #: mangopay/constants.py:208
 msgid "Transaction refused"
-msgstr ""
+msgstr "Transaction refusée"
 
 #: mangopay/constants.py:214
 msgid "Afghanistan"
