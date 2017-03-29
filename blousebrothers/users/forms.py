@@ -2,7 +2,7 @@ from decimal import Decimal
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from oscar.forms.widgets import DatePickerInput
-from localflavor.generic.forms import IBANFormField, BICFormField
+from localflavor.generic.forms import IBANFormField, BICFormField, DateField
 
 from .models import User
 
@@ -66,8 +66,19 @@ class CardRegistrationForm(forms.Form):
     accessKeyRef = forms.CharField(widget=forms.HiddenInput())
     returnURL = forms.CharField(widget=forms.HiddenInput())
     data = forms.CharField(widget=forms.HiddenInput())
-    cardNumber = forms.CharField(label=_('Numéro de la carte'), required=True)
-    cardExpirationDate = forms.CharField(label=_("Date d'expiration"), required=True,
-                                         help_text="ex. : 1219")
+    cardNumber = forms.CharField(label=_('Numéro de la carte'), required=True,
+                                 widget=forms.TextInput(
+                                     attrs={'data-mask': '9999-9999-9999-9999'}
+                                 ))
+    cardExpirationDate = DateField(label=_("Date d'expiration"), required=True,
+                                   help_text="ex. : 12/19",
+                                   widget=forms.TextInput(
+                                       attrs={'data-mask': '99/99'}
+                                   )
+                                   )
     cardCvx = forms.CharField(label=_("Code de vérification"), required=True,
-                              help_text="code à 3 chiffres au dos de la carte")
+                              help_text="code à 3 chiffres au dos de la carte",
+                              widget=forms.TextInput(
+                                  attrs={'data-mask': '999'}
+                              )
+                              )

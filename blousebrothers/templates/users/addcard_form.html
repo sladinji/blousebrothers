@@ -1,27 +1,55 @@
 {% extends "layout.html" %}
 {% load crispy_forms_tags %}
 {% load currency_filters %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %}Ajout carte de paiement{% endblock %}
+{% block submenu %}
+{% endblock %}
 
 {% block content %}
 <div class="space"></div> <!-- 40px Vertical Spacing -->
 
-<div class="row well">
-    <div class="col-md-6 col-sm-12">
-        <h2>Ajouter une carte de paiement</h2>
-        <form class="form-horizontal" method="post" action="{{card.cardRegistrationURL}}">
-            {{ cr_form | crispy }}
-            <div class="control-group">
-                <div class="controls">
-                    <button type="submit" name='sub_newcard' class="btn">Valider</button>
-                    <a href="{% url 'users:wallet' %}" class="btn">Annuler</a>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2><i class="fa fa-credit-card"></i> Ajouter une carte de paiement</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                    <form class="form-horizontal" method="post" action="{{card.cardRegistrationURL}}">
+                        {{ cr_form | crispy }}
+
+                        <div class="control-group">
+                            <div class="controls text-right">
+                                <button type="submit" name='sub_newcard' class="btn"><i class="fa fa-check"></i> Valider</button>
+                                <a href="{% url 'users:wallet' %}" class="btn"><i class="fa fa-close"></i> Annuler</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+    <div class="col-md-3"></div>
 </div>
-<div class="space"></div> <!-- 40px Vertical Spacing -->
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-sm-6 imgfit">
+        <img src="{% static "images/powered-by-mangopay.jpg" %}"/>
+    </div>
+    <div class="col-md-3"></div>
+</div>
 
+{% endblock %}
+
+{% block extrascripts %}
+{{ block.super }}
+<script async type="text/javascript" src="{% static "js/inputmask.js" %}"></script>
 {% endblock %}
