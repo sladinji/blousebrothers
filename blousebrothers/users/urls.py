@@ -52,6 +52,12 @@ urlpatterns = [
         view=views.AddCardView.as_view(),
         name='addcard'
     ),
+    # MangoPay Credit Card feed back
+    url(
+        regex=r'^~addcardreturn/$',
+        view=views.HandleMangoAddCardReturn.as_view(),
+        name='addcardreturn'
+    ),
     # Subscription
     url(
         regex=r'^~subscription/(?P<sub_id>[\d]*)$',

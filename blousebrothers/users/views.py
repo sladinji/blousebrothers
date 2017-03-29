@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
+from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView, RedirectView
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
@@ -18,6 +18,7 @@ import allauth.account.views
 
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 import blousebrothers.context_processor
+from mangopay.constants import ERROR_MESSAGES_DICT
 
 from .models import User
 from .forms import (
@@ -113,6 +114,29 @@ class BaseWalletFormView(MangoPermissionMixin, FormView):
         return reverse('users:wallet')
 
 
+class HandleMangoAddCardReturn(RedirectView):
+    """
+    When a card is added, AddCard form directely send information to MangoPay.
+    There's no card info transit through our server. Here we handle MangoPay
+    returned data.
+    """
+
+    def get(self, request, *args, **kwargs):
+        if 'data' in request.GET:
+            # handle mango redirection after new card added
+            mpu = request.user.mangopay_users.first()
+            card_registration = mpu.mangopay_card_registrations.order_by('-id').first()
+            if card_registration.mangopay_card.mangopay_id:
+                raise Exception("Mango pay id already exist ???")
+            card_registration.handle_registration_data(request.GET['data'])
+            return redirect(reverse('users:wallet'))
+
+        elif 'errorCode' in request.GET:
+            messages.error(request, ERROR_MESSAGES_DICT[request.GET['errorCode']])
+            return redirect(reverse('users:addcard'))
+        return redirect(reverse('users:wallet'))
+
+
 class UserWalletView(BaseWalletFormView):
 
     template_name = 'users/wallet.html'
@@ -124,15 +148,6 @@ class UserWalletView(BaseWalletFormView):
             payin = MangoPayPayInByCard.objects.get(mangopay_id=request.GET['transactionId'])
             payin.get()
             self.handle_payin_status(payin)
-
-        elif 'data' in request.GET:
-            # handle mango redirection after new card added
-            mpu = request.user.mangopay_users.first()
-            card_registration = mpu.mangopay_card_registrations.order_by('-id').first()
-            if card_registration.mangopay_card.mangopay_id:
-                raise Exception("Mango pay id already exist ???")
-            card_registration.handle_registration_data(request.GET['data'])
-            return redirect(reverse('users:wallet'))
 
         check_bonus(request)
         return super().get(request, *args, **kwargs)
@@ -272,7 +287,7 @@ class AddCardView(BaseWalletFormView):
         pd = card_registration.get_preregistration_data()
         pd.update(data=pd['preregistrationData'], accessKeyRef=pd['accessKey'])
         returnURL = "https://" if self.request.is_secure() else "http://"
-        returnURL += self.request.get_host() + reverse('users:wallet')
+        returnURL += self.request.get_host() + reverse('users:addcardreturn')
         pd.update(returnURL=returnURL)
         cr_form = CardRegistrationForm(initial=pd)
         return card_registration, cr_form, pd

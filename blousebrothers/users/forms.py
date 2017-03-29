@@ -68,12 +68,12 @@ class CardRegistrationForm(forms.Form):
     data = forms.CharField(widget=forms.HiddenInput())
     cardNumber = forms.CharField(label=_('Numéro de la carte'), required=True,
                                  widget=forms.TextInput(
-                                     attrs={'data-mask': '9999-9999-9999-9999'}
+                                     attrs={'data-mask': '9999999999999999'}
                                  ))
     cardExpirationDate = DateField(label=_("Date d'expiration"), required=True,
-                                   help_text="ex. : 12/19",
+                                   help_text="ex. : 1219",
                                    widget=forms.TextInput(
-                                       attrs={'data-mask': '99/99'}
+                                       attrs={'data-mask': '9999'}
                                    )
                                    )
     cardCvx = forms.CharField(label=_("Code de vérification"), required=True,
