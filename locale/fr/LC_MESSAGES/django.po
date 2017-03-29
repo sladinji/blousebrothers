@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: blousebrothers/confs/models.py:73
+#: blousebrothers/confs/models.py:85
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 17:23+0000\n"
+"POT-Creation-Date: 2017-03-29 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,139 +18,290 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: blousebrothers/confs/forms.py:28
+#: blousebrothers/auth.py:58
+msgid ""
+"Avant de pouvoir publier une conférence, merci de compléter le formulaire ci-"
+"dessous. Ces informations sont nécessaires pour activer ton compte. C'est "
+"gratuit et sans engagement"
+msgstr ""
+
+#: blousebrothers/auth.py:88
+msgid ""
+"Merci de compléter le formulaire ci-dessous pour pouvoir créditer ton compte."
+msgstr ""
+
+#: blousebrothers/basket/views.py:34
+msgid "Merci de te connecter pour pouvoir faire un dossier"
+msgstr ""
+
+#: blousebrothers/basket/views.py:39
+msgid "Merci de compléter ce formulaire pour pouvoir continuer"
+msgstr ""
+
+#: blousebrothers/basket/views.py:54
+msgid ""
+"Merci de créditer ton compte pour pouvoir faire cette conférence (prix : {} "
+"€)"
+msgstr ""
+
+#: blousebrothers/catalogue/models.py:14 blousebrothers/catalogue/models.py:62
+#: blousebrothers/catalogue/reviews/models.py:10
+#: blousebrothers/catalogue/reviews/models.py:27
+msgid "Intérêt global du dossier"
+msgstr ""
+
+#: blousebrothers/catalogue/models.py:15 blousebrothers/catalogue/models.py:63
+#: blousebrothers/catalogue/reviews/models.py:13
+#: blousebrothers/catalogue/reviews/models.py:28
+msgid "Clarté du dossier"
+msgstr ""
+
+#: blousebrothers/catalogue/models.py:16 blousebrothers/catalogue/models.py:64
+#: blousebrothers/catalogue/reviews/models.py:16
+#: blousebrothers/catalogue/reviews/models.py:29
+msgid "Qualité de la correction"
+msgstr ""
+
+#: blousebrothers/catalogue/models.py:17
+#: blousebrothers/catalogue/reviews/models.py:22
+msgid "Difficulté du dossier"
+msgstr ""
+
+#: blousebrothers/catalogue/reviews/forms.py:14
+msgid "Commentaires libres"
+msgstr ""
+
+#: blousebrothers/catalogue/reviews/forms.py:15
+#: blousebrothers/confs/models.py:65
+msgid "Titre"
+msgstr ""
+
+#: blousebrothers/catalogue/reviews/forms.py:18
+msgid "Pas de spoiler ! Merci :-)"
+msgstr ""
+
+#: blousebrothers/catalogue/reviews/forms.py:19
+msgid "Soit juste dans ton évaluation, c'est important :-) !"
+msgstr ""
+
+#: blousebrothers/confs/forms.py:29
 msgid ""
 "Ne sélectionner que les items abordés de manière <strong>significative</"
 "strong> dans le dossier"
 msgstr ""
 
-#: blousebrothers/confs/forms.py:38
+#: blousebrothers/confs/forms.py:39
+#: blousebrothers/templates/catalogue/detail.html:165
 msgid "Matières abordées"
 msgstr ""
 
-#: blousebrothers/confs/models.py:45
+#: blousebrothers/confs/forms.py:62
+msgid "Message"
+msgstr ""
+
+#: blousebrothers/confs/models.py:53
 msgid "DCP"
 msgstr ""
 
-#: blousebrothers/confs/models.py:46
+#: blousebrothers/confs/models.py:54
 msgid "QI"
 msgstr ""
 
-#: blousebrothers/confs/models.py:54 blousebrothers/confs/models.py:118
-#: blousebrothers/confs/models.py:217
+#: blousebrothers/confs/models.py:55
+msgid "LCA"
+msgstr ""
+
+#: blousebrothers/confs/models.py:64 blousebrothers/confs/models.py:187
+#: blousebrothers/confs/models.py:256 blousebrothers/confs/models.py:284
+#: blousebrothers/confs/models.py:304 blousebrothers/confs/models.py:313
+#: blousebrothers/confs/models.py:323 blousebrothers/confs/models.py:431
+#: blousebrothers/confs/models.py:432
 msgid "Date created"
 msgstr "Date de création"
 
-#: blousebrothers/confs/models.py:55
-msgid "Titre"
-msgstr ""
-
-#: blousebrothers/confs/models.py:56
+#: blousebrothers/confs/models.py:66 config/settings/common.py:352
 msgid "Type"
 msgstr ""
 
-#: blousebrothers/confs/models.py:58
+#: blousebrothers/confs/models.py:68
 msgid "Slug"
 msgstr ""
 
-#: blousebrothers/confs/models.py:60
+#: blousebrothers/confs/models.py:70
+#: blousebrothers/templates/catalogue/detail.html:93
 msgid "Esprit du dossier"
 msgstr ""
 
-#: blousebrothers/confs/models.py:61
+#: blousebrothers/confs/models.py:71
 msgid ""
 "Ex: \"dossier très pointu et monothématique sur la fibrillation auriculaire"
 "\" ou \"dossier transversal de révisions classiques sur lupus et grossesse\" "
 msgstr ""
 
-#: blousebrothers/confs/models.py:63
+#: blousebrothers/confs/models.py:73
 msgid "Énoncé*"
 msgstr ""
 
-#: blousebrothers/confs/models.py:65
+#: blousebrothers/confs/models.py:75
 msgid ""
 "Ne sélectionner que les items abordés de manière <strong>significative</"
 "strong> dans votre dossier"
 msgstr ""
 
-#: blousebrothers/confs/models.py:68
+#: blousebrothers/confs/models.py:79
 msgid "Spécialités"
 msgstr ""
 
-#: blousebrothers/confs/models.py:69
+#: blousebrothers/confs/models.py:81 blousebrothers/confs/models.py:324
 msgid "Progression"
 msgstr ""
 
-#: blousebrothers/confs/models.py:70
+#: blousebrothers/confs/models.py:82
 msgid "Prix de vente"
 msgstr ""
 
-#: blousebrothers/confs/models.py:76
-msgid "Accessible"
+#: blousebrothers/confs/models.py:87
+msgid "Supprimée"
 msgstr ""
 
-#: blousebrothers/confs/models.py:77
+#: blousebrothers/confs/models.py:88
+msgid "Pas de frais"
+msgstr ""
+
+#: blousebrothers/confs/models.py:89
+msgid "Publier"
+msgstr ""
+
+#: blousebrothers/confs/models.py:91
 msgid ""
-"Un dossier accessible apparaitra dans les recherches et pourra être acheté au "
-"prix que vous avez fixé."
+"Publier mon dossier avec les paramètres sélectionnés. Je certifie que le "
+"matériel de ma conférence est original et je dégage BlouseBrothers de toute "
+"responsabilité concernant son contenu. Je suis au courant de mes obligations "
+"en matière de fiscalité, détaillées dans les <a href='/cgu/'>conditions "
+"générales d'utilisation</a>."
 msgstr ""
 
-#: blousebrothers/confs/models.py:117 blousebrothers/confs/models.py:188
-#: blousebrothers/confs/models.py:216
+#: blousebrothers/confs/models.py:99
+msgid "Accès gratuit aux étudiants de ma ville le "
+msgstr ""
+
+#: blousebrothers/confs/models.py:185 blousebrothers/confs/models.py:282
+#: blousebrothers/confs/models.py:302 blousebrothers/confs/models.py:311
 msgid "Image"
 msgstr ""
 
-#: blousebrothers/confs/models.py:119
+#: blousebrothers/confs/models.py:188
 msgid "Légende"
 msgstr ""
 
-#: blousebrothers/confs/models.py:120 blousebrothers/confs/models.py:162
-#: blousebrothers/confs/models.py:192 blousebrothers/confs/models.py:219
+#: blousebrothers/confs/models.py:189 blousebrothers/confs/models.py:222
+#: blousebrothers/confs/models.py:267 blousebrothers/confs/models.py:286
+#: blousebrothers/confs/models.py:306 blousebrothers/confs/models.py:315
 msgid "Ordre"
 msgstr ""
 
-#: blousebrothers/confs/models.py:138
+#: blousebrothers/confs/models.py:198
 msgid "Numéro"
 msgstr ""
 
-#: blousebrothers/confs/models.py:153
+#: blousebrothers/confs/models.py:213
 msgid "Matière"
 msgstr ""
 
-#: blousebrothers/confs/models.py:160
+#: blousebrothers/confs/models.py:220
 msgid "Enoncé"
 msgstr ""
 
-#: blousebrothers/confs/models.py:161
+#: blousebrothers/confs/models.py:221
 msgid "Conference"
 msgstr "Conférence"
 
-#: blousebrothers/confs/models.py:163
+#: blousebrothers/confs/models.py:223
 msgid "Coéfficient"
 msgstr "Coefficient"
 
-#: blousebrothers/confs/models.py:186
-msgid "Proposition"
+#: blousebrothers/confs/models.py:224
+msgid "Remarque globale pour la correction"
 msgstr ""
 
-#: blousebrothers/confs/models.py:187
+#: blousebrothers/confs/models.py:255 blousebrothers/confs/models.py:264
 msgid "Explication"
 msgstr ""
 
-#: blousebrothers/confs/models.py:190
+#: blousebrothers/confs/models.py:263
+msgid "Proposition"
+msgstr ""
+
+#: blousebrothers/confs/models.py:265
 msgid "Correct"
 msgstr ""
 
-#: blousebrothers/confs/models.py:191
+#: blousebrothers/confs/models.py:266
 msgid "Zéro si erreur"
 msgstr ""
 
-#: blousebrothers/confs/models.py:218
+#: blousebrothers/confs/models.py:285 blousebrothers/confs/models.py:305
+#: blousebrothers/confs/models.py:314
 msgid "Libellé"
 msgstr ""
 
+#: blousebrothers/confs/models.py:325 blousebrothers/confs/models.py:326
+#: blousebrothers/confs/models.py:392 blousebrothers/confs/models.py:393
+msgid "Résultat"
+msgstr ""
+
+#: blousebrothers/confs/models.py:328
+msgid "Remarques personnelles"
+msgstr ""
+
+#: blousebrothers/confs/models.py:329
+msgid ""
+"Visible uniquement par toi, note ici les choses que tu veux retenir, ça "
+"pourra également te permettre de retrouver plus facilement ce dossier."
+msgstr ""
+
+#: blousebrothers/confs/models.py:335 blousebrothers/confs/models.py:388
+msgid "Temps passé"
+msgstr ""
+
+#: blousebrothers/confs/models.py:389
+msgid "Réponses"
+msgstr ""
+
+#: blousebrothers/confs/models.py:394
+msgid "Nombre d'erreurs"
+msgstr ""
+
+#: blousebrothers/confs/models.py:419 blousebrothers/users/models.py:276
+msgid "Nom"
+msgstr ""
+
+#: blousebrothers/confs/models.py:420
+msgid "Description"
+msgstr ""
+
+#: blousebrothers/confs/models.py:421
+msgid "Durée"
+msgstr ""
+
+#: blousebrothers/confs/models.py:422
+msgid "Prix"
+msgstr ""
+
+#: blousebrothers/confs/models.py:423
+msgid "Montant crédit wallet"
+msgstr ""
+
+#: blousebrothers/confs/models.py:424
+msgid "Montant parrainage"
+msgstr ""
+
+#: blousebrothers/confs/models.py:433
+msgid "Vendu pour"
+msgstr ""
+
 #: blousebrothers/dashboard/catalogue/forms.py:9
-msgid "Créer un nouveau dossier de type"
+msgid "Créer un nouveau sujet de type"
 msgstr ""
 
 #: blousebrothers/dashboard/catalogue/forms.py:10
@@ -158,49 +309,51 @@ msgid "-- Choose type --"
 msgstr "--Choisissez le type--"
 
 #: blousebrothers/templates/account/email.html:6
-#: blousebrothers/templates/dashboard/layout.html:44
 #: blousebrothers/templates/partials/nav_accounts.html:46
 #: blousebrothers/templates/partials/nav_accounts.html:50
 msgid "Account"
 msgstr "Compte"
 
-#: blousebrothers/templates/account/email.html:12
+#: blousebrothers/templates/account/email.html:9
 msgid "E-mail Addresses"
 msgstr "Adresses email"
 
-#: blousebrothers/templates/account/email.html:14
+#: blousebrothers/templates/account/email.html:11
 msgid "The following e-mail addresses are associated with your account:"
 msgstr "Les adresses email suivantes sont associées avec votre compte"
 
-#: blousebrothers/templates/account/email.html:28
+#: blousebrothers/templates/account/email.html:25
 msgid "Verified"
 msgstr "Vérifié"
 
-#: blousebrothers/templates/account/email.html:30
+#: blousebrothers/templates/account/email.html:27
 msgid "Unverified"
 msgstr "Non vérifié"
 
-#: blousebrothers/templates/account/email.html:32
+#: blousebrothers/templates/account/email.html:29
 msgid "Primary"
 msgstr "Principale"
 
-#: blousebrothers/templates/account/email.html:38
+#: blousebrothers/templates/account/email.html:35
 msgid "Make Primary"
 msgstr "Définir comme principale"
 
-#: blousebrothers/templates/account/email.html:39
+#: blousebrothers/templates/account/email.html:36
 msgid "Re-send Verification"
 msgstr "Envoyer de nouveau la vérification"
 
-#: blousebrothers/templates/account/email.html:40
+#: blousebrothers/templates/account/email.html:37
+#: blousebrothers/templates/basket/partials/basket_content.html:63
+#: blousebrothers/templates/basket/partials/basket_content.html:181
+#: blousebrothers/templates/basket/partials/basket_totals.html:48
 msgid "Remove"
 msgstr "Retirer"
 
-#: blousebrothers/templates/account/email.html:47
+#: blousebrothers/templates/account/email.html:44
 msgid "Warning:"
 msgstr "Attention:"
 
-#: blousebrothers/templates/account/email.html:47
+#: blousebrothers/templates/account/email.html:44
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
@@ -209,15 +362,15 @@ msgstr ""
 "afin qu'il soit possible de vous renvoyer votre mot de passe, des "
 "notifications, etc"
 
-#: blousebrothers/templates/account/email.html:52
+#: blousebrothers/templates/account/email.html:49
 msgid "Add E-mail Address"
 msgstr "Ajouter une adresse email"
 
-#: blousebrothers/templates/account/email.html:57
+#: blousebrothers/templates/account/email.html:54
 msgid "Add E-mail"
 msgstr "Ajouter un email"
 
-#: blousebrothers/templates/account/email.html:68
+#: blousebrothers/templates/account/email.html:62
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "Voulez-vous réellement supprimer l'adresse email sélectionnée?"
 
@@ -226,16 +379,26 @@ msgstr "Voulez-vous réellement supprimer l'adresse email sélectionnée?"
 msgid ""
 "Bienvenue sur %(site_name)s!\n"
 "\n"
-"Tu viens de t'inscrire sur %(site_domain)s.\n"
+"Bienvenue sur BlouseBrothers.\n"
+" \n"
+" \n"
+"Merci de confirmer ton adresse email en cliquant sur ce lien : "
+"%(activate_url)s\n"
 "\n"
-"Merci de confirmer ton adresse en cliquant sur ce lien : %(activate_url)s\n"
-"\n"
-"Le site étant actuellement en phase de lancement, un membre de l'équipe te "
-"recontactera pour finaliser inscription.\n"
+"Tu es interne (ou externe confiant) ?\n"
+"Dépose tes dossiers et garde 70%% de tes ventes. Aucun frais, aucun "
+"engagement.\n"
+" \n"
+"Tu es externe? Achète uniquement les dossiers qui te conviennent, selon ton "
+"programme. Evalue chaque dossier pour les suivants. Accède à la correction, "
+"à ta note et à ton classement.\n"
+" \n"
+"Tu peux tester les dossiers qui sont en accès libre dès maintenant pour te "
+"faire une idée. \n"
 "\n"
 msgstr ""
 
-#: blousebrothers/templates/account/email/email_confirmation_message.txt:10
+#: blousebrothers/templates/account/email/email_confirmation_message.txt:16
 #, python-format
 msgid ""
 "Merci et à bientôt sur %(site_name)s!\n"
@@ -243,13 +406,13 @@ msgid ""
 msgstr ""
 
 #: blousebrothers/templates/account/email_confirm.html:6
-#: blousebrothers/templates/account/email_confirm.html:13
+#: blousebrothers/templates/account/email_confirm.html:10
 #: blousebrothers/templates/account/email_confirmed.html:6
 #: blousebrothers/templates/account/email_confirmed.html:13
 msgid "Confirm E-mail Address"
 msgstr "Confirmez l'adresse email"
 
-#: blousebrothers/templates/account/email_confirm.html:19
+#: blousebrothers/templates/account/email_confirm.html:16
 #, python-format
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
@@ -258,11 +421,11 @@ msgstr ""
 "Veuillez confirmer que <a href=\"mailto:%(email)s\">%(email)s</a> est une "
 "adresse email pour l'utilisateur %(user_display)s."
 
-#: blousebrothers/templates/account/email_confirm.html:23
+#: blousebrothers/templates/account/email_confirm.html:20
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: blousebrothers/templates/account/email_confirm.html:30
+#: blousebrothers/templates/account/email_confirm.html:27
 #, python-format
 msgid ""
 "This e-mail confirmation link expired or is invalid. Please <a href="
@@ -280,25 +443,15 @@ msgstr ""
 "Vous avez confirmé que <a href=\"mailto:%(email)s\">%(email)s</a> est "
 "uneadresse email de l'utilisateur %(user_display)s."
 
-#: blousebrothers/templates/account/login.html:9
+#: blousebrothers/templates/account/login.html:15
 msgid "Sign In"
 msgstr "Inscription"
 
-#: blousebrothers/templates/account/login.html:12
-#: blousebrothers/templates/account/signup.html:33
-#: blousebrothers/templates/pages/home.html:24
-msgid "Inscription"
-msgstr ""
-
-#: blousebrothers/templates/account/login.html:21
-msgid "Connexion"
-msgstr ""
-
-#: blousebrothers/templates/account/login.html:50
+#: blousebrothers/templates/account/login.html:32
 msgid "Log In"
 msgstr ""
 
-#: blousebrothers/templates/account/login.html:51
+#: blousebrothers/templates/account/login.html:33
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié?"
 
@@ -313,40 +466,33 @@ msgid "Are you sure you want to sign out?"
 msgstr "Etes-vous sûr de vouloir vous déconnecter?"
 
 #: blousebrothers/templates/account/password_change.html:5
-#: blousebrothers/templates/account/password_change.html:11
-#: blousebrothers/templates/account/password_change.html:16
+#: blousebrothers/templates/account/password_change.html:8
+#: blousebrothers/templates/account/password_change.html:13
 #: blousebrothers/templates/account/password_reset_from_key.html:6
-#: blousebrothers/templates/account/password_reset_from_key.html:12
+#: blousebrothers/templates/account/password_reset_from_key.html:9
 #: blousebrothers/templates/account/password_reset_from_key_done.html:4
-#: blousebrothers/templates/account/password_reset_from_key_done.html:10
+#: blousebrothers/templates/account/password_reset_from_key_done.html:7
 msgid "Change Password"
 msgstr "Changer le mot de passe"
 
-#: blousebrothers/templates/account/password_reset.html:7
-#: blousebrothers/templates/account/password_reset.html:14
-#: blousebrothers/templates/account/password_reset_done.html:6
-#: blousebrothers/templates/account/password_reset_done.html:12
+#: blousebrothers/templates/account/password_reset.html:8
+#: blousebrothers/templates/account/password_reset_done.html:7
+#: blousebrothers/templates/account/password_reset_done.html:23
+#: blousebrothers/templates/account/password_reset_done.html:82
 msgid "Password Reset"
 msgstr "Changer le mot de passe"
 
-#: blousebrothers/templates/account/password_reset.html:19
-msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
-msgstr ""
-"Mot de passe oublié? Veuillez entrer votre adresse email afin d'en "
-"reconfigurer un nouveau"
-
-#: blousebrothers/templates/account/password_reset.html:24
+#: blousebrothers/templates/account/password_reset.html:21
 msgid "Reset My Password"
 msgstr "Changer mon mot de passe"
 
-#: blousebrothers/templates/account/password_reset.html:27
+#: blousebrothers/templates/account/password_reset.html:23
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
 "Veuillez nous contacter pour tout problème lors du changement de mot de passe"
 
-#: blousebrothers/templates/account/password_reset_done.html:18
+#: blousebrothers/templates/account/password_reset_done.html:31
+#: blousebrothers/templates/account/password_reset_done.html:88
 msgid ""
 "We have sent you an e-mail. Please contact us if you do not receive it "
 "within a few minutes."
@@ -354,11 +500,11 @@ msgstr ""
 "Nous vous avons envoyé un email. Veuillez nous contacter si vous ne le "
 "recevez pas dans les minutes qui suivent"
 
-#: blousebrothers/templates/account/password_reset_from_key.html:12
+#: blousebrothers/templates/account/password_reset_from_key.html:9
 msgid "Bad Token"
 msgstr ""
 
-#: blousebrothers/templates/account/password_reset_from_key.html:16
+#: blousebrothers/templates/account/password_reset_from_key.html:13
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
@@ -369,18 +515,18 @@ msgstr ""
 "qu'il a déjà été utilisé. Veuillez redemander un<a href="
 "\"%(passwd_reset_url)s\">nouveau renouvellement du mot de passe</a>."
 
-#: blousebrothers/templates/account/password_reset_from_key.html:22
+#: blousebrothers/templates/account/password_reset_from_key.html:19
 msgid "change password"
 msgstr "changer le mot de passe"
 
-#: blousebrothers/templates/account/password_reset_from_key.html:25
-#: blousebrothers/templates/account/password_reset_from_key_done.html:11
+#: blousebrothers/templates/account/password_reset_from_key.html:22
+#: blousebrothers/templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
 msgstr "Votre mot de passe a bien été changé"
 
 #: blousebrothers/templates/account/password_set.html:6
-#: blousebrothers/templates/account/password_set.html:12
-#: blousebrothers/templates/account/password_set.html:17
+#: blousebrothers/templates/account/password_set.html:9
+#: blousebrothers/templates/account/password_set.html:14
 msgid "Set Password"
 msgstr "Définir le mot de passe"
 
@@ -389,22 +535,22 @@ msgid "Signup"
 msgstr "Inscription"
 
 #: blousebrothers/templates/account/signup_closed.html:5
-#: blousebrothers/templates/account/signup_closed.html:11
+#: blousebrothers/templates/account/signup_closed.html:8
 msgid "Sign Up Closed"
 msgstr ""
 
-#: blousebrothers/templates/account/signup_closed.html:13
+#: blousebrothers/templates/account/signup_closed.html:10
 msgid "We are sorry, but the sign up is currently closed."
 msgstr ""
 
 #: blousebrothers/templates/account/verification_sent.html:5
-#: blousebrothers/templates/account/verification_sent.html:11
+#: blousebrothers/templates/account/verification_sent.html:8
 #: blousebrothers/templates/account/verified_email_required.html:5
-#: blousebrothers/templates/account/verified_email_required.html:11
+#: blousebrothers/templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
 msgstr "Vérifiez votre adresse email"
 
-#: blousebrothers/templates/account/verification_sent.html:13
+#: blousebrothers/templates/account/verification_sent.html:10
 #, python-format
 msgid ""
 "We have sent an e-mail to <a href=\"mailto:%(email)s\">%(email)s</a> for "
@@ -416,288 +562,735 @@ msgstr ""
 "d'inscription Veuillez nous contacter si vous ne le recevez pas dans les "
 "minutes qui suivent."
 
-#: blousebrothers/templates/account/verified_email_required.html:15
+#: blousebrothers/templates/account/verified_email_required.html:12
 msgid ""
 "This part of the site requires us to verify that\n"
 "        you are who you claim to be. For this purpose, we require that you\n"
 "        verify ownership of your e-mail address. "
 msgstr ""
 
-#: blousebrothers/templates/account/verified_email_required.html:19
+#: blousebrothers/templates/account/verified_email_required.html:16
 msgid ""
 "We have sent an e-mail to you for\n"
 "        verification. Please click on the link inside this e-mail. Please\n"
 "        contact us if you do not receive it within a few minutes."
 msgstr ""
 
-#: blousebrothers/templates/account/verified_email_required.html:23
+#: blousebrothers/templates/account/verified_email_required.html:20
 #, python-format
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
 "mail address</a>."
 msgstr ""
 
-#: blousebrothers/templates/base.html:10
+#: blousebrothers/templates/base.html:18
 msgid "Build"
 msgstr ""
 
-#: blousebrothers/templates/base.html:89
+#: blousebrothers/templates/base.html:105
 msgid "Version:"
 msgstr ""
 
-#: blousebrothers/templates/confs/conference_final.html:6
-#: blousebrothers/templates/confs/conference_form.html:6
-#: blousebrothers/templates/confs/conference_list.html:3
-#: blousebrothers/templates/confs/conference_update.html:5
-#: blousebrothers/templates/partials/nav_accounts.html:25
-msgid "Confs"
+#: blousebrothers/templates/basket/basket.html:6
+#: blousebrothers/templates/basket/basket.html:14
+#: blousebrothers/templates/basket/basket.html:22
+msgid "Achat abonnement"
 msgstr ""
 
-#: blousebrothers/templates/confs/conference_final.html:48
-msgid "Valider"
+#: blousebrothers/templates/basket/basket.html:12
+#: blousebrothers/templates/catalogue/browse.html:21
+#: blousebrothers/templates/partials/nav_accounts.html:20
+msgid "Home"
 msgstr ""
 
-#: blousebrothers/templates/confs/conference_form.html:42
-msgid "Enregistrer et continuer"
-msgstr ""
-
-#: blousebrothers/templates/confs/conference_list.html:9
-msgid "Mes confs"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:11
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:19
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:11
-msgid "Products"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:17
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:17
-#: blousebrothers/templates/dashboard/layout.html:25
-#: blousebrothers/templates/dashboard/layout.html:103
-#: blousebrothers/templates/layout.html:70
-#: blousebrothers/templates/partials/nav_accounts.html:54
-msgid "Dashboard"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:25
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:20
-msgid "Dossiers"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:32
-msgid "Créer un nouveau dossier"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:37
-msgid "Submitting..."
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_list.html:37
-msgid "Nouveau dossier"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:44
+#: blousebrothers/templates/basket/messages/addition.html:6
 #, python-format
 msgid ""
 "\n"
-"                            You are currently editing a product variant of\n"
-"                            <a href=\"%(parent_url)s\">%(title)s</a>.\n"
-"                        "
+"    <strong>%(quantity)s</strong> copies of <strong>%(title)s</strong>\n"
+"    have been added to your basket.\n"
+"    "
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:59
-msgid "Sections"
+#: blousebrothers/templates/basket/partials/basket_content.html:8
+msgid "Important messages about items in your basket"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:71
-msgid "Énoncé du dossier"
+#: blousebrothers/templates/basket/partials/basket_content.html:16
+msgid "You could be missing out on offers!"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:73
-msgid "Categories"
-msgstr "Catégories"
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:76
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:147
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:258
-msgid "Attributes"
+#: blousebrothers/templates/basket/partials/basket_content.html:18
+#, python-format
+msgid ""
+"\n"
+"                <div class=\"warning\">%(message)s to qualify for the <a "
+"href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
+"            "
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:79
-msgid "Iconographie"
+#: blousebrothers/templates/basket/partials/basket_content.html:29
+msgid "Items to buy now"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:82
-msgid "Questions"
+#: blousebrothers/templates/basket/partials/basket_content.html:30
+#: blousebrothers/templates/checkout/preview.html:53
+#: blousebrothers/templates/checkout/thank_you.html:65
+msgid "Quantity"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:104
-msgid "Product details"
+#: blousebrothers/templates/basket/partials/basket_content.html:31
+#: blousebrothers/templates/basket/partials/basket_content.html:165
+#: blousebrothers/templates/catalogue/detail.html:148
+msgid "Price"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:127
-msgid "Category"
+#: blousebrothers/templates/basket/partials/basket_content.html:32
+#: blousebrothers/templates/checkout/preview.html:54
+#: blousebrothers/templates/checkout/thank_you.html:66
+msgid "Total"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:149
-msgid "Product Type:"
+#: blousebrothers/templates/basket/partials/basket_content.html:58
+msgid "Updating..."
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:170
-msgid "Upload, change or remove images"
+#: blousebrothers/templates/basket/partials/basket_content.html:58
+msgid "Update"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:189
-msgid "Stock and pricing"
+#: blousebrothers/templates/basket/partials/basket_content.html:65
+msgid "Save for later"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:194
-msgid "Partner"
+#: blousebrothers/templates/basket/partials/basket_content.html:111
+msgid "Voucher/promo code"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:195
-msgid "SKU"
+#: blousebrothers/templates/basket/partials/basket_content.html:113
+msgid "I have a voucher code..."
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:197
-msgid "Num in stock"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:198
-msgid "Num allocated"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:199
-msgid "Low stock threshold"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:201
-msgid "Currency"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:202
-msgid "Cost price"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:203
-msgid "Price (excl tax)"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:204
-msgid "Retail price"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:205
-msgid "Delete?"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:249
-msgid "Variants"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:250
+#: blousebrothers/templates/basket/partials/basket_content.html:119
 msgid "Adding..."
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:252
-msgid "Add variant"
-msgstr ""
+#: blousebrothers/templates/basket/partials/basket_content.html:119
+#, fuzzy
+#| msgid "All products"
+msgid "Add voucher"
+msgstr "Tous les dossiers"
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:257
-msgid "Title"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:259
-msgid "Stock records"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:269
-msgid "Edit"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:272
-msgid "Delete"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:281
-msgid "This product does not have any variants."
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:283
-msgid "One can't add variants to this product at this point."
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:285
-msgid "This is likely because this product still has stock records."
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:301
-msgid "Recommended products"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:324
-msgid "Cancel"
-msgstr ""
-
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:326
+#: blousebrothers/templates/basket/partials/basket_content.html:120
+#: blousebrothers/templates/catalogue/reviews/review_form.html:47
 #: blousebrothers/templates/partials/form.html:12
 msgid "or"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:328
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:332
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:335
+#: blousebrothers/templates/basket/partials/basket_content.html:120
+#: blousebrothers/templates/catalogue/reviews/review_form.html:48
+#: blousebrothers/templates/partials/form.html:12
+msgid "cancel"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_content.html:130
+#: blousebrothers/templates/checkout/preview.html:88
+#: blousebrothers/templates/checkout/thank_you.html:109
+#, fuzzy
+#| msgid "All products"
+msgid "Totals"
+msgstr "Tous les dossiers"
+
+#: blousebrothers/templates/basket/partials/basket_content.html:142
+msgid "Proceed to checkout"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_content.html:151
+msgid "Aucun abonnement sélectionné."
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_content.html:152
+msgid "Retourner sur la page d'accueil"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_content.html:161
+msgid "Items to buy later"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_content.html:164
+msgid "Items"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_content.html:198
+msgid "Move to basket"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:9
+#: blousebrothers/templates/basket/partials/basket_totals.html:99
+#: blousebrothers/templates/checkout/thank_you.html:115
+#: blousebrothers/templates/partials/nav_primary.html:20
+msgid "Basket"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:16
+#: blousebrothers/templates/checkout/thank_you.html:121
+msgid "Basket total (before discounts)"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:28
+#: blousebrothers/templates/checkout/thank_you.html:126
+#: blousebrothers/templates/checkout/thank_you.html:173
+#, fuzzy
+#| msgid "Account"
+msgid "Discount"
+msgstr "Compte"
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:39
+#, fuzzy
+#| msgid "All products"
+msgid "Vouchers"
+msgstr "Tous les dossiers"
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:62
+#: blousebrothers/templates/checkout/thank_you.html:136
+msgid "Basket total (after discounts)"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:74
+#: blousebrothers/templates/checkout/thank_you.html:141
+msgid "Basket total"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:95
+msgid "Tax"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:105
+#: blousebrothers/templates/checkout/thank_you.html:160
+msgid "Shipping"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:120
+#: blousebrothers/templates/checkout/thank_you.html:214
+msgid "Post order actions"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:120
+msgid "These will be applied once your order is placed."
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:140
+#: blousebrothers/templates/checkout/thank_you.html:230
+msgid "Order total"
+msgstr ""
+
+#: blousebrothers/templates/basket/partials/basket_totals.html:153
+msgid "Taxes will be added during checkout."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/browse.html:78
+msgid "Refine by"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/browse.html:103
+#, python-format
+msgid ""
+"\n"
+"                    <strong>%(num_results)s</strong> result - showing "
+"<strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
+"                "
+msgid_plural ""
+"\n"
+"                    <strong>%(num_results)s</strong> results - showing "
+"<strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
+"                "
+msgstr[0] ""
+msgstr[1] ""
+
+#: blousebrothers/templates/catalogue/browse.html:109
+#, python-format
+msgid ""
+"\n"
+"                    <strong>%(num_results)s</strong> result.\n"
+"                "
+msgid_plural ""
+"\n"
+"                    <strong>%(num_results)s</strong> results.\n"
+"                "
+msgstr[0] ""
+msgstr[1] ""
+
+#: blousebrothers/templates/catalogue/browse.html:122
+msgid "<strong>0</strong> results."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/browse.html:139
+#, fuzzy
+#| msgid "All products"
+msgid "No products found."
+msgstr "Tous les dossiers"
+
+#: blousebrothers/templates/catalogue/detail.html:46
+#, fuzzy
+#| msgid "Edit products"
+msgid "Edit this product"
+msgstr "Tous les dossiers"
+
+#: blousebrothers/templates/catalogue/detail.html:70
+msgid "Auteur"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:79
+msgid "Pseudo"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:80
+#: blousebrothers/templates/users/user_detail.html:34
+msgid "City"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:81
+#: blousebrothers/templates/users/user_detail.html:35
+#: blousebrothers/users/models.py:110
+msgid "Niveau"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:83
+#: blousebrothers/templates/users/user_detail.html:37
+#: blousebrothers/users/models.py:117
+msgid "Spécialité"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:109
+msgid "See all reviews"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:111
+msgid "Avis étudiants"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:116
+msgid "This product does not have any reviews yet"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:133
+msgid "Product Information"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:138
+msgid "UPC"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:142
+#, fuzzy
+#| msgid "All products"
+msgid "Product Type"
+msgstr "Tous les dossiers"
+
+#: blousebrothers/templates/catalogue/detail.html:159
+msgid "Étudiants présents"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:173
+msgid "Items abordés"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:195
+msgid "Du même auteur..."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/detail.html:211
+msgid "Recommended items"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/add_to_basket_form.html:12
+msgid "You have an active stock alert for this product."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/add_to_basket_form.html:16
+msgid "Tu peux être prévenu par email lorsque ce sujet sera disponible."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/add_to_basket_form.html:18
+#: blousebrothers/templates/catalogue/partials/review.html:41
+#: blousebrothers/templates/catalogue/partials/review.html:46
+msgid "Submitting..."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/add_to_basket_form.html:18
+msgid "Prévenez moi quand le dossier sera disponible"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/add_to_basket_form_compact.html:11
+msgid "Bientôt disponible !"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/product.html:9
+msgid "Accéder au détail"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:24
+#, python-format
+msgid ""
+"\n"
+"                Reviewed by you on %(review_date)s\n"
+"                "
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:28
+#, python-format
+msgid ""
+"\n"
+"                    Reviewed by <strong>%(name)s</strong> on "
+"%(review_date)s\n"
+"                "
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:32
+msgid "Permalink"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:37
+msgid "Is this review helpful?"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:41
+msgid "Yes"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:46
+msgid "No"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:53
+#, python-format
+msgid ""
+"\n"
+"            <strong>%(num_up_votes)s</strong> sur %(num_votes)s étudiant a "
+"trouvé ça pertinent \n"
+"            "
+msgid_plural ""
+"\n"
+"            <strong>%(num_up_votes)s</strong> sur %(num_votes)s étudiants "
+"ont trouvé ça pertinent\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: blousebrothers/templates/catalogue/partials/review.html:59
+msgid "This review has no votes."
+msgstr ""
+
+#: blousebrothers/templates/catalogue/partials/stock_record.html:9
+#: blousebrothers/templates/catalogue/partials/stock_record.html:15
+msgid "Free"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/reviews/partials/review_stars.html:19
+#, python-format
+msgid ""
+"\n"
+"            %(num_reviews)s avis\n"
+"            "
+msgid_plural ""
+"\n"
+"            %(num_reviews)s avis\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: blousebrothers/templates/catalogue/reviews/partials/review_stars.html:45
+msgid "Write a review"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/reviews/review_form.html:8
+msgid "Laisser un avis sur le dossier"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/reviews/review_form.html:35
+msgid "Difficulté"
+msgstr ""
+
+#: blousebrothers/templates/catalogue/reviews/review_form.html:46
 #: blousebrothers/templates/partials/form.html:11
 msgid "Saving..."
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:329
-msgid "Save and add another variant"
+#: blousebrothers/templates/catalogue/reviews/review_form.html:46
+msgid "Save review"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:333
-msgid "Save and continue editing"
+#: blousebrothers/templates/checkout/nav.html:11
+msgid "1. Payment"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:336
-#: blousebrothers/templates/partials/form.html:11
-msgid "Save"
+#: blousebrothers/templates/checkout/nav.html:16
+msgid "1. Paiement"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/catalogue/product_update.html:340
-msgid "View on site"
+#: blousebrothers/templates/checkout/nav.html:23
+msgid "2. Récapitulatif"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/layout.html:42
-msgid "Welcome"
+#: blousebrothers/templates/checkout/nav.html:29
+#, fuzzy
+#| msgid "Confirm"
+msgid "3. Confirmation"
+msgstr "Confirmer"
+
+#: blousebrothers/templates/checkout/preview.html:13
+#: blousebrothers/templates/checkout/thank_you.html:22
+#: blousebrothers/templates/checkout/thank_you.html:25
+msgid "Payment"
 msgstr ""
 
-#: blousebrothers/templates/dashboard/layout.html:43
-msgid "Return to site"
+#: blousebrothers/templates/checkout/preview.html:16
+msgid "seront débités sur votre carte."
 msgstr ""
 
-#: blousebrothers/templates/dashboard/layout.html:45
-msgid "Log out"
+#: blousebrothers/templates/checkout/preview.html:18
+msgid "Changer de mode de paiement"
 msgstr ""
 
-#: blousebrothers/templates/layout.html:59
+#: blousebrothers/templates/checkout/preview.html:25
+msgid "Si tout est OK pour toi, clique sur commander."
+msgstr ""
+
+#: blousebrothers/templates/checkout/preview.html:35
+msgid "Commander"
+msgstr ""
+
+#: blousebrothers/templates/checkout/preview.html:44
+msgid "Modifier ma commande"
+msgstr ""
+
+#: blousebrothers/templates/checkout/preview.html:48
+#: blousebrothers/templates/checkout/thank_you.html:59
+msgid "Order contents"
+msgstr ""
+
+#: blousebrothers/templates/checkout/preview.html:52
+msgid "Item"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:29
+#, python-format
+msgid ""
+"\n"
+"                                Allocation of %(amount)s from type %(type)s "
+"(reference: %(reference)s)\n"
+"                            "
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:33
+#, python-format
+msgid ""
+"\n"
+"                                Allocation of %(amount)s from type %(type)s\n"
+"                            "
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:40
+msgid "No payment was required for this order."
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:45
+#, fuzzy
+#| msgid "Email address"
+msgid "Billing address"
+msgstr "Adresses email"
+
+#: blousebrothers/templates/checkout/thank_you.html:64
+msgid "Items purchased"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:82
+#, python-format
+msgid ""
+"\n"
+"                            Estimated dispatch: <strong>%(date)s</strong>\n"
+"                        "
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:163
+msgid "Shipping method"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:168
+msgid "Shipping charge (before discounts)"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:178
+msgid "Shipping charge (after discounts)"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:183
+msgid "Shipping charge"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:200
+msgid "Order tax"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:243
+msgid "Tracking your order"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:245
+msgid "You can track the status of your order"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:246
+msgid "View order status"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:255
+msgid "Print this page"
+msgstr ""
+
+#: blousebrothers/templates/checkout/thank_you.html:258
+msgid "Retourner sur le site"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_final.html:6
+#: blousebrothers/templates/confs/conference_form.html:6
+#: blousebrothers/templates/confs/conference_list.html:7
+#: blousebrothers/templates/confs/conference_update.html:5
+#: blousebrothers/templates/confs/test_form.html:5
+#: blousebrothers/templates/confs/test_list.html:4
+#: blousebrothers/templates/partials/nav_accounts.html:25
+msgid "Confs"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_final.html:72
+msgid "Valider"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_form.html:43
+msgid "Enregistrer et continuer"
+msgstr ""
+
+#: blousebrothers/templates/confs/conference_list.html:14
+#: blousebrothers/templates/layout.html:66
 msgid "Confs créées"
 msgstr ""
 
-#: blousebrothers/templates/layout.html:87
+#: blousebrothers/templates/confs/conference_list.html:15
+msgid "Éditer mes conférences"
+msgstr ""
+
+#: blousebrothers/templates/confs/partials/go_button.html:13
+msgid "Démarrage..."
+msgstr ""
+
+#: blousebrothers/templates/confs/partials/go_button.html:22
+msgid "Voir mon résultat"
+msgstr ""
+
+#: blousebrothers/templates/confs/partials/go_button.html:25
+msgid "Reprendre"
+msgstr ""
+
+#: blousebrothers/templates/confs/partials/go_button.html:29
+msgid "S'entrainer"
+msgstr ""
+
+#: blousebrothers/templates/confs/partials/go_button.html:32
+msgid "Add to basket"
+msgstr ""
+
+#: blousebrothers/templates/confs/test_detail.html:25
+msgid "Recommencer"
+msgstr ""
+
+#: blousebrothers/templates/confs/test_list.html:13
+msgid "Mes confs"
+msgstr ""
+
+#: blousebrothers/templates/confs/test_list.html:14
+msgid "Retrouve ici les Confs que tu as achetées"
+msgstr ""
+
+#: blousebrothers/templates/dashboard/catalogue/product_list.html:6
+msgid "Products"
+msgstr ""
+
+#: blousebrothers/templates/invitations/email/email_invite_message.txt:3
+#, python-format
+msgid ""
+"\n"
+"\n"
+"Hello,\n"
+"\n"
+"%(inviter)st'as invité à le rejoindre sur BlouseBrothers.\n"
+"\n"
+"BlouseBrothers est une plateforme collaborative d'entrainement aux ECNi. \n"
+"Nous voulons remplacer les prépas ECNi trop chères par un système "
+"collaboratif plus juste !\n"
+"\n"
+"%(invite_url)s\n"
+"\n"
+"A très vite sur BlouseBrothers !\n"
+"\n"
+"Guillaume et Julien.\n"
+"\n"
+msgstr ""
+
+#: blousebrothers/templates/invitations/email/email_invite_subject.txt:3
+#, python-format
+msgid " %(inviter)s t'as invité à le rejoindre sur BlouseBrothers"
+msgstr ""
+
+#: blousebrothers/templates/invitations/messages/invite_accepted.txt:3
+msgid ""
+"Ton parrainage a bien été pris en compte. Merci de compléter le formulaire "
+"ci-dessous pour finaliser ton inscription."
+msgstr ""
+
+#: blousebrothers/templates/layout.html:61
+msgid "Catalogue"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:70
+msgid "Confs achetées"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:86
+#: blousebrothers/templates/partials/nav_accounts.html:54
+msgid "Dashboard"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:90
 #: blousebrothers/templates/partials/nav_accounts.html:56
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: blousebrothers/templates/layout.html:90
+#: blousebrothers/templates/layout.html:93
 #: blousebrothers/templates/partials/nav_accounts.html:58
 msgid "Login or register"
 msgstr ""
 
+#: blousebrothers/templates/layout.html:102
+msgid "Comment ça marche ?"
+msgstr ""
+
+#: blousebrothers/templates/layout.html:103
+msgid "Créer une conf"
+msgstr ""
+
+#: blousebrothers/templates/pages/home.html:24
+msgid "Inscription"
+msgstr ""
+
 #: blousebrothers/templates/pages/home.html:31
+#: blousebrothers/templates/socialaccount/signup.html:9
+#: blousebrothers/templates/socialaccount/signup.html:20
 msgid "Sign Up"
 msgstr "Inscription"
+
+#: blousebrothers/templates/partials/confjs.html:252
+msgid "Cette page enregistre en permanence tes modifications, no stress ;)"
+msgstr ""
 
 #: blousebrothers/templates/partials/ellipses_pagination.html:9
 #: blousebrothers/templates/partials/pagination.html:8
@@ -709,8 +1302,8 @@ msgstr ""
 msgid "next"
 msgstr ""
 
-#: blousebrothers/templates/partials/form.html:12
-msgid "cancel"
+#: blousebrothers/templates/partials/form.html:11
+msgid "Save"
 msgstr ""
 
 #: blousebrothers/templates/partials/form_fields.html:5
@@ -740,14 +1333,6 @@ msgstr ""
 
 #: blousebrothers/templates/partials/mini_basket.html:13
 msgid "View basket"
-msgstr ""
-
-#: blousebrothers/templates/partials/nav_accounts.html:20
-msgid "Home"
-msgstr ""
-
-#: blousebrothers/templates/partials/nav_primary.html:20
-msgid "Basket"
 msgstr ""
 
 #: blousebrothers/templates/partials/nav_primary.html:23
@@ -783,104 +1368,269 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: blousebrothers/templates/partials/submenu_conf_edit.html:12
-msgid "Choix du type de dossier"
+#: blousebrothers/templates/partials/submenu_conf_edit.html:13
+msgid "Type de sujet"
 msgstr ""
 
-#: blousebrothers/templates/partials/submenu_conf_edit.html:23
-msgid "Rédaction des questions"
+#: blousebrothers/templates/partials/submenu_conf_edit.html:24
+msgid "Rédaction"
 msgstr ""
 
-#: blousebrothers/templates/partials/submenu_search.html:10
-msgid "Créer une conf"
+#: blousebrothers/templates/partials/testjs.html:190
+msgid "Session restaurée au dernier point de progression."
 msgstr ""
 
-#: blousebrothers/templates/users/user_detail.html:21
-msgid "First name"
+#: blousebrothers/templates/partials/testjs.html:194
+msgid "Voici le rendu du sujet"
 msgstr ""
 
-#: blousebrothers/templates/users/user_detail.html:22
+#: blousebrothers/templates/partials/testjs.html:196
+msgid ""
+"Tu peux quitter et reprendre plus tard, ta progression est automatiquement "
+"sauvegardée."
+msgstr ""
+
+#: blousebrothers/templates/socialaccount/signup.html:11
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"%(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#: blousebrothers/templates/users/user_detail.html:30
 msgid "Last name"
 msgstr ""
 
-#: blousebrothers/templates/users/user_detail.html:23
+#: blousebrothers/templates/users/user_detail.html:31
+msgid "First name"
+msgstr ""
+
+#: blousebrothers/templates/users/user_detail.html:32
 msgid "Email address"
 msgstr "Adresses email"
 
-#: blousebrothers/templates/users/user_detail.html:24
-msgid "City"
+#: blousebrothers/templates/users/wallet.html:57
+msgid "Numéro de carte"
 msgstr ""
 
-#: blousebrothers/templates/users/user_detail.html:25
-#: blousebrothers/users/models.py:87
-msgid "Niveau"
+#: blousebrothers/templates/users/wallet.html:59
+msgid "Valide jusqu'au"
 msgstr ""
 
-#: blousebrothers/templates/users/user_detail.html:35
-msgid "Modifier mes informations"
+#: blousebrothers/templates/users/wallet.html:179
+msgid "Activité à mes conférences"
 msgstr ""
 
-#: blousebrothers/users/models.py:22
-msgid "P1"
-msgstr "Première année de médecine"
-
-#: blousebrothers/users/models.py:23
-msgid "P2"
-msgstr "Deuxième année de médecine"
-
-#: blousebrothers/users/models.py:24
-msgid "P3"
-msgstr "Troisième année de médecine"
-
-#: blousebrothers/users/models.py:25
-msgid "M1"
-msgstr "Quatrième année de médecine"
-
-#: blousebrothers/users/models.py:26
-msgid "M2"
-msgstr "Cinquième année de médecine"
-
-#: blousebrothers/users/models.py:27
-msgid "M3"
-msgstr "Sixième année de médecine"
-
-#: blousebrothers/users/models.py:28
-msgid "Interne"
+#: blousebrothers/templates/users/wallet.html:202
+msgid "Étudiants"
 msgstr ""
 
-#: blousebrothers/users/models.py:29
-msgid "Médecin"
+#: blousebrothers/templates/users/wallet.html:204
+msgid "Nombre total d'étudiants"
 msgstr ""
 
-#: blousebrothers/users/models.py:47
-msgid "Name of User"
+#: blousebrothers/templates/users/wallet.html:208
+msgid "Nouveaux étudiants"
 msgstr ""
 
-#: blousebrothers/users/models.py:49
-msgid "Code Parrain"
+#: blousebrothers/templates/users/wallet.html:212
+msgid "Nombre total de questions"
 msgstr ""
 
-#: blousebrothers/users/models.py:55
+#: blousebrothers/templates/users/wallet.html:220
+msgid "Dernières 24 heures"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:223
+#: blousebrothers/templates/users/wallet.html:243
+msgid "Nombre de dossiers effectués"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:227
+#: blousebrothers/templates/users/wallet.html:247
+msgid "Revenu total"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:231
+#: blousebrothers/templates/users/wallet.html:251
+msgid "Prix moyen"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:240
+msgid "Orders - All Time"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:263
+msgid "Résultats de la recherche"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:265
+msgid "Détails des ventes effectuées"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:272
+#, fuzzy
+#| msgid "Conference"
+msgid "Conférence"
+msgstr "Conférence"
+
+#: blousebrothers/templates/users/wallet.html:273
+msgid "Etudiant"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:274
+msgid "Date"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:275
+msgid "Crédit"
+msgstr ""
+
+#: blousebrothers/templates/users/wallet.html:276
+msgid "Frais"
+msgstr ""
+
+#: blousebrothers/users/admin.py:46
+msgid "\"On se réveille !\""
+msgstr ""
+
+#: blousebrothers/users/admin.py:53
+msgid "Dossier complet mais non accessible aux étudiants"
+msgstr ""
+
+#: blousebrothers/users/admin.py:54
+msgid ""
+"Infos pour Mango manquantes (ddn, pays de résidence, nationalité, prénom, "
+"nom)"
+msgstr ""
+
+#: blousebrothers/users/admin.py:55
+msgid "Nom et adresse précisés"
+msgstr ""
+
+#: blousebrothers/users/admin.py:85
+msgid "Paie sa conf"
+msgstr ""
+
+#: blousebrothers/users/admin.py:89
+msgid "A poser sa carte"
+msgstr ""
+
+#: blousebrothers/users/admin.py:90
+msgid "N'a pas poser sa carte"
+msgstr ""
+
+#: blousebrothers/users/admin.py:103
+msgid "dossier en cours"
+msgstr ""
+
+#: blousebrothers/users/admin.py:117
+msgid "depuis une semaine"
+msgstr ""
+
+#: blousebrothers/users/admin.py:118
+msgid "depuis un mois"
+msgstr ""
+
+#: blousebrothers/users/admin.py:119
+msgid "depuis plus d'un mois"
+msgstr ""
+
+#: blousebrothers/users/forms.py:19 blousebrothers/users/models.py:78
 msgid "Date de naissance"
 msgstr ""
 
-#: blousebrothers/users/models.py:57
+#: blousebrothers/users/forms.py:38 blousebrothers/users/forms.py:46
+msgid "Montant en euros"
+msgstr ""
+
+#: blousebrothers/users/forms.py:41
+msgid "Minimum 5€"
+msgstr ""
+
+#: blousebrothers/users/forms.py:56
+msgid "IBAN"
+msgstr ""
+
+#: blousebrothers/users/forms.py:57
+msgid "BIC"
+msgstr ""
+
+#: blousebrothers/users/forms.py:61
+msgid "Email de ton filleul"
+msgstr ""
+
+#: blousebrothers/users/forms.py:69
+msgid "Numéro de la carte"
+msgstr ""
+
+#: blousebrothers/users/forms.py:73
+msgid "Date d'expiration"
+msgstr ""
+
+#: blousebrothers/users/forms.py:79
+#, fuzzy
+#| msgid "Re-send Verification"
+msgid "Code de vérification"
+msgstr "Envoyer de nouveau la vérification"
+
+#: blousebrothers/users/models.py:42
+msgid "P1"
+msgstr "Première année de médecine"
+
+#: blousebrothers/users/models.py:43
+msgid "P2"
+msgstr "Deuxième année de médecine"
+
+#: blousebrothers/users/models.py:44
+msgid "P3"
+msgstr "Troisième année de médecine"
+
+#: blousebrothers/users/models.py:45
+msgid "M1"
+msgstr "Quatrième année de médecine"
+
+#: blousebrothers/users/models.py:46
+msgid "M2"
+msgstr "Cinquième année de médecine"
+
+#: blousebrothers/users/models.py:47
+msgid "M3"
+msgstr "Sixième année de médecine"
+
+#: blousebrothers/users/models.py:48
+msgid "Interne"
+msgstr ""
+
+#: blousebrothers/users/models.py:49
+msgid "Médecin"
+msgstr ""
+
+#: blousebrothers/users/models.py:70
+msgid "Name of User"
+msgstr ""
+
+#: blousebrothers/users/models.py:72
+msgid "Code Parrain"
+msgstr ""
+
+#: blousebrothers/users/models.py:80
 msgid "Adresse 1"
 msgstr ""
 
-#: blousebrothers/users/models.py:59
+#: blousebrothers/users/models.py:82
 msgid "Adresse 2"
 msgstr ""
 
-#: blousebrothers/users/models.py:61
+#: blousebrothers/users/models.py:84
 msgid "Ville"
 msgstr ""
 
-#: blousebrothers/users/models.py:63
+#: blousebrothers/users/models.py:86
 msgid "Code postal"
 msgstr ""
 
-#: blousebrothers/users/models.py:67
+#: blousebrothers/users/models.py:90
 msgid ""
 "Phone number must be entered in the format: '+999999999'. Up to 15 digits "
 "allowed."
@@ -888,46 +1638,1465 @@ msgstr ""
 "Le numéro de téléphone doit être entré dans le format suivant: '+999999999'. "
 "15 chiffres autorisés."
 
-#: blousebrothers/users/models.py:71
+#: blousebrothers/users/models.py:94
 msgid "Fixe"
 msgstr ""
 
-#: blousebrothers/users/models.py:75
+#: blousebrothers/users/models.py:98
 msgid "Mobile"
 msgstr ""
 
-#: blousebrothers/users/models.py:77
+#: blousebrothers/users/models.py:100
 msgid "Conférencier"
 msgstr ""
 
-#: blousebrothers/users/models.py:79
+#: blousebrothers/users/models.py:102
 msgid "Souhaite devenir conférencier"
 msgstr ""
 
-#: blousebrothers/users/models.py:81
+#: blousebrothers/users/models.py:104
 msgid "Date de demande"
 msgstr ""
 
-#: blousebrothers/users/models.py:85
+#: blousebrothers/users/models.py:108
 msgid "Ville de CHU actuelle"
 msgstr ""
 
-#: blousebrothers/users/models.py:105
-msgid "Nom"
+#: blousebrothers/users/models.py:115
+msgid "Pays de résidence"
 msgstr ""
 
-#: blousebrothers/users/views.py:46
-msgid "Pour être conférencier, vous devez compléter le formulaire ci-dessous."
+#: blousebrothers/users/models.py:116
+msgid "Nationalité"
 msgstr ""
 
-#: config/settings/common.py:150
+#: blousebrothers/users/models.py:118
+msgid "Bio visible par les utilisateurs"
+msgstr ""
+
+#: blousebrothers/users/models.py:120
+msgid "Important si tu es conférencier !"
+msgstr ""
+
+#: blousebrothers/users/views.py:314
+msgid ""
+"Merci de t'identifier ou de créer un compte pour soucrire à un abonnement"
+msgstr ""
+
+#: config/settings/common.py:183
 msgid "French"
 msgstr "Français"
 
+#: config/settings/common.py:353
+msgid "Rating"
+msgstr ""
+
+#: mangopay/constants.py:9
+msgid "Natural User"
+msgstr ""
+
+#: mangopay/constants.py:68
+msgid "BIC & IBAN"
+msgstr ""
+
+#: mangopay/constants.py:69
+msgid "Local US Format"
+msgstr ""
+
+#: mangopay/constants.py:70
+msgid "Other"
+msgstr ""
+
+#: mangopay/constants.py:78
+msgid "Checking"
+msgstr ""
+
+#: mangopay/constants.py:79
+msgid "Savings"
+msgstr ""
+
+#: mangopay/constants.py:91
+msgid "The request is created but not processed."
+msgstr ""
+
+#: mangopay/constants.py:92
+msgid "The request has been successfully processed."
+msgstr ""
+
+#: mangopay/constants.py:93
+msgid "The request has failed."
+msgstr ""
+
+#: mangopay/constants.py:101
+msgid "Pay in by BankWire"
+msgstr ""
+
+#: mangopay/constants.py:102
+msgid "Pay in by card via web"
+msgstr ""
+
+#: mangopay/constants.py:106
+msgid "Generic Operation error"
+msgstr ""
+
+#: mangopay/constants.py:107
+msgid "Insufficient wallet balance"
+msgstr ""
+
+#: mangopay/constants.py:108
+msgid "Author is not the wallet owner"
+msgstr ""
+
+#: mangopay/constants.py:109
+msgid "Transaction amount is higher than maximum permitted amount"
+msgstr ""
+
+#: mangopay/constants.py:110
+msgid "Transaction amount is lower than minimum permitted amount"
+msgstr ""
+
+#: mangopay/constants.py:111
+msgid "Invalid transaction amount"
+msgstr ""
+
+#: mangopay/constants.py:112
+msgid "Credited Funds must be more than 0"
+msgstr ""
+
+#: mangopay/constants.py:114
+msgid "User has not been redirected"
+msgstr ""
+
+#: mangopay/constants.py:115
+msgid "User canceled the payment"
+msgstr ""
+
+#: mangopay/constants.py:117
+msgid "Transaction has already been successfully refunded"
+msgstr ""
+
+#: mangopay/constants.py:118
+msgid "The refund cannot exceed initial transaction amount"
+msgstr ""
+
+#: mangopay/constants.py:119
+msgid "The refunded fees cannot exceed initial fee amount"
+msgstr ""
+
+#: mangopay/constants.py:120
+msgid "Balance of client fee wallet insufficient"
+msgstr ""
+
+#: mangopay/constants.py:121
+msgid ""
+"Duplicate operation: you cannot refund the same amount more than once for a "
+"transaction during the same day."
+msgstr ""
+
+#: mangopay/constants.py:123 mangopay/constants.py:205
+msgid "Invalid card number"
+msgstr ""
+
+#: mangopay/constants.py:124
+msgid "Invalid cardholder name"
+msgstr ""
+
+#: mangopay/constants.py:125
+msgid "Invalid PIN code"
+msgstr ""
+
+#: mangopay/constants.py:126
+msgid "Invalid PIN format"
+msgstr ""
+
+#: mangopay/constants.py:127
+msgid "Token input Error"
+msgstr ""
+
+#: mangopay/constants.py:128
+msgid "Card number: invalid format"
+msgstr ""
+
+#: mangopay/constants.py:129
+msgid "Expiry date: missing or invalid format"
+msgstr ""
+
+#: mangopay/constants.py:130
+msgid "CSC: missing or invalid format"
+msgstr ""
+
+#: mangopay/constants.py:131
+msgid "Callback URL: Invalid format"
+msgstr ""
+
+#: mangopay/constants.py:132
+msgid "Registration data : Invalid format"
+msgstr ""
+
+#: mangopay/constants.py:133
+msgid "The user did not complete the transaction"
+msgstr ""
+
+#: mangopay/constants.py:134
+msgid "The transaction has been cancelled by the user"
+msgstr ""
+
+#: mangopay/constants.py:135
+msgid "User is filling in the payment card details"
+msgstr ""
+
+#: mangopay/constants.py:136
+msgid "User has not been redirected then the payment session has expired"
+msgstr ""
+
+#: mangopay/constants.py:137
+msgid "User has let the payment session expire without paying"
+msgstr ""
+
+#: mangopay/constants.py:139
+msgid ""
+"Transaction refused by the bank. No more funds or limit has been reached"
+msgstr ""
+
+#: mangopay/constants.py:141
+msgid "Transaction refused by the bank. Amount limit has been reached"
+msgstr ""
+
+#: mangopay/constants.py:143
+msgid "Transaction refused by the terminal"
+msgstr ""
+
+#: mangopay/constants.py:144
+msgid ""
+"Transaction refused by the bank. The card spent amount limit has been reached"
+msgstr ""
+
+#: mangopay/constants.py:146
+msgid "The card has expired"
+msgstr ""
+
+#: mangopay/constants.py:147
+msgid "The card is inactive."
+msgstr ""
+
+#: mangopay/constants.py:148
+msgid "The card is not active"
+msgstr ""
+
+#: mangopay/constants.py:149
+msgid ""
+"Maximum number of attempts reached. Too much attempts for the same "
+"transaction"
+msgstr ""
+
+#: mangopay/constants.py:151
+msgid "Maximum amount exceeded. This is a card limitation on spent amount"
+msgstr ""
+
+#: mangopay/constants.py:153
+msgid ""
+"Maximum Uses Exceeded. Maximum attempts with this cards reached. You must "
+"try again after 24 hours."
+msgstr ""
+
+#: mangopay/constants.py:155
+msgid "Debit limit exceeded. This is a card limitation on spent amount"
+msgstr ""
+
+#: mangopay/constants.py:157
+msgid "Amount limit. TThe contribution transaction has failed"
+msgstr ""
+
+#: mangopay/constants.py:158
+msgid "Debit limit exceeded"
+msgstr ""
+
+#: mangopay/constants.py:159
+msgid ""
+"Transaction refused. The transaction has been refused by the bank. Contact "
+"your bank in order to have more information about it."
+msgstr ""
+
+#: mangopay/constants.py:162
+msgid "Secure mode: 3DSecure authentication is not available"
+msgstr ""
+
+#: mangopay/constants.py:163
+msgid "Secure mode: 3DSecure authentication has failed"
+msgstr ""
+
+#: mangopay/constants.py:165
+msgid "Token processing error. The token has not been created"
+msgstr ""
+
+#: mangopay/constants.py:166
+msgid "CardRegistration should return a valid JSON response"
+msgstr ""
+
+#: mangopay/constants.py:167
+msgid "The user is blocked due to KYC limitation."
+msgstr ""
+
+#: mangopay/constants.py:168
+msgid "Fraud policy error"
+msgstr ""
+
+#: mangopay/constants.py:169
+msgid "Counterfeit Card"
+msgstr ""
+
+#: mangopay/constants.py:170
+msgid ""
+"Lost Card. A 'lost card' error is a rule carried by the bank which "
+"deactivates a card due to too many payments or attempts."
+msgstr ""
+
+#: mangopay/constants.py:173
+msgid ""
+"Stolen Card. A 'lost card' error is a rule carried by the bank which "
+"deactivates a card due to too many payments or attempts."
+msgstr ""
+
+#: mangopay/constants.py:176
+msgid "Card bin not authorized"
+msgstr ""
+
+#: mangopay/constants.py:177
+msgid "Security violation"
+msgstr ""
+
+#: mangopay/constants.py:178
+msgid "Fraud suspected by the bank"
+msgstr ""
+
+#: mangopay/constants.py:179
+msgid "Opposition on bank account"
+msgstr ""
+
+#: mangopay/constants.py:180
+msgid "Transaction blocked by Fraud Policy"
+msgstr ""
+
+#: mangopay/constants.py:181
+msgid "Wallet blocked by Fraud policy"
+msgstr ""
+
+#: mangopay/constants.py:182
+msgid "User blocked by Fraud policy"
+msgstr ""
+
+#: mangopay/constants.py:183
+msgid "PSP configuration error"
+msgstr ""
+
+#: mangopay/constants.py:185
+msgid ""
+"PSP technical error. You could get this error if your card  is not supported "
+"by the payment service provider, or if the amount is higher than the maximum "
+"amount per transaction"
+msgstr ""
+
+#: mangopay/constants.py:188
+msgid "Bank technical error"
+msgstr ""
+
+#: mangopay/constants.py:189
+msgid "Technical error"
+msgstr ""
+
+#: mangopay/constants.py:191
+msgid "Internal Error. There is an issue on the tokenization server (PSP side)"
+msgstr ""
+
+#: mangopay/constants.py:192
+msgid "Method GET is not allowed"
+msgstr ""
+
+#: mangopay/constants.py:195
+msgid "Username/Password is incorrect"
+msgstr ""
+
+#: mangopay/constants.py:196
+msgid "Account is locked or inactive"
+msgstr ""
+
+#: mangopay/constants.py:197
+msgid "This card is not active"
+msgstr ""
+
+#: mangopay/constants.py:198
+msgid "Card expired"
+msgstr ""
+
+#: mangopay/constants.py:200
+msgid "Client certificate is disabled"
+msgstr ""
+
+#: mangopay/constants.py:201
+msgid "You do not have permissions to make this API call"
+msgstr ""
+
+#: mangopay/constants.py:203
+msgid ""
+"Too much time taken from the creation of the CardRegistration object to the "
+"submission of the Card Details on the Tokenizer Server"
+msgstr ""
+
+#: mangopay/constants.py:206
+msgid "Invalid date format"
+msgstr ""
+
+#: mangopay/constants.py:207
+msgid "Invalid CSC number"
+msgstr ""
+
+#: mangopay/constants.py:208
+msgid "Transaction refused"
+msgstr ""
+
+#: mangopay/constants.py:214
+msgid "Afghanistan"
+msgstr ""
+
+#: mangopay/constants.py:215 mangopay/constants.py:473
+msgid "land Islands"
+msgstr ""
+
+#: mangopay/constants.py:216 mangopay/constants.py:474
+msgid "Albania"
+msgstr ""
+
+#: mangopay/constants.py:217
+msgid "Algeria"
+msgstr ""
+
+#: mangopay/constants.py:218
+msgid "American Samoa"
+msgstr ""
+
+#: mangopay/constants.py:219 mangopay/constants.py:475
+msgid "Andorra"
+msgstr ""
+
+#: mangopay/constants.py:220
+msgid "Angola"
+msgstr ""
+
+#: mangopay/constants.py:221
+msgid "Anguilla"
+msgstr ""
+
+#: mangopay/constants.py:222
+msgid "Antarctica"
+msgstr ""
+
+#: mangopay/constants.py:223
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: mangopay/constants.py:224
+msgid "Argentina"
+msgstr ""
+
+#: mangopay/constants.py:225
+msgid "Armenia"
+msgstr ""
+
+#: mangopay/constants.py:226
+msgid "Aruba"
+msgstr ""
+
+#: mangopay/constants.py:227
+msgid "Australia"
+msgstr ""
+
+#: mangopay/constants.py:228 mangopay/constants.py:476
+msgid "Austria"
+msgstr ""
+
+#: mangopay/constants.py:229
+msgid "Azerbaijan"
+msgstr ""
+
+#: mangopay/constants.py:230
+msgid "Bahamas"
+msgstr ""
+
+#: mangopay/constants.py:231 mangopay/constants.py:478
+msgid "Bahrain"
+msgstr ""
+
+#: mangopay/constants.py:232
+msgid "Bangladesh"
+msgstr ""
+
+#: mangopay/constants.py:233
+msgid "Barbados"
+msgstr ""
+
+#: mangopay/constants.py:234
+msgid "Belarus"
+msgstr ""
+
+#: mangopay/constants.py:235 mangopay/constants.py:479
+msgid "Belgium"
+msgstr ""
+
+#: mangopay/constants.py:236
+msgid "Belize"
+msgstr ""
+
+#: mangopay/constants.py:237
+msgid "Benin"
+msgstr ""
+
+#: mangopay/constants.py:238
+msgid "Bermuda"
+msgstr ""
+
+#: mangopay/constants.py:239
+msgid "Bhutan"
+msgstr ""
+
+#: mangopay/constants.py:240
+msgid "Bolivia, Plurinational State of"
+msgstr ""
+
+#: mangopay/constants.py:241
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr ""
+
+#: mangopay/constants.py:242 mangopay/constants.py:480
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: mangopay/constants.py:243
+msgid "Botswana"
+msgstr ""
+
+#: mangopay/constants.py:244
+msgid "Bouvet Island"
+msgstr ""
+
+#: mangopay/constants.py:245 mangopay/constants.py:481
+msgid "Brazil"
+msgstr ""
+
+#: mangopay/constants.py:246
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: mangopay/constants.py:247
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: mangopay/constants.py:248 mangopay/constants.py:482
+msgid "Bulgaria"
+msgstr ""
+
+#: mangopay/constants.py:249
+msgid "Burkina Faso"
+msgstr ""
+
+#: mangopay/constants.py:250
+msgid "Burundi"
+msgstr ""
+
+#: mangopay/constants.py:251
+msgid "Cambodia"
+msgstr ""
+
+#: mangopay/constants.py:252
+msgid "Cameroon"
+msgstr ""
+
+#: mangopay/constants.py:253
+msgid "Canada"
+msgstr ""
+
+#: mangopay/constants.py:254
+msgid "Cape Verde"
+msgstr ""
+
+#: mangopay/constants.py:255
+msgid "Cayman Islands"
+msgstr ""
+
+#: mangopay/constants.py:256
+msgid "Central African Republic"
+msgstr ""
+
+#: mangopay/constants.py:257
+msgid "Chad"
+msgstr ""
+
+#: mangopay/constants.py:258
+msgid "Chile"
+msgstr ""
+
+#: mangopay/constants.py:259
+msgid "China"
+msgstr ""
+
+#: mangopay/constants.py:260
+msgid "Christmas Island"
+msgstr ""
+
+#: mangopay/constants.py:261
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: mangopay/constants.py:262
+msgid "Colombia"
+msgstr ""
+
+#: mangopay/constants.py:263
+msgid "Comoros"
+msgstr ""
+
+#: mangopay/constants.py:264
+msgid "Congo"
+msgstr ""
+
+#: mangopay/constants.py:265
+msgid "Congo, The Democratic Republic of the"
+msgstr ""
+
+#: mangopay/constants.py:266
+msgid "Cook Islands"
+msgstr ""
+
+#: mangopay/constants.py:267 mangopay/constants.py:483
+msgid "Costa Rica"
+msgstr ""
+
+#: mangopay/constants.py:268
+msgid "Cte D'ivoire"
+msgstr ""
+
+#: mangopay/constants.py:269 mangopay/constants.py:484
+msgid "Croatia"
+msgstr ""
+
+#: mangopay/constants.py:270
+msgid "Cuba"
+msgstr ""
+
+#: mangopay/constants.py:271
+msgid "Curaao"
+msgstr ""
+
+#: mangopay/constants.py:272 mangopay/constants.py:485
+msgid "Cyprus"
+msgstr ""
+
+#: mangopay/constants.py:273 mangopay/constants.py:486
+msgid "Czech Republic"
+msgstr ""
+
+#: mangopay/constants.py:274 mangopay/constants.py:487
+msgid "Denmark"
+msgstr ""
+
+#: mangopay/constants.py:275
+msgid "Djibouti"
+msgstr ""
+
+#: mangopay/constants.py:276
+msgid "Dominica"
+msgstr ""
+
+#: mangopay/constants.py:277 mangopay/constants.py:488
+msgid "Dominican Republic"
+msgstr ""
+
+#: mangopay/constants.py:278
+msgid "Ecuador"
+msgstr ""
+
+#: mangopay/constants.py:279
+msgid "Egypt"
+msgstr ""
+
+#: mangopay/constants.py:280
+msgid "El Salvador"
+msgstr ""
+
+#: mangopay/constants.py:281
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: mangopay/constants.py:282
+msgid "Eritrea"
+msgstr ""
+
+#: mangopay/constants.py:283 mangopay/constants.py:489
+msgid "Estonia"
+msgstr ""
+
+#: mangopay/constants.py:284
+msgid "Ethiopia"
+msgstr ""
+
+#: mangopay/constants.py:285
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: mangopay/constants.py:286
+msgid "Faroe Islands"
+msgstr ""
+
+#: mangopay/constants.py:287
+msgid "Fiji"
+msgstr ""
+
+#: mangopay/constants.py:288 mangopay/constants.py:490
+msgid "Finland"
+msgstr ""
+
+#: mangopay/constants.py:289 mangopay/constants.py:491
+msgid "France"
+msgstr ""
+
+#: mangopay/constants.py:290
 #, fuzzy
-#~| msgid "All products"
-#~ msgid "Product"
-#~ msgstr "Tous les dossiers"
+#| msgid "French"
+msgid "French Guiana"
+msgstr "Français"
+
+#: mangopay/constants.py:291
+msgid "French Polynesia"
+msgstr ""
+
+#: mangopay/constants.py:292
+msgid "French Southern Territories"
+msgstr ""
+
+#: mangopay/constants.py:293
+msgid "Gabon"
+msgstr ""
+
+#: mangopay/constants.py:294
+msgid "Gambia"
+msgstr ""
+
+#: mangopay/constants.py:295 mangopay/constants.py:492
+msgid "Georgia"
+msgstr ""
+
+#: mangopay/constants.py:296 mangopay/constants.py:493
+msgid "Germany"
+msgstr ""
+
+#: mangopay/constants.py:297
+msgid "Ghana"
+msgstr ""
+
+#: mangopay/constants.py:298 mangopay/constants.py:494
+msgid "Gibraltar"
+msgstr ""
+
+#: mangopay/constants.py:299 mangopay/constants.py:495
+msgid "Greece"
+msgstr ""
+
+#: mangopay/constants.py:300
+msgid "Greenland"
+msgstr ""
+
+#: mangopay/constants.py:301
+msgid "Grenada"
+msgstr ""
+
+#: mangopay/constants.py:302
+msgid "Guadeloupe"
+msgstr ""
+
+#: mangopay/constants.py:303
+msgid "Guam"
+msgstr ""
+
+#: mangopay/constants.py:304 mangopay/constants.py:496
+msgid "Guatemala"
+msgstr ""
+
+#: mangopay/constants.py:305
+msgid "Guernsey"
+msgstr ""
+
+#: mangopay/constants.py:306
+msgid "Guinea"
+msgstr ""
+
+#: mangopay/constants.py:307
+msgid "Guinea-bissau"
+msgstr ""
+
+#: mangopay/constants.py:308
+msgid "Guyana"
+msgstr ""
+
+#: mangopay/constants.py:309
+msgid "Haiti"
+msgstr ""
+
+#: mangopay/constants.py:310
+msgid "Heard Island and McDonald Islands"
+msgstr ""
+
+#: mangopay/constants.py:311
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#: mangopay/constants.py:312
+msgid "Honduras"
+msgstr ""
+
+#: mangopay/constants.py:313
+msgid "Hong Kong"
+msgstr ""
+
+#: mangopay/constants.py:314 mangopay/constants.py:497
+msgid "Hungary"
+msgstr ""
+
+#: mangopay/constants.py:315 mangopay/constants.py:498
+msgid "Iceland"
+msgstr ""
+
+#: mangopay/constants.py:316
+msgid "India"
+msgstr ""
+
+#: mangopay/constants.py:317
+msgid "Indonesia"
+msgstr ""
+
+#: mangopay/constants.py:318
+msgid "Iran, Islamic Republic of"
+msgstr ""
+
+#: mangopay/constants.py:319
+msgid "Iraq"
+msgstr ""
+
+#: mangopay/constants.py:320 mangopay/constants.py:499
+msgid "Ireland"
+msgstr ""
+
+#: mangopay/constants.py:321
+msgid "Isle of Man"
+msgstr ""
+
+#: mangopay/constants.py:322 mangopay/constants.py:500
+msgid "Israel"
+msgstr ""
+
+#: mangopay/constants.py:323 mangopay/constants.py:501
+msgid "Italy"
+msgstr ""
+
+#: mangopay/constants.py:324
+msgid "Jamaica"
+msgstr ""
+
+#: mangopay/constants.py:325
+msgid "Japan"
+msgstr ""
+
+#: mangopay/constants.py:326
+msgid "Jersey"
+msgstr ""
+
+#: mangopay/constants.py:327 mangopay/constants.py:502
+msgid "Jordan"
+msgstr ""
+
+#: mangopay/constants.py:328 mangopay/constants.py:503
+msgid "Kazakhstan"
+msgstr ""
+
+#: mangopay/constants.py:329
+msgid "Kenya"
+msgstr ""
+
+#: mangopay/constants.py:330
+msgid "Kiribati"
+msgstr ""
+
+#: mangopay/constants.py:331
+msgid "Korea, Democratic People's Republic of"
+msgstr ""
+
+#: mangopay/constants.py:332
+msgid "Korea, Republic of"
+msgstr ""
+
+#: mangopay/constants.py:333 mangopay/constants.py:505
+msgid "Kuwait"
+msgstr ""
+
+#: mangopay/constants.py:334
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: mangopay/constants.py:335
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: mangopay/constants.py:336 mangopay/constants.py:506
+msgid "Latvia"
+msgstr ""
+
+#: mangopay/constants.py:337 mangopay/constants.py:507
+msgid "Lebanon"
+msgstr ""
+
+#: mangopay/constants.py:338
+msgid "Lesotho"
+msgstr ""
+
+#: mangopay/constants.py:339
+msgid "Liberia"
+msgstr ""
+
+#: mangopay/constants.py:340
+msgid "Libya"
+msgstr ""
+
+#: mangopay/constants.py:341
+msgid "Liechtenstein"
+msgstr ""
+
+#: mangopay/constants.py:342 mangopay/constants.py:509
+msgid "Lithuania"
+msgstr ""
+
+#: mangopay/constants.py:343 mangopay/constants.py:510
+msgid "Luxembourg"
+msgstr ""
+
+#: mangopay/constants.py:344
+msgid "Macao"
+msgstr ""
+
+#: mangopay/constants.py:345
+msgid "Macedonia, The Former Yugoslav Republic of"
+msgstr ""
+
+#: mangopay/constants.py:346
+msgid "Madagascar"
+msgstr ""
+
+#: mangopay/constants.py:347
+msgid "Malawi"
+msgstr ""
+
+#: mangopay/constants.py:348
+msgid "Malaysia"
+msgstr ""
+
+#: mangopay/constants.py:349
+msgid "Maldives"
+msgstr ""
+
+#: mangopay/constants.py:350
+msgid "Mali"
+msgstr ""
+
+#: mangopay/constants.py:351 mangopay/constants.py:512
+msgid "Malta"
+msgstr ""
+
+#: mangopay/constants.py:352
+msgid "Marshall Islands"
+msgstr ""
+
+#: mangopay/constants.py:353
+msgid "Martinique"
+msgstr ""
+
+#: mangopay/constants.py:354 mangopay/constants.py:513
+msgid "Mauritania"
+msgstr ""
+
+#: mangopay/constants.py:355 mangopay/constants.py:514
+msgid "Mauritius"
+msgstr ""
+
+#: mangopay/constants.py:356
+msgid "Mayotte"
+msgstr ""
+
+#: mangopay/constants.py:357
+msgid "Mexico"
+msgstr ""
+
+#: mangopay/constants.py:358
+msgid "Micronesia, Federated States of"
+msgstr ""
+
+#: mangopay/constants.py:359
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: mangopay/constants.py:360 mangopay/constants.py:516
+msgid "Monaco"
+msgstr ""
+
+#: mangopay/constants.py:361
+msgid "Mongolia"
+msgstr ""
+
+#: mangopay/constants.py:362 mangopay/constants.py:517
+msgid "Montenegro"
+msgstr ""
+
+#: mangopay/constants.py:363
+msgid "Montserrat"
+msgstr ""
+
+#: mangopay/constants.py:364
+msgid "Morocco"
+msgstr ""
+
+#: mangopay/constants.py:365
+msgid "Mozambique"
+msgstr ""
+
+#: mangopay/constants.py:366
+msgid "Myanmar"
+msgstr ""
+
+#: mangopay/constants.py:367
+msgid "Namibia"
+msgstr ""
+
+#: mangopay/constants.py:368
+msgid "Nauru"
+msgstr ""
+
+#: mangopay/constants.py:369
+msgid "Nepal"
+msgstr ""
+
+#: mangopay/constants.py:370
+msgid "Netherlands"
+msgstr ""
+
+#: mangopay/constants.py:371
+msgid "New Caledonia"
+msgstr ""
+
+#: mangopay/constants.py:372
+msgid "New Zealand"
+msgstr ""
+
+#: mangopay/constants.py:373
+msgid "Nicaragua"
+msgstr ""
+
+#: mangopay/constants.py:374
+msgid "Niger"
+msgstr ""
+
+#: mangopay/constants.py:375
+msgid "Nigeria"
+msgstr ""
+
+#: mangopay/constants.py:376
+msgid "Niue"
+msgstr ""
+
+#: mangopay/constants.py:377
+msgid "Norfolk Island"
+msgstr ""
+
+#: mangopay/constants.py:378
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: mangopay/constants.py:379 mangopay/constants.py:519
+msgid "Norway"
+msgstr ""
+
+#: mangopay/constants.py:380
+msgid "Oman"
+msgstr ""
+
+#: mangopay/constants.py:381 mangopay/constants.py:520
+msgid "Pakistan"
+msgstr ""
+
+#: mangopay/constants.py:382
+msgid "Palau"
+msgstr ""
+
+#: mangopay/constants.py:383
+msgid "Palestinian Territory, Occupied"
+msgstr ""
+
+#: mangopay/constants.py:384
+msgid "Panama"
+msgstr ""
+
+#: mangopay/constants.py:385
+msgid "Papua New Guinea"
+msgstr ""
+
+#: mangopay/constants.py:386
+msgid "Paraguay"
+msgstr ""
+
+#: mangopay/constants.py:387
+msgid "Peru"
+msgstr ""
+
+#: mangopay/constants.py:388
+msgid "Philippines"
+msgstr ""
+
+#: mangopay/constants.py:389
+msgid "Pitcairn"
+msgstr ""
+
+#: mangopay/constants.py:390 mangopay/constants.py:522
+msgid "Poland"
+msgstr ""
+
+#: mangopay/constants.py:391 mangopay/constants.py:523
+msgid "Portugal"
+msgstr ""
+
+#: mangopay/constants.py:392
+msgid "Puerto Rico"
+msgstr ""
+
+#: mangopay/constants.py:393 mangopay/constants.py:525
+msgid "Qatar"
+msgstr ""
+
+#: mangopay/constants.py:394
+msgid "Runion"
+msgstr ""
+
+#: mangopay/constants.py:395 mangopay/constants.py:524
+msgid "Romania"
+msgstr ""
+
+#: mangopay/constants.py:396
+msgid "Russian Federation"
+msgstr ""
+
+#: mangopay/constants.py:397
+msgid "Rwanda"
+msgstr ""
+
+#: mangopay/constants.py:398
+msgid "Saint Barthlemy"
+msgstr ""
+
+#: mangopay/constants.py:399
+msgid "Saint Helena, Ascension and Tristan Da Cunha"
+msgstr ""
+
+#: mangopay/constants.py:400
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: mangopay/constants.py:401 mangopay/constants.py:526
+msgid "Saint Lucia"
+msgstr ""
+
+#: mangopay/constants.py:402
+msgid "Saint Martin (French Part)"
+msgstr ""
+
+#: mangopay/constants.py:403
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: mangopay/constants.py:404
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: mangopay/constants.py:405
+msgid "Samoa"
+msgstr ""
+
+#: mangopay/constants.py:406 mangopay/constants.py:527
+msgid "San Marino"
+msgstr ""
+
+#: mangopay/constants.py:407
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: mangopay/constants.py:408 mangopay/constants.py:528
+msgid "Saudi Arabia"
+msgstr ""
+
+#: mangopay/constants.py:409
+msgid "Senegal"
+msgstr ""
+
+#: mangopay/constants.py:410 mangopay/constants.py:529
+msgid "Serbia"
+msgstr ""
+
+#: mangopay/constants.py:411
+msgid "Seychelles"
+msgstr ""
+
+#: mangopay/constants.py:412
+msgid "Sierra Leone"
+msgstr ""
+
+#: mangopay/constants.py:413
+msgid "Singapore"
+msgstr ""
+
+#: mangopay/constants.py:414
+msgid "Sint Maarten (Dutch Part)"
+msgstr ""
+
+#: mangopay/constants.py:415
+msgid "Slovakia"
+msgstr ""
+
+#: mangopay/constants.py:416 mangopay/constants.py:531
+msgid "Slovenia"
+msgstr ""
+
+#: mangopay/constants.py:417
+msgid "Solomon Islands"
+msgstr ""
+
+#: mangopay/constants.py:418
+msgid "Somalia"
+msgstr ""
+
+#: mangopay/constants.py:419
+msgid "South Africa"
+msgstr ""
+
+#: mangopay/constants.py:420
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: mangopay/constants.py:421
+msgid "South Sudan"
+msgstr ""
+
+#: mangopay/constants.py:422 mangopay/constants.py:532
+msgid "Spain"
+msgstr ""
+
+#: mangopay/constants.py:423
+msgid "Sri Lanka"
+msgstr ""
+
+#: mangopay/constants.py:424
+msgid "Sudan"
+msgstr ""
+
+#: mangopay/constants.py:425
+msgid "Suriname"
+msgstr ""
+
+#: mangopay/constants.py:426
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#: mangopay/constants.py:427
+msgid "Swaziland"
+msgstr ""
+
+#: mangopay/constants.py:428 mangopay/constants.py:533
+msgid "Sweden"
+msgstr ""
+
+#: mangopay/constants.py:429 mangopay/constants.py:534
+msgid "Switzerland"
+msgstr ""
+
+#: mangopay/constants.py:430
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: mangopay/constants.py:431
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: mangopay/constants.py:432
+msgid "Tajikistan"
+msgstr ""
+
+#: mangopay/constants.py:433
+msgid "Tanzania, United Republic of"
+msgstr ""
+
+#: mangopay/constants.py:434
+msgid "Thailand"
+msgstr ""
+
+#: mangopay/constants.py:435
+msgid "Timor-leste"
+msgstr ""
+
+#: mangopay/constants.py:436
+msgid "Togo"
+msgstr ""
+
+#: mangopay/constants.py:437
+msgid "Tokelau"
+msgstr ""
+
+#: mangopay/constants.py:438
+msgid "Tonga"
+msgstr ""
+
+#: mangopay/constants.py:439
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: mangopay/constants.py:440 mangopay/constants.py:536
+msgid "Tunisia"
+msgstr ""
+
+#: mangopay/constants.py:441 mangopay/constants.py:537
+msgid "Turkey"
+msgstr ""
+
+#: mangopay/constants.py:442
+msgid "Turkmenistan"
+msgstr ""
+
+#: mangopay/constants.py:443
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: mangopay/constants.py:444
+msgid "Tuvalu"
+msgstr ""
+
+#: mangopay/constants.py:445
+msgid "Uganda"
+msgstr ""
+
+#: mangopay/constants.py:446
+msgid "Ukraine"
+msgstr ""
+
+#: mangopay/constants.py:447 mangopay/constants.py:538
+msgid "United Arab Emirates"
+msgstr ""
+
+#: mangopay/constants.py:448 mangopay/constants.py:539
+msgid "United Kingdom"
+msgstr ""
+
+#: mangopay/constants.py:449
+msgid "United States"
+msgstr ""
+
+#: mangopay/constants.py:450
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: mangopay/constants.py:451
+msgid "Uruguay"
+msgstr ""
+
+#: mangopay/constants.py:452
+msgid "Uzbekistan"
+msgstr ""
+
+#: mangopay/constants.py:453
+msgid "Vanuatu"
+msgstr ""
+
+#: mangopay/constants.py:454
+msgid "Venezuela, Bolivarian Republic of"
+msgstr ""
+
+#: mangopay/constants.py:455
+msgid "Viet Nam"
+msgstr ""
+
+#: mangopay/constants.py:456 mangopay/constants.py:540
+msgid "Virgin Islands, British"
+msgstr ""
+
+#: mangopay/constants.py:457
+msgid "Virgin Islands, U.S."
+msgstr ""
+
+#: mangopay/constants.py:458
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: mangopay/constants.py:459
+msgid "Western Sahara"
+msgstr ""
+
+#: mangopay/constants.py:460
+msgid "Yemen"
+msgstr ""
+
+#: mangopay/constants.py:461
+msgid "Zambia"
+msgstr ""
+
+#: mangopay/constants.py:462
+msgid "Zimbabwe"
+msgstr ""
+
+#: mangopay/constants.py:477
+msgid "Republic of Azerbaijan"
+msgstr ""
+
+#: mangopay/constants.py:504
+msgid "Republic of Kosovo"
+msgstr ""
+
+#: mangopay/constants.py:508
+msgid "Principality of Liechtenstein"
+msgstr ""
+
+#: mangopay/constants.py:511
+msgid "Macedonia, Former Yugoslav Republic of"
+msgstr ""
+
+#: mangopay/constants.py:515
+msgid "Moldova"
+msgstr ""
+
+#: mangopay/constants.py:518
+msgid "The Netherlands"
+msgstr ""
+
+#: mangopay/constants.py:521
+msgid "Palestine, State of"
+msgstr ""
+
+#: mangopay/constants.py:530
+msgid "Slovak Republic"
+msgstr ""
+
+#: mangopay/constants.py:535
+msgid "Timor-Leste"
+msgstr ""
+
+#~ msgid ""
+#~ "Forgotten your password? Enter your e-mail address below, and we'll send "
+#~ "you an e-mail allowing you to reset it."
+#~ msgstr ""
+#~ "Mot de passe oublié? Veuillez entrer votre adresse email afin d'en "
+#~ "reconfigurer un nouveau"
+
+#~ msgid "Categories"
+#~ msgstr "Catégories"
 
 #, fuzzy
 #~| msgid "All products"
@@ -976,11 +3145,6 @@ msgstr "Français"
 
 #, fuzzy
 #~| msgid "All products"
-#~ msgid "All vouchers"
-#~ msgstr "Tous les dossiers"
-
-#, fuzzy
-#~| msgid "All products"
 #~ msgid "Includes all products?"
 #~ msgstr "Tous les dossiers"
 
@@ -1006,11 +3170,6 @@ msgstr "Français"
 
 #, fuzzy
 #~| msgid "All products"
-#~ msgid "No products found."
-#~ msgstr "Tous les dossiers"
-
-#, fuzzy
-#~| msgid "All products"
 #~ msgid "Remove product"
 #~ msgstr "Tous les dossiers"
 
@@ -1031,11 +3190,6 @@ msgstr "Français"
 
 #, fuzzy
 #~| msgid "All products"
-#~ msgid "Total Products"
-#~ msgstr "Tous les dossiers"
-
-#, fuzzy
-#~| msgid "All products"
 #~ msgid "Total products"
 #~ msgstr "Tous les dossiers"
 
@@ -1052,10 +3206,6 @@ msgstr "Français"
 #, fuzzy
 #~| msgid "All products"
 #~ msgid "Num products"
-#~ msgstr "Tous les dossiers"
-
-#~| msgid "All products"
-#~ msgid "Edit products"
 #~ msgstr "Tous les dossiers"
 
 #~| msgid "All products"
