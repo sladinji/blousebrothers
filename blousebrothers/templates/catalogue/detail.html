@@ -162,7 +162,7 @@
         <tr>
             <th>{% trans "Matières abordées" %}</th>
             <td><ul>{% for spe in product.conf.specialities.all %}
-                    <li>{{ spe }}</li>
+                    <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
                     {% endfor %}
                 </ul>
             </td>
