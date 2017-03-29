@@ -15,15 +15,17 @@
                       data-toggle="modal" data-productTitle="{{product.conf.title}}" data-target="#confirm-go" data-productId="{{product.pk}}" data-productPrice="{{ session.price.excl_tax|currency:session.price.currency }}" data-productURL="{{ product.get_absolute_url }}"
         {% endif %} 
         class="btn btn-gray">
-        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 		{% if product.conf %}
 			{% if user|already_done:product.conf %}
                 {% if user|test_finished:product.conf %}
-                    {% trans "Résultat" %}</button>
+        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                    {% trans "Voir mon résultat" %}</button>
                 {% else %}
+        <i class="fa fa-repeat" aria-hidden="true"></i>
                     {% trans "Reprendre" %}</button>
                 {% endif %}
 			{% else %}
+        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     {% trans "S'entrainer" %}</button>
 			{% endif %}
 		{% else %}

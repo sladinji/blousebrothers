@@ -39,14 +39,7 @@
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="col-md-3"></div>
 </div>
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-sm-6 imgfit">
-        <img src="{% static "images/powered-by-mangopay.jpg" %}"/>
-    </div>
-    <div class="col-md-3"></div>
-</div>
-
+{% include 'partials/banklogos.html'%}
 {% endblock %}
 
 {% block extrascripts %}

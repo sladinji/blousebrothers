@@ -150,6 +150,10 @@ class UserWalletView(BaseWalletFormView):
             self.handle_payin_status(payin)
 
         check_bonus(request)
+
+        if not request.user.has_at_least_one_card:
+            return redirect(reverse('users:addcard'))
+
         return super().get(request, *args, **kwargs)
 
     def handle_payin_status(self, payin):

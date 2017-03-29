@@ -4,278 +4,300 @@
 {% load i18n %}
 {% load bbtricks %}
 {% load tinycontent_tags %}
+{% load history_tags %}
 
 {% block title %}{{ user.username }}{% endblock %}
+{% block submenu %}
+{% endblock %}
 
 {% block content %}
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-cubes"></i> Crédits actuels : {{ balance | wallet_clean | currency }}</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        Provenance :
-                        <ul class="col-md-12 stats">
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b><br> 
-                                    Personnel</span>
-                                <em>(que j'ai gagné ou ajouté)</em>
-                            </li>
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{{ user.wallet_bonus.balance | wallet_clean | currency }}</b><br> 
-                                    Bonus</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-credit-card"></i> Cartes enregistrées</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        <ul class="col-md-12 stats">
-                            {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                            {% if card_registration.mangopay_card.mangopay_id %}
-                            {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{% trans 'Numéro de carte' %}</b><br> 
-                                    {{ card_registration.mangopay_card.alias }}</span>
-                                <em>{% trans "Valide jusqu'au" %} {{ card_registration.mangopay_card.expiration_date }}</em>
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <a href="{% url 'users:addcard' %}" class="btn"><i class="fa fa-plus"></i> Ajouter une carte</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	{% if balance.amount != 0 %}
+	<div class="row">
+		<div class="col-md-6">
+			<div class="x_panel tile fixed_height_320">
+				<div class="x_title">
+					<h2><i class="fa fa-cubes"></i> Crédits actuels : {{ balance | wallet_clean | currency }}</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<div class="dashboard-widget-content">
+						<div class="space12"></div> <!-- 40px Vertical Spacing -->
+						Provenance :
+						<ul class="col-md-12 stats">
+							<li class="stat col-md-6 col-sm-6 col-xs-12">
+								<span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b><br> 
+									Personnel</span>
+								<em>(que j'ai gagné ou ajouté)</em>
+							</li>
+							<li class="stat col-md-6 col-sm-6 col-xs-12">
+								<span><b class="value">{{ user.wallet_bonus.balance | wallet_clean | currency }}</b><br> 
+									Bonus</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="x_panel tile fixed_height_320">
+				<div class="x_title">
+					<h2><i class="fa fa-credit-card"></i> Cartes enregistrées</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<div class="dashboard-widget-content">
+						<div class="space12"></div> <!-- 40px Vertical Spacing -->
+						<ul class="col-md-12 stats">
+							{% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
+							{% if card_registration.mangopay_card.mangopay_id %}
+							{{ card_registration.mangopay_card.request_card_info | default:"" }}
+							<li class="stat col-md-6 col-sm-6 col-xs-12">
+								<span><b class="value">{% trans 'Numéro de carte' %}</b><br> 
+									{{ card_registration.mangopay_card.alias }}</span>
+								<em>{% trans "Valide jusqu'au" %} {{ card_registration.mangopay_card.expiration_date }}</em>
+							</li>
+							{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+					<a href="{% url 'users:addcard' %}" class="btn"><i class="fa fa-plus"></i> Ajouter une carte</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+	<div class="space12"></div> <!-- 40px Vertical Spacing -->
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-bank"></i> Compte bancaire </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        {% if user.bank_account %}
-                        <ul class="col-md-12 stats">
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">IBAN</b><br> 
-                                    {{ user.bank_account.iban }}</span>
-                            </li>
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">BIC</b><br> 
-                                    {{ user.bank_account.bic }}</span>
-                            </li>
-                        </ul>
-                        {% endif %}
-                    </div>
-                    {% if user.bank_account %}
-                    <a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
-                    {% else %}
-                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        {% if user.has_at_least_one_card %}
-        <div class="col-md-6 col-sm-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-plus"></i> Créditer mon compte</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="panel-body">
-                            <form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
-                                {% csrf_token %}
-                                <ul class="quick-pay collapse in">
-                                    <li class="quick-pay">
-                                        <button type="submit" name='sub_credit_5' class="btn">5€</button>
-                                    </li>
-                                    <li class="quick-pay">
-                                        <button type="submit" name='sub_credit_10' class="btn">10€</button>
-                                    </li>
-                                    <li class="quick-pay">
-                                        <button type="submit" name='sub_credit_15' class="btn">15€</button>
-                                    </li>
-                                    <li class="quick-pay">
-                                        <button type="submit" name='sub_credit_20' class="btn">20€</button>
-                                    </li>
-                                    <li class="quick-pay">
-                                        <a href="#other" class="btn" name='autre' class="btn" data-toggle="collapse">Autre</a>
-                                    </li>
-                                </ul>
-                                {% if user.has_more_than_one_card %}
-                                <select class="select form-control" id="card_id" name="card_id" >
-                                    <option  value="" selected="selected">Choisir une carte...</option>
-                                    {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                                    {% if card_registration.mangopay_card.mangopay_id %}
-                                    {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                                    <option value="{{ card_registration.mangopay_card.id }}">{{ card_registration.mangopay_card.alias }}</option>
-                                    {% endif %}
-                                    {% endfor %}
-                                </select>
-                                {% endif %}
-                                <div id="other" class="collapse">
-                                    {{ form|crispy }}
-                                    <div class="control-group">
-                                        <div class="controls">
-                                            <button type="submit" name='sub_credit' class="btn">Valider</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
+	<div class="row">
+		{% if user.is_conferencier %}
+		<div class="col-md-6">
+			<div class="x_panel tile fixed_height_320">
+				<div class="x_title">
+					<h2><i class="fa fa-bank"></i> Compte bancaire </h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<div class="dashboard-widget-content">
+						<div class="space12"></div> <!-- 40px Vertical Spacing -->
+						{% if user.bank_account %}
+						<ul class="col-md-12 stats">
+							<li class="stat col-md-6 col-sm-6 col-xs-12">
+								<span><b class="value">IBAN</b><br> 
+									{{ user.bank_account.iban }}</span>
+							</li>
+							<li class="stat col-md-6 col-sm-6 col-xs-12">
+								<span><b class="value">BIC</b><br> 
+									{{ user.bank_account.bic }}</span>
+							</li>
+						</ul>
+						{% endif %}
+					</div>
+					{% if user.bank_account %}
+					<a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
+					{% else %}
+					<a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="col-md-3"></div>
+		{% endif %}
+		{% else %}{% comment if balance.amount > 0 %}{% endcomment %}
+		<div class="col-md-3"></div>
+		{% endif %}{% comment if balance.amount > 0 %}{% endcomment %}
+		{% if user.has_at_least_one_card %}
+		<div class="col-md-6 col-sm-12">
+			<div class="x_panel tile fixed_height_320">
+				<div class="x_title">
+					<h2><i class="fa fa-plus"></i> Créditer mon compte</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<div class="dashboard-widget-content">
+						<div class="panel-body">
+							<form class="form-horizontal" method="post" action="{% url 'users:wallet' %}">
+								{% csrf_token %}
+								<ul class="quick-pay collapse in">
+									<li class="quick-pay">
+										<button type="submit" name='sub_credit_5' class="btn">5€</button>
+									</li>
+									<li class="quick-pay">
+										<button type="submit" name='sub_credit_10' class="btn">10€</button>
+									</li>
+									<li class="quick-pay">
+										<button type="submit" name='sub_credit_15' class="btn">15€</button>
+									</li>
+									<li class="quick-pay">
+										<button type="submit" name='sub_credit_20' class="btn">20€</button>
+									</li>
+									<li class="quick-pay">
+										<a href="#other" class="btn" name='autre' class="btn" data-toggle="collapse">Autre</a>
+									</li>
+								</ul>
+								{% if user.has_more_than_one_card %}
+								<select class="select form-control" id="card_id" name="card_id" >
+									<option  value="" selected="selected">Choisir une carte...</option>
+									{% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
+									{% if card_registration.mangopay_card.mangopay_id %}
+									{{ card_registration.mangopay_card.request_card_info | default:"" }}
+									<option value="{{ card_registration.mangopay_card.id }}">{{ card_registration.mangopay_card.alias }}</option>
+									{% endif %}
+									{% endfor %}
+								</select>
+								{% endif %}
+								<div id="other" class="collapse">
+									{{ form|crispy }}
+									<div class="control-group">
+										<div class="controls">
+											<button type="submit" name='sub_credit' class="btn">Valider</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	</div>
 
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
-
-    {% if user.is_conferencier %}
-    <div class="row">
-        <div class="col-md-9">
-            <div id="order_graph">
-                <div class="bar-caption"><h1>{% trans "Activité à mes conférences" %}</h1></div>
-                <div class="bar-y-axis">
-                    <ul>
-                        {% for y_value in hourly_report_dict.y_range %}
-                        <li><span>{{ y_value|currency }}</span></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <dl class="bar-chart">
-                    {% for item in hourly_report_dict.order_total_hourly %}
-                    <dd class="bar-layer">
-                    <em>{{ item.end_time|time }}</em>
-                    <span style="height: {{ item.percentage }}%;" >
-                        <p{% if item.percentage == 0 %} style="display: none;"{% endif %}>{{ item.total_incl_tax|currency }}</p>
-                    </span>
-                    </dd>
-                    {% endfor %}
-                </dl>
-            </div>
-        </div>
-        {% comment tableau récap %}
-        <div class="col-md-4">
-            <table class="table table-striped table-bordered table-hover">
-                <caption><i class="icon-group icon-large"></i> {% trans "Étudiants" %}</caption>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre total d'étudiants" %}</th>
-                    <td class="col-md-2" >{{ total_customers }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Nouveaux étudiants" %}</th>
-                    <td class="col-md-2" >{{ total_customers_last_day }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre total de questions" %}</th>
-                    <td class="col-md-2" >{{ total_open_baskets_last_day }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-4">
-            <table class="table table-striped table-bordered table-hover">
-                <caption><i class="icon-copy icon-large"></i> {% trans "Dernières 24 heures" %}</caption>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre de dossiers effectués" %}</th>
-                    <td class="col-md-2" >{{ total_orders_last_day }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Revenu total" %}</th>
-                    <td class="col-md-2" >{{ total_lines_last_day }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Prix moyen" %}</th>
-                    <td class="col-md-2" >{{ total_revenue_last_day|currency }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-4">
-            <table class="table table-striped table-bordered table-hover">
-                <caption>
-                    <i class="icon-copy icon-large"> </i>{% trans "Orders - All Time" %}
-                </caption>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre de dossiers effectués" %}</th>
-                    <td class="col-md-2" >{{ total_orders }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Revenu total" %}</th>
-                    <td class="col-md-2" >{{ total_lines }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Prix moyen" %}</th>
-                    <td class="col-md-2" >{{ total_revenue|currency }}</td>
-                </tr>
-            </table>
-        </div>
-        {% endcomment %}
-
-        <div class="col-sm-12">
-            <table class="table table-striped table-bordered table-hover">
-                <caption>
-                    <h3 class="pull-left"><i class="icon-star icon-large"></i>
-                        {% if search_filters %}
-                        {% trans "Résultats de la recherche" %}
-                        {% else %}
-                        {% trans "Détails des ventes effectuées" %}
-                        {% endif %}
-                    </h3>
-                </caption>
-
-                <thead>
-                    <tr>
-                        <th>{% trans "Conférence" %}</th>
-                        <th>{% trans "Etudiant" %}</th>
-                        <th>{% trans "Date" %}</th>
-                        <th>{% trans "Crédit" %}</th>
-                        <th>{% trans "Frais" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for sell in user.sales.all %}
-                    <tr>
-                        <td><a href="{% url 'catalogue:reviews-list' product_slug=sell.product.slug product_pk=sell.product.id %}">{{ sell.product }}</a></td>
-                        <td>{{ sell.student }}</td>
-                        <td>{{ sell.create_timestamp }}</td>
-                        <td>{{ sell.credited_funds }}</td>
-                        <td>{{ sell.fees }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
+	{% include 'partials/banklogos.html'%}
+	{% if balance.amount != 0 %}
+    {% recently_viewed_products %}
     {% endif %}
+
+	<div class="space"></div> <!-- 40px Vertical Spacing -->
+
+	{% if user.is_conferencier %}
+	<div class="row">
+		<div class="col-md-9">
+			<div id="order_graph">
+				<div class="bar-caption"><h1>{% trans "Activité à mes conférences" %}</h1></div>
+				<div class="bar-y-axis">
+					<ul>
+						{% for y_value in hourly_report_dict.y_range %}
+						<li><span>{{ y_value|currency }}</span></li>
+						{% endfor %}
+					</ul>
+				</div>
+				<dl class="bar-chart">
+					{% for item in hourly_report_dict.order_total_hourly %}
+					<dd class="bar-layer">
+					<em>{{ item.end_time|time }}</em>
+					<span style="height: {{ item.percentage }}%;" >
+						<p{% if item.percentage == 0 %} style="display: none;"{% endif %}>{{ item.total_incl_tax|currency }}</p>
+					</span>
+					</dd>
+					{% endfor %}
+				</dl>
+			</div>
+		</div>
+		{% comment tableau récap %}
+		<div class="col-md-4">
+			<table class="table table-striped table-bordered table-hover">
+				<caption><i class="icon-group icon-large"></i> {% trans "Étudiants" %}</caption>
+				<tr>
+					<th class="col-md-10">{% trans "Nombre total d'étudiants" %}</th>
+					<td class="col-md-2" >{{ total_customers }}</td>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Nouveaux étudiants" %}</th>
+					<td class="col-md-2" >{{ total_customers_last_day }}</td>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Nombre total de questions" %}</th>
+					<td class="col-md-2" >{{ total_open_baskets_last_day }}</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-4">
+			<table class="table table-striped table-bordered table-hover">
+				<caption><i class="icon-copy icon-large"></i> {% trans "Dernières 24 heures" %}</caption>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Nombre de dossiers effectués" %}</th>
+					<td class="col-md-2" >{{ total_orders_last_day }}</td>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Revenu total" %}</th>
+					<td class="col-md-2" >{{ total_lines_last_day }}</td>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Prix moyen" %}</th>
+					<td class="col-md-2" >{{ total_revenue_last_day|currency }}</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-4">
+			<table class="table table-striped table-bordered table-hover">
+				<caption>
+					<i class="icon-copy icon-large"> </i>{% trans "Orders - All Time" %}
+				</caption>
+				<tr>
+					<th class="col-md-10">{% trans "Nombre de dossiers effectués" %}</th>
+					<td class="col-md-2" >{{ total_orders }}</td>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Revenu total" %}</th>
+					<td class="col-md-2" >{{ total_lines }}</td>
+				</tr>
+				<tr>
+					<th class="col-md-10">{% trans "Prix moyen" %}</th>
+					<td class="col-md-2" >{{ total_revenue|currency }}</td>
+				</tr>
+			</table>
+		</div>
+		{% endcomment %}
+
+		<div class="col-sm-12">
+			<table class="table table-striped table-bordered table-hover">
+				<caption>
+					<h3 class="pull-left"><i class="icon-star icon-large"></i>
+						{% if search_filters %}
+						{% trans "Résultats de la recherche" %}
+						{% else %}
+						{% trans "Détails des ventes effectuées" %}
+						{% endif %}
+					</h3>
+				</caption>
+
+				<thead>
+					<tr>
+						<th>{% trans "Conférence" %}</th>
+						<th>{% trans "Etudiant" %}</th>
+						<th>{% trans "Date" %}</th>
+						<th>{% trans "Crédit" %}</th>
+						<th>{% trans "Frais" %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for sell in user.sales.all %}
+					<tr>
+						<td><a href="{% url 'catalogue:reviews-list' product_slug=sell.product.slug product_pk=sell.product.id %}">{{ sell.product }}</a></td>
+						<td>{{ sell.student }}</td>
+						<td>{{ sell.create_timestamp }}</td>
+						<td>{{ sell.credited_funds }}</td>
+						<td>{{ sell.fees }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="space"></div> <!-- 40px Vertical Spacing -->
+	{% endif %}
 </div>
 
+{% include "confs/partials/confirm_go.html" %}
+{% endblock %}
+
+{% block extrascripts %}
+{{ block.super }}
+{% include 'confs/partials/confirm_go_js.html' %}
 {% endblock %}
