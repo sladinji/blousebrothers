@@ -170,7 +170,7 @@
         <tr>
             <th>{% trans "Items abordés" %}</th>
             <td><ul>{% for item in product.conf.items.all %}
-                    <li>{{ item }}</li>
+                    <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
                     {% endfor %}
                 </ul>
             </td>
