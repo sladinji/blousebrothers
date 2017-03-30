@@ -77,7 +77,7 @@ def sync(qs=None, name='BlouseBrothers'):
             create_timestamp__gt=now - timedelta(days=10)
         ).aggregate(won=Sum('credited_funds'))['won']
         # DERNIER TEST COMMENTÉ ?
-        needs_comment = None
+        needs_comment = 'no'
         last_test = user.tests.last()
         # WALLETS
         wallet_perso = 0
