@@ -44,5 +44,12 @@
 
 {% block extrascripts %}
 {{ block.super }}
-<script async type="text/javascript" src="{% static "js/inputmask.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.inputmask.bundle.js" %}"></script>
+{% endblock %}
+
+{% block onbodyload %}
+$(document).ready(function(){
+ $(":input").inputmask();
+});
+
 {% endblock %}
