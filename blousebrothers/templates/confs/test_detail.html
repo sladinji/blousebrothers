@@ -33,7 +33,7 @@
         <div class="col-xs-12 txt-grey">
 
             {% if object.conf.type == 'DCP' %}
-            <legend>Énoncé</legend>{{ object.conf.statement | default:"<i>aucun</i>"}}
+            <legend>Énoncé</legend>{{ object.conf.statement | safe | urlizetrunc:45 }}
             {% if object.conf.images.all %}
             <legend>Illustrations</legend>
             {% for image in object.conf.images.all %}
@@ -56,7 +56,7 @@
                 <h2>Question {{ t_answer.question.index | add:"1" }} </h2>
             </div>
             <div class="col-sm-12 txt-grey">
-                <big><p>{{ t_answer.question.question | default:"<i>aucun</i>" | safe}}</p></big>
+                <big><p>{{ t_answer.question.question | safe | urlizetrunc:45 }}</p></big>
             </div>
             {% for image in t_answer.question.images.all %}
             <div class="col-sm-12 illustrations" id="images_div">
@@ -74,7 +74,7 @@
                     Proposition {{ answer.index | to_char }} {{ answer | zero_cause_error_label:t_answer }}:
                     {{ answer | result_icon:t_answer }}
                 </strong> 
-                <p>{{ answer.answer | default:"<i>A compléter</i>" }}</p>
+                <p>{{ answer.answer | safe | urlizetrunc:45 | default:"<i>A compléter</i>" }}</p>
                 <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %}</strong> <p>{{ answer.explaination | default:"" | youtube | safe }}</p>
                 {% for image in answer.images.all %}
                 <div class="illustrations" id="images_div">
@@ -88,7 +88,7 @@
             {% endfor %}
 
             <div class="col-sm-12">
-                <big><p>{{ t_answer.question.explaination| default:"" | safe }}</p></big>
+                <big><p>{{ t_answer.question.explaination| safe | urlizetrunc:45 | default:""  }}</p></big>
                 {% for image in t_answer.question.explaination_images.all %}
                 <div class="illustrations" id="images_div">
                     <figure>
