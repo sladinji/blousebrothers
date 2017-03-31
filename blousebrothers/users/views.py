@@ -155,7 +155,7 @@ class UserWalletView(BaseWalletFormView):
 
         check_bonus(request)
 
-        if not request.user.has_at_least_one_card:
+        if not request.user.is_conferencier and not request.user.has_at_least_one_card:
             return redirect(reverse('users:addcard'))
 
         return super().get(request, *args, **kwargs)

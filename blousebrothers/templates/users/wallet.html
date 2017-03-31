@@ -13,7 +13,7 @@
 {% block content %}
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
-	{% if balance.amount != 0 %}
+	{% if balance.amount != 0 or user.is_conferencier %}
 	<div class="row">
 		<div class="col-md-6">
 			<div class="x_panel tile fixed_height_320">
@@ -71,6 +71,9 @@
 	<div class="space12"></div> <!-- 40px Vertical Spacing -->
 
 	<div class="row">
+        {% if not user.has_at_least_one_card %}
+        <div class="col-md-3"></div>
+        {% endif %}
 		{% if user.is_conferencier %}
 		<div class="col-md-6">
 			<div class="x_panel tile fixed_height_320">
