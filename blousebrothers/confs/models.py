@@ -172,7 +172,8 @@ class Conference(ModelMeta, models.Model):
     @property
     def spe_css(self):
         if self.specialities.first():
-            return '_'.join(self.specialities.first().name.lower().split())
+            return '_'.join(self.specialities.first().name.lower().replace("'","_").split())
+        return "no_spe"
 
 
 def conf_directory_path(conf_image, filename):

@@ -1010,10 +1010,12 @@ footer .content{
 .product_pod .image_container {
     margin-top: 10px;
     padding: 0px 25px;
+    background-color: rgba(255, 255, 255, 0.82);
 }
 .product_pod .price_color {
     min-height: 21px;
 	font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.82);
 	margin-bottom: -2px;
 }
 p.icono {
@@ -1362,4 +1364,64 @@ ul.quick-list li {
 
 article.product_pod.cardiologie-chir_vasculaire {
     background-image: url(/static/images/spe/cardio.png);
+}
+article.product_pod.neurologie {
+    background-image: url(/static/images/spe/neuro.png);
+}
+article.product_pod.pneumologie{
+    background-image: url(/static/images/spe/pneumo.png);
+}
+article.product_pod.hématologie{
+    background-image: url(/static/images/spe/hémato.png);
+}
+article.product_pod.psychiatrie{
+    background-image: url(/static/images/spe/psychiatrie.png);
+}
+article.product_pod.douleur{
+    background-image: url(/static/images/spe/doul.png);
+}
+article.product_pod.orl{
+    background-image: url(/static/images/spe/orl.png);
+}
+article.product_pod.urgences-réa{
+    background-image: url(/static/images/spe/urg_rea.png);
+}
+article.product_pod.oncologie{
+    background-image: url(/static/images/spe/onco.png);
+}
+article.product_pod.ophtalmologie{
+    background-image: url(/static/images/spe/opht.png);
+}
+article.product_pod.lecture_critique_d_articles{
+    background-image: url(/static/images/spe/lca.png);
+}
+article.product_pod.urologie{
+    background-image: url(/static/images/spe/uro.png);
+}
+article.product_pod.hépato-gastro-entérologie{
+    background-image: url(/static/images/spe/hepato_gastro.png);
+}
+article.product_pod.dermatologie{
+    background-image: url(/static/images/spe/dermato.png);
+}
+article.product_pod.endocrinologie{
+    background-image: url(/static/images/spe/endoc.png);
+}
+article.product_pod.néphrologie{
+    background-image: url(/static/images/spe/nephro.png);
+}
+article.product_pod.orthopédie{
+    background-image: url(/static/images/spe/ortho.png);
+}
+article.product_pod.gériatrie{
+    background-image: url(/static/images/spe/geria.png);
+}
+article.product_pod.médecine_interne{
+    background-image: url(/static/images/spe/interne.png);
+}
+article.product_pod.santé_publique{
+    background-image: url(/static/images/spe/santepub.png);
+}
+article.product_pod.gynécologie_–_obstétrique{
+    background-image: url(/static/images/spe/gyneco.png);
 }

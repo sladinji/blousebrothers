@@ -5,7 +5,7 @@
 {% load staticfiles %}
 
 {% block product %}
-<article class="product_pod{% if product.conf and product.conf.specialities %} {{ product.conf.spe_css }}{% endif %}">
+<article class="product_pod {{ product.conf.spe_css }}">
     <a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
         {% block product_title %}
         <h3>{{ product.get_title }}</h3>
