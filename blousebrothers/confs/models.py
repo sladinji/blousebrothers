@@ -169,6 +169,11 @@ class Conference(ModelMeta, models.Model):
         qei = QuestionExplainationImage.objects.filter(question__conf=self).count()
         return conf + question + answer + qei
 
+    @property
+    def spe_css(self):
+        if self.specialities.first():
+            return '_'.join(self.specialities.first().name.lower().split())
+
 
 def conf_directory_path(conf_image, filename):
     return '{0}/conf_{1}/{2}'.format(conf_image.conf.owner.username,

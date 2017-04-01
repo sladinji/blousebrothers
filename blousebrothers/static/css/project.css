@@ -1001,6 +1001,7 @@ footer .content{
 	margin: 0px 10px;
 	margin-bottom: 10px;
 	padding: 10px;
+    background-color: white;
 }
 .image_container {
     font-family: sans-serif;
@@ -1357,4 +1358,8 @@ ul.quick-list li {
 .imgfit img {
     max-width: 100%;
     max-height: 100%;
+}
+
+article.product_pod.cardiologie-chir_vasculaire {
+    background-image: url(/static/images/spe/cardio.png);
 }
