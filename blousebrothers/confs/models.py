@@ -171,6 +171,8 @@ class Conference(ModelMeta, models.Model):
 
     @property
     def spe_css(self):
+        if self.type == 'LCA':
+            return "lecture_critique_d_articles"
         if self.specialities.first():
             return '_'.join(self.specialities.first().name.lower().replace("'","_").split())
         return "no_spe"
