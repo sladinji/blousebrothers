@@ -144,6 +144,13 @@ class User(AbstractUser):
                 mp_user.create()
             return mp_user
 
+    def remove_inactive_cards(self):
+        for cr in self.mangopay_user.mangopay_card_registrations.all():
+            cr.mangopay_card.request_card_info()
+            if cr.mangopay_card.is_active == False:
+                cr.mangopay_card.delete()
+
+
     @property
     def has_more_than_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()

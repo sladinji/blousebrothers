@@ -154,6 +154,7 @@ class UserWalletView(BaseWalletFormView):
             self.handle_payin_status(payin)
 
         check_bonus(request)
+        request.user.remove_inactive_cards()
 
         if not request.user.is_conferencier and not request.user.has_at_least_one_card:
             return redirect(reverse('users:addcard'))
