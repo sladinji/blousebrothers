@@ -557,7 +557,7 @@ class MangoPayPayInByCard(MangoPayPayIn):
         execution_details = PayInExecutionDetailsDirect()
         execution_details.CardId = self.mangopay_card.mangopay_id
         execution_details.SecureModeReturnURL = self.secure_mode_return_url
-        execution_details.SecureMode = "FORCE"
+        execution_details.SecureMode = "DEFAULT"
         return execution_details
 
     def _update(self, pay_in):
