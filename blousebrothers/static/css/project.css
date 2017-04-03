@@ -1010,6 +1010,7 @@ footer .content{
 .product_pod .image_container {
     margin-top: 10px;
     padding: 0px 25px;
+    font-weight: bold;
 }
 .product_pod .price_color {
     min-height: 21px;
