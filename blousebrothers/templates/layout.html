@@ -52,9 +52,6 @@ settings file. This will enable the on-the-fly less compiler.
         </div>
         <div class="col-sm-12 col-md-10 ">
             <div class="top-header">
-                {% if not request.user.is_authenticated %}
-                <div class="slogan">BlouseBrothers</div>
-                {% endif %}
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu {% if not request.user.is_authenticated %} pull-right{% else%} pull-left{% endif %}">
                         <li class="menu-item-has-children item-megamenu">
