@@ -23,212 +23,214 @@
 {% include "confs/partials/confirm_go.html" %}
 {% endwith %}
 
-<article class="product_page"><!-- Start of product page -->
+<div class="container">
+    <article class="product_page"><!-- Start of product page -->
 
-    <div class="row">
-        {% comment %}
-        {% block product_gallery %}
-        <div class="col-sm-6">
-            {% include "catalogue/partials/gallery.html" %}
-        </div>
-        {% endblock %}
-        {% endcomment %}
-
-        {% block product_main %}
-        <div class="col-sm-12 product_main">
+        <div class="row">
             {% comment %}
-            This is a but clunky here.  Better to have some kind of JS-driven dashboard menu that 
-            pops out when clicked.  A bit like the Django-Debug-Toolbar button
+            {% block product_gallery %}
+            <div class="col-sm-6">
+                {% include "catalogue/partials/gallery.html" %}
+            </div>
+            {% endblock %}
             {% endcomment %}
-            {% if user.is_authenticated and user.is_staff %}
-            <a class="pull-right hidden-xs" href="{% url 'dashboard:catalogue-product' pk=product.id %}"><small><i class="icon-edit"></i> {% trans "Edit this product" %}</small></a>
+
+            {% block product_main %}
+            <div class="col-sm-12 product_main">
+                {% comment %}
+                This is a but clunky here.  Better to have some kind of JS-driven dashboard menu that 
+                pops out when clicked.  A bit like the Django-Debug-Toolbar button
+                {% endcomment %}
+                {% if user.is_authenticated and user.is_staff %}
+                <a class="pull-right hidden-xs" href="{% url 'dashboard:catalogue-product' pk=product.id %}"><small><i class="icon-edit"></i> {% trans "Edit this product" %}</small></a>
+                {% endif %}
+                <h1 class="text-center">{{ product.get_title }}</h1>
+                <div class="review-share pull-right">
+                    {% include 'catalogue/partials/share_product.html' %}
+                </div>
+
+                {% if object.user_test %}
+                {% include 'confs/partials/test_result.html' with object=object.user_test %}
+                <div class="space"></div> <!-- 40px Vertical Spacing -->
+                {% endif %}
+
+                {% iffeature "reviews" %}
+                {% include "catalogue/reviews/partials/review_stars.html" %}
+                {% endiffeature %}
+
+
+            </div><!-- /col-sm-12 -->
+            {% endblock %}
+        </div><!-- /row -->
+
+        {% block product_description %}
+        {% if product.conf and product.conf.owner%}
+        <div id="author_description" class="sub-header">
+            <h2>{% trans "Auteur" %}</h2>
+        </div>
+        <div class="col-xs-3 product_main">
+            {% if product.conf.owner.socialaccount_set %}
+            <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url}}">
             {% endif %}
-            <h1 class="text-center">{{ product.get_title }}</h1>
-            <div class="review-share pull-right">
-                {% include 'catalogue/partials/share_product.html' %}
+        </div>
+        <div class="col-xs-9 product_main">
+            <ul class="quick-list">
+                <li><label>{% trans 'Pseudo' %} :</label> {{ product.conf.owner.username }}</li>
+                <li><label>{% trans 'City' %} :</label> {% if product.conf.owner.university %} {{ product.conf.owner.university }} {% endif %}</li>
+                <li><label>{% trans 'Niveau' %} :</label>{% if product.conf.owner.degree %} {% trans  product.conf.owner.degree  %} {% endif %}</li>
+                {% if product.conf.owner.degree == 'INTERNE' or product.conf.owner.degree == 'MEDECIN' %}
+                <li><label>{% trans 'Spécialité' %} :</label>{% if product.conf.owner.speciality %} {{ product.conf.owner.speciality  }} {% endif %}</li>
+                {% endif %}
+            </ul>
+            {% if product.conf.owner.bio %}
+            {% endif %}
+        </div>
+        <p><i>{{ product.conf.owner.bio }}</i></p>
+        {% endif %}
+        {% if product.description %}
+        <div id="product_description" class="sub-header">
+            <h2>{% trans "Esprit du dossier" %}</h2>
+        </div>
+        <p>{{ product.description|safe }}</p>
+        {% endif %}
+        {% endblock %}   
+        {% include "catalogue/partials/stock_record.html" %}
+
+        {% block product_basket_form %}
+        {% include "catalogue/partials/add_to_basket_form.html" %}
+        {% endblock %}
+
+        {% iffeature "reviews" %}
+        {% block product_review %}
+        <section>
+            <div id="reviews" class="sub-header">
+                {% if product.num_approved_reviews > 3 %}
+                <a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}" class="btn pull-right">{% trans "See all reviews" %}</a>
+                {% endif %}
+                <h2>{% trans "Avis étudiants" %}</h2>
             </div>
 
-            {% if object.user_test %}
-            {% include 'confs/partials/test_result.html' with object=object.user_test %}
-            <div class="space"></div> <!-- 40px Vertical Spacing -->
+            {% if product.num_approved_reviews == 0 %}
+            <p>
+            {% trans "This product does not have any reviews yet" %}.
+            </p>
+            {% else %}
+            <ol class="list-unstyled review-list">
+                {% for review in product.reviews.approved.all|slice:":3" %}
+                <li>
+                    {% include 'catalogue/partials/review.html' %}
+                </li>
+                {% endfor %}
+            </ol>
             {% endif %}
+        </section>
+        {% endblock product_review %}
+        {% endiffeature %}
 
-            {% iffeature "reviews" %}
-           {% include "catalogue/reviews/partials/review_stars.html" %}
-            {% endiffeature %}
-
-
-        </div><!-- /col-sm-12 -->
-        {% endblock %}
-    </div><!-- /row -->
-
-    {% block product_description %}
-    {% if product.conf and product.conf.owner%}
-    <div id="author_description" class="sub-header">
-        <h2>{% trans "Auteur" %}</h2>
-    </div>
-    <div class="col-xs-3 product_main">
-        {% if product.conf.owner.socialaccount_set %}
-        <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url}}">
-        {% endif %}
-    </div>
-    <div class="col-xs-9 product_main">
-        <ul class="quick-list">
-            <li><label>{% trans 'Pseudo' %} :</label> {{ product.conf.owner.username }}</li>
-            <li><label>{% trans 'City' %} :</label> {% if product.conf.owner.university %} {{ product.conf.owner.university }} {% endif %}</li>
-            <li><label>{% trans 'Niveau' %} :</label>{% if product.conf.owner.degree %} {% trans  product.conf.owner.degree  %} {% endif %}</li>
-            {% if product.conf.owner.degree == 'INTERNE' or product.conf.owner.degree == 'MEDECIN' %}
-            <li><label>{% trans 'Spécialité' %} :</label>{% if product.conf.owner.speciality %} {{ product.conf.owner.speciality  }} {% endif %}</li>
-            {% endif %}
-        </ul>
-        {% if product.conf.owner.bio %}
-        {% endif %}
-    </div>
-    <p><i>{{ product.conf.owner.bio }}</i></p>
-    {% endif %}
-    {% if product.description %}
-    <div id="product_description" class="sub-header">
-        <h2>{% trans "Esprit du dossier" %}</h2>
-    </div>
-    <p>{{ product.description|safe }}</p>
-    {% endif %}
-    {% endblock %}   
-    {% include "catalogue/partials/stock_record.html" %}
-
-    {% block product_basket_form %}
-    {% include "catalogue/partials/add_to_basket_form.html" %}
-    {% endblock %}
-
-    {% iffeature "reviews" %}
-    {% block product_review %}
-    <section>
-        <div id="reviews" class="sub-header">
-            {% if product.num_approved_reviews > 3 %}
-            <a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}" class="btn pull-right">{% trans "See all reviews" %}</a>
-            {% endif %}
-            <h2>{% trans "Avis étudiants" %}</h2>
+        {% block product_info %}
+        <div class="sub-header">
+            <h2>{% trans "Product Information" %}</h2>
         </div>
+        <table class="table table-striped">
+            {% if product.upc %}
+            <tr>
+                <th>{% trans "UPC" %}</th><td>{{ product.upc }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% trans "Product Type" %}</th><td>{{ product.get_product_class.name }}</td>
+            </tr>
 
-        {% if product.num_approved_reviews == 0 %}
-        <p>
-        {% trans "This product does not have any reviews yet" %}.
-        </p>
-        {% else %}
-        <ol class="list-unstyled review-list">
-            {% for review in product.reviews.approved.all|slice:":3" %}
-            <li>
-                {% include 'catalogue/partials/review.html' %}
+            {% purchase_info_for_product request product as session %}
+            {% if session.price.exists %}
+            <tr>
+                <th>{% trans "Price" %}</th><td>{{ session.price.excl_tax|currency:session.price.currency }}</td>
+            </tr>
+            {% endif %}
+            {% for av in product.attribute_values.all %}
+            <tr>
+                <th>{{ av.attribute.name }}</th>
+                <td>{{ av.value_as_html }}</td>
+            </tr>
+            {% endfor %}
+            {% iffeature "reviews" %}
+            <tr>
+                <th>{% trans "Étudiants présents" %}</th>
+                <td>{{ product.num_approved_reviews }}</td>
+            </tr>
+            {% endiffeature %}
+            {% if product.conf %}
+            <tr>
+                <th>{% trans "Matières abordées" %}</th>
+                <td><ul>{% for spe in product.conf.specialities.all %}
+                        <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>{% trans "Items abordés" %}</th>
+                <td><ul>{% for item in product.conf.items.all %}
+                        <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% if request.is_googlebot %}
+            <tr>
+                <th>article full content just for indexing</th>
+                <td>{{ product.conf.get_all_txt |safe }}</td>
+            </tr>
+            {%endif%}
+            {% endif %}
+
+        </table>
+        {% endblock %}
+
+
+        {% with same_author_products=product.conf.owner.products|slice:":6" %}
+        {% if same_author_products %}
+        <div class="sub-header">
+            <h2>{% trans "Du même auteur..." %}</h2>
+        </div>
+        <ul class="row">
+            {% for product in same_author_products %}
+            <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                {% render_product product %}
             </li>
             {% endfor %}
-        </ol>
+        </ul>
         {% endif %}
-    </section>
-    {% endblock product_review %}
-    {% endiffeature %}
+        {% endwith %}
 
-    {% block product_info %}
-    <div class="sub-header">
-        <h2>{% trans "Product Information" %}</h2>
-    </div>
-    <table class="table table-striped">
-        {% if product.upc %}
-        <tr>
-            <th>{% trans "UPC" %}</th><td>{{ product.upc }}</td>
-        </tr>
+
+        {% with recommended_products=product.recommended_products.all|slice:":6" %}
+        {% if recommended_products %}
+        <div class="sub-header">
+            <h2>{% trans "Recommended items" %}</h2>
+        </div>
+        <ul class="row">
+            {% for product in recommended_products %}
+            <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                {% render_product product %}
+            </li>
+            {% endfor %}
+        </ul>
         {% endif %}
-        <tr>
-            <th>{% trans "Product Type" %}</th><td>{{ product.get_product_class.name }}</td>
-        </tr>
+        {% endwith %}
 
-        {% purchase_info_for_product request product as session %}
-        {% if session.price.exists %}
-        <tr>
-            <th>{% trans "Price" %}</th><td>{{ session.price.excl_tax|currency:session.price.currency }}</td>
-        </tr>
-        {% endif %}
-        {% for av in product.attribute_values.all %}
-        <tr>
-            <th>{{ av.attribute.name }}</th>
-            <td>{{ av.value_as_html }}</td>
-        </tr>
-        {% endfor %}
-        {% iffeature "reviews" %}
-        <tr>
-            <th>{% trans "Étudiants présents" %}</th>
-            <td>{{ product.num_approved_reviews }}</td>
-        </tr>
-        {% endiffeature %}
-        {% if product.conf %}
-        <tr>
-            <th>{% trans "Matières abordées" %}</th>
-            <td><ul>{% for spe in product.conf.specialities.all %}
-                    <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <th>{% trans "Items abordés" %}</th>
-            <td><ul>{% for item in product.conf.items.all %}
-                    <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        {% if request.is_googlebot %}
-        <tr>
-            <th>article full content just for indexing</th>
-            <td>{{ product.conf.get_all_txt |safe }}</td>
-        </tr>
-        {%endif%}
-        {% endif %}
+        {% recently_viewed_products current_product=product %}
 
-    </table>
-    {% endblock %}
-
-
-    {% with same_author_products=product.conf.owner.products|slice:":6" %}
-    {% if same_author_products %}
-    <div class="sub-header">
-        <h2>{% trans "Du même auteur..." %}</h2>
-    </div>
-    <ul class="row">
-        {% for product in same_author_products %}
-        <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-            {% render_product product %}
-        </li>
-        {% endfor %}
-    </ul>
+    </article><!-- End of product page -->
+    {% if user.is_authenticated and product.conf %}
+    {% load disqus_tags %}
+    {% set_disqus_identifier "result_" product.conf.slug %}
+    {% disqus_dev %}
+    {% disqus_sso %}
+    {% set_disqus_developer 1 %}
+    {% disqus_show_comments %}
     {% endif %}
-    {% endwith %}
-
-
-    {% with recommended_products=product.recommended_products.all|slice:":6" %}
-    {% if recommended_products %}
-    <div class="sub-header">
-        <h2>{% trans "Recommended items" %}</h2>
-    </div>
-    <ul class="row">
-        {% for product in recommended_products %}
-        <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-            {% render_product product %}
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-
-    {% recently_viewed_products current_product=product %}
-
-</article><!-- End of product page -->
-{% if user.is_authenticated and product.conf %}
-{% load disqus_tags %}
-{% set_disqus_identifier "result_" product.conf.slug %}
-{% disqus_dev %}
-{% disqus_sso %}
-{% set_disqus_developer 1 %}
-{% disqus_show_comments %}
-{% endif %}
+</div>
 {% endblock content %}
 
 {% block extrascripts %}
