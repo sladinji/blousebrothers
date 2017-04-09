@@ -341,11 +341,15 @@ ul.djng-field-errors li.valid::before {
 }
 .submenu {
     padding-top: 0px;
-    padding-left: 15px;
     display: inline-block;
+    margin-top: 20px;
 }
 .box-search {
     padding: 4px 15px;
+}
+
+#toast-container>div {
+    opacity: 0.95 !important;
 }
 
 .submenu li {
@@ -362,7 +366,7 @@ ul.djng-field-errors li.valid::before {
 }
 
 ul li.active a {
-	color: #c99947;
+	color: #E8B510;
 }
 
 ul.bb-ul li.active {
