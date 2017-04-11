@@ -118,6 +118,9 @@ class BasketAddView(CoreBasketAddView):
     def redirect_success(self, form):
         messages.success(self.request, self.get_success_message(form),
                          extra_tags='safe noicon')
+
+        self.request.user.status = "buyer_ok"
+        self.request.user.save()
         # Send signal for basket addition
         self.add_signal.send(
             sender=self, product=form.product, user=self.request.user,

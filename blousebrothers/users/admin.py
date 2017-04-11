@@ -149,7 +149,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     add_form = MyUserCreationForm
     fieldsets = (
         ('Addresse', {'fields': ('address1', 'address2', 'zip_code', 'city')}),
-        ('Profil', {'fields': ('is_conferencier', 'wanabe_conferencier',
+        ('Profil', {'fields': ("status", 'is_conferencier', 'wanabe_conferencier',
                                'wanabe_conferencier_date', 'degree', 'mobile')}),
     ) + AuthUserAdmin.fieldsets
 
@@ -181,7 +181,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
                   'city']
     search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
-                   'wanabe_conferencier', 'university', "degree", 'date_joined',
+                   'wanabe_conferencier', 'university', "degree", 'date_joined', "status",
                    EditionProgressListFilter, FinishedButNotForSaleFilter, GotCBFilter)
 
 admin.site.register(University)

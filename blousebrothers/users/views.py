@@ -72,6 +72,7 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         super().form_valid(form)
         check_bonus(self.request)
         if isinstance(form, UserSmallerForm):
+            self.request.user.status = "wallet_ok"
             messages.success(self.request, "C'est presque fini, il ne reste plus qu'à créditer ton compte.")
             return redirect(reverse('users:wallet'))
 
@@ -168,6 +169,9 @@ class UserWalletView(BaseWalletFormView):
                 'Le transfert de {} a bien été pris en compte (référence : {})'.format(
                     payin.debited_funds, payin.mangopay_id)
             )
+            if "wallet_ok" in self.request.user.status:
+                self.request.user.status = "money_ok"
+                self.request.user.save()
             ctx = dict(payin=payin, user=self.request.user)
             msg_plain = render_to_string('confs/email/confirm_credit.txt', ctx)
             msg_html = render_to_string('confs/email/confirm_credit.html', ctx)

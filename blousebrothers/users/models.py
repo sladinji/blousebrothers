@@ -18,6 +18,7 @@ from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
 from shortuuidfield import ShortUUIDField
 from invitations.models import Invitation
+from oscar.apps.catalogue.reviews.signals import review_added
 
 from mangopay.models import (
     MangoPayNaturalUser,
@@ -352,3 +353,9 @@ def remember_status(sender, **kwargs):
     """
     instance = kwargs.get('instance')
     instance.previous_status = instance.status
+
+
+@receiver(review_added)
+def give_eval_ok(review, user, request, response):
+    user.status = "give_eval_ok"
+    user.save()
