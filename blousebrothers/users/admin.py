@@ -175,7 +175,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
             html = '<img style="width:150px;height:150px;border-radius:50%;" src="{}">'.format(avatar)
             return mark_safe(html)
 
-    list_display = ('username', social_avatar,  'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
+    list_display = ('username','status', social_avatar,  'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
                     'hijack_field',)
     csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'address1', 'address2', 'zip_code',
                   'city']

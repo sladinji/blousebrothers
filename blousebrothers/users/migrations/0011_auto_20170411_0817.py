@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='status',
-            field=models.CharField(default='registred', max_length=20, null=True, verbose_name='Status'),
+            field=models.CharField(default='registered', max_length=20, null=True, verbose_name='Status'),
         ),
         migrations.AddField(
             model_name='user',

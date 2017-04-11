@@ -10,7 +10,7 @@
             {% if user.gave_all_mangopay_info %}
             <h1>Profil</h1>
             {% else %}
-            <h1>Informations obligatoires pour porte-monnaie électronique</h1>
+            <h1>Informations personnelles</h1>
             {% endif %}
             <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
                 {% csrf_token %}

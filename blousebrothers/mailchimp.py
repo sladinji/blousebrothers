@@ -4,6 +4,7 @@ from mailchimp3 import MailChimp
 from blousebrothers.users.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
+from django.utils import timezone
 
 # MailChimp clien API
 
@@ -66,7 +67,9 @@ def days_since_last_purchase(user):
 
 def handle_status(user):
     """Update _inact suffix according to  user status timestamp"""
-    now = datetime.now()
+    now = timezone.now()
+    if not user.status_timestamp:
+        user.status_timestamp = now
     #  Manage special status
     if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=8):  # 8h if sold at 00:00 ...
         user.status = "conf_publi_ok"

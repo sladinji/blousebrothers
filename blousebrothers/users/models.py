@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 import logging
-from datetime import datetime
+from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
@@ -123,7 +123,7 @@ class User(AbstractUser):
                            blank=True, null=True,
                            help_text=_("Important si tu es conférencier !"),
                            )
-    status = models.CharField(_("Status"), max_length=20, default="registred", null=True)
+    status = models.CharField(_("Status"), max_length=20, default="registered", null=True)
     status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
     previous_status = None  # place holder to check status change
 
@@ -343,7 +343,7 @@ def update_status_timestamp(sender, **kwargs):
     instance = kwargs.get('instance')
     created = kwargs.get('created')
     if instance.previous_status != instance.status or created:
-        instance.status_timestamp = datetime.now()
+        instance.status_timestamp = timezone.now()
 
 
 @receiver(post_init, sender=User)
@@ -356,6 +356,6 @@ def remember_status(sender, **kwargs):
 
 
 @receiver(review_added)
-def give_eval_ok(review, user, request, response):
+def give_eval_ok(review, user, request, response, **kwargs):
     user.status = "give_eval_ok"
     user.save()

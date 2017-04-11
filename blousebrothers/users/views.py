@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView, RedirectView
+from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
@@ -69,12 +69,13 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         """
         Call handle bonus if new info allow to create mangopay wallet.
         """
+        if isinstance(form, UserSmallerForm):
+            form.instance.status = "wallet_ok"
         super().form_valid(form)
         check_bonus(self.request)
         if isinstance(form, UserSmallerForm):
-            self.request.user.status = "wallet_ok"
             messages.success(self.request, "C'est presque fini, il ne reste plus qu'à créditer ton compte.")
-            return redirect(reverse('users:wallet'))
+            return redirect(reverse("catalogue:index"))
 
         return HttpResponseRedirect(self.get_success_url())
 
