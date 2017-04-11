@@ -20,6 +20,6 @@ class CatalogueView(CoreCatalogueView):
 
     def get(self, *args, **kwargs):
         check_bonus(self.request, self.request.user)
-        if self.request.user.is_authenticated and not self.request.user.gave_all_mangopay_info:
+        if self.request.user.is_authenticated() and not self.request.user.gave_all_mangopay_info:
             return redirect(reverse("users:wallet"))
         return super().get(*args, **kwargs)
