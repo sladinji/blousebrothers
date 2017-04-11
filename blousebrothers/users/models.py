@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 import logging
+from datetime import datetime
 
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
@@ -11,6 +12,7 @@ from django.core.validators import RegexValidator
 from django.dispatch import receiver
 from django.core.mail import mail_admins
 from django_countries.fields import CountryField
+from django.db.models.signals import post_init, pre_save
 
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
@@ -110,6 +112,7 @@ class User(AbstractUser):
     degree = models.CharField(_("Niveau"), max_length=10, choices=DEGREE_LEVEL,
                               blank=False, default=None, null=True)
     """Degree level"""
+    """Degree level"""
     friends = models.ManyToManyField('self')
     """Friends"""
     country_of_residence = CountryField(_("Pays de résidence"), default="FR", blank=False)
@@ -119,6 +122,9 @@ class User(AbstractUser):
                            blank=True, null=True,
                            help_text=_("Important si tu es conférencier !"),
                            )
+    status = models.CharField(_("Status"), max_length=20, default="registred", null=True)
+    status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
+    previous_status = None  # place holder to check status change
 
     @property
     def gave_all_required_info(self):
@@ -147,9 +153,8 @@ class User(AbstractUser):
     def remove_inactive_cards(self):
         for cr in self.mangopay_user.mangopay_card_registrations.all():
             cr.mangopay_card.request_card_info()
-            if cr.mangopay_card.is_active == False:
+            if not cr.mangopay_card.is_active:
                 cr.mangopay_card.delete()
-
 
     @property
     def has_more_than_one_card(self):
@@ -286,6 +291,24 @@ class University(models.Model):
     def __str__(self):
         return self.name
 
+
+##################################################################################
+#                  _________.__                     .__                          #
+#                 /   _____/|__| ____   ____ _____  |  |   ______                #
+#                 \_____  \ |  |/ ___\ /    \\__  \ |  |  /  ___/                #
+#                 /        \|  / /_/  >   |  \/ __ \|  |__\___ \                 #
+#                /_______  /|__\___  /|___|  (____  /____/____  >                #
+#                        \/   /_____/      \/     \/          \/                 #
+#                                                                       __       #
+#      _____ _____    ____ _____     ____   ____   _____   ____   _____/  |_     #
+#     /     \\__  \  /    \\__  \   / ___\_/ __ \ /     \_/ __ \ /    \   __\    #
+#    |  Y Y  \/ __ \|   |  \/ __ \_/ /_/  >  ___/|  Y Y  \  ___/|   |  \  |      #
+#    |__|_|  (____  /___|  (____  /\___  / \___  >__|_|  /\___  >___|  /__|      #
+#          \/     \/     \/     \//_____/      \/      \/     \/     \/          #
+#                                                                                #
+##################################################################################
+
+
 email_template = '''
 Nom : {}
 Email : {}
@@ -309,3 +332,23 @@ def notify_signup(request, user, **kwargs):
         mail_admins('Nouvelle inscription', msg)
     except:
         logger.exception("Error sending email info for new inscription")
+
+
+@receiver(pre_save, sender=User)
+def update_status_timestamp(sender, **kwargs):
+    """
+    Method to update status_timestamp if status has changed.
+    """
+    instance = kwargs.get('instance')
+    created = kwargs.get('created')
+    if instance.previous_status != instance.status or created:
+        instance.status_timestamp = datetime.now()
+
+
+@receiver(post_init, sender=User)
+def remember_status(sender, **kwargs):
+    """
+    Method to set previous_status after init.
+    """
+    instance = kwargs.get('instance')
+    instance.previous_status = instance.status
