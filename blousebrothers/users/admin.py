@@ -149,7 +149,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     add_form = MyUserCreationForm
     fieldsets = (
         ('Addresse', {'fields': ('address1', 'address2', 'zip_code', 'city')}),
-        ('Profil', {'fields': ('is_conferencier', 'wanabe_conferencier',
+        ('Profil', {'fields': ("status", 'is_conferencier', 'wanabe_conferencier',
                                'wanabe_conferencier_date', 'degree', 'mobile')}),
     ) + AuthUserAdmin.fieldsets
 
@@ -175,13 +175,13 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
             html = '<img style="width:150px;height:150px;border-radius:50%;" src="{}">'.format(avatar)
             return mark_safe(html)
 
-    list_display = ('username', social_avatar,  'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
+    list_display = ('username','status', social_avatar,  'date_joined', 'degree', 'email', 'is_conferencier', created_confs,
                     'hijack_field',)
     csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'address1', 'address2', 'zip_code',
                   'city']
     search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
-                   'wanabe_conferencier', 'university', "degree", 'date_joined',
+                   'wanabe_conferencier', 'university', "degree", 'date_joined', "status",
                    EditionProgressListFilter, FinishedButNotForSaleFilter, GotCBFilter)
 
 admin.site.register(University)

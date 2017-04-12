@@ -85,13 +85,13 @@ class MangoPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     Check if user gave all info to deal with mangopay.
     """
 
-    msg_access_denied = _('Merci de compléter le formulaire ci-dessous pour pouvoir créditer ton compte.')
+    msg_access_denied = _('Merci de compléter le formulaire ci-dessous avant de continuer.')
 
     def test_func(self):
         return self.request.user.gave_all_mangopay_info
 
     def handle_no_permission(self):
-        messages.error(self.request, self.msg_access_denied)
+        messages.info(self.request, self.msg_access_denied)
         return redirect('users:update')
 
 

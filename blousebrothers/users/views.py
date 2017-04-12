@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView, RedirectView
+from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
@@ -69,11 +69,13 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         """
         Call handle bonus if new info allow to create mangopay wallet.
         """
+        if isinstance(form, UserSmallerForm):
+            form.instance.status = "wallet_ok"
         super().form_valid(form)
         check_bonus(self.request)
         if isinstance(form, UserSmallerForm):
             messages.success(self.request, "C'est presque fini, il ne reste plus qu'à créditer ton compte.")
-            return redirect(reverse('users:wallet'))
+            return redirect(reverse("catalogue:index"))
 
         return HttpResponseRedirect(self.get_success_url())
 
@@ -168,6 +170,9 @@ class UserWalletView(BaseWalletFormView):
                 'Le transfert de {} a bien été pris en compte (référence : {})'.format(
                     payin.debited_funds, payin.mangopay_id)
             )
+            if "wallet_ok" in self.request.user.status:
+                self.request.user.status = "money_ok"
+                self.request.user.save()
             ctx = dict(payin=payin, user=self.request.user)
             msg_plain = render_to_string('confs/email/confirm_credit.txt', ctx)
             msg_html = render_to_string('confs/email/confirm_credit.html', ctx)

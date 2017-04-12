@@ -4322,10 +4322,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444;
 }
 .breadcrumb {
-  padding: 8px 15px;
+  padding: 11px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #FEFEFE;
   border-radius: 4px;
 }
 .breadcrumb > li {
@@ -8635,7 +8634,7 @@ body {
   box-sizing: border-box;
 }
 .page .page_inner {
-  background: #fff;
+  background: transparent;
   -webkit-border-radius: 0 0 6px 6px;
   -moz-border-radius: 0 0 6px 6px;
   border-radius: 0 0 6px 6px;

@@ -4,44 +4,46 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-sm-12">
-    {% if user.gave_all_mangopay_info %}
-    <h1>Profil</h1>
-    {% else %}
-    <h1>Informations obligatoires pour porte-monnaie électronique</h1>
-    {% endif %}
-    <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if user.gave_all_mangopay_info %}
-        <div class="form-group">
-            <label class="control-label ">
-                Code Tutorat de Ville
-            </label>
-            <div class="controls ">
-                <input class="textinput textInput form-control" disabled> 
-            </div> 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% if user.gave_all_mangopay_info %}
+            <h1>Profil</h1>
+            {% else %}
+            <h1>Informations personnelles</h1>
+            {% endif %}
+            <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {% if user.gave_all_mangopay_info %}
+                <div class="form-group">
+                    <label class="control-label ">
+                        Code Tutorat de Ville
+                    </label>
+                    <div class="controls ">
+                        <input class="textinput textInput form-control" disabled> 
+                    </div> 
+                </div>
+                <p class="help-block">Bientôt disponible</p>
+                {% endif %}
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">Valider</button>
+                    </div>
+                </div>
+            </form>
+            {% comment multiple emails disabled %}
+            <h1>Gestion des emails</h1>
+            <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
+            <br>
+            {% endcomment %}
+            {% if not user.gave_all_mangopay_info %}
+            <p>La gestion de votre porte-monnaie est confiée à <a href="https://www.mangopay.com">MangoPay</a>.
+            <strong>Aucune donnée bancaire n'est stockée ni ne transite via notre site.</strong>
+            Votre argent n'est pas stocké sur notre compte.</p>
+            {% endif %}
         </div>
-        <p class="help-block">Bientôt disponible</p>
-        {% endif %}
-        <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn">Valider</button>
-          </div>
-        </div>
-    </form>
-    {% comment multiple emails disabled %}
-    <h1>Gestion des emails</h1>
-    <a class="btn btn-primary" href="{% url 'account_email' %}">Ajouter ou supprimer une adresse email</a>
-    <br>
-    {% endcomment %}
-    {% if not user.gave_all_mangopay_info %}
-    <p>La gestion de votre porte-monnaie est confiée à <a href="https://www.mangopay.com">MangoPay</a>.
-    <strong>Aucune donnée bancaire n'est stockée ni ne transite via notre site.</strong>
-    Votre argent n'est pas stocké sur notre compte.</p>
-    {% endif %}
-  </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -60,13 +62,13 @@ $('#id_degree').change(function(){
 {% endblock %}
 
 {% block onbodyload %}
-    {{ block.super }}
-    $('#div_id_speciality').addClass('collapse');
+{{ block.super }}
+$('#div_id_speciality').addClass('collapse');
 
-    if ( $('#id_degree').val() == 'MEDECIN' || $('#id_degree').val() == 'INTERNE'){
-        $('#div_id_speciality').slideDown();
-    }
-    else{
-        $('#div_id_speciality').slideUp();
-    }
+if ( $('#id_degree').val() == 'MEDECIN' || $('#id_degree').val() == 'INTERNE'){
+$('#div_id_speciality').slideDown();
+}
+else{
+$('#div_id_speciality').slideUp();
+}
 {% endblock %}

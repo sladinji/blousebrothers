@@ -1,58 +1,61 @@
 {% load i18n %}
 {% load activeurl %}
 
-<div class="space12"></div> <!-- 40px Vertical Spacing -->
+
+<div class="col-md-3"></div>
+<div class="col-md-6">
 {% activeurl %}
-<div class="submenu">
-  <ul>
-    <li>
-	<span class="numtip">1</span>
-	{% if object %}
-       	<a href="{% url 'confs:edit' object.slug %}">
-	{% endif %}
-	       	{% trans "Type de sujet" %}
-	{% if object %}
-	</a>
-	{% endif %}
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    </li>
-    <li>
-	<span class="numtip">2</span> 
-	{% if object %}
-	<a href="{% url 'confs:update' object.slug %}">
-	{% endif %}
-	       	{% trans "Rédaction" %}
-	{% if object %}
-	</a>
-	{% endif %}
-	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    </li>
-    <li>
-	{% url 'confs:update' object.slug as update_view %}
-	{% comment %} Only updateview handle angularjs, so we test if we're on it {% endcomment %}
-	{% if request.path == update_view  %}
-	{% verbatim %}
-	<div ng-if="conference.edition_progress == 100">
-	{% endverbatim %}
-       	  <a href="{% url 'confs:final' object.slug %}">
-	{% verbatim %}
-	    <span class="numtip">3</span> Fin {{ conference.edition_progress | number : 0 }}%
-	  </a>
-	</div>
-	<div ng-if="conference.edition_progress != 100">
-	  <span class="numtip">3</span> Fin {{ conference.edition_progress | number : 0 }}%
-	</div>
-	{% endverbatim %}
-	{% else %}
-	{% if object and object.edition_progress == 100 %}
-       	<a href="{% url 'confs:final' object.slug %}">
-		<span class="numtip">3</span> Finalisation {{ object.edition_progress }}%
-	</a>
-	{% else %}
-	<span class="numtip">3</span> Fin 
-	{% endif %}
-	{% endif %}
-    </li>
-  </ul>
-</div>
+    <div class="submenu">
+        <ul>
+            <li>
+                <span class="numtip">1</span>
+                {% if object %}
+                <a href="{% url 'confs:edit' object.slug %}">
+                    {% endif %}
+                    {% trans "Type de sujet" %}
+                    {% if object %}
+                </a>
+                {% endif %}
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </li>
+            <li>
+                <span class="numtip">2</span> 
+                {% if object %}
+                <a href="{% url 'confs:update' object.slug %}">
+                    {% endif %}
+                    {% trans "Rédaction" %}
+                    {% if object %}
+                </a>
+                {% endif %}
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </li>
+            <li>
+                {% url 'confs:update' object.slug as update_view %}
+                {% comment %} Only updateview handle angularjs, so we test if we're on it {% endcomment %}
+                {% if request.path == update_view  %}
+                {% verbatim %}
+                <div ng-if="conference.edition_progress == 100">
+                    {% endverbatim %}
+                    <a href="{% url 'confs:final' object.slug %}">
+                        {% verbatim %}
+                        <span class="numtip">3</span> Fin {{ conference.edition_progress | number : 0 }}%
+                    </a>
+                </div>
+                <div ng-if="conference.edition_progress != 100">
+                    <span class="numtip">3</span> Fin {{ conference.edition_progress | number : 0 }}%
+                </div>
+                {% endverbatim %}
+                {% else %}
+                {% if object and object.edition_progress == 100 %}
+                <a href="{% url 'confs:final' object.slug %}">
+                    <span class="numtip">3</span> Finalisation {{ object.edition_progress }}%
+                </a>
+                {% else %}
+                <span class="numtip">3</span> Fin 
+                {% endif %}
+                {% endif %}
+            </li>
+        </ul>
+    </div>
 {% endactiveurl %}
+</div>

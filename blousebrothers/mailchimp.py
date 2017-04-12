@@ -4,6 +4,7 @@ from mailchimp3 import MailChimp
 from blousebrothers.users.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
+from django.utils import timezone
 
 # MailChimp clien API
 
@@ -41,6 +42,7 @@ tags = {
     "6w_since_last_buy": "MMERGE21",
     "wallet_bonus": "MMERGE22",
     "ping_10mn": "MMERGE23",
+    "status": "MMERGE25",
 }
 
 
@@ -63,6 +65,32 @@ def days_since_last_purchase(user):
         return diff.days
 
 
+def handle_status(user):
+    """Update _inact suffix according to  user status timestamp"""
+    now = timezone.now()
+    if not user.status_timestamp:
+        user.status_timestamp = now
+    #  Manage special status
+    if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=8):  # 8h if sold at 00:00 ...
+        user.status = "conf_publi_ok"
+    if user.status == "give_eval_ok" and now - user.status_timestamp > timedelta(hours=24):
+        user.status = "money_ok_inact"
+    if user.status == "buyer_over" and now - user.status_timestamp > timedelta(hours=2):
+        user.status = "give_eval_notok"
+    #  Manage _inact (status_timestamp updated when status change!!)
+    if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_inact_m1"):
+        user.status = "inact"
+    if now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_inact_j15"):
+        user.status = user.status.replace("_inact_j15", "_inact_m1")
+    elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_inact_j7"):
+        user.status = user.status.replace("_inact_j7", "_inact_j15")
+    elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_inact"):
+        user.status = user.status.replace("_inact", "_inact_j7")
+    elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_inact"):
+        user.status = "{}_inact".format(user.status)
+    user.save()
+
+
 def sync(qs=None, name='BlouseBrothers'):
     if not qs:
         qs = User.objects.all()
@@ -79,7 +107,7 @@ def sync(qs=None, name='BlouseBrothers'):
         # DERNIER TEST COMMENTÉ ?
         needs_comment = 'no'
         last_test = user.tests.last()
-        # WALLETS
+       # WALLETS
         wallet_perso = 0
         wallet_bonus = 0
         try:
@@ -93,6 +121,8 @@ def sync(qs=None, name='BlouseBrothers'):
                     )
         except Exception as ex:
             print(ex)
+
+        handle_status(user)
 
         merge_fields = {
             'FNAME': user.first_name,
@@ -116,7 +146,7 @@ def sync(qs=None, name='BlouseBrothers'):
             tags["6w_since_last_buy"]: no_buy_since(user, 42),
             tags["nombre jours depuis dernier achat"]: days_since_last_purchase(user),
             tags["ping_10mn"]: 'no' if now - user.date_joined.replace(tzinfo=None) < timedelta(minutes=10) else 'yes',
-
+            tags["status"]: user.status,
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
         print(merge_fields)
