@@ -12,6 +12,8 @@ services:
       - postgres_data_dev:/var/lib/postgresql/data
       - postgres_backup_dev:/backups
     env_file: .env-dev
+    networks:
+      - postgres
 
   django:
     build:
@@ -28,6 +30,9 @@ services:
     links:
       - postgres
       - solr
+    networks:
+      - default
+      - postgres
 
   solr:
     build: ./compose/solr
@@ -44,3 +49,5 @@ networks:
   default:
     external:
       name: nginx-proxy
+  postgres:
+      driver: bridge

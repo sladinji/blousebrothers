@@ -55,7 +55,7 @@ settings file. This will enable the on-the-fly less compiler.
         <div class="col-sm-12 col-md-10 ">
             <div class="top-header">
                 <div class="collapse navbar-collapse nav-primary">
-                    <ul class="boutique-nav main-menu clone-main-menu {% if not request.user.is_authenticated %} pull-right{% else%} pull-left{% endif %}">
+                    <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'catalogue:index' %}?sort_by=newest"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
                         </li>
@@ -100,19 +100,10 @@ settings file. This will enable the on-the-fly less compiler.
         </div>
         {% endactiveurl %}
         {% block submenu %}
-        <div class="hidden-xs submenu_new">
-            <div class="col-sm-hide col-md-2 text-center">
-                <a href="tel:+33339250264"><i class="fa fa-phone"></i> 03 39 25 02 64</a>
-            </div>
-            <div class="col-sm-hide col-md-2 text-center">
-                <a href="https://www.facebook.com/iBlouseBrothers"><i class="fa fa-facebook"></i></a>
-            </div>
-            <div class="col-md-2 text-center">
-                <a href="https://twitter.com/iBlouseBrothers"><i class="fa fa-twitter"></i></a>
-            </div>
-            <div class="col-md-2 text-center">
-                <a href="mailto:contact@blousebrothers.fr"><i class="fa fa-envelope"></i> contact@blousebrothers.fr</a>
-            </div>
+        <div class="hidden-xs submenu_new pull-right">
+            <a href="tel:+33339250264"><i class="fa fa-phone"></i> 03 39 25 02 64</a> 
+            <a href="https://www.facebook.com/iBlouseBrothers"><i class="fa fa-facebook"></i></a> 
+            <a href="https://twitter.com/iBlouseBrothers"><i class="fa fa-twitter"></i></a> 
         </div>
         {% endblock %}
     </div>
