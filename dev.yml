@@ -20,12 +20,7 @@ services:
     command: python /app/manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
-    environment:
-      - POSTGRES_USER=blousebrothers
-      - USE_DOCKER=yes
-      - VIRTUAL_HOST=futur.blousebrothers.fr
-      - LETSENCRYPT_HOST=futur.blousebrothers.fr
-      - LETSENCRYPT_EMAIL=julien.almarcha@labresult.fr
+    env_file: .env-dev
     volumes:
       - .:/app
     expose:
