@@ -9,7 +9,7 @@ from . import crud
 urlpatterns = [
     # URL pattern for the ConferenceListView
     url(
-        regex=r'^$',
+        r'^created/?$',
         view=views.ConferenceListView.as_view(),
         name='list'
     ),
@@ -50,7 +50,7 @@ urlpatterns = [
 
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/update$',
+        regex=r'^~create/(?P<slug>[\w.@+-]+)/update$',
         view=views.ConferenceUpdateView.as_view(),
         name='update'
     ),
@@ -60,7 +60,7 @@ urlpatterns = [
         name='delete'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/final$',
+        regex=r'^~/create/(?P<slug>[\w.@+-]+)/final$',
         view=views.ConferenceFinalView.as_view(),
         name='final'
     ),
@@ -71,7 +71,7 @@ urlpatterns = [
         name='create'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/edit$',
+        regex=r'^~create/(?P<slug>[\w.@+-]+)/edit$',
         view=views.ConferenceEditView.as_view(),
         name='edit'
     ),

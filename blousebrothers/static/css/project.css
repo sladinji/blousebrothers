@@ -61,6 +61,19 @@
 	padding-top: 9px;
 	width: 80%;
 }
+.submenu_new a {
+    color: #e5e5e5;
+}
+.submenu_new .col-sm-hide.col-md-2.text-center {
+    padding-top: 5px;
+}
+
+li.menu-item-has-children.item-megamenu.active {
+    border-bottom: 5px solid #E8B510;
+}
+.main-menu>li>a {
+    padding: 14px 0;
+}
 .blouse-font {
 	font-family: 'lobster';
 }
