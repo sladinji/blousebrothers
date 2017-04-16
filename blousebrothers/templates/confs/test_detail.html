@@ -19,11 +19,17 @@
         <div id="result">
         {% include 'confs/partials/test_result.html' with object=object %}
         </div>
-        <div class="text-center">
+        <div class="col-sm-12 text-center">
+            {% if not object.has_review and object.student != object.conf.owner %}
+            <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
+                Merci de laisser un avis !
+            </a>
+            {% else %}
             <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
                 {% csrf_token %}
                 <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
             </form>
+            {% endif %}
         </div>
     </div>
 
@@ -112,6 +118,13 @@
         {% endcomment %}
     </div>
     <!-- End Action buttons -->
+</div>
+<div class="col-sm-12 text-center">
+    {% if not object.has_review and object.student != object.conf.owner %}
+    <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
+        Merci de laisser un avis !
+    </a>
+    {% endif %}
 </div>
 {% load disqus_tags %}
 {% set_disqus_identifier result_ " object.conf.slug" %}
