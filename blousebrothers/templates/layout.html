@@ -44,7 +44,7 @@ settings file. This will enable the on-the-fly less compiler.
     <div class="row">
         <div class="col-sm-12 col-md-2 logo-wrapper">
             <div class="logo">
-                <a href="{% url 'catalogue:index' %}?sort_by=newest"><img src="{% static "images/logo_home.png" %}" width=100px alt=""></a>
+                <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=100px alt=""></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-primary">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -57,7 +57,7 @@ settings file. This will enable the on-the-fly less compiler.
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'catalogue:index' %}?sort_by=newest"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
+                            <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
                         </li>
                         <li class="menu-item-has-children item-megamenu"><a href="{% url 'regledujeu' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a></li>
                         <li class="menu-item-has-children item-megamenu"><a id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a></li>

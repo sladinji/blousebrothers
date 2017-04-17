@@ -163,7 +163,7 @@
             <tr>
                 <th>{% trans "Matières abordées" %}</th>
                 <td><ul>{% for spe in product.conf.specialities.all %}
-                        <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
+                        <li><a href="{% url 'catalogue:index' %}?selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
                         {% endfor %}
                     </ul>
                 </td>
@@ -171,7 +171,7 @@
             <tr>
                 <th>{% trans "Items abordés" %}</th>
                 <td><ul>{% for item in product.conf.items.all %}
-                        <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
+                        <li><a href="{% url 'catalogue:index' %}?selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
                         {% endfor %}
                     </ul>
                 </td>
