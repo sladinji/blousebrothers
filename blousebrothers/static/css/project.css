@@ -1,4 +1,7 @@
 /* These styles are generated from project.scss. */
+.main-menu>li:first-child {
+        padding-left: 20px;
+}
 .container-fluid {
      max-width: none;
 }
@@ -1065,6 +1068,9 @@ footer .content{
 	margin-bottom: 10px;
 	padding: 10px;
     background-color: white;
+}
+.product_pod .btn:hover {
+    background-color: #E8B510;
 }
 .image_container {
     font-family: sans-serif;
