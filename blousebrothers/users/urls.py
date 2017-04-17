@@ -9,21 +9,21 @@ from . import views
 urlpatterns = [
     # URL pattern for the UserRedirectView
     url(
-        regex=r'^~redirect/$',
+        regex=r'^detail/$',
         view=views.UserRedirectView.as_view(),
         name='redirect'
     ),
 
     # URL pattern for the UserDetailView
     url(
-        regex=r'^(?P<username>[\w.@+-]+)/$',
+        regex=r'^detail/(?P<username>[\w.@+-]+)/$',
         view=views.UserDetailView.as_view(),
         name='detail'
     ),
 
     # URL pattern for the UserUpdateView
     url(
-        regex=r'^~update/$',
+        regex=r'^detail/~update/$',
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
@@ -36,25 +36,25 @@ urlpatterns = [
     ),
     # IBAN
     url(
-        regex=r'^~addbankaccount/$',
+        regex=r'^~wallet/addbankaccount/$',
         view=views.AddIbanView.as_view(),
         name='addiban'
     ),
     # PAYOUT
     url(
-        regex=r'^~transfert/$',
+        regex=r'^~wallet/transfert/$',
         view=views.PayOutView.as_view(),
         name='payout'
     ),
     # Credit Card
     url(
-        regex=r'^~addcard/$',
+        regex=r'^~wallet/addcard/$',
         view=views.AddCardView.as_view(),
         name='addcard'
     ),
     # MangoPay Credit Card feed back
     url(
-        regex=r'^~addcardreturn/$',
+        regex=r'^~wallet/addcardreturn/$',
         view=views.HandleMangoAddCardReturn.as_view(),
         name='addcardreturn'
     ),

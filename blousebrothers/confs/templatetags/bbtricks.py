@@ -47,29 +47,14 @@ def result_icon(answer, test_answer):
 
 @register.filter
 def score100(test):
-    product = test.conf.products.first()
-    if not product or test.has_review() or test.student == test.conf.owner :
-        score = Decimal(test.score * 100 / test.max_score)
-        span = '<span class="score"><big>{}</big> / 100</span>'.format(
-            score.quantize(Decimal('.01'), rounding=ROUND_UP)
-        )
-        return mark_safe(span)
-    else:
-        return mark_safe(
-            '<br>'
-            '<a class="btn score" href="{}#addreview">'
-            'Laisse un avis <br>pour accéder à ta note !</a>'.format(
-                reverse('catalogue:reviews-add', kwargs={
-                    'product_slug': product.slug, 'product_pk': product.id}
-                )
-            )
-
-        )
+    score = Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
+    span = '<span class="score"><big>{}</big> / 100</span>'.format(score)
+    return mark_safe(span)
 
 
 @register.filter
 def get_test_url(test):
-    try :
+    try:
         if not test.finished or test.has_review():
             return reverse('confs:test', kwargs={'slug': test.conf.slug})
         else:
