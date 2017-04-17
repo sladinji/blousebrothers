@@ -44,7 +44,16 @@ class BasketAddView(CoreBasketAddView):
 
         if created and not free_conf:
             try:
-                return self.debit_wallet(form, test, self.request.user.wallet_bonus)
+                if self.request.user.has_full_access():
+                    Sale.objects.create(
+                        conferencier=form.product.conf.owner,
+                        student=self.request.user,
+                        product=form.product,
+                        conf=form.product.conf,
+                    )
+                    return self.redirect_success(form)
+                else:
+                    return self.debit_wallet(form, test, self.request.user.wallet_bonus)
             except:
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)

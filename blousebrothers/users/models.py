@@ -196,7 +196,7 @@ class User(AbstractUser):
         if subs:
             return subs[0]
 
-    def has_full_acces(self):
+    def has_full_access(self):
         return [x for x in self.subs.filter(type__name="Accès illimités").all() if not x.is_past_due]
 
     @property

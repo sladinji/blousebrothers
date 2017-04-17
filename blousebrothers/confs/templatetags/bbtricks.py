@@ -16,6 +16,16 @@ Product = get_model('catalogue', 'Product')
 def to_char(value):
     return ascii_uppercase[value]
 
+@register.filter
+def or_subscription(money):
+    """
+    Display Abo in conferencier sale's table when amount == 0.
+    """
+    if money.amount == 0 :
+        return "Abo"
+    else:
+        return money.amount
+
 
 @register.filter
 def is_good_css(answer, test_answer):

@@ -283,8 +283,8 @@
 						<td><a href="{% url 'catalogue:reviews-list' product_slug=sell.product.slug product_pk=sell.product.id %}">{{ sell.product }}</a></td>
 						<td>{{ sell.student }}</td>
 						<td>{{ sell.create_timestamp }}</td>
-						<td>{{ sell.credited_funds }}</td>
-						<td>{{ sell.fees }}</td>
+						<td>{{ sell.credited_funds | or_subscription  }}</td>
+						<td>{{ sell.fees | or_subscription }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
