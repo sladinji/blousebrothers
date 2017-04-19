@@ -1487,3 +1487,6 @@ article.product_pod.gynécologie_–_obstétrique{
 article.product_pod.rhumatologie{
     background-image: url(/static/images/spe/rhumato.png);
 }
+article.product_pod.chirurgie_maxillo-faciale{
+    background-image: url(/static/images/spe/maxillo.png);
+}
