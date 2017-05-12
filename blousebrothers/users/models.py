@@ -123,7 +123,7 @@ class User(AbstractUser):
                            blank=True, null=True,
                            help_text=_("Important si tu es conférencier !"),
                            )
-    status = models.CharField(_("Status"), max_length=20, default="registered", null=True)
+    status = models.CharField(_("Status"), max_length=50, default="registered", null=True)
     status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
     previous_status = None  # place holder to check status change
 
