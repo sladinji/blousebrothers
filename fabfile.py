@@ -5,6 +5,9 @@ from fabric.api import *
 import requests
 import re
 import fabric
+from raven import Client
+
+sentry = Client('https://770aeeaa5cc24a3e8b16a10c328c28c5:1aca22596ba1421198ff5269032f0ffd@sentry.io/104798')
 
 env.hosts = ['admin@blousebrothers.fr']
 code_dir = 'projets/blousebrothers/blousebrothers'
@@ -16,7 +19,7 @@ def send_simple_message(msg):
                 auth=("api", "key-0cb37ccb0c2de16fc921df70228346bc"),
                 data={"from": "Futur Bot <noreply@blousebrothers.fr>",
                       "to": ["julien.almarcha@gmail.com", "guillaume@blousebrothers.fr"],
-                      "subject": "https://futur.blousebrothers.fr updated",
+                      "subject": "https://labresult.fr updated",
                       "text": msg})
 
 
@@ -38,7 +41,7 @@ def deploy():
         run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
-@hosts('dowst@futur.blousebrothers.fr')
+@hosts('ubuntu@labresult.fr')
 def futur(branch='master',reset='no'):
     """
     Deploy on futur
@@ -80,7 +83,24 @@ def proddb(pre=False):
     return last
 
 
-@hosts('dowst@futur.blousebrothers.fr')
+class FabricException(Exception):
+    pass
+
+@hosts('ubuntu@labresult.fr')
+def backup():
+    with settings(abort_exception = FabricException):
+        try:
+            local("docker-compose run postgres backup")
+            backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
+            last = sorted(backups)[-1]
+            local(r"docker run --rm --volumes-from blousebrothers_postgres_1 "
+                r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
+            put("backup.tgz")
+        except Exception:
+            print("AHAAH")
+    	    sentry.captureException()
+
+@hosts('ubuntu@labresult.fr')
 def preproddb():
     """
     Dump prrprod and loat it locallly.
@@ -95,10 +115,10 @@ def load_last_dump(last=None, pre=False, mangoreset='yes'):
         backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
         last = sorted(backups)[-1]
     if pre:
-        local("cd dowst@futur.blousebrothers.fr && tar xzf backup.tgz")
+        local("cd ubuntu@labresult.fr && tar xzf backup.tgz")
         local("docker run --rm "
               "--volumes-from blousebrothers_postgres_1 "
-              "-v $(pwd)/dowst@futur.blousebrothers.fr/backups:/backup "
+              "-v $(pwd)/ubuntu@labresult.fr/backups:/backup "
               "blousebrothers_postgres cp /backup/%s /backups" % last)
     else:
         local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
@@ -124,7 +144,7 @@ def get_migrations():
     get("%s/blousebrothers/confs/migrations/*.py" % code_dir, "blousebrothers/confs/migrations/")
 
 
-@hosts('dowst@futur.blousebrothers.fr')
+@hosts('ubuntu@labresult.fr')
 def futur_publish_confs():
     """
     Publish_confs on futur.
@@ -134,14 +154,14 @@ def futur_publish_confs():
             run("docker-compose run django ./manage.py publish_confs")
 
 
-@hosts('dowst@futur.blousebrothers.fr')
+@hosts('ubuntu@labresult.fr')
 def futur_gen_code():
     with cd(code_dir):
         with prefix("source blouserc"):
             run('./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
 
 
-@hosts('dowst@futur.blousebrothers.fr')
+@hosts('ubuntu@labresult.fr')
 def futur_syncdb():
     with cd(code_dir):
         with prefix("source blouserc"):
