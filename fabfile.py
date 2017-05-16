@@ -90,14 +90,11 @@ class FabricException(Exception):
 def backup():
     with settings(abort_exception = FabricException):
         try:
-            local("docker-compose run postgres backup")
-            backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
-            last = sorted(backups)[-1]
-            local(r"docker run --rm --volumes-from blousebrothers_postgres_1 "
-                r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
+            local("/usr/local/bin/docker-compose run postgres backup")
+            local(r"/usr/bin/docker run --rm --volumes-from blousebrothers_postgres_1 "
+                r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/last_dump.sql")
             put("backup.tgz")
         except Exception:
-            print("AHAAH")
     	    sentry.captureException()
 
 @hosts('ubuntu@labresult.fr')
