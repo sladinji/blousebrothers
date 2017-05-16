@@ -68,12 +68,12 @@
         <div id="author_description" class="sub-header">
             <h2>{% trans "Auteur" %}</h2>
         </div>
-        <div class="col-xs-3 product_main">
+        <div class="col-xs-4 product_main">
             {% if product.conf.owner.socialaccount_set %}
             <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url}}">
             {% endif %}
         </div>
-        <div class="col-xs-9 product_main">
+        <div class="col-xs-8 product_main">
             <ul class="quick-list">
                 <li><label>{% trans 'Pseudo' %} :</label> {{ product.conf.owner.username }}</li>
                 <li><label>{% trans 'City' %} :</label> {% if product.conf.owner.university %} {{ product.conf.owner.university }} {% endif %}</li>
@@ -163,7 +163,7 @@
             <tr>
                 <th>{% trans "Matières abordées" %}</th>
                 <td><ul>{% for spe in product.conf.specialities.all %}
-                        <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
+                        <li><a href="{% url 'catalogue:index' %}?selected_facets=spe_exact%3A{{ spe }}">{{ spe }}</a></li>
                         {% endfor %}
                     </ul>
                 </td>
@@ -171,7 +171,7 @@
             <tr>
                 <th>{% trans "Items abordés" %}</th>
                 <td><ul>{% for item in product.conf.items.all %}
-                        <li><a href="{% url 'catalogue:index' %}?sort_by=newest&selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
+                        <li><a href="{% url 'catalogue:index' %}?selected_facets=conf_items_exact%3A{{ item.number }}">{{ item }}</a></li>
                         {% endfor %}
                     </ul>
                 </td>

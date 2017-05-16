@@ -1,4 +1,7 @@
 /* These styles are generated from project.scss. */
+.main-menu>li:first-child {
+        padding-left: 20px;
+}
 .container-fluid {
      max-width: none;
 }
@@ -1066,6 +1069,9 @@ footer .content{
 	padding: 10px;
     background-color: white;
 }
+.product_pod .btn:hover {
+    background-color: #E8B510;
+}
 .image_container {
     font-family: sans-serif;
     min-height: 119px;
@@ -1480,4 +1486,7 @@ article.product_pod.gynécologie_–_obstétrique{
 }
 article.product_pod.rhumatologie{
     background-image: url(/static/images/spe/rhumato.png);
+}
+article.product_pod.chirurgie_maxillo-faciale{
+    background-image: url(/static/images/spe/maxillo.png);
 }
