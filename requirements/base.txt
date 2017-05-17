@@ -97,5 +97,5 @@ django-invitations==1.9
 django-disqus==0.5
 pysolr==3.6.0
 mailchimp3==2.0.10
-django-oscar-paypal==0.9.7
+git+https://github.com/sladinji/django-oscar-paypal.git
 

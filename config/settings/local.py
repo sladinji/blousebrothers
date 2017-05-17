@@ -67,6 +67,10 @@ MANGOPAY_DEBUG_MODE = True
 MANGOPAY_BASE_URL = "https://api.sandbox.mangopay.com"
 MANGOPAY_PASSPHRASE = "op38EBPRsdSkU0rbPuduaoU0Ny7vegjo5TEPsv6bEdApDLShFT"
 
+PAYPAL_API_USERNAME = 'julien-facilitator_api1.blousebrothers.fr'
+PAYPAL_API_PASSWORD = '3RFTB3NFMVG7KJYP'
+PAYPAL_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31APT1rdUDeTom6WERLbb3tqVk8Pte'
+
 NOTEBOOK_ARGUMENTS = [
         # exposes IP and port
         '--ip=0.0.0.0',

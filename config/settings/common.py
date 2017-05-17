@@ -73,6 +73,7 @@ THIRD_PARTY_APPS = [
     'invitations',  # Sponsoring
     'localflavor',  # IbanField
     'disqus', #  Forum
+    'paypal',
 ]
 
 # Apps specific for this project go here.
@@ -370,6 +371,17 @@ OSCAR_SEARCH_FACETS = {
     #     }),
     ]),
 }
+OSCAR_DASHBOARD_NAVIGATION.append(
+    {
+        'label': _('PayPal'),
+        'icon': 'icon-globe',
+        'children': [
+            {
+                'label': _('Express transactions'),
+                'url_name': 'paypal-express-list',
+            },
+        ]
+    })
 
 OSCAR_DEFAULT_CURRENCY = 'EUR'
 OSCAR_SHOP_NAME = "BlouseBrothers"
