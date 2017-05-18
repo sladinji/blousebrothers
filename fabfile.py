@@ -10,7 +10,7 @@ from raven import Client
 sentry = Client('https://770aeeaa5cc24a3e8b16a10c328c28c5:1aca22596ba1421198ff5269032f0ffd@sentry.io/104798')
 
 env.hosts = ['admin@blousebrothers.fr']
-code_dir = 'projets/blousebrothers/blousebrothers'
+code_dir = 'projets/blousebrothers'
 
 
 def send_simple_message(msg):
@@ -41,7 +41,7 @@ def deploy():
         run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
-@hosts('ubuntu@labresult.fr')
+@hosts('fx@labresult.fr')
 def futur(branch='master',reset='no'):
     """
     Deploy on futur
