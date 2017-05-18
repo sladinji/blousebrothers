@@ -64,7 +64,7 @@ class BasketAddView(CoreBasketAddView):
                         msg = _("Merci d'ajouter une carte et de créditer ton compte. Tout est sécurisé par Mangopay.")
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
-                    return HttpResponseRedirect(reverse("users:wallet") + '?next={}'.format(self.request.path))
+                    return HttpResponseRedirect(reverse("basket:summary") + '?next={}'.format(self.request.path))
                 except Exception as ex:
                     test.delete()
                     raise ex
