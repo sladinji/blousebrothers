@@ -77,8 +77,10 @@ class Product(AbstractProduct):
     @property
     def needs_confirmation(self):
         user = CuserMiddleware.get_user()
-        if not self.conf or self.conf.price == 0 or user.already_done(self.conf) or user.has_full_access():
+        balance = user.wallet.balance() + user.wallet_bonus.balance()
+        if not user.has_full_access() and balance > 0:
+            return True
+        else:
             return False
-        return True
 
 from oscar.apps.catalogue.models import *  # noqa

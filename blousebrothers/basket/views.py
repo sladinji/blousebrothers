@@ -9,6 +9,7 @@ from blousebrothers.confs.models import Test
 from blousebrothers.users.models import Sale
 from money import Money
 from mangopay.models import MangoPayTransfer
+from oscar.core.loading import get_model
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
@@ -58,10 +59,7 @@ class BasketAddView(CoreBasketAddView):
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)
                 except MangoNoEnoughCredit:
-                    if self.request.user.has_at_least_one_card:
-                        msg = _("Merci de créditer ton compte. Tout est sécurisé par Mangopay.")
-                    else:
-                        msg = _("Merci d'ajouter une carte et de créditer ton compte. Tout est sécurisé par Mangopay.")
+                    msg = _("Merci de créditer ton compte." )
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
                     return HttpResponseRedirect(reverse("basket:summary") + '?next={}'.format(self.request.path))
