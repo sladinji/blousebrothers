@@ -111,7 +111,10 @@ def sync(qs=None, name='BlouseBrothers'):
         wallet_perso = 0
         wallet_bonus = 0
         try:
-            if user.gave_all_mangopay_info:
+            if user.has_full_access():
+                wallet_perso = 1
+                wallet_bonus = 1
+            elif user.gave_all_mangopay_info:
                 wallet_perso = user.wallet.balance().amount
                 wallet_bonus = user.wallet_bonus.balance().amount
             if last_test and not last_test.has_review() and last_test.conf.owner != user:
