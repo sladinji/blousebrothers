@@ -1490,3 +1490,33 @@ article.product_pod.rhumatologie{
 article.product_pod.chirurgie_maxillo-faciale{
     background-image: url(/static/images/spe/maxillo.png);
 }
+
+#select-plan .etape1, #select-plan .etape2{
+    padding:30px 0;
+}
+#select-plan .etape1{
+    text-align:center;
+}
+#select-plan .etape1 .btn{
+    box-shadow:inherit;
+    padding:15px 40px;
+    font-weight:200;
+}
+#select-plan .etape1 .btn.active{
+    background-color: #E8B510;
+    color:#fff;
+}
+#select-plan .etape1 .the-total-price{
+    color:#000;
+    font-size:4em;
+}
+#select-plan .etape1 h2, #select-plan .etape2 h2{
+    color:#000;
+}
+.voucher-plan .sub-header{
+    border-bottom:0;
+    margin-top:20px;
+}
+.voucher-plan .btn{
+    box-shadow:inherit;
+}
