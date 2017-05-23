@@ -64,7 +64,7 @@ django-select2==5.8.10
 django-activeurl==0.1.9
 django-cookie-law==1.0.13
 django-tinycontent==0.6.1
-stripe==1.38.0
+stripe==1.55.2
 django-image-cropping==1.0.4
 easy_thumbnails==2.3
 django-countries==4.3
