@@ -75,12 +75,14 @@ class Product(AbstractProduct):
             return Test.objects.get(student=user, conf=self.conf)
 
     @property
-    def needs_confirmation(self):
+    def no_confirmation_needed(self):
         user = CuserMiddleware.get_user()
-        balance = user.wallet.balance() + user.wallet_bonus.balance()
-        if not user.has_full_access() and balance > 0:
+        if not user.is_authenticated():
             return True
-        else:
+        balance = user.wallet.balance() + user.wallet_bonus.balance()
+        if not user.has_full_access() and balance.amount > 0:
             return False
+        else:
+            return True
 
 from oscar.apps.catalogue.models import *  # noqa
