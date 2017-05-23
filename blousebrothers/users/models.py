@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
+import functools
 import logging
 from django.utils import timezone
 
@@ -177,6 +178,10 @@ class User(AbstractUser):
             wallet.mangopay_user = self.mangopay_user
             wallet.create(description=description)
         return wallet
+
+    @functools.lru_cache(10)
+    def balance(self):
+        return self.wallet.balance() + self.wallet_bonus.balance()
 
     @property
     def wallet(self):

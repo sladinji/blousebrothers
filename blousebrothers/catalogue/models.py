@@ -79,8 +79,7 @@ class Product(AbstractProduct):
         user = CuserMiddleware.get_user()
         if not user.is_authenticated():
             return True
-        balance = user.wallet.balance() + user.wallet_bonus.balance()
-        if not user.has_full_access() and balance.amount > 0:
+        if not user.has_full_access() and user.balance().amount > 0:
             return False
         else:
             return True
