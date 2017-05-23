@@ -1,4 +1,5 @@
 from decimal import Decimal, ROUND_HALF_UP
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -17,13 +18,14 @@ selector = get_class('partner.strategy', 'Selector')()
 
 class BasketView(CoreBasketView):
     def get_context_data(self, **kwargs):
+        kwargs.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
         for line in self.request.basket.all_lines():
-            try :
+            try:
                 if line.product.categories.first().name == '__Abonnements':
-                    return super(BasketView, self).get_context_data(selected_sub_id=line.product.id,**kwargs)
+                    return super(BasketView, self).get_context_data(selected_sub_id=line.product.id, **kwargs)
             except:
                 pass
-        return super(BasketView, self).get_context_data(selected_sub_id=None,**kwargs)
+        return super(BasketView, self).get_context_data(selected_sub_id=None, **kwargs)
 
 
 class MangoTransfertException(Exception):
