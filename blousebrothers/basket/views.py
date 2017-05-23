@@ -73,7 +73,10 @@ class BasketAddView(CoreBasketAddView):
                     msg = _("Merci de créditer ton compte." )
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
-                    return HttpResponseRedirect(reverse("basket:summary") + '?next={}'.format(self.request.path))
+                    return HttpResponseRedirect(
+                        reverse("users:subscription",
+                                kwargs={'sub_id':0}) + '?next={}'.format(self.request.path)
+                    )
                 except Exception as ex:
                     test.delete()
                     raise ex

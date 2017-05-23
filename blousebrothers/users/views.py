@@ -335,7 +335,10 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         Display subscriptions page or redirect to basket if subscription was clicked.
         """
         if kwargs['sub_id']:
-            sub = Product.objects.get(id=kwargs['sub_id'])
+            if kwargs['sub_id'] == '0':
+                sub = Product.objects.filter(title__contains="1 mois").first()
+            else:
+                sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.flush()
             request.basket.add_product(sub, 1)
             return redirect('/basket/')
