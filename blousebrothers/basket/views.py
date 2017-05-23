@@ -4,15 +4,26 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from oscar.apps.basket.views import BasketAddView as CoreBasketAddView
+from oscar.apps.basket.views import BasketView as CoreBasketView
 from oscar.core.loading import get_class
 from blousebrothers.confs.models import Test
 from blousebrothers.users.models import Sale
 from money import Money
 from mangopay.models import MangoPayTransfer
-from oscar.core.loading import get_model
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
+
+
+class BasketView(CoreBasketView):
+    def get_context_data(self, **kwargs):
+        for line in self.request.basket.all_lines():
+            try :
+                if line.product.categories.first().name == '__Abonnements':
+                    return super(BasketView, self).get_context_data(selected_sub_id=line.product.id,**kwargs)
+            except:
+                pass
+        return super(BasketView, self).get_context_data(selected_sub_id=None,**kwargs)
 
 
 class MangoTransfertException(Exception):

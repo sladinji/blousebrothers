@@ -3,6 +3,7 @@
 {% load currency_filters %}
 {% load purchase_info_tags %}
 {% load widget_tweaks %}
+{% load bbtricks %}
 
 {% if basket_warnings %}
     <h5>{% trans "Important messages about items in your basket" %}</h5>
@@ -56,31 +57,20 @@
           {% endif %}
 	  </span>
 	  <br><br>
-	  <div class="btn-group" data-toggle="buttons">
-	    <label class="btn btn-default" data-toggle="tab" data-target="#pay_tab1">
-	      <input type="radio" id="pay_year" name="pay_mode" value="1" data-target="#pay_tab1"  /> {% trans "Annuel" %}
-	    </label>
-	    <label class="btn btn-default" data-toggle="tab" data-target="#pay_tab2">
-	      <input type="radio" id="pay_month" name="pay_mode" value="2" data-target="#pay_tab2"  />  {% trans "Mensuel" %}
-	    </label>
-	    <label class="btn btn-default" data-toggle="tab" data-target="#pay_tab3">
-	      <input type="radio" id="pay_credit" name="pay_mode" value="3" data-target="#pay_tab3"  />  {% trans "Crédit" %}
-	    </label>
+	  <div class="btn-group">
+        {% for sub in subscriptions %}
+        <a class="btn btn-default{% if selected_sub_id == sub.id %} active{% endif %}" href="{% url 'users:subscription' sub.id %}">
+            {{ sub.title }}
+	    </a>
+        {% endfor %}
 	  </div>
 	  <br><br>
 	  <div class="tab-content">
-	    <div id="pay_tab1" class="tab-pane fade in active">
-	      <h3>{% trans "Annuel" %}</h3>
-	      <p>Some content.</p>
+        {% for sub in subscriptions %}
+        <div id="pay_tab{{ sub.id }}" class="tab-pane fade{% if selected_sub_id == sub.id %} in active{% endif %}">
+          <p>{{ sub.description | sub_desc_custo | safe }}</p>
 	    </div>
-	    <div id="pay_tab2" class="tab-pane fade">
-	      <h3>{% trans "Mensuel" %}</h3>
-	      <p>Some content in menu 1.</p>
-	    </div>
-	    <div id="pay_tab3" class="tab-pane fade">
-	      <h3>{% trans "Crédit" %}</h3>
-	      <p>Some content in menu 2.</p>
-	    </div>
+        {% endfor %}
 	  </div>
 	</form>
       </div> {# end select your plan #}
