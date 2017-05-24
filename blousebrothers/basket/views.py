@@ -11,13 +11,18 @@ from blousebrothers.confs.models import Test
 from blousebrothers.users.models import Sale
 from money import Money
 from mangopay.models import MangoPayTransfer
+from oscar.apps.shipping.methods import NoShippingRequired
+
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
+CheckoutSessionMixin = get_class('checkout.session', 'CheckoutSessionMixin')
 
 
-class BasketView(CoreBasketView):
+class BasketView(CheckoutSessionMixin, CoreBasketView):
     def get_context_data(self, **kwargs):
+        self.checkout_session.use_shipping_method(
+                            NoShippingRequired().code)
         kwargs.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
         for line in self.request.basket.all_lines():
             try:

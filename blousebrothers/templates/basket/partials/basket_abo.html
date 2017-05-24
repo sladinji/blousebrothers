@@ -94,6 +94,10 @@
 		  data-email="{{ user.email }}"
 		  data-label="Payer par carte">
 	  </script>
+	<div style="display:none">
+		<input type="hidden" name="action" value="place_order" />
+		{{ stripe_token_form.as_p }}
+	</div>
 	</form>
 	</div>
 	{% endblock %}	
