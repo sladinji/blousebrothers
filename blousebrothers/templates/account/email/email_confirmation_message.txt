@@ -2,17 +2,17 @@
 
 Bienvenue sur BlouseBrothers,
  
-Ton inscription est bientôt validé, merci de confirmer ton adresse mail en cliquant sur ce lien : {{ activate_url }}
+Ton inscription est bientÃ´t validÃ©, merci de confirmer ton adresse mail en cliquant sur ce lien : {{ activate_url }}
 
 Tu es interne (ou externe confiant) ?
-Tu peux créer des dossiers sur la plateforme et les vendre au prix que tu le souhaite (ou les proposer gratuitement!) et garder 70% des gains de tes ventes. Aucun frais, aucun engagement.
+Tu peux crÃ©er des dossiers sur la plateforme et les vendre au prix que tu le souhaite (ou les proposer gratuitement!) et garder 70% des gains de tes ventes. Aucun frais, aucun engagement.
  
 Tu es externe?
-Achète uniquement les dossiers qui te conviennent, selon ton programme. Évalue chaque dossier pour les suivants. Accède à  la correction, à  ta note et à  ton classement.
+AchÃ¨te uniquement les dossiers qui te conviennent, selon ton programme. Ã‰value chaque dossier pour les suivants. AccÃ¨de Ã   la correction, Ã   ta note et Ã   ton classement.
  
-Tu peux tester les dossiers qui sont en accès libre dès maintenant pour te faire une idée.
+Tu peux tester les dossiers qui sont en accÃ¨s libre dÃ¨s maintenant pour te faire une idÃ©e.
 
-S'il y a le moindre problème ou si tu as simplement des suggestions à émettre quant à l'amélioration du site c'est ici:
+S'il y a le moindre problÃ¨me ou si tu as simplement des suggestions Ã  Ã©mettre quant Ã  l'amÃ©lioration du site c'est ici:
 contact@blousebrothers.fr
 
 
@@ -22,6 +22,6 @@ Bonne chance !
 La team BlouseBrothers 
 
 {% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Merci et à  bientôt sur BlouseBrothers !
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Merci et Ã Â  bientÃ´t sur BlouseBrothers !
 {{ site_domain }}{% endblocktrans %}
 
