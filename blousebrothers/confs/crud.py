@@ -205,17 +205,21 @@ class StudentAnswerCRUDView(BaseAnswerCRUDView, StudentConfRelatedObjPermissionM
     def serialize_queryset(self, queryset):
         """
         Prepare answers for student :
-            * turn them all false if not answered yet
-            * set them with given answers if they exist
+            * add user anwser if test finished to display correction
+            * set them with given answers if they exist to display what was answered
+            * or turn them all false if not answered yet
         """
         object_data = super().serialize_queryset(queryset)
         question = Question.objects.get(pk=self.request.GET['question'])
         test = Test.objects.get(conf=question.conf, student=self.request.user)
         test_answer = test.answers.get(test=test, question=question)
-        if test_answer:
+        if test.finished:
             for obj in object_data:
                 obj["user_answer_css"] = is_good_css(Answer.objects.get(id=obj['pk']), test_answer)
                 obj["user_answer"] = str(obj['index']) in test_answer.given_answers
+        elif test_answer.given_answers:
+            for obj in object_data:
+                obj["correct"] = str(obj['index']) in test_answer.given_answers
         else:
             for obj in object_data:
                 obj["correct"] = False
