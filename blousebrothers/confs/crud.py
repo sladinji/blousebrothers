@@ -13,6 +13,7 @@ from blousebrothers.auth import (
     StudentConfRelatedObjPermissionMixin,
     TestPermissionMixin,
 )
+from .templatetags.bbtricks import is_good_css
 from .models import (
     Conference,
     Question,
@@ -71,7 +72,7 @@ class TestCRUDView(TestPermissionMixin, NgCRUDView):
 class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
     model = TestAnswer
 
-    def get_object(self):
+    def get_queryset(self):
         if 'question' in self.request.GET:
             question = Question.objects.get(pk=self.request.GET['question'])
             test = Test.objects.get(student=self.request.user, conf=question.conf)
@@ -85,7 +86,6 @@ class BaseConferenceImageCRUDView(NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
-        print(self.request.GET)
         if 'conf' in self.request.GET:
             return self.model.objects.filter(
                 conf_id=self.request.GET['conf']
@@ -198,7 +198,7 @@ class AnswerCRUDView(BaseAnswerCRUDView, ConfRelatedObjPermissionMixin):
 
 class StudentAnswerCRUDView(BaseAnswerCRUDView, StudentConfRelatedObjPermissionMixin):
     """
-    Crud view for conferencier access
+    Crud view for student access
     """
     allowed_methods = ['GET']
 
@@ -211,11 +211,12 @@ class StudentAnswerCRUDView(BaseAnswerCRUDView, StudentConfRelatedObjPermissionM
         object_data = super().serialize_queryset(queryset)
         question = Question.objects.get(pk=self.request.GET['question'])
         test = Test.objects.get(conf=question.conf, student=self.request.user)
-        answer = test.answers.get(test=test, question=question)
-        if answer :
-            for obj in object_data :
-                obj["correct"] = str(obj['index']) in answer.given_answers
-        else :
+        test_answer = test.answers.get(test=test, question=question)
+        if test_answer:
+            for obj in object_data:
+                obj["user_answer_css"] = is_good_css(Answer.objects.get(id=obj['pk']), test_answer)
+                obj["user_answer"] = str(obj['index']) in test_answer.given_answers
+        else:
             for obj in object_data:
                 obj["correct"] = False
         return object_data

@@ -263,7 +263,27 @@ ul.djng-field-errors li.valid::before {
 	padding: 10px;
 	border: 10px solid #000;
 	margin: -1px;
-	background: #fff;
+	background: none;
+}
+.btn-check-cell .fatal {
+	color: #F00;
+	border: none;
+	padding: 0px;
+}
+.btn-check-cell .notcorrect {
+	color: #F00;
+	border: none;
+	padding: 0px;
+	background: none;
+}
+.btn-check-cell .fatal::after {
+    content:"0"
+}
+.btn-check-cell .correct {
+	color: #0F0;
+	border: none;
+	padding: 0px;
+	background: none;
 }
 .btn {
     background-color: white;

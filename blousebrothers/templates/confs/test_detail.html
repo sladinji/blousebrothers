@@ -20,7 +20,7 @@
   {% endcomment %}
   <div class='row'>
     <aside class="col-md-3 hidden-sm hidden-xs">
-      {% include 'partials/nav_test_questions.html' %}
+      {% include 'partials/nav_testresult_questions.html' %}
     </aside>
     
     <div class="col-md-9 test-main-col" >
@@ -114,11 +114,11 @@
 			      {% endfor %}-->
                             </div>
                             <div class="btn-check-cell">
-                                <i ng-if="answer.correct" class="fa fa-check-square-o" aria-hidden="true"></i>
-                                <i ng-if="!answer.correct" class="fa fa-square-o" aria-hidden="true"></i>
+                                <i ng-if="answer.user_answer_css=='correct'" class="{{ answer.user_answer_css }} fa fa-check" aria-hidden="true"></i>
+                                <i ng-if="answer.user_answer_css!='correct'" class="{{ answer.user_answer_css }} fa fa-close" aria-hidden="true"></i>
+                                <i ng-if="answer.user_answer" class="fa fa-check-square-o" aria-hidden="true"></i>
+                                <i ng-if="!answer.user_answer" class="fa fa-square-o" aria-hidden="true"></i>
                                 <span class='well-answer-title'>{{ans_label[answers.indexOf(answer)]}}</span>
-				<i ng-if="!answer.correct" class="fa fa-square-o" aria-hidden="true"></i>
-				
                             </div>
                         </button>
                     </div>
@@ -126,9 +126,8 @@
             </form>
 
             <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
-            <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled="answer_not_given()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+            <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
             {% endverbatim %}
-            <button ng-if="questions.indexOf(question) == 14" class="btn pull-right" ng-click="next_question()" ng-disabled="answer_not_given()">Terminer !<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
         </div>
     </div>
     <div class="row">
