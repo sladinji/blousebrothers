@@ -133,8 +133,12 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
         object_data = super().serialize_queryset(queryset)
         conf = Conference.objects.get(pk=self.request.GET['conf'])
         test = Test.objects.get(conf=conf, student=self.request.user)
-        for obj in object_data :
+        for obj in object_data:
             obj["answered"] = bool(test.answers.get(question_id=obj["pk"]).given_answers)
+        if test.finished:
+            for obj in object_data:
+                obj["score"] = test.answers.get(question_id=obj["pk"]).score
+                obj["nb_errors"] = test.answers.get(question_id=obj["pk"]).nb_errors
         return object_data
 
 
