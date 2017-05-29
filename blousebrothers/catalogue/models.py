@@ -79,6 +79,8 @@ class Product(AbstractProduct):
         user = CuserMiddleware.get_user()
         if not user.is_authenticated():
             return True
+        if self.conf and user.tests.get(conf=self.conf):
+            return True
         if not user.has_full_access() and user.balance().amount > 0:
             return False
         else:

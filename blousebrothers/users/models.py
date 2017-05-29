@@ -219,6 +219,19 @@ class User(AbstractUser):
         if transfer.status == 'SUCCEEDED':
             return True
 
+    def credit_wallet(self, amount=5):
+        bb = User.objects.get(username="BlouseBrothers")
+        transfer = MangoPayTransfer()
+        transfer.mangopay_credited_wallet = self.wallet
+        transfer.mangopay_debited_wallet = bb.wallet_bonus
+        transfer.debited_funds = amount
+        transfer.save()
+        transfer.create()
+        if transfer.status == 'SUCCEEDED':
+            return True
+        else:
+            raise Exception("Transfert failed :")
+
     def handle_subscription_bonus(self, subscription=None):
         if not subscription:
             subscription = self.subscription
