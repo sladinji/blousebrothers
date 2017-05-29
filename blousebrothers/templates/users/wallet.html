@@ -38,6 +38,7 @@
 				</div>
 			</div>
 		</div>
+        {% comment %}
 		<div class="col-md-6">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
@@ -64,6 +65,7 @@
 				</div>
 			</div>
 		</div>
+        {% endcomment %}
 	</div>
 
 	<div class="space12"></div> <!-- 40px Vertical Spacing -->
@@ -166,7 +168,6 @@
 		{% endif %}
 	</div>
 
-	{% include 'partials/banklogos.html'%}
 	{% if balance.amount != 0 %}
     {% recently_viewed_products %}
     {% endif %}
