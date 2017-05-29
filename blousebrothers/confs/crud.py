@@ -139,6 +139,7 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
             for obj in object_data:
                 obj["score"] = test.answers.get(question_id=obj["pk"]).score
                 obj["nb_errors"] = test.answers.get(question_id=obj["pk"]).nb_errors
+                obj["nb_fatals"] = test.answers.get(question_id=obj["pk"]).fatals.count()
         return object_data
 
 
