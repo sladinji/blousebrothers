@@ -45,10 +45,32 @@
             </div>
         </div>
         <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-list"></i> Abonnement</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="space"></div> <!-- 40px Vertical Spacing -->
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% if object.subscription %}
+                        <ul class="quick-list">
+                            <li><label>{% trans 'Abonnement' %} :</label> {{ object.subscription.type.name }}</li>
+                            <li><label>{% trans 'Validité' %} :</label> {{ object.subscription.date_over }}</li>
+                        </ul>
+                        <p><i>{{ object.subscription.type.description }}</i></p>
+                        {% else %}
+                        <p> Tu n'as actuellement aucun abonnement.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="space"></div> <!-- 40px Vertical Spacing -->
+        <div class="col-md-6">
             {% include 'partials/sponsor_form.html' %}
         </div>
     </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
 {% endblock content %}
 

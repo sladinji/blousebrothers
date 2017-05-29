@@ -8,7 +8,6 @@
 {{ basket_form.as_p }}
 <input id="id_quantity" name="quantity" type="hidden" value="1">
 {% endif %}
-{{ product.no_confirmation_needed }}
 	<button {% if product.no_confirmation_needed %}
         type="submit" data-loading-text="{% trans 'Démarrage...' %}" 
         {% else %} 

@@ -23,7 +23,9 @@
                 <div class="package">
 		  <h4>{{ sub.title }}</h4>
 		  {% purchase_info_for_product request sub as session %}
+          {% if sub.attr.month != 0 %}
 		  <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
+          {% endif %}
                 </div>
                 <ul class="inclusion">
 		  {{ sub.description | sub_desc_custo | safe }}
