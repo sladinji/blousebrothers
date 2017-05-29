@@ -6,8 +6,8 @@
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Monstserrat';
-	src:url('/static/fonts/Montserrat-Regular.otf');
+/*	font-family: 'Monstserrat';
+	src:url('/static/fonts/Montserrat-Regular.otf');*/
 	font-weight: normal;
 	font-style: normal;
 }
@@ -894,7 +894,8 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Monstserrat";
+    font-family: 'Montserrat', sans-serif;
+/*    font-family: "Monstserrat";*/
   font-size: 15px;
   line-height: 1.42857143;
   color: #333333;
@@ -9931,7 +9932,7 @@ FOOTER
 }
 .footer.style2 .widget .widget-title{
     color: #333;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
 }
 .footer.style2 .contact-info .phone{
     color: #999;
@@ -10280,7 +10281,7 @@ FOOTER
 }
 .footer.style9 .widget .widget-title {
     color: #333;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
 }
 .footer.style9 .widget .widget-title:after{
     display: none;

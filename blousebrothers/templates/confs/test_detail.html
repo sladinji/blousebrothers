@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="container">
   <toaster-container toaster-options="{'time-out': 5000}"></toaster-container>
   {% comment %}
@@ -24,6 +25,7 @@
     </aside>
     
     <div class="col-md-9 test-main-col" >
+      
       <div ng-if="conference.type == 'QI'">
         {{conference.title}}<br/>
       </div>
@@ -90,15 +92,17 @@
                 </div>
 </div>       
 <br>
-            <form class="form-horizontal">
+<form class="form-horizontal">
               <fieldset>
 		<!--  {{ answers | is_good_css:answer }} -->
                     <div ng-repeat="answer in answers">
-                        <button type="button" class="btn-answer" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}"> 
+                        <div type="button" class="btn-answer relative" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}"> 
                             <div class="answer-label">
                               {{answer.answer}}
-			      <br><br><strong><span ng-if="answer.correct">VRAI</span><span ng-if="answer.correct != true">FAUX</span> : </strong>
-			      <p class="" ng-bind-html="answer.explaination | safe"</p>
+			      <br><br><!--<strong><span ng-if="answer.correct">VRAI</span><span ng-if="answer.correct != true">FAUX</span> : </strong>-->
+			      <div class="explication"><b>Explication : </b>
+				<p class="" ng-bind-html="answer.explaination | safe"</p>
+				   </div>
 
 			<div ng-repeat="image in answersimages[answer.index]">
                             <img ng-src="{{ static_media(image.image) }}"/>
@@ -114,13 +118,17 @@
 			      {% endfor %}-->
                             </div>
                             <div class="btn-check-cell">
-                                <i ng-if="answer.user_answer_css=='correct'" class="{{ answer.user_answer_css }} fa fa-check" aria-hidden="true"></i>
-                                <i ng-if="answer.user_answer_css!='correct'" class="{{ answer.user_answer_css }} fa fa-close" aria-hidden="true"></i>
                                 <i ng-if="answer.user_answer" class="fa fa-check-square-o" aria-hidden="true"></i>
                                 <i ng-if="!answer.user_answer" class="fa fa-square-o" aria-hidden="true"></i>
                                 <span class='well-answer-title'>{{ans_label[answers.indexOf(answer)]}}</span>
                             </div>
-                        </button>
+			    <div class="result_ext">
+				<i ng-if="answer.user_answer_css=='correct'" class="{{ answer.user_answer_css }} fa fa-check" aria-hidden="true"></i>
+				<i ng-if="answer.user_answer_css!='correct'" class="{{ answer.user_answer_css }} fa fa-close" aria-hidden="true"></i>
+			      </div>
+			    </div>
+			</div>
+
                     </div>
                 </fieldset>
             </form>
@@ -137,7 +145,6 @@
     </div>
 </div>
 {% endblock content %}
-
 
 {% block scripts %}
 {% include 'partials/test_resultjs.html' %}
