@@ -58,7 +58,7 @@
                             <li><label>{% trans 'Abonnement' %} :</label> {{ object.subscription.type.name }}</li>
                             <li><label>{% trans 'Validité' %} :</label> {{ object.subscription.date_over }}</li>
                         </ul>
-                        <p><i>{{ object.subscription.type.description }}</i></p>
+                        <p><i>{{ object.subscription.type.description |safe }}</i></p>
                         {% else %}
                         <p> Tu n'as actuellement aucun abonnement.</p>
                         {% endif %}

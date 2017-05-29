@@ -53,6 +53,7 @@
     {% endif %}
     {% endcomment %}
     
+    {% if user.subscription == None %}
     <section id="pricing">
         {% comment remove subs %}
         {% include "partials/sponsor_form.html" %}
@@ -72,6 +73,7 @@
         </div>
         {% endfor %}
     </section>
+    {% endif %}
 
     {% if has_facets %}
         <h4>{% trans "Refine by" %}</h4>
