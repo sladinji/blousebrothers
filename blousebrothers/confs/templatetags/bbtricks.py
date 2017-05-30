@@ -65,10 +65,12 @@ def result_icon(answer, test_answer):
 
 @register.filter
 def score100(test):
-    score = Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
-    span = '<span class="score"><big>{}</big> / 100</span>'.format(score)
-    return mark_safe(span)
-
+    if test.finished :
+        score = Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
+        span = '<span class="score"><big>{}</big> / 100</span>'.format(score)
+        return mark_safe(span)
+    else:
+        return ""
 
 @register.filter
 def get_test_url(test):
