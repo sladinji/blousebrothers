@@ -1618,3 +1618,7 @@ article.product_pod.chirurgie_maxillo-faciale{
 .voucher-plan .btn{
     box-shadow:inherit;
 }
+.btn-go {
+    font-size: 25px;
+    color: rgb(25, 166, 25);
+}

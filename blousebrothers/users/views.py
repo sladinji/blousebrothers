@@ -341,6 +341,10 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
                 ).filter(
                     attribute_values__value_integer="1"
                 ).first()
+                if not sub :
+                    sub = Product.objects.filter(
+                        attribute_values__attribute__name="month"
+                    ).first()
             else:
                 sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.flush()

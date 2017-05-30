@@ -50,7 +50,7 @@
                     {% include 'catalogue/partials/share_product.html' %}
                 </div>
 
-                {% if object.user_test %}
+                {% if object.user_test and object.user_test.finished %}
                 {% include 'confs/partials/test_result.html' with object=object.user_test %}
                 <div class="space"></div> <!-- 40px Vertical Spacing -->
                 {% endif %}
