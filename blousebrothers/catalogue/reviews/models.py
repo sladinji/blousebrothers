@@ -38,3 +38,6 @@ def set_score(sender, instance, *args, **kwargs):
 
 
 from oscar.apps.catalogue.reviews.models import *  # noqa
+
+ProductReview._meta.get_field('title').blank = True
+ProductReview._meta.get_field('body').blank = True

@@ -24,6 +24,18 @@
       {% include 'partials/nav_testresult_questions.html' %}
     </aside>
     
+    <div class="col-sm-9 text-center">
+        {% if not object.has_review and object.student != object.conf.owner %}
+        <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
+            Merci de laisser un avis !
+        </a>
+        {% else %}
+        <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
+            {% csrf_token %}
+            <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
+        </form>
+        {% endif %}
+    </div>
     <div class="col-md-9 test-main-col" >
       
       <div ng-if="conference.type == 'QI'">
