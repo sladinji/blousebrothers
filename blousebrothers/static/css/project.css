@@ -320,13 +320,13 @@ ul.djng-field-errors li.valid::before {
 	background: none;
 }
 
-.result_ext{
-    position:absolute;
-    z-index:2;
-    right:-120px;
-    top:10px;
-    text-align:center;
-    margin-bottom:10px;
+.result_ext {
+    position: absolute;
+    z-index: 2;
+    right: -71px;
+    top: 1px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 .result_ext .fa-close.fatal::before{
     content: "\f071";
@@ -343,14 +343,14 @@ ul.djng-field-errors li.valid::before {
     }
 }
 .result_ext .fa {
-    font-size:40px !important;
-    width:90px;
-    background:inherit;
-    /*    background: rgba( 0, 0, 0, 0.03);*/
-/*    border:3px solid #ccc;*/
-    border-radius:50px;
-    height:90px;
-    line-height:60px;
+    font-size: 22px !important;
+    width: 60px;
+    background: inherit;
+    /* background: rgba( 0, 0, 0, 0.03); */
+    /* border: 3px solid #ccc; */
+    border-radius: 30px;
+    height: 60px;
+    line-height: 31px;
 }
 .relative{
     position:relative;

@@ -15,51 +15,51 @@
 {% block content %}
 
 <div class="container">
-  <toaster-container toaster-options="{'time-out': 5000}"></toaster-container>
-  {% comment %}
-  AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
-  {% endcomment %}
-  <div class='row'>
-    <aside class="col-md-3 hidden-sm hidden-xs">
-      {% include 'partials/nav_testresult_questions.html' %}
-    </aside>
-    
-    <div class="col-sm-9 text-center">
-        {% if not object.has_review and object.student != object.conf.owner %}
-        <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
-            Merci de laisser un avis !
-        </a>
-        {% else %}
-        <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
-            {% csrf_token %}
-            <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
-        </form>
-        {% endif %}
-    </div>
-    <div class="col-md-9 test-main-col" >
-      
-      <div ng-if="conference.type == 'QI'">
-        {{conference.title}}<br/>
-      </div>
-      
-      <div ng-if="conference.type != 'QI'">
-        <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
-          <div ng-if="isSubjectDiplayed">
-            <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer le sujet du DCP
-          </div>
-          <div ng-if="!isSubjectDiplayed">
-            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher le sujet du DCP
-          </div>
-        </a>
-        <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
-          {% verbatim %}
-          <form novalidate class="question-form">
-            <div class="col-sm-12">
-              <div class="col-sm-9">
-                <p class="ititle"/>{{conference.title}}</p>
-</div>
-<div class="col-sm-3">
-  <span class='well-title'>Sujet</span>
+    <toaster-container toaster-options="{'time-out': 5000}"></toaster-container>
+    {% comment %}
+    AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
+    {% endcomment %}
+    <div class='row'>
+        <aside class="col-md-3 hidden-sm hidden-xs">
+            {% include 'partials/nav_testresult_questions.html' %}
+        </aside>
+
+        <div class="col-sm-9 text-center">
+            {% if not object.has_review and object.student != object.conf.owner %}
+            <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
+                Merci de laisser un avis !
+            </a>
+            {% else %}
+            <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
+                {% csrf_token %}
+                <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
+            </form>
+            {% endif %}
+        </div>
+        <div class="col-md-9 test-main-col" >
+
+            <div ng-if="conference.type == 'QI'">
+                {{conference.title}}<br/>
+            </div>
+
+            <div ng-if="conference.type != 'QI'">
+                <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
+                    <div ng-if="isSubjectDiplayed">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer le sujet du DCP
+                    </div>
+                    <div ng-if="!isSubjectDiplayed">
+                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher le sujet du DCP
+                    </div>
+                </a>
+                <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
+                    {% verbatim %}
+                    <form novalidate class="question-form">
+                        <div class="col-sm-12">
+                            <div class="col-sm-9">
+                                <p class="ititle"/>{{conference.title}}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <span class='well-title'>Sujet</span>
                             </div>
                         </div>
                         {% endverbatim %}
@@ -83,9 +83,9 @@
                             <br><br>
                         </div>
                     </div>
-</div>
-<br>
-</div>
+                </div>
+                <br>
+            </div>
 
 
             <div class="well well-white" ng-if="question">
@@ -102,61 +102,61 @@
                     <img ng-src="{{ static_media(image.image) }}"/>
                     <figcaption>{{image.caption}}</figcaption>
                 </div>
-</div>       
-<br>
-<form class="form-horizontal">
-              <fieldset>
-		<!--  {{ answers | is_good_css:answer }} -->
+            </div>       
+            <br>
+            <form class="form-horizontal">
+                <fieldset>
+                    <!--  {{ answers | is_good_css:answer }} -->
                     <div ng-repeat="answer in answers">
                         <div type="button" class="btn-answer relative" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}"> 
                             <div class="answer-label">
-                              {{answer.answer}}
-			      <br><br><!--<strong><span ng-if="answer.correct">VRAI</span><span ng-if="answer.correct != true">FAUX</span> : </strong>-->
-			      <div class="explication"><b>Explication : </b>
-				<p class="" ng-bind-html="answer.explaination | safe"</p>
-				   </div>
+                                {{answer.answer}}
+                                <br><br><!--<strong><span ng-if="answer.correct">VRAI</span><span ng-if="answer.correct != true">FAUX</span> : </strong>-->
+                                <div class="explication"><b>Explication : </b>
+                                    <p class="" ng-bind-html="answer.explaination | safe"</p>
+                                </div>
 
-			<div ng-repeat="image in answersimages[answer.index]">
-                            <img ng-src="{{ static_media(image.image) }}"/>
-                        </div>
-				 
-			 <!--			      {% for image in answer.images.all %}
-			      <div class="illustrations" id="images_div">
-				<figure>
-				  <img src="{% cropped_thumbnail image "cropping" %}">
-				  <figcaption>{{ image.caption }}</figcaption>
-				</figure>
-			      </div>
-			      {% endfor %}-->
+                                <div ng-repeat="image in answersimages[answer.index]">
+                                    <img ng-src="{{ static_media(image.image) }}"/>
+                                </div>
+
+                                <!--			      {% for image in answer.images.all %}
+                                    <div class="illustrations" id="images_div">
+                                    <figure>
+                                    <img src="{% cropped_thumbnail image "cropping" %}">
+                                    <figcaption>{{ image.caption }}</figcaption>
+                                    </figure>
+                                    </div>
+                                    {% endfor %}-->
                             </div>
                             <div class="btn-check-cell">
                                 <i ng-if="answer.user_answer" class="fa fa-check-square-o" aria-hidden="true"></i>
                                 <i ng-if="!answer.user_answer" class="fa fa-square-o" aria-hidden="true"></i>
                                 <span class='well-answer-title'>{{ans_label[answers.indexOf(answer)]}}</span>
                             </div>
-			    <div class="result_ext">
-				<i ng-if="answer.user_answer_css=='correct'" class="{{ answer.user_answer_css }} fa fa-check" aria-hidden="true"></i>
-				<i ng-if="answer.user_answer_css!='correct'" class="{{ answer.user_answer_css }} fa fa-close" aria-hidden="true"></i>
-			      </div>
-			    </div>
-			</div>
-
+                            <div class="result_ext">
+                                <i ng-if="answer.user_answer_css=='correct'" class="{{ answer.user_answer_css }} fa fa-check" aria-hidden="true"></i>
+                                <i ng-if="answer.user_answer_css!='correct'" class="{{ answer.user_answer_css }} fa fa-close" aria-hidden="true"></i>
+                            </div>
+                        </div>
                     </div>
+
+        </div>
                 </fieldset>
             </form>
 
             <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
             <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-	    <br><br>
+            <br><br>
             {% endverbatim %}
-        </div>
-        <div disqus="'conference.slug'" title="test"></div>
     </div>
-    <div class="row">
-        <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
-            {% include 'partials/nav_test_questions.html' %}
-        </aside>
-    </div>
+    <div disqus="'conference.slug'" title="test"></div>
+</div>
+<div class="row">
+    <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
+        {% include 'partials/nav_test_questions.html' %}
+    </aside>
+</div>
 </div>
 {% endblock content %}
 
