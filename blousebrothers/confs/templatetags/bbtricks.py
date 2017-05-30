@@ -22,7 +22,7 @@ def or_subscription(money):
     Display Abo in conferencier sale's table when amount == 0.
     """
     if money.amount == 0 :
-        return "Abo"
+        return "Abo*"
     else:
         return money.amount
 
