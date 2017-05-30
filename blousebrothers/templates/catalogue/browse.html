@@ -54,24 +54,7 @@
     {% endcomment %}
     
     {% if user.subscription == None %}
-    <section id="pricing">
-        {% comment remove subs %}
-        {% include "partials/sponsor_form.html" %}
-        {% endcomment %}
-        <div class="space"></div> <!-- 40px Vertical Spacing -->
-        {% for sub in subscriptions %}
-        <div class="p-style1 column_left">
-            <div class="package">
-                <h4>{{ sub.title }}</h4>
-                {% purchase_info_for_product request sub as session %}
-                <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
-            </div>
-            <ul class="inclusion">
-                {{ sub.description | sub_desc_custo | safe }}
-                <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray"><i class="fa fa-check-circle" aria-hidden="true"></i> Souscrire</a></li>
-            </ul>
-        </div>
-        {% endfor %}
+    {% include 'partials/subscriptions.html' %} 
     </section>
     {% endif %}
 
