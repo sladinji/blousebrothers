@@ -179,7 +179,6 @@ class User(AbstractUser):
             wallet.create(description=description)
         return wallet
 
-    @functools.lru_cache(10)
     def balance(self):
         return self.wallet.balance() + self.wallet_bonus.balance()
 
