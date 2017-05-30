@@ -4,14 +4,33 @@
 Questions
 </header>
 <ul class="bb-ul">
-	<li ng-repeat="x in questions" class="{{ x.pk == question.pk ? 'active' : ''}}">
+	<li ng-repeat="x in questions" class=" nopadding {{ x.pk == question.pk ? 'active' : ''}}">
 		<a href ng-click="question_selected(x)">
-			<i class="fa fa-{{ x.answered ? 'check-circle-o' : 'question-circle'}}  fa-fw"></i>
-			{{ $index + 1 }} : {{x.question || 'à compléter' | htmlToPlaintext | limitTo: 20}} ...
+		  <span class="padding-int">
+		    <i class="fa fa-{{ x.answered ? 'check-circle-o' : 'question-circle'}}  fa-fw"></i>
+		    {{ $index + 1 }} : {{x.question || 'à compléter' | htmlToPlaintext | limitTo: 55}} ...
+		  </span>
+		  <span class="score_per_question">		    
+		    <span>
+		      <i ng-if="x.score=='1.00'" class="fa fa-star" aria-hidden="true"></i>
+		      <i ng-if="x.score=='0.20'" class="fa fa-star-half-o" aria-hidden="true"></i>
+		      <i ng-if="x.score=='0.50'" class="fa fa-star-half-o" aria-hidden="true"></i>
+		      <i ng-if="x.score=='0.00'" class="fa fa-star-o" aria-hidden="true"></i> {{x.score}}</span>
+		    <span>
+		      <i ng-if="x.nb_errors==0" class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+		      <i ng-if="x.nb_errors > 0" class="fa fa-times-circle-o" aria-hidden="true"></i>
+		      {{x.nb_errors}}
+		      <i ng-if="x.nb_fatals > 0" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+		    </span>
+		  </span>
+		  <br class="clear">
 		</a>
 	</li>
 </ul>
-<div class="tips tips-bottom bb-container bb-light-grey">
-</div>
-</div>
 {% endverbatim %}
+{% load bbtricks %}
+<div class="tips tips-bottom bb-container bb-light-grey">
+  Votre score : {{ object | score100 }} 
+</div>
+</div>
+

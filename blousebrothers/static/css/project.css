@@ -19,7 +19,8 @@
     color: RGB(200, 200, 200);
 }
 .main-menu-wapper {
-    background-color: black;
+    /*    background-color: black;*/
+    background:#444;
     box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.37);
 }
 .main-menu-wapper .row {
@@ -153,8 +154,37 @@ ul.bb-ul {
 }
 
 ul.bb-ul li {
-	padding: 6px 2px 6px 16px;
+	padding: 8px 2px 8px 16px;
 	border-bottom: 1px solid #ddd;
+	font-weight:300;
+	font-size:14px;	
+}
+
+ul.bb-ul li.nopadding{
+    padding:0;
+}
+ul.bb-ul li .padding-int{
+    padding: 8px 2px 0px 16px;
+    display:block;
+}
+ul.bb-ul li.active .score_per_question,
+ul.bb-ul li:hover .score_per_question{
+    color:#fff;
+}
+.tips .score{
+    float:none;
+}
+.score_per_question{
+/*    border-top:1px solid #444;*/
+    display:block;
+    color:#73879C;
+    padding: 8px 2px 0px 16px;
+}
+.score_per_question span{
+    display:block;
+    float:left;
+    width:50%;
+    /*text-align:center;*/
 }
 
 .bb-container {
@@ -296,6 +326,7 @@ ul.djng-field-errors li.valid::before {
     right:-120px;
     top:10px;
     text-align:center;
+    margin-bottom:10px;
 }
 .result_ext .fa-close.fatal::before{
     content: "\f071";
@@ -313,13 +344,13 @@ ul.djng-field-errors li.valid::before {
 }
 .result_ext .fa {
     font-size:40px !important;
-    width:100px;
+    width:90px;
     background:inherit;
     /*    background: rgba( 0, 0, 0, 0.03);*/
 /*    border:3px solid #ccc;*/
     border-radius:50px;
-    height:100px;
-    line-height:70px;
+    height:90px;
+    line-height:60px;
 }
 .relative{
     position:relative;
@@ -455,9 +486,11 @@ ul li.active a {
 	color: #E8B510;
 }
 
+ul.bb-ul li:hover,
 ul.bb-ul li.active {
 	background-color: #c99947;
 }
+ul.bb-ul li:hover a,
 ul.bb-ul li.active a {
 	color: #fff;
 }
@@ -641,6 +674,9 @@ input[type=range]:focus::-ms-fill-upper {
     clear:both;
 }
 
+.clear{
+    clear:both;
+}
 .signup{    
     font-family: 'Roboto', sans-serif;
     font-weight:100;
@@ -795,12 +831,12 @@ footer {
     display: table-row;
     height: 69px;
     line-height: 29px;
-    background: url(/static/images/blackcircles.png);
+/*    background: url(/static/images/blackcircles.png);*/
 }
 footer{
     border-top:1px solid #666;
     padding:20px;
-    background-color: #000;
+    background-color: #444;
     color: RGB(200, 200, 200);
 }
 footer a{
@@ -1177,11 +1213,11 @@ footer .content.row {
 }
 
 footer .col-sm-12.text-center {
-    padding-top: 10px;
-    color
+    padding-top: 20px;
+    padding-bottom:20px;
 }
 footer .col-sm-6.col-md-2.text-center {
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 .short-separator {
@@ -1512,8 +1548,10 @@ article.product_pod.ophtalmologie{
     background-image: url(/static/images/spe/opht.png);
 }
 article.product_pod.lecture_critique_d_articles{
+    position:relative;
     background-image: url(/static/images/spe/lca.png);
 }
+
 article.product_pod.urologie{
     background-image: url(/static/images/spe/uro.png);
 }
