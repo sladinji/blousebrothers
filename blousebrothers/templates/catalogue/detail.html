@@ -8,6 +8,7 @@
 {% load display_tags %}
 {% load i18n %}
 {% load purchase_info_tags %}
+{% load bbtricks %}
 
 {% block title %}
 {{ product.title }} | {{ block.super }}
@@ -70,7 +71,7 @@
         </div>
         <div class="col-xs-4 product_main">
             {% if product.conf.owner.socialaccount_set %}
-            <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url}}">
+            <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url | default_icon }}">
             {% endif %}
         </div>
         <div class="col-xs-8 product_main">

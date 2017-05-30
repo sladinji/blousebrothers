@@ -6,6 +6,7 @@ from django import template
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.db.models import Sum
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from oscar.core.loading import get_model
 
 register = template.Library()
@@ -25,6 +26,13 @@ def or_subscription(money):
         return "Abo*"
     else:
         return money.amount
+
+@register.filter
+def default_icon(name):
+    if not name:
+        return static('images/ms-icon-150x150.png')
+    else:
+        return name
 
 
 @register.filter
