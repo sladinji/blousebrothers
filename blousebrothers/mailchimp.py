@@ -1,3 +1,4 @@
+import re
 import hashlib
 from datetime import datetime, timedelta
 from mailchimp3 import MailChimp
@@ -65,6 +66,10 @@ def days_since_last_purchase(user):
         return diff.days
 
 
+def update_status(status, new_suffix):
+    return "{}{}".format(re.sub('_inact.*', '', status), new_suffix)
+
+
 def handle_status(user):
     """Update _inact suffix according to  user status timestamp"""
     now = timezone.now()
@@ -81,13 +86,13 @@ def handle_status(user):
     if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_inact_m1"):
         user.status = "inact"
     if now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_inact_j15"):
-        user.status = user.status.replace("_inact_j15", "_inact_m1")
+        user.status = update_status(user.status, "_inact_m1")
     elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_inact_j7"):
-        user.status = user.status.replace("_inact_j7", "_inact_j15")
+        user.status = update_status(user.status, "_inact_j15")
     elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_inact"):
-        user.status = user.status.replace("_inact", "_inact_j7")
+        user.status = update_status(user.status, "_inact_j7")
     elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_inact"):
-        user.status = "{}_inact".format(user.status)
+        user.status = update_status(user.status, "_inact")
     user.save()
 
 
