@@ -99,3 +99,6 @@ pysolr==3.6.0
 mailchimp3==2.0.10
 git+https://github.com/sladinji/django-oscar-paypal.git
 
+# Raven is the Sentry client
+# --------------------------
+raven

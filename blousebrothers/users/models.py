@@ -2,6 +2,8 @@
 from __future__ import unicode_literals, absolute_import
 import functools
 import logging
+import hashlib
+import threading
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
@@ -40,6 +42,8 @@ AbstractUser._meta.get_field('email').blank = False
 
 @python_2_unicode_compatible
 class User(AbstractUser):
+
+    mailchync = True #  used by cron script on mailchimp synchronization
 
     DEGREE_LEVEL = (
         (None, '---'),
@@ -355,15 +359,36 @@ def notify_signup(request, user, **kwargs):
         logger.exception("Error sending email info for new inscription")
 
 
+def mailchync(user):
+    """
+    Function trigged on user status change to synchronize with mailchimp.
+    """
+    from blousebrothers import mailchimp
+    merge_fields = {mailchimp.tags["status"]: user.status}
+    mailchimp.client.lists.members.create_or_update(
+        mailchimp.mc_lids[mailchimp.LIST_NAME],
+        subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
+        data={
+            'email_address': user.email,
+            'status_if_new': 'subscribed',
+            'merge_fields': merge_fields,
+        })
+
+
 @receiver(pre_save, sender=User)
 def update_status_timestamp(sender, **kwargs):
     """
     Method to update status_timestamp if status has changed.
+    And sync it with mailchimp.
     """
     instance = kwargs.get('instance')
     created = kwargs.get('created')
     if instance.previous_status != instance.status or created:
         instance.status_timestamp = timezone.now()
+        if instance.mailchync:
+            threading.Thread(target=mailchync, args=(instance,)).start()
+        else:
+            instance.mailchync = True
 
 
 @receiver(post_init, sender=User)

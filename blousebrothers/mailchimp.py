@@ -7,6 +7,9 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.utils import timezone
 
+
+LIST_NAME = 'BlouseBrothers'
+
 # MailChimp clien API
 
 client = MailChimp('Guillaume', '1f44b79db423b0c889fb301564eb969a-us12')
@@ -93,10 +96,11 @@ def handle_status(user):
         user.status = update_status(user.status, "_inact_j7")
     elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_inact"):
         user.status = update_status(user.status, "_inact")
+    user.mailchync = False # disable mailchync on save
     user.save()
 
 
-def sync(qs=None, name='BlouseBrothers'):
+def sync(qs=None, name=LIST_NAME):
     if not qs:
         qs = User.objects.all()
     now = datetime.now()
@@ -161,6 +165,7 @@ def sync(qs=None, name='BlouseBrothers'):
         print(merge_fields)
 
         try:
+            return
             client.lists.members.create_or_update(
                 mc_lids[name],
                 subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
