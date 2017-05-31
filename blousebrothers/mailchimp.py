@@ -154,7 +154,8 @@ def sync(qs=None, name='BlouseBrothers'):
             tags["6w_since_last_buy"]: no_buy_since(user, 42),
             tags["nombre jours depuis dernier achat"]: days_since_last_purchase(user),
             tags["ping_10mn"]: 'no' if now - user.date_joined.replace(tzinfo=None) < timedelta(minutes=10) else 'yes',
-            tags["status"]: user.status,
+            #tags["status"]: user.status,
+            tags["status"]: 'RESET',
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
         print(merge_fields)
