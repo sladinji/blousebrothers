@@ -46,6 +46,7 @@ class BasketAddView(CoreBasketAddView):
     Debit user wallet if product is a conference.
     """
 
+
     def form_valid(self, form):
         if not form.product.conf:
             return super().form_valid(form)
@@ -139,6 +140,10 @@ class BasketAddView(CoreBasketAddView):
 
     def get_success_url(self, product=None):
         if product and product.conf :
+            self.request.user.status = "buyer_ok"
+            self.request.user.save()
+            product.conf.owner.status = 'conf_sold'
+            product.conf.owner.save()
             return reverse('confs:test', kwargs={"slug": product.conf.slug})
         else:
             return super().get_success_url(product)
@@ -147,8 +152,6 @@ class BasketAddView(CoreBasketAddView):
         messages.success(self.request, self.get_success_message(form),
                          extra_tags='safe noicon')
 
-        self.request.user.status = "buyer_ok"
-        self.request.user.save()
         # Send signal for basket addition
         self.add_signal.send(
             sender=self, product=form.product, user=self.request.user,

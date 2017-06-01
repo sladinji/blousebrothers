@@ -38,4 +38,6 @@ def handle_subscription(sender, **kwargs):
                 sub.date_over = date.today() + relativedelta(months=+line.product.attr.month)
                 sub.price_paid = line.unit_price_incl_tax
                 sub.save()
+                line.order.user.status = "money_ok"
+                line.order.user.save()
                 check_bonus(user=line.order.user, sub=sub)

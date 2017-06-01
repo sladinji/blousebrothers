@@ -203,6 +203,8 @@ class ConferenceCreateView(BBLoginRequiredMixin, CreateView, FormView):
                 q = Question.objects.create(conf=self.object, index=i)
                 for j in range(5):
                     Answer.objects.create(question=q, index=j)
+            self.request.user.status = 'creat_conf_begin'
+            self.request.user.save()
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -216,6 +218,16 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
     def get_success_url(self):
         return reverse('confs:test',
                        kwargs={'slug': self.object.slug})
+
+    def get_object(self, queryset=None):
+        """
+        Update user status if required.
+        """
+        obj = super().get_object(queryset)
+        if not obj.for_sale:
+            self.request.user.status = 'creat_conf_100'
+            self.request.user.save()
+        return obj
 
     def get_context_data(self, **kwargs):
         items = []
@@ -241,6 +253,9 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
         ).exists():
             Test.objects.create(conf=self.object, student=self.request.user)
         create_product(self.object)
+        if self.object.for_sale:
+            self.request.user.status = 'conf_publi_ok'
+            self.request.user.save()
         return super().form_valid(form)
 
 

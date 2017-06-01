@@ -345,6 +345,8 @@ def notify_signup(request, user, **kwargs):
     """
     send a mail to admin
     """
+    user.status = 'registred'
+    user.save()
     try:
         msg = email_template.format(user.name,
                                     user.email,
@@ -402,5 +404,9 @@ def remember_status(sender, **kwargs):
 
 @receiver(review_added)
 def give_eval_ok(review, user, request, response, **kwargs):
-    user.status = "give_eval_ok"
-    user.save()
+    if review.product.conf:
+        user.status = "money_ok"
+        user.save()
+        review.product.conf.owner.status = "get_eval_ok"
+        review.product.conf.owner.save()
+
