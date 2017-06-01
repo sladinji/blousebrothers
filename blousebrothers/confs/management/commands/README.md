@@ -1,5 +1,5 @@
 # Synchro Mailchimp
-![alt text](https://s3.amazonaws.com/blousebrothers/imgemail/gbb.png)
+![alt text](https://s3.amazonaws.com/blousebrothers/imgemail/mailchync.png)
 
 **trigger actuels:** 
 * ping_10
