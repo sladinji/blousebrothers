@@ -80,11 +80,9 @@ def handle_status(user):
         user.status_timestamp = now
     #  Manage special status
     if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=8):  # 8h if sold at 00:00 ...
-        user.status = "conf_publi_ok"
+        user.status = "creat_wait"
     if user.status == "give_eval_ok" and now - user.status_timestamp > timedelta(hours=24):
         user.status = "money_ok_inact"
-    if user.status == "buyer_over" and now - user.status_timestamp > timedelta(hours=2):
-        user.status = "give_eval_notok"
     #  Manage _inact (status_timestamp updated when status change!!)
     if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_inact_m1"):
         user.status = "inact"

@@ -352,7 +352,7 @@ class TestResult(TestPermissionMixin, DetailView):
         ).get(
             conf=conf, student=self.request.user)
         if not test.finished:
-            self.request.user.status = "buyer_over"
+            self.request.user.status = "give_eval_notok"
             self.request.user.save()
             test.set_score()
         return test
