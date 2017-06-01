@@ -70,34 +70,46 @@ def days_since_last_purchase(user):
 
 
 def update_status(status, new_suffix):
-    return "{}{}".format(re.sub('_inact.*', '', status), new_suffix)
+    return "{}{}".format(re.sub('_H24|J7|_J15|_M1|_inact', '', status), new_suffix)
+
+
+def special_status(user):
+    """Special status don't follow usual incrementation"""
+    now = timezone.now()
+    for current_status, next_status in (
+        ('conf_publi_ok', 'creat_wait'),
+        ('conf_sold', 'creat_wait'),
+        ('get_eval_ok', 'creat_wait'),
+        ('buyer_ok_M1', 'money_ok'),
+    ):
+        if user.status == current_status and now - user.status_timestamp > timedelta(hours=24):
+            user.status = next_status
+            return True
+
+
+def increment_status(user):
+    """Update _inact suffix according to  user status timestamp"""
+    now = timezone.now()
+    if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_M1"):
+        user.status = "inact"
+    elif now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_J15"):
+        user.status = update_status(user.status, "_M1")
+    elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_J7"):
+        user.status = update_status(user.status, "_J15")
+    elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_H24"):
+        user.status = update_status(user.status, "_J7")
+    elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_H24"):
+        user.status = update_status(user.status, "_inact")
 
 
 def handle_status(user):
-    """Update _inact suffix according to  user status timestamp"""
     now = timezone.now()
     if not user.status_timestamp:
         user.status_timestamp = now
-    #  Manage special status
-    if user.status == "conf_publi_ok" and now - user.status_timestamp > timedelta(hours=24):  # 8h if sold at 00:00 ...
-        user.status = "creat_wait"
-    if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=24):  # 8h if sold at 00:00 ...
-        user.status = "creat_wait"
-    if user.status == "give_eval_ok" and now - user.status_timestamp > timedelta(hours=24):
-        user.status = "money_ok_inact"
-    #  Manage _inact (status_timestamp updated when status change!!)
-    if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_inact_m1"):
-        user.status = "inact"
-    if now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_inact_j15"):
-        user.status = update_status(user.status, "_inact_m1")
-    elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_inact_j7"):
-        user.status = update_status(user.status, "_inact_j15")
-    elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_inact"):
-        user.status = update_status(user.status, "_inact_j7")
-    elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_inact"):
-        user.status = update_status(user.status, "_inact")
-    user.mailchync = False # disable mailchync on save
-    user.save()
+    if not special_status(user):
+        increment_status(user)
+    user.mailchync = False  # disable mailchync on save
+    user.save()  # status_timestamp updated when status change
 
 
 def sync(qs=None, name=LIST_NAME):
