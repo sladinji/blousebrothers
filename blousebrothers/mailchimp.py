@@ -175,6 +175,7 @@ def sync(qs=None, name=LIST_NAME):
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
         print(merge_fields)
+        continue
 
         try:
             return
@@ -197,3 +198,32 @@ def last_48h():
     clear('test')
     qs = User.objects.filter(date_joined__gt=datetime.now() - timedelta(days=2))
     sync('test', qs)
+
+
+def reset_workflow():
+    User.objects.filter(mangopay_users__isnull=True).update(status="registred")
+    for user in User.objects.filter(mangopay_users__isnull=False):
+        if user.created_confs.filter(edition_progress=100, for_sale=False).exists():
+            user.status = 'creat_conf_100'
+            user.save()
+            continue
+        if user.created_confs.filter(edition_progress__lt=100).exists():
+            user.status = 'creat_conf_begin'
+            user.save()
+            continue
+        if user.created_confs.filter(edition_progress=100, for_sale=True).exists():
+            user.status = 'conf_publi_ok'
+            user.save()
+            continue
+        if user.balance().amount == 0:
+            user.status = 'wallet_ok'
+            user.save()
+            continue
+        elif [rev for rev in user.tests.all() if not rev.has_review()]:
+            user.status = 'give_eval_not_ok'
+            user.save()
+            continue
+        else:
+            user.status = 'money_ok'
+            user.save()
+            continue
