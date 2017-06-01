@@ -170,15 +170,12 @@ def sync(qs=None, name=LIST_NAME):
             tags["6w_since_last_buy"]: no_buy_since(user, 42),
             tags["nombre jours depuis dernier achat"]: days_since_last_purchase(user),
             tags["ping_10mn"]: 'no' if now - user.date_joined.replace(tzinfo=None) < timedelta(minutes=10) else 'yes',
-            #tags["status"]: user.status,
-            tags["status"]: 'RESET',
+            tags["status"]: user.status,
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
         print(merge_fields)
-        continue
 
         try:
-            return
             client.lists.members.create_or_update(
                 mc_lids[name],
                 subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
@@ -201,6 +198,9 @@ def last_48h():
 
 
 def reset_workflow():
+    """
+    Reset mailchimp status according to current state.
+    """
     User.objects.filter(mangopay_users__isnull=True).update(status="registred")
     for user in User.objects.filter(mangopay_users__isnull=False):
         if user.created_confs.filter(edition_progress=100, for_sale=False).exists():
