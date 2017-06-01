@@ -13,14 +13,14 @@ digraph G {
             color=black
             fillcolor=red
     ];
-    creat_conf_begin, buyer_ok[
+    creat_conf_begin, money_ok[
         style="filled"
         color=white
         fillcolor=white
         ];
     wallet_ok -> _H24[style=dotted];
     wallet_ok -> creat_conf_begin [label="A cliqué sur créer une conférence"];
-    wallet_ok -> buyer_ok[label="Achat"];
+    wallet_ok -> money_ok[label="Achat crédit ou Abo"];
     registered -> wallet_ok [label="Formulaire pour Mangopay rempli (profil renseigné: nom adresse...)"];
     subgraph cluster_1 {
         label = "Parkour EXTERNE";
@@ -28,7 +28,7 @@ digraph G {
         node [style=filled,color=white];
         color=lightblue;
         money_ok -> _H24[style=dotted];
-        money_ok -> buyer_ok [label="Premier achat"];
+        money_ok -> buyer_ok [label="Achat conf"];
         buyer_ok -> give_eval_notok[label="Conf finie"];
         buyer_ok -> _H24[style=dotted];
         buyer_ok -> money_ok[label="A M1+1" color=red];
