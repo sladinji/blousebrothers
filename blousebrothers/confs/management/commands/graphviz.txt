@@ -29,17 +29,12 @@ digraph G {
         color=lightblue;
         money_ok -> _H24[style=dotted];
         money_ok -> buyer_ok [label="Premier achat"];
-        buyer_ok -> buyer_over [label="Conf finie"];
+        buyer_ok -> give_eval_notok[label="Conf finie"];
         buyer_ok -> _H24[style=dotted];
         buyer_ok -> money_ok[label="A M1+1" color=red];
-        buyer_over -> give_eval_notok [label="Pas d'éval donnée"];
-        buyer_over -> _H24[style=dotted];
         give_eval_notok -> _H24[style=dotted];
-        buyer_over -> give_eval_ok [label="Éval donnée"];
-        give_eval_ok -> _H24[style=dotted, label="Si rien pdt 24h va en money_ok_H24"];
-        give_eval_ok -> buyer_ok[label="Nouvel achat"];
         give_eval_notok -> buyer_ok[label="Nouvel achat"];
-        buyer_over -> buyer_ok[label="Nouvel achat"];
+        give_eval_notok -> money_ok[label="Evaluation donnée"];
     }
     subgraph cluster_2 {
         label = "Parkour CONFERENCIER";

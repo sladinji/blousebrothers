@@ -79,7 +79,9 @@ def handle_status(user):
     if not user.status_timestamp:
         user.status_timestamp = now
     #  Manage special status
-    if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=8):  # 8h if sold at 00:00 ...
+    if user.status == "conf_publi_ok" and now - user.status_timestamp > timedelta(hours=24):  # 8h if sold at 00:00 ...
+        user.status = "creat_wait"
+    if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=24):  # 8h if sold at 00:00 ...
         user.status = "creat_wait"
     if user.status == "give_eval_ok" and now - user.status_timestamp > timedelta(hours=24):
         user.status = "money_ok_inact"
