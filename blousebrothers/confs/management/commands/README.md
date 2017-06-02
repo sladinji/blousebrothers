@@ -67,4 +67,5 @@ Change to abo: envoi email confirmation abonnement
 Change to virement: envoi email confirmation virement
 Change to welcome: envoi email de bienvenue à l'inscription
 Change to credit_low: envoi email incitation à créditer le compte
+Change to abo_quasi_fin: envoi email incitation à se réabonner
 
