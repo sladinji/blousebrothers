@@ -56,3 +56,14 @@
 *        #envoi email d'info (une seule fois)
 * creat_wait, creat_wait_H24, creat_wait_J7, creat_wait_J15, creat_wait_M1, boucle sur creat_wait_J15... etc
 *        #incite à créer d'autres dossiers
+
+
+**--> EMAILS ACTIONS:**
+
+Merge tag à updater: action (MMERGE28)
+Change to publi: envoi l'email de confirmation de publication de conf
+Change to credit: envoi l'email de confirmation de crédit de compte
+Change to abo: envoi email confirmation abonnement
+Change to virement: envoi email confirmation virement
+Change to welcome: envoi email de bienvenue à l'inscription
+
