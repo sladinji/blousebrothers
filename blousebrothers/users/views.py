@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
+from datetime import date
 
 from django.apps import apps
+from django.core import mail
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
@@ -15,6 +17,7 @@ from django.template.loader import render_to_string
 from invitations.models import Invitation
 from meta.views import MetadataMixin
 import allauth.account.views
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 import blousebrothers.context_processor
@@ -26,6 +29,7 @@ from .forms import (
     PayInForm,
     CardRegistrationForm,
     EmailInvitationForm,
+    ImageForm,
     UserSmallerForm,
     IbanForm,
     PayOutForm,
@@ -38,6 +42,8 @@ from blousebrothers.tools import get_full_url, check_bonus
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
+SubscriptionType = apps.get_model('confs', 'SubscriptionType')
+SubscriptionModel = apps.get_model('confs', 'Subscription')
 
 
 class UserDetailView(DetailView):
@@ -84,6 +90,65 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
             return UserForm
         else:
             return UserSmallerForm
+
+
+class SpecialOffer(BBLoginRequiredMixin, FormView):
+    form_class = ImageForm
+    template_name = 'users/specialoffer.html'
+
+    def post(self, request, *args, **kwargs):
+
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            image = form.cleaned_data['image']
+            msg = """
+            Username : {username}
+            Profile : {url_profile}
+            Activer l'offre : https://blousebrothers.fr/{url_activate}
+            """.format(username=self.request.user.username,
+                       url_profile=reverse('users:detail',
+                                           kwargs={'username': self.request.user.username}),
+                       url_activate=reverse('users:activateoffer',
+                                            kwargs={'user_id': self.request.user.id}),
+                       )
+
+            with mail.get_connection() as connection:
+                mail.EmailMessage(
+                    "Demande D4", msg, 'noreply@blousebrothers.fr',
+                    ['julien@blousebrothers.fr',
+                     # 'guillaume@blousebrothers.fr', 'philippe@blousebrothers.fr'
+                     ],
+                    connection=connection,
+                    attachments=[(image.name, image, image.content_type)],
+                    reply_to=(self.request.user.email,),
+                ).send()
+                messages.success(self.request, "T'as demandes a bien été prise en compte, "
+                                 "on t'envoie un mail dès que ta demande est validée ;)")
+                return redirect(reverse('users:detail',
+                               kwargs={'username': self.request.user.username}))
+        else:
+            return self.form_invalid(form)
+
+
+class ActivateOffer(BBLoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'users/specialofferactivated.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get(self, request, user_id=None):
+        if not user_id:
+            raise Exception("USER ID REQUIRED")
+        user = User.objects.get(id=user_id)
+        subtype = SubscriptionType.objects.get(name='Abonnement 1 mois')
+        sub = SubscriptionModel(user=user, type=subtype)
+        sub.date_over = date(2017, 6, 23)
+        sub.price_paid = 0
+        sub.save()
+        user.status = "d4offer"
+        user.save()
+        return super().get(request, d4=user)
 
 
 class UserSendInvidation(BBLoginRequiredMixin, FormView):

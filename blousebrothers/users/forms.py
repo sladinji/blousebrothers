@@ -61,6 +61,12 @@ class EmailInvitationForm(forms.Form):
     email = forms.EmailField(label=_('Email de ton filleul'), required=True)
 
 
+class ImageForm(forms.Form):
+    image = forms.ImageField(
+        label=_("Photo de carte d'étudiant"),
+        required=False)
+
+
 class CardRegistrationForm(forms.Form):
     cardRegistrationURL = forms.CharField(widget=forms.HiddenInput())
     accessKeyRef = forms.CharField(widget=forms.HiddenInput())

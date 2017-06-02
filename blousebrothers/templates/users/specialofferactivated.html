@@ -1,26 +1,25 @@
+
 {% extends "layout.html" %}
 {% load crispy_forms_tags %}
 {% load currency_filters %}
 {% load i18n %}
 
-{% block title %}Cadeau D4{% endblock %}
+{% block title %}Cadeau D4 activé{% endblock %}
 
 {% block content %}
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="col-md-6 col-sm-12">
     <div class="x_panel tile fixed_height_320">
         <div class="x_title">
-            <h2><i class="fa fa-download"></i> Envoie nous la photo de ta carte d'étudiant</h2>
+            <h2><i class="fa fa-download"></i> D4 activé</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
             <div class="dashboard-widget-content">
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}">
-                        {% csrf_token %}
-                        {{ form | crispy }}
-                        <button type="submit" name='sub_offer' class="btn">Envoyer</button>
-                    </form>
+                    <ul>
+                        <li>{{ d4.username }} doit recevoir un email l'informant que c'est OK</li>
+                    </ul>
                 </div>
             </div>
         </div>
