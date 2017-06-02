@@ -1117,6 +1117,11 @@ footer .content{
     font-size: 35px;
     margin-bottom: 20px;
 }
+aside .presale a {
+    color: #e8b510;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
 
 /* Product catalogue */
 
