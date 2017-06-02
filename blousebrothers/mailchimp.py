@@ -203,6 +203,10 @@ def reset_workflow():
     """
     User.objects.filter(mangopay_users__isnull=True).update(status="registred")
     for user in User.objects.filter(mangopay_users__isnull=False):
+        if not user.gave_all_mangopay_info():
+            user.status = 'registred'
+            user.save()
+            continue
         if user.created_confs.filter(edition_progress=100, for_sale=False).exists():
             user.status = 'creat_conf_100'
             user.save()
