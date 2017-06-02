@@ -105,12 +105,12 @@ class SpecialOffer(BBLoginRequiredMixin, FormView):
             msg = """
             Username : {username}
             Profile : {url_profile}
-            Activer l'offre : https://blousebrothers.fr/{url_activate}
+            Activer l'offre : {url_activate}
             """.format(username=self.request.user.username,
-                       url_profile=reverse('users:detail',
-                                           kwargs={'username': self.request.user.username}),
-                       url_activate=reverse('users:activateoffer',
-                                            kwargs={'user_id': self.request.user.id}),
+                       url_profile=get_full_url(request, 'users:detail',
+                                                args=(request.user.username,)),
+                       url_activate=get_full_url(request, 'users:activateoffer',
+                                                 args=(self.request.user.id,)),
                        )
 
             with mail.get_connection() as connection:
