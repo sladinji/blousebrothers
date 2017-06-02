@@ -117,7 +117,7 @@ class SpecialOffer(BBLoginRequiredMixin, FormView):
                 mail.EmailMessage(
                     "Demande D4", msg, 'noreply@blousebrothers.fr',
                     ['julien@blousebrothers.fr',
-                     # 'guillaume@blousebrothers.fr', 'philippe@blousebrothers.fr'
+                      'guillaume@blousebrothers.fr','philippe@blousebrothers.fr',
                      ],
                     connection=connection,
                     attachments=[(image.name, image, image.content_type)],
