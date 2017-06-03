@@ -194,7 +194,6 @@ def sync(qs=None, name=LIST_NAME):
         logger.info(merge_fields)
 
         try:
-            continue
             client.lists.members.create_or_update(
                 mc_lids[name],
                 subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
