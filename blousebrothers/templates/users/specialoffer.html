@@ -1,26 +1,75 @@
 {% extends "layout.html" %}
 {% load crispy_forms_tags %}
 {% load currency_filters %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %}Cadeau D4{% endblock %}
 
 {% block content %}
+<style>
+label[for="id_image"]{
+    border: solid 1px;
+    padding: 11px;
+    cursor: pointer;
+}
+.btn-upload {
+    position: relative;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 10px;
+}
+input#id_image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+</style>
+
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
-<div class="col-md-6 col-sm-12">
+<div class="col-sm-12 text-center">
+    <img scr="{% static 'images/HEADERPUBD4.png' %}">
+</div>
+<div class="space12"></div> <!-- 40px Vertical Spacing -->
+<div class="col-md-6 col-sm-12 tab-pane active" id="deal">
     <div class="x_panel tile fixed_height_320">
         <div class="x_title">
-            <h2><i class="fa fa-download"></i> Envoie nous la photo de ta carte d'étudiant</h2>
+            <h2><i class="fa fa-handshake-o"></i> Deal</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
             <div class="dashboard-widget-content">
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form | crispy }}
-                        <button type="submit" name='sub_offer' class="btn">Envoyer</button>
-                    </form>
+                    <h2>Nous te demandons, une fois Interne, de poser au moins un dossier ou une série de 15 QI.  Tu en garderas les gains aux conditions normales de BlouseBrothers; c'est juste pour enrichir notre catalogue</h2>
+                    <button class="btn" type="button" data-toggle="collapse" data-target="#photo" aria-expanded="false" aria-controls="photo">J'accepte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="collapse" id="photo">
+    <div class="col-md-6 col-sm-12 tab-pane">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2><i class="fa fa-download"></i> Envoie nous la photo de ta carte d'étudiant</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                            <button type="submit" name='sub_offer' class="btn">Envoyer</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
