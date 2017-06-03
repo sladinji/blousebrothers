@@ -1594,6 +1594,9 @@ article.product_pod.rhumatologie{
 article.product_pod.chirurgie_maxillo-faciale{
     background-image: url(/static/images/spe/maxillo.png);
 }
+article.product_pod.radiologie{
+    background-image: url(/static/images/spe/radiologie.png);
+}
 
 #select-plan .etape1, #select-plan .etape2{
     padding:30px 0;
