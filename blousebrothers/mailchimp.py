@@ -7,6 +7,17 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.utils import timezone
 
+import logging
+import sys
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 LIST_NAME = 'BlouseBrothers'
 
@@ -85,21 +96,28 @@ def special_status(user):
         if user.status == current_status and now - user.status_timestamp > timedelta(hours=24):
             user.status = next_status
             return True
+    logger.info("No special status")
 
 
 def increment_status(user):
     """Update _inact suffix according to  user status timestamp"""
     now = timezone.now()
+    logger.info('user status age : %s', now - user.status_timestamp)
     if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_M1"):
+        logger.info('inact')
         user.status = "inact"
     elif now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_J15"):
+        logger.info('_M1')
         user.status = update_status(user.status, "_M1")
     elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_J7"):
+        logger.info('_J15')
         user.status = update_status(user.status, "_J15")
     elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_H24"):
+        logger.info('_J7')
         user.status = update_status(user.status, "_J7")
     elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_H24"):
-        user.status = update_status(user.status, "_inact")
+        logger.info('_H24')
+        user.status = update_status(user.status, "_H24")
 
 
 def handle_status(user):
@@ -144,7 +162,7 @@ def sync(qs=None, name=LIST_NAME):
                         'product_slug': product.slug, 'product_pk': product.id}
                     )
         except Exception as ex:
-            print(ex)
+            logger.debug(ex)
 
         handle_status(user)
 
@@ -173,9 +191,10 @@ def sync(qs=None, name=LIST_NAME):
             tags["status"]: user.status,
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
-        print(merge_fields)
+        logger.info(merge_fields)
 
         try:
+            continue
             client.lists.members.create_or_update(
                 mc_lids[name],
                 subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
@@ -186,9 +205,9 @@ def sync(qs=None, name=LIST_NAME):
                 })
         except Exception as ex:
             if hasattr(ex, 'response'):
-                print(ex.response.content)
+                logger.exception(ex.response.content)
             else:
-                print(ex)
+                logger.exception(ex)
 
 
 def last_48h():
