@@ -123,8 +123,8 @@ class SpecialOffer(BBLoginRequiredMixin, FormView):
                     attachments=[(image.name, image, image.content_type)],
                     reply_to=(self.request.user.email,),
                 ).send()
-                messages.success(self.request, "T'as demandes a bien été prise en compte, "
-                                 "on t'envoie un mail dès que ta demande est validée ;)")
+                messages.success(self.request, "Ta demande a bien été prise en compte, "
+                                 "on t'envoie un mail dès qu'elle est validée ;)")
                 return redirect(reverse('users:detail',
                                kwargs={'username': self.request.user.username}))
         else:
