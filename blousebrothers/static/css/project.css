@@ -1606,7 +1606,7 @@ article.product_pod.radiologie{
 }
 #select-plan .etape1 .btn{
     box-shadow:inherit;
-    padding:15px 40px;
+    padding:15px 20px;
     font-weight:200;
 }
 #select-plan .etape1 .btn.active{
