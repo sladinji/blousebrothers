@@ -31,45 +31,72 @@ input#id_image {
     opacity: 0;
     filter: alpha(opacity=0);
 }
+h1 {
+    color: white;
+    line-height: 96px;
+    font-family: lobster;
+    font-size: 40pt;
+}
+.bb {
+    background-color: #2db1ff;
+}
 </style>
 
-<div class="space12"></div> <!-- 40px Vertical Spacing -->
-<div class="space12"></div> <!-- 40px Vertical Spacing -->
-<div class="col-md-6 col-sm-12 tab-pane active" id="deal">
-    <div class="x_panel tile fixed_height_320">
-        <div class="x_title">
-            <h2><i class="fa fa-handshake-o"></i> Deal</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <div class="dashboard-widget-content">
-                <div class="panel-body">
-                    <h2>Nous te demandons, une fois Interne, de poser au moins un dossier ou une série de 15 QI.  Tu en garderas les gains aux conditions normales de BlouseBrothers; c'est juste pour enrichir notre catalogue</h2>
-                    <button class="btn" type="button" data-toggle="collapse" data-target="#photo" aria-expanded="false" aria-controls="photo">J'accepte</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="col-md-3 hidden-xs text-right">
+    <img src='/static/images/HEADERPUBD4.png'>
 </div>
-<div class="collapse" id="photo">
-    <div class="col-md-6 col-sm-12 tab-pane">
+<div class="col-md-6 col-xs-12 bb">
+    <h1 class="text-center">Accès complet au site offert à tous les D4 jusqu'aux ECN</h1>
+</div>
+<div class="col-md-3 hidden-xs">
+    <img src='/static/images/HEADERPUBD4.png'>
+</div>
+
+<div class="space12"></div> <!-- 40px Vertical Spacing -->
+<div class="row">
+    <div class="col-md-3 hidden-xs"></div>
+    <div class="col-md-6 col-sm-12">
         <div class="x_panel tile fixed_height_320">
             <div class="x_title">
-                <h2><i class="fa fa-download"></i> Envoie nous la photo de ta carte d'étudiant</h2>
+                <h2><i class="fa fa-handshake-o"></i> Le deal</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <div class="dashboard-widget-content">
                     <div class="panel-body">
-                        <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ form | crispy }}
-                            <button type="submit" name='sub_offer' class="btn">Envoyer</button>
-                        </form>
+                        <h2>Nous te demandons, une fois Interne, de poser au moins un dossier ou une série de 15 QI.  Tu en garderas les gains aux conditions normales de BlouseBrothers; c'est juste pour enrichir notre catalogue</h2>
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#photo" aria-expanded="false" aria-controls="photo">J'accepte</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-3 hidden-xs"></div>
+</div>
+<div class="space12"></div> <!-- 40px Vertical Spacing -->
+<div class="collapse" id="photo">
+    <div class="row">
+        <div class="col-md-3 hidden-xs"></div>
+        <div class="col-md-6 col-xs-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-download"></i> Envoie nous la photo de ta carte d'étudiant</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <button type="submit" name='sub_offer' class="btn">Envoyer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 hidden-xs"></div>
     </div>
 </div>
 {% endblock %}
