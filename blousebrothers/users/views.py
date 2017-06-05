@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
@@ -117,7 +118,7 @@ class SpecialOffer(BBLoginRequiredMixin, FormView):
                 mail.EmailMessage(
                     "Demande D4", msg, 'noreply@blousebrothers.fr',
                     ['julien@blousebrothers.fr',
-                      'guillaume@blousebrothers.fr','philippe@blousebrothers.fr',
+                     'guillaume@blousebrothers.fr', 'philippe@blousebrothers.fr',
                      ],
                     connection=connection,
                     attachments=[(image.name, image, image.content_type)],
@@ -126,7 +127,7 @@ class SpecialOffer(BBLoginRequiredMixin, FormView):
                 messages.success(self.request, "Ta demande a bien été prise en compte, "
                                  "on t'envoie un mail dès qu'elle est validée ;)")
                 return redirect(reverse('users:detail',
-                               kwargs={'username': self.request.user.username}))
+                                        kwargs={'username': self.request.user.username}))
         else:
             return self.form_invalid(form)
 
@@ -137,17 +138,21 @@ class ActivateOffer(BBLoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def test_func(self):
         return self.request.user.is_superuser
 
+    def handle_no_permission(self):
+        raise PermissionDenied
+
     def get(self, request, user_id=None):
         if not user_id:
             raise Exception("USER ID REQUIRED")
         user = User.objects.get(id=user_id)
         subtype = SubscriptionType.objects.get(name='Abonnement 1 mois')
-        sub = SubscriptionModel(user=user, type=subtype)
-        sub.date_over = date(2017, 6, 23)
-        sub.price_paid = 0
-        sub.save()
-        user.status = "d4offer"
-        user.save()
+        sub, created = SubscriptionModel.objects.get_or_create(user=user, type=subtype)
+        if created:
+            sub.date_over = date(2017, 6, 23)
+            sub.price_paid = 0
+            sub.save()
+            user.status = "d4offer"
+            user.save()
         return super().get(request, d4=user)
 
 
@@ -223,7 +228,7 @@ class UserWalletView(BaseWalletFormView):
         check_bonus(request)
         request.user.remove_inactive_cards()
 
-        #if not request.user.is_conferencier and not request.user.has_at_least_one_card:
+        # if not request.user.is_conferencier and not request.user.has_at_least_one_card:
         #    return redirect(reverse('users:addcard'))
 
         return super().get(request, *args, **kwargs)
@@ -405,7 +410,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
                 ).filter(
                     attribute_values__value_integer="1"
                 ).first()
-                if not sub :
+                if not sub:
                     sub = Product.objects.filter(
                         attribute_values__attribute__name="month"
                     ).first()
