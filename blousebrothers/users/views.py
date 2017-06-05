@@ -146,11 +146,10 @@ class ActivateOffer(BBLoginRequiredMixin, UserPassesTestMixin, TemplateView):
             raise Exception("USER ID REQUIRED")
         user = User.objects.get(id=user_id)
         subtype = SubscriptionType.objects.get(name='Abonnement 1 mois')
-        sub, created = SubscriptionModel.objects.get_or_create(user=user, type=subtype)
+        sub, created = SubscriptionModel.objects.get_or_create(
+            user=user, type=subtype, date_over=date(2017, 6, 23), price_paid=0
+        )
         if created:
-            sub.date_over = date(2017, 6, 23)
-            sub.price_paid = 0
-            sub.save()
             user.status = "d4offer"
             user.save()
         return super().get(request, d4=user)
