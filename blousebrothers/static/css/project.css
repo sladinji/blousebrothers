@@ -75,6 +75,10 @@ ul.boutique-nav.main-menu.clone-main-menu {
 	padding-top: 9px;
 	width: 80%;
 }
+.submenu.sub-search{
+    margin-top:0;
+    width:100%;
+}
 .submenu_new a {
     padding: 10px;
 }
@@ -463,7 +467,9 @@ ul.djng-field-errors li.valid::before {
 }
 .box-search {
     padding: 4px 15px;
+    width:100% !important; 
 }
+
 
 #toast-container>div {
     opacity: 0.95 !important;
@@ -1116,6 +1122,7 @@ footer .content{
     color: #da6f1e;
     font-size: 35px;
     margin-bottom: 20px;
+    display:block;
 }
 aside .presale a {
     color: #fff;
@@ -1134,8 +1141,9 @@ aside .presale a {
     background-color: #0078cb;
     color: white;
     padding: 25px 6px;
-	margin-top: 0;
-	height: 91px;
+    margin-top: 0;
+    height: 91px;
+    font-weight:600;
 }
 .product-compact ol {
 	padding-right: 10px;
@@ -1166,9 +1174,10 @@ aside .presale a {
 }
 
 .product_pod .btn{
-	margin: 0px 10px;
-	margin-bottom: 10px;
-	padding: 10px;
+    margin: 0px 10px;
+    margin-bottom: 10px;
+    margin-top:10px;
+    padding: 10px;
     background-color: white;
 }
 .product_pod .btn:hover {
@@ -1181,7 +1190,8 @@ aside .presale a {
 .product_pod .image_container {
     margin-top: 10px;
     padding: 0px 25px;
-    font-weight: bold;
+    font-weight: 300;
+    color:#333;    
 }
 .product_pod .price_color {
     min-height: 21px;
@@ -1194,9 +1204,9 @@ p.icono {
 p.author_name {
     margin-bottom: 5px;
 }
-.product-compact li.col-xs-6.col-sm-4.col-md-3.col-lg-3 {
-	padding-left: 5px;
-    padding-right: 5px;
+.product-compact li.col-xs-6.col-md-4.col-lg-3 {
+/*    padding-left: 30px;
+    padding-right: 30px;*/
 }
 .side_categories {
 	border-radius: 0px;
@@ -1523,78 +1533,89 @@ ul.quick-list li {
     max-height: 100%;
 }
 
-article.product_pod.cardiologie-chir_vasculaire {
+article.product_pod{
+    position:relative;
+}
+article.product_pod .prod-bg{
+    position:absolute;
+    z-index:-1;
+    width:100%;
+    height:100%;
+    filter: grayscale(90%);
+    opacity:0.8;
+}
+article.product_pod .cardiologie-chir_vasculaire {
     background-image: url(/static/images/spe/cardio.png);
 }
-article.product_pod.neurologie {
+article.product_pod .neurologie {
     background-image: url(/static/images/spe/neuro.png);
 }
-article.product_pod.pneumologie{
+article.product_pod .pneumologie{
     background-image: url(/static/images/spe/pneumo.png);
 }
-article.product_pod.hématologie{
+article.product_pod .hématologie{
     background-image: url(/static/images/spe/hémato.png);
 }
-article.product_pod.psychiatrie{
+article.product_pod .psychiatrie{
     background-image: url(/static/images/spe/psychiatrie.png);
 }
-article.product_pod.douleur{
+article.product_pod .douleur{
     background-image: url(/static/images/spe/doul.png);
 }
-article.product_pod.orl{
+article.product_pod .orl{
     background-image: url(/static/images/spe/orl.png);
 }
-article.product_pod.urgences-réa{
+article.product_pod .urgences-réa{
     background-image: url(/static/images/spe/urg_rea.png);
 }
-article.product_pod.oncologie{
+article.product_pod .oncologie{
     background-image: url(/static/images/spe/onco.png);
 }
-article.product_pod.ophtalmologie{
+article.product_pod .ophtalmologie{
     background-image: url(/static/images/spe/opht.png);
 }
-article.product_pod.lecture_critique_d_articles{
-    position:relative;
+article.product_pod .lecture_critique_d_articles{
+/*    position:relative;*/
     background-image: url(/static/images/spe/lca.png);
 }
 
-article.product_pod.urologie{
+article.product_pod .urologie{
     background-image: url(/static/images/spe/uro.png);
 }
-article.product_pod.hépato-gastro-entérologie{
+article.product_pod .hépato-gastro-entérologie{
     background-image: url(/static/images/spe/hepato_gastro.png);
 }
-article.product_pod.dermatologie{
+article.product_pod .dermatologie{
     background-image: url(/static/images/spe/dermato.png);
 }
-article.product_pod.endocrinologie{
+article.product_pod .endocrinologie{
     background-image: url(/static/images/spe/endoc.png);
 }
-article.product_pod.néphrologie{
+article.product_pod .néphrologie{
     background-image: url(/static/images/spe/nephro.png);
 }
-article.product_pod.orthopédie{
+article.product_pod .orthopédie{
     background-image: url(/static/images/spe/ortho.png);
 }
-article.product_pod.gériatrie{
+article.product_pod .gériatrie{
     background-image: url(/static/images/spe/geria.png);
 }
-article.product_pod.médecine_interne{
+article.product_pod .médecine_interne{
     background-image: url(/static/images/spe/interne.png);
 }
-article.product_pod.santé_publique{
+article.product_pod .santé_publique{
     background-image: url(/static/images/spe/santepub.png);
 }
-article.product_pod.gynécologie_–_obstétrique{
+article.product_pod .gynécologie_–_obstétrique{
     background-image: url(/static/images/spe/gyneco.png);
 }
-article.product_pod.rhumatologie{
+article.product_pod .rhumatologie{
     background-image: url(/static/images/spe/rhumato.png);
 }
-article.product_pod.chirurgie_maxillo-faciale{
+article.product_pod .chirurgie_maxillo-faciale{
     background-image: url(/static/images/spe/maxillo.png);
 }
-article.product_pod.radiologie{
+article.product_pod .radiologie{
     background-image: url(/static/images/spe/radiologie.png);
 }
 
