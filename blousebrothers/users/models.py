@@ -239,7 +239,7 @@ class User(AbstractUser):
         if not subscription:
             subscription = self.subscription
 
-        if subscription and not subscription.bonus_taken and self.gave_all_mangopay_info:
+        if subscription and subscription.type.bonus and not subscription.bonus_taken and self.gave_all_mangopay_info:
             if self.give_bonus(subscription.type.bonus):
                 subscription.bonus_taken = True
                 subscription.save()
