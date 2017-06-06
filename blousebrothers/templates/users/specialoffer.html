@@ -89,7 +89,7 @@ h1 {
                             <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form | crispy }}
-                                <button type="submit" name='sub_offer' class="btn">Envoyer</button>
+                                <button type="submit" name='sub_offer' class="btn" data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i> Transfert...'>Envoyer</button>
                             </form>
                         </div>
                     </div>
