@@ -66,7 +66,7 @@ def futur(branch='master',reset='no'):
             run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
-def proddb(pre=False):
+def proddb(pre=False, mangoreset='yes'):
     """
     Dump prod db and load it load loacally.
     """
@@ -79,7 +79,7 @@ def proddb(pre=False):
 
     get("%s/backup.tgz" % code_dir)
     if not pre:
-        load_last_dump(last)
+        load_last_dump(last, mangoreset)
     return last
 
 
