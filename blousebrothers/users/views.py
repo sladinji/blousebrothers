@@ -423,3 +423,7 @@ class SignupView(MetadataMixin, allauth.account.views.SignupView):
     description = """Plateforme collaborative d'entraînement aux ECNi. Etudiant: n'achète que les dossiers dont tu as
     besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:
     dépose tes dossiers et garde 70% des gains."""
+
+
+class FAQ(TemplateView):
+    template_name = 'faq/faq.html'
