@@ -81,16 +81,13 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         super().form_valid(form)
         check_bonus(self.request)
         if isinstance(form, UserSmallerForm):
-            messages.success(self.request, "C'est presque fini, il ne reste plus qu'à créditer ton compte.")
+            messages.success(self.request, "Tu peux maintenant créditer ton compte ou souscrire à un abonnement.")
             return redirect(reverse("catalogue:index"))
 
         return HttpResponseRedirect(self.get_success_url())
 
     def get_form_class(self):
-        if self.request.user.gave_all_mangopay_info:
-            return UserForm
-        else:
-            return UserSmallerForm
+        return UserForm
 
 
 class SpecialOffer(BBLoginRequiredMixin, FormView):
