@@ -15,6 +15,7 @@ COPY ./i18n_oscar/locale/fr/LC_MESSAGES/django.* /usr/local/lib/python3.5/site-p
 COPY ./compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN groupadd -r django && useradd -d /app -g django django
 
 WORKDIR /app
 
