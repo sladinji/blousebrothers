@@ -112,10 +112,10 @@ def load_last_dump(last=None, pre=False, mangoreset='yes'):
         backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
         last = sorted(backups)[-1]
     if pre:
-        local("cd ubuntu@labresult.fr && tar xzf backup.tgz")
+        local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
         local("docker run --rm "
               "--volumes-from blousebrothers_postgres_1 "
-              "-v $(pwd)/ubuntu@labresult.fr/backups:/backup "
+              "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
               "blousebrothers_postgres cp /backup/%s /backups" % last)
     else:
         local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
