@@ -1,8 +1,14 @@
 from decimal import Decimal, ROUND_UP
 from string import ascii_uppercase
 import datetime
+import base64
+import hashlib
+import hmac
+import simplejson
+import time
 
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.db.models import Sum
@@ -157,3 +163,52 @@ def sort_items(d):
         return sorted(d, key=lambda x: int(x['name']))
     except:
         return sorted(d, key=lambda x: x['name'])
+
+
+def get_hmac(user):
+    user_data = {
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+    }
+    # create a JSON packet of our data attributes
+    data = simplejson.dumps(user_data)
+    # encode the data to base64
+    message = base64.b64encode(data.encode("utf-8"))
+    # generate a timestamp for signing the message
+    timestamp = int(time.time())
+    # generate our hmac signature
+    msg_t = '%s %s' % (message, timestamp)
+    sig = hmac.HMAC(settings.DISQUS_SECRET_KEY.encode("utf-8"),
+                    msg_t.encode("utf-8"), hashlib.sha1).hexdigest()
+    return message, timestamp, sig
+
+
+@register.simple_tag
+def get_disqus_sso(user):
+    message, timestamp, sig = get_hmac(user)
+    # return a script tag to insert the sso message
+    return mark_safe("""<script type="text/javascript">
+                     var disqus_config = function() {
+                     this.page.remote_auth_s3 = "%(message)s %(sig)s %(timestamp)s";
+                     this.page.api_key = "%(pub_key)s";
+                     }
+                     </script>""" % dict(
+                         message=message,
+                         timestamp=timestamp,
+                         sig=sig,
+                         pub_key=settings.DISQUS_PUBLIC_KEY,
+                     )
+                     )
+
+
+@register.simple_tag
+def get_remote_s3(user):
+    message, timestamp, sig = get_hmac(user)
+    return sig
+
+
+# settings value
+@register.simple_tag
+def settings_value(name):
+    return getattr(settings, name, "")

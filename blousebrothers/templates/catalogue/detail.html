@@ -224,6 +224,7 @@
 
     </article><!-- End of product page -->
     {% if user.is_authenticated and product.conf %}
+    {% get_disqus_sso user %} 
     {% load disqus_tags %}
     {% set_disqus_identifier "result_" product.conf.slug %}
     {% disqus_dev %}
