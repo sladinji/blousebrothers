@@ -77,7 +77,7 @@ class Product(AbstractProduct):
     @property
     def no_confirmation_needed(self):
         user = CuserMiddleware.get_user()
-        if not user.has_full_access() and user.balance().amount > 0:
+        if user.is_authenticated() and not user.has_full_access() and user.balance().amount > 0:
             return False
         else:
             return True
