@@ -239,6 +239,7 @@ class User(AbstractUser):
         if not subscription:
             subscription = self.subscription
 
+        # We check if subscription.type.bonus is not 0
         if subscription and subscription.type.bonus and not subscription.bonus_taken and self.gave_all_mangopay_info:
             if self.give_bonus(subscription.type.bonus):
                 subscription.bonus_taken = True
@@ -251,7 +252,8 @@ class User(AbstractUser):
         if not subscription or subscription.bonus_sponsor_taken:
             return
         invitation = Invitation.objects.filter(email=self.email, accepted=True).first()
-        if invitation:
+        # We check if bonus_sponsor is not 0
+        if invitation and subscription.type.bonus_sponsor:
             if invitation.inviter.give_bonus(subscription.type.bonus_sponsor):
                 subscription.bonus_sponsor_taken = True
                 subscription.save()
