@@ -185,7 +185,6 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
 });
 
 conf_app.run(function(disqusService){
-    console.log("ahaha");
     disqusService.setSso({
         remote_auth_s3: '{% get_remote_s3 user %}',
         api_key: '{% settings_value "DISQUS_PUBLIC_KEY" %}'
