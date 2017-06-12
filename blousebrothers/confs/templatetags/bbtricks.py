@@ -174,7 +174,7 @@ def get_hmac(user):
     # create a JSON packet of our data attributes
     data = simplejson.dumps(user_data)
     # encode the data to base64
-    message = base64.b64encode(data.encode("utf-8"))
+    message = base64.b64encode(data.encode("utf-8")).decode()
     # generate a timestamp for signing the message
     timestamp = int(time.time())
     # generate our hmac signature
@@ -205,7 +205,11 @@ def get_disqus_sso(user):
 @register.simple_tag
 def get_remote_s3(user):
     message, timestamp, sig = get_hmac(user)
-    return sig
+    return "%(message)s %(sig)s %(timestamp)s" % (dict(
+        message=message,
+        timestamp=timestamp,
+        sig=sig,
+    ))
 
 
 # settings value

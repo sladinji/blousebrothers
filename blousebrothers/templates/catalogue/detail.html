@@ -227,7 +227,7 @@
     {% load disqus_tags %}
     {% set_disqus_identifier product.conf.slug %}
     {% disqus_dev %}
-    {% disqus_sso %}
+    {% get_disqus_sso user %}
     {% disqus_show_comments %}
     {% endif %}
 </div>
