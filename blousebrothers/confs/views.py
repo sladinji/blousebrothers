@@ -270,14 +270,14 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
                        forum='blousebrothers',
                        remote_auth=get_disqus_sso(self.object.owner),
                        title=self.object.title,
-                       url=reverse('confs:result', kwargs={'slug': self.object.slug}),
+                       url=get_full_url(self.request, 'confs:result', args=(self.object.slug,)),
                        identifier=self.object.slug,
                        )
         except APIError as ex:
             if "thread already exists" in ex.message :
                 pass
             else:
-                raise ex
+                logger.exception("PB CREATING THREAD")
 
         return super().form_valid(form)
 
