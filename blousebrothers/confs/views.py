@@ -375,7 +375,7 @@ class TestResult(TestPermissionMixin, DetailView):
 
     def get(self, *args, **kwargs):
         try:
-            super().get(*args, **kwargs)
+            return super().get(*args, **kwargs)
         except ObjectDoesNotExist:
             messages.warning(self.request, "Tu dois dois faire le dossier avant de pouvoir accéder au forum.")
             conf = Conference.objects.get(slug=self.kwargs['slug'])
