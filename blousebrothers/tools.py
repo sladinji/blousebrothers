@@ -1,6 +1,12 @@
 import logging
+import simplejson
+import base64
+import hashlib
+import hmac
+import time
 
 from django.forms.models import model_to_dict
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -87,3 +93,26 @@ def check_bonus(request=None, user=None, sub=None):
             # Optionally pass a request and we'll grab any information we can
             'request': request,
         })
+
+
+def get_disqus_sso(user):
+    """
+    Return remote_auth value required by Disqus API for SSO user authentication.
+    """
+    user_data = {
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+    }
+    # create a JSON packet of our data attributes
+    data = simplejson.dumps(user_data)
+    # generate a timestamp for signing the message
+    timestamp = int(time.time())
+    message = base64.b64encode(data.encode("utf-8")).decode(),
+    return "{message} {signature} {timestamp}".format(
+        timestamp=timestamp,
+        message=message,
+        signature=hmac.HMAC(settings.DISQUS_SECRET_KEY.encode("utf-8"),
+                            "{} {}".format(message, timestamp).encode("utf-8"),
+                            hashlib.sha1).hexdigest()
+    )
