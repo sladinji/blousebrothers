@@ -203,7 +203,7 @@ def sync(qs=None, name=LIST_NAME):
                     'merge_fields': merge_fields,
                 })
         except Exception as ex:
-            if hasattr(ex, 'response'):
+            if hasattr(ex, 'response') and ex.response:
                 logger.exception(ex.response.content)
             else:
                 logger.exception(ex)
