@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import (
     DetailView,
     ListView,
@@ -371,6 +372,15 @@ class TestResult(TestPermissionMixin, DetailView):
             self.request.user.save()
             test.set_score()
         return test
+
+    def get(self, *args, **kwargs):
+        try:
+            super().get(*args, **kwargs)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "Tu dois dois faire le dossier avant de pouvoir accéder au forum.")
+            conf = Conference.objects.get(slug=self.kwargs['slug'])
+            product = Product.objects.get(conf=conf)
+            return redirect(product.get_absolute_url())
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
