@@ -223,6 +223,15 @@
         {% recently_viewed_products current_product=product %}
 
     </article><!-- End of product page -->
+    {% if user.is_authenticated and product.conf %}
+    {% load disqus_tags %}
+    {% set_disqus_identifier product.conf.slug %}
+	{% set_disqus_title product.conf.title %}
+	{% set_disqus_url product.get_absolute_url %}
+    {% disqus_dev %}
+    {% get_disqus_sso user %}
+    {% disqus_show_comments %}
+    {% endif %}
 </div>
 {% endblock content %}
 
