@@ -410,7 +410,6 @@ class TestResult(TestPermissionMixin, DetailView):
         try:
             return super().get(*args, **kwargs)
         except ObjectDoesNotExist:
-            messages.warning(self.request, "Tu dois dois faire le dossier avant de pouvoir accéder au forum.")
             conf = Conference.objects.get(slug=self.kwargs['slug'])
             product = Product.objects.get(conf=conf)
             return redirect(product.get_absolute_url())
