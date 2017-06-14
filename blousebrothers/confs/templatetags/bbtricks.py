@@ -175,10 +175,10 @@ def get_disqus_sso(user):
     # return a script tag to insert the sso message
     return mark_safe("""<script type="text/javascript">
                      var disqus_config = function() {
-                     this.page.remote_auth_s3 = "{remote_auth}";
-                     this.page.api_key = "{pub_key}";
+                     this.page.remote_auth_s3 = "%(remote_auth)s";
+                     this.page.api_key = "%(pub_key)s";
                      }
-                     </script>""".format(
+                     </script>""" % dict(
                          remote_auth=get_remote_auth(user),
                          pub_key=settings.DISQUS_PUBLIC_KEY,
                      )
