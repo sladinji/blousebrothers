@@ -32,25 +32,6 @@ scrollTop: $( $.attr(this, 'href') ).offset().top
     <div class='row'>
         <aside class="col-md-3 hidden-sm hidden-xs">
             {% include 'partials/nav_testresult_questions.html' %}
-            <div class="col-sm-6">
-                <h2>SCORE</h2>
-                <div class="short-separator"></div>
-                <h2>
-                    {{ object | score100 }} 
-                </h2>
-            </div>
-            <div class="col-sm-6">
-                <h2>CLASSEMENT</h2>
-                <div class="short-separator"></div>
-                <h2>
-                    <big>{{ object.position }}</big> / {{ object.total }}
-                </h2>
-            </div>
-            <div class="col-sm-12">
-                <p>TEMPS : {{object.time_taken | time:"H:i:s" }}</p>
-                <p>ERREURS : {{object.nb_errors }}</p>
-                <p>ERREURS GRAVES : {{object.fatal_errors | length }}</p>
-            </div>
         </aside>
 
         <div class="col-sm-9 text-center">
