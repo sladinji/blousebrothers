@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load youtube %}
 {% load tinycontent_tags %}
+{% load bbtricks %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
@@ -31,6 +32,25 @@ scrollTop: $( $.attr(this, 'href') ).offset().top
     <div class='row'>
         <aside class="col-md-3 hidden-sm hidden-xs">
             {% include 'partials/nav_testresult_questions.html' %}
+            <div class="col-sm-6">
+                <h2>SCORE</h2>
+                <div class="short-separator"></div>
+                <h2>
+                    {{ object | score100 }} 
+                </h2>
+            </div>
+            <div class="col-sm-6">
+                <h2>CLASSEMENT</h2>
+                <div class="short-separator"></div>
+                <h2>
+                    <big>{{ object.position }}</big> / {{ object.total }}
+                </h2>
+            </div>
+            <div class="col-sm-12">
+                <p>TEMPS : {{object.time_taken | time:"H:i:s" }}</p>
+                <p>ERREURS : {{object.nb_errors }}</p>
+                <p>ERREURS GRAVES : {{object.fatal_errors | length }}</p>
+            </div>
         </aside>
 
         <div class="col-sm-9 text-center">
@@ -161,15 +181,15 @@ scrollTop: $( $.attr(this, 'href') ).offset().top
 	    <div class="text-center" ng-if="question.index == 14"><a href="/catalogue"><button class="btn btn-primary"><i class="fa fa-undo"></i> Retour au catalogue </button></a></div>
             {% endverbatim %}
     </div>
+<div class="row">
+    <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
+        {% include 'partials/nav_testresult_questions.html' %}
+    </aside>
+</div>
 <hr><a name="discussion" id="discussion">
   <h2 class="text-center">Posez vos questions en rapport avec la conférence ici</h2>
 <hr>
 <div disqus="conference.slug" title="test"></div>
-</div>
-<div class="row">
-    <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
-        {% include 'partials/nav_test_questions.html' %}
-    </aside>
 </div>
 </div>
 {% endblock content %}

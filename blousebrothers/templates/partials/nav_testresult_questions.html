@@ -29,8 +29,15 @@ Questions
 </ul>
 {% endverbatim %}
 {% load bbtricks %}
-<div class="tips tips-bottom bb-container bb-light-grey">
-  Votre score : {{ object | score100 }} 
+<div class="tips tips-bottom bb-container bb-light-grey text-center">
+    <p>SCORE : {{ object | score100 }}</p>
+    <p>CLASSEMENT : <big>{{ object.position }}</big> / {{ object.total }}</p>
+    <br>
+    <div class="short-separator"></div>
+    <br>
+    <p>Temps : {{object.time_taken | time:"H:i:s" }}</p>
+    <p>Erreurs : {{object.nb_errors }}</p>
+    <p>Erreurs graves : {{object.fatal_errors | length }}</p>
 </div>
 </div>
 
