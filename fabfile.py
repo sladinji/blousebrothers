@@ -41,7 +41,7 @@ def deploy():
         run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
-@hosts('fx@labresult.fr')
+@hosts('ubuntu@labresult.fr')
 def futur(branch='master',reset='no'):
     """
     Deploy on futur

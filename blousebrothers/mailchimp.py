@@ -135,6 +135,8 @@ def sync(qs=None, name=LIST_NAME):
         qs = User.objects.all()
     now = datetime.now()
     for user in qs:
+        if "yopmail.com" in user.email:
+            continue
         # ACHATS DES 30 DERNIERS JOURS
         purchase30 = user.purchases.filter(create_timestamp__gt=now - timedelta(days=30)).count()
         # VENTES DES 30 DERNIERS JOURS
@@ -203,7 +205,7 @@ def sync(qs=None, name=LIST_NAME):
                     'merge_fields': merge_fields,
                 })
         except Exception as ex:
-            if hasattr(ex, 'response'):
+            if hasattr(ex, 'response') and ex.response:
                 logger.exception(ex.response.content)
             else:
                 logger.exception(ex)

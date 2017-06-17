@@ -55,7 +55,7 @@
 						<em>Cette semaine</em>
 					</li>
 					<li class="stat col-md-3 col-sm-3 col-xs-6">
-						<span><b class="value"><a href="{{ conference.products.first.get_absolute_url }}#disqus_thread" data-disqus-identifier="result_{{ conference.slug }}">Pas de commentaire</a>
+						<span><b class="value"><a href="{{ conference.products.first.get_absolute_url }}#disqus_thread" data-disqus-identifier="{{ conference.slug }}">Pas de commentaire</a>
                         {% disqus_num_replies %}
 </b></span>
                         

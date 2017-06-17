@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 import logging
 
+from disqusapi import DisqusAPI, APIError
 from django.contrib import messages
 from django.apps import apps
 from django.core.mail import mail_admins
@@ -12,6 +13,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from djng.views.mixins import JSONResponseMixin, allow_remote_invocation
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import (
     DetailView,
     ListView,
@@ -20,7 +22,9 @@ from django.views.generic import (
     FormView,
     DeleteView,
 )
+from django.conf import settings
 
+from blousebrothers.tools import get_disqus_sso
 from blousebrothers.auth import (
     BBConferencierReqMixin,
     ConferenceWritePermissionMixin,
@@ -246,7 +250,9 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
         return context
 
     def form_valid(self, form):
-        """Create a Test instance for user to be able to test is conference"""
+        """
+        Create a Test instance for user to be able to test is conference,
+        and create """
         if not Test.objects.filter(
             conf=self.object,
             student=self.request.user
@@ -256,6 +262,23 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
         if self.object.for_sale:
             self.request.user.status = 'conf_publi_ok'
             self.request.user.save()
+        # Create disqus thread
+        try :
+            disqus = DisqusAPI(settings.DISQUS_SECRET_KEY, settings.DISQUS_PUBLIC_KEY)
+            disqus.get("threads.create",
+                       method='post',
+                       forum='blousebrothers',
+                       remote_auth=get_disqus_sso(self.object.owner),
+                       title=self.object.title,
+                       url=get_full_url(self.request, 'confs:result', args=(self.object.slug,)),
+                       identifier=self.object.slug,
+                       )
+        except APIError as ex:
+            if "thread already exists" in ex.message :
+                pass
+            else:
+                logger.exception("PB CREATING THREAD")
+
         return super().form_valid(form)
 
 
@@ -370,7 +393,26 @@ class TestResult(TestPermissionMixin, DetailView):
             self.request.user.status = "give_eval_notok"
             self.request.user.save()
             test.set_score()
+            try :
+                disqus = DisqusAPI(settings.DISQUS_SECRET_KEY, settings.DISQUS_PUBLIC_KEY)
+                thread = disqus.get('threads.details', method='get', forum='blousebrothers',
+                                    thread='ident:' + test.conf.slug)
+                disqus.post('threads.subscribe',
+                                       method='post',
+                                       thread=thread['id'],
+                                       remote_auth=get_disqus_sso(test.userstudent),
+                                       )
+            except:
+                logger.exception()
         return test
+
+    def get(self, *args, **kwargs):
+        try:
+            return super().get(*args, **kwargs)
+        except ObjectDoesNotExist:
+            conf = Conference.objects.get(slug=self.kwargs['slug'])
+            product = Product.objects.get(conf=conf)
+            return redirect(product.get_absolute_url())
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

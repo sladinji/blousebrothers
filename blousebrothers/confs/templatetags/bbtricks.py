@@ -3,11 +3,14 @@ from string import ascii_uppercase
 import datetime
 
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.db.models import Sum
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from oscar.core.loading import get_model
+
+from blousebrothers.tools import get_disqus_sso as get_remote_auth
 
 register = template.Library()
 Product = get_model('catalogue', 'Product')
@@ -17,15 +20,17 @@ Product = get_model('catalogue', 'Product')
 def to_char(value):
     return ascii_uppercase[value]
 
+
 @register.filter
 def or_subscription(money):
     """
     Display Abo in conferencier sale's table when amount == 0.
     """
-    if money.amount == 0 :
+    if money.amount == 0:
         return "Abo*"
     else:
         return money.amount
+
 
 @register.filter
 def default_icon(name):
@@ -65,12 +70,13 @@ def result_icon(answer, test_answer):
 
 @register.filter
 def score100(test):
-    if test.finished :
+    if test.finished:
         score = Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
         span = '<span class="score"><big>{}</big> / 100</span>'.format(score)
         return mark_safe(span)
     else:
         return ""
+
 
 @register.filter
 def get_test_url(test):
@@ -157,3 +163,29 @@ def sort_items(d):
         return sorted(d, key=lambda x: int(x['name']))
     except:
         return sorted(d, key=lambda x: x['name'])
+
+
+@register.simple_tag
+def get_remote_s3(user):
+    return get_remote_auth(user)
+
+
+@register.simple_tag
+def get_disqus_sso(user):
+    # return a script tag to insert the sso message
+    return mark_safe("""<script type="text/javascript">
+                     var disqus_config = function() {
+                     this.page.remote_auth_s3 = "%(remote_auth)s";
+                     this.page.api_key = "%(pub_key)s";
+                     }
+                     </script>""" % dict(
+                         remote_auth=get_remote_auth(user),
+                         pub_key=settings.DISQUS_PUBLIC_KEY,
+                     )
+                     )
+
+
+# settings value
+@register.simple_tag
+def settings_value(name):
+    return getattr(settings, name, "")

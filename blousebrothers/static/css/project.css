@@ -1618,6 +1618,9 @@ article.product_pod .chirurgie_maxillo-faciale{
 article.product_pod .radiologie{
     background-image: url(/static/images/spe/radiologie.png);
 }
+article.product_pod .maladies_infectieuses{
+    background-image: url(/static/images/spe/infectio.png);
+}
 
 #select-plan .etape1, #select-plan .etape2{
     padding:30px 0;
