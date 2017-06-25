@@ -71,15 +71,15 @@ urlpatterns = [
         name='invitation'
     ),
     # SpecialOffer demand
-    url(
-        regex=r'^~specialoffer/$',
-        view=views.SpecialOffer.as_view(),
-        name='specialoffer'
-    ),
+    #url(
+    #    regex=r'^~specialoffer/$',
+    #    view=views.SpecialOffer.as_view(),
+    #    name='specialoffer'
+    #),
     # ActivateOffer demand
-    url(
-        regex=r'^~activate/(?P<user_id>[\d]*)$',
-        view=views.ActivateOffer.as_view(),
-        name='activateoffer'
-    ),
+    #url(
+    #    regex=r'^~activate/(?P<user_id>[\d]*)$',
+    #    view=views.ActivateOffer.as_view(),
+    #    name='activateoffer'
+    #),
 ]
