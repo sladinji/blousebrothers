@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.db.models import Count
 from django.utils.six.moves import input
 
-from blousebrothers.users.models import User, Sale
+from blousebrothers.users.models import User, Sale, SubscriptionsBoard
 
 PRICE = Decimal("9")
 
@@ -42,17 +42,29 @@ class Command(BaseCommand):
         ).values(
             'conf__owner'
         ).annotate(
-            total=Count('conf')
+            total=Count('conf'),
+            students=Count('student', distinct=True),
         ).order_by('-total'):
             amount = unit_price*sale['total']
             amount = amount.quantize(Decimal('1.00'))  # arrondi
-            user = User.objects.get(pk=sale['conf__owner'])
-            print('{} soit {:f} € pour {}'.format(
+            owner = User.objects.get(pk=sale['conf__owner'])
+            print('{} soit {:f} € pour {} avec {} étudiants # {}'.format(
                 sale['total'],
                 amount,
-                user.username)
+                owner.username,
+                sale['students'],
+                owner.email,
             )
-            user.credit_wallet(unit_price*sale['total'])
-            for sale in Sale.objects.filter(credited_funds=0, conf__owner=user):
+            )
+            transfer = owner.credit_wallet(unit_price*sale['total'])
+            board = SubscriptionsBoard(
+                conferencier=owner,
+                nb_sales=sale['total'],
+                nb_students=sale['students'],
+                credited_funds=unit_price*sale['total'],
+                transfer=transfer,
+            )
+            board.save()
+            for sale in Sale.objects.filter(credited_funds=0, conf__owner=owner):
                 sale.credited_funds = unit_price
                 sale.save()

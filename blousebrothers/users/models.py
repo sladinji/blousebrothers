@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
-import functools
 import logging
 import hashlib
 import threading
@@ -43,7 +42,7 @@ AbstractUser._meta.get_field('email').blank = False
 @python_2_unicode_compatible
 class User(AbstractUser):
 
-    mailchync = True #  used by cron script on mailchimp synchronization
+    mailchync = True  # used by cron script on mailchimp synchronization
 
     DEGREE_LEVEL = (
         (None, '---'),
@@ -131,6 +130,10 @@ class User(AbstractUser):
     status = models.CharField(_("Status"), max_length=50, default="registered", null=True)
     status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
     previous_status = None  # place holder to check status change
+
+    @property
+    def last_subsboard(self):
+        return self.subs_board.order_by('-date_created').first()
 
     @property
     def gave_all_required_info(self):
@@ -231,7 +234,7 @@ class User(AbstractUser):
         transfer.save()
         transfer.create()
         if transfer.status == 'SUCCEEDED':
-            return True
+            return transfer
         else:
             raise Exception("Transfert failed :")
 
@@ -297,6 +300,8 @@ class User(AbstractUser):
 
 
 class Sale(models.Model):
+    class Meta:
+        ordering = ['-create_timestamp']
     conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sales')
     conf = models.ForeignKey(Conference, on_delete=models.SET_NULL, related_name='sales', null=True)
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="purchases")
@@ -307,6 +312,25 @@ class Sale(models.Model):
     fees = MoneyField(default=0, default_currency="EUR",
                       decimal_places=2, max_digits=12)
     create_timestamp = models.DateTimeField(auto_now_add=True, null=True)
+
+
+class SubscriptionsBoard(models.Model):
+    conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subs_board')
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    nb_sales = models.PositiveIntegerField(_("Dossiers effecutés"), default=0)
+    nb_students = models.PositiveIntegerField(_("Nombre d'étudiant"), default=0)
+    credited_funds = MoneyField(default=0, default_currency="EUR",
+                                decimal_places=2, max_digits=12)
+    transfer = models.ForeignKey(MangoPayTransfer, on_delete=models.SET_NULL, null=True)
+
+    @property
+    def mois(self):
+        return ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre',
+         'Octobre','Novembre','Décembre'][self.date_created.month - 1]
+
+    @property
+    def unit_price(self):
+        return self.credited_funds / self.nb_sales
 
 
 class University(models.Model):
@@ -411,4 +435,3 @@ def give_eval_ok(review, user, request, response, **kwargs):
         user.save()
         review.product.conf.owner.status = "get_eval_ok"
         review.product.conf.owner.save()
-

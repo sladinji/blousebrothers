@@ -106,7 +106,46 @@
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 
     {% if user.is_conferencier %}
+    {% if user.last_subsboard %}
     <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-line-chart"></i> Mes dossiers effectués en {{ user.last_subsboard.mois }} par les abonnés</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        Le prix d'un dossier est fixé chaque mois en fonction de l'activité des abonnés.<br>
+                        <ul class="col-md-12 stats">
+                            <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                <span><b class="value">{{ user.last_subsboard.nb_students }}</b><br> 
+                                    Étudiants
+                                <em></em>
+                            </li>
+                            <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                <span><b class="value">{{ user.last_subsboard.nb_sales }}</b><br> 
+                                    Dossiers
+                                <em></em>
+                            </li>
+                            <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                <span><b class="value">{{ user.last_subsboard.unit_price }}</b><br> 
+                                    Prix unitaire
+                                <em></em>
+                            </li>
+                            <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                <span><b class="value">{{ user.last_subsboard.credited_funds.amount }} €</b><br> 
+                                    Total
+                                <em></em>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
         <div class="col-md-9">
             <div id="order_graph">
                 <div class="bar-caption"><h1>{% trans "Activité à mes conférences" %}</h1></div>
