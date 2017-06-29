@@ -263,7 +263,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
             self.request.user.status = 'conf_publi_ok'
             self.request.user.save()
         # Create disqus thread
-        try :
+        try:
             disqus = DisqusAPI(settings.DISQUS_SECRET_KEY, settings.DISQUS_PUBLIC_KEY)
             disqus.get("threads.create",
                        method='post',
@@ -274,7 +274,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
                        identifier=self.object.slug,
                        )
         except APIError as ex:
-            if "thread already exists" in ex.message :
+            if "thread already exists" in ex.message:
                 pass
             else:
                 logger.exception("PB CREATING THREAD")
@@ -393,17 +393,17 @@ class TestResult(TestPermissionMixin, DetailView):
             self.request.user.status = "give_eval_notok"
             self.request.user.save()
             test.set_score()
-            try :
+            try:
                 disqus = DisqusAPI(settings.DISQUS_SECRET_KEY, settings.DISQUS_PUBLIC_KEY)
                 thread = disqus.get('threads.details', method='get', forum='blousebrothers',
                                     thread='ident:' + test.conf.slug)
                 disqus.post('threads.subscribe',
-                                       method='post',
-                                       thread=thread['id'],
-                                       remote_auth=get_disqus_sso(test.userstudent),
-                                       )
+                            method='post',
+                            thread=thread['id'],
+                            remote_auth=get_disqus_sso(test.student),
+                            )
             except:
-                logger.exception()
+                logger.exception("Student Disqus thread subscription error")
         return test
 
     def get(self, *args, **kwargs):
@@ -439,7 +439,7 @@ class TestResetView(TestPermissionMixin, UpdateView):
     def get_success_url(self):
         if self.request.user.has_full_access():
             return reverse('confs:test',
-                       kwargs={'slug': self.object.conf.slug})
+                           kwargs={'slug': self.object.conf.slug})
         else:
             messages.info(self.request,
                           "Merci de souscrire à un abonnement pour pouvoir recommencer un dossier.")
