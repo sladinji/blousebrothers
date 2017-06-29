@@ -429,15 +429,21 @@ class TestResetView(TestPermissionMixin, UpdateView):
     fields = ['id']
 
     def form_valid(self, form):
-        self.object.finished = False
-        self.object.progress = 0
-        self.object.answers.all().delete()
-        self.object.save()
+        if self.request.user.has_full_access():
+            self.object.finished = False
+            self.object.progress = 0
+            self.object.answers.all().delete()
+            self.object.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('confs:test',
+        if self.request.user.has_full_access():
+            return reverse('confs:test',
                        kwargs={'slug': self.object.conf.slug})
+        else:
+            messages.info(self.request,
+                          "Merci de souscrire à un abonnement pour pouvoir recommencer un dossier.")
+            return reverse('users:subscription', kwargs={'sub_id': 0})
 
     def get_object(self, queryset=None):
         conf = Conference.objects.get(slug=self.kwargs['slug'])
