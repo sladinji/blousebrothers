@@ -3,23 +3,23 @@
 {% load currency_filters %}
 {% load i18n %}
 
-{% block title %}Transfert{% endblock %}
+{% block title %}Cadeau D4{% endblock %}
 
 {% block content %}
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="col-md-6 col-sm-12">
     <div class="x_panel tile fixed_height_320">
         <div class="x_title">
-            <h2><i class="fa fa-download"></i> Transférer vers mon compte bancaire</h2>
+            <h2><i class="fa fa-download"></i> Envoie nous la photo de ta carte d'étudiant</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
             <div class="dashboard-widget-content">
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="{% url 'users:payout' %}">
+                    <form class="form-horizontal" method="post" action="{% url 'users:specialoffer' %}">
                         {% csrf_token %}
                         {{ form | crispy }}
-                        <button type="submit" name='sub_iban' class="btn">Valider</button>
+                        <button type="submit" name='sub_offer' class="btn">Envoyer</button>
                     </form>
                 </div>
             </div>
