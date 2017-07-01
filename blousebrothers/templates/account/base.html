@@ -10,7 +10,7 @@
 {% block content_wrapper %}
 
 <div class="signup">
-<div class="{% block extra_slide_class %}{% endblock%}slide1 slide container">
+<div class="{% block extra_slide_class %}{% endblock%} slide slide1  container">
 	  {% block first_row %}
       <div class="row">
 	    <div class="col-lg-6 col-md-6 col-sd-12">      
@@ -27,9 +27,10 @@
 	    <div class="col-md-4"></div>
 	    <div class="col-md-4">
 	      <div class="tcenter">
+            <p>Des Externes. Des Internes. Pas d’Intermédiaires.</p>
 	        <img src="{% static "images/logo.png" %}"class="logo"><br>
             <h1>BlouseBrothers</h1>
-	        <h2>Plateforme ECNi collaborative</h2>
+	        <h2>Prépa ECN collaborative</h2>
 	        {% include "partials/alert_messages.html" %}
 	      </div>
 	    </div>

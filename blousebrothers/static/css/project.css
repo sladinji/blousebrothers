@@ -690,16 +690,18 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .signup .slide{
     position:relative;
+    background-position: center;
 }
 
 .signup .slide1 .slide4{
     background-size:cover;
     width:100%;
     height:100%;
+    background-position: center;
 }
 
 .signup .slide1{
-    background:url('/static/images/slide1_bg.jpg');
+    background:url('/static/images/slide1_bg.png');
 }
 .signup .slide4{
     background:url('/static/images/slide4_bg.jpg');
@@ -774,12 +776,14 @@ h1, h2{
 .signup .slide2 .bg_right{
     background:url('/static/images/slide2_bg_right.jpg');
     background-size:cover;
+    background-position: center;
     width:50%;
     height:100%;        
 }
 .signup .slide3 .bg_left{
     background:url('/static/images/slide3_bg_left.jpg');
     background-size:cover;
+    background-position: center;
     width:50%;
     height:100%;    
 }
@@ -787,6 +791,7 @@ h1, h2{
 .signup .slide3 .bg_right{
     background:url('/static/images/slide3_bg_right.jpg');
     background-size:cover;
+    background-position: center;
     width:50%;
     height:100%;        
 }
