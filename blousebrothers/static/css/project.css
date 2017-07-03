@@ -1674,5 +1674,8 @@ article.product_pod .maladies_infectieuses{
     color: rgb(25, 166, 25);
 }
 h1.faq {
-        text-align: center;
-    }
+    text-align: center;
+}
+.panel-heading {
+    cursor: pointer;
+}
