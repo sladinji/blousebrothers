@@ -1655,3 +1655,6 @@ article.product_pod .maladies_infectieuses{
     font-size: 25px;
     color: rgb(25, 166, 25);
 }
+h1.faq {
+        text-align: center;
+    }
