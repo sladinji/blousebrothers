@@ -1679,3 +1679,20 @@ h1.faq {
 .panel-heading {
     cursor: pointer;
 }
+.container-fluid.faqbg {
+    background: url(/static/images/slide3_bg_right.jpg);
+    background-size: 100% auto;
+}
+@media (max-width: 767px){
+    .container-fluid.faqbg {
+        background-size: auto 100%;
+    }
+}
+.faqbg h1 {
+    color: white;
+    font-family: 'lobster';
+}
+.faqbg h2 {
+    color: white;
+    font-family: 'lobster';
+}

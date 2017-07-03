@@ -1,10 +1,14 @@
 {% extends "layout.html" %}
 {% load staticfiles %}
+{% block main_container_class %}<div class="container-fluid faqbg">{% endblock %}
 {% block content %}
 <div class="container">
     <div row>
-        <div class="col-md-6">
-            <h1 class="faq">Je suis externe</h1>
+        <div class="col-md-12 text-center">
+            <h1>Comment ça marche ?</h1>
+        </div>
+        <div class="col-md-5">
+            <h2 class="faq text-center">Je suis externe</h2>
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
@@ -205,8 +209,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <h1 class="faq">Je suis conférencier</h1>
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <h2 class="faq text-center">Je suis conférencier</h2>
             <div class="panel-group" id="accordion2">
                 <div class="panel panel-default">
                     <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseConfernecier">
