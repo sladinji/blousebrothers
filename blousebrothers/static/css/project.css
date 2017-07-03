@@ -1688,6 +1688,9 @@ h1.faq {
         background-size: auto 100%;
     }
 }
+.faqbg p {
+    color: white;
+}
 .faqbg h1 {
     color: white;
     font-family: 'lobster';
