@@ -59,7 +59,7 @@ settings file. This will enable the on-the-fly less compiler.
                         <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
                         </li>
-                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'regledujeu' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a></li>
+                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'users:faq' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a></li>
                         <li class="menu-item-has-children item-megamenu"><a id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a></li>
                         {% if request.user.is_authenticated %}
                         {% if request.user.is_conferencier%}

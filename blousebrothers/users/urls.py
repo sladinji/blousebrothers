@@ -82,4 +82,10 @@ urlpatterns = [
     #    view=views.ActivateOffer.as_view(),
     #    name='activateoffer'
     #),
+    # FAQ
+    url(
+        regex=r'^~FAQ$',
+        view=views.FAQ.as_view(),
+        name='faq'
+    ),
 ]
