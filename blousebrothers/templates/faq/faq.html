@@ -1,436 +1,378 @@
 {% extends "layout.html" %}
 {% load staticfiles %}
-
 {% block content %}
 <div class="container">
-	<div row>
-		<div class="col-md-6">
-			<h1 class="faq">Je suis externe</h1>
-
-			<div class="panel-group" id="accordion">
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
-						<h4 class="panel-title">
-							<p>Notre but?
-							<p>
-						</h4>
-					</div>
-					<div id="collapseOne" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/cible.png' %}"/></div>
-								<div class="col-md-10 ">
-									Une préparation aux ECNi accessible à tous, sans aucun sacrifice de qualité.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-
-
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion" href="#collapseTen">
-						<h4 class="panel-title">
-							<p>Comment allez vous y arriver ?</p>
-						</h4>
-					</div>
-
-					<div id="collapseTen" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/personne.png' %}"/></div>
-								<div class="col-md-10 ">
-									Nous fonctionnons sous forme de plateforme collaborative.
-									Chacun peut déposer des dossiers ECNi très facilement et les proposer au prix qu'il
-									souhaite, ou
-									gratuitement.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion" href="#collapseEleven">
-						<h4 class="panel-title">
-							<p>Tout le monde peut faire n'importe quoi ?</p>
-						</h4>
-					</div>
-					<div id="collapseEleven" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/etoile.png' %}"/></div>
-								<div class="col-md-10 ">
-									Les dossiers sont évalués par les étudiants qui les ont achetés.
-									Ces notes forment, la réputation indélébile et publique du Conférencier.
-									Il est aussi possible de poser des questions depuis la page correction ou sur nos groupes
-									Facebook.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion" href="#collapseTwo">
-						<h4 class="panel-title">
-							<p>De quoi est constitué un DCP ou un groupe de QI ?</p>
-						</h4>
-					</div>
-					<div id="collapseTwo" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/crayon.png' %}"/></div>
-								<div class="col-md-10 ">
-									15 Questions</br>
-									5 Propositions dont 1 à 5 sont justes</br>
-									Toujours.</br>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion" href="#collapseThree">
-						<h4 class="panel-title">
-							<p>Comment marchent les corrections ?</p>
-						</h4>
-					</div>
-					<div id="collapseThree" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/ok.png' %}"/></div>
-								<div class="col-md-10 ">
-									Nous demandons à nos conférenciers de fournir une correction détaillée avec tous les cas
-									cliniques.
-									Mais vous pouvez poser des questions directement auprès du conférencier, il sera notifié et
-									encouragé à vous répondre car sa réputation est aussi dépendante de ses réponses.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion" href="#collapseFive">
-						<h4 class="panel-title">
-							<p>...et au niveau des notations ?</p>
-						</h4>
-					</div>
-					<div id="collapseFive" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/note.png' %}"/></div>
-								<div class="col-md-10 ">
-									1 point si toutes les bonnes réponses sont cochées et qu'il n'y a aucune mauvaise réponse cochée;
-									0,5 s'il y a une erreur (une bonne réponse oubliée ou une mauvaise réponse cochée); 0,2 s'il y a 2
-									erreurs; 0 au delà de 2 erreurs.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion" href="#collapseSix">
-						<h4 class="panel-title">
-							<p>Combien ça coûte ?</p>
-						</h4>
-					</div>
-					<div id="collapseSix" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/argent.png' %}"/></div>
-								<div class="col-md-10 ">
-									C'est toi qui fait ton programme. Tu crédites ton compte et tu n'achètes que ce qui te
-									plaît. Les
-									prix proposés par les conférenciers sont très compétitifs.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading " class="accordion-toggle collapsed" data-toggle="collapse"
-																	data-parent="#accordion" href="#collapseEight">
-						<h4 class="panel-title">
-							<p>Pas d'abonnements ?</p>
-						</h4>
-					</div>
-					<div id="collapseEight" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/boite.png' %}"/></div>
-								<div class="col-md-10 ">
-
-									Et bien si ! et tu as le choix:</br>
-									Abonnement 1 Mois ou Abonnement 12 Mois.</br>
-									Grâce aux abonnements, tu as un accès illimité à tous les dossiers ainsi qu'à la
-									totalité des services du site.</br>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion"
-				   href="#collapseFour">
-						<h4 class="panel-title">
-							<p>Et la sécurité de mes données bancaires ?</p>
-						</h4>
-					</div>
-					<div id="collapseFour" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/securite.png' %}"/></div>
-								<div class="col-md-10 ">
-									Tes données bancaires sont gérées par un service tiers de confiance, reconnu
-									internationalement
-									(Mangopay). Rien n'est stocké sur le site. L'argent dédié aux Conférenciers est bloqué sur
-									Mangopay
-									et ensuite directement viré sur le compte du Conférencier, sans passer par le nôtre.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse"
-																   data-parent="#accordion"
-				   href="#collapseSeven">
-						<h4 class="panel-title">
-							<p>Et si je crédite trop mon compte ?</p>
-						</h4>
-					</div>
-					<div id="collapseSeven" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/cb.png' %}"/></div>
-								<div class="col-md-10 ">
-									Tu peux récupérer l'argent crédité, moins 1 euro de frais.
-									L'argent crédité depuis ton compte bancaire est stocké sur le portefeuille "personnel":
-									c'est
-									uniquement ce dernier que tu peux rapatrier sur ton compte. L'argent présent sur le
-									portefeuille
-									"bonus" correspond à des promotions ou des crédits d'abonnement, et ne peut pas être retiré.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-		</div>
-		<div class="col-md-6">
-
-			<h1 class="faq">Je suis conférencier</h1>
-
-			<div class="panel-group" id="accordion2">
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseConfernecier">
-						<h4 class="panel-title">
-							<p>Qui peut devenir conférencier ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseConfernecier" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/conferencier.png' %}"/></div>
-								<div class="col-md-10 ">
-
-									N'importe quel étudiant en médecine, interne ou médecin, à partir du moment où il est authentifié sur le site.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseSpe">
-						<h4 class="panel-title">
-							<p>Quelles matières peut enseigner un conférencier ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseSpe" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/personne.png' %}"/></div>
-								<div class="col-md-10 ">
-									Pas de restriction. On peut être interne d'une spécialité donnée, pas forcément très bien classé, et pourtant être un conférencier brillant et un très bon pédagogue dans plusieurs spé. Nous avons tous connu des internes comme ça.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseReg">
-						<h4 class="panel-title">
-							<p>Faut-il poster des dossiers régulièrement sur le site ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseReg" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/hibou.png' %}"/></div>
-								<div class="col-md-10 ">
-
-									Tu fais strictement comme tu en as envie.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTips">
-						<h4 class="panel-title">
-							<p>
-							Comment rédiger un bon Dossier Clinique Progressif ou des bonnes Questions Individuelles ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseTips" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/crayon.png' %}"/></div>
-								<div class="col-md-10 ">
-
-									C'est une vaste question ! Nous t'invitons à regarder cette page web et notre tutoriel vidéo. La docimologie est une science délicate et subjective !     </div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapsePlagiat">
-						<h4 class="panel-title">
-							<p>
-
-							Quelle est la politique de BlouseBrothers vis-à-vis du plagiat?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapsePlagiat" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/copy.png' %}"/></div>
-								<div class="col-md-10 ">
-
-
-									Nous exigeons des conférenciers de ne rien plagier: ni livres, ni banques de cas nationales ou locales, ni boîtes de conf. Nous ne pourrons pas couvrir un conférencier qui s'aventurerait dans cette mauvaise voie, en cas de plainte. La loi est la loi. Nous sommes également clairs dans nos CGU. De même, nous ne tolérerons aucun plagiat de la part des autres boîtes de conf. Les règles sont claires: ce qui est sur BlouseBrothers doit être original, et doit y rester.</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFB">
-						<h4 class="panel-title">
-							<p>
-
-							Est-il possible d'avoir un feedback des étudiants?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseFB" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/dialog.png' %}"/></div>
-								<div class="col-md-10 ">
-
-
-									C'est la base de nos valeurs. Les étudiants peuvent signaler toutes les erreurs et coquilles aux conférenciers, et ces derniers peuvent modifier leurs cas en fonction des retours. Le but est l'amélioration permanente.</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseRet">
-						<h4 class="panel-title">
-							<p>
-							Quelle est la rétribution des conférenciers?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseRet" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/cb.png' %}"/></div>
-								<div class="col-md-10 ">
-
-
-									Les conférenciers gardent 70% ce qu'ils vendent.</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFree">
-						<h4 class="panel-title">
-							<p>
-							Si je propose des dossiers gratuitement, ou si je décide de donner mes gains à une association, prenez vous une commission ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseFree" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/personne.png' %}"/></div>
-								<div class="col-md-10 ">
-
-
-									Non.</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOwn">
-						<h4 class="panel-title">
-							<p>
-							A quoi sert l'argent que vous gardez ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseOwn" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/split.png' %}"/></div>
-								<div class="col-md-10 ">
-
-
-									La TOTALITE de l'argent gardé par BlouseBrothers sert à payer le développement et les futures fonctionnalités de la plateforme.</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseSecu">
-						<h4 class="panel-title">
-							<p>
-							Comment est organisée la sécurité de mes données bancaires ?</p>
-							<p>
-						</h4>
-					</div>
-					<div id="collapseSecu" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-2"><img src="{% static 'images/faq/securite.png' %}"/></div>
-								<div class="col-md-10 ">
-
-
-									Tes données bancaires sont gérées par un service tiers de confiance, reconnu internationalement (Mangopay). Nous ne stockons pas de données bancaires sur le site. L'argent redistribué aux conférenciers ne passe pas par notre compte en banque: il est bloqué sur Mangopay et revient ensuite directement aux conférenciers. </div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div row>
+        <div class="col-md-6">
+            <h1 class="faq">Je suis externe</h1>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+                        <h4 class="panel-title">
+                            <p>Notre but ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/cible.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Une préparation aux ECNi accessible à tous, sans aucun sacrifice de qualité.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTen">
+                        <h4 class="panel-title">
+                            <p>Comment allez vous y arriver ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseTen" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/personne.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Nous fonctionnons sous forme de plateforme collaborative.
+                                    Chacun peut déposer des dossiers ECNi très facilement et les proposer au prix qu'il
+                                    souhaite, ou
+                                    gratuitement.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">
+                        <h4 class="panel-title">
+                            <p>Tout le monde peut faire n'importe quoi ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseEleven" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/etoile.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Les dossiers sont évalués par les étudiants qui les ont achetés.
+                                    Ces notes forment, la réputation indélébile et publique du Conférencier.
+                                    Il est aussi possible de poser des questions depuis la page correction ou sur nos groupes
+                                    Facebook.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                        <h4 class="panel-title">
+                            <p>De quoi est constitué un DCP ou un groupe de QI ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/crayon.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    15 Questions</br>
+                                    5 Propositions dont 1 à 5 sont justes</br>
+                                    Toujours.</br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                        <h4 class="panel-title">
+                            <p>Comment marchent les corrections ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/ok.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Nous demandons à nos conférenciers de fournir une correction détaillée avec tous les cas
+                                    cliniques.
+                                    Mais vous pouvez poser des questions directement auprès du conférencier, il sera notifié et
+                                    encouragé à vous répondre car sa réputation est aussi dépendante de ses réponses.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                        <h4 class="panel-title">
+                            <p>...et au niveau des notations ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/note.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    1 point si toutes les bonnes réponses sont cochées et qu'il n'y a aucune mauvaise réponse cochée;
+                                    0,5 s'il y a une erreur (une bonne réponse oubliée ou une mauvaise réponse cochée); 0,2 s'il y a 2
+                                    erreurs; 0 au delà de 2 erreurs.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                        <h4 class="panel-title">
+                            <p>Combien ça coûte ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/argent.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    C'est toi qui fait ton programme. Tu crédites ton compte et tu n'achètes que ce qui te
+                                    plaît. Les
+                                    prix proposés par les conférenciers sont très compétitifs.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading " class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+                        <h4 class="panel-title">
+                            <p>Pas d'abonnements ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseEight" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/boite.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Et bien si ! et tu as le choix:</br>
+                                    Abonnement 1 Mois ou Abonnement 12 Mois.</br>
+                                    Grâce aux abonnements, tu as un accès illimité à tous les dossiers ainsi qu'à la
+                                    totalité des services du site.</br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                        <h4 class="panel-title">
+                            <p>Et la sécurité de mes données bancaires ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/securite.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Tes données bancaires sont gérées par un service tiers de confiance, reconnu
+                                    internationalement
+                                    (Mangopay). Rien n'est stocké sur le site. L'argent dédié aux Conférenciers est bloqué sur
+                                    Mangopay
+                                    et ensuite directement viré sur le compte du Conférencier, sans passer par le nôtre.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                        <h4 class="panel-title">
+                            <p>Et si je crédite trop mon compte ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/cb.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Tu peux récupérer l'argent crédité, moins 1 euro de frais.
+                                    L'argent crédité depuis ton compte bancaire est stocké sur le portefeuille "personnel":
+                                    c'est
+                                    uniquement ce dernier que tu peux rapatrier sur ton compte. L'argent présent sur le
+                                    portefeuille
+                                    "bonus" correspond à des promotions ou des crédits d'abonnement, et ne peut pas être retiré.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="faq">Je suis conférencier</h1>
+            <div class="panel-group" id="accordion2">
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseConfernecier">
+                        <h4 class="panel-title">
+                            <p>Qui peut devenir conférencier ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseConfernecier" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/conferencier.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    N'importe quel étudiant en médecine, interne ou médecin, à partir du moment où il est authentifié sur le site.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseSpe">
+                        <h4 class="panel-title">
+                            <p>Quelles matières peut enseigner un conférencier ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseSpe" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/personne.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Pas de restriction. On peut être interne d'une spécialité donnée, pas forcément très bien classé, et pourtant être un conférencier brillant et un très bon pédagogue dans plusieurs spé. Nous avons tous connu des internes comme ça.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseReg">
+                        <h4 class="panel-title">
+                            <p>Faut-il poster des dossiers régulièrement sur le site ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseReg" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/hibou.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Tu fais strictement comme tu en as envie.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTips">
+                        <h4 class="panel-title">
+                            Comment rédiger un bon Dossier Clinique Progressif ou des bonnes Questions Individuelles ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseTips" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/crayon.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    C'est une vaste question ! Nous t'invitons à regarder cette page web et notre tutoriel vidéo. La docimologie est une science délicate et subjective !     </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapsePlagiat">
+                        <h4 class="panel-title">
+                            <p>Quelle est la politique de BlouseBrothers vis-à-vis du plagiat ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapsePlagiat" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/copy.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Nous exigeons des conférenciers de ne rien plagier: ni livres, ni banques de cas nationales ou locales, ni boîtes de conf. Nous ne pourrons pas couvrir un conférencier qui s'aventurerait dans cette mauvaise voie, en cas de plainte. La loi est la loi. Nous sommes également clairs dans nos CGU. De même, nous ne tolérerons aucun plagiat de la part des autres boîtes de conf. Les règles sont claires: ce qui est sur BlouseBrothers doit être original, et doit y rester.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFB">
+                        <h4 class="panel-title">
+                            <p>Est-il possible d'avoir un feedback des étudiants ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseFB" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/dialog.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    C'est la base de nos valeurs. Les étudiants peuvent signaler toutes les erreurs et coquilles aux conférenciers, et ces derniers peuvent modifier leurs cas en fonction des retours. Le but est l'amélioration permanente.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseRet">
+                        <h4 class="panel-title">
+                            <p>Quelle est la rétribution des conférenciers ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseRet" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/cb.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Les conférenciers gardent 70% ce qu'ils vendent.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFree">
+                        <h4 class="panel-title">
+                            <p>Si je propose des dossiers gratuitement, ou si je décide de donner mes gains à une association, prenez vous une commission ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseFree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/personne.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Non.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOwn">
+                        <h4 class="panel-title">
+                            <p>A quoi sert l'argent que vous gardez ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseOwn" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/split.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    La TOTALITE de l'argent gardé par BlouseBrothers sert à payer le développement et les futures fonctionnalités de la plateforme.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseSecu">
+                        <h4 class="panel-title">
+                            <p>Comment est organisée la sécurité de mes données bancaires ?</p>
+                        </h4>
+                    </div>
+                    <div id="collapseSecu" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2"><img src="{% static 'images/faq/securite.png' %}"/></div>
+                                <div class="col-md-10 ">
+                                    Tes données bancaires sont gérées par un service tiers de confiance, reconnu internationalement (Mangopay). Nous ne stockons pas de données bancaires sur le site. L'argent redistribué aux conférenciers ne passe pas par notre compte en banque: il est bloqué sur Mangopay et revient ensuite directement aux conférenciers. </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
