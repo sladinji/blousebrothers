@@ -687,6 +687,7 @@ input[type=range]:focus::-ms-fill-upper {
     font-family: 'Roboto', sans-serif;
     font-weight:100;
     color:#fff;
+background-color: #000;
 }
 .signup .slide{
     position:relative;
@@ -702,9 +703,16 @@ input[type=range]:focus::-ms-fill-upper {
 
 .signup .slide1{
     background:url('/static/images/slide1_bg.png');
+    background-position: center;
+}
+@media screen and (max-width: 767px){
+.signup .slide1 {
+        background:url('/static/images/slide1_bg_small.png');
+    }
 }
 .signup .slide4{
     background:url('/static/images/slide4_bg.jpg');
+    background-position: center;
 }
 .signup .signin.slide1{
     background:url('/static/images/slide3_bg_right.jpg');
@@ -1054,7 +1062,7 @@ body {
 .package {
     color: #ffffff;
     padding: 25px 0px;
-    background-color: #565d67;
+    background-color: #00a11e;
 }
 .package h4{
 	font-size: 25px;
@@ -1161,6 +1169,7 @@ aside .presale a {
     padding-left: 0px;
     padding-right: 0px;
 	height: 346px;
+
 }
 @media (max-width: 991px){
     .product_pod {
@@ -1176,6 +1185,10 @@ aside .presale a {
 }
 .signup .p-style1 {
 	box-shadow: none;
+    display: inline-table;
+    width: 15%;
+    margin-right: 15px;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .product_pod .btn{
