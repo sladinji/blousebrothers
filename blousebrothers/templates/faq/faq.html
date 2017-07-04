@@ -384,3 +384,19 @@
     </div>
 </div>
 {% endblock %}
+
+{% block onbodyload %}
+
+$( document ).ready(function() {
+    $('.container-fluid').css('min-height',$(window).height()+'px');
+    if ($(window).height() > $(window).width()){
+        $('.container-fluid.faqbg').css('background-size','auto 100%');
+    }
+    else{
+        $('.container-fluid.faqbg').css('background-size','100% auto ');
+    }
+});
+
+
+
+{% endblock %}
