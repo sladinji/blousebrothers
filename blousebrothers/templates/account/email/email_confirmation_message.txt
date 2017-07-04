@@ -1,18 +1,27 @@
 {% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Bienvenue sur {{ site_name }}!
 
-Bienvenue sur BlouseBrothers.
+Bienvenue sur BlouseBrothers,
  
- 
-Merci de confirmer ton adresse email en cliquant sur ce lien : {{ activate_url }}
+Ton inscription est bientôt validé, merci de confirmer ton adresse mail en cliquant sur ce lien : {{ activate_url }}
 
 Tu es interne (ou externe confiant) ?
-Dépose tes dossiers et garde 70% de tes ventes. Aucun frais, aucun engagement.
+Tu peux créer des dossiers sur la plateforme et les vendre au prix que tu le souhaite (ou les proposer gratuitement!) et garder 70% des gains de tes ventes. Aucun frais, aucun engagement.
  
-Tu es externe? Achète uniquement les dossiers qui te conviennent, selon ton programme. Evalue chaque dossier pour les suivants. Accède à la correction, à ta note et à ton classement.
+Tu es externe?
+Achète uniquement les dossiers qui te conviennent, selon ton programme. Évalue chaque dossier pour les suivants. Accède à  la correction, à  ta note et à  ton classement.
  
-Tu peux tester les dossiers qui sont en accès libre dès maintenant pour te faire une idée. 
+Tu peux tester les dossiers qui sont en accès libre dès maintenant pour te faire une idée.
+
+S'il y a le moindre problème ou si tu as simplement des suggestions à émettre quant à l'amélioration du site c'est ici:
+contact@blousebrothers.fr
+
+
+Bonne chance !
+
+
+La team BlouseBrothers 
 
 {% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Merci et à bientôt sur {{ site_name }}!
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Merci et à  bientôt sur BlouseBrothers !
 {{ site_domain }}{% endblocktrans %}
 

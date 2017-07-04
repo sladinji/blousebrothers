@@ -5,7 +5,9 @@
 {% load staticfiles %}
 
 {% block product %}
-<article class="product_pod {{ product.conf.spe_css }}">
+<article class="product_pod ">
+  <div class="prod-bg {{ product.conf.spe_css }}">
+  </div>
     <a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
         {% block product_title %}
         <h3>{{ product.get_title }}</h3>

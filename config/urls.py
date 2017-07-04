@@ -10,6 +10,8 @@ from django.views import defaults as default_views
 from django.contrib.sitemaps.views import sitemap
 from oscar.app import application
 
+from paypal.express.dashboard.app import application as paypal
+
 import blousebrothers.users.views
 
 from .sitemaps import StaticViewSitemap
@@ -31,6 +33,10 @@ urlpatterns = [
 
     # Terms and Conditions
     url(r'^terms/', include('termsandconditions.urls')),
+
+    # Paypal
+    url(r'^checkout/paypal/', include('paypal.express.urls')),
+    url(r'^dashboard/paypal/express/', include(paypal.urls)),
 
 
     # Django Admin, use {% url 'admin:index' %}

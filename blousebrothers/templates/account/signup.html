@@ -14,7 +14,7 @@
 {% block title %}{% trans "Signup" %}{% endblock title %}
 
 {% block content%}
-  <form action="{% url 'account_signup' %}" id="signup_form" method="post">
+<form action="{% url 'account_signup' %}" id="signup_form" method="post">
     {{ form.non_field_errors }}
     {% csrf_token %}
     {{ form.email.errors }}
@@ -33,67 +33,80 @@
     {% include "socialaccount/snippets/login_extra.html" %}
     {% endif %}
     <br><br>
-  </form>
+</form>
 {% endblock content %}
 
 {% block extra_slides %}
-    <!-- slide 2-->
-    <div class="slide2 slide container">
-      <div class="row">
-	<div class="col-xs-12 col-md-6 bg_left tcenter">
-	  <div class="centrage">
-	    <h3>Indépendance</h3>
-	    <span class="txt_current">
-	      Les externes paient des gens qui paient des internes. <br>
-	      Et si on supprimait ce qui ne sert à rien ? <br>
-	      Nous n'avons plus besoin des boîtes de conf.
-	    </span>
-	  </div>
-	</div>
-	<div class="col-xs-12 col-md-6 bg_right tcenter">
-	  <div class="centrage">
-	    <h3>Autonomie</h3>
-	    <span class="txt_current">
-	      Tu es interne ? Dépose tes dossiers sur la plateforme.<br>
-	      Tu es externe ? Entraîne toi selon ton programme.<br>
-	      Les dossiers sont corrigés et les questions sont les bienvenues.
-	    </span>
-	  </div> <!-- centrage -->
-	</div> <!-- col 6-->
-      </div> <!-- row -->
-    </div> <!-- slide2 -->
+<!-- slide 2-->
+<div class="slide2 slide container">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 bg_left tcenter">
+            <div class="centrage">
+                <h3>Indépendance</h3>
+                <span class="txt_current">
+                    BlouseBrothers est une prépa ECNi collaborative, les<br>
+                    internes enseignent directement en ligne aux<br>
+                    externes, sans intermédiaires. 
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 bg_right tcenter">
+            <div class="centrage">
+                <h3>Autonomie</h3>
+                <span class="txt_current">
+                    Tu es Interne? Tu peux déposer les dossiers cliniques que tu as réalisé. Tu es Externe? tu choisis dossier par dossier les items que tu souhaites réviser, et tu accèdes aux corrections et aux fiches de révisions en rapport.
+                </span>
+            </div> <!-- centrage -->
+        </div> <!-- col 6-->
+    </div> <!-- row -->
+</div> <!-- slide2 -->
 
-    <!-- slide 3-->
-    <div class="slide3 slide container">
-      <div class="row">
-	<div class="col-md-6 bg_left tcenter">
-	  <div class="centrage">
-	    <h3>Feedback</h3>
-	    <span class="txt_current">
-	      Les conférenciers et leurs dossiers sont notés par les étudiants.<br>
-	      La réputation des conférenciers sur la plateforme dépend de cette notation.<br>
-	      Les étudiants peuvent se baser sur ces notes pour faire leur choix.
-	    </span>
-	  </div>
-	</div>
-	<div class="col-md-6 bg_right tcenter">
-	  <div class="centrage">
-	    <h3>Equité</h3>
-	    <span class="txt_current">
-	      Les conférenciers gardent 70% de leurs ventes.<br>
-	      Ils peuvent aussi offrir leurs dossiers, ou donner leurs gains à une cause qui leur tient à coeur.<br>
-	      Pourquoi engraisser des boîtes de conf ? Sérieusement ?
-	    </span>
-	  </div> <!-- centrage -->
-	</div> <!-- col 6-->
-      </div> <!-- row -->
-    </div> <!-- slide3 -->
+<!-- slide 3-->
+<div class="slide3 slide container">
+    <div class="row">
+        <div class="col-md-6 bg_left tcenter">
+            <div class="centrage">
+                <h3>Feedback</h3>
+                <span class="txt_current">
+                    Les étudiants peuvent noter les dossiers ECN qu’ils ont réalisés ainsi que les commenter, ce qui permet d’évaluer la qualité des dossier. Il est possible de contacter et d'échanger avec le Conférencier.
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6 bg_right tcenter">
+            <div class="centrage">
+                <h3>Equité</h3>
+                <span class="txt_current">
+                    Les conférenciers gardent 70% de leurs ventes sur dossiers. Les 30% restants sont dédiés au développement de la plate-forme.
+                </span>
+            </div> <!-- centrage -->
+        </div> <!-- col 6-->
+    </div> <!-- row -->
+</div> <!-- slide3 -->
 
 <div class="signup slide4 slide container">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg_left tcenter">
+        <div class="centrage">
+            <h3>En résumé</h3>
+            <span class="txt_current">
+                BlouseBrothers est une plateforme collaborative pour la préparation aux ECNi. Tu y trouveras des dossiers cliniques progressifs (DCP) et des questions individuelles (QI) classés par items et par matières, ainsi que des dossiers de Lecture Critique d’Articles (LCA) réalisés et mis en ligne par des internes pour les externes.<br>
+                Les dossiers sont rédigés selon les recommandations du CNCI et suivent les programmes des Collèges. <br>
+                Des corrections détaillées sont fournies par les Conférenciers.<br>
+                Des fiches de révisions ECN et des statistiques permettant un suivi individuel des révisions sont également disponibles.<br>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+    <div class="col-md-12">
+        {% include 'partials/subscriptions.html' %} 
+    </div>
 </div>
+{% comment %}
 <div class="text-center">
-<img src="https://www.mangopay.com/terms/powered-by-mangopay.png" height="40px" />
+    <img src="https://www.mangopay.com/terms/powered-by-mangopay.png" height="40px" />
 </div>
+{% endcomment %}
 {% endblock extra_slides%}
 
 
@@ -103,37 +116,36 @@
 
 $( document ).ready(function() {
 
-	$('.slide').css('min-height',$(window).height()+'px');
-	$('.slide2').css('line-height', $(window).height()+'px');
-	$('.slide2 .bg_right').height($(window).height());
-	$('.slide2 .bg_left').height($(window).height());
-	$('.slide3').css('line-height', $(window).height()+'px');
-	$('.slide3 .bg_right').height($(window).height());
-	$('.slide3 .bg_left').height($(window).height());
+$('.slide').css('min-height',$(window).height()+'px');
+$('.slide2').css('line-height', $(window).height()+'px');
+$('.slide2 .bg_right').height($(window).height());
+$('.slide2 .bg_left').height($(window).height());
+$('.slide3').css('line-height', $(window).height()+'px');
+$('.slide3 .bg_right').height($(window).height());
+$('.slide3 .bg_left').height($(window).height());
 });
 
 
 function move_value(scrolled, start, end, value_start, value_end){
     if (scrolled < start)
-	return value_start;
+    return value_start;
     else if (scrolled > end)
-	return value_end;
+    return value_end;
 
     end = end-start;
     scrolled = scrolled-start;
     start = 0;
     if (value_end < value_start){ // on descend
-	return ((1-scrolled/end) * (value_start - value_end));
+    return ((1-scrolled/end) * (value_start - value_end));
     }
     else{
-	return ((scrolled/end) * (value_end - value_start));
+    return ((scrolled/end) * (value_end - value_start));
     }
 }
 
 function alertModal(msg){
     $('#myModal .modal-body p').html(msg);
     $("#myModal").modal('show');
-
 }
 
 {% endblock %}

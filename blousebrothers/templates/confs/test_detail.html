@@ -1,9 +1,9 @@
-
 {% extends "layout_angular.html" %}
 {% load static %}
 {% load i18n %}
 {% load youtube %}
 {% load tinycontent_tags %}
+{% load bbtricks %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
 {% block submenu %}
@@ -35,11 +35,7 @@ scrollTop: $( $.attr(this, 'href') ).offset().top
         </aside>
 
         <div class="col-sm-9 text-center">
-            {% if not object.has_review and object.student != object.conf.owner %}
-            <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
-                Merci de laisser un avis !
-            </a>
-            {% else %}
+            {% if object.has_review or object.student == object.conf.owner %}
             <form action="{% url 'confs:test_reset' object.conf.slug %}" id="signin_form" method="post">
                 {% csrf_token %}
                 <button id="reset-test-button" class="btn btn-primary" type="submit"><i class="fa fa-undo" aria-hidden="true"></i> {% trans "Recommencer" %}</button>
@@ -162,15 +158,21 @@ scrollTop: $( $.attr(this, 'href') ).offset().top
 	    <div class="text-center" ng-if="question.index == 14"><a href="/catalogue"><button class="btn btn-primary"><i class="fa fa-undo"></i> Retour au catalogue </button></a></div>
             {% endverbatim %}
     </div>
+<div class="row">
+    <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
+        {% include 'partials/nav_testresult_questions.html' %}
+    </aside>
+</div>
+<hr>
+
+{% if not object.has_review and object.student != object.conf.owner %}
+{% include 'catalogue/reviews/partials/review_stars.html' %}
+{% endif %}
+
 <hr><a name="discussion" id="discussion">
   <h2 class="text-center">Posez vos questions en rapport avec la conférence ici</h2>
 <hr>
-<div disqus="'conference.slug'" title="test"></div>
-</div>
-<div class="row">
-    <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
-        {% include 'partials/nav_test_questions.html' %}
-    </aside>
+<div disqus="conference.slug" title="test"></div>
 </div>
 </div>
 {% endblock content %}

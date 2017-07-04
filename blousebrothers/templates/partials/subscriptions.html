@@ -3,36 +3,31 @@
 {% load bbtricks %}
 {% load tinycontent_tags %}
 
-
 <section id="pricing">
-
+    {% comment remove subs %}
+    {% include "partials/sponsor_form.html" %}
+    {% endcomment %}
     <div class="space"></div> <!-- 40px Vertical Spacing -->
-    <div class="title">
-        <h1 id="subscriptions">Abonnements</h1>
-    </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
-
-    <div class="container"> <!-- Container -->
-        <div class="row">
-
-        <div class="col-sm-12">
-	    {% for sub in subscriptions %}
-            <div class="col-sm-12">
-              <div class="p-style1">
-                <div class="package">
-		  <h4>{{ sub.title }}</h4>
-		  {% purchase_info_for_product request sub as session %}
-		  <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
-                </div>
-                <ul class="inclusion">
-		  {{ sub.description | sub_desc_custo | safe }}
-          <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray"><i class="fa fa-check-circle" aria-hidden="true"></i> Souscrire</a></li>
-                </ul>
-              </div>
-            </div>
-	    {% endfor %}
+    {% for sub in subscriptions %}
+    {% if user.subscription == None or sub.attr.month == 0 %}
+    <div class="p-style1 column_left">
+        <div class="package">
+            <h4>{{ sub.title }}</h4>
+            {% purchase_info_for_product request sub as session %}
+            {% if sub.attr.month != 0 %}
+            <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
+            {% else %}
+            <h6>Pour acheter juste ce qui t'intéresse</h6> 
+            {% endif %}
         </div>
-    </div> <!-- End Container -->
-
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
+        <ul class="inclusion">
+            {{ sub.description | sub_desc_custo | safe }}
+            <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i> {% if sub.attr.month != 0 %}Souscrire{% else %}Acheter{% endif %}</a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+    {% endfor %}
 </section>
+

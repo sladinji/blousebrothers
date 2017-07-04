@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 import logging
+import hashlib
+import threading
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
@@ -39,6 +41,8 @@ AbstractUser._meta.get_field('email').blank = False
 
 @python_2_unicode_compatible
 class User(AbstractUser):
+
+    mailchync = True  # used by cron script on mailchimp synchronization
 
     DEGREE_LEVEL = (
         (None, '---'),
@@ -123,9 +127,13 @@ class User(AbstractUser):
                            blank=True, null=True,
                            help_text=_("Important si tu es conférencier !"),
                            )
-    status = models.CharField(_("Status"), max_length=20, default="registered", null=True)
+    status = models.CharField(_("Status"), max_length=50, default="registered", null=True)
     status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
     previous_status = None  # place holder to check status change
+
+    @property
+    def last_subsboard(self):
+        return self.subs_board.order_by('-date_created').first()
 
     @property
     def gave_all_required_info(self):
@@ -178,6 +186,9 @@ class User(AbstractUser):
             wallet.create(description=description)
         return wallet
 
+    def balance(self):
+        return self.wallet.balance() + self.wallet_bonus.balance()
+
     @property
     def wallet(self):
         return self._get_or_create_wallet("{}'s personal wallet".format(self.username))
@@ -196,6 +207,9 @@ class User(AbstractUser):
         if subs:
             return subs[0]
 
+    def has_full_access(self):
+        return [x for x in self.subs.all() if not x.is_past_due]
+
     @property
     def products(self):
         return Product.objects.filter(conf__owner=self)
@@ -211,11 +225,25 @@ class User(AbstractUser):
         if transfer.status == 'SUCCEEDED':
             return True
 
+    def credit_wallet(self, amount=5):
+        bb = User.objects.get(username="BlouseBrothers")
+        transfer = MangoPayTransfer()
+        transfer.mangopay_credited_wallet = self.wallet
+        transfer.mangopay_debited_wallet = bb.wallet_bonus
+        transfer.debited_funds = amount
+        transfer.save()
+        transfer.create()
+        if transfer.status == 'SUCCEEDED':
+            return transfer
+        else:
+            raise Exception("Transfert failed :")
+
     def handle_subscription_bonus(self, subscription=None):
         if not subscription:
             subscription = self.subscription
 
-        if subscription and not subscription.bonus_taken and self.gave_all_mangopay_info:
+        # We check if subscription.type.bonus is not 0
+        if subscription and subscription.type.bonus and not subscription.bonus_taken and self.gave_all_mangopay_info:
             if self.give_bonus(subscription.type.bonus):
                 subscription.bonus_taken = True
                 subscription.save()
@@ -227,7 +255,8 @@ class User(AbstractUser):
         if not subscription or subscription.bonus_sponsor_taken:
             return
         invitation = Invitation.objects.filter(email=self.email, accepted=True).first()
-        if invitation:
+        # We check if bonus_sponsor is not 0
+        if invitation and subscription.type.bonus_sponsor:
             if invitation.inviter.give_bonus(subscription.type.bonus_sponsor):
                 subscription.bonus_sponsor_taken = True
                 subscription.save()
@@ -271,6 +300,8 @@ class User(AbstractUser):
 
 
 class Sale(models.Model):
+    class Meta:
+        ordering = ['-create_timestamp']
     conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sales')
     conf = models.ForeignKey(Conference, on_delete=models.SET_NULL, related_name='sales', null=True)
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="purchases")
@@ -281,6 +312,25 @@ class Sale(models.Model):
     fees = MoneyField(default=0, default_currency="EUR",
                       decimal_places=2, max_digits=12)
     create_timestamp = models.DateTimeField(auto_now_add=True, null=True)
+
+
+class SubscriptionsBoard(models.Model):
+    conferencier = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subs_board')
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    nb_sales = models.PositiveIntegerField(_("Dossiers effecutés"), default=0)
+    nb_students = models.PositiveIntegerField(_("Nombre d'étudiant"), default=0)
+    credited_funds = MoneyField(default=0, default_currency="EUR",
+                                decimal_places=2, max_digits=12)
+    transfer = models.ForeignKey(MangoPayTransfer, on_delete=models.SET_NULL, null=True)
+
+    @property
+    def mois(self):
+        return ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre',
+         'Octobre','Novembre','Décembre'][self.date_created.month - 1]
+
+    @property
+    def unit_price(self):
+        return self.credited_funds / self.nb_sales
 
 
 class University(models.Model):
@@ -321,6 +371,8 @@ def notify_signup(request, user, **kwargs):
     """
     send a mail to admin
     """
+    user.status = 'registred'
+    user.save()
     try:
         msg = email_template.format(user.name,
                                     user.email,
@@ -335,15 +387,36 @@ def notify_signup(request, user, **kwargs):
         logger.exception("Error sending email info for new inscription")
 
 
+def mailchync(user):
+    """
+    Function trigged on user status change to synchronize with mailchimp.
+    """
+    from blousebrothers import mailchimp
+    merge_fields = {mailchimp.tags["status"]: user.status}
+    mailchimp.client.lists.members.create_or_update(
+        mailchimp.mc_lids[mailchimp.LIST_NAME],
+        subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
+        data={
+            'email_address': user.email,
+            'status_if_new': 'subscribed',
+            'merge_fields': merge_fields,
+        })
+
+
 @receiver(pre_save, sender=User)
 def update_status_timestamp(sender, **kwargs):
     """
     Method to update status_timestamp if status has changed.
+    And sync it with mailchimp.
     """
     instance = kwargs.get('instance')
     created = kwargs.get('created')
     if instance.previous_status != instance.status or created:
         instance.status_timestamp = timezone.now()
+        if instance.mailchync:
+            threading.Thread(target=mailchync, args=(instance,)).start()
+        else:
+            instance.mailchync = True
 
 
 @receiver(post_init, sender=User)
@@ -357,5 +430,8 @@ def remember_status(sender, **kwargs):
 
 @receiver(review_added)
 def give_eval_ok(review, user, request, response, **kwargs):
-    user.status = "give_eval_ok"
-    user.save()
+    if review.product.conf:
+        user.status = "money_ok"
+        user.save()
+        review.product.conf.owner.status = "get_eval_ok"
+        review.product.conf.owner.save()

@@ -6,7 +6,7 @@
 {% purchase_info_for_product request product as session %}
 
 {% if session.availability.is_available_to_buy %}
-{% include "confs/partials/go_button.html" %}
+<a href="{{ product.get_absolute_url }}" class="btn"><i class="fa fa-plus" aria-hidden="true"></i> {% trans "Plus d'infos..." %}</a>
 {% else %}
   <span class="btn btn-default btn-block disabled">{% trans "Bientôt disponible !" %}</span>
 {% endif %}

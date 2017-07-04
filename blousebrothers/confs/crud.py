@@ -13,6 +13,7 @@ from blousebrothers.auth import (
     StudentConfRelatedObjPermissionMixin,
     TestPermissionMixin,
 )
+from .templatetags.bbtricks import is_good_css
 from .models import (
     Conference,
     Question,
@@ -71,7 +72,7 @@ class TestCRUDView(TestPermissionMixin, NgCRUDView):
 class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
     model = TestAnswer
 
-    def get_object(self):
+    def get_queryset(self):
         if 'question' in self.request.GET:
             question = Question.objects.get(pk=self.request.GET['question'])
             test = Test.objects.get(student=self.request.user, conf=question.conf)
@@ -85,7 +86,6 @@ class BaseConferenceImageCRUDView(NgCRUDView):
     model = ConferenceImage
 
     def get_queryset(self):
-        print(self.request.GET)
         if 'conf' in self.request.GET:
             return self.model.objects.filter(
                 conf_id=self.request.GET['conf']
@@ -133,8 +133,13 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
         object_data = super().serialize_queryset(queryset)
         conf = Conference.objects.get(pk=self.request.GET['conf'])
         test = Test.objects.get(conf=conf, student=self.request.user)
-        for obj in object_data :
+        for obj in object_data:
             obj["answered"] = bool(test.answers.get(question_id=obj["pk"]).given_answers)
+        if test.finished:
+            for obj in object_data:
+                obj["score"] = test.answers.get(question_id=obj["pk"]).score
+                obj["nb_errors"] = test.answers.get(question_id=obj["pk"]).nb_errors
+                obj["nb_fatals"] = test.answers.get(question_id=obj["pk"]).fatals.count()
         return object_data
 
 
@@ -198,24 +203,29 @@ class AnswerCRUDView(BaseAnswerCRUDView, ConfRelatedObjPermissionMixin):
 
 class StudentAnswerCRUDView(BaseAnswerCRUDView, StudentConfRelatedObjPermissionMixin):
     """
-    Crud view for conferencier access
+    Crud view for student access
     """
     allowed_methods = ['GET']
 
     def serialize_queryset(self, queryset):
         """
         Prepare answers for student :
-            * turn them all false if not answered yet
-            * set them with given answers if they exist
+            * add user anwser if test finished to display correction
+            * set them with given answers if they exist to display what was answered
+            * or turn them all false if not answered yet
         """
         object_data = super().serialize_queryset(queryset)
         question = Question.objects.get(pk=self.request.GET['question'])
         test = Test.objects.get(conf=question.conf, student=self.request.user)
-        answer = test.answers.get(test=test, question=question)
-        if answer :
-            for obj in object_data :
-                obj["correct"] = str(obj['index']) in answer.given_answers
-        else :
+        test_answer = test.answers.get(test=test, question=question)
+        if test.finished:
+            for obj in object_data:
+                obj["user_answer_css"] = is_good_css(Answer.objects.get(id=obj['pk']), test_answer)
+                obj["user_answer"] = str(obj['index']) in test_answer.given_answers
+        elif test_answer.given_answers:
+            for obj in object_data:
+                obj["correct"] = str(obj['index']) in test_answer.given_answers
+        else:
             for obj in object_data:
                 obj["correct"] = False
         return object_data

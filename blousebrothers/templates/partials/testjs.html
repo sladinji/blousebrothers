@@ -193,7 +193,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
                     {% if user == object.conf.owner or user.is_superuser %}
                     toaster.pop('success', "{% trans 'Voici le rendu du sujet' %}", "");
                     {% else %}
-                    toaster.pop('success', "{% trans 'Tu peux quitter et reprendre plus tard, ta progression est automatiquement sauvegardée.'  %}", "");
+                    //toaster.pop('success', "{% trans 'Tu peux quitter et reprendre plus tard, ta progression est automatiquement sauvegardée.'  %}", "");
                     {% endif %}
                 }
                 Question.query({conf: $scope.conference.pk}).$promise

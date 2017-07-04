@@ -19,12 +19,12 @@
 {% block mini_basket %}{% endblock %}
 
 {% block headertext %}
-    {% trans "Achat abonnement" %}
+<!--    {% trans "Achat abonnement" %} -->
 {% endblock %}
 
 {% block content %}
     {# Use a partial template so that AJAX can be used to re-render basket #}
-    {% include 'basket/partials/basket_content.html' %}
+    {% include 'basket/partials/basket_abo.html' %}
 {% endblock content %}
 
 {% block onbodyload %}

@@ -3,6 +3,8 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from oscar.forms.widgets import DatePickerInput
 from localflavor.generic.forms import IBANFormField, BICFormField, DateField
+from django.utils.safestring import mark_safe
+
 
 from .models import User
 
@@ -59,6 +61,13 @@ class IbanForm(forms.Form):
 
 class EmailInvitationForm(forms.Form):
     email = forms.EmailField(label=_('Email de ton filleul'), required=True)
+
+
+class ImageForm(forms.Form):
+    image = forms.ImageField(
+        label=mark_safe("<i class='fa fa-camera'></i> Prend une photo de carte d'étudiant"),
+        required=True,
+        widget=forms.ClearableFileInput(attrs={'class': 'btn btn-upload'}))
 
 
 class CardRegistrationForm(forms.Form):

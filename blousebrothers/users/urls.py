@@ -70,4 +70,22 @@ urlpatterns = [
         view=views.UserSendInvidation.as_view(),
         name='invitation'
     ),
+    # SpecialOffer demand
+    #url(
+    #    regex=r'^~specialoffer/$',
+    #    view=views.SpecialOffer.as_view(),
+    #    name='specialoffer'
+    #),
+    # ActivateOffer demand
+    #url(
+    #    regex=r'^~activate/(?P<user_id>[\d]*)$',
+    #    view=views.ActivateOffer.as_view(),
+    #    name='activateoffer'
+    #),
+    # FAQ
+    url(
+        regex=r'^~FAQ$',
+        view=views.FAQ.as_view(),
+        name='faq'
+    ),
 ]

@@ -1,3 +1,4 @@
+import re
 import hashlib
 from datetime import datetime, timedelta
 from mailchimp3 import MailChimp
@@ -5,6 +6,20 @@ from blousebrothers.users.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.utils import timezone
+
+import logging
+import sys
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+LIST_NAME = 'BlouseBrothers'
 
 # MailChimp clien API
 
@@ -65,37 +80,63 @@ def days_since_last_purchase(user):
         return diff.days
 
 
-def handle_status(user):
+def update_status(status, new_suffix):
+    return "{}{}".format(re.sub('_H24|J7|_J15|_M1|_inact', '', status), new_suffix)
+
+
+def special_status(user):
+    """Special status don't follow usual incrementation"""
+    now = timezone.now()
+    for current_status, next_status in (
+        ('conf_publi_ok', 'creat_wait'),
+        ('conf_sold', 'creat_wait'),
+        ('get_eval_ok', 'creat_wait'),
+        ('buyer_ok_M1', 'money_ok'),
+    ):
+        if user.status == current_status and now - user.status_timestamp > timedelta(hours=24):
+            user.status = next_status
+            return True
+    logger.info("No special status")
+
+
+def increment_status(user):
     """Update _inact suffix according to  user status timestamp"""
+    now = timezone.now()
+    logger.info('user status age : %s', now - user.status_timestamp)
+    if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_M1"):
+        logger.info('inact')
+        user.status = "inact"
+    elif now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_J15"):
+        logger.info('_M1')
+        user.status = update_status(user.status, "_M1")
+    elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_J7"):
+        logger.info('_J15')
+        user.status = update_status(user.status, "_J15")
+    elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_H24"):
+        logger.info('_J7')
+        user.status = update_status(user.status, "_J7")
+    elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_H24"):
+        logger.info('_H24')
+        user.status = update_status(user.status, "_H24")
+
+
+def handle_status(user):
     now = timezone.now()
     if not user.status_timestamp:
         user.status_timestamp = now
-    #  Manage special status
-    if user.status == "conf_sold" and now - user.status_timestamp > timedelta(hours=8):  # 8h if sold at 00:00 ...
-        user.status = "conf_publi_ok"
-    if user.status == "give_eval_ok" and now - user.status_timestamp > timedelta(hours=24):
-        user.status = "money_ok_inact"
-    if user.status == "buyer_over" and now - user.status_timestamp > timedelta(hours=2):
-        user.status = "give_eval_notok"
-    #  Manage _inact (status_timestamp updated when status change!!)
-    if now - user.status_timestamp > timedelta(days=15) and user.status.endswith("_inact_m1"):
-        user.status = "inact"
-    if now - user.status_timestamp > timedelta(days=14) and user.status.endswith("_inact_j15"):
-        user.status = user.status.replace("_inact_j15", "_inact_m1")
-    elif now - user.status_timestamp > timedelta(days=8) and user.status.endswith("_inact_j7"):
-        user.status = user.status.replace("_inact_j7", "_inact_j15")
-    elif now - user.status_timestamp > timedelta(days=6) and user.status.endswith("_inact"):
-        user.status = user.status.replace("_inact", "_inact_j7")
-    elif now - user.status_timestamp > timedelta(hours=24) and not user.status.endswith("_inact"):
-        user.status = "{}_inact".format(user.status)
-    user.save()
+    if not special_status(user):
+        increment_status(user)
+    user.mailchync = False  # disable mailchync on save
+    user.save()  # status_timestamp updated when status change
 
 
-def sync(qs=None, name='BlouseBrothers'):
+def sync(qs=None, name=LIST_NAME):
     if not qs:
         qs = User.objects.all()
     now = datetime.now()
     for user in qs:
+        if "yopmail.com" in user.email:
+            continue
         # ACHATS DES 30 DERNIERS JOURS
         purchase30 = user.purchases.filter(create_timestamp__gt=now - timedelta(days=30)).count()
         # VENTES DES 30 DERNIERS JOURS
@@ -111,7 +152,10 @@ def sync(qs=None, name='BlouseBrothers'):
         wallet_perso = 0
         wallet_bonus = 0
         try:
-            if user.gave_all_mangopay_info:
+            if user.has_full_access():
+                wallet_perso = 1
+                wallet_bonus = 1
+            elif user.gave_all_mangopay_info:
                 wallet_perso = user.wallet.balance().amount
                 wallet_bonus = user.wallet_bonus.balance().amount
             if last_test and not last_test.has_review() and last_test.conf.owner != user:
@@ -120,7 +164,7 @@ def sync(qs=None, name='BlouseBrothers'):
                         'product_slug': product.slug, 'product_pk': product.id}
                     )
         except Exception as ex:
-            print(ex)
+            logger.debug(ex)
 
         handle_status(user)
 
@@ -149,7 +193,7 @@ def sync(qs=None, name='BlouseBrothers'):
             tags["status"]: user.status,
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
-        print(merge_fields)
+        logger.info(merge_fields)
 
         try:
             client.lists.members.create_or_update(
@@ -161,13 +205,49 @@ def sync(qs=None, name='BlouseBrothers'):
                     'merge_fields': merge_fields,
                 })
         except Exception as ex:
-            if hasattr(ex, 'response'):
-                print(ex.response.content)
+            if hasattr(ex, 'response') and ex.response:
+                logger.exception(ex.response.content)
             else:
-                print(ex)
+                logger.exception(ex)
 
 
 def last_48h():
     clear('test')
     qs = User.objects.filter(date_joined__gt=datetime.now() - timedelta(days=2))
     sync('test', qs)
+
+
+def reset_workflow():
+    """
+    Reset mailchimp status according to current state.
+    """
+    User.objects.filter(mangopay_users__isnull=True).update(status="registred")
+    for user in User.objects.filter(mangopay_users__isnull=False):
+        if not user.gave_all_mangopay_info():
+            user.status = 'registred'
+            user.save()
+            continue
+        if user.created_confs.filter(edition_progress=100, for_sale=False).exists():
+            user.status = 'creat_conf_100'
+            user.save()
+            continue
+        if user.created_confs.filter(edition_progress__lt=100).exists():
+            user.status = 'creat_conf_begin'
+            user.save()
+            continue
+        if user.created_confs.filter(edition_progress=100, for_sale=True).exists():
+            user.status = 'conf_publi_ok'
+            user.save()
+            continue
+        if user.balance().amount == 0:
+            user.status = 'wallet_ok'
+            user.save()
+            continue
+        elif [rev for rev in user.tests.all() if not rev.has_review()]:
+            user.status = 'give_eval_not_ok'
+            user.save()
+            continue
+        else:
+            user.status = 'money_ok'
+            user.save()
+            continue

@@ -1,0 +1,66 @@
+digraph G {
+    subgraph cluster_0 {
+        rankdir=LR;
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+        _H24 -> _J7-> _J15 -> _M1 -> _inact
+        label = "Incrémentation status (suffix)";
+    }
+    "registered" [
+        style="filled,dashed"
+            shape=box
+            color=black
+            fillcolor=red
+    ];
+    creat_conf_begin, money_ok[
+        style="filled"
+        color=white
+        fillcolor=white
+        ];
+    wallet_ok -> _H24[style=dotted];
+    wallet_ok -> creat_conf_begin [label="A cliqué sur créer une conférence"];
+    wallet_ok -> money_ok[label="Achat crédit ou Abo"];
+    registered -> wallet_ok [label="Formulaire pour Mangopay rempli (profil renseigné: nom adresse...)"];
+    subgraph cluster_1 {
+        label = "Parkour EXTERNE";
+        style=filled;
+        node [style=filled,color=white];
+        color=lightblue;
+        money_ok -> _H24[style=dotted];
+        money_ok -> buyer_ok [label="Achat conf"];
+        buyer_ok -> give_eval_notok[label="Conf finie"];
+        buyer_ok -> _H24[style=dotted];
+        buyer_ok -> money_ok[label="A M1+1" color=red];
+        give_eval_notok -> _H24[style=dotted];
+        give_eval_notok -> buyer_ok[label="Nouvel achat"];
+        give_eval_notok -> money_ok[label="Evaluation donnée"];
+    }
+    subgraph cluster_2 {
+        label = "Parkour CONFERENCIER";
+        node [style=filled,color=white];
+        demande_publi[shape=diamond, label="Info Mangopay données ?"]
+        style=filled;
+        color=orange;
+
+        creat_conf_begin -> _H24 [style="dotted"];
+        creat_conf_begin -> creat_conf_100 [label="Conf terminée à 100%"];
+        get_eval_ok -> creat_wait [label="A 24h", color=red];
+
+        creat_conf_100 -> demande_publi[label="Clique sur 'Publier'"];
+        demande_publi -> conf_publi_ok[label="Oui"];
+        creat_conf_100 -> _H24 [style="dotted"];
+
+        conf_publi_ok -> conf_sold [label="1ere vente", color=red];
+        conf_publi_ok -> creat_wait[label="A 24h", color=red];
+
+        conf_sold ->  creat_wait [label="A 24h", color=red];
+        conf_sold -> get_eval_ok;
+
+        creat_wait ->  _H24 [style="dotted"];
+        creat_wait ->  get_eval_ok;
+    }
+    demande_publi -> wallet_ok[label="Non, redirection formulaire"];
+    registered -> _H24 [style=dotted];
+    registered -> creat_conf_begin[label="Zappe le formulaire pour Mangopay\net commence à rédiger une conf directe"];
+}

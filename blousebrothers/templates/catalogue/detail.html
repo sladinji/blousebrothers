@@ -8,6 +8,7 @@
 {% load display_tags %}
 {% load i18n %}
 {% load purchase_info_tags %}
+{% load bbtricks %}
 
 {% block title %}
 {{ product.title }} | {{ block.super }}
@@ -49,7 +50,7 @@
                     {% include 'catalogue/partials/share_product.html' %}
                 </div>
 
-                {% if object.user_test %}
+                {% if object.user_test and object.user_test.finished %}
                 {% include 'confs/partials/test_result.html' with object=object.user_test %}
                 <div class="space"></div> <!-- 40px Vertical Spacing -->
                 {% endif %}
@@ -70,7 +71,7 @@
         </div>
         <div class="col-xs-4 product_main">
             {% if product.conf.owner.socialaccount_set %}
-            <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url}}">
+            <img style="width:150px;height:150px;border-radius:50%;" src="{{product.conf.owner.socialaccount_set.first.get_avatar_url | default_icon }}">
             {% endif %}
         </div>
         <div class="col-xs-8 product_main">
@@ -224,10 +225,11 @@
     </article><!-- End of product page -->
     {% if user.is_authenticated and product.conf %}
     {% load disqus_tags %}
-    {% set_disqus_identifier "result_" product.conf.slug %}
+    {% set_disqus_identifier product.conf.slug %}
+	{% set_disqus_title product.conf.title %}
+	{% set_disqus_url product.get_absolute_url %}
     {% disqus_dev %}
-    {% disqus_sso %}
-    {% set_disqus_developer 1 %}
+    {% get_disqus_sso user %}
     {% disqus_show_comments %}
     {% endif %}
 </div>

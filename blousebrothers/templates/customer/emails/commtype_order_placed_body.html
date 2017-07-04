@@ -1,12 +1,12 @@
 {% extends 'account/email/email_base.html' %}
 
 {% block body %}
-<div style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;line-height:14px;color:#ffffff;text-align:left;">
+<div style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;line-height:14px;color:#202020;text-align:left;">
     <p style="margin: 0;font-size: 12px;line-height: 14px">
     <span style="color: rgb(230, 185, 255); font-size: 12px; line-height: 14px;">
         <strong>
             <span style="font-size: 24px; line-height: 28px;">
-                <span style="color: rgb(255, 204, 153) !important; font-size: 24px; line-height: 28px;">
+                <span style="color: #202020 !important; font-size: 24px; line-height: 28px;">
                     {% for line in order.lines.all %}
                     {{ line.product.attr.email_msg | safe }}
                     {% endfor %}

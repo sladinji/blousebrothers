@@ -1,17 +1,36 @@
 from decimal import Decimal, ROUND_HALF_UP
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from oscar.apps.basket.views import BasketAddView as CoreBasketAddView
+from oscar.apps.basket.views import BasketView as CoreBasketView
 from oscar.core.loading import get_class
 from blousebrothers.confs.models import Test
 from blousebrothers.users.models import Sale
 from money import Money
 from mangopay.models import MangoPayTransfer
+from oscar.apps.shipping.methods import NoShippingRequired
+
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
+CheckoutSessionMixin = get_class('checkout.session', 'CheckoutSessionMixin')
+
+
+class BasketView(CheckoutSessionMixin, CoreBasketView):
+    def get_context_data(self, **kwargs):
+        self.checkout_session.use_shipping_method(
+                            NoShippingRequired().code)
+        kwargs.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
+        for line in self.request.basket.all_lines():
+            try:
+                if line.product.categories.first().name == '__Abonnements':
+                    return super(BasketView, self).get_context_data(selected_sub_id=line.product.id, **kwargs)
+            except:
+                pass
+        return super(BasketView, self).get_context_data(selected_sub_id=None, **kwargs)
 
 
 class MangoTransfertException(Exception):
@@ -26,6 +45,7 @@ class BasketAddView(CoreBasketAddView):
     """
     Debit user wallet if product is a conference.
     """
+
 
     def form_valid(self, form):
         if not form.product.conf:
@@ -44,18 +64,27 @@ class BasketAddView(CoreBasketAddView):
 
         if created and not free_conf:
             try:
-                return self.debit_wallet(form, test, self.request.user.wallet_bonus)
+                if self.request.user.has_full_access():
+                    Sale.objects.create(
+                        conferencier=form.product.conf.owner,
+                        student=self.request.user,
+                        product=form.product,
+                        conf=form.product.conf,
+                    )
+                    return self.redirect_success(form)
+                else:
+                    return self.debit_wallet(form, test, self.request.user.wallet_bonus)
             except:
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)
                 except MangoNoEnoughCredit:
-                    if self.request.user.has_at_least_one_card:
-                        msg = _("Merci de créditer ton compte. Tout est sécurisé par Mangopay.")
-                    else:
-                        msg = _("Merci d'ajouter une carte et de créditer ton compte. Tout est sécurisé par Mangopay.")
+                    msg = _("Merci de créditer ton compte." )
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
-                    return HttpResponseRedirect(reverse("users:wallet") + '?next={}'.format(self.request.path))
+                    return HttpResponseRedirect(
+                        reverse("users:subscription",
+                                kwargs={'sub_id':0}) + '?next={}'.format(self.request.path)
+                    )
                 except Exception as ex:
                     test.delete()
                     raise ex
@@ -111,6 +140,10 @@ class BasketAddView(CoreBasketAddView):
 
     def get_success_url(self, product=None):
         if product and product.conf :
+            self.request.user.status = "buyer_ok"
+            self.request.user.save()
+            product.conf.owner.status = 'conf_sold'
+            product.conf.owner.save()
             return reverse('confs:test', kwargs={"slug": product.conf.slug})
         else:
             return super().get_success_url(product)
@@ -119,8 +152,6 @@ class BasketAddView(CoreBasketAddView):
         messages.success(self.request, self.get_success_message(form),
                          extra_tags='safe noicon')
 
-        self.request.user.status = "buyer_ok"
-        self.request.user.save()
         # Send signal for basket addition
         self.add_signal.send(
             sender=self, product=form.product, user=self.request.user,

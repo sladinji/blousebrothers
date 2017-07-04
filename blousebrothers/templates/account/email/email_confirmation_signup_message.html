@@ -1,74 +1,25 @@
 {% extends 'account/email/email_base.html' %}
 
 {% block body %}
-<div style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;line-height:14px;color:#ffffff;text-align:left;">
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(230, 185, 255); font-size: 12px; line-height: 14px;">
-        <strong>
-            <span style="font-size: 24px; line-height: 28px;">
-                ﻿<span style="color: rgb(255, 204, 153); font-size: 24px; line-height: 28px;">
-                    Bienvenue sur BlouseBrothers.</span>
-            </span>
-        </strong>
-    </span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">
-        &nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">
-        &nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
-        <strong>
-            <span style="line-height: 21px; font-size: 18px;">
-                Tu es interne (ou externe confiant) ?</span>
-        </strong>
-    </span>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
-        <strong>
-            <span style="line-height: 21px; font-size: 18px;">
-                Dépose tes dossiers et garde 70% de tes ventes. Aucun frais, aucun engagement.<br>
-            </span>
-        </strong>
-    </span>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="font-size: 18px; line-height: 21px; color: rgb(255, 204, 153);">
-        &nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
-        <strong>
-            <span style="line-height: 21px; font-size: 18px;">
-                Tu es externe? Achète uniquement les dossiers qui te conviennent, selon ton programme. Evalue chaque dossier pour les suivants. Accède à la correction, à ta note et à ton classement.<br>
-            </span>
-        </strong>
-    </span>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">
-        &nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(230, 185, 255); font-size: 18px; line-height: 21px;">
-        <strong>
-            <span style="line-height: 21px; font-size: 18px;">
-                <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
-                    Tu peux tester les dossiers qui sont en accès libre dès maintenant pour te faire une idée.</span>
-                <br>
-            </span>
-        </strong>
-    </span>
-    </p>
-</div>
+<span style="font-size:15px"><span style="font-family:lato,helvetica neue,helvetica,arial,sans-serif">Bienvenue sur BlouseBrothers,<br>
+&nbsp;<br>
+Ton inscription est bien validée, merci de confirmer ton adresse mail en cliquant sur ce lien : <a href="{{ activate_url }}">{{ activate_url }}</a><br>
+<br>
+Tu es interne (ou externe confiant) ?<br>
+Tu peux créer des dossiers sur la plateforme et les vendre au prix que tu le souhaite (ou les proposer gratuitement!) et garder 70% des gains de tes ventes. Aucun frais, aucun engagement.<br>
+&nbsp;<br>
+Tu es externe?<br>
+Achète uniquement les dossiers qui te conviennent, selon ton programme. Évalue chaque dossier pour les suivants. Accède à&nbsp; la correction, à&nbsp; ta note et à&nbsp; ton classement.<br>
+&nbsp;<br>
+Tu peux tester les dossiers qui sont en accès libre dès maintenant pour te faire une idée.<br>
+<br>
+S'il y a le moindre problème ou si tu as simplement des suggestions à émettre quant à l'amélioration du site c'est ici:<br>
+<a href="http://contact@blousebrothers.fr" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #ebd84d;font-weight: bold;text-decoration: underline;">contact@blousebrothers.fr </a><br>
+<br>
+<br>
+Bonne chance !<br>
+<br>
+<br>
+La team <a href="https://blousebrothers.fr" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #ebd84d;font-weight: bold;text-decoration: underline;">BlouseBrothers</a></span></span><br>
+&nbsp;
 {% endblock body %}

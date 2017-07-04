@@ -16,6 +16,7 @@ Source = apps.get_model('payment', 'Source')
 
 
 class PaymentDetailsView(CorePaymentDetailsView):
+    preview = True
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

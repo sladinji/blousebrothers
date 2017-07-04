@@ -10,100 +10,99 @@
 <div class="container">
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     <div class="row">
-      <div class="col-md-12">
-	<div class="tab-content clearfix">
-	  <ul class="nav nav-tabs nav-justified">
-	    <li class="active tab-1a">
-	      <a href="#1a" data-toggle="tab"><i class="fa fa-user"></i> Profil</a>
-	    </li>
-	    <li class="tab-2a"><a href="#2a" data-toggle="tab"><i class="fa fa-list"></i> Abonnement</a>	      
-	    </li>
-<!--	    <li class="tab-3a"><a href="#3a" data-toggle="tab"><i class="fa fa-thumbs-o-up"></i> Parrainage</a>
-	    </li>-->
-	    <li class="tab-4a"><a href="#4a" data-toggle="tab"><i class="fa fa-euro"></i> Gains</a>
-	  </li>
-	  
-	  </ul>
-	  <div class="tab-pane active" id="1a">
-	    <!--
-	    <div class="x_title">
-	      <h2><i class="fa fa-user"></i> Profil</h2>
-	      {% if object == request.user %}
-	      <ul class="nav navbar-right panel_toolbox">
-		<li><a class="btn" href="{% url 'users:update' %}"><i class="fa fa-edit"></i> Éditer mon profil</a>
-		</li>
-	      </ul>
-	      <div class="clearfix"></div>
-            </div>
--->
-            <div class="space"></div> <!-- 40px Vertical Spacing -->
-            <div class="x_content">
-	      <div class="dashboard-widget-content">
-		{% endif %}
-		<ul class="quick-list">
-                  {% if object == request.user %}
-                  <li><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</li>
-                  <li><label>{% trans 'First name' %} :</label> {{ object.first_name }}</li>
-                  <li><label>{% trans 'Email address' %} :</label> {{ object.email }}</li>
-                  {% endif %}
-                  <li><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</li>
-                  <li><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</li>
-                  {% if object.degree == 'INTERNE' or object.degree == 'MEDECIN' %}
-                  <li><label>{% trans 'Spécialité' %} :</label>{% if object.speciality %} {{ object.speciality  }} {% endif %}</li>
-                  {% endif %}
-		</ul>
-		{% if object.bio %}
-		<p><i>{{ object.bio }}</i></p>
-		{% endif %}
-	      </div>
-            </div>
-<<<<<<< Updated upstream
-        </div>
-        <div class="col-md-6">
-=======
-	  </div>
-	  <div class="tab-pane" id="2a">
-      <!--          <div class="x_title">
-                    <h2><i class="fa fa-list"></i> Abonnement</h2>
-                    <div class="clearfix"></div>
-      </div>-->
-      <br>
-                <div class="space"></div> <!-- 40px Vertical Spacing -->
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        {% if object.subscription %}
-                        <ul class="quick-list">
-                            <li><label>{% trans 'Abonnement' %} :</label> {{ object.subscription.type.name }}</li>
-                            <li><label>{% trans 'Validité' %} :</label> {{ object.subscription.date_over }}</li>
-                        </ul>
-                        <p><i>{{ object.subscription.type.description |safe }}</i></p>
-                        {% else %}
-			{% include '../templates/basket/partials/basket_abo.html' %}
-                        <!-- <p> Tu n'as actuellement aucun abonnement.</p>-->
-                        {% endif %}
-                    </div>
-                </div>
+        <div class="col-md-12">
+            <div class="tab-content clearfix">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active tab-1a">
+                        <a href="#1a" data-toggle="tab"><i class="fa fa-user"></i> Mon profil</a>
+                    </li>
+                    <li class="tab-2a"><a href="#2a" data-toggle="tab"><i class="fa fa-list"></i> Mon abonnement</a>	      
+                    </li>
+                    <!--	    <li class="tab-3a"><a href="#3a" data-toggle="tab"><i class="fa fa-thumbs-o-up"></i> Parrainage</a>
+                        </li>-->
+                        <li class="tab-4a"><a href="#4a" data-toggle="tab"><i class="fa fa-euro"></i> Mon porte-monnaie</a>
+                        </li>
 
-	  </div>
-	  <div class="tab-pane" id="3a">
->>>>>>> Stashed changes
-            {% include 'partials/sponsor_form.html' %}
-	  </div>
-	  <div class="tab-pane" id="4a">
-	    {% include 'partials/addiban_form.html' %}
-	  </div>
-	</div>
-      </div>
-      
+                </ul>
+                <div class="tab-pane active" id="1a">
+                    <!--
+                        <div class="x_title">
+                        <h2><i class="fa fa-user"></i> Profil</h2>
+                        {% if object == request.user %}
+                        <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="btn" href="{% url 'users:update' %}"><i class="fa fa-edit"></i> Éditer mon profil</a>
+                        </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        </div>
+                    -->
+                    <div class="space"></div> <!-- 40px Vertical Spacing -->
+                    <div class="x_content">
+                        <div class="dashboard-widget-content">
+                            {% endif %}
+                            <ul class="quick-list">
+                                {% if object == request.user %}
+                                <li><label>{% trans 'Last name' %} :</label> {{ object.last_name }}</li>
+                                <li><label>{% trans 'First name' %} :</label> {{ object.first_name }}</li>
+                                <li><label>{% trans 'Email address' %} :</label> {{ object.email }}</li>
+                                {% endif %}
+                                <li><label>{% trans 'City' %} :</label> {% if object.university %} {{ object.university }} {% endif %}</li>
+                                <li><label>{% trans 'Niveau' %} :</label>{% if object.degree %} {% trans  object.degree  %} {% endif %}</li>
+                                {% if object.degree == 'INTERNE' or object.degree == 'MEDECIN' %}
+                                <li><label>{% trans 'Spécialité' %} :</label>{% if object.speciality %} {{ object.speciality  }} {% endif %}</li>
+                                {% endif %}
+                            </ul>
+                            {% if object.bio %}
+                            <p><i>{{ object.bio }}</i></p>
+                            {% endif %}
+                            <div class="text-center">
+                                <a class="btn" href="{% url 'users:update' %}"><i class="fa fa-edit"></i> Éditer mon profil</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="2a">
+                    <!--          <div class="x_title">
+                        <h2><i class="fa fa-list"></i> Abonnement</h2>
+                        <div class="clearfix"></div>
+                        </div>-->
+                        <br>
+                        <div class="space"></div> <!-- 40px Vertical Spacing -->
+                        <div class="x_content">
+                            <div class="dashboard-widget-content">
+                                {% if object.subscription %}
+                                <ul class="quick-list">
+                                    <li><label>{% trans 'Abonnement' %} :</label> {{ object.subscription.type.name }}</li>
+                                    <li><label>{% trans 'Validité' %} :</label> {{ object.subscription.date_over }}</li>
+                                </ul>
+                                <p><i>{{ object.subscription.type.description |safe }}</i></p>
+                                {% else %}
+                                {% include '../templates/basket/partials/basket_abo.html' %}
+                                <!-- <p> Tu n'as actuellement aucun abonnement.</p>-->
+                                {% endif %}
+                            </div>
+                        </div>
+
+                </div>
+                <div class="tab-pane" id="3a">
+                    {% include 'partials/sponsor_form.html' %}
+                </div>
+                <div class="tab-pane" id="4a">
+                    {% include 'users/wallet.html' %}
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
 <script>
 $(document).ready(function(){
-var url = document.location.toString();
-if (url.match('#')) {
-$('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
-}; //add a suffix
+    var url = document.location.toString();
+    if (url.match('#')) {
+        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+    }; //add a suffix
 });
 
 </script>

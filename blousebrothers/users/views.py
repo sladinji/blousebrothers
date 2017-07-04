@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
+from datetime import date
 
 from django.apps import apps
+from django.core import mail
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView, FormView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
@@ -15,6 +18,7 @@ from django.template.loader import render_to_string
 from invitations.models import Invitation
 from meta.views import MetadataMixin
 import allauth.account.views
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 import blousebrothers.context_processor
@@ -26,6 +30,7 @@ from .forms import (
     PayInForm,
     CardRegistrationForm,
     EmailInvitationForm,
+    ImageForm,
     UserSmallerForm,
     IbanForm,
     PayOutForm,
@@ -38,6 +43,8 @@ from blousebrothers.tools import get_full_url, check_bonus
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
+SubscriptionType = apps.get_model('confs', 'SubscriptionType')
+SubscriptionModel = apps.get_model('confs', 'Subscription')
 
 
 class UserDetailView(DetailView):
@@ -45,6 +52,9 @@ class UserDetailView(DetailView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+    def get_queryset(self):
+        return User.objects.all().prefetch_related('sales__student').prefetch_related('sales__product')
 
 
 class UserRedirectView(BBLoginRequiredMixin, RedirectView):
@@ -74,16 +84,75 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         super().form_valid(form)
         check_bonus(self.request)
         if isinstance(form, UserSmallerForm):
-            messages.success(self.request, "C'est presque fini, il ne reste plus qu'à créditer ton compte.")
+            messages.success(self.request, "Tu peux maintenant créditer ton compte ou souscrire à un abonnement.")
             return redirect(reverse("catalogue:index"))
 
         return HttpResponseRedirect(self.get_success_url())
 
     def get_form_class(self):
-        if self.request.user.gave_all_mangopay_info:
-            return UserForm
+        return UserForm
+
+
+class SpecialOffer(BBLoginRequiredMixin, FormView):
+    form_class = ImageForm
+    template_name = 'users/specialoffer.html'
+
+    def post(self, request, *args, **kwargs):
+
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            image = form.cleaned_data['image']
+            msg = """
+            Username : {username}
+            Profile : {url_profile}
+            Activer l'offre : {url_activate}
+            """.format(username=self.request.user.username,
+                       url_profile=get_full_url(request, 'users:detail',
+                                                args=(request.user.username,)),
+                       url_activate=get_full_url(request, 'users:activateoffer',
+                                                 args=(self.request.user.id,)),
+                       )
+
+            with mail.get_connection() as connection:
+                mail.EmailMessage(
+                    "Demande D4", msg, 'noreply@blousebrothers.fr',
+                    ['julien@blousebrothers.fr',
+                     'guillaume@blousebrothers.fr', 'philippe@blousebrothers.fr',
+                     ],
+                    connection=connection,
+                    attachments=[(image.name, image, image.content_type)],
+                    reply_to=(self.request.user.email,),
+                ).send()
+                messages.success(self.request, "Ta demande a bien été prise en compte, "
+                                 "on t'envoie un mail dès qu'elle est validée ;)")
+                return redirect(reverse('users:detail',
+                                        kwargs={'username': self.request.user.username}))
         else:
-            return UserSmallerForm
+            return self.form_invalid(form)
+
+
+class ActivateOffer(BBLoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'users/specialofferactivated.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        raise PermissionDenied
+
+    def get(self, request, user_id=None):
+        if not user_id:
+            raise Exception("USER ID REQUIRED")
+        user = User.objects.get(id=user_id)
+        subtype = SubscriptionType.objects.get(name='Abonnement 1 mois')
+        sub, created = SubscriptionModel.objects.get_or_create(
+            user=user, type=subtype, date_over=date(2017, 6, 23), price_paid=0
+        )
+        if created:
+            user.status = "d4offer"
+            user.save()
+        return super().get(request, d4=user)
 
 
 class UserSendInvidation(BBLoginRequiredMixin, FormView):
@@ -158,8 +227,8 @@ class UserWalletView(BaseWalletFormView):
         check_bonus(request)
         request.user.remove_inactive_cards()
 
-        if not request.user.is_conferencier and not request.user.has_at_least_one_card:
-            return redirect(reverse('users:addcard'))
+        # if not request.user.is_conferencier and not request.user.has_at_least_one_card:
+        #    return redirect(reverse('users:addcard'))
 
         return super().get(request, *args, **kwargs)
 
@@ -170,9 +239,8 @@ class UserWalletView(BaseWalletFormView):
                 'Le transfert de {} a bien été pris en compte (référence : {})'.format(
                     payin.debited_funds, payin.mangopay_id)
             )
-            if "wallet_ok" in self.request.user.status:
-                self.request.user.status = "money_ok"
-                self.request.user.save()
+            self.request.user.status = "money_ok"
+            self.request.user.save()
             ctx = dict(payin=payin, user=self.request.user)
             msg_plain = render_to_string('confs/email/confirm_credit.txt', ctx)
             msg_html = render_to_string('confs/email/confirm_credit.html', ctx)
@@ -335,7 +403,19 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         Display subscriptions page or redirect to basket if subscription was clicked.
         """
         if kwargs['sub_id']:
-            sub = Product.objects.get(id=kwargs['sub_id'])
+            if kwargs['sub_id'] == '0':
+                sub = Product.objects.filter(
+                    attribute_values__attribute__name="month"
+                ).filter(
+                    attribute_values__value_integer="1"
+                ).first()
+                if not sub:
+                    sub = Product.objects.filter(
+                        attribute_values__attribute__name="month"
+                    ).first()
+            else:
+                sub = Product.objects.get(id=kwargs['sub_id'])
+            request.basket.flush()
             request.basket.add_product(sub, 1)
             return redirect(reverse("users:detail", args=(self.request.user.username,))+"#2a")
         return super().get(request, *args, **kwargs)
@@ -346,3 +426,7 @@ class SignupView(MetadataMixin, allauth.account.views.SignupView):
     description = """Plateforme collaborative d'entraînement aux ECNi. Etudiant: n'achète que les dossiers dont tu as
     besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:
     dépose tes dossiers et garde 70% des gains."""
+
+
+class FAQ(TemplateView):
+    template_name = 'faq/faq.html'

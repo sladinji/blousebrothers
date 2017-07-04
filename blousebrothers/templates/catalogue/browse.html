@@ -52,26 +52,25 @@
         </div>
     {% endif %}
     {% endcomment %}
-    
+
+    {% if user.subscription == None %}
+    {% comment %}
+    <span class="presale"><a class="btn btn-success" href="{% url 'users:specialoffer' %}"><i class="fa fa-hand-scissors-o" aria-hidden="true"></i> Demande l'offre spéciale D4 !!!</a></span>
+    {% endcomment %}
     <section id="pricing">
-        {% include "partials/sponsor_form.html" %}
-        <div class="space"></div> <!-- 40px Vertical Spacing -->
-        {% comment remove subs %}
-        {% for sub in subscriptions %}
         <div class="p-style1 column_left">
             <div class="package">
-                <h4>{{ sub.title }}</h4>
-                {% purchase_info_for_product request sub as session %}
-                <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
+                <h4>Souscrire à un abonnement</h4>
             </div>
             <ul class="inclusion">
-                {{ sub.description | sub_desc_custo | safe }}
-                <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray"><i class="fa fa-check-circle" aria-hidden="true"></i> Souscrire</a></li>
+                Nous proposons différentes formules, il y en a sûrement une qui te conviendra.
+                <li><a href="{% url 'users:subscription' 0 %}" class="btn btn-noblock btn-lg btn-gray">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i> Voir les offres</a>
+                </li>
             </ul>
         </div>
-        {% endfor %}
-        {% endcomment %}
     </section>
+    {% endif %}
 
     {% if has_facets %}
         <h4>{% trans "Refine by" %}</h4>
