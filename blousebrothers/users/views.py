@@ -337,7 +337,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         if kwargs['sub_id']:
             sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.add_product(sub, 1)
-            return redirect('/basket/')
+            return redirect(reverse("users:detail", args=(self.request.user.username,))+"#2a")
         return super().get(request, *args, **kwargs)
 
 

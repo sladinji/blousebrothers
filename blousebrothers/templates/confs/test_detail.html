@@ -1,25 +1,40 @@
-{% extends "layout.html" %}
+
+{% extends "layout_angular.html" %}
 {% load static %}
 {% load i18n %}
 {% load youtube %}
-{% load bbtricks %}
-{% load cropping %}
+{% load tinycontent_tags %}
+{% block title %}{% trans 'Confs' %}{% endblock %}
 
-{% block title %}{{ object.conf.title}}{% endblock %}
+{% block submenu %}
+{% endblock %}
+
+{% block viewport %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
 
 {% block content %}
+<script>
+$(document).on('click', '.anchorlink', function(event){
+event.preventDefault();
+
+$('html, body').animate({
+scrollTop: $( $.attr(this, 'href') ).offset().top
+}, 500);
+});
+</script>
+
 <div class="container">
+    <toaster-container toaster-options="{'time-out': 5000}"></toaster-container>
+    {% comment %}
+    AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
+    {% endcomment %}
+    <div class='row'>
+        <aside class="col-md-3 hidden-sm hidden-xs">
+            {% include 'partials/nav_testresult_questions.html' %}
+        </aside>
 
-    <div class="row">
-        <div class="col-sm-12">
-
-            <h2>{{ object.conf.title}}</h2>
-            <br>
-        </div>
-        <div id="result">
-        {% include 'confs/partials/test_result.html' with object=object %}
-        </div>
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-9 text-center">
             {% if not object.has_review and object.student != object.conf.owner %}
             <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
                 Merci de laisser un avis !
@@ -31,202 +46,138 @@
             </form>
             {% endif %}
         </div>
-    </div>
+        <div class="col-md-9 test-main-col" >
 
-    <!-- Action buttons -->
-    <div class="row">
-
-        <div class="col-xs-12 txt-grey">
-
-            {% if object.conf.type == 'DCP' %}
-            <legend>Énoncé</legend>{{ object.conf.statement | safe | urlizetrunc:45 }}
-            {% if object.conf.images.all %}
-            <legend>Illustrations</legend>
-            {% for image in object.conf.images.all %}
-            <div class="illustrations" id="images_div">
-                <figure>
-                    <img src="{% cropped_thumbnail image "cropping" %}">
-                    <figcaption>{{ image.caption }}</figcaption>
-                </figure>
+            <div ng-if="conference.type == 'QI'">
+                {{conference.title}}<br/>
             </div>
-            {% endfor %}
-            {% endif %}
-            {% endif %}
-            <!-- Your Stuff: Custom user template urls -->
-        </div>
-        <div class="space"></div> <!-- 40px Vertical Spacing -->
 
-        {% for t_answer in object.answers.all|dictsort:"question.index" %}
-        <div class="well well-white question">
-            <div class="col-sm-6">
-                <h2>Question {{ t_answer.question.index | add:"1" }} </h2>
-            </div>
-            <div class="col-sm-12 txt-grey">
-                <big><p>{{ t_answer.question.question | safe | urlizetrunc:45 }}</p></big>
-            </div>
-            {% for image in t_answer.question.images.all %}
-            <div class="col-sm-12 illustrations" id="images_div">
-                <figure>
-                    <img src="{% cropped_thumbnail image "cropping" %}">
-                    <figcaption>{{ image.caption }}</figcaption>
-                </figure>
-            </div>
-            {% endfor %}
-
-            {% for answer in t_answer.question.answers.all %}
-            <div class="col-sm-12 {{ answer | is_good_css:t_answer }}">
-                <strong>
-                    {{ answer | get_checked_fa:t_answer }}
-                    Proposition {{ answer.index | to_char }} {{ answer | zero_cause_error_label:t_answer }}:
-                    {{ answer | result_icon:t_answer }}
-                </strong> 
-                <p>{{ answer.answer | safe | urlizetrunc:45 | default:"<i>A compléter</i>" }}</p>
-                <strong>Réponse  : {% if answer.correct %}VRAI{% else %}FAUX{% endif %}</strong> <p>{{ answer.explaination | default:"" | youtube | safe }}</p>
-                {% for image in answer.images.all %}
-                <div class="illustrations" id="images_div">
-                    <figure>
-                        <img src="{% cropped_thumbnail image "cropping" %}">
-                        <figcaption>{{ image.caption }}</figcaption>
-                    </figure>
+            <div ng-if="conference.type != 'QI'">
+                <a class="btn" ng-init="isSubjectDiplayed = true" ng-click="isSubjectDiplayed = !isSubjectDiplayed">
+                    <div ng-if="isSubjectDiplayed">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer le sujet du DCP
+                    </div>
+                    <div ng-if="!isSubjectDiplayed">
+                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher le sujet du DCP
+                    </div>
+                </a>
+                <div id="subject" ng-show="isSubjectDiplayed" class="well well-white" >
+                    {% verbatim %}
+                    <form novalidate class="question-form">
+                        <div class="col-sm-12">
+                            <div class="col-sm-9">
+                                <p class="ititle"/>{{conference.title}}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <span class='well-title'>Sujet</span>
+                            </div>
+                        </div>
+                        {% endverbatim %}
+                        <p>{{object.conf.statement|linebreaks}}</p>
+                        {% verbatim %}
+                    </form>
+                    <div ng-show="conferenceimages.length > 0">
+                        <a class="btn" ng-init="isImagesDiplayed = true" ng-click="isImagesDiplayed = !isImagesDiplayed">
+                            <div ng-if="isImagesDiplayed">
+                                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Masquer les illustrations
+                            </div>
+                            <div ng-if="!isImagesDiplayed">
+                                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Afficher les illustrations
+                            </div>
+                        </a>
+                        <div class="illustrations" ng-show="isImagesDiplayed" id="images_div">
+                            <div ng-repeat="image in conferenceimages">
+                                <img ng-src="{{static_media(image.image)}}"/>
+                                <figcaption>{{image.caption}}</figcaption>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
                 </div>
-                {% endfor %}
+                <br>
             </div>
-            {% endfor %}
 
-            <div class="col-sm-12">
-                <big><p>{{ t_answer.question.explaination| safe | urlizetrunc:45 | default:""  }}</p></big>
-                {% for image in t_answer.question.explaination_images.all %}
-                <div class="illustrations" id="images_div">
-                    <figure>
-                        <img src="{% cropped_thumbnail image "cropping" %}">
-                        <figcaption>{{ image.caption }}</figcaption>
-                    </figure>
+
+            <div class="well well-white" ng-if="question">
+                <div class="col-sm-6 col-xs-4">
                 </div>
-                {% endfor %}
-            </div>
+                <div class="col-sm-6 col-xs-8">
+                    <span class='well-title'><span class="hidden-xs">Question </span>{{ question.index + 1 }} </span>
+                </div>
+                <div class="col-xs-12">
+                    <p class="angular-with-newlines" ng-bind-html="question.question | safe"</p>
+                </div>
 
-            <div class="col-sm-12 btn-comment" data-question-id="{{ t_answer.question.id }}">
-                <a class="btn btn-primary" data-toggle="modal" data-target="#commentModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier concernant la question {{ t_answer.question.index | add:"1" }} </a>
-            </div>
-        </div>
-        {% endfor %}
+                <div ng-repeat="image in questionimages">
+                    <img ng-src="{{ static_media(image.image) }}"/>
+                    <figcaption>{{image.caption}}</figcaption>
+                </div>
+            </div>       
+            <br>
+            <form class="form-horizontal">
+                <fieldset>
+                    <!--  {{ answers | is_good_css:answer }} -->
+                    <div ng-repeat="answer in answers">
+                        <div type="button" class="btn-answer relative" id="answer{{ans_label[answers.indexOf(answer)]}}" ng-disabled="{{ conference.type == 'DCP' && question.answered }}"> 
+                            <div class="answer-label">
+                                {{answer.answer}}
+                                <br><br><!--<strong><span ng-if="answer.correct">VRAI</span><span ng-if="answer.correct != true">FAUX</span> : </strong>-->
+                                <div class="explication"><b>Explication : </b>
+                                    <p class="" ng-bind-html="answer.explaination | safe"</p>
+                                </div>
 
-        {% comment %}
-        <div class="col-sm-12" id="btn-comment" data-question-id="0">
-            <a class="commenting btn btn-getscore" data-toggle="modal" data-target="#thxModal"> <i class="fa fa-commenting" aria-hidden="true"></i> Remercier le conférencier</a>
+                                <div ng-repeat="image in answersimages[answer.index]">
+                                    <img ng-src="{{ static_media(image.image) }}"/>
+                                </div>
+
+                                <!--			      {% for image in answer.images.all %}
+                                    <div class="illustrations" id="images_div">
+                                    <figure>
+                                    <img src="{% cropped_thumbnail image "cropping" %}">
+                                    <figcaption>{{ image.caption }}</figcaption>
+                                    </figure>
+                                    </div>
+                                    {% endfor %}-->
+				<div class="answer_discuss_link align-right"><a href="#discussion" class="anchorlink">Problème / Question?</a></div>
+                            </div>
+                            <div class="btn-check-cell">
+                                <i ng-if="answer.user_answer" class="fa fa-check-square-o" aria-hidden="true"></i>
+                                <i ng-if="!answer.user_answer" class="fa fa-square-o" aria-hidden="true"></i>
+                                <span class='well-answer-title'>{{ans_label[answers.indexOf(answer)]}}</span>
+                            </div>
+                            <div class="result_ext">
+                                <i ng-if="answer.user_answer_css=='correct'" class="{{ answer.user_answer_css }} fa fa-check" aria-hidden="true"></i>
+                                <i ng-if="answer.user_answer_css!='correct'" class="{{ answer.user_answer_css }} fa fa-close" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
         </div>
-        {% endcomment %}
+                </fieldset>
+            </form>
+
+            <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
+            <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+            <br><br>
+	    <div class="text-center" ng-if="question.index == 14"><a href="/catalogue"><button class="btn btn-primary"><i class="fa fa-undo"></i> Retour au catalogue </button></a></div>
+            {% endverbatim %}
     </div>
-    <!-- End Action buttons -->
+<hr><a name="discussion" id="discussion">
+  <h2 class="text-center">Posez vos questions en rapport avec la conférence ici</h2>
+<hr>
+<div disqus="'conference.slug'" title="test"></div>
 </div>
-<div class="col-sm-12 text-center">
-    {% if not object.has_review and object.student != object.conf.owner %}
-    <a class="btn" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug  product_pk=object.conf.products.all.0.id %}#addreview">
-        Merci de laisser un avis !
-    </a>
-    {% endif %}
+<div class="row">
+    <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
+        {% include 'partials/nav_test_questions.html' %}
+    </aside>
 </div>
-{% load disqus_tags %}
-{% set_disqus_identifier result_ " object.conf.slug" %}
-{% disqus_dev %}
-{% disqus_sso %}
-{% disqus_show_comments %}
-
-
-<div class="space"></div> <!-- 40px Vertical Spacing -->
-<!-- Modal -->
-<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="commentModalLabel"><i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier</h4>
-            </div>
-            <div class="modal-body">
-                <textarea id="commenttextarea" name="textarea" rows="10" cols="50"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button id="send_comment" type="button" class="commenting btn btn-default" data-dismiss="modal">Envoyer</button>
-            </div>
-        </div>
-    </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="thxModal" tabindex="-1" role="dialog" aria-labelledby="thxModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="thxModalLabel"><i class="fa fa-commenting" aria-hidden="true"></i> Message au conférencier</h4>
-            </div>
-            <div class="modal-body">
-                <textarea id="thxtextarea" name="textarea" rows="10" cols="50"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-send-thx" type="button" class="commenting btn btn-default" data-dismiss="modal">Envoyer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 {% endblock content %}
 
-
-
 {% block scripts %}
-{{ block.super }}
-<script type="text/javascript">
-var question_id_comment = 0;
-// using jQuery
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken');
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-$(".btn-comment").on('click', function(){
-    question_id_comment = $(this).data("question-id");
-});
+{% include 'partials/test_resultjs.html' %}
+{% endblock %}
 
-$("#btn-send-thx").click(function(){
-    $.post(
-            "{% url 'confs:question_comment' %}",
-            { 
-                conf_id : {{ object.conf.pk }},
-                comment :  $('textarea#thxtextarea').val(),
-            });
-
-});
-$("#send_comment").click(function(){
-    $.post(
-            "{% url 'confs:question_comment' %}",
-            { 
-                question_id : question_id_comment,
-                comment :  $('textarea#commenttextarea').val(),
-            });
-
-});
-
-</script>
+{% block onbodyload %}
 {% endblock %}
