@@ -694,16 +694,13 @@ background-color: #000;
     background-position: center;
 }
 
-.signup .slide1 .slide4{
-    background-size:cover;
-    width:100%;
-    height:100%;
-    background-position: center;
-}
-
 .signup .slide1{
     background:url('/static/images/slide1_bg.png');
     background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    width:100%;
+    height:100%;
 }
 @media screen and (max-width: 767px){
 .signup .slide1 {
@@ -713,6 +710,9 @@ background-color: #000;
 .signup .slide4{
     background:url('/static/images/slide4_bg.jpg');
     background-position: center;
+    background-size:cover;
+    width:100%;
+    height:100%;
 }
 .signup .signin.slide1{
     background:url('/static/images/slide3_bg_right.jpg');
@@ -1698,4 +1698,7 @@ h1.faq {
 .faqbg h2 {
     color: white;
     font-family: 'lobster';
+}
+.opac {
+    background-color: rgba(0, 0, 0, 0.5);
 }
