@@ -81,7 +81,7 @@ def days_since_last_purchase(user):
 
 
 def update_status(status, new_suffix):
-    return "{}{}".format(re.sub('_H24|J7|_J15|_M1|_inact', '', status), new_suffix)
+    return "{}{}".format(re.sub('_H24|_J7|_J15|_M1|_inact', '', status), new_suffix)
 
 
 def special_status(user):
