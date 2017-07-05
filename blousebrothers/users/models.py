@@ -128,8 +128,13 @@ class User(AbstractUser):
                            help_text=_("Important si tu es conférencier !"),
                            )
     status = models.CharField(_("Status"), max_length=50, default="registered", null=True)
+    action = models.CharField(_("Action"), max_length=50, default="welcome", null=True)
     status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
     previous_status = None  # place holder to check status change
+    previous_action = None  # place holder to check status change
+    conf_entam_url = models.CharField(max_length=512, null=True)
+    conf_pub_url = models.CharField(max_length=512, null=True)
+    conf_encours_url = models.CharField(max_length=512, null=True)
 
     @property
     def last_subsboard(self):
@@ -392,7 +397,13 @@ def mailchync(user):
     Function trigged on user status change to synchronize with mailchimp.
     """
     from blousebrothers import mailchimp
-    merge_fields = {mailchimp.tags["status"]: user.status}
+    merge_fields = {
+        mailchimp.tags["status"]: user.status,
+        mailchimp.tags["action"]: user.action,
+        mailchimp.tags["conf_entam_url"]: user.conf_encours_url,
+        mailchimp.tags["conf_pub_url"]: user.conf_pub_url,
+        mailchimp.tags["conf_encours_url"]: user.conf_encours_url,
+    }
     mailchimp.client.lists.members.create_or_update(
         mailchimp.mc_lids[mailchimp.LIST_NAME],
         subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
@@ -411,7 +422,7 @@ def update_status_timestamp(sender, **kwargs):
     """
     instance = kwargs.get('instance')
     created = kwargs.get('created')
-    if instance.previous_status != instance.status or created:
+    if instance.previous_status != instance.status or instance.previous_action != instance.action or created:
         instance.status_timestamp = timezone.now()
         if instance.mailchync:
             threading.Thread(target=mailchync, args=(instance,)).start()
@@ -426,6 +437,7 @@ def remember_status(sender, **kwargs):
     """
     instance = kwargs.get('instance')
     instance.previous_status = instance.status
+    instance.previous_action = instance.action
 
 
 @receiver(review_added)

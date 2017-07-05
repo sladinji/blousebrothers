@@ -61,11 +61,11 @@
 **--> EMAILS ACTIONS:**
 
 * - Merge tag à updater: action (MMERGE28)
-* - Change to publi: envoi l'email de confirmation de publication de conf
-* - Change to credit: envoi l'email de confirmation de crédit de compte
-* - Change to abo: envoi email confirmation abonnement
-* - Change to virement: envoi email confirmation virement
-* - Change to welcome: envoi email de bienvenue à l'inscription
-* - Change to credit_low: envoi email incitation à créditer le compte
-* - Change to abo_quasi_fin: envoi email incitation à se réabonner
+* - Change to publi: envoi l'email de confirmation de publication de conf DONE
+* - Change to credit: envoi l'email de confirmation de crédit de compte FORGET
+* - Change to abo: envoi email confirmation abonnement TODO
+* - Change to virement: envoi email confirmation virement DEJA AVEC INFO ET RÉFÉRENCE FORGET
+* - Change to welcome: envoi email de bienvenue à l'inscription DONE
+* - Change to credit_low: envoi email incitation à créditer le compte FORGET
+* - Change to abo_quasi_fin: envoi email incitation à se réabonner TODO
 

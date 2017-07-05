@@ -58,6 +58,10 @@ tags = {
     "wallet_bonus": "MMERGE22",
     "ping_10mn": "MMERGE23",
     "status": "MMERGE25",
+    "action": "MMERGE28",
+    "conf_entam_url": "MMERGE29",
+    "conf_pub_url": "MMERGE30",
+    "conf_encours_url": "MMERGE11",
 }
 
 
