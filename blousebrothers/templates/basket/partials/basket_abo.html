@@ -178,15 +178,15 @@
 </form>
 {% endblock %}
 
-<div class="row voucher-plan">
+<div class="row voucher-plan align-center">
     {% block vouchers %}
     {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
     {% if voucher_form %}
-    <div class="col-xs-12 col-md-4 align-center">
+    <div class="col-xs-12 col-md-12">
         <div class="sub-header">
             <h2>{% trans "Voucher/promo code" %}</h2>
         </div>
-        <p id="voucher_form_link"><a href="#voucher" class="btn btn-default btn-full">{% trans "I have a voucher code..." %}</a></p>
+        <p id="voucher_form_link"><a class="btn btn-default btn-full">{% trans "I have a voucher code..." %}</a></p>
 
         <div id="voucher_form_container" style="display:none">
             <form id="voucher_form" action="{% url 'basket:vouchers-add' %}" method="post">

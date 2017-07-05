@@ -23,6 +23,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 import blousebrothers.context_processor
 from mangopay.constants import ERROR_MESSAGES_DICT
+from oscar.core.loading import get_class
+
 
 from .models import User
 from .forms import (
@@ -45,6 +47,7 @@ Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
 SubscriptionType = apps.get_model('confs', 'SubscriptionType')
 SubscriptionModel = apps.get_model('confs', 'Subscription')
+BasketVoucherForm = get_class('basket.forms', 'BasketVoucherForm')
 
 
 class UserDetailView(DetailView):
@@ -55,6 +58,11 @@ class UserDetailView(DetailView):
 
     def get_queryset(self):
         return User.objects.all().prefetch_related('sales__student').prefetch_related('sales__product')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['voucher_form'] = BasketVoucherForm()
+        return context
 
 
 class UserRedirectView(BBLoginRequiredMixin, RedirectView):

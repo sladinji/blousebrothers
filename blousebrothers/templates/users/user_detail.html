@@ -97,6 +97,9 @@
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
+{% endblock content %}
+
+{% block extrascripts %}
 <script>
 $(document).ready(function(){
     var url = document.location.toString();
@@ -104,7 +107,16 @@ $(document).ready(function(){
         $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
     }; //add a suffix
 });
+$('#voucher_form_link').bind('click', function() {
+	$('#voucher_form_container').show();
+	$('#voucher_form_link').hide();
+	$('#id_code').focus();
+});
+$('#voucher_form_cancel').bind('click', function() {
+	$('#voucher_form_container').hide();
+	$('#voucher_form_link').show();
+});
 
 </script>
-{% endblock content %}
+{% endblock extrascripts %}
 
