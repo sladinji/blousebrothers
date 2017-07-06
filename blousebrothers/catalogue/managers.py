@@ -12,6 +12,8 @@ class BrowsableProductManager(BaseBrowsableProductManager):
         Remove suscription and deleted confs
         """
         qs = super().get_queryset()
+        qs = qs.prefetch_related('conf__owner')
+        qs = qs.prefetch_related('stockrecords')
         qs = qs.exclude(conf__deleted=True)
         qs = qs.exclude(conf__for_sale=False)
         user = CuserMiddleware.get_user()

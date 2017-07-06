@@ -70,9 +70,6 @@ settings file. This will enable the on-the-fly less compiler.
                         <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'confs:my_confs' %}"><span class="fa fa-check-circle-o"></span> {% trans 'Confs achetées' %}</a>
                         </li>
-                        {% if balance.amount > 0 or request.user.is_conferencier %}
-                        <li class="menu-item-has-children item-megamenu"><a id="wallet_link" href="{% url 'users:wallet' %}"><i class="icon-money"></i> {{ balance }}</a></li>
-                        {% endif %}
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}
@@ -82,7 +79,7 @@ settings file. This will enable the on-the-fly less compiler.
                                 <span class="label label-important">{{ num_unread_notifications }}</span>
                             </a>
                             {% else %}
-                            <a href="{% url 'users:redirect' %}"><i class="icon-user"></i> {{ request.user.username }}</a>
+                            <a href="{% url 'users:detail' username=request.user.username %}"><i class="icon-user"></i> {{ request.user.username }}</a>
                             {% endif %}
                         </li>
                         {% if request.user.is_staff or perms.partner.dashboard_access %}

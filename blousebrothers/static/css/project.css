@@ -1702,3 +1702,7 @@ h1.faq {
 .opac {
     background-color: rgba(0, 0, 0, 0.5);
 }
+input#id_code {
+    width: 321px;
+    margin: auto;
+}

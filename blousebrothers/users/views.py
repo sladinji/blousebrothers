@@ -23,6 +23,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 import blousebrothers.context_processor
 from mangopay.constants import ERROR_MESSAGES_DICT
+from oscar.core.loading import get_class
+
 
 from .models import User
 from .forms import (
@@ -45,6 +47,7 @@ Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
 SubscriptionType = apps.get_model('confs', 'SubscriptionType')
 SubscriptionModel = apps.get_model('confs', 'Subscription')
+BasketVoucherForm = get_class('basket.forms', 'BasketVoucherForm')
 
 
 class UserDetailView(DetailView):
@@ -52,6 +55,14 @@ class UserDetailView(DetailView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+    def get_queryset(self):
+        return User.objects.all().prefetch_related('sales__student').prefetch_related('sales__product')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['voucher_form'] = BasketVoucherForm()
+        return context
 
 
 class UserRedirectView(BBLoginRequiredMixin, RedirectView):
@@ -414,7 +425,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
                 sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.flush()
             request.basket.add_product(sub, 1)
-            return redirect('/basket/')
+            return redirect(reverse("users:detail", args=(self.request.user.username,))+"#2a")
         return super().get(request, *args, **kwargs)
 
 

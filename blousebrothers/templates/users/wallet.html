@@ -1,4 +1,3 @@
-{% extends "layout.html" %}
 {% load crispy_forms_tags %}
 {% load currency_filters %}
 {% load i18n %}
@@ -6,9 +5,7 @@
 {% load tinycontent_tags %}
 {% load history_tags %}
 
-{% block title %}{{ user.username }}{% endblock %}
 
-{% block content %}
 <div class="space12"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
     <div class="row">
@@ -266,11 +263,3 @@
     <div class="space"></div> <!-- 40px Vertical Spacing -->
     {% endif %}
 </div>
-
-{% include "confs/partials/confirm_go.html" %}
-{% endblock %}
-
-{% block extrascripts %}
-{{ block.super }}
-{% include 'confs/partials/confirm_go_js.html' %}
-{% endblock %}
