@@ -148,6 +148,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
     fieldsets = (
+        ('Mailchimp', {'fields': ('status', 'action', 'conf_entam_url', 'conf_pub_url', 'conf_encours_url')}),
         ('Addresse', {'fields': ('address1', 'address2', 'zip_code', 'city')}),
         ('Profil', {'fields': ("status", 'is_conferencier', 'wanabe_conferencier',
                                'wanabe_conferencier_date', 'degree', 'mobile')}),
