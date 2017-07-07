@@ -404,6 +404,7 @@ def mailchync(user):
         mailchimp.tags["conf_pub_url"]: user.conf_pub_url,
         mailchimp.tags["conf_encours_url"]: user.conf_encours_url,
     }
+    merge_fields = {k: v for k, v in merge_fields.items() if v}
     mailchimp.client.lists.members.create_or_update(
         mailchimp.mc_lids[mailchimp.LIST_NAME],
         subscriber_hash=hashlib.md5(user.email.lower().encode()).hexdigest(),
