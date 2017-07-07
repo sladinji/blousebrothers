@@ -233,7 +233,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
             self.request.user.status = 'creat_conf_100'
             self.request.user.save()
         else:
-            self.request.user.conf_pub_url = get_full_url(self.request, 'confs:update', args=(self.object.slug,))
+            self.request.user.conf_pub_url = get_full_url(self.request, 'confs:update', args=(obj.slug,))
             self.request.user.action = "publi"
             self.request.user.save()
         return obj
