@@ -132,9 +132,9 @@ class User(AbstractUser):
     status_timestamp = models.DateTimeField(auto_now_add=True, null=True)
     previous_status = None  # place holder to check status change
     previous_action = None  # place holder to check status change
-    conf_entam_url = models.CharField(max_length=512, null=True)
-    conf_pub_url = models.CharField(max_length=512, null=True)
-    conf_encours_url = models.CharField(max_length=512, null=True)
+    conf_entam_url = models.CharField(max_length=512, null=True, blank=True)
+    conf_pub_url = models.CharField(max_length=512, null=True, blank=True)
+    conf_encours_url = models.CharField(max_length=512, null=True, blank=True)
 
     @property
     def last_subsboard(self):

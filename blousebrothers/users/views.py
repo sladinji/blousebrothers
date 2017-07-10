@@ -4,6 +4,7 @@ from decimal import Decimal
 from datetime import date
 
 from django.apps import apps
+from django.conf import settings
 from django.core import mail
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -50,7 +51,7 @@ SubscriptionModel = apps.get_model('confs', 'Subscription')
 BasketVoucherForm = get_class('basket.forms', 'BasketVoucherForm')
 
 
-class UserDetailView(DetailView):
+class UserDetailView(BBLoginRequiredMixin, DetailView):
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
@@ -60,8 +61,18 @@ class UserDetailView(DetailView):
         return User.objects.all().prefetch_related('sales__student').prefetch_related('sales__product')
 
     def get_context_data(self, **kwargs):
+        """
+        Update context for subscription view (voucher, selected_sub...)
+        """
         context = super().get_context_data(**kwargs)
         context['voucher_form'] = BasketVoucherForm()
+        context.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
+        for line in self.request.basket.all_lines():
+            try:
+                if line.product.categories.first().name == '__Abonnements':
+                    context['selected_sub_id'] = line.product.id
+            except:
+                pass
         return context
 
 

@@ -1706,3 +1706,7 @@ input#id_code {
     width: 321px;
     margin: auto;
 }
+
+.dashboard-widget-content li {
+    list-style: none;
+}
