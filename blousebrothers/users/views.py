@@ -75,6 +75,12 @@ class UserDetailView(BBLoginRequiredMixin, DetailView):
                 pass
         return context
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj != self.request.user :
+            raise PermissionDenied
+        return obj
+
 
 class UserRedirectView(BBLoginRequiredMixin, RedirectView):
     permanent = False
