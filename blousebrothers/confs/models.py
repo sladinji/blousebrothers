@@ -446,22 +446,3 @@ class Subscription(models.Model):
     @property
     def is_past_due(self):
         return date.today() > self.date_over
-
-
-class Section(models.Model):
-    """
-    Section of a chapter
-    """
-    name = models.CharField("Section", max_length=128, blank=False, null=False)
-
-
-class Disease(models.Model):
-    name = models.CharField("Section", max_length=512, blank=False, null=False)
-
-
-class Card(models.Model):
-    """
-    Fiche de revision
-    """
-    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='cards', blank=True, null=True)
-    section = models.ForeignKey('Section', verbose_name=("Section"), related_name='cards', blank=False, null=False)
