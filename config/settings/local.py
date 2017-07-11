@@ -37,13 +37,14 @@ CACHES = {
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 INSTALLED_APPS += ('debug_toolbar', )
 
-INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', '172.18.0.8' ]
+INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', '172.18.0.8']
 # tricks to have debug toolbar when developing with docker
 if os.environ.get('USE_DOCKER') == 'yes':
     ip = socket.gethostbyname(socket.gethostname())
     INTERNAL_IPS += [ip[:-1]+"1"]
 
 DEBUG_TOOLBAR_CONFIG = {
+#    'SHOW_TOOLBAR_CALLBACK': lambda r: False,  # COMMENT THIS LINE TO ENABLE TOOLBAR
     'DISABLE_PANELS': [
         'debug_toolbar.panels.redirects.RedirectsPanel',
     ],
@@ -107,9 +108,9 @@ AWS_HEADERS = {
 }
 
 #  See:http://stackoverflow.com/questions/10390244/
-from storages.backends.s3boto import S3BotoStorage
-StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')
-MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')
+from storages.backends.s3boto import S3BotoStorage  #noqa
+StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')  #noqa
+MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')  #noqa
 DEFAULT_FILE_STORAGE = 'config.settings.local.MediaRootS3BotoStorage'
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
@@ -120,7 +121,6 @@ MEDIA_URL = 'https://s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
 # ------------------------
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
-
 
 
 # EMAIL
@@ -136,4 +136,3 @@ ANYMAIL = {
     "MAILGUN_API_KEY": 'key-0cb37ccb0c2de16fc921df70228346bc',
 }
 EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
-

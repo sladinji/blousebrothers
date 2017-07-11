@@ -271,18 +271,12 @@ ul.djng-field-errors li.valid::before {
 }
 
 .correct {
-	background: #d6ffc6;
-	border: 5px solid #449d44;
-	margin: -1px;
-	padding: 10px;
 	color:#449d44;
+    font-weight: bold;
 }
 .notcorrect {
-	background: #ffe0df;;
-	border: 5px solid #e03e2f;
-	margin: -1px;
-	padding: 10px;
 	color:#e03e2f;
+    font-weight: bold;
 }
 .notcorrect .fa {
 	color: #e03e2f;
@@ -1701,4 +1695,12 @@ h1.faq {
 }
 .opac {
     background-color: rgba(0, 0, 0, 0.5);
+}
+input#id_code {
+    width: 321px;
+    margin: auto;
+}
+
+.dashboard-widget-content li {
+    list-style: none;
 }

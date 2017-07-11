@@ -12,6 +12,7 @@ from blousebrothers.users.models import Sale
 from money import Money
 from mangopay.models import MangoPayTransfer
 from oscar.apps.shipping.methods import NoShippingRequired
+from blousebrothers.tools import get_full_url
 
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
@@ -46,7 +47,6 @@ class BasketAddView(CoreBasketAddView):
     Debit user wallet if product is a conference.
     """
 
-
     def form_valid(self, form):
         if not form.product.conf:
             return super().form_valid(form)
@@ -71,6 +71,10 @@ class BasketAddView(CoreBasketAddView):
                         product=form.product,
                         conf=form.product.conf,
                     )
+                    self.request.user.conf_entam_url = get_full_url(
+                        self.request, 'confs:test', args=(form.product.conf.slug,)
+                    )
+                    self.request.user.save()
                     return self.redirect_success(form)
                 else:
                     return self.debit_wallet(form, test, self.request.user.wallet_bonus)
@@ -78,12 +82,12 @@ class BasketAddView(CoreBasketAddView):
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)
                 except MangoNoEnoughCredit:
-                    msg = _("Merci de créditer ton compte." )
+                    msg = _("Merci de créditer ton compte.")
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
                     return HttpResponseRedirect(
                         reverse("users:subscription",
-                                kwargs={'sub_id':0}) + '?next={}'.format(self.request.path)
+                                kwargs={'sub_id': 0}) + '?next={}'.format(self.request.path)
                     )
                 except Exception as ex:
                     test.delete()
@@ -139,7 +143,7 @@ class BasketAddView(CoreBasketAddView):
             )
 
     def get_success_url(self, product=None):
-        if product and product.conf :
+        if product and product.conf:
             self.request.user.status = "buyer_ok"
             self.request.user.save()
             product.conf.owner.status = 'conf_sold'

@@ -4,6 +4,7 @@ from decimal import Decimal
 from datetime import date
 
 from django.apps import apps
+from django.conf import settings
 from django.core import mail
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -23,6 +24,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from blousebrothers.auth import BBLoginRequiredMixin, MangoPermissionMixin
 import blousebrothers.context_processor
 from mangopay.constants import ERROR_MESSAGES_DICT
+from oscar.core.loading import get_class
+
 
 from .models import User
 from .forms import (
@@ -45,13 +48,38 @@ Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
 SubscriptionType = apps.get_model('confs', 'SubscriptionType')
 SubscriptionModel = apps.get_model('confs', 'Subscription')
+BasketVoucherForm = get_class('basket.forms', 'BasketVoucherForm')
 
 
-class UserDetailView(DetailView):
+class UserDetailView(BBLoginRequiredMixin, DetailView):
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+    def get_queryset(self):
+        return User.objects.all().prefetch_related('sales__student').prefetch_related('sales__product')
+
+    def get_context_data(self, **kwargs):
+        """
+        Update context for subscription view (voucher, selected_sub...)
+        """
+        context = super().get_context_data(**kwargs)
+        context['voucher_form'] = BasketVoucherForm()
+        context.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
+        for line in self.request.basket.all_lines():
+            try:
+                if line.product.categories.first().name == '__Abonnements':
+                    context['selected_sub_id'] = line.product.id
+            except:
+                pass
+        return context
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj != self.request.user :
+            raise PermissionDenied
+        return obj
 
 
 class UserRedirectView(BBLoginRequiredMixin, RedirectView):
@@ -414,7 +442,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
                 sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.flush()
             request.basket.add_product(sub, 1)
-            return redirect('/basket/')
+            return redirect(reverse("users:detail", args=(self.request.user.username,))+"#2a")
         return super().get(request, *args, **kwargs)
 
 

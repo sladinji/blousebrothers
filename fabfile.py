@@ -107,7 +107,7 @@ def preproddb():
     load_last_dump(last, pre=True)
 
 
-def load_last_dump(last=None, pre=False, mangoreset='yes'):
+def load_last_dump(last="last_dump.sql", pre=False, mangoreset='yes'):
     if not last:
         backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
         last = sorted(backups)[-1]

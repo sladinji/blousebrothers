@@ -208,6 +208,7 @@ class ConferenceCreateView(BBLoginRequiredMixin, CreateView, FormView):
                 for j in range(5):
                     Answer.objects.create(question=q, index=j)
             self.request.user.status = 'creat_conf_begin'
+            self.request.user.conf_entam_url = get_full_url(self.request, 'confs:update', args=(self.object.slug,))
             self.request.user.save()
             return super().form_valid(form)
         else:
@@ -230,6 +231,10 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
         obj = super().get_object(queryset)
         if not obj.for_sale:
             self.request.user.status = 'creat_conf_100'
+            self.request.user.save()
+        else:
+            self.request.user.conf_pub_url = get_full_url(self.request, 'confs:update', args=(obj.slug,))
+            self.request.user.action = "publi"
             self.request.user.save()
         return obj
 

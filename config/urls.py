@@ -43,7 +43,7 @@ urlpatterns = [
     url(settings.ADMIN_URL, include(admin.site.urls)),
 
     # User management
-    url(r'^users/', include('blousebrothers.users.urls', namespace='users')),
+    url(r'^mon/', include('blousebrothers.users.urls', namespace='users')),
     url(r'^ecni/', include('blousebrothers.confs.urls', namespace='confs')),
     url(r'^accounts/', include('allauth.urls')),
 

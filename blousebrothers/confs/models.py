@@ -45,6 +45,7 @@ class AdminConfManager(models.Manager):
         return super().get_queryset()
 
 
+
 class Conference(ModelMeta, models.Model):
     objects = ConfManager()
     all_objects = AdminConfManager()
