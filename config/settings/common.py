@@ -79,7 +79,8 @@ THIRD_PARTY_APPS = [
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'blousebrothers.users',  # custom users app
-    'blousebrothers.confs',  # custom users app
+    'blousebrothers.confs',  # confs app
+    'blousebrothers.cards',  # revisons/fiches app
     # Your stuff: custom apps go here
     'widget_tweaks',
 ]

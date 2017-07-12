@@ -135,6 +135,7 @@ class User(AbstractUser):
     conf_entam_url = models.CharField(max_length=512, null=True, blank=True)
     conf_pub_url = models.CharField(max_length=512, null=True, blank=True)
     conf_encours_url = models.CharField(max_length=512, null=True, blank=True)
+    cards = models.ManyToManyField('cards.Card', through='cards.deck', related_name='students')
 
     @property
     def last_subsboard(self):
