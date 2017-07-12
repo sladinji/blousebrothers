@@ -16,8 +16,11 @@ def fix_subscription(apps, schema_editor):
     Subscription.objects.all().update(type_id=5)
     SubscriptionType.objects.exclude(id=5).delete()
     sub = SubscriptionType.objects.first()
-    sub.bonus = Decimal('2')
-    sub.save()
+    if sub:
+        sub.bonus = Decimal('2')
+        sub.save()
+    else:
+        return
 
     # Update Abo product type
 
