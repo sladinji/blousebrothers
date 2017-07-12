@@ -164,6 +164,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
         <div class="col-md-2"></div>
         <div class="col-md-5">
             <h2 class="faq text-center">Je suis Conférencier</h2>
@@ -279,10 +281,10 @@
                                 <div class="col-md-2"><img src="{% static 'images/faq/cb.png' %}"/></div>
                                 <div class="col-md-10 ">
                                     70% des gains des abonnements reviennent aux Conférenciers. Ils sont répartis au prorata du nombre de Dossiers consultés par les étudiants chaque mois. Exemple: si il y a 2 Conférenciers sur la plateforme et 4 Etudiants:
-</br> - Gains à répartir = 4 x prix de l'abonnement x 0,7
-</br> - Conférencier 1: 5 consultations de son "Dossier 1", 2 de son "Dossier 2", 5 de son "Dossier 3" = 12 consultations
-</br> - Conférencier 2: 6 consultation de son seul"Dossier 4" = 6 consultations
-</br> --> 2/3 des gains à répartir pour Conférencier 1, 1/3 pour Conférencier 2.</div>
+                                    </br> - Gains à répartir = 4 x prix de l'abonnement x 0,7
+                                    </br> - Conférencier 1: 5 consultations de son "Dossier 1", 2 de son "Dossier 2", 5 de son "Dossier 3" = 12 consultations
+                                    </br> - Conférencier 2: 6 consultation de son seul"Dossier 4" = 6 consultations
+                                    </br> --> 2/3 des gains à répartir pour Conférencier 1, 1/3 pour Conférencier 2.</div>
                             </div>
                         </div>
                     </div>
@@ -328,13 +330,13 @@
 {% block onbodyload %}
 
 $( document ).ready(function() {
-    $('.container-fluid').css('min-height',$(window).height()+'px');
-    if ($(window).height() > $(window).width()){
-        $('.container-fluid.faqbg').css('background-size','auto 100%');
-    }
-    else{
-        $('.container-fluid.faqbg').css('background-size','100% auto ');
-    }
+$('.container-fluid').css('min-height',$(window).height()+'px');
+if ($(window).height() > $(window).width()){
+$('.container-fluid.faqbg').css('background-size','auto 100%');
+}
+else{
+$('.container-fluid.faqbg').css('background-size','100% auto ');
+}
 });
 
 
