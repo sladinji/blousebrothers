@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% load static %}{% load i18n %}
+{% load crispy_forms_tags %}
+{% load djng_tags %}
+{% block title %}{% trans 'Confs' %}{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock %}
+
+{% block content %}
+<div class="col-md-3"></div>
+    <div id="subject" class="col-md-6" >
+        <div class="tabbable dashboard col-md-12">
+            <div class="space"></div>
+            <h1 class="text-center">Nouvelle fiche</h1>
+            <div class="space"></div>
+            <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'cards:create' %}">
+                {% csrf_token %}
+                <div class="tab-content">
+                    <div id="conference">
+                        {{ form | crispy }}
+                    </div>
+                </div>
+                <br>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">{% trans "Valider" %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+{{ block.super }}
+{{ form.media.js }}
+{{ block.super }}
+{% endblock %}
+
