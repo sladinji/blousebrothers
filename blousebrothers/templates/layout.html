@@ -61,6 +61,9 @@ settings file. This will enable the on-the-fly less compiler.
                         </li>
                         <li class="menu-item-has-children item-megamenu"><a href="{% url 'users:faq' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a></li>
                         <li class="menu-item-has-children item-megamenu"><a id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a></li>
+                        <li class="menu-item-has-children item-megamenu">
+                            <a href="{% url 'cards:list' %}"><span class="fa fa-reorder"></span> {% trans 'Révisions' %}</a>
+                        </li>
                         {% if request.user.is_authenticated %}
                         {% if request.user.is_conferencier%}
                         <li class="menu-item-has-children item-megamenu">

@@ -658,10 +658,10 @@ input[type=range]:focus::-ms-fill-upper {
 
 .btn {
     background: none;
-    border: 1px solid #568EBC;
     color: #568EBC;
-    box-shadow: 4px 7px 8px 0px rgba(133, 133, 133, 0.43);
+    box-shadow: 1px 1px 3px 0px rgba(133, 133, 133, 0.43);
     border: 1px solid rgba(133, 133, 133, 0.31);
+    border-radius: 6px;
 }
 /*FX SIGNUP*/
 .signup .tright{
@@ -1703,4 +1703,8 @@ input#id_code {
 
 .dashboard-widget-content li {
     list-style: none;
+}
+
+.card-title h4.list-group-item-heading {
+    text-align: left;
 }

@@ -18,8 +18,8 @@ urlpatterns = [
         name='edit'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/view$',
+        regex=r'^(?P<slug>[\w.@+-]+)/fiche$',
         view=views.UpdateCardView.as_view(),
-        name='edit'
+        name='detail'
     ),
 ]
