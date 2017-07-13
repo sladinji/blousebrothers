@@ -77,7 +77,7 @@ class UserDetailView(BBLoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        if obj != self.request.user :
+        if obj != self.request.user:
             raise PermissionDenied
         return obj
 
@@ -104,15 +104,17 @@ class UserUpdateView(BBLoginRequiredMixin, UpdateView):
         """
         Call handle bonus if new info allow to create mangopay wallet.
         """
-        if isinstance(form, UserSmallerForm):
-            form.instance.status = "wallet_ok"
+        first_time = not self.request.user.gave_all_mangopay_info
         super().form_valid(form)
         check_bonus(self.request)
-        if isinstance(form, UserSmallerForm):
-            messages.success(self.request, "Tu peux maintenant créditer ton compte ou souscrire à un abonnement.")
+        if first_time:
+            form.instance.status = "wallet_ok"
+            messages.success(self.request, "Bienvenue {} dans la communauté BlouseBrothers !".format(
+                self.request.user.username)
+            )
             return redirect(reverse("catalogue:index"))
-
-        return HttpResponseRedirect(self.get_success_url())
+        else:
+            return HttpResponseRedirect(self.get_success_url())
 
     def get_form_class(self):
         return UserForm
