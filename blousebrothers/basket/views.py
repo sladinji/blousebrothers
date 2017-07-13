@@ -82,7 +82,7 @@ class BasketAddView(CoreBasketAddView):
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)
                 except MangoNoEnoughCredit:
-                    msg = _("Merci de créditer ton compte.")
+                    msg = _("Merci de choisir un abonnement.")
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
                     return HttpResponseRedirect(
