@@ -15,11 +15,11 @@ urlpatterns = [
     url(
         regex=r'^(?P<slug>[\w.@+-]+)/edit$',
         view=views.UpdateCardView.as_view(),
-        name='edit'
+        name='update'
     ),
     url(
         regex=r'^(?P<slug>[\w.@+-]+)/fiche$',
-        view=views.UpdateCardView.as_view(),
+        view=views.DetailCardView.as_view(),
         name='detail'
     ),
 ]

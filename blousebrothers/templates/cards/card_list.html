@@ -19,18 +19,34 @@
         </div>
     </div>
 
-    <div class="list-group">
+    <div class="panel-group cardslist" id="accordion">
         {% for object in object_list %}
-        <div class="list-group-item">
-            <div class="card-title">
-                <a href="{% url 'cards:detail' object.slug %}" >
-                    <h4 class="list-group-item-heading">{{ object.title_tmp }}
-                    </h4>
-                </a>
-                <p class="list-group-item-heading">{{ object.specialities.all|join:", " }}
-                </p>
-                <p class="list-group-item-heading">{{ object.items.all|join:", " }}
-                </p>
+        <div class="panel panel-default">
+            <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ object.slug }}">
+                <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="list-group-item-heading">{{ object.title }}</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="text-left list-group-item-heading">{{ object.section }}</h4>
+                        </div>
+                </div>
+            </div>
+            <div id="collapse{{ object.slug }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-8 cardcontent">
+                            <p>{{ object.content|linebreaks }}
+                        </div>
+                        <div class="col-md-4 cardsitems">
+                            <a href="{% url 'cards:update' object.slug %}" ><i class="fa fa-edit"></i> </a>
+                                <p class="list-group-item-heading">{{ object.specialities.all|join:", " }}
+                                </p>
+                                <p class="list-group-item-heading">{{ object.items.all|join:", " }}
+                                </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}

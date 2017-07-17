@@ -1708,3 +1708,18 @@ input#id_code {
 .card-title h4.list-group-item-heading {
     text-align: left;
 }
+
+.cardslist h4.text-left.list-group-item-heading {
+    text-align: left;
+}
+.col-md-4.cardsitems {
+    text-align: left;
+    font-style: italic;
+    font-family: sans-serif;
+    border-left-width: 2px;
+    border-left-style: groove;
+}
+.col-md-8.cardcontent {
+    text-align: left;
+    font-family: serif;
+}

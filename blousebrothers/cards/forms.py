@@ -13,7 +13,7 @@ class CreateCardForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Card
-        fields = ['specialities', 'items', 'title_tmp', 'section_tmp', 'content']
+        fields = ['specialities', 'items', 'title', 'section', 'content']
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(

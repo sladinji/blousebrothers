@@ -14,7 +14,11 @@
     <div id="subject" class="col-md-6" >
         <div class="tabbable dashboard col-md-12">
             <div class="space"></div>
+            {% if object %}
+            <h1 class="text-center">{{ object.title }}</h1>
+            {% else %}
             <h1 class="text-center">Nouvelle fiche</h1>
+            {% endif %}
             <div class="space"></div>
             <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'cards:create' %}">
                 {% csrf_token %}

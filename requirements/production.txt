@@ -2,8 +2,6 @@
 #	production that aren't in development.
 -r base.txt
 
-
-
 # WSGI Handler
 # ------------------------------------------------
 gevent==1.1.1
