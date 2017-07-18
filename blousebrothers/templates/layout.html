@@ -59,20 +59,13 @@ settings file. This will enable the on-the-fly less compiler.
                         <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
                         </li>
-                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'users:faq' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a></li>
-                        <li class="menu-item-has-children item-megamenu"><a id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a></li>
+                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'users:faq' %}"><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</a></li>
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'cards:list' %}"><span class="fa fa-reorder"></span> {% trans 'Révisions' %}</a>
+                            <a href="{% url 'cards:list' %}"><span class="fa fa-history"></span> {% trans 'Révisions' %}</a>
                         </li>
                         {% if request.user.is_authenticated %}
-                        {% if request.user.is_conferencier%}
-                        <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Confs créées' %}</a>
-                        </li>
+                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad"></span> {% trans 'Entrainements' %}</a></li>
                         {% endif %}
-                        <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'confs:my_confs' %}"><span class="fa fa-check-circle-o"></span> {% trans 'Confs achetées' %}</a>
-                        </li>
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}
@@ -87,7 +80,6 @@ settings file. This will enable the on-the-fly less compiler.
                         </li>
                         {% if request.user.is_staff or perms.partner.dashboard_access %}
                         <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
-                        {% endif %}
                         {% endif %}
                         {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>

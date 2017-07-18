@@ -21,6 +21,7 @@ from django.views.generic import (
     CreateView,
     FormView,
     DeleteView,
+    TemplateView,
 )
 from django.conf import settings
 
@@ -50,6 +51,10 @@ from .forms import ConferenceForm, ConferenceFinalForm, RefundForm
 
 logger = logging.getLogger(__name__)
 Product = apps.get_model('catalogue', 'Product')
+
+
+class ConferenceHomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'confs/conference_home.html'
 
 
 class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin, DetailView):

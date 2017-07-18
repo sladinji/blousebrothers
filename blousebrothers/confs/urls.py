@@ -7,16 +7,22 @@ from . import views
 from . import crud
 
 urlpatterns = [
+    # URL pattern for the ConferenceHomeView
+    url(
+        r'^entrainement/?$',
+        view=views.ConferenceHomeView.as_view(),
+        name='home'
+    ),
     # URL pattern for the ConferenceListView
     url(
-        r'^created/?$',
+        r'^mes_dossiers/?$',
         view=views.ConferenceListView.as_view(),
         name='list'
     ),
 
     # URL pattern for the TestUpdateView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/workinout$',
+        regex=r'^(?P<slug>[\w.@+-]+)/entrainement$',
         view=views.TestUpdateView.as_view(),
         name='test'
     ),
@@ -29,7 +35,7 @@ urlpatterns = [
 
     # URL pattern for the TestUpdateView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/result$',
+        regex=r'^(?P<slug>[\w.@+-]+)/resultats$',
         view=views.TestResult.as_view(),
         name='result'
     ),
@@ -50,7 +56,7 @@ urlpatterns = [
 
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^~create/(?P<slug>[\w.@+-]+)/update$',
+        regex=r'^~creation/(?P<slug>[\w.@+-]+)/update$',
         view=views.ConferenceUpdateView.as_view(),
         name='update'
     ),
@@ -60,22 +66,22 @@ urlpatterns = [
         name='delete'
     ),
     url(
-        regex=r'^~/create/(?P<slug>[\w.@+-]+)/final$',
+        regex=r'^~/creation/(?P<slug>[\w.@+-]+)/final$',
         view=views.ConferenceFinalView.as_view(),
         name='final'
     ),
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^~create/$',
+        regex=r'^~creation/$',
         view=views.ConferenceCreateView.as_view(),
         name='create'
     ),
     url(
-        regex=r'^~create/(?P<slug>[\w.@+-]+)/edit$',
+        regex=r'^~creation/(?P<slug>[\w.@+-]+)/edit$',
         view=views.ConferenceEditView.as_view(),
         name='edit'
     ),
-    url(r'^gottowork/?$',
+    url(r'^dossiers_faits/?$',
         views.BuyedConferenceListView.as_view(),
         name='my_confs'),
 
