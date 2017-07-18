@@ -2747,7 +2747,7 @@ select[multiple].input-lg {
   user-select: none;
 }
 .btn, input[type="submit"] {
-	color: #fff;
+	color: #73879C;
 	display: inline-block;
 	padding: 9px 25px;
 	text-align: center;
@@ -2757,7 +2757,6 @@ select[multiple].input-lg {
 	transition: all 0.3s ease 0s;
 	background: transparent;
 	position: relative;
-	background-color: #568EBC;
 	font-size: 12px;
 	border: none;
 	border-radius: 0px;
@@ -2806,7 +2805,6 @@ fieldset[disabled] .btn {
 }
 .btn-default {
   color: #333;
-  background-color: #4281a4;
   border-color: #ccc;
 }
 .btn-default:hover,

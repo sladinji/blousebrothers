@@ -23,7 +23,7 @@ class UpdateCardView(UpdateView):
     form_class = CreateCardForm
 
 
-class DetailCardView(UpdateView):
+class DetailCardView(DetailView):
     model = Card
 
 

@@ -224,6 +224,9 @@ class Speciality(models.Model):
     def __str__(self):
         return self.name
 
+    def image(self):
+        return 'images/spe/cardio.png'
+
 
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False)

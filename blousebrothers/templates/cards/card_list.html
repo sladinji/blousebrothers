@@ -27,7 +27,7 @@
                         <div class="col-md-4">
                             <h4 class="list-group-item-heading">{{ object.title }}</h4>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <h4 class="text-left list-group-item-heading">{{ object.section }}</h4>
                         </div>
                 </div>
@@ -36,6 +36,9 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-8 cardcontent">
+                            <div class="col-md-7">
+                            <a href="{% url 'cards:detail' object.slug %}" ><i class="fa fa-eye"></i> </a>
+                            </div>
                             <p>{{ object.content|linebreaks }}
                         </div>
                         <div class="col-md-4 cardsitems">

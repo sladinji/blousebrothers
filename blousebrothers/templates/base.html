@@ -65,12 +65,16 @@
 
         {% block extrahead %}{% endblock %}
 
+    {% if not debug %}
 	{% google_analytics %}
 	{% analytical_head_bottom %}
+    {% endif %}
     </head>
 
     <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %}">
+    {% if not debug %}
 	{% analytical_body_top %}
+    {% endif %}
 	{% hijack_notification %}
         {# Main content goes in this 'layout' block #}
 	{% if request %}
@@ -112,7 +116,9 @@
 
         {# Page meta-data - this is populated by the 'metadata' template context processor #}
         <!-- {% trans "Version:" %} {{ version }} -->
+        {% if not debug %}
         {% analytical_body_bottom %}
+        {% endif %}
     </body>
 {% include "partials/footer.html" %}
 </html>
