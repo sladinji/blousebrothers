@@ -57,10 +57,6 @@ settings file. This will enable the on-the-fly less compiler.
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
-                        </li>
-                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'users:faq' %}"><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</a></li>
-                        <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'cards:list' %}"><span class="fa fa-history"></span> {% trans 'Révisions' %}</a>
                         </li>
                         {% if request.user.is_authenticated %}
@@ -82,7 +78,7 @@ settings file. This will enable the on-the-fly less compiler.
                         <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
                         {% endif %}
                         {% if request.user.is_authenticated %}
-                        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
+                        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i></a></li>
                         {% else %}
                         {% block connect_link %}
                         <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'account_login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
@@ -95,6 +91,7 @@ settings file. This will enable the on-the-fly less compiler.
         {% endactiveurl %}
         {% block submenu %}
         <div class="hidden-xs submenu_new pull-right">
+            <a href="{% url 'users:faq' %}"><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</a>
             <a href="tel:+33339250264"><i class="fa fa-phone"></i> 03 39 25 02 64</a> 
             <a href="https://www.facebook.com/iBlouseBrothers"><i class="fa fa-facebook"></i></a> 
             <a href="https://twitter.com/iBlouseBrothers"><i class="fa fa-twitter"></i></a> 

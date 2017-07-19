@@ -4,36 +4,36 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center">Entrainements</h1>
+    <h1 class="text-center">Dossiers</h1>
     <div class="space12"></div> <!-- 40px Vertical Spacing -->
         <div class="row">
             <div class="col-sm-6 col-md-4 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif">
+                    <img class="card-img-top" src="{% static 'images/confs/catalogue.png' %}">
                     <div class="card-block">
                         <figure class="profile">
-                            <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
+                            <img src="{% static 'images/confs/catalogue.png' %}" alt="">
                         </figure>
-                        <h4 class="card-title mt-3">Voir les dossiers effectués</h4>
+                        <h4 class="card-title mt-3">Voir les dossiers disponibles</h4>
                         <div class="meta">
                             <a><span class="fa fa-history"></span></a>
                         </div>
                         <div class="card-text">
-                            Retrouve la liste des dossiers que tu as déjà effectués.
+                            Liste de toutes les confs disponibles sur le site.
                         </div>
                     </div>
                     <div class="card-footer">
                         <small>Tu as effectué {{ request.user.tests|length}} dossiers.</small>
-                        <a href="{% url 'confs:my_confs' %}" class="btn btn-secondary float-right btn-sm">voir</a>
+                        <a href="{% url 'catalogue:index' %}" class="btn btn-secondary float-right btn-sm">voir</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif">
+                    <img class="card-img-top" src="{% static 'images/confs/create.png' %}">
                     <div class="card-block">
                         <figure class="profile">
-                            <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
+                            <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
                         </figure>
                         <h4 class="card-title mt-3">Créer un dossier</h4>
                         <div class="meta">
@@ -51,10 +51,10 @@
             </div>
             <div class="col-sm-6 col-md-4 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif">
+                    <img class="card-img-top" src="{% static 'images/confs/my_confs.png' %}">
                     <div class="card-block">
                         <figure class="profile">
-                            <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
+                            <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
                         </figure>
                         <h4 class="card-title mt-3">Voir mes dossiers créés</h4>
                         <div class="meta">
