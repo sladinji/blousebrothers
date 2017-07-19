@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.db.models import Q
 from django.views.generic import (
     ListView,
@@ -6,7 +7,7 @@ from django.views.generic import (
     CreateView,
     DetailView,
 )
-from .models import Card
+from .models import Card, Deck
 from .forms import CreateCardForm
 
 
@@ -23,8 +24,42 @@ class UpdateCardView(UpdateView):
     form_class = CreateCardForm
 
 
-class DetailCardView(DetailView):
-    model = Card
+class RevisionView(DetailView):
+    template_name = "cards/revision.html"
+    model = Deck
+
+    def get_object(self, queryset=None):
+        card = Card.objects.get(slug=self.kwargs['slug'])
+        obj, _ = self.model.objects.get_or_create(card=card, student=self.request.user)
+        return obj
+
+    def choose_new_card(self, request):
+        # choose a new card never done by user
+        new_card = Card.objects.exclude(
+            id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True)
+        ).first()
+        # if all card are already done choose the oldest and hardest one
+        if not new_card:
+            new_card = Card.objects.filter(
+                deck__student=request.user
+            ).order_by(
+                'deck__nb_views',
+                '-deck__difficulty',
+                'deck__modified',
+            ).first()
+        return new_card
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if 'easy' in request.POST:
+            self.object.difficulty = 0
+        elif 'average' in request.POST:
+            self.object.difficulty = 1
+        elif 'hard' in request.POST:
+            self.object.difficulty = 2
+        self.object.save()
+        new_card = self.choose_new_card(request)
+        return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
 
 class ListCardView(ListView):
@@ -38,5 +73,4 @@ class ListCardView(ListView):
                 Q(content__icontains=self.request.GET['q']) |
                 Q(section__icontains=self.request.GET['q'])
             )
-
         return qry.all()

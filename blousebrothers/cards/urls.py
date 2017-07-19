@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     url(
         regex=r'^(?P<slug>[\w.@+-]+)/fiche$',
-        view=views.DetailCardView.as_view(),
-        name='detail'
+        view=views.RevisionView.as_view(),
+        name='revision'
     ),
 ]

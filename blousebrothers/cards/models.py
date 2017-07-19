@@ -8,10 +8,20 @@ class Deck(models.Model):
     User <--> Cards M2M relation with notes
     """
     student = models.ForeignKey("users.User", verbose_name=_("Étudiant"), on_delete=models.CASCADE,
-                                related_name="classeur", blank=False, null=False)
+                                related_name="deck", blank=False, null=False)
     card = models.ForeignKey("Card", verbose_name=_("Fiche"), on_delete=models.CASCADE,
-                             related_name="classeur", blank=False, null=False)
+                             related_name="deck", blank=False, null=False)
     difficulty = models.PositiveIntegerField(_("Difficulté"), default=1)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    nb_views = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        """
+        Increment nb_views
+        """
+        self.nb_views += 1
+        return super().save(*args, **kwargs)
 
 
 class Card(models.Model):
