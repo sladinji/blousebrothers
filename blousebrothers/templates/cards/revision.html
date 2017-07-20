@@ -2,12 +2,21 @@
 {% load static %}{% load i18n %}
 {% block title %}{% trans 'Révisions' %}{% endblock %}
 
+{% block body_class %}bodyrev{% endblock body_class %}
+
+{% block main_header %}
+{% endblock main_header %}
+
+{% block zendesk %}
+{% endblock zendesk %}
 
 {% block content %}
 {% with object.card.specialities.all|first as spe %}
-<div class="space"></div> 
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-4 hidden-xs hidden-sm">
+	</div>
+	<div class="col-sm-4 hidden-md hidden-lg text-right">
+        {% include "cards/partials/rev_menu.html" %}
 	</div>
 	<div class="col-md-4">
 		<div class="column"> 
@@ -40,11 +49,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-4 hidden-md hidden-lg">
+	</div>
+	<div class="col-md-4 text-right hidden-xs hidden-sm">
+        {% include "cards/partials/rev_menu.html" %}
 	</div>
 </div>
 {% endwith %}
 {% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
 
 {% block extrascripts %}
  <script type="text/javascript">

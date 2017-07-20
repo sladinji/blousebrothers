@@ -727,7 +727,7 @@ background-color: #000;
     line-height:219px;
 }
 
-.signup .btn{
+.signup .btn, a.signup.btn {
     background:none;
     border:1px solid #fff;
     color:#fff;
@@ -1819,6 +1819,8 @@ input#id_code {
   -ms-transition: all 0.3s linear 0s;
   -o-transition: all 0.3s linear 0s;
   transition: all 0.3s linear 0s;
+  margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+  transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
 }
 .post-module:hover,
 .hover {
@@ -1977,3 +1979,8 @@ input#id_code {
   color: #f2b202;
 }
 
+.bodyrev {
+    background-color: black;
+    background-image: url(/static/images/bg_rev.png);
+    background-size: cover;
+}

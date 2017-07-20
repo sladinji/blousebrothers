@@ -6,9 +6,27 @@ from django.views.generic import (
     UpdateView,
     CreateView,
     DetailView,
+    RedirectView,
 )
 from .models import Card, Deck
 from .forms import CreateCardForm
+
+
+def choose_new_card(request):
+    # choose a new card never done by user
+    new_card = Card.objects.exclude(
+        id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True)
+    ).first()
+    # if all card are already done choose the oldest and hardest one
+    if not new_card:
+        new_card = Card.objects.filter(
+            deck__student=request.user
+        ).order_by(
+            'deck__nb_views',
+            '-deck__difficulty',
+            'deck__modified',
+        ).first()
+    return new_card
 
 
 class CreateCardView(CreateView):
@@ -24,6 +42,16 @@ class UpdateCardView(UpdateView):
     form_class = CreateCardForm
 
 
+class RevisionRedirectView(RedirectView):
+    """
+    Root url of card app, reached by clicking on revision link.
+    """
+
+    def get_redirect_url(self):
+        new_card = choose_new_card(self.request)
+        return reverse('cards:revision', kwargs={'slug': new_card.slug})
+
+
 class RevisionView(DetailView):
     template_name = "cards/revision.html"
     model = Deck
@@ -32,22 +60,6 @@ class RevisionView(DetailView):
         card = Card.objects.get(slug=self.kwargs['slug'])
         obj, _ = self.model.objects.get_or_create(card=card, student=self.request.user)
         return obj
-
-    def choose_new_card(self, request):
-        # choose a new card never done by user
-        new_card = Card.objects.exclude(
-            id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True)
-        ).first()
-        # if all card are already done choose the oldest and hardest one
-        if not new_card:
-            new_card = Card.objects.filter(
-                deck__student=request.user
-            ).order_by(
-                'deck__nb_views',
-                '-deck__difficulty',
-                'deck__modified',
-            ).first()
-        return new_card
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -58,7 +70,7 @@ class RevisionView(DetailView):
         elif 'hard' in request.POST:
             self.object.difficulty = 2
         self.object.save()
-        new_card = self.choose_new_card(request)
+        new_card = choose_new_card(request)
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
 

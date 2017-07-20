@@ -18,6 +18,11 @@ urlpatterns = [
         name='update'
     ),
     url(
+        regex=r'^$',
+        view=views.RevisionRedirectView.as_view(),
+        name='redirect'
+    ),
+    url(
         regex=r'^(?P<slug>[\w.@+-]+)/fiche$',
         view=views.RevisionView.as_view(),
         name='revision'

@@ -57,10 +57,10 @@ settings file. This will enable the on-the-fly less compiler.
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'cards:list' %}"><span class="fa fa-history"></span> {% trans 'Révisions' %}</a>
+                            <a href="{% url 'cards:redirect' %}"><span class="fa fa-history"></span> {% trans 'Révisions' %}</a>
                         </li>
                         {% if request.user.is_authenticated %}
-                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad"></span> {% trans 'Entrainements' %}</a></li>
+                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad"></span> {% trans 'Dossiers cliniques' %}</a></li>
                         {% endif %}
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
