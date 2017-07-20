@@ -1840,7 +1840,7 @@ input#id_code {
   height: 350px;
   overflow: hidden;padding: 0;
 }
-.post-module .thumbnail .date {
+.post-module .post-content .date {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -1859,7 +1859,7 @@ input#id_code {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.post-module .thumbnail .date .day {
+.post-module .post-content .date .day {
  font-size: 18px;
     line-height: 31px;
     color: #fff;
@@ -1918,7 +1918,6 @@ input#id_code {
   font-weight: 400;
 }
 .post-module .post-content .description {
-  display: none;
   color: #666666;
   font-size: 14px;
   line-height: 1.8em;
@@ -1984,3 +1983,13 @@ input#id_code {
     background-image: url(/static/images/bg_rev.png);
     background-size: cover;
 }
+#btn_rev_block {
+    visibility: hidden;
+}
+.description {
+    visibility: hidden;
+}
+.description .preview {
+    visibility: visible;
+}
+    visibility: hidden;

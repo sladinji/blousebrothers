@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load static %}{% load i18n %}
+{% load bbtricks%}
 {% block title %}{% trans 'Révisions' %}{% endblock %}
 
 {% block body_class %}bodyrev{% endblock body_class %}
@@ -24,17 +25,21 @@
 			<div class="post-module"> 
 				<!-- Thumbnail-->
 				<div class="thumbnail">
-					<div class="date"> <a href="#0">
-							<div class="day"><i class="fa fa-bars" aria-hidden="true"></i></div>
-						</a> </div>
 						<img src="{% static spe.image %}" class="img-responsive" alt=""> </div>
 				<!-- Post Content-->
 				<div class="post-content">
 					<div class="category">{{ spe.name }}</div>
                     <h1 class="title">{{ object.card.title }}</h1>
                     <h2 class="sub_title">{{ object.card.section }}</h2>
+                    <div class="date">
+                        <a href="#0">
+                            <div class="day"><i class="fa fa-bars" aria-hidden="true"></i></div>
+                        </a> 
+                    </div>
                     <div class="description">
-                        <p>{{ object.card.content }}</p>
+                        <p>{{ object.card.content | rev_content | safe }}</p>
+                    </div>
+                    <div id="btn_rev_block">
                         <form action="" method="POST" >
                             {% csrf_token %}
                             <div class="text-center">
@@ -63,27 +68,14 @@
 
 {% block extrascripts %}
  <script type="text/javascript">
-var mouse_already_there = false;
-var event_set = false;
+var myswitch = true;
 $(document).ready(function() {
-    $('.post-module').mouseenter(function(){
-        if(!event_set) { mouse_already_there = true; }
-    }, function(){
-        if(!event_set) { mouse_already_there = false; }
+    $('.date').click(function(){
+        var visibility = ( myswitch ? "visible" : "hidden");
+        myswitch = !myswitch;
+        $('.description').css("visibility", visibility);
+        $('#btn_rev_block').css("visibility", "visible");
     });
-    if(mouse_already_there) {
-        //do nothing
-    } else {
-        //set event
-        event_set = true;
-		$('.post-module').mouseenter(function() {
-		  $(this).find('.description').stop().animate({
-			height: "toggle",
-			opacity: "toggle",
-		  }, 300);
-		  $('.post-module').unbind();
-		});
-    }
 });
 </script>
 {% endblock extrascripts %}

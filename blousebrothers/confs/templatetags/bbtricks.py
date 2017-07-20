@@ -1,4 +1,5 @@
 from decimal import Decimal, ROUND_UP
+import re
 from string import ascii_uppercase
 import datetime
 
@@ -189,3 +190,11 @@ def get_disqus_sso(user):
 @register.simple_tag
 def settings_value(name):
     return getattr(settings, name, "")
+
+
+@register.filter
+def rev_content(txt):
+    txt = re.sub("~(.*)~", r"<span class='preview'>\1</span>", txt)
+    txt = re.sub("\n", r"<br>", txt)
+    txt = re.sub(r'/!\\', '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ', txt)
+    return txt
