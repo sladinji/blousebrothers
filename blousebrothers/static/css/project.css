@@ -1818,8 +1818,9 @@ input#id_code {
   -ms-transition: all 0.3s linear 0s;
   -o-transition: all 0.3s linear 0s;
   transition: all 0.3s linear 0s;
-  margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
-  transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+  /* margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+  /* transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+  margin-top: 100px;
 }
 .post-module:hover,
 .hover {
