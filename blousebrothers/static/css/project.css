@@ -1810,7 +1810,6 @@ input#id_code {
   display: block;
   background: #FFFFFF;
   min-width: 270px;
-  height: 524px;
   -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
@@ -1837,7 +1836,7 @@ input#id_code {
 }
 .post-module .thumbnail {
   background: #000000;
-  height: 350px;
+  height: 95px;
   overflow: hidden;padding: 0;
 }
 .post-module .post-content .date {
@@ -1878,7 +1877,6 @@ input#id_code {
   transition: all 0.3s linear 0s;
 }
 .post-module .post-content {
-  position: absolute;
   bottom: 0;
   background: #FFFFFF;
   width: 100%;
@@ -1991,5 +1989,5 @@ input#id_code {
 }
 .description .preview {
     visibility: visible;
+    font-weight: bold;
 }
-    visibility: hidden;
