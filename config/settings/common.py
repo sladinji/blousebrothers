@@ -238,7 +238,7 @@ TEMPLATES = [
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
                 'blousebrothers.context_processor.subscriptions',
-                'blousebrothers.context_processor.balance',
+                #'blousebrothers.context_processor.balance',
                 'blousebrothers.context_processor.invit_form',
             ],
         },

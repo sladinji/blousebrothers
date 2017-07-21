@@ -17,12 +17,13 @@ def subscriptions(request):
     return {'subscriptions': subs}
 
 
-def balance(request):
-    try:
-        return {'balance': request.user.balance()}
-    except:
-        return {'balance': mark_safe('<span style="color:orange;">Activer mon compte</span>')}
-
+#def balance(request):
+#    try:
+#        print("#DOh!! "*100)
+#        return {'balance': request.user.balance()}
+#    except:
+#        return {'balance': mark_safe('<span style="color:orange;">Activer mon compte</span>')}
+#
 
 def invit_form(request):
     """
