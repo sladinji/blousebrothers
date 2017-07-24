@@ -60,9 +60,9 @@
                         <form action="" method="POST" >
                             {% csrf_token %}
                             <div class="text-center">
-                                <button type="submit" name="easy" class="btn btn-success">Facile</button>
-                                <button class="btn btn-warning" name="average">Moyen</button>
-                                <button class="btn btn-danger" name="hard">Difficile</button>
+                                <button type="submit" name="easy" class="btn btn-success" disabled>Facile</button>
+                                <button class="btn btn-warning" name="average" disabled>Moyen</button>
+                                <button class="btn btn-danger" name="hard" disabled>Difficile</button>
                             </div>
                         </form>
                     </div>
@@ -88,11 +88,11 @@
 var myswitch = true;
 var myflag = true;
 $(document).ready(function() {
-
     var toggle_card = function(){
         $('.description *:not(.preview)').css({opacity: myswitch ? 0.0 : 1.0}).animate({opacity: myswitch ? 1.0 : 0.0});
         if(myflag == true){
             $('.btn_rev_block').css({opacity: 0.0, visibility:"visible"}).animate({opacity: 1.0});
+            $('button').prop('disabled', false);
             myflag=false;
         }
         myswitch = !myswitch;
