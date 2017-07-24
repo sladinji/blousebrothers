@@ -27,4 +27,9 @@ urlpatterns = [
         view=views.RevisionView.as_view(),
         name='revision'
     ),
+    url(
+        regex=r'^bookmark/([0-9]+)$',
+        view=views.bookmark_card,
+        name='bookmark'
+    ),
 ]

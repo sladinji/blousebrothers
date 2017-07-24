@@ -9,6 +9,12 @@ from blousebrothers.confs.models import Item, Speciality
 from .models import Card
 
 
+class UpdateCardForm(ModelForm, Bootstrap3FormMixin):
+    class Meta:
+        model = Card
+        fields = ['content', ]
+
+
 class CreateCardForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:

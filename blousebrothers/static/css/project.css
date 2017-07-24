@@ -1872,6 +1872,10 @@ input#id_code {
 }
 .card_button.end_revision {
     top: 20px;
+    left: 340px;
+}
+.card_button.card_edit{
+    top: 20px;
     left: 260px;
 }
 .card_button.card_fav {

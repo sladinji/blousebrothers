@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "cards/revision.html" %}
 {% load static %}{% load i18n %}
 {% load crispy_forms_tags %}
 {% load djng_tags %}
@@ -9,18 +9,8 @@
 {{ form.media.css }}
 {% endblock %}
 
-{% block content %}
-<div class="col-md-3"></div>
-    <div id="subject" class="col-md-6" >
-        <div class="tabbable dashboard col-md-12">
-            <div class="space"></div>
-            {% if object %}
-            <h1 class="text-center">{{ object.title }}</h1>
-            {% else %}
-            <h1 class="text-center">Nouvelle fiche</h1>
-            {% endif %}
-            <div class="space"></div>
-            <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'cards:create' %}">
+{% block description %}
+            <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'cards:update' object.card.slug %}">
                 {% csrf_token %}
                 <div class="tab-content">
                     <div id="conference">
@@ -34,9 +24,7 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-{% endblock content %}
+{% endblock description %}
 
 {% block scripts %}
 {{ block.super }}
@@ -44,3 +32,10 @@
 {{ block.super }}
 {% endblock %}
 
+{% block extrascripts %}
+ <script type="text/javascript">
+$(document).ready(function() {
+    $('.description *:not(.preview)').css({opacity : 1.0});
+});
+</script>
+{% endblock extrascripts %}

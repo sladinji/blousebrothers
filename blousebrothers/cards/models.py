@@ -36,7 +36,7 @@ class Card(models.Model):
     title = models.CharField(_("Titre du cours"), max_length=256, blank=False, null=False)
     content = models.TextField(_('Contenu'), blank=True, null=True)
     parent = models.ForeignKey("Card", verbose_name=_("Original"), on_delete=models.SET_NULL,
-                               related_name="childs", blank=True, null=True)
+                               related_name="children", blank=True, null=True)
     author = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
                                related_name="created_cards", blank=True, null=True)
     slug = AutoSlugField(_('Slug'), max_length=256, unique=True, populate_from='title')
