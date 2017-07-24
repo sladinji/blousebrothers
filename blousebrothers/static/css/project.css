@@ -2000,10 +2000,10 @@ input#id_code {
 }
 .description *:not(.preview){
     opacity: 0.0;
-    font-size: 18px;
+    font-size: 20px;
 }
 .preview {
-    font-size: 18px;
+    font-size: 20px;
     visibility: visible !important;
     opacity: 1.0 !important;
     font-weight: bold;
