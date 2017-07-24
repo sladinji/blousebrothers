@@ -1840,10 +1840,10 @@ input#id_code {
   height: 95px;
   overflow: hidden;padding: 0;
 }
-.post-module .post-content .date {
-  position: absolute;
+.post-module .post-content .card_button {
   top: 20px;
   right: 20px;
+  position: absolute;
   z-index: 1;
   background: #f2b202;
   width: 55px;
@@ -1858,15 +1858,25 @@ input#id_code {
   -webkti-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  font-size: 18px;
+  line-height: 31px;
+  color: #fff;
 }
-.post-module .post-content .date .day {
- font-size: 18px;
-    line-height: 31px;
-    color: #fff;
+.day {
+  color: white;
+  font-size: 26px;
 }
-.post-module .thumbnail .date .month {
-  font-size: 12px;
-  text-transform: uppercase;
+.card_button.card_next {
+    top: 20px;
+    left: 180px;
+}
+.card_button.card_fav {
+    top: 20px;
+    left: 100px;
+}
+.card_button.card_prev {
+    top: 20px;
+    left: 20px;
 }
 .post-module .thumbnail img {
   display: block;
@@ -1982,13 +1992,14 @@ input#id_code {
     background-image: url(/static/images/bg_rev.png);
     background-size: cover;
 }
-#btn_rev_block {
-    visibility: hidden;
+.btn_rev_block {
+    opacity: 0.0;
 }
-.description {
-    visibility: hidden;
+.description *:not(.preview){
+    opacity: 0.0;
 }
-.description .preview {
-    visibility: visible;
+.preview {
+    visibility: visible !important;
+    opacity: 1.0 !important;
     font-weight: bold;
 }

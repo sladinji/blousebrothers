@@ -31,15 +31,32 @@
 					<div class="category">{{ spe.name }}</div>
                     <h1 class="title">{{ object.card.title }}</h1>
                     <h2 class="sub_title">{{ object.card.section }}</h2>
-                    <div class="date">
+                    <div class="card_button">
                         <a href="#0">
                             <div class="day"><i class="fa fa-bars" aria-hidden="true"></i></div>
                         </a> 
                     </div>
+                    <div class="btn_rev_block">
+                        <div class="card_button card_prev">
+                            <a href="#0" title="Voir la version précédente">
+                                <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                        <div class="card_button card_fav">
+                            <a href="#0" title="Choisir cette version">
+                                <div class="day"><i class="fa fa-star" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                        <div class="card_button card_next">
+                            <a href="#0" alt="Voir la version suivante">
+                                <div class="day"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                    </div>
                     <div class="description">
                         <p>{{ object.card.content | rev_content | safe }}</p>
                     </div>
-                    <div id="btn_rev_block">
+                    <div class="btn_rev_block">
                         <form action="" method="POST" >
                             {% csrf_token %}
                             <div class="text-center">
@@ -69,13 +86,19 @@
 {% block extrascripts %}
  <script type="text/javascript">
 var myswitch = true;
+var myflag = true;
 $(document).ready(function() {
-    $('.date').click(function(){
-        var visibility = ( myswitch ? "visible" : "hidden");
+
+    var toggle_card = function(){
+        $('.description *:not(.preview)').css({opacity: myswitch ? 0.0 : 1.0}).animate({opacity: myswitch ? 1.0 : 0.0});
+        if(myflag == true){
+            $('.btn_rev_block').css({opacity: 0.0, visibility:"visible"}).animate({opacity: 1.0});
+            myflag=false;
+        }
         myswitch = !myswitch;
-        $('.description').css("visibility", visibility);
-        $('#btn_rev_block').css("visibility", "visible");
-    });
+    };
+
+    $('.post-content').click(toggle_card);
 });
 </script>
 {% endblock extrascripts %}
