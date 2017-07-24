@@ -1820,7 +1820,7 @@ input#id_code {
   transition: all 0.3s linear 0s;
   /* margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
   /* transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
-  margin-top: 100px;
+  margin-top: 5px;
 }
 .post-module:hover,
 .hover {
@@ -1870,6 +1870,10 @@ input#id_code {
     top: 20px;
     left: 180px;
 }
+.card_button.end_revision {
+    top: 20px;
+    left: 260px;
+}
 .card_button.card_fav {
     top: 20px;
     left: 100px;
@@ -1915,6 +1919,7 @@ input#id_code {
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
+  padding-left: inherit;
 }
 .post-module .post-content .title {
   padding: 0 0 10px;
@@ -2007,4 +2012,7 @@ input#id_code {
     visibility: visible !important;
     opacity: 1.0 !important;
     font-weight: bold;
+}
+.btn_rev_block.btn_rev_eval {
+    margin-top: 30px;
 }

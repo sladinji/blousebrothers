@@ -16,9 +16,6 @@
 <div class="row">
 	<div class="col-md-4 hidden-xs hidden-sm">
 	</div>
-	<div class="col-sm-4 hidden-md hidden-lg text-right">
-        {% include "cards/partials/rev_menu.html" %}
-	</div>
 	<div class="col-md-4">
 		<div class="column"> 
 			<!-- Post-->
@@ -52,11 +49,16 @@
                                 <div class="day"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
                             </a> 
                         </div>
+                        <div class="card_button end_revision">
+                            <a href="{% url 'catalogue:index' %}" alt="Revenir au site">
+                                <div class="day"><i class="fa fa-power-off" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
                     </div>
                     <div class="description">
                         <p>{{ object.card.content | rev_content | safe }}</p>
                     </div>
-                    <div class="btn_rev_block">
+                    <div class="btn_rev_block btn_rev_eval">
                         <form action="" method="POST" >
                             {% csrf_token %}
                             <div class="text-center">
@@ -71,7 +73,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4 hidden-md hidden-lg">
+	<div class="col-sm-4 hidden-md hidden-lg">
 	</div>
 	<div class="col-md-4 text-right hidden-xs hidden-sm">
         {% include "cards/partials/rev_menu.html" %}
