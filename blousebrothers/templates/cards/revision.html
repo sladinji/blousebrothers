@@ -34,25 +34,25 @@
                         </a> 
                     </div>
                     <div class="btn_rev_block">
-                        {% if object.card.parent and object.card.parent.children.all %}
+                        {% if object.card.parent and object.card.parent.children.all or object.card.children.all %}
                         <div class="card_button card_prev">
-                            <a href="#0" title="Voir la version précédente">
+                            <a href="{% url 'cards:previous' object.card.pk %}" title="Voir la version précédente">
                                 <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                         <div class="card_button card_fav">
                             <a href="#0" title="Choisir cette version">
-                                <div class="day"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                                <div class="day"><i class="fa fa-star{% if not is_favorite%}-o{% endif %}" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                         <div class="card_button card_next">
-                            <a href="#0" alt="Voir la version suivante">
+                            <a href="{% url 'cards:next' object.card.pk %}" alt="Voir la version suivante">
                                 <div class="day"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                         {% endif %}
                         <div class="card_button card_edit">
-                            <a href="{% url 'cards:update' object.card.slug %}" alt="Revenir au site">
+                            <a href="{% url 'cards:update' object.card.slug %}" alt="Éditer la carte">
                                 <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
                             </a> 
                         </div>
@@ -64,9 +64,13 @@
                     </div>
                     <div class="description">
                         {% block description %}
-                        <p>{{ object.card.content | rev_content | safe }}</p>
+                        <span>{{ object.card.content | rev_content | safe }}</span>
                         {% endblock description %}
                     </div>
+                    {% if dsp_card_on_load and object.card.author%}
+                    <br>
+                    <i>Édité par</i> {{ object.card.author.username }}
+                    {% endif %}
                     <div class="btn_rev_block btn_rev_eval">
                         <form action="" method="POST" >
                             {% csrf_token %}
@@ -118,9 +122,10 @@ $(document).ready(function() {
 			}
 		});
     });
-    
-
     $('.post-content').click(toggle_card);
+    {% if dsp_card_on_load %}
+    toggle_card();
+    {% endif %}
 });
 </script>
 {% endblock extrascripts %}

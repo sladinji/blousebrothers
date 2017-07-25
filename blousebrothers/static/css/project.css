@@ -2020,3 +2020,6 @@ input#id_code {
 .btn_rev_block.btn_rev_eval {
     margin-top: 30px;
 }
+.column {
+    min-width: 500px;
+}

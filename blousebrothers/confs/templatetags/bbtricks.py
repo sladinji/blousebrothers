@@ -194,7 +194,7 @@ def settings_value(name):
 
 @register.filter
 def rev_content(txt):
-    txt = re.sub("~(.*)~", r"</p><span class='preview'>\1</span><p>", txt)
+    txt = re.sub("([^~]*)~([^~]*)~", r"\1</span><span class='preview'>\2</span><span>", txt)
     txt = re.sub("\n", r"<br>", txt)
     txt = re.sub(r'/!\\', '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ', txt)
     return txt

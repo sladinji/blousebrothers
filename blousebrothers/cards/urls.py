@@ -23,7 +23,17 @@ urlpatterns = [
         name='redirect'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/fiche$',
+        regex=r'^next/([0-9]+)$',
+        view=views.RevisionNextCardView.as_view(),
+        name='next'
+    ),
+    url(
+        regex=r'^previous/([0-9]+)$',
+        view=views.RevisionPreviousCardView.as_view(),
+        name='previous'
+    ),
+    url(
+        regex=r'^(?P<slug>[\w.@+-]+)/fiche/(?P<dsp_card_on_load>\w*)?$',
         view=views.RevisionView.as_view(),
         name='revision'
     ),

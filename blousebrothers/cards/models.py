@@ -40,3 +40,4 @@ class Card(models.Model):
     author = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
                                related_name="created_cards", blank=True, null=True)
     slug = AutoSlugField(_('Slug'), max_length=256, unique=True, populate_from='title')
+    created = models.DateTimeField(auto_now_add=True)
