@@ -231,6 +231,13 @@ class Question(models.Model):
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     coefficient = models.PositiveIntegerField(_("Coéfficient"), default=1)
     explaination = models.TextField(_("Remarque globale pour la correction"), blank=True, null=True)
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='questions',
+                                   help_text=_('Ne sélectionner que les items abordés de manière '
+                                               '<strong>significative</strong> dans votre dossier'),
+                                   blank=True,
+                                   )
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='questions',
+                                          blank=True)
 
     def is_valid(self):
         one_good = len([a for a in self.answers.all() if a.answer and a.correct]) >= 1

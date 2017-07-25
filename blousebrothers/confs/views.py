@@ -32,7 +32,7 @@ from blousebrothers.auth import (
     TestPermissionMixin,
     BBLoginRequiredMixin,
 )
-from blousebrothers.tools import analyse_conf, get_full_url
+from blousebrothers.tools import analyse_conf, get_full_url, classifier
 from blousebrothers.confs.utils import create_product
 from .models import (
     Conference,
@@ -66,6 +66,14 @@ class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['meta'] = self.get_object().as_meta(self.request)
+        if context['user'].is_superuser:
+            intro = context['object'].statement
+            l = []
+            quest = context['object'].questions.all()
+            for question in quest:
+                res = classifier(intro+" "+question.question+" "+question.explaination)
+                l.append(res)
+            context['specialities'] = l
         return context
 
 
