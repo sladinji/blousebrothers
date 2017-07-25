@@ -66,12 +66,15 @@ class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['meta'] = self.get_object().as_meta(self.request)
-        if context['user'].is_superuser:
+        if self.request.user.is_superuser:
             intro = context['object'].statement
             l = []
             quest = context['object'].questions.all()
             for question in quest:
-                res = classifier(intro+" "+question.question+" "+question.explaination)
+                if question.explaination is not None:
+                    res = classifier(intro+" "+question.question+" "+question.explaination)
+                else:
+                    res = classifier(intro+" "+question.question)
                 l.append(res)
             context['specialities'] = l
         return context
