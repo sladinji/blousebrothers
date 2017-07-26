@@ -194,7 +194,21 @@ def settings_value(name):
 
 @register.filter
 def rev_content(txt):
-    txt = re.sub("([^~]*)~([^~]*)~", r"\1</span><span class='preview'>\2</span><span>", txt)
+    #  Preview first line if no @ are present in text
+    if "@" not in txt:
+        txt = re.sub(r"(.+)\n", r"@@\1@@", txt, 1)
+    #  Replace - by font awesome >
+    txt = re.sub("(?m)^-(.*)", r'<i class="fa fa-chevron-right" aria-hidden="true"></i> \1<br>', txt)
+    #  Add when txt is indented by space or tab
+    for i in range(1, 5):
+        txt = re.sub(r'(?m)^\t{%s}([^\t]+)' % i,
+                     '&nbsp;'*4*i + r'<i class="fa fa-check" aria-hidden="true"></i> \1', txt)
+        txt = re.sub(r'(?m)^ {%s}([^ ]+)' % i,
+                     '&nbsp;'*i + r'<i class="fa fa-check" aria-hidden="true"></i> \1', txt)
+    #  Replace @@ by preview span
+    txt = re.sub("([^@]*)@@([^@]*)@@", r"\1</span><span class='preview'>\2</span><span><br>", txt)
+    #  Replace new lines by <br>
     txt = re.sub("\n", r"<br>", txt)
+    # Replace /!\ by icon
     txt = re.sub(r'/!\\', '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ', txt)
     return txt

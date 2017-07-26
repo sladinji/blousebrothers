@@ -2003,6 +2003,7 @@ input#id_code {
     background-color: black;
     background-image: url(/static/images/bg_rev.png);
     background-size: cover;
+    background-repeat: no-repeat;
 }
 .btn_rev_block {
     opacity: 0.0;
@@ -2010,6 +2011,9 @@ input#id_code {
 .description *:not(.preview){
     opacity: 0.0;
     font-size: 20px;
+}
+.description {
+    margin-top: 40px;
 }
 .preview {
     font-size: 20px;

@@ -1,4 +1,5 @@
 import difflib
+from glob import glob
 from django.core.management.base import BaseCommand
 from django.contrib.flatpages.models import FlatPage
 from blousebrothers.cards.models import Card
@@ -12,13 +13,13 @@ mapping = (
     ("#", "section"),
     ("", "content"),
 )
-fn = 'fiches/endocardite.md'
+fn = 'fiches/Item 231 - Insuffisance aortique.txt'
 
 
 class Command(BaseCommand):
     help = 'Import .md cards in fiches folder'
     # Dictionnary of spe by word to enhance matches
-    spe_dic = { word: spe
+    spe_dic = {word: spe
                for spe in Speciality.objects.all()
                for word in spe.name.replace("-", " ").split()
                }
@@ -33,39 +34,36 @@ class Command(BaseCommand):
                 ]
 
     def save_fiche(self, **kwargs):
-        print(kwargs)
-        card = Card(
-            title=kwargs["title"],
-            section=kwargs["section"],
-            content=kwargs["content"]
-        )
+        kwargs["content"] = kwargs['content'].replace("~", "@@")
+        items = kwargs.pop('items')
+        specialities = kwargs.pop('specialities')
+        card = Card(**kwargs)
         card.save()
-        card.specialities = self.get_specialities(kwargs['specialities'].split(","))
+        card.specialities = self.get_specialities(specialities.split(","))
         card.items = Item.objects.filter(
-                          number__in=[ int(x.strip()) for x in kwargs['items'].split(",")]
+                          number__in=[int(x.strip()) for x in items.split(",")]
                       ).all()
         card.save()
-
 
     def handle(self, *args, **options):
         Card.objects.all().delete()
         fiche = {}
         fiche["content"] = ""
         ready_to_save = False
-        for line in open(fn).readlines():
-            line = line.strip()
-            for marker, section in mapping:
-                if line.startswith(marker):
-                    if line and section == "content" :
-                        #  append content and flag ready to save
-                        ready_to_save = True
-                        fiche['content'] += "\n{}".format(line)
-                    else:
-                        if ready_to_save and fiche['content']:
-                            #  save and unflag ready to save
-                            self.save_fiche(**fiche)
-                            ready_to_save = False
-                            fiche["content"] = ""
-                        fiche[section] = line.replace(marker, "")
-                        break #  break once a marker is found
-
+        for fn in glob('fiches/*'):
+            for line in open(fn).readlines():
+                line = line.strip()
+                for marker, section in mapping:
+                    if line.startswith(marker):
+                        if line and section == "content":
+                            # append content and flag ready to save
+                            ready_to_save = True
+                            fiche['content'] += "\n{}".format(line)
+                        else:
+                            if ready_to_save and fiche['content']:
+                                # save and unflag ready to save
+                                self.save_fiche(**fiche)
+                                ready_to_save = False
+                                fiche["content"] = ""
+                            fiche[section] = line.replace(marker, "")
+                            break  # break once a marker is found

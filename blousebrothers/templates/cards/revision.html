@@ -25,9 +25,18 @@
 						<img src="{% static spe.image %}" class="img-responsive" alt=""> </div>
 				<!-- Post Content-->
 				<div class="post-content">
+                    {% if spe.name %}
 					<div class="category">{{ spe.name }}</div>
+                    {% endif %}
+                    {% if object.card.title %}
                     <h1 class="title">{{ object.card.title }}</h1>
+                    {% endif %}
+                    {% if object.card.section %}
                     <h2 class="sub_title">{{ object.card.section }}</h2>
+                    {% endif %}
+                    {% if dsp_card_on_load and object.card.author%}
+                    <i>Édité par</i> {{ object.card.author.username }}
+                    {% endif %}
                     <div class="card_button">
                         <a href="#0">
                             <div class="day"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -67,10 +76,6 @@
                         <span>{{ object.card.content | rev_content | safe }}</span>
                         {% endblock description %}
                     </div>
-                    {% if dsp_card_on_load and object.card.author%}
-                    <br>
-                    <i>Édité par</i> {{ object.card.author.username }}
-                    {% endif %}
                     <div class="btn_rev_block btn_rev_eval">
                         <form action="" method="POST" >
                             {% csrf_token %}
