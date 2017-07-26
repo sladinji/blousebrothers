@@ -1,0 +1,208 @@
+####Cardiologie
+###231 
+
+
+Quelle est la définition de l’insuffisance aortique?
+régurgitation de sang de l’aorte vers le ventricule gauche en diastole
+
+
+De quels paramètres physiologiques dépend le volume de la régurgitation dans l’IA?
+taille de l’orifice régurgitant
+durée de la diastole
+gradient de pression
+
+
+Quelles sont les étapes du retentissement de l’IA chronique sur le VG? 
+surcharge volumétrique
+dilatation cavitaire progressive, bonne compliance du VG
+augmentation de contrainte pariétale 
+hypertrophie myocardique compensatrice 
+	avec donc maintien de fonction VG normale au début
+puis dégénérescence des fibres myocardiques et fibrose
+	avec altération de fonction VG
+	et altération de compliance et hausse des pressions de remplissage 
+
+
+Les IA sont-elles toutes symptomatiques?
+Non, certaines IA chroniques peuvent rester asymptomatiques pendant des décennies
+
+
+
+Quel est le retentissement sur la circulation coronaire d’une IA importante?
+quuand IA importante, pressions diastoliques aortiques tendent à s’abaisser 
+donc altération de circulation coronaire
+avec hypoperfusion relative 
+participe à la genèse de la fibrose myocardique
+
+
+Quel est le rententissement hémodynamique d’une insuffisance aortique aigüe?
+surcharge volumétrique VG très importante
+sur une cavité de taille normale ou peu dilatée et à compliance normale 
+entraîne une élévation brutale des pressions de remplissage VG
+et une élévation de pression dans la circulation pulmonaire: OAP
+
+
+
+Quelles sont les étiologies possibles d’IA chronique?
+IA dystrophique 
+IA secondaire à une endocardite infectieuse ancienne
+IA malformative (bicuspidie aortique +++)
+IA rhumatismale
+IA des maladies inflammatoires
+IA médicamenteuses
+
+
+Quels sont les sous-types d’IA dystrophiques?
+IA annulo-ectasiante = dysplasie élastique anneau aortique, paroi aorte ascendante, et valves
+	syndrome de Marfan
+	d’Ehlers-Danlos
+	et le + souvent, sans cause identifiable
+	dilatation d’aorte ascendante expose au risque de dissection aortique +++
+dysplasie valvulaire isolée primitive ou syndrome des valves flasques (plus rare)
+
+
+
+
+Quelle malformation valvulaire est souvent associée à l’IA d’origine malformative?
+Bicuspidie aortique
+dilatation associée de l’aorte ascendante (associée dans 50% des cas) +/
+
+
+Quelles pathologies inflammatoires peuvent se compliquer d’insuffisance aortique?
+Spondylarthrite ankylosante+++
+Takayasu
+Lupus
+
+
+Quels médicaments peuvent entraîner une insuffisance aortique?
+dérivés de l’ergot de seigle
+anorexigènes (fenfluramine, benfluorex)
+
+Quelles sont les étiologies possibles d’IA aigüe?
+endocardite infectieuse
+dissection aortique aiguë
+traumatisme
+rupture d’anévrisme du sinus de Valsalva
+
+
+
+Quelles sont les étiologies d’insuffisance aortique sur prothèse?
+Désinsertion partielle aseptique
+Endocardite infectieuse (—> localisation sur anneau aortique, désinsertion)
+
+
+Caractéristiques du souffle de l’insuffisance aortique?
+diastolique (proto-méso si IA modérée, holo si importante)
+foyer aortique, irradie le long du bord sternal gauche
+classiquement « doux, lointain, humé, aspiratif »
+Si IA sévère : roulement de Flint apexien ou bruit de galop
+
+Quelle valvulopathie doit être évoquée devant une hyperpulsatilité artérielle périphérique et/ou un élargissement de la PA différentielle?
+Insuffisance aortique
+
+
+Signes ECG de l’IA?
+Longtemps normal, troubles du rythme = tardifs++, mauvais pronostic
+Signes d’hypertrophie atriale et ventriculaire gauche
+ondes R très amples dans les dérivations précordiales
+
+
+Signes d’insuffisance aortique à la radiographie de thorax?
+Signes tardifs++
+Augmentation de l’index cardio-thoracique (ICT)
+Dilatation de l’aorte ascendante donne un débord aortique au niveau de l’arc moyen droit
+
+
+
+Quels sont les étapes et les buts de l’ETT lors de l’examen d’une insuffisance aortique?
+confirmation diagnostique de l’IA
+	reflux diastolique de l’aorte vers le VG au doppler
+quantification de l’importance de fuite
+	largeur du jet régurgitant à son origine au doppler
+	méthode de la zone de convergence ou PISA
+précision du retentissement
+	dilatation VG
+	épaisseur pariétale
+	FEVG
+	pression artérielle pulmonaire et pressions de remplissage VG
+détermination de l’étiologie
+	aspect des valves
+	aspect aorte et anneau aortique
+recherche d’autres attentes valvulaires associées
+	mitrale
+	tricuspidienne
+
+
+
+
+Quelles sont les indications de la coronarographie préopératoire dans le cadre d’une insuffisance aortique?
+hommes > 40 ans
+femmes ménopausées ou > 50 ans
+ou facteurs de risque cardiovasculaires
+(valable pour toutes les chirurgies valvulaires)
+
+
+Quel examen invasif est nécessaire dans le bilan préopératoire d’une insuffisance aortique hez les patients porteurs de FDR cardiovasculaires?
+Coronarographie
+Egalement pour tous les hommes après 40 ans et femmes ménopausées.
+
+
+Quelles sont les complications possibles de l’insuffisance aortique?
+Endocardite infectieuse
+Insuffisance cardiaque aigüe ou chronique
+Dissection aortique
+Troubles du rythme (rare)
+
+
+Quel point de l’examen clinique non cardiovasculaire est fondamental lors du suivi d’une valvulopathie?
+Recherche de foyers infectieux bucco-dentaires
+
+
+Quel traitement médicamenteux doit-être instauré dans le syndrome de Marfan, en prévention d’une complication grave?
+bêtabloquants ou losartan (ARA II)
+pour prévenir la dissection aortique
+
+
+
+
+
+indications spécifiques dans l’IA : précision des dimensions de l’aorte ascendante dans les IA
+Scanner et
+dystrophiques, et surveillance de l’évolution chez les sujets non opérés d’emblée
+IRM          
+détermination des volumes VG et FEVG (intérêt si mauvaise échogénicité)
+
+
+
+Quelle est la valvulopathie native qui se complique le plus fréquemment d’endocardite infectieuse?
+L’insuffisance aortique
+
+Quelles sont les indications chirurgicales dans l’insuffisance aortique?
+IA symptomatique (aigüe ou chronique) = remplacement valvulaire
+IA asymptomatique = remplacement valvulaire
+	+ retentissement VG (FEVG < 50% ou dilatation VG sévère)
+	ou autre chirurgie cardiaque nécessaire: pontage, aorte, autre valvulopathie…
+IA dystrophiques + dilatation de l’aorte ascendante = chirurgie de Bentall (RVA + remplacement de l’aorte ascendante par tube prothétique)
+	si dilatation aortique > 55mm
+	ou si Marfan + dilatation aortique > 50mm
+	ou si Marfan + dilatation aortique > 45mm + FDR de dissection aortique
+	ou si bicuspidie + dilatation aortique > 50mm + FDR de dissection aortique
+(FDR de dissection aortique: ATCD familiaux, hausse de taille de l’aorte > 2 mm/an, IA ou IM sévère associée, et/ou désir grossesse)
+
+
+Quels sont les facteurs de risque de dissection aortique, dans le cadre d’un Marfan ou d’une bicuspidie?
+ATCD familiaux
+hausse de taille de l’aorte > 2 mm/an
+IA sévère
+IM sévère
+désir de grossesse
+
+
+
+Quel est le traitement d’une IA asymptomatique, sans retentissement VG, sans dilatation aortique de stade chirurgical?
+Abstention thérapeutique
+
+
+Quelle est la mortalité péri-opératoire de la chirurgie de remplacement valvulaire aortique?
+1-3% mortalité si RVA isolé chez les patients asymptomatiques
+3-7% chez les patients symptomatiques ou si chirurgie de l’aorte ascendante ou pontages associés

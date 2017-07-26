@@ -1,0 +1,116 @@
+
+#### Cardiologie
+###235
+
+##Palpitations
+
+Définition des « palpitations »?
+perception anormale de battements cardiaques, normaux ou anormaux
+trop fort, trop vite, ou irrégulièrement
+Subjectif, anxiogène
+témoignant ou non d’une anomalie cardiaque
+
+Que faut-il impérativement demander à l’interrogatoire, devant des palpitations?
+Signes d’urgences: 
+Douleur thoracique
+Perte de connaissance ou syncope
+Dyspnée
+
+Antécédents familiaux à rechercher devant des palpitations?
+surtout si enfant ou adolescent +++
+mort subite du nourrisson
+mort subite < 35 ans dans la famille
+recherche arythmies de cause génétique (arbre généalogique)
+
+Qu’évoquer devant des palpitations + tachycardie régulière à QRS large à l’ECG?
+Tachycardie ventriculaire
+Se préparer à la réa!
+
+
+Traitements, habitudes de vie, circonstances à rechercher devant des palpitations?
+alcool (+++)
+tabac
+café
+cocaïne
+amphétamines
+sympathomimétiques
+prise d’hormones thyroïdiennes
+grossesse
+hyperthyroïdie
+fièvre (+++)
+déshydratation
+syndrome d’apnée du sommeil
+
+
+Que doit-on évoquer devant une crise polyurique associée à des palpitations?
+trouble du rythme
+
+Que doit-on évoquer devant des palpitations générées par un changement brusque de position?
+tachycardie jonctionnelle
+
+Bilan biologique et paraclinique devant des palpitations?
+biologie de routine :
+	ionogramme
+	NFS
+	alcoolémie
+	troponinémie
+	β-HCG
+	TSH
+ECG +/- ECG d’effort +/- holter ECG: recherche une corrélation électro-clinique
+Echocardiographie
+
+Quel type d’ECG demander si palpitations quotidiennes? et si hebdomadaires?
+Quotidiennes: holter ECG 24-96h
+Hebdomadaires: ECG ambulatoire de longue durée (21 jours)
+
+Citer 2 examens explorant les troubles du rythme cardiaque, réalisés sur avis spécialisé uniquement
+etude électrophysiologique endocavitaire
+	acte diagnostique et thérapeutique
+	si arythmie accessible à une ablation par radiofréquence identifiée
+moniteur ECG implantable
+	jusqu’à 3 ans de monitorage
+
+Que faut-il rechercher chez l’obèse ou le diabétique présentant des extrasystoles auriculaires?
+Des passages en FA
+savoir répéter les Holter
+car FA possiblement emboligène 
+avec risque d’AVC embolique+++
+
+
+
+Grandes causes de tachycardie sinusale?
+Adaptatives++++:
+	extracardiaques :
+		fièvre, sepsis
+		anémie, hypovolémie, hypoxie
+		hyperthyroïdie, grossesse, alcoolisme
+ 		hypotension artérielle (notamment iatrogène +++)
+		syndrome d’apnée du sommeil
+		sevrage brutal en bétabloquants
+		pathologie psychiatrique, sevrage alcoolique
+		sympathomimétiques, vasodilatateurs, atropiniques…
+	cardiaques:
+		cardiopathie
+		insuff cardiaque
+		embolie pulmonaire
+Exceptionnellement: isolée =
+	Tachycardie sinusale inappropriée
+
+
+Terrain, symptômes et étiologies de la tachycardie jonctionnelle:
+2 groupes:
+	tachycardie jonctionnelle par rérentrée intranodale = maladie de Bouveret
+	tachycardie jonctionnelle par rérentrée sur faisceau accessoire de Kent = Wolff-Parkinson-White
+sujet jeune, cœur par ailleurs sain
+palpitations avec parfois battements cervicaux
+polyurie en fin d’accès
+arrêté par manœuvre vagale 
+	ou injection d’adénosine (Krenosin®) 
+	ou d’adénosine-5’-triphosphorique (Striadyne®)
+diagnostic parfois porté grâce à une étude électrophysiologique endocavitaire
+
+
+Comment s’expriment les TDR ventriculaire? Quelle étiologie principale?
+syncope > palpitations
+cardiopathie post-infarctus 80% des cas++
+souvent accompagnées d’angor, collapsus, état de choc, arrêt cardiaque

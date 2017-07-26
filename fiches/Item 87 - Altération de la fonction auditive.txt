@@ -1,0 +1,785 @@
+                                               Item 87
+ - aLTERATION DE LA FONCTION AUDITIVE
+                                     I. Diagnostic
+
+                                     - définitions : surdité (= baisse de l’audition, quelle que soit l’importance ou étiologie), hypoacousie (souvent employé pour les
+                                     surdités légères ou moyennes), cophose (= surdité totale, unilatéral ou bilatérale)
+
+                                     - oreille externe (= pavillon + conduit auditif externe)
+
+                                         → protection mécanique du système tympano-ossiculaire (angulation du conduit cartilagineux/osseux)
+
+                                         → amplification des fréquences conversationnelles (surtout entre 2-4 kHz +++) par résonnance dans le CAE
+
+                                         → localisation sonore, surtout verticale +++ (reliefs du pavillon)
+
+                                     - oreille moyenne (= système tympano-ossiculaire + trompe d’Eustache + mastoïde)
+
+                                         → tympan (membrane conique, incurvée vers l’umbo) : pars tensa (semi-transparente, avec relief du manche du
+                                               marteau) et pars flaccida (au-dessus, séparées par ligaments tympano-malléaires antérieur et postérieur)
+
+                                         → chaîne ossiculaire composée de 3 osselets : marteau (malleus), enclume (incus), et étrier (stapes)
+
+                                         → fonction : adaptation d’impédance des ondes transmises (milieu aérien) → oreille interne (milieu liquide)
+
+                                         → en son absence : perte auditive de 50-55 dB
+
+                                         → muscles de l’oreille moyenne : protection de l’oreille interne des sons forts → réflexe stapédien
+
+                                         → trompe d’Eustache : fonction équipressive, et drainage d’évacuation vers le cavum (processus mucociliaire)
+Généralités
+
+
+
+
+
+                                     - oreille interne (= cochlée + vestibule + canaux semi-circulaires)
+
+                                         → cochlée : transduction d’une énergie mécanique (dans les liquides) en énergie électrique (nerf cochléaire)
+
+                                         → sélectivité fréquentielle : phénomènes actifs et passifs
+
+                                         → fonctionnement passif (disposition des rampes tympanique et vestibulaire, et caractéristiques de la mbne basilaire) :
+                                               organisation tonotopique (haute fréquences
+ → base, basses fréquences → apex), avec maximum de déplacement de la
+                                               membrane basilaire selon la fréquence du son
+ → déplacement des stéréocils des cellules ciliées internes (CCI) → PA
+
+                                         → fonctionnement actif : cellules ciliées externes (CCE) → motilité intrinsèque, accentuation très locale de la vibration et
+                                               donc la transduction des cellules ciliées internes
+
+                                     - transmission d’énergie acoustique : conduction aérienne +++ (pavillon-CAE-tympan-osselets-cochlée) ou osseuse (→ cochlée)
+
+                                     - surdité de transmission : atteinte des structures de l’oreille externe ou moyenne
+
+                                     - surdité de perception ou neurosensorielles : oreille interne, cochlée, nerf auditif, voies nerveuses, structures centrales
+
+                                     - surdité mixte = surdité de transmission + perception
+
+                                     - audiométrie tonale liminaire : seuil auditif entre 125-8000 Hz pour la conduction aérienne (CA), entre 250-4000 Hz pour la
+                                     conduction osseuse (CO), chaque oreille testée séparément
+
+                                     - niveau de surdité = moyenne des seuils auditifs aériens pour les fréquences conversationnelles (500, 1000, 2000, 4000 Hz)
+
+                                          → perte entre 0-20 dB : audition normale ou subnormale
+
+                                          → perte entre 21-40 dB (perte légère) : parole comprise à un niveau normal, mais difficultés si voix faible
+
+                                          → perte entre 41-70 dB (perte moyenne) : parole perçue si elle est forte
+
+                                          → perte entre 71-90 dB (perte sévère) : parole perçue uniquement à des niveaux très forts (lecture labiale +++)
+
+                                          → perte > 90 dB (perte profonde) : compréhension de la parole quasi-impossible, troubles d’acquisition langage (enfant)
+                                                                                           Audition normale Surdité transmission        Surdité perception
+                                         Triade
+                                                               Epreuve de Weber             Non latéralisée       Oreille atteinte         Oreille saine
+Examens fonctionnels de l’audition
+
+
+
+
+                                      acoumétrique
+                                                           Epreuve de Rinne (CA
+ - cO)           Positif            Nul ou négatif             Positif
+
+                                                          - stimulation par des sons pures de fréquence (Hz) et intensité (dB) variées : détermination du
+                                      Audiométrie         seuil liminaire d’audition par voie aérienne (casque) et osseuse (vibrateur mastoïdien)
+                                        tonale
+            - audition normale ou surdité de perception : CO = CA (courbes superposées)
+ → rinne positif
+
+                                                          - surdité de transmission : CO > CA
+ → rinne négatif
+
+                                                          - stimulation par des sons complexes signifiants (mots bisyllabiques +++) ou non
+                                      Audiométrie
+         - pourcentage de reconnaissance des mots d’une liste (en fonction de l’intensité)
+                                        vocale
+            - casque (chaque oreille séparément) ou champ libre (2 oreilles simultanément)
+
+                                                          - possibilité de réalisation avec adjonction de bruit perturbant
+
+                                                          - mesure de l’impédance de l’oreille moyenne et de ses modifications sous l’influence d’une
+                                                          surpression ou dépression dans le CAE (en l’absence de perforation tympanique +++)
+
+                                                          - valeur fonctionnelle de la trompe d’Eustache et du système tympano-ossiculaire
+                                      Impédance-
+
+                                                               → trouble de la ventilation de l’oreille moyenne : pic de compliance décalé vers les
+                                        métrie                     pressions négatives (= dépression dans la caisse du tympan)
+
+                                                               → epanchement liquidien dans la caisse du tympan : courbe plate
+
+                                                               → caractère physique type tympanosclérose, atteinte ossiculaire : courbe en « Tour Eiffel »
+
+                                                                - mesure de la variation d’impédance du système tympano-ossiculaire (impédancemétrie) :
+                                                Réflexe
+Examens fonctionnels de l’audition (suite)
+                                                                contraction du muscle stapédien lors d’une simulation auditive supraliminaire (> 80 dB)
+                                               stapédien
+        - dans certaines affections (otospongiose +++) : absence de réflexe stapédien
+
+                                                                - potentiels neurogènes évoqués a/n cochléaire et rétro-cochléaire (nerf VIII, tronc cérébral) :
+                                                                enregistrement dans les 10 ms après stimulation sonore, dans manière non invasive (électrodes),
+                                               Potentiels       avec extraction du PEA du bruit de fond électrique non significatif (EEG de repos, EMG…)
+                                                évoqués
+         - intérêt otologique : mesure objective du seuil auditif (précision de 10-15 dB), dès la naissance
+                                                auditifs        (audiométrie objective de l’enfant
+ - dépistage du nouveau-né - ou du sujet non coopérant +++)
+                                               précoces
+         - intérêt otoneurologique : localisation topographique de l’atteinte des surdités de perception
+                                                 (PEA)
+          → étude des latences et délais de conduction des 5 pics (I (cochlée), II (nerf auditif), III, IV, V (TC))
+
+                                                                - limites : pas d’étude fréquence par fréquence des réponses, plage de fréquences aiguës de
+                                                                l’audiométrie (non graves), gêne d’interprétation pour l’analyse des latences si surdité profonde
+
+                                                                - cellules ciliées internes (CCI) : seuls récepteurs sensoriels de l’audition
+
+                                                                - cellules ciliées externes : propriétés micromécaniques, et dont la contraction entraine un son
+                                                                enregistrable dirigé vers le CAE (= otoémissions acoustiques)
+ → spontanées (OEAS) ou
+                                              Otoémissions
+                                                                provoquées par des sons brefs (OEAP)
+ → donc, méthode non invasive, simple, rapide (1 min) et
+                                               acoustiques
+                                                                fiable d’exploration des CCE (premières à disparaitre si atteinte cochléaire)
+                                                  (OEA)
+         - méthode dépistage de la surdité chez le nouveau né : OEAP présentes (système auditif
+                                                                périphérique intègre, perte < 30 dB), ou OEAP absentes (possible hypoacousie > 30 dB)
+
+                                                                - dépistage d’une atteinte cochléaire infraclinique de l’adulte : TTT ototoxique, professionnelle…
+
+                                             II. Surdités de transmission
+
+                                                                 - unilatérales ou bilatérales, intensité légère ou moyenne, jamais totale (perte max = 60 dB)
+
+                                                                 - pas de modification qualitative de la voix, qui peut résonner dans les oreilles (autophonie)
+                                                 Clinique
+        - souvent, intelligibilité améliorée dans le bruit (paracousie) et au téléphone
+Diagnostic positif
+
+
+
+
+
+                                                                 - possibilité de retard de langage chez l’enfant
+
+                                                                 - parfois, acouphènes de timbre grave : peu gênants, bien localisés dans l’oreille malade
+
+                                                                 - epreuve de Weber : localisée dans l’oreille sourde ou la plus sourde (si atteinte bilatérale)
+                                               Acoumétrie
+
+                                                                 - epreuve de Rinne : négative
+
+                                                                 - dissociation entre conduction aérienne (CA) et osseuse (CO) : Rinne audiométrique négatif
+                                               Audiométrie
+                                                                 (CO normale, et CA abaissée sur toutes les fréquences, ou prédominant sur les graves)
+                                             tonale et vocale
+    - tests supraliminaires et audiométrie vocale : pas d’altération qualitative (pas de distorsion)
+
+                                                                 - impédancemétrie + mesure du réflexe stapédien (en l’absence de perforation tympan +++)
+                                             Tympanométrie
+
+                                                                 - eléments de confirmation diagnostique et de précision des lésions
+
+                                                                 - ostéodystrophie de la capsule labyrinthique, avec ankylose de l’étrier dans la fenêtre ovale
+
+                                                                 - multifactorielle (génétique, hormonale, virale…), souvent bilatérale (75% des cas +++)
+
+                                                                 - atteinte histologique = 8% de sujets blancs, manifestation clinique = 0,1% des sujets
+
+                                                                 - terrain : adulte jeune, prédominance féminine (2/1), absence de passé otologique, tympan
+Diagnostic étiologique et traitement
+
+
+
+
+                                                                 normal +/- ATCD familiaux surdité (50% des cas)
+
+                                                                 - chez la femme, poussées évolutives lors des périodes de vie génitale
+
+                                                                 - audiométrie : surdité de transmission pure, puis mixte
+                                              Otospongiose
+
+                                                                 - tympanogramme normal, et réflexe stapédien aboli
+
+                                                                 - tDM : foyers d’otospongiose de la capsule otique (hypodensité osseuse), ou épaississement
+                                                                 platinaire, mais un scanner normal n’élimine pas le diagnostic d’otospongiose +++
+
+                                                                 - surdité évolutive : parfois, surdité sévère, mais rarement profonde
+
+                                                                 - chirurgie (résultats excellent = 95% restitution d’audition) : stapédectomie (ablation de
+                                                                 l’étrier) ou stapédotomie (trou central de la platine), et prothèse stapédienne (→ continuité)
+
+                                                                 - si contre-indication opératoire (rare) : appareillage par prothèse auditive (excellents résultats)
+
+                                                                 - fréquence non négligeable, séquelles dues aux OMA à répétition ou OMC : perforation
+                                                                 tympanique, tympan flaccide ou accolé au fond de caisse (atélecasie), lyse ossiculaire avec
+                                                                 interruption de la chaîne, blocage ossiculaire cicatriciel (tympanosclérose), dysperméabilité de
+                                                Séquelles        la trompe d’Eustache (entrave l’aération de la caisse)
+                                                 d’otites
+        - atteintes isolées ou associées, surdité de transmission légère ou moyenne (seule séquelle)
+
+                                                                 - généralement fixée, parfois évolutive (labyrinthisation, par atteinte progressive d’oreille int.)
+
+                                                                 - traitement chirurgical : tympanoplastie (résultats moins bien que l’otospongiose = 50-70%)
+
+                                                                 - prothèse auditive (aide efficace) : si échec du traitement chirurgical
+
+                                                                   - malformation congénitale de l’oreille externe et/ou moyenne
+
+                                                                   - origine génétique ou acquise (embryopathies rubéolique ou toxique)
+
+                                                                   - le plus souvent, isolée (uni- ou bilatérale), parfois dans le cadre d’un syndrome malformatif
+                                                                   plus complexe de la 1ère fente branchiale (syndrome du 1er arc = syndrome otomandibulaire)
+
+                                                                   - diagnostic simple à naissance si aplasie majeure : malformation du pavillon, absence de CAE
+
+                                                                   - parfois, diagnostic très difficile si aplasie mineure unilatérale : malformation uniquement de
+                                                                   la chaine ossiculaire (souvent, découverte fortuite +++)
+                                               Aplasie d’oreille
+
+                                                                   - surdité de transmission pure (généralement, oreille interne normale, origine embryologique
+                                                                   différente), fixée, non évolutive, révélée par signes indirects chez le jeune enfant si bilatérale
+Diagnostic étiologique et traitement (suite)
+
+
+
+
+
+                                                                   - traitement chirurgical (difficile, spécialisé) : discutable dans les formes unilatérales (pas ou
+                                                                   peu de retentissement), avec indication si âge > 7 ans et après bilan par scanner
+
+                                                                   - prothèse auditive à conduction osseuse : indication ans les formes bilatérales, en attendant la
+                                                                   chirurgie, pour permettre un développement socio-scolaire normal (très efficace)
+
+                                                                   - aplasie du pavillon : geste chirurgical de reconstruction après 8 ans
+                                                 Bouchon de
+         - diagnostic facile à l’examen : surdité de transmission, volontiers apparue après un bain
+                                                  cérumen
+          - traitement simple et efficace : extraction par lavage (si tympan fermé) ou aspiration
+
+                                                                   - fractures du rocher atteignant l’oreille moyenne
+
+                                                                        → surdité de transmission réversible : si simple hémotympan
+
+                                                                        → surdité de transmission permanente : si atteinte du système tympano-ossiculaire
+                                                                            (perforation, fracture, luxation)
+ → tympanoplastie à distance
+
+                                                   Surdités
+        - traumatismes externes par pénétration d’un agent vulnérant par le CAE (plus rares) : mêmes
+                                                traumatiques       lésions et traitement que les fractures du rocher
+
+                                                                   - barotraumatismes de l’oreille moyenne (variations brusques et importantes de pression)
+
+                                                                        → facteur favorisant : dysfonctionnement tubaire (rhume, obstruction nasale chronique…)
+
+                                                                        → dépression relative au niveau de la caisse du tympan : entraîne une exsudation séreuse
+                                                                            (otite séreuse), voire hémorragie (hémotympan) ou rupture tympanique
+
+                                                                        → parfois, association à : barotraumatisme de l’oreille interne
+
+                                                                   - oMA : surdité de transmission contingente, avec le plus souvent, guérison en même temps
+                                                   Surdité
+
+                                                                   - otite séromuqueuse à tympan fermé (signe majeur +++) : l’OSM est la cause la plus fréquente
+                                                  d’origine
+                                                                   de surdité de transmission de l’enfant
+ → aérateur trans-tympanique (efficace)
+                                                 infectieuse
+       - cholestéatome de l’oreille moyenne : parfois, la surdité de transmission est le premier signe
+                                                   Surdité
+         - très rares, surdité parfois révélatrice, et prise en charge par traitement de la cause
+                                                  d’origine
+        - tumeur du glomus tympano-jugulaire
+                                                  tumorale
+         - carcinomes du CAE et de l’oreille moyenne
+
+
+                                               III. Surdité de perception
+
+                                                                      - uni- ou bilatérales, d’intensité variable, parfois totale : de la surdité légère à la cophose
+
+                                                                      - elévation de la voix : surdités bilatérales et sévères
+
+                                                                      - gêne auditive révélée ou aggravée en milieu bruyant et dans les conversations à
+                                                    Clinique
+                                                                      plusieurs personnes : signe de la « cocktail party »
+
+                                                                      - parfois, acouphènes de timbre aigus (sifflements) : mal tolérés, plus ou moins bien
+Diagnostic positif
+
+
+
+
+                                                                      localisés dans l’oreille
+
+                                                                      - epreuve de Weber : latéralisée dans l’oreille saine ou la moins sourde (si atteinte bilatérale)
+                                                  Acoumétrie
+
+                                                                      - epreuve de Rinne : positive
+
+                                                                      - courbes de conduction osseuse et aériennes abaissées de manière égale, non dissociées :
+                                                                      Rinne audiométrique positif (CA = CO)
+
+                                                                      - perte prédominant sur les sons aigus : sauf Maladie de Ménière +++ (perte sur toutes les
+                                                                      fréquences ou prédominant sur les sons graves)
+                                                  Audiométrie
+
+                                                                      - tests supraliminaires et audiométrie vocale : altération qualitatives et distorsions
+                                                tonale et vocale      (habituellement absentes dans les atteintes du nerf VIII)
+ → hauteur (diplacousie), intensité
+                                                                      (recrutement), et timbre
+
+                                                                      - pEA (audiométrie objective) : aide au diagnostic topographique (oreille interne, nerf VIII,
+                                                                      voies nerveuses)
+
+                                                                    - apparition brutale ou progressive, avec parfois, cause inconnue ou incertaine
+
+                                                                    - souvent, traitement aléatoire ou inexistant, pronostic fonctionnel incertain (voire péjoratif)
+
+                                                                                      - surdité brusque en coup de tonnerre, unilatérale, survenant brutalement en qlq sec-min
+
+                                                                                      - signes associés : sifflements unilatéraux, parfois vertiges ou troubles d’équilibre
+
+                                                                                      - pas d’anomalie clinique ou biologique : surdité de perception +/- profonde
+
+                                                                                      - arguments étiologiques discrets : virale (rhinopharyngite datant de quelques jours, allure
+                                                                        Surdité       saisonnière), vasculaire (sujet âgé, facteurs de risque, atteinte vasculaire)
+                                                                       unilatérale
+    - pronostic fonctionnel péjoratif : 50-75% ne récupèrent pas
+                                                                        brusque
+       - facteurs de mauvais pronostic : surdité sévère ou profonde, et traitement retardé ou nul
+                                                                         (SUB)
+        - urgence médicale dans les premières heures-jours : efficacité discutée, nulle après J8-10
+
+                                                                                           → pendant 6-8 jours : corticoïdes, vasodilatateurs IV, oxygénothérapie hyperbare,
+                                                                                               carbogène, hémodilution
+
+                                                                                           → puis, pendant plusieurs semaines : traitement de relais plus léger (vasodilatateurs…)
+
+                                                                                     - recherche systématique du neurinome de l’acoustique (10%) : PEA ou IRM injectée (+++)
+
+                                                                                     - fracture transversale du rocher
+ → labyrinthique (lésant l’oreille interne)
+
+                                                                                          → clinique : surdité unilatérale ou asymétrique, totale ou partielle (mais alors souvent
+                                                                                             évolutive
+ → dégénérescence secondaire)
+                                                                        Origine
+           → signes associés : acouphènes, et souvent, vertiges (régressifs)
+                                                                     traumatique
+     - traumatisme crânien sans fracture du rocher (commotion labyrinthique par l’onde de
+                                            Surdités unilatérales
+Diagnostic étiologique et traitement
+
+
+
+
+                                                                                     choc) : surdité régressive (totalement ou partiellement)
+
+                                                                                     - surdité résiduelles : syndrome post-traumatique, incidence médico-légale fréquente
+
+                                                                                     - fistule péri-lymphatique : surdité de perception post-traumatique évolutive ou fluctuante
+
+                                                                                     - labyrinthites otogènes par propagation de l’infection de l’oreille moyenne
+
+                                                                                          → causes : otite moyenne aiguë, cholestéatome de l’oreille (avec fistule du canal
+                                                                                              externe ou effraction trans-platinaire au niveau de la fenêtre ovale)
+
+                                                                                          → evolution : régression totale ou partielle, après traitement antibiotique et corticoïde
+                                                                    Labyrinthites             énergique et précoce, et traitement chirurgical en urgence d’un cholestéatome
+                                                                     infectieuses
+
+                                                                                     - neuro-labyrinthites hématogènes, microbiennes : oreillons (surdité unilatérale), zona
+                                                                                     auriculaire (atteinte du VII), autres virus neurotropes, ou syphilis (exceptionnelle)
+
+                                                                                     - neuro-labyrinthites post-méningite : surtout bactérienne +++
+
+                                                                                     - généralement, surdité irréversible et incurable
+                                                                       Trouble
+                                                                                                                         Cf. Item 101
+ - vertiges
+                                                                     pressionnel
+
+                                                                                     - schwannome de la paire crânienne VIII : tumeur de l’angle ponto-cérébelleux
+
+                                                                                     - rare, mais nécessité de diagnostic au stade précoce (+++)
+
+                                                                                     - début insidieux, chez l’adulte : unilatérale, lentement progressive, de découverte fortuite
+
+                                                                                     - signes associés : acouphènes (contingents), troubles de l’équilibre (discrets et inconstants)
+
+                                                                                     - examen clinique : hypoesthésie cornéenne unilatérale, signes vestibulaires spontanés ou
+                                                                    Neurinome de     provoqués (secouage de tête, vibrateur, Halmagyi)
+                                                                     l’acoustique
+    - audiométrie tonale et vocale : surdité de perception avec intelligibilité effondrée
+
+                                                                                     - potentiel évoqué auditif (+++) : ↑ latences du côté atteint (atteinte rétro-cochléaire)
+
+                                                                                     - epreuves calorique et otolithique : déficit vestibulaire unilatéral
+
+                                                                                     - imagerie : IRM du canal auditif interne-fosse postérieure avec injection de gadolinium
+
+                                                                                     - traitement (selon âge, taille, localisation, évolution du neurinome, et symptômes) :
+                                                                                     chirurgie, surveillance radio-clinique, ou radiothérapie stéréotaxique (gamma knife)
+
+                                                                                     - surdité de perception cochléaire bilatérale, d’installation progressive, chez l’adulte jeune
+                                       Surdités bilatérales
+
+
+
+
+
+                                                                                     - souvent, suspicion d’origine génétique : transmission autosomique dominante
+                                                                       Origine
+       - evolution : aggravation au fil du temps (parfois très rapide +++)
+                                           de l’adulte
+
+
+
+
+                                                                      génétique
+      - signes associés : acouphènes bilatéraux
+                                                                       (maladie
+      - handicap fonctionnel dramatique (sujet jeune en pleine activité professionnelle)
+                                                                     évolutive du
+    - echappe à tout traitement médical ou chirurgical
+                                                                     sujet jeune)
+         → vasodilatateurs : classiquement prescrits, efficacité discutable
+
+                                                                                          → prothèse acoustique amplificatrice : rapidement, dès la chute de l’intelligibilité
+
+                                                                                          → implant cochléaire (relais de la prothèse amplificatrice) : si surdité profonde bilatérale
+
+                                                                                                         - processus normal de vieillissement : porte sur toutes les structures neurosensorielles du
+                                                                                                         système auditif (oreille interne, voies et centres nerveux)
+
+                                                                                                         - commence très tôt vers 25 ans : amputation des fréquences les plus aiguës (sans qu’il n’y
+                                                                                                         ait avant longtemps de trouble de l’intelligibilité +++)
+
+                                                                                                         - signes clinique vers 65 ans : gêne progressive de la communication verbale, beaucoup plus
+                                                                                                         importante que selon la courbe audiométrique tonale si association à des troubles de la
+                                                                                                         sélectivité fréquentielle (par atteinte des CCE) et de l’intégration corticale du message verbal
+
+                                                                                                         - parfois, débute beaucoup plus tôt si facteurs associés
+                                                                                           Sénescence ou
+      → génétiques : presbyacousie précoce, forme de passage ac surdité évolutive du jeune
+                                                                                           presbyacousie
+      → pathologiques : insuff. vasculaire, diabète, trauma sonores professionnels, toxiques..
+
+                                                                                                            - bilatérale et symétrique, portant sur les fréquences aiguës (4000 Hz) : puis, extension vers
+                                                                                                            les fréquences conversationnelles (500-2000 Hz)
+
+                                                                                                            - signes : difficulté de suivre les conversations en milieu bruyant, et parfois, acouphènes
+
+                                                                                                            - facteurs aggravant des troubles d’intelligibilité : troubles cognitifs (sénescence)
+
+                                                                                                            - traitement inexistant, éducation de l’entourage
+
+                                                                                                            - prothèse auditive bilatérale précoce (+++) : dès une chute bilatérale de 30 dB à 2000 Hz
+Diagnostic étiologique et traitement (suite)
+
+
+
+
+
+                                                                                                            - orthophonie : lecture labiale, éducation auditive, travail cognitif sur suppléances mentales
+
+                                                                                                                                - maladie professionnelle fréquente (forgerons, chaudronniers…)
+                                               Surdités bilatérales de l’adulte (suite)
+
+
+
+
+
+                                                                                                                                - zone d’alarme de nuisance auditive = 85 dB pendant 8h/jour
+
+                                                                                                                                - sons impulsifs et spectres sonores aigus plus nocifs
+
+                                                                                                                                - susceptibilité individuelle au bruit
+                                                                                                            Traumatismes
+ - audiométrie (1er signe +++) : scotome auditif bilatéral à 4000 Hz, puis
+                                                                                                               chroniques       extension en tache d’huile (aigus et fréquences conversationnelles)
+                                                                                                            professionnels
+ - clinique : fatigue auditive dans les premiers mois, sifflements d’oreille
+                                                                                                                                (réversibles à l’éviction du bruit), puis aggravation de la gêne auditive
+
+                                                                                                                                - pas d’évolution après éviction de l’ambiance sonore
+
+                                                                                                                                - pas de traitement, mesures de prévention (+++) : protection individuelle
+                                                                                            Traumatismes                        et collective, audiogrammes de contrôle (médecine du travail)
+                                                                                               sonores
+                          - bruit soudain et violent (déflagration…) : lésion de l’oreille interne et
+                                                                                                                                surdité bilatérale, portant ou prédominant sur la fréquence 4000 Hz
+
+                                                                                                                                    → signes associés : sifflements d’oreille, parfois vertiges
+
+                                                                                                                                    → evolution : possibilité de régression totale ou partielle
+                                                                                                            Traumatismes
+            → traitement médical en urgence (+++) : même que les SUB (cf. supra)
+                                                                                                                  aigus
+             → parfois, accident du travail (pas une maladie professionnelle +++)
+                                                                                                              accidentels
+       - barotraumatismes de l’oreille interne (mêmes causes que pour l’oreille
+                                                                                                                                moyenne) : surdité et vertiges rotatoires, avec traitement en urgence (+++)
+
+                                                                                                                                    → corticothérapie, vasodilatateurs, désobstruction nasale (VC locaux)
+
+                                                                                                                                    → si épanchement de l’oreille moyenne : paracentèse + ATB per os
+
+                                                                                                                                    → prévention des récidives : rétablissement de perméabilité nasale…
+
+                                                                                                            - bilatérale (si voie générale), prédominant sur fréquences aiguës, irréversible et incurable
+
+                                                                                                            - aminosides +++ (streptomycine) : ototoxiques (cochlée + vestibule), mais toxicité moins
+                                                                                                            importante des nouveaux aminosides (tropisme plutôt vestibulaire que cochléaire)
+
+                                                                                                            - mécanismes : surdosage et répétition des traitements, sujets insuffisants rénaux, et/ou
+                                                                                               Surdités
+                                                                                                            prédisposition génétique (ADN mitochondrial)
+                                                                                             toxiques et
+
+                                                                                                            - prévention (+++) : surveillance de la fonction rénale, adaptations des doses (surveillance
+                                                                                             iatrogènes
+                                                                                                            des [C] plasmatiques), indications précises, audiogramme systématique si sujets à risque
+
+                                                                                                            - autres médicaments incriminés : furosémide (potentialisation de l’ototoxicité des
+                                                                                                            aminosides), antimitotiques (cisplatine, moutardes à l’azote), quinine et dérivés, rétinoïdes
+
+                                                                                                            - certains produits industriels : CO, Hg, Pb…
+
+                                                                                                            - très rarement chez l’adulte conscient : surdité psychogène ou simulée
+                                                                                          Simulateurs
+
+                                                                                                            - epreuves audiométriques objectives (+++) : PEA avec recherche de seuils
+
+                                                                                                            - lésion des voies centrales : atteinte haute du TC, ou régions cortico-sous-corticales
+DD
+
+
+
+
+
+                                                                                                            - pas une surdité, car pas de baisse de l’ouïe, mais troubles gnosiques : le sujet entend
+                                               Surdités centrales                                           (audiogramme tonal normal), mais ne comprend pas (audiogramme vocal altéré)
+
+                                                                                                            - souvent, pas des plaintes auditive : SEP, tumeur du tronc cérébral
+
+                                                                                                            - audiométrie par potentiels évoqués auditifs (+++) : confirmation et localisation
+                 IV. Enfant sourd
+- Retentissement plus grave si : présente à la naissance ou avant l’acquisition du langage (1,5-2 ans), bilatérale et importante
+- Trouble communication orale d’autant plus important que le seuil est élevé : majeur si surdité sévère-profonde (> 70 dB),
+plus ou moins marqué si surdité moyenne (40-70 dB), voire légère
+- Développement (tout retard des acquisitions -langage- dit faire rechercher une surdité +++) : réaction au bruits (naissance),
+gazouillis (3 mois), reconnaissance du nom (4 mois), imitation des sons et intonations (6 mois), redouble les syllabes (10 mois),
+premiers mots (12 mois), vocabulaire > 50 mots et juxtaposition de 2-3 mots (18 mois)
+
+     → puis, vers 3 ans : comprend le langage de ses activités quotidiennes, utilise « je », communique, phrases avec
+         sujet/verbe/complément, pose des questions
+
+     → a 5 ans : parle sans déformer les mots, vocabulaire étendu, comprend et construit des phrases complexes, peut
+         évoquer un événement et raconter une histoire
+                  Perte          Appellation                                                Conséquences
+Classification
+
+
+
+
+                  20-40             Légère            Défaut de prononciation des consonnes, gêne scolaire       Langage oral acquis
+                                                             Parle tard et mal, langage imparfait                  spontanément,
+                  40-70           Moyenne                                                                          retard possible
+                                                        Nombreuses confusions des voyelles et consonnes
+                  70-90             Sévère                Identifie les bruits, ne perçoit que la voix forte   Langage oral non acquis
+                                                                                                                   spontanément,
+                  > 90    Profonde-totale (cophose)                 Aucune parole n’est perçue                      retard majeur
+
+                 - dépistage universel de la surdité en milieu néonatal (+++)
+
+                 - puis, vigilance (audition fragile) : certaines surdités acquises (méningite), ou atteintes génétiques évolutives
+
+                                       - nourrisson : comportement anormal vis-à-vis du monde sonore (pas de réactions aux voix,
+                                       bruits), avec parfois, possibilité de gazouillis normal vers 3 mois (mais illusion, simple jeu
+                  Signes d’appels moteur, avec régression vers 1 an)
+                    (indirects et
+      - âge préscolaire : absence ou retard de développement du langage parlé, voire régression si
+                      variables        surdité récente (contraste avec le bon développement du langage mimique ou gestuel)
+                     selon l’âge)
+      - âge scolaire (surdité sévères-profondes généralement reconnues) : banal retard scolaire
+                                       (orientation vers des troubles caractériels ou problème psychologique), troubles d’articulation
+
+                                       - a tout âge : symptomatologie otologique (malformation, otite…)
+
+                                       - essentiel, prendre en considération les doutes formulés par les parents
+                   Interrogatoire
+
+                                       - déroulement de la grossesse (réanimation néonatale), maladies postnatales
+                    des parents
+        - antécédents héréditaires, développement psychomoteur
+
+                                       - par tout médecin, 3 certificats obligatoires du carnet de santé : naissance, 9ème et 24ème mois
+
+                                       - incidence de la surdité profonde à la naissance = 1,3%
+
+                                       - dépistage (+++) : un enfant entendant à la naissance peut devenir malentendant
+
+                                       - en période néonatale, 2 techniques :
+Diagnostic
+
+
+
+
+
+                                            → otoémissions acoustiques : si absence d’OEAP (5% FP) → surdité (sans présager de sa
+                       Tests de                 profondeur), ou le plus souvent, mauvaises conditions d’examens (endormi, au calme,
+                      dépistage                 pièce silencieuse, CAE propres)
+
+                                            → pEA automatisé (1% FP) : si échec du test → surdité, ou mauvaises conditions d’examen
+
+                                      - 4ème mois (non obligatoire) : réactions aux bruits familiers (voix mère, biberon, porte)
+
+                                      - 9ème mois : bruits familiers, jouets sonores divers (calibrés en fréquence et intensité)
+
+                                      - 24ème mois : voix chuchotée, voix haute, jouets sonores
+
+                                      - a l’entrée à l’école, vers 6 ans : audiogramme du médecin scolaire (surdité légère-moyenne)
+
+                                      - a tout âge et dès la naissance : audiométrie objective par enregistrement des PEA ou OEAP
+                                      (fixation du niveau de surdité à 10 dB près, mais sur les fréquences aiguës seulement +++)
+
+                                      - entre 3 mois-5 ans : audiométrie par réflexe conditionné (après apprentissage, stimulus
+                    Mesure de         sonore avec diminution progressive de l’intensité
+ → seuil auditif à 10-15 dB près)
+                    l’audition
+             → geste automatico-réflexe : réflexe d’orientation conditionnée -ROC- (tourne la tête)
+                       (ORL)
+               → geste volontaire à but ludique : l’enfant appuie sur un bouton faisant apparaitre des
+                                               images amusantes (peep-show), ou mettant en marche un train jouet (train-show)
+
+                                      - a partir de 5 ans : techniques d’audiométrique tonale subjective (= adulte)
+
+                                      - bilan orthophonique et examen psychologique avec détermination du QI
+
+                                      - indispensables pour compléter le bilan d’une surdité de l’enfant
+                      Autres
+
+                                      - diagnostics différentiels : autisme et troubles envahissant du développement, troubles
+                                      neurologiques et dysphasies, retard psychomoteur
+
+                                                                  - surdités moyennes (perte < 60 dB) : compatibles avec l’acquisition spontanée du
+                                                                  langage (plus ou moins perturbée si bilatérales)
+
+
+
+
+                                      transmission
+                                       Surdités de
+
+                                                                  - aplasies de l’oreille externe et/ou moyenne par malformation de la 1ère fente et du 1er
+                                                                  arc branchial : uni- ou bilatérales, isolées ou associées à d’autres malformations du 1er
+                                                                  arc (syndromes otomandibulaires)
+
+                                                                  - maladie de Lobstein (maladie des os de verre) : surdité + fragilité osseuse + sclérotiques
+                                                                  bleues + hyperlaxité ligamentaire
+
+                                                                  - unilatérales : pas de conséquence majeure sur le développement du langage ou sur le
+                    Génétiques           Surdités de perception   plan social, et souvent de découverte fortuite
+                     (50-60%)
+                                     - bilatérales
+
+                                                                      → surdités isolées (non syndromiques) : non évolutives, génétiques (récessives) → 60% des
+Etiologies
+
+
+
+
+                                                                        surdités sévères-profondes de l’enfant (mutation du gène codant pour la connexine 26)
+
+                                                                      → syndrome d’Usher : rétinite pigmentaire
+
+                                                                      → syndrome de Wardenburg : mèche blanche, hétérochromie irienne
+
+                                                                      → syndrome de Pendred : goitre + hypothyroïdie
+
+                                                                      → syndrome d’Alport : insuffisance rénale
+
+                                                                      → syndrome de Jerwall-Lange-Nielsen : altérations cardiaques (QT long) → mort subite +++
+
+                                                                      → mucopolysaccharidoses (thésaurismoses) : maladie de Hurler (gargoïlisme), de Morquio
+                                         Prénatales
+ - 15% des surdités bilatérales sévères-profondes
+                                        (embryo- et
+ - tORCH syndrome : Toxoplasmose, Others (syphilis, VIH), Rubéole, CMV, Herpès
+                                       fœtopathies)
+ - atteintes toxiques : aminosides, médicaments tératogènes (thalidomide)
+                      Acquises
+                      - 15% des surdités sévères-profondes
+                      (40-50%)          Néonatales
+ - traumatisme obstétrical, anoxie néonatale, prématurité
+
+                                                    - incompatibilité Rhésus : ictère nucléaire (lésion oreille interne et/ou centrale)
+
+                                                    - classiques chez l’adulte
+                                        Postnatales
+
+                                                    - traumatiques, toxiques, infectieuses générales (méningite) ou locales (OSM)
+                     Surdités de
+                                                                                           Traitement médical ou chirurgical
+                    transmission
+
+                                       - appareillage précoce de toute surdité de perception moyenne à profonde : dès le diagnostic
+                                       posé et que les seuils auditifs sont connus précisément sur chaque oreille
+
+                                       - prise en charge orthophonique systématique : acquisition et correction du langage parlé,
+Prise en charge
+
+
+
+
+                                       faisant appel aux perceptions auditives restantes ou par appareillage, et un soutien visuel
+                                       adapté (lecture labiale, langage parlé complété)
+
+                                       - facteurs de meilleurs résultats thérapeutiques : surdité moins profonde, rééducation plus
+                     Surdités de       précoce, possibilités intellectuelles plus grandes (QI), enfant bien entouré par la famille
+                     perception
+        - implant cochléaire (prothèse électronique avec électrodes de stimulation dans la cochlée) :
+                                       surdité de perception bilatérale sévère-profonde avec résultats prothétiques insuffisants
+
+                                       - langue des signes : si surdité profonde bilatérale sans espoir de réhabilitation auditive
+                                       (prothèse acoustique ou implant cochléaire), ou choix parental (projet visuo-gestuel)
+
+                                       - prise en charge multidisciplinaire : rééducation précoce, accompagnement parental et de
+                                       l’enfant, maintien dans son milieu familial et dans un milieu normo-entendant (implant)
+
+                                       - parfois, institut spécialisé (3 ans) : si handicap associé majeur, ou absence de soutien familial
+
+                  - fondamentale en cas d’oreille unique (surdité unilatérale)
+
+                  - origine génétique (majorité des surdités handicapantes de l’enfant)
+
+                      → information : risques de la consanguinité
+
+                      → si antécédent familial de surdité : encadrement (familial, médical, social), suivi du développement normal
+                          pour un dépistage précoce, mais pas d’indication au dépistage prénatal (bénigne, prise en charge efficace)
+Prévention
+
+
+
+
+
+                  - autres causes de surdité avec prévention envisageable
+
+                      → situations à risque : prématurité, réanimation, petit poids de naissance, hypoxie, traitements ototoxiques
+
+                      → surdité ototoxique : aminosides (toxicité cumulative, limiter les indications, dose et durée minimales),
+                          chimiothérapie (sels de platine
+ → carboplatine moins toxique que cisplatine), prévention d’alcoolisme fœtal
+
+                      → surdité traumatique : ne pas nettoyer les CAE par coton-tige au-delà de la zone pileuse (→ luxations
+                          ossiculaires, voire atteinte de l’oreille interne), soins d’oreille sous contrôle visuel (otoscopie)
+
+                      → traumatismes sonores (bruits aigus +++) : éviter les bruits intenses et prolongés, les métiers bruyants et
+                          l’association solvants-bruit (ototoxicité cumulative)
+

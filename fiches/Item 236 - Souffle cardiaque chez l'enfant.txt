@@ -1,0 +1,184 @@
+
+####Cardiologie
+###236
+
+
+Grandes causes possible d’un souffle cardiaque précordial chez l’enfant?
+souffle fonctionnel anorganique
+malformation cardiaque congénitale (1-2% des enfants à la naissance)
+rarement, cardiomyopathie ou myocardite aiguë
+exceptionnellement: cardiopathie acquise (disparition du RAA en occident)
+
+
+
+Quand s’inquiéter devant un dédoublement du B2 chez l’enfant?
+Si large et fixe : anormal
+	communication inter-auriculaire
+	ou bloc de branche droit
+Si le long du bord sternal gauche, variable avec la respiration:
+	fréquent et physiologique
+
+
+Etiologies d’un éclat du B2 le long du bord sternal gauche?
+HTAP
+malposition des gros vaisseaux (position antérieure de l’aorte)
+
+
+
+Qu’évoquer devant un clic mésosystolique chez l’enfant? et un clic protosystolique?
+clic mésosystolique apexien (foyer mitral)
+	prolapsus mitral
+clic protosystolique : 
+	sténose valvulaire sur l’un des gros vaisseaux (aorte ou artère pulmonaire)
+
+Y a t’il une corrélation directe entre l’intensité d’un souffle et la gravité de la maladie sous-jacente?
+Non.
+Par exemple, shunt gauche-droite majeur avec HTAP sévère ou transposition des gros vaisseaux sans malformation associée: peu ou pas de souffle
+Petite CIV: Souffle majeur	
+	
+
+
+
+Circonstances devant faire évoquer une cardiopathie chez l’enfant?
+cyanose
+signes d’insuffisance cardiaque
+difficultés alimentaires, retard staturo-pondéral
+dyspnée, polypnée
+infections pulmonaires à répétition
+syncope/spasme du sanglot
+douleur thoracique (rarement++)
+tout syndrome polymalformatif ou contexte familial de cardiopathie congénitale
+
+Quelle pathologie doit être suspectée devant une absence de pouls fémoral chez l’enfant?
+Coarctation de l’aorte
+
+Quand et comment rechercher une cardiopathie devant un syndrome polymalformatif?
+échographie cardiaque systématique dans le bilan du syndrome
+symptomatique ou non
+avec un souffle cardiaque ou non
+
+
+
+Chez l’enfant, quelles caractéristiques évoquent un souffle d’origine organique?
+Organique:
+	large irradiation
+	diastolique ou double souffle 
+	frémissant
+	holosystolique de régurgitation
+	frémissant dans le cou et en sus-sternal : obstacle aortique
+	entendu dans le dos : obstacle pulmonaire
+	irradiant dans toutes les directions(« rayon de roue »): communication interventriculaire
+
+
+~Radiographie de thorax chez l’enfant + souffle cardiaque: Qu’évoquer devant ces signes?~
+~cardiomégalie :~
+	cardiopathie malformative
+	cardiomyopathie ou myocardite aiguë
+	éliminer une fausse cardiomégalie par superposition de l’image du thymus et de la silhouette cardiaque
+~saillie de l’arc moyen gauche: ~
+	oriente vers shunt gauche-droite (dilatation du tronc d’a. pulmonaire)
+~concavité de l’arc moyen gauche: ~
+	hypoplasie de la voie pulmonaire proximale (tétralogie de Fallot +++)
+~pédicule vasculaire étroit: ~
+	anomalie de position des gros vaisseaux
+~hypervascularisation pulmonaire: ~
+	shunt gauche-droit (hyperdébit pulmonaire)
+~hypovascularisation pulmonaire:~
+	évoque un obstacle sur la voie pulmonaire
+
+
+~Quels sont les signes à la radiographie de thorax de ces pathologies?~
+~cardiopathie malformative:~
+	cardiomégalie
+~shunt gauche-droite:~  
+	dilatation du tronc d’a. pulmonaire: saillie de l’arc moyen gauche
+	hypervascularisation pulmonaire
+~tétralogie de Fallot: ~
+	hypoplasie de la voie pulmonaire proximale
+	avec concavité de l’arc moyen gauche
+~pédicule vasculaire étroit: ~
+	anomalie de position des gros vaisseaux
+~obstacle sur la voie pulmonaire:~
+	hypovascularisation pulmonaire
+
+
+Particularités de l’ECG physiologique chez l’enfant?
+fréquence cardiaque : d’autant plus rapide que l’enfant est jeune
+axe du QRS plus droit que chez l’adulte
+intervalle PR plus court
+ondes T positives en précordiales droites à la naissance
+	se négative à la fin de S1
+	demeurent négatives de V1-V4 pendant l’enfance
+
+
+Quelles sont les explorations cardiaques possibles devant un souffle cardiaque chez l’enfant, après ECG et RT?
+Epreuve d’effort
+	tapis roulant chez le petit
+	bicyclette ergométrique
+holter-ECG : si troubles du rythme idiopathiques ou postopératoires
+IRM cardiaque (très performante, notamment pour les gros vaisseaux intra-thoraciques)
+Scanner multibarrette (mais examen irradiant)
+Cathétérisme cardiaque (AG < 10 ans) : 
+	rarement pour le diagnostic
+	+ souvent pour le bilan préopératoire des cardiopathies congénitales complexes
+	ou cathétérisme interventionnel
+
+
+CAT devant un souffle entendu à la maternité?
++ précoce = + pathologique
+Entendu à J1-J2: 
+	échographie cardiaque d’emblée avant la sortie de maternité
+Entendu à J5: 
+	examen clinique complet
+	ECG
+	radiographie pulmonaire
+	échographie cardiaque systématique mais pas forcément urgente
+
+Principale cardiopathie du nouveau-né générant une insuffisance cardiaque?
+Coarctation aortique de forme préductale (en amont de l’émergence du canal artériel)
+ou sténose de l’isthme de l’aorte
+symptomatique dès les premiers jours de vie
+chirurgie urgente +++
+(autre cause: les cardiopathies « complexes », polymorphes)
+
+Principale cardiopathie du nouveau-né générant une cyanose?
+transposition des gros vaisseaux: cause la plus classique de cyanose néonatale
+urgence cardiologique néonatale +++
+chirurgie dans les 15 jours de vie
+(autre cause: les cardiopathies « complexes », polymorphes)
+
+Principales cardiopathies du nourrisson (2 mois - 2 ans) générant une insuffisance cardiaque?
+shunts gauche-droite +++
+communication interventriculaire large:
+	cardiomégalie importante
+	hypervascularisation pulmonaire à la radiographie thoracique
+persistance du canal artériel
+canal atrioventriculaire (trisomie 21 +++)
+—> chir dans la première année de vie sinon risque d’HTAP irréversible
+
+
+Principale cardiopathie du nourrisson (2 mois - 2 ans) générant une cyanose?
+Tétralogie de Fallot (cardiopathie cyanogène la plus fréquente +++)
+	Cyanose souvent retardée, qq semaines-mois
+	Correction chirurgicale entre 6 mois-1 an
+
+
+
+Types de cardiopathies malformatives détectées après 2 ans?
+rarement dépistées à cet âge (pb sociaux++)
+cardiopathies bien tolérées : CIA, CMO, CMH…
+
+Chez l’enfant, quelles caractéristiques évoquent un souffle d’origine fonctionnelle? 
+très fréquents : ⅓-½ enfants à un moment donné de l’enfance
+asymptomatiques
+systoliques (jamais diastoliques +++)
+en général proto- ou méso-systoliques (éjectionnels), brefs
+faible intensité < 3/6
+souvent intensité variable avec la position
+doux, parfois musicaux
+pas de modification de B1 et B2 (dédoublement variable de B2 possible)
+pouls fémoraux perçus, TA normale…)
+cœur normal à la radiographie et à l’ECG
+si doute, échographie cardiaque +++
+pas de traitement ni surveillance… ni rien
+

@@ -1,0 +1,359 @@
+#### Cardiologie
+###233   
+##Péricardite aigüe
+
+
+
+Signes cliniques de la péricardite aigüe?
+fièvre modérée d’emblée, syndrome grippal
+douleur thoracique rétrosternale ou précordiale gauche
+	prolongée
+	trinitrino-résistante (+++)
+	majorée par le décubitus, inspiration profonde, toux
+	calmée par l’antéflexion
+possible dyspnée, toux sèche, dysphonie, hoquet, épanchement pleural
+frottement péricardique inconstant
+	systolo-diastolique
+	« pas dans la neige », « cuir neuf »…
+tachycardie
+
+
+Un ECG normal écarte t’il le diagnostic de péricardite?
+Non, il ne faut pas hésiter à le répéter
+
+Signes ECG de la péricardite?
+anomalies diffuses non systématisées
+sans image en miroir (-//- IDM)
+4 stades:
+	stade I (J1) : sus-ST concave vers le haut, ondes T positives
+	stade II (J2-J4) : ondes T plates
+	stade III (1ère semaine) : ondes T négatives
+	stade IV (1er mois) : normalisation
+sous-décalage de PQ (phase initiale) +++
+tachycardie sinusale
+possibles extrasystoles atriales, FA, flutter
+microvoltage si épanchement abondant:
+	amplitude QRS < 5 mm dans les dérivations périphériques
+	QRS < 10 mm dans les dérivations précordiales)
+
+
+Quel examen doit-on faire devant une élévation des CK-MB au cours d’une péricardite? Que peut-on suspecter?
+Faire une échographie cardiaque
+à la recherche de troubles de la cinétique cardiaque
+élévation modérée des CK-MB est habituelle au cours de la péricardite
+mais hausse franche doit faire rechercher une myo-péricardite (= myocardite associée)
+
+
+
+Bilan paraclinique initial d’une péricardite?
+iono, NG, urée créat
+CRP
+enzymes cardiaques: troponine, CPK-MB 
+si fièvre: hémocultures +/- IDR
+Radio tho
+
+
+
+Quels sont les signes radiologiques de la péricardite?
+Souvent normale
+Rectitude du bord gauche, aspect triangulaire et symétrique = aspect « en carafe »
+Epanchement pleural
+
+
+Quels sont les signes de péricardite à l’échographie cardiaque?
+Peut être normale (péricardite sèche)
+Epanchement péricardique+++
+	abondance
+	topographie
+	tolérance hémodynamique (tamponnade?)
+
+
+Quelle est l’étiologie majeure des tamponnades lors d’une péricardite?
+Péricardite néoplasique++ (très rare dans les autres étiologies)
+	Mésothéliome
+	Métastases
+		broncho-pulm
+		sein
+		mélanome
+		leucémies
+		lymphomes
+		Kaposi
+		
+
+
+Quelles sont les indications de l’IRM cardiaque dans la péricardite?
+patient non échogène
+péricardite néoplasique
+péricardique cloisonnée 
+
+
+Quelles sont les indications de la ponction péricardique dans la péricardite? Quelles analyses?
+épanchement symptomatique depuis > une semaine
+tamponnade
+suspicion de péricardite néoplasique 
+Analyses:
+	glucose
+	protides
+	LDH
+	cytologie
+	examen bactério direct (Gram et de Ziehl-Nielsen)
+	culture bactérienne, PCR (recherche virale et tuberculose)
+
+Quelle est l’indication d’un drainage péricardique chirurgical?
+suspicion de péricardite aiguë purulente
+analyse cytologique et microbiologique
+
+
+Quels sont les critères d’hospitalisation d’une péricardite?
+- éléments orientant vers une cause non idiopathique
+- ou gravité:
+durée > plusieurs semaines
+ou résistance à AINS/aspirine > 7 jours
+fièvre > 38°C
+épancht péricardique abondant (> 20 mm) ou tamponnade
+myocardite associée
+immunodépression
+post-traumatisme thoracique
+ttt par AVK
+
+
+Quelle est la cause la plus fréquente de péricardite?
+Viral/Idiopathique: 90% 
+
+
+Quels sont les virus potentiellement responsables de péricardite?
+entérovirus
+	coxsackies A et B
+	echovirus
+adénovirus
+herpesvirus:
+	HSV
+	CMV
+	EBV
+parvovirus B19
+VIH - VHC
+virus influenza
+
+Comment avoir un diagnostic de certitude concernant l’étiologie virale d’une péricardite?
+PCR virale sur épanchement/biopsie péricardique
+le plus souvent intutile+++
+
+Fréquence des récidives de péricardites idiopatiques?
+30-50% des cas
+
+Quels sont les traitements possible d’une péricardite chronique récidivante?
+après diagnostic viral
+discuter:
+	immunoglobulines
+	interféron α
+
+
+Etiologies devant un épanchement péricardique lors d’une infection VIH?
+VIH en lui-même
+surinfection virale
+surinfection bactérienne
+surinfection fungique
+lymphome
+sarcome de Kaposi
+
+
+
+Péricardites purulentes: terrain, porte d’entrée, germes, complications, traitement
+OH, âgés, immunodéprimés
+septicémie, infections pleuro-pulmonaire, post-thoracotomie
+Germes:
+	cocci +	
+		staphylocoques
+		pneumocoques
+		streptocoques
+	BGN
+Complications fréquentes:
+	tamponnade
+	constriction péricardique
+Traitement: 
+	documentation du germe
+	antibiothérapie adaptée
+	drainage chirurgical
+
+
+Présentation de la péricardite tuberculeuse?
+péricardite subaiguë liquidienne
+AEG
+fièvre modérée persistante
+
+Quel dosage doit-on réaliser dans le liquide de ponction péricardique pour rechercher une étiologie tuberculeuse?
+adénosine déaminase
+très augmentée
+
+Complications de la péricardite tuberculeuse?
+Tamponnade
+Récidive
+Constriction péricardique
+
+Quel traitement peut-on associer à la quadrithérapie antituberculeuse dans le cadre d’une péricardite?
+Corticothérapie
+Diminue les symptomes
+Rôle préventif de la constriction: discuté
+
+
+Quelle est l’étiologie principale des péricardites néoplasiques primitives?
+mésothéliome: rare++
+40 fois moins fréquent que les métastases
+
+Quels cancers peuvent se compliquer de péricardite?
+bronchique
+sein
+mélanome
+leucémie
+lymphome
+Kaposi
+
+
+Caractéristiques de l’épanchement péricardique néoplasique?
+Fréquent
+Abondant
+Tamponnades+++
+Hémorragique
+Doit être ponctionné (ou biopsie péricardique)
+
+
+Etiologies les plus fréquentes des péricardites auto-immunes?
+lupus
+polyarthrite rhumatoïde
+sclérodermie
+périartérite noueuse
+dermatomyosite
+
+
+
+Que faut-il doser dans le liquide d’épanchement péricardique pour diagnostiquer une péricardite auto-immune?
+Anticorps anti-sarcolemme
+
+
+Cause d’une péricardite précoce dans l’IDM? et retardée?
+péricardite précoce:
+	au décours d’un infarctus trans-mural
+	évolution souvent favorable
+péricardite tardive (après J15):
+	syndrome de Dressler (rare)
+	péricardite associée à arthralgies, AEG, sd inflammatoire +++, ↑ QT
+
+Que suspecter devant une péricardite chez un insuffisant rénal non dialysé? et dialysé?
+Non dialysé: 
+	péricardite urémique
+	dans l’I Rn sévère
+Dialysé au long cours:
+	traitement épurateur inadapté
+
+Quelles sont les 2 étiologies à suspecter devant une constriction péricardique ou tamponnade après chirurgie cardiaque?
+- Syndrome post-péricardiotomie (de qq jours à qq mois)
+- Hémopéricarde (épanchements précoces)
+
+Quel est le délai habituel de survenue d’une péricardite post-irradiation thoracique?
+après 1 an
+
+
+Etiologies les plus fréquentes des tamponnades?
+péricardite néoplasique
+péricardite traumatique
+péricardite tuberculeuse
+hémopéricarde
+	traumatique
+	postopératoire+++
+très rarement péricardite aiguë virale
+
+
+Mécanisme et CAT devant une tamponnade?
+Compression des cavités droites
+Urgence
+Cause d’arrêt cardiocirculatoire par adiastolie
+Remplissage par macromolécules
+Arrêt des anticoagulants
+Echographie puis ponction ou drainage chir
+
+Signes cliniques de la tamponnade?
+ceux de la péricardite
+associés à:
+	BDC assourdis
+	insuff cardiaque droite (TJ, RHJ…)
+	signes de choc, polypnée, orthopnée
+	pouls paradoxal
+
+Signes ECG de la tamponnade:
+microvoltage
+alternance électrique (QRS successifs de hauteur différente)
+
+
+Signes de la tamponnade en échographie cardiaque:
+collapsus diastolique des cavités droites en expiration
+compression du VG par le VD en inspiration
+aspect de « swinging heart »
+déplacement du septum paradoxal en inspiration
+épanchement souvent abondant
+
+Que examen complémentaire permet de visualiser au mieux l’inflammation lors d’une myocardite?
+IRM cardiaque injectée
+hypersignal T2 du myocardeséquences tardives après injection: 
+	prises de contraste focales 
+	sous-épicardiques 
+	non systématisées+++
+
+
+Etiologies des myocardites?
+Virales+++:
+	CMV
+	Coxsackie
+
+Quel traitement permet de limiter les récidives de péricardite?
+Colchicine
+
+Quelle est l’utilité de la colchicine dans la péricardite?
+Prévention des rechutes
+
+
+Devant une péricardite chronique > 3 mois avec bilan étiologique non invasif négatif, quelle exploration est indiquée? Que suspecte t’on?
+prélèvement biopsique dirigé par péricardoscopie par fibres optiques 
+péricardites néoplasiques++
+péricardite tuberculeuse
+
+
+Péricardite chronique constrictive: fréquence, tableau clinique, diag différentiel?
+fréquence: < 10% des cas
+épaississement fibreux ou fibrocalcaire du péricarde
+Signes d’IC droite+++ (TJ, RHJ, ascite) et gauche
+différentiel: myocardiopathies restrictives
+
+
+
+Devant une suspicion clinique de péricardite chronique constrictive: examens paracliniques et traitement?
+Devant signes d’IC surtout droite après péricardite:
+échographie: 
+	adiastolie 
+	avec égalisation des pressions télédiastoliques des 4 cavités cardiaques
++/- cathétérisme droit: 
+	dip plateau
+traitement possible: péricardectomie
+
+
+Traitement de la péricardite aiguë idiopathique?
+hospitalisation si gravité
+AINS + colchicine
+Arrêt progressif après un mois avec échographie
+Pas de corticoïdes
+http://www.realites-cardiologiques.com/wp-content/uploads/sites/2/2010/12/14.pdf
+
+
+Posologies et surveillance d’un traitement par colchicine?
+posologie : 0,5 mg x 2/jour
+Interactions médicamenteuses via cytochrome P450+++
+	macrolides++ (rq décès par surdosage en colchicine…)
+	statines
+	ciclosporine
+	vérapamil
+Surveillance biologique:
+	créatinine
+	transaminases
+	CPK
+	NG - plaquettes
+Dose adaptée à la clairance, CI si insuff rénale sévère
+
