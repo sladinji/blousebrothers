@@ -453,3 +453,25 @@ class Subscription(models.Model):
     @property
     def is_past_due(self):
         return date.today() > self.date_over
+
+
+class Classifier(models.Model):
+    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
+    version = models.DecimalField(_("Version"), max_digits=6, decimal_places=2, default=0)
+    date = models.DateField(_("Date created"), auto_now_add=True)
+    classifier = models.FileField("un chemin ici")
+
+
+class Prediction(models.Model):
+    question = models.ForeignKey('Question', related_name="prediction")
+    classifier = models.ForeignKey('Classifier', related_name="prediction")
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='prediction', blank=True)
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='prediction', blank=True)
+
+
+class PredictionValidation(models.Model):
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="prediction_validation")
+    prediction = models.ForeignKey('Prediction', blank=False, null=False, related_name="prediction_validation")
+    valid = models.BooleanField(default=None)
+    date_created = models.DateField(_("Date created"), auto_now_add=True)
+    date_modified = models.DateField(_("Date modified"), auto_now=True)

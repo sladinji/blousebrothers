@@ -25,6 +25,7 @@ from .models import (
     Test,
     TestAnswer,
     QuestionComment,
+    PredictionValidation,
 )
 
 logger = logging.getLogger(__name__)
@@ -80,6 +81,16 @@ class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
                 question_id=self.request.GET['question'],
                 test_id=test.id,
             )
+
+
+class PredictionValidationCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
+    model = PredictionValidation
+
+    def get_object(self):
+        if 'question' in self.request.GET:
+            prediction, created = PredictionValidation.objects.get_or_create(question=self.request.GET['question'],
+                                                                    user=self.request.user)
+            return prediction
 
 
 class BaseConferenceImageCRUDView(NgCRUDView):
