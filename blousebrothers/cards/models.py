@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from blousebrothers.confs.models import AutoSlugField
+from django.db.models import Q
 
 
 class Deck(models.Model):
@@ -28,6 +29,11 @@ class Card(models.Model):
     """
     Fiche de revision
     """
+    LEVEL_CHOICES=(
+        ('EASY', _('Facile')),
+        ('MIDDLE', _('Moyen')),
+        ('HARD', _('Dur')),
+    )
     specialities = models.ManyToManyField('confs.Speciality', verbose_name=("Specialities"),
                                           related_name='cards', blank=True)
     items = models.ManyToManyField('confs.Item', verbose_name=_("Items"),
@@ -41,3 +47,16 @@ class Card(models.Model):
                                related_name="created_cards", blank=True, null=True)
     slug = AutoSlugField(_('Slug'), max_length=256, unique=True, populate_from='title')
     created = models.DateTimeField(auto_now_add=True)
+    public = models.BooleanField(default=False)
+    level = models.CharField(_("Level"), max_length=10, choices=LEVEL_CHOICES,
+                             blank=False, default='DP')
+    free = models.BooleanField(default=True)
+
+    def family(self, user):
+        """
+        Return family accessible by user.
+        """
+        parent = self.parent or self
+        return [parent] + list(parent.children.filter(
+            Q(author__isnull=True) | Q(author=user) | Q(public=True)
+        ).order_by("created"))

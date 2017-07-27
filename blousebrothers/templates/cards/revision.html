@@ -43,7 +43,7 @@
                         </a> 
                     </div>
                     <div class="btn_rev_block">
-                        {% if object.card.parent and object.card.parent.children.all or object.card.children.all %}
+                        {% if other_versions %}
                         <div class="card_button card_prev">
                             <a href="{% url 'cards:previous' object.card.pk %}" title="Voir la version précédente">
                                 <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>

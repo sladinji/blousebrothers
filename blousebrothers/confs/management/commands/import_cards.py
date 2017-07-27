@@ -28,10 +28,12 @@ class Command(BaseCommand):
         """
         Get close match (remove "ologie" from str for better perfromances (infectiologie/infectieuse...))
         """
-        return [
-            self.spe_dic[difflib.get_close_matches(x.replace("ologie", ""), self.spe_dic.keys(), 1)[0]]
+        ret= [
+            self.spe_dic[difflib.get_close_matches(x.strip().replace("ologie", ""), self.spe_dic.keys(), 1)[0]]
             for x in spelist
                 ]
+        print(spelist, ">>", ret)
+        return ret
 
     def save_fiche(self, **kwargs):
         kwargs["content"] = kwargs['content'].replace("~", "@@")
@@ -47,10 +49,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         Card.objects.all().delete()
-        fiche = {}
-        fiche["content"] = ""
-        ready_to_save = False
         for fn in glob('fiches/*'):
+            fiche = {}
+            fiche["content"] = ""
+            ready_to_save = False
+            print(">> importing %s" % fn)
             for line in open(fn).readlines():
                 line = line.strip()
                 for marker, section in mapping:

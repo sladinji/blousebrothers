@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.db.models import Q
@@ -9,11 +11,15 @@ from django.views.generic import (
     DetailView,
     RedirectView,
 )
+from blousebrothers.auth import BBLoginRequiredMixin
 from .models import Card, Deck
 from .forms import CreateCardForm, UpdateCardForm
 
 
 def choose_new_card(request):
+    """
+    Hot point.
+    """
     # choose a new original card never done by user
     new_card = Card.objects.filter(
         parent__isnull=True,
@@ -22,7 +28,7 @@ def choose_new_card(request):
     ).first()
     # check if user have done card of this family
     if new_card and Deck.objects.filter(student=request.user,
-                                        card_id__in=get_family(new_card),
+                                        card_id__in=new_card.family(request.user),
                                         ).exists():
         new_card = None
     # if all card are already done choose the oldest and hardest one
@@ -38,6 +44,7 @@ def choose_new_card(request):
 
 def bookmark_card(request, card_id):
     """
+    Ajax view.
     Bookmark given card by updating user deck with given card.
     Other revision of the card are parent or brothers of the given card.
     """
@@ -49,7 +56,20 @@ def bookmark_card(request, card_id):
     return JsonResponse({'success': True})
 
 
-class CreateCardView(CreateView):
+class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
+
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        self.object = self.get_object()
+        card = self.object.card
+        return card.author is None or card.author == self.request.user or card.public
+
+    def handle_no_permission(self):
+        raise PermissionDenied
+
+
+class CreateCardView(CreateView, RevisionPermissionMixin):
     model = Card
     form_class = CreateCardForm
 
@@ -57,7 +77,7 @@ class CreateCardView(CreateView):
         return reverse('cards:list')
 
 
-class UpdateCardView(UpdateView):
+class UpdateCardView(UpdateView, RevisionPermissionMixin):
     model = Card
     form_class = UpdateCardForm
 
@@ -79,7 +99,8 @@ class UpdateCardView(UpdateView):
         """
         Create a new version if current user is not the author
         """
-        if form.instance.author != self.request.user:
+        bb = self.request.user.username == "BlouseBrothers"
+        if not bb and form.instance.author != self.request.user:
             current_card = Card.objects.get(id=form.instance.pk)
             form.instance.parent = current_card.parent or current_card
             form.instance.pk = None
@@ -89,21 +110,14 @@ class UpdateCardView(UpdateView):
             obj.items.set(current_card.items.all())
             obj.specialities.set(current_card.specialities.all())
             obj.save()
+            bookmark_card(self.request, obj.pk)
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('cards:revision', kwargs={'slug': self.object.slug})
 
 
-def get_family(card):
-    """
-    Return all family members of given card.
-    """
-    parent = card.parent or card
-    return [parent] + list(parent.children.all().order_by("created"))
-
-
-class RevisionRedirectView(RedirectView):
+class RevisionRedirectView(RedirectView, RevisionPermissionMixin):
     """
     Root url of card app, reached by clicking on revision link.
     Choose a card a redirect to revision view.
@@ -114,25 +128,21 @@ class RevisionRedirectView(RedirectView):
         return reverse('cards:revision', kwargs={'slug': new_card.slug})
 
 
-class RevisionNextCardView(RedirectView):
+class RevisionNextCardView(RedirectView, RevisionPermissionMixin):
+    step = 1
 
     def get_redirect_url(self, *args, **kwargs):
         current_card = Card.objects.get(pk=args[0])
-        family = get_family(current_card)
-        new_card = family[(family.index(current_card) + 1) % len(family)]
-        return reverse('cards:revision', kwargs={'slug': new_card.slug, 'dsp_card_on_load':True})
+        family = current_card.family(self.request.user)
+        new_card = family[(family.index(current_card) + self.step) % len(family)]
+        return reverse('cards:revision', kwargs={'slug': new_card.slug, 'dsp_card_on_load': True})
 
 
-class RevisionPreviousCardView(RedirectView):
-
-    def get_redirect_url(self, *args, **kwargs):
-        current_card = Card.objects.get(pk=args[0])
-        family = get_family(current_card)
-        new_card = family[(family.index(current_card) - 1) % len(family)]
-        return reverse('cards:revision', kwargs={'slug': new_card.slug, 'dsp_card_on_load':True})
+class RevisionPreviousCardView(RevisionNextCardView, RevisionPermissionMixin):
+    step = -1
 
 
-class RevisionView(DetailView):
+class RevisionView(DetailView, RevisionPermissionMixin):
     template_name = "cards/revision.html"
     model = Deck
     is_favorite = False
@@ -146,7 +156,7 @@ class RevisionView(DetailView):
         card = Card.objects.get(slug=self.kwargs['slug'])
         obj = Deck.objects.filter(
             student=self.request.user,
-            card__in=get_family(card),
+            card__in=card.family(self.request.user),
         ).exclude(
             card=card,
         ).first()
@@ -162,6 +172,7 @@ class RevisionView(DetailView):
         context = super().get_context_data(*args, **kwargs)
         context.update(is_favorite=self.is_favorite)
         context.update(dsp_card_on_load=self.kwargs['dsp_card_on_load'] == "True")
+        context.update(other_versions=len(self.object.card.family(self.request.user)) > 1)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -177,7 +188,7 @@ class RevisionView(DetailView):
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
 
-class ListCardView(ListView):
+class ListCardView(ListView, RevisionPermissionMixin):
     model = Card
 
     def get_queryset(self):
