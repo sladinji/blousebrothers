@@ -16,6 +16,10 @@ from blousebrothers.tools import get_disqus_sso as get_remote_auth
 register = template.Library()
 Product = get_model('catalogue', 'Product')
 
+@register.filter
+def index(List, i):
+    return List[int(i)]
+
 
 @register.filter
 def to_char(value):

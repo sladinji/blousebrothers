@@ -56,6 +56,11 @@
       <div class="col-sm-12">
 	      <strong>Énoncé :</strong><p>{{ question.question | default:"<i>aucun</i>" | safe }}</p>
       </div>
+        {% if user.is_superuser %}
+        {% with question.index as mindex %}
+        <div><strong>Specialités proposées :</strong>{% for spe in specialities|index:mindex %} {{ spe }} ; {% endfor %}</div>
+        {% endwith %}
+        {% endif %}
       {% for image in question.images.all %}
       <div class="illustrations" id="images_div">
 	      <figure>
