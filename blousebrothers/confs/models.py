@@ -454,12 +454,14 @@ class Subscription(models.Model):
     def is_past_due(self):
         return date.today() > self.date_over
 
+def classifier_directory_path(classifier, filename):
+    return 'classifiers/{0}/{1}-{2}'.format(classifier.name, classifier.version, filename)
 
 class Classifier(models.Model):
     name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
-    version = models.DecimalField(_("Version"), max_digits=6, decimal_places=2, default=0)
+    version = models.CharField(_("Version"), max_length=64)
     date = models.DateField(_("Date created"), auto_now_add=True)
-    classifier = models.FileField("un chemin ici")
+    classifier = models.FileField(_("Classifier"), upload_to=classifier_directory_path)
 
 
 class Prediction(models.Model):
