@@ -18,6 +18,7 @@ from blousebrothers.tools import get_full_url
 @method_decorator(terms_required, name='dispatch')
 class BBLoginRequiredMixin(LoginRequiredMixin):
     login_url = '/accounts/login/'
+    permission_denied_message = 'Merci de te connecter'
 
 
 class BBConferencierReqMixin(BBLoginRequiredMixin, UserPassesTestMixin):

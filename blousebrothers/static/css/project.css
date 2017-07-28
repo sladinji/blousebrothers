@@ -1903,7 +1903,7 @@ input#id_code {
   bottom: 0;
   background: #FFFFFF;
   width: 100%;
-    padding: 0 30px;
+    padding: 0px 30px;
   -webkti-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1931,7 +1931,6 @@ input#id_code {
   font-size: 24px !important;
   font-weight: 700;    
   margin: 55px 0 0 !important;
-  margin-bottom: -47px !important;
 }
 .post-module .post-content .sub_title {
   margin: 0;
@@ -2013,9 +2012,6 @@ input#id_code {
     opacity: 0.0;
     font-size: 20px;
 }
-.description {
-    margin-top: 40px;
-}
 .preview {
     font-size: 20px;
     visibility: visible !important;
@@ -2026,5 +2022,5 @@ input#id_code {
     margin-top: 30px;
 }
 .column {
-    min-width: 500px;
+    min-width: 428px;
 }

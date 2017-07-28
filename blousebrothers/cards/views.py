@@ -66,6 +66,8 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         return card.author is None or card.author == self.request.user or card.public
 
     def handle_no_permission(self):
+        if not self.request.user.is_authenticated():
+            return BBLoginRequiredMixin.handle_no_permission(self)
         raise PermissionDenied
 
 
@@ -117,7 +119,7 @@ class UpdateCardView(UpdateView, RevisionPermissionMixin):
         return reverse('cards:revision', kwargs={'slug': self.object.slug})
 
 
-class RevisionRedirectView(RedirectView, RevisionPermissionMixin):
+class RevisionRedirectView(RevisionPermissionMixin, RedirectView):
     """
     Root url of card app, reached by clicking on revision link.
     Choose a card a redirect to revision view.
