@@ -83,14 +83,14 @@ class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
             )
 
 
-class PredictionValidationCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
+class PredictionValidationCRUDView(NgCRUDView):
     model = PredictionValidation
 
-    def get_object(self):
-        if 'question' in self.request.GET:
-            prediction, created = PredictionValidation.objects.get_or_create(question=self.request.GET['question'],
-                                                                    user=self.request.user)
-            return prediction
+    def get_queryset(self):
+        question = Question.objects.get(pk=self.request.GET['question_id'])
+        prediction, created = PredictionValidation.objects.get_or_create(prediction=question.prediction.first(),
+                                                                         user=self.request.user)
+        return prediction
 
 
 class BaseConferenceImageCRUDView(NgCRUDView):

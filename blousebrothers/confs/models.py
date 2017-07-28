@@ -224,9 +224,6 @@ class Speciality(models.Model):
     def __str__(self):
         return self.name
 
-    def image(self):
-        return 'images/spe/cardio.png'
-
 
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False)
@@ -477,6 +474,6 @@ class Prediction(models.Model):
 class PredictionValidation(models.Model):
     user = models.ForeignKey('users.User', blank=False, null=False, related_name="prediction_validation")
     prediction = models.ForeignKey('Prediction', blank=False, null=False, related_name="prediction_validation")
-    valid = models.BooleanField(default=None)
+    valid = models.NullBooleanField(default=None)
     date_created = models.DateField(_("Date created"), auto_now_add=True)
     date_modified = models.DateField(_("Date modified"), auto_now=True)
