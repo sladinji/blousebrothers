@@ -196,9 +196,9 @@ def settings_value(name):
 def rev_content(txt):
     #  Preview first line if no @ are present in text
     if "@" not in txt:
-        txt = re.sub(r"(.+)\n", r"@@\1@@", txt, 1)
+        txt = re.sub(r"(.+)\n", r"@@\1@@\n", txt, 1)
     #  Replace - by font awesome >
-    txt = re.sub("(?m)^-(.*)", r'<i class="fa fa-chevron-right" aria-hidden="true"></i> \1<br>', txt)
+    txt = re.sub("(?m)^-(.*)", r'<i class="fa fa-chevron-right" aria-hidden="true"></i> \1', txt)
     #  Add when txt is indented by space or tab
     for i in range(1, 5):
         txt = re.sub(r'(?m)^\t{%s}([^\t]+)' % i,
@@ -211,4 +211,5 @@ def rev_content(txt):
     txt = re.sub("\n", r"<br>", txt)
     # Replace /!\ by icon
     txt = re.sub(r'/!\\', '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ', txt)
+    txt = re.sub(r'—>', '<i class="fa fa-arrow-right" aria-hidden="true"></i> ', txt)
     return txt

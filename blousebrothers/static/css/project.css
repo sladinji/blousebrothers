@@ -1868,19 +1868,19 @@ input#id_code {
 }
 .card_button.card_next {
     top: 20px;
-    left: 180px;
+    left: 100px;
 }
 .card_button.end_revision {
     top: 20px;
-    left: 340px;
+    left: 260px;
 }
 .card_button.card_edit{
     top: 20px;
-    left: 260px;
+    left: 180px;
 }
 .card_button.card_fav {
     top: 20px;
-    left: 100px;
+    left: 20px;
 }
 .card_button.card_prev {
     top: 20px;
@@ -1931,6 +1931,7 @@ input#id_code {
   font-size: 24px !important;
   font-weight: 700;    
   margin: 55px 0 0 !important;
+  margin-bottom: -47px !important;
 }
 .post-module .post-content .sub_title {
   margin: 0;

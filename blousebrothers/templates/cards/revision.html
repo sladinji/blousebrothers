@@ -44,29 +44,24 @@
                     </div>
                     <div class="btn_rev_block">
                         {% if other_versions %}
-                        <div class="card_button card_prev">
-                            <a href="{% url 'cards:previous' object.card.pk %}" title="Voir la version précédente">
-                                <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
-                            </a> 
-                        </div>
                         <div class="card_button card_fav">
                             <a href="#0" title="Choisir cette version">
                                 <div class="day"><i class="fa fa-star{% if not is_favorite%}-o{% endif %}" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                         <div class="card_button card_next">
-                            <a href="{% url 'cards:next' object.card.pk %}" alt="Voir la version suivante">
-                                <div class="day"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+                            <a href="{% url 'cards:next' object.card.pk %}" title="Voir la version suivante">
+                                <div class="day"><i class="fa fa-clone" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                         {% endif %}
                         <div class="card_button card_edit">
-                            <a href="{% url 'cards:update' object.card.slug %}" alt="Éditer la carte">
+                            <a href="{% url 'cards:update' object.card.slug %}" title="Éditer la carte">
                                 <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                         <div class="card_button end_revision">
-                            <a href="{% url 'catalogue:index' %}" alt="Revenir au site">
+                            <a href="{% url 'catalogue:index' %}" title="Revenir au site">
                                 <div class="day"><i class="fa fa-power-off" aria-hidden="true"></i></div>
                             </a> 
                         </div>
