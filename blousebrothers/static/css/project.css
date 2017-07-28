@@ -1833,7 +1833,7 @@ input#id_code {
   -webkit-transform: scale(1.1);
   -moz-transform: scale(1.1);
   transform: scale(1.1);
-  opacity: .6;
+  opacity: .2;
 }
 .post-module .thumbnail {
   background: #000000;
@@ -1841,8 +1841,6 @@ input#id_code {
   overflow: hidden;padding: 0;
 }
 .post-module .post-content .card_button {
-  top: 20px;
-  right: 20px;
   position: absolute;
   z-index: 1;
   background: #f2b202;
@@ -1866,11 +1864,28 @@ input#id_code {
   color: white;
   font-size: 26px;
 }
+div#calltoac {
+    position: relative;
+    margin: -27px auto;
+}
+.btn_rev_eval .card_button {
+    position: relative;
+}
 .card_button.card_next {
     top: 20px;
     left: 100px;
 }
+.btn_rev_nav .card_button.card_prev {
+    left: 100px;
+}
+.btn_rev_nav .card_button.card_next {
+    left: 180px;
+}
 .card_button.end_revision {
+    top: 20px;
+    right: 20px;
+}
+.btn_rev_nav .card_button.card_edit{
     top: 20px;
     left: 260px;
 }
@@ -1897,6 +1912,7 @@ input#id_code {
 }
 .post-module .thumbnail {
     border-radius: 0px;
+    margin-bottom: 44px;
 }
 
 .post-module .post-content {

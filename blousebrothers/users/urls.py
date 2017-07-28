@@ -23,69 +23,64 @@ urlpatterns = [
 
     # URL pattern for the UserUpdateView
     url(
-        regex=r'^compte/~update/$',
+        regex=r'^compte/update/$',
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
     # Wallet
-    #url(r'^~wallet/$', TemplateView.as_view(template_name='pages/wallet_teaser.html'), name='wallet'),
+    #url(r'^wallet/$', TemplateView.as_view(template_name='pages/wallet_teaser.html'), name='wallet'),
     url(
-        regex=r'^~wallet/$',
+        regex=r'^wallet/$',
         view=views.UserWalletView.as_view(),
         name='wallet'
     ),
     # IBAN
     url(
-        regex=r'^~wallet/addbankaccount/$',
+        regex=r'^wallet/addbankaccount/$',
         view=views.AddIbanView.as_view(),
         name='addiban'
     ),
     # PAYOUT
     url(
-        regex=r'^~wallet/transfert/$',
+        regex=r'^wallet/transfert/$',
         view=views.PayOutView.as_view(),
         name='payout'
     ),
     # Credit Card
     url(
-        regex=r'^~wallet/addcard/$',
+        regex=r'^wallet/addcard/$',
         view=views.AddCardView.as_view(),
         name='addcard'
     ),
     # MangoPay Credit Card feed back
     url(
-        regex=r'^~wallet/addcardreturn/$',
+        regex=r'^wallet/addcardreturn/$',
         view=views.HandleMangoAddCardReturn.as_view(),
         name='addcardreturn'
     ),
     # Subscription
     url(
-        regex=r'^~subscription/(?P<sub_id>[\d]*)$',
+        regex=r'^abonnement/(?P<sub_id>[\d]*)$',
         view=views.Subscription.as_view(),
         name='subscription'
     ),
     # Inviations
     url(
-        regex=r'^~invitation/$',
+        regex=r'^invitation/$',
         view=views.UserSendInvidation.as_view(),
         name='invitation'
     ),
     # SpecialOffer demand
     #url(
-    #    regex=r'^~specialoffer/$',
+    #    regex=r'^specialoffer/$',
     #    view=views.SpecialOffer.as_view(),
     #    name='specialoffer'
     #),
     # ActivateOffer demand
     #url(
-    #    regex=r'^~activate/(?P<user_id>[\d]*)$',
+    #    regex=r'^activate/(?P<user_id>[\d]*)$',
     #    view=views.ActivateOffer.as_view(),
     #    name='activateoffer'
     #),
     # FAQ
-    url(
-        regex=r'^~FAQ$',
-        view=views.FAQ.as_view(),
-        name='faq'
-    ),
 ]
