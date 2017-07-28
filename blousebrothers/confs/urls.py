@@ -126,6 +126,10 @@ urlpatterns = [
         crud.QuestionCRUDView.as_view(),
         name='question_crud_view'),
 
+    url(r'^crud/predval/?$',
+        crud.PredictionValidationCRUDView.as_view(),
+        name='prediction_validation_crud_view'),
+
     url(r'^crud/studentquestion/?$',
         crud.StudentQuestionCRUDView.as_view(),
         name='student_question_crud_view'),

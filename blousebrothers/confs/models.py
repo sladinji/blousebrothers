@@ -224,9 +224,6 @@ class Speciality(models.Model):
     def __str__(self):
         return self.name
 
-    def image(self):
-        return 'images/spe/cardio.png'
-
 
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False)
@@ -234,6 +231,13 @@ class Question(models.Model):
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     coefficient = models.PositiveIntegerField(_("Coéfficient"), default=1)
     explaination = models.TextField(_("Remarque globale pour la correction"), blank=True, null=True)
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='questions',
+                                   help_text=_('Ne sélectionner que les items abordés de manière '
+                                               '<strong>significative</strong> dans votre dossier'),
+                                   blank=True,
+                                   )
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='questions',
+                                          blank=True)
 
     def is_valid(self):
         one_good = len([a for a in self.answers.all() if a.answer and a.correct]) >= 1
@@ -449,3 +453,27 @@ class Subscription(models.Model):
     @property
     def is_past_due(self):
         return date.today() > self.date_over
+
+def classifier_directory_path(classifier, filename):
+    return 'classifiers/{0}/{1}-{2}'.format(classifier.name, classifier.version, filename)
+
+class Classifier(models.Model):
+    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
+    version = models.CharField(_("Version"), max_length=64)
+    date = models.DateField(_("Date created"), auto_now_add=True)
+    classifier = models.FileField(_("Classifier"), upload_to=classifier_directory_path)
+
+
+class Prediction(models.Model):
+    question = models.ForeignKey('Question', related_name="prediction")
+    classifier = models.ForeignKey('Classifier', related_name="prediction")
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='prediction', blank=True)
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='prediction', blank=True)
+
+
+class PredictionValidation(models.Model):
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="prediction_validation")
+    prediction = models.ForeignKey('Prediction', blank=False, null=False, related_name="prediction_validation")
+    valid = models.NullBooleanField(default=None)
+    date_created = models.DateField(_("Date created"), auto_now_add=True)
+    date_modified = models.DateField(_("Date modified"), auto_now=True)
