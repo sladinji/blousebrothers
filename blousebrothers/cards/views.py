@@ -119,7 +119,7 @@ class UpdateCardView(UpdateView, RevisionPermissionMixin):
         return reverse('cards:revision', kwargs={'slug': self.object.slug})
 
 
-class RevisionRedirectView(RevisionPermissionMixin, RedirectView):
+class RevisionRedirectView(RedirectView):
     """
     Root url of card app, reached by clicking on revision link.
     Choose a card a redirect to revision view.
