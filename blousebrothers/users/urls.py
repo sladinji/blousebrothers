@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 
 from . import views
 
+
 urlpatterns = [
     # URL pattern for the UserRedirectView
     url(
@@ -88,4 +89,10 @@ urlpatterns = [
         view=views.FAQ.as_view(),
         name='faq'
     ),
-]
+    # WIEWS
+    url(
+       regex=r'^stat$',
+       view=views.Stat.as_view(),
+       name='stat',
+    ),
+  ]

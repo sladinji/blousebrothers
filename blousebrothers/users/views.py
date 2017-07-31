@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
 from datetime import date
 
+from django.views.generic import TemplateView
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
@@ -26,6 +27,10 @@ import blousebrothers.context_processor
 from mangopay.constants import ERROR_MESSAGES_DICT
 from oscar.core.loading import get_class
 
+import statistics
+from statistics import mean
+
+from highcharts.views import HighChartsBarView
 
 from .models import User
 from .forms import (
@@ -451,9 +456,111 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
 class SignupView(MetadataMixin, allauth.account.views.SignupView):
     title = 'BlouseBrothers prépa ECNi collaborative'
     description = """Plateforme collaborative d'entraînement aux ECNi. Etudiant: n'achète que les dossiers dont tu as
-    besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:
+    besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:wi
     dépose tes dossiers et garde 70% des gains."""
 
 
 class FAQ(TemplateView):
     template_name = 'faq/faq.html'
+
+class Stat(TemplateView, HighChartsBarView):
+    template_name = 'stat/stat.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['object'] = request.user
+
+        user = User.objects.prefetch_related("tests__answers").get(pk=request.user.pk)
+
+        #moy sur tout les test
+        moy_allTest=sum([x.score for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
+
+        #nombre d'erreur total
+        nb_erreurTot = sum([x.nb_errors for x in user.tests.filter(finished=True )])
+
+        #temps total time_total en heure
+        time_total=0
+        for x in user.tests.filter(finished=True):
+            time =( x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)/3600
+            time_total=time_total+time
+        time_moyen=time_total / len(user.tests.filter(finished=True))
+        print(time_moyen)
+        #temps en moyenne pour chaque qcm = time moyen
+        time_moyen=time_total / len(user.tests.filter(finished=True))
+
+        #nombre de test effectuer
+        nb_test=0
+        for x in user.tests.filter(finished=True):
+             if x.finished == True:
+                 nb_test=nb_test+1
+
+        d={}
+        d[1] = 0
+        d[2] = 0
+        d[3] = 0
+        d[4] = 0
+        d[5] = 0
+        d[6] = 0
+        d[7] = 0
+        d[8] = 0
+        d[9] = 0
+        d[10] = 0
+        d[11] = 0
+        d[12] = 0
+
+        #date lorsque est effectuer le test mit dans le mois correspondant
+        for x in  user.tests.filter(finished=True):
+            d[x.date_created.month]+=1
+
+        notes_spe = {}
+        notes_item = {}
+        moy_spec = {}
+        moy_item = {}
+
+        for test in user.tests.filter(finished=True):
+            for spe in test.conf.specialities.all():
+                if spe.name in notes_spe:
+                    notes_spe[spe.name] += [test.score]
+                else:
+                    notes_spe[spe.name] = [test.score]
+
+
+        for test in user.tests.filter(finished=True):
+            for item in test.conf.items.all():
+                if item.number in notes_item:
+                    notes_item[item.number] += [test.score]
+                else:
+                    notes_item[item.number] = [test.score]
+
+        for k,v in notes_item.items():
+            moy=mean(v)
+            moy_item= (k,moy)
+
+        for k,v in notes_spe.items():
+            moy2=mean(v)
+            moy_spe= (k,moy2)
+
+        categories = ['Orange', 'Bananas', 'Apples']
+
+
+
+        #nombre d'erreurs par test en moyenne
+        moy_error = sum([x.nb_errors for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
+        context['time_moyen'] = time_moyen
+        context['nb_test'] = nb_test
+        context['moy_error'] = moy_error
+        context['nb_erreurTot'] = nb_erreurTot
+        context['moy_allTest'] = moy_allTest
+        context['time_total'] = time_total
+        context['notes_spe']= notes_spe
+        context['notes_item'] = notes_item
+        context['moy_spec'] = moy_spec
+        context['moy_item'] = moy_item
+        return self.render_to_response(context)
+
+    @property
+    def series(self):
+        result = []
+        for i in moy_item:
+            result.append({'name': i, "data": moy_item[i]})
+        return result
