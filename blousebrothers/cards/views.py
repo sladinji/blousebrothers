@@ -10,7 +10,11 @@ from django.views.generic import (
     CreateView,
     DetailView,
     RedirectView,
+    TemplateView,
 )
+
+from chartit import DataPool, Chart
+
 from blousebrothers.auth import BBLoginRequiredMixin
 from .models import Card, Deck
 from .forms import CreateCardForm, UpdateCardForm
@@ -192,9 +196,41 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
 
+class RevisionStats(RevisionPermissionMixin, TemplateView):
+    template_name = 'cards/stats.html'
 
-class RevisionStats(RevisionPermissionMixin, DetailView):
-    pass
+    def get_context_data(self, *args, **kwargs):
+        data = DataPool(
+            series=[
+                {'options': {
+                    'source': self.request.user.deck.all()},
+                    'terms': [
+                        'modified',
+                        'nb_views']}
+            ]
+        )
+        #  Step 2: Create the Chart object
+        cht = Chart(
+            datasource=data,
+            series_options=[
+                {'options':{
+                    'type': 'line',
+                    'stacking': False},
+                    'terms':{
+                        'modified': [
+                            'nb_views',
+                        ]
+                    }}],
+            chart_options=
+            {'title': {
+                'text': 'Weather Data of Boston and Houston'},
+                'xAxis': {
+                    'title': {
+                        'text': 'Month number'}}}
+        )
+
+        #Step 3: Send the chart object to the template.
+        return super().get_context_data(cards_chart=cht)
 
 
 class ListCardView(RevisionPermissionMixin, ListView):

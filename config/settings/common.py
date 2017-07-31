@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
     'localflavor',  # IbanField
     'disqus', #  Forum
     'paypal',
+    'chartit',
 ]
 
 # Apps specific for this project go here.
