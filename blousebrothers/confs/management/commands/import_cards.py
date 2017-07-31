@@ -1,7 +1,6 @@
 import difflib
 from glob import glob
 from django.core.management.base import BaseCommand
-from django.contrib.flatpages.models import FlatPage
 from blousebrothers.cards.models import Card
 from blousebrothers.confs.models import Item, Speciality
 
@@ -28,7 +27,7 @@ class Command(BaseCommand):
         """
         Get close match (remove "ologie" from str for better perfromances (infectiologie/infectieuse...))
         """
-        ret= [
+        ret = [
             self.spe_dic[difflib.get_close_matches(x.strip().replace("ologie", ""), self.spe_dic.keys(), 1)[0]]
             for x in spelist
                 ]
@@ -39,7 +38,7 @@ class Command(BaseCommand):
         kwargs["content"] = kwargs['content'].replace("~", "@@")
         items = kwargs.pop('items')
         specialities = kwargs.pop('specialities')
-        card = Card(**kwargs)
+        card = Card(public=True, **kwargs)
         card.save()
         card.specialities = self.get_specialities(specialities.split(","))
         card.items = Item.objects.filter(
