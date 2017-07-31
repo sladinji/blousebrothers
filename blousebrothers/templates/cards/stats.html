@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
+
+{% block content %}
+{{ chart.as_html }}
+{% endblock content %}

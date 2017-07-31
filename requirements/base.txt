@@ -103,3 +103,6 @@ git+https://github.com/disqus/disqus-python.git
 # Raven is the Sentry client
 # --------------------------
 raven
+
+# Add a second requirements to speed up Docker image build
+-r base2.txt
