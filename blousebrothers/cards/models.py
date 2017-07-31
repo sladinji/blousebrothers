@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from blousebrothers.confs.models import AutoSlugField
 from django.db.models import Q
+from django.core.urlresolvers import reverse
 
 
 class Deck(models.Model):
@@ -29,7 +30,7 @@ class Card(models.Model):
     """
     Fiche de revision
     """
-    LEVEL_CHOICES=(
+    LEVEL_CHOICES = (
         ('EASY', _('Facile')),
         ('MIDDLE', _('Moyen')),
         ('HARD', _('Dur')),
@@ -60,3 +61,14 @@ class Card(models.Model):
         return [parent] + list(parent.children.filter(
             Q(author__isnull=True) | Q(author=user) | Q(public=True)
         ).order_by("created"))
+
+    def get_absolute_url(self):
+        return reverse('cards:revision', args=[self.slug])
+
+    @property
+    def root(self):
+        return self if not self.parent else self.parent
+
+    def get_root_absolute_url(self):
+        parent = self.parent or self
+        return reverse('cards:revision', args=[parent.slug])

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.views import defaults as default_views
 from django.contrib.sitemaps.views import sitemap
 from oscar.app import application
@@ -29,6 +29,11 @@ urlpatterns = [
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^rules/$', TemplateView.as_view(template_name='pages/regledujeu.html'), name='regledujeu'),
     url(r'^invitations/', include('invitations.urls', namespace='invitations')),
+    url(
+        regex=r'^FAQ/',
+        view=blousebrothers.users.views.FAQ.as_view(),
+        name='faq'
+    ),
 
 
     # Terms and Conditions

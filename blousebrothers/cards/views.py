@@ -10,7 +10,11 @@ from django.views.generic import (
     CreateView,
     DetailView,
     RedirectView,
+    TemplateView,
 )
+
+from chartit import DataPool, Chart
+
 from blousebrothers.auth import BBLoginRequiredMixin
 from .models import Card, Deck
 from .forms import CreateCardForm, UpdateCardForm
@@ -59,6 +63,8 @@ def bookmark_card(request, card_id):
 class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
+        if not self.request.user.is_authenticated():
+            False
         if self.request.user.is_superuser:
             return True
         self.object = self.get_object()
@@ -71,7 +77,7 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         raise PermissionDenied
 
 
-class CreateCardView(CreateView, RevisionPermissionMixin):
+class CreateCardView(RevisionPermissionMixin, CreateView):
     model = Card
     form_class = CreateCardForm
 
@@ -79,7 +85,7 @@ class CreateCardView(CreateView, RevisionPermissionMixin):
         return reverse('cards:list')
 
 
-class UpdateCardView(UpdateView, RevisionPermissionMixin):
+class UpdateCardView(RevisionPermissionMixin, UpdateView):
     model = Card
     form_class = UpdateCardForm
 
@@ -119,7 +125,7 @@ class UpdateCardView(UpdateView, RevisionPermissionMixin):
         return reverse('cards:revision', kwargs={'slug': self.object.slug})
 
 
-class RevisionRedirectView(RedirectView):
+class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):
     """
     Root url of card app, reached by clicking on revision link.
     Choose a card a redirect to revision view.
@@ -130,7 +136,7 @@ class RevisionRedirectView(RedirectView):
         return reverse('cards:revision', kwargs={'slug': new_card.slug})
 
 
-class RevisionNextCardView(RedirectView, RevisionPermissionMixin):
+class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):
     step = 1
 
     def get_redirect_url(self, *args, **kwargs):
@@ -140,11 +146,11 @@ class RevisionNextCardView(RedirectView, RevisionPermissionMixin):
         return reverse('cards:revision', kwargs={'slug': new_card.slug, 'dsp_card_on_load': True})
 
 
-class RevisionPreviousCardView(RevisionNextCardView, RevisionPermissionMixin):
+class RevisionPreviousCardView(RevisionPermissionMixin, RevisionNextCardView):
     step = -1
 
 
-class RevisionView(DetailView, RevisionPermissionMixin):
+class RevisionView(RevisionPermissionMixin, DetailView):
     template_name = "cards/revision.html"
     model = Deck
     is_favorite = False
@@ -190,7 +196,44 @@ class RevisionView(DetailView, RevisionPermissionMixin):
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
 
-class ListCardView(ListView, RevisionPermissionMixin):
+class RevisionStats(RevisionPermissionMixin, TemplateView):
+    template_name = 'cards/stats.html'
+
+    def get_context_data(self, *args, **kwargs):
+        data = DataPool(
+            series=[
+                {'options': {
+                    'source': self.request.user.deck.all()},
+                    'terms': [
+                        'modified',
+                        'nb_views']}
+            ]
+        )
+        #  Step 2: Create the Chart object
+        cht = Chart(
+            datasource=data,
+            series_options=[
+                {'options':{
+                    'type': 'line',
+                    'stacking': False},
+                    'terms':{
+                        'modified': [
+                            'nb_views',
+                        ]
+                    }}],
+            chart_options=
+            {'title': {
+                'text': 'Weather Data of Boston and Houston'},
+                'xAxis': {
+                    'title': {
+                        'text': 'Month number'}}}
+        )
+
+        #Step 3: Send the chart object to the template.
+        return super().get_context_data(cards_chart=cht)
+
+
+class ListCardView(RevisionPermissionMixin, ListView):
     model = Card
 
     def get_queryset(self):
