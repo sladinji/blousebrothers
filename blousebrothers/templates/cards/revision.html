@@ -98,7 +98,17 @@
 	<div class="col-md-4 text-right hidden-xs hidden-sm">
         {% include "cards/partials/rev_menu.html" %}
 	</div>
+{% if user.is_authenticated and object.card.parent.public %}
+{% load disqus_tags %}
+{% set_disqus_identifier object.card.parent.slug %}
+{% set_disqus_title object.card.parent.title %}
+{% set_disqus_url object.card.parent.get_absolute_url %}
+{% disqus_dev %}
+{% get_disqus_sso user %}
+{% disqus_show_comments %}
+{% endif %}
 </div>
+
 {% endwith %}
 {% endblock content %}
 
