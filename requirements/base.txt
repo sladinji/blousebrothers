@@ -103,4 +103,3 @@ git+https://github.com/disqus/disqus-python.git
 # Raven is the Sentry client
 # --------------------------
 raven
--r base2.txt

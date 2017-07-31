@@ -42,9 +42,4 @@ urlpatterns = [
         view=views.bookmark_card,
         name='bookmark'
     ),
-    url(
-        regex=r'^stats/$',
-        view=views.RevisionStats.as_view(),
-        name='stats'
-    ),
 ]
