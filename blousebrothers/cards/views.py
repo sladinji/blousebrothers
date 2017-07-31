@@ -200,7 +200,7 @@ class Dispatching(Chart):
     """
     How many cards in each category.
     """
-    chart_type = 'pie'
+    chart_type = 'doughnut'
     request = None
 
     def get_labels(self, **kwargs):
