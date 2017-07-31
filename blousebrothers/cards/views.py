@@ -196,28 +196,37 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
 
-class TimeSeriesChart(Chart):
-    chart_type = 'line'
-    scales = {
-        'xAxes': [Axes(type='time', position='bottom')],
-    }
+class Dispatching(Chart):
+    """
+    How many cards in each category.
+    """
+    chart_type = 'pie'
+    request = None
+
+    def get_labels(self, **kwargs):
+        return [str(label[1]) for label in Card.LEVEL_CHOICES]
 
     def get_datasets(self, **kwargs):
-        data = [{'y': 0, 'x': '2017-01-02T00:00:00'}, {'y': 1, 'x': '2017-01-03T00:00:00'}, {'y': 4, 'x': '2017-01-04T00:00:00'}, {'y': 9, 'x': '2017-01-05T00:00:00'}, {'y': 16, 'x': '2017-01-06T00:00:00'}, {'y': 25, 'x': '2017-01-07T00:00:00'}, {'y': 36, 'x': '2017-01-08T00:00:00'}, {'y': 49, 'x': '2017-01-09T00:00:00'}, {'y': 64, 'x': '2017-01-10T00:00:00'}, {'y': 81, 'x': '2017-01-11T00:00:00'}, {'y': 100, 'x': '2017-01-12T00:00:00'}, {'y': 121, 'x': '2017-01-13T00:00:00'}, {'y': 144, 'x': '2017-01-14T00:00:00'}, {'y': 169, 'x': '2017-01-15T00:00:00'}, {'y': 196, 'x': '2017-01-16T00:00:00'}, {'y': 225, 'x': '2017-01-17T00:00:00'}, {'y': 256, 'x': '2017-01-18T00:00:00'}, {'y': 289, 'x': '2017-01-19T00:00:00'}, {'y': 324, 'x': '2017-01-20T00:00:00'}, {'y': 361, 'x': '2017-01-21T00:00:00'}, {'y': 400, 'x': '2017-01-22T00:00:00'}, {'y': 441, 'x': '2017-01-23T00:00:00'}, {'y': 484, 'x': '2017-01-24T00:00:00'}, {'y': 529, 'x': '2017-01-25T00:00:00'}, {'y': 576, 'x': '2017-01-26T00:00:00'}, {'y': 625, 'x': '2017-01-27T00:00:00'}, {'y': 676, 'x': '2017-01-28T00:00:00'}, {'y': 729, 'x': '2017-01-29T00:00:00'}, {'y': 784, 'x': '2017-01-30T00:00:00'}, {'y': 841, 'x': '2017-01-31T00:00:00'}, {'y': 900, 'x': '2017-02-01T00:00:00'}]
-
-        return [DataSet(
-            type='line',
-            label='Time Series',
-            data=data,
-        )]
+        data = [Deck.objects.filter(student=self.request.user, difficulty=dif).count()
+                for dif in range(3)]
+        colors = [
+            "#5cb85c",
+            "#E8B510",
+            "#d9534f"
+        ]
+        return [DataSet(data=data,
+                        label="Répartition des fiches",
+                        backgroundColor=colors,
+                        hoverBackgroundColor=colors)]
 
 
 class RevisionStats(RevisionPermissionMixin, TemplateView):
     template_name = 'cards/stats.html'
 
     def get_context_data(self, *args, **kwargs):
-        chart = TimeSeriesChart()
-        return super().get_context_data(*args, chart=chart, **kwargs)
+        dispatching_chart = Dispatching()
+        dispatching_chart.request = self.request
+        return super().get_context_data(*args, chart=dispatching_chart, **kwargs)
 
 
 class ListCardView(RevisionPermissionMixin, ListView):

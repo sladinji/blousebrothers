@@ -5,5 +5,24 @@
 {% endblock %}
 
 {% block content %}
-{{ chart.as_html }}
+        <div class="col-md-3">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-cubes"></i> Répartition de mes fiches</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        {{ chart.as_html }}
+                        <ul class="col-md-12 stats">
+                            <li class="stat col-md-6 col-sm-6 col-xs-12">
+                                <span><b class="value">Total</b><br> 
+                                    {{ user.deck.count }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock content %}
