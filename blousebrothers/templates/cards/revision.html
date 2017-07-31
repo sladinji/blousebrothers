@@ -39,6 +39,7 @@
                     {% endif %}
                     <div class="btn_rev_block{% if dsp_card_on_load %} btn_rev_nav{% endif %}">
                         {% if other_versions %}
+                        {% if dsp_card_on_load %}
                         <div class="card_button card_fav">
                             <a href="#0" title="Choisir cette version">
                                 <div class="day"><i class="fa fa-star{% if not is_favorite%}-o{% endif %}" aria-hidden="true"></i></div>
@@ -49,6 +50,7 @@
                                 <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
                             </a> 
                         </div>
+                        {% endif %}
                         <div class="card_button card_next">
                             <a href="{% url 'cards:next' object.card.pk %}" title="Voir la version suivante">
                                 <div class="day"><i class="fa fa-{% if dsp_card_on_load %}chevron-right{% else %}clone{%endif%}" aria-hidden="true"></i></div>
@@ -128,7 +130,7 @@ $(document).ready(function() {
 			}
 		});
     });
-    $('.post-content').click(toggle_card);
+    $('.description').click(toggle_card);
     {% if dsp_card_on_load %}
     toggle_card();
     {% endif %}
