@@ -1,11 +1,9 @@
 {% extends 'layout.html' %}
-{% load chartit %}
 
 {% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.14/highcharts.js"></script>
-{{ cards_chart|load_charts:"cards_chart" }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 {% endblock %}
 
 {% block content %}
-    <div id='cards_chart'> Chart will be rendered here </div>
+{{ chart.as_html }}
 {% endblock content %}

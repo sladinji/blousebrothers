@@ -1,1 +1,1 @@
-django_chartit
+django-jchart
