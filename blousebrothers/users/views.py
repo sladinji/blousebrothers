@@ -30,7 +30,8 @@ from oscar.core.loading import get_class
 import statistics
 from statistics import mean
 
-from highcharts.views import HighChartsBarView
+from jchart import Chart
+from jchart.config import Axes, DataSet
 
 from .models import User
 from .forms import (
@@ -463,10 +464,19 @@ class SignupView(MetadataMixin, allauth.account.views.SignupView):
 class FAQ(TemplateView):
     template_name = 'faq/faq.html'
 
-class Stat(TemplateView, HighChartsBarView):
-    template_name = 'stat/stat.html'
+class MeanLineChart(Chart):
+    chart_type = 'line'
 
-    def get(self, request, *args, **kwargs):
+    def get_dataset(self, **kwargs):
+        data = self.context['moy_spec']
+        return [DataSet(
+            label='My First Graph',
+            data=data)]
+
+class Stats(TemplateView):
+    template_name = 'stats/stats.html'
+
+    def get_context_data(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         context['object'] = request.user
 
@@ -495,18 +505,8 @@ class Stat(TemplateView, HighChartsBarView):
                  nb_test=nb_test+1
 
         d={}
-        d[1] = 0
-        d[2] = 0
-        d[3] = 0
-        d[4] = 0
-        d[5] = 0
-        d[6] = 0
-        d[7] = 0
-        d[8] = 0
-        d[9] = 0
-        d[10] = 0
-        d[11] = 0
-        d[12] = 0
+        for i in range(1,13):
+            d[i] = 0
 
         #date lorsque est effectuer le test mit dans le mois correspondant
         for x in  user.tests.filter(finished=True):
@@ -533,16 +533,10 @@ class Stat(TemplateView, HighChartsBarView):
                     notes_item[item.number] = [test.score]
 
         for k,v in notes_item.items():
-            moy=mean(v)
-            moy_item= (k,moy)
+            moy_item[k] = mean(v)
 
         for k,v in notes_spe.items():
-            moy2=mean(v)
-            moy_spe= (k,moy2)
-
-        categories = ['Orange', 'Bananas', 'Apples']
-
-
+            moy_spec[k] = mean(v)
 
         #nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
@@ -556,11 +550,7 @@ class Stat(TemplateView, HighChartsBarView):
         context['notes_item'] = notes_item
         context['moy_spec'] = moy_spec
         context['moy_item'] = moy_item
-        return self.render_to_response(context)
 
-    @property
-    def series(self):
-        result = []
-        for i in moy_item:
-            result.append({'name': i, "data": moy_item[i]})
-        return result
+        chart = MeanLineChart()
+        context['stat_chart'] = chart
+        return context

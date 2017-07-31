@@ -91,9 +91,9 @@ urlpatterns = [
     ),
     # WIEWS
     url(
-       regex=r'^stat$',
-       view=views.Stat.as_view(),
-       name='stat',
+       regex=r'^stats$',
+       view=views.Stats.as_view(),
+       name='stats',
     ),
   ]
 

@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% load jchart %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1> salut voici tes stats</h1>
+
+<!--{% for test in object.tests.all %}
+    {{test.score}}
+    {% endfor %}-->
+
+    Tu as fait 
+    {{nb_test}}
+    tests depuis le debut
+    </br>
+    tu as passé en moyenne
+    {{time_moyen}}
+    minutes par test
+    </br>
+    tu as en moyenne 
+    {{moy_allTest}}
+    de score par test
+    </br>
+    tu as passé
+    {{time_total}}
+    heures à faire des tests
+    </br>
+    Tu as fait
+    {{nb_erreurTot}}
+    erreurs sur tout tes tests
+    </br>
+    En moyenne tu as fait
+    {{moy_error}}
+    erreurs par test
+    </br>
+    </br>
+    </br>
+    Test par item :
+    {{notes_item}}
+    </br>
+    moyenne par item :
+    {% for k,v in notes_item.items%}
+    {{ k}}{{v}}
+    {% endfor %}
+    </br>
+    </br>
+    item par spe
+    {{notes_spe}}
+    </br>
+    moyenne par spe
+    {% for k,v in notes_spe.items%}
+    {{ k}}{{v}}
+    {% endfor %}
+    <div id='stat_chart'>Chart wil be displayed here normally</div>
+{% endblock content %}
+
