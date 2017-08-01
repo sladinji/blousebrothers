@@ -50,7 +50,7 @@ class Card(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     level = models.CharField(_("Level"), max_length=10, choices=LEVEL_CHOICES,
-                             blank=False, default='DP')
+                             blank=False, default='MIDDLE')
     free = models.BooleanField(default=True)
 
     def family(self, user):
