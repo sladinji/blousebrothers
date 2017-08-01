@@ -232,8 +232,8 @@ class Dispatching(Chart):
                         hoverBackgroundColor=self.colors)]
 
 
-class RevisionStats(RevisionPermissionMixin, TemplateView):
-    template_name = 'cards/stats.html'
+class RevisionHome(RevisionPermissionMixin, TemplateView):
+    template_name = 'cards/home.html'
 
     def get_context_data(self, *args, **kwargs):
         dispatching_chart = Dispatching()

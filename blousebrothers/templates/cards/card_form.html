@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block description %}
-            <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'cards:update' object.card.slug %}">
+<form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% if object %}{% url 'cards:update' object.card.slug %}{% else %}{% url 'cards:create' %}{% endif %}">
                 {% csrf_token %}
                 <div class="tab-content">
                     <div id="conference">
@@ -21,11 +21,14 @@
                 <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn">{% trans "Valider" %}</button>
-                        <a href="{% url 'cards:revision' object.card.slug %}" class="btn">{% trans "Annuler" %}</a>
+                        <a href="{% if object %}{% url 'cards:revision' object.card.slug %}{% else %}{% url 'cards:home' %}{% endif %}" class="btn">{% trans "Annuler" %}</a>
                     </div>
                 </div>
             </form>
 {% endblock description %}
+
+{% block card_footer %}
+{% endblock %}
 
 {% block scripts %}
 {{ block.super }}

@@ -44,8 +44,8 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^stats/$',
-        view=views.RevisionStats.as_view(),
-        name='stats'
+        regex=r'^home/$',
+        view=views.RevisionHome.as_view(),
+        name='home'
     ),
 ]

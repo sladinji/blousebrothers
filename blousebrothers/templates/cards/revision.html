@@ -3,9 +3,10 @@
 {% load bbtricks%}
 {% block title %}{% trans 'Révisions' %}{% endblock %}
 
-{% block body_class %}bodyrev{% endblock body_class %}
+{% block body_class %}{% if object %}bodyrev{% endif %}{% endblock body_class %}
 
 {% block main_header %}
+{% if not object %}{{ block.super }}{% endif %}
 {% endblock main_header %}
 
 {% block zendesk %}
@@ -20,9 +21,12 @@
 		<div class="column"> 
 			<!-- Post-->
 			<div class="post-module"> 
+                {% if object %}
 				<!-- Thumbnail-->
 				<div class="thumbnail">
-						<img src="{% static spe.image %}" class="img-responsive" alt=""> </div>
+						<img src="{% static spe.image %}" class="img-responsive" alt="">
+                </div>
+                {% endif %}
 				<!-- Post Content-->
 				<div class="post-content">
                     {% if spe.name %}
@@ -38,6 +42,7 @@
                     <i>Édité par</i> {{ object.card.author.username }}
                     {% endif %}
                     <div class="btn_rev_block{% if dsp_card_on_load %} btn_rev_nav{% endif %}">
+                        {% if object %}
                         {% if other_versions %}
                         {% if dsp_card_on_load %}
                         <div class="card_button card_fav">
@@ -63,10 +68,11 @@
                             </a> 
                         </div>
                         <div class="card_button end_revision">
-                            <a href="{% url 'catalogue:index' %}" title="Revenir au site">
+                            <a href="{% url 'cards:home' %}" title="Revenir au site">
                                 <div class="day"><i class="fa fa-power-off" aria-hidden="true"></i></div>
                             </a> 
                         </div>
+                        {% endif %}
                     </div>
                     <div class="description">
                         {% block description %}
@@ -78,6 +84,7 @@
                         </div>
                         {% endblock description %}
                     </div>
+                    {% block card_footer %}
                     <div class="btn_rev_block btn_rev_eval">
                         <form action="" method="POST" >
                             {% csrf_token %}
@@ -88,6 +95,7 @@
                             </div>
                         </form>
                     </div>
+                    {% endblock %}
 					<div class="post-meta"><span class="timestamp"><i class="fa fa-clock"></i>{% for item in object.card.items.all %}{{ item.name }} {% endfor %}</span><span class="comments"></span></div>
 				</div>
 			</div>
@@ -115,8 +123,10 @@
 {% endblock content %}
 
 {% block footer %}
+{% if not object %}{{ block.super }}{% endif %}
 {% endblock footer %}
 
+{% if object %}
 {% block extrascripts %}
  <script type="text/javascript">
 var myswitch = true;
@@ -149,3 +159,4 @@ $(document).ready(function() {
 });
 </script>
 {% endblock extrascripts %}
+{% endif %}
