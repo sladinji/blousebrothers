@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -16,8 +18,9 @@ from jchart import Chart
 from jchart.config import Axes, DataSet
 
 from blousebrothers.auth import BBLoginRequiredMixin
+from blousebrothers.confs.models import Item
 from .models import Card, Deck
-from .forms import CreateCardForm, UpdateCardForm
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
 
 def choose_new_card(request):
@@ -82,18 +85,37 @@ class CreateCardView(RevisionPermissionMixin, CreateView):
     form_class = CreateCardForm
 
     def get_success_url(self):
-        return reverse('cards:list')
+        return reverse('cards:finalize', kwargs={'slug': self.object.slug})
+
+    def form_valid(self, form):
+        """
+        Find items and spe for the given data, and add @@ makers.
+        """
+        txt = "{question} {content}".format(**form.cleaned_data)
+        self.object = form.save()
+
+        for item in Item.objects.all():
+            for kw in item.kwords.all():
+                if re.search(r'[^\w]'+kw.value+r'([^\w]|$)', txt):
+                    self.object.items.add(item)
+                    break
+
+        self.object.content = '@@{question}@@\n{content}'.format(**form.cleaned_data)
+        self.object.author = self.request.user
+        self.object.save()
+
+        Deck.objects.create(card=self.object, student=self.request.user)
+
+        return super().form_valid(form)
 
 
-class UpdateCardView(RevisionPermissionMixin, UpdateView):
-    model = Card
-    form_class = UpdateCardForm
+class MockDeckMixin():
+    """
+    Share same template as Revision view. Because Revision view use Deck
+    as model, we mock Deck model with another class.
+    """
 
     def get_context_data(self, **kwargs):
-        """
-        Share same template as Revision view. Because Revision view use Deck
-        as model, we mock Deck model with another class.
-        """
         class Mock:
             card = None
 
@@ -102,6 +124,19 @@ class UpdateCardView(RevisionPermissionMixin, UpdateView):
         mock.card = context['object']
         context.update(object=mock)
         return context
+
+
+class FinalizeCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
+    model = Card
+    form_class = FinalizeCardForm
+
+    def get_success_url(self):
+        return reverse('cards:list')
+
+
+class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
+    model = Card
+    form_class = UpdateCardForm
 
     def form_valid(self, form):
         """
@@ -181,6 +216,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         context.update(is_favorite=self.is_favorite)
         context.update(dsp_card_on_load=self.kwargs['dsp_card_on_load'] == "True")
         context.update(other_versions=len(self.object.card.family(self.request.user)) > 1)
+        context.update(zen=True)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -245,11 +281,10 @@ class ListCardView(RevisionPermissionMixin, ListView):
     model = Card
 
     def get_queryset(self):
-        qry = self.model.objects.all()
+        qry = self.model.objects.filter(deck__student=self.request.user)
         if self.request.GET.get('q', False):
             qry = qry.filter(
-                Q(title__icontains=self.request.GET['q']) |
                 Q(content__icontains=self.request.GET['q']) |
-                Q(section__icontains=self.request.GET['q'])
+                Q(tags__name__icontains=self.request.GET['q'])
             )
-        return qry.all()
+        return qry.all().order_by('-deck__created')

@@ -253,7 +253,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
                 id__in=self.object.items.all()
             ).all():
                 for kw in item.kwords.all():
-                    if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
+                    if re.search(r'[^\w]'+kw.value+r'([^\w]|$)', txt):
                         items.append(item)
                         break
         context = super().get_context_data(**{'items': items})

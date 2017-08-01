@@ -3,10 +3,10 @@
 {% load bbtricks%}
 {% block title %}{% trans 'Révisions' %}{% endblock %}
 
-{% block body_class %}{% if object %}bodyrev{% endif %}{% endblock body_class %}
+{% block body_class %}{% if zen %}bodyrev{% endif %}{% endblock body_class %}
 
 {% block main_header %}
-{% if not object %}{{ block.super }}{% endif %}
+{% if not zen %}{{ block.super }}{% endif %}
 {% endblock main_header %}
 
 {% block zendesk %}
@@ -21,7 +21,7 @@
 		<div class="column"> 
 			<!-- Post-->
 			<div class="post-module"> 
-                {% if object %}
+                {% if zen %}
 				<!-- Thumbnail-->
 				<div class="thumbnail">
 						<img src="{% static spe.image %}" class="img-responsive" alt="">
@@ -29,7 +29,7 @@
                 {% endif %}
 				<!-- Post Content-->
 				<div class="post-content">
-                    {% if spe.name %}
+                    {% if spe.name and zen %}
 					<div class="category">{{ spe.name }}</div>
                     {% endif %}
                     {% if object.card.title %}
@@ -42,7 +42,7 @@
                     <i>Édité par</i> {{ object.card.author.username }}
                     {% endif %}
                     <div class="btn_rev_block{% if dsp_card_on_load %} btn_rev_nav{% endif %}">
-                        {% if object %}
+                        {% if zen %}
                         {% if other_versions %}
                         {% if dsp_card_on_load %}
                         <div class="card_button card_fav">
@@ -74,16 +74,16 @@
                         </div>
                         {% endif %}
                     </div>
+                    {% block description %}
                     <div class="description">
-                        {% block description %}
                         <span>{{ object.card.content | rev_content | safe }}</span>
                         <div class="card_button preview" id="calltoac">
                             <a href="#0">
                                 <div class="day preview"><i class="fa fa-bars preview" aria-hidden="true"></i></div>
                             </a> 
                         </div>
-                        {% endblock description %}
                     </div>
+                    {% endblock description %}
                     {% block card_footer %}
                     <div class="btn_rev_block btn_rev_eval">
                         <form action="" method="POST" >
@@ -95,8 +95,8 @@
                             </div>
                         </form>
                     </div>
-                    {% endblock %}
 					<div class="post-meta"><span class="timestamp"><i class="fa fa-clock"></i>{% for item in object.card.items.all %}{{ item.name }} {% endfor %}</span><span class="comments"></span></div>
+                    {% endblock %}
 				</div>
 			</div>
 		</div>
@@ -123,10 +123,10 @@
 {% endblock content %}
 
 {% block footer %}
-{% if not object %}{{ block.super }}{% endif %}
+{% if not zen %}{{ block.super }}{% endif %}
 {% endblock footer %}
 
-{% if object %}
+{% if zen %}
 {% block extrascripts %}
  <script type="text/javascript">
 var myswitch = true;

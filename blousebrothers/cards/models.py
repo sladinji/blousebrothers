@@ -26,6 +26,10 @@ class Deck(models.Model):
         return super().save(*args, **kwargs)
 
 
+class Tag(models.Model):
+    name = models.CharField(_("Tags"), max_length=256, blank=False, null=False)
+
+
 class Card(models.Model):
     """
     Fiche de revision
@@ -39,14 +43,14 @@ class Card(models.Model):
                                           related_name='cards', blank=True)
     items = models.ManyToManyField('confs.Item', verbose_name=_("Items"),
                                    related_name='cards', blank=True)
-    section = models.CharField(_("Chapitre"), max_length=256, blank=False, null=False)
-    title = models.CharField(_("Titre du cours"), max_length=256, blank=False, null=False)
-    content = models.TextField(_('Contenu'), blank=True, null=True)
+    tags = models.ManyToManyField('Tag', verbose_name=("Tags"),
+                                          related_name='cards', blank=True)
+    content = models.TextField(_('Réponse'), blank=True, null=True)
     parent = models.ForeignKey("Card", verbose_name=_("Original"), on_delete=models.SET_NULL,
                                related_name="children", blank=True, null=True)
     author = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
                                related_name="created_cards", blank=True, null=True)
-    slug = AutoSlugField(_('Slug'), max_length=256, unique=True, populate_from='title')
+    slug = AutoSlugField(_('Slug'), max_length=256, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     level = models.CharField(_("Level"), max_length=10, choices=LEVEL_CHOICES,
