@@ -2040,3 +2040,7 @@ div#calltoac {
 .column {
     min-width: 428px;
 }
+.x_content canvas {
+    width: 100% !important;
+    height: 100% !important;
+}

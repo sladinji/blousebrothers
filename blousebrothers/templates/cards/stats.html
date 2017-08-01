@@ -5,24 +5,54 @@
 {% endblock %}
 
 {% block content %}
-        <div class="col-md-3">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                    <h2><i class="fa fa-cubes"></i> Répartition de mes fiches</h2>
+                    <h2><i class="fa fa-pie-chart"></i> Répartition de mes fiches</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        {{ chart.as_html }}
-                        <ul class="col-md-12 stats">
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">Total</b><br> 
-                                    {{ user.deck.count }}</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:60%; width:60%">
+                                    {{ chart.as_html }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{count}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody></table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 {% endblock content %}

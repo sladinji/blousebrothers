@@ -202,22 +202,31 @@ class Dispatching(Chart):
     """
     chart_type = 'doughnut'
     request = None
+    responsive = True
+    maintainAspectRatio = False
+    legend = {
+        'display': False,
+        'position': 'right',
+    }
+    colors = [
+        "#5cb85c",
+        "#E8B510",
+        "#d9534f"
+    ]
 
     def get_labels(self, **kwargs):
         return [str(label[1]) for label in Card.LEVEL_CHOICES]
 
+    def get_lab_col_cnt(self):
+        return zip(self.get_labels(), self.colors, self.data)
+
     def get_datasets(self, **kwargs):
-        data = [Deck.objects.filter(student=self.request.user, difficulty=dif).count()
-                for dif in range(3)]
-        colors = [
-            "#5cb85c",
-            "#E8B510",
-            "#d9534f"
-        ]
-        return [DataSet(data=data,
+        self.data = [Deck.objects.filter(student=self.request.user, difficulty=dif).count()
+                     for dif in range(3)]
+        return [DataSet(data=self.data,
                         label="Répartition des fiches",
-                        backgroundColor=colors,
-                        hoverBackgroundColor=colors)]
+                        backgroundColor=self.colors,
+                        hoverBackgroundColor=self.colors)]
 
 
 class RevisionStats(RevisionPermissionMixin, TemplateView):
