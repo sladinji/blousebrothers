@@ -464,53 +464,59 @@ class SignupView(MetadataMixin, allauth.account.views.SignupView):
 class FAQ(TemplateView):
     template_name = 'faq/faq.html'
 
-class MeanLineChart(Chart):
-    chart_type = 'line'
 
-    def get_dataset(self, **kwargs):
-        data = self.context['moy_spec']
-        return [DataSet(
-            label='My First Graph',
-            data=data)]
+class MeanLineChart(Chart):
+    chart_type = 'bar'
+    context = []
+
+    def get_labels(self, **kwargs):
+        return sorted([i for i in self.context['moy_spec']])
+
+    def get_datasets(self, **kwargs):
+        choix = 'spécialité'
+        data = sorted([(spe, self.context['moy_spec'][spe]) for spe in self.context['moy_spec']])
+        return [DataSet(label='Ma moyenne par {}'.format(choix),
+                        data=[spe[1] for spe in data])]
+
 
 class Stats(TemplateView):
     template_name = 'stats/stats.html'
 
-    def get_context_data(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['object'] = request.user
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = self.request.user
 
-        user = User.objects.prefetch_related("tests__answers").get(pk=request.user.pk)
+        user = User.objects.prefetch_related("tests__answers").get(pk=self.request.user.pk)
 
-        #moy sur tout les test
-        moy_allTest=sum([x.score for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
+        # moy sur tout les test
+        moy_allTest = sum([x.score for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
 
-        #nombre d'erreur total
-        nb_erreurTot = sum([x.nb_errors for x in user.tests.filter(finished=True )])
+        # nombre d'erreur total
+        nb_erreurTot = sum([x.nb_errors for x in user.tests.filter(finished=True)])
 
-        #temps total time_total en heure
-        time_total=0
+        # temps total time_total en heure
+        time_total = 0
         for x in user.tests.filter(finished=True):
-            time =( x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)/3600
-            time_total=time_total+time
-        time_moyen=time_total / len(user.tests.filter(finished=True))
-        print(time_moyen)
-        #temps en moyenne pour chaque qcm = time moyen
-        time_moyen=time_total / len(user.tests.filter(finished=True))
+            time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)/3600
+            time_total = time_total + time
+        time_moyen = time_total / len(user.tests.filter(finished=True))
 
-        #nombre de test effectuer
-        nb_test=0
+        # temps en moyenne pour chaque qcm = time moyen
+        time_moyen = time_total / len(user.tests.filter(finished=True))
+
+        # nombre de test effectuer
+        nb_test = 0
         for x in user.tests.filter(finished=True):
-             if x.finished == True:
-                 nb_test=nb_test+1
+            if x.finished:
+                nb_test = nb_test + 1
 
-        d={}
-        for i in range(1,13):
+        d = {}
+        for i in range(1, 13):
             d[i] = 0
 
-        #date lorsque est effectuer le test mit dans le mois correspondant
-        for x in  user.tests.filter(finished=True):
-            d[x.date_created.month]+=1
+        # date lorsque est effectuer le test mit dans le mois correspondant
+        for x in user.tests.filter(finished=True):
+            d[x.date_created.month] += 1
 
         notes_spe = {}
         notes_item = {}
@@ -524,7 +530,6 @@ class Stats(TemplateView):
                 else:
                     notes_spe[spe.name] = [test.score]
 
-
         for test in user.tests.filter(finished=True):
             for item in test.conf.items.all():
                 if item.number in notes_item:
@@ -532,13 +537,13 @@ class Stats(TemplateView):
                 else:
                     notes_item[item.number] = [test.score]
 
-        for k,v in notes_item.items():
-            moy_item[k] = mean(v)
+        for k, v in notes_item.items():
+            moy_item[k] = round(mean(v), 2)
 
-        for k,v in notes_spe.items():
-            moy_spec[k] = mean(v)
+        for k, v in notes_spe.items():
+            moy_spec[k] = round(mean(v), 2)
 
-        #nombre d'erreurs par test en moyenne
+        # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
         context['time_moyen'] = time_moyen
         context['nb_test'] = nb_test
@@ -546,11 +551,12 @@ class Stats(TemplateView):
         context['nb_erreurTot'] = nb_erreurTot
         context['moy_allTest'] = moy_allTest
         context['time_total'] = time_total
-        context['notes_spe']= notes_spe
+        context['notes_spe'] = notes_spe
         context['notes_item'] = notes_item
         context['moy_spec'] = moy_spec
         context['moy_item'] = moy_item
 
         chart = MeanLineChart()
-        context['stat_chart'] = chart
+        chart.context = context
+        context['mean_chart'] = chart
         return context

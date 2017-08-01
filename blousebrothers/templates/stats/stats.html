@@ -13,47 +13,48 @@
     {% endfor %}-->
 
     Tu as fait 
-    {{nb_test}}
+    {{ nb_test }}
     tests depuis le debut
     </br>
     tu as passé en moyenne
-    {{time_moyen}}
+    {{ time_moyen }}
     minutes par test
     </br>
     tu as en moyenne 
-    {{moy_allTest}}
+    {{ moy_allTest }}
     de score par test
     </br>
     tu as passé
-    {{time_total}}
+    {{ time_total }}
     heures à faire des tests
     </br>
     Tu as fait
-    {{nb_erreurTot}}
+    {{ nb_erreurTot }}
     erreurs sur tout tes tests
     </br>
     En moyenne tu as fait
-    {{moy_error}}
+    {{ moy_error }}
     erreurs par test
     </br>
     </br>
     </br>
     Test par item :
-    {{notes_item}}
+    {{ notes_item }}
     </br>
     moyenne par item :
-    {% for k,v in notes_item.items%}
-    {{ k}}{{v}}
+    {% for k,v in notes_item.items %}
+    {{ k }}{{ v }}
     {% endfor %}
     </br>
     </br>
     item par spe
-    {{notes_spe}}
+    {{ notes_spe }}
     </br>
     moyenne par spe
     {% for k,v in notes_spe.items%}
-    {{ k}}{{v}}
+    {{ k }}{{ v }}
     {% endfor %}
-    <div id='stat_chart'>Chart wil be displayed here normally</div>
+
+    {{ mean_chart.as_html }}
 {% endblock content %}
 
