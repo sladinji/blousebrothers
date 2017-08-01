@@ -218,6 +218,9 @@ class Dispatching(Chart):
         return [str(label[1]) for label in Card.LEVEL_CHOICES]
 
     def get_lab_col_cnt(self):
+        """
+        Used in template to display stat in table
+        """
         return zip(self.get_labels(), self.colors, self.data)
 
     def get_datasets(self, **kwargs):
