@@ -521,6 +521,7 @@ class Stats(TemplateView):
         moy_spec = {}
         moy_item = {}
 
+        #note par specialite
         for test in user.tests.filter(finished=True):
             for spe in test.conf.specialities.all():
                 if spe.name in notes_spe:
@@ -528,6 +529,7 @@ class Stats(TemplateView):
                 else:
                     notes_spe[spe.name] = [test.score]
 
+        #note par item
         for test in user.tests.filter(finished=True):
             for item in test.conf.items.all():
                 if item.number in notes_item:
@@ -535,25 +537,30 @@ class Stats(TemplateView):
                 else:
                     notes_item[item.number] = [test.score]
 
+        #moyenne des items
         for k, v in notes_item.items():
             moy_item[k] = round(mean(v), 2)
 
+        # moyenne des specialités
         for k, v in notes_spe.items():
             moy_spec[k] = round(mean(v), 2)
 
         result_lastWeek = 0
         test_lastWeek = datetime.now() - timedelta(days=7)
 
+        #nombre de test fait la semaine derniere
         for x in user.tests.filter(date_created__gt=test_lastWeek):
             if x.finished:
                 result_lastWeek = result_lastWeek +1
 
         nbTest_lastWeek = 0
-        nbResult_lastWeek = datetime.now() - timedelta(days=7)
+        nbResult_lastWeek = datetime.now() - timedelta(days=150)
 
+        #nombre de test fait avant la semaine derniere
         for x in user.tests.filter(date_created__lt=nbResult_lastWeek):
             if x.finished:
                 nbTest_lastWeek = nbTest_lastWeek + 1
+        pourcen_testPlus = (nb_test/nbTest_lastWeek)*100
 
         # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
@@ -570,6 +577,7 @@ class Stats(TemplateView):
         context['moy_item'] = moy_item
         context['result_lastWeek'] = result_lastWeek
         context['nbTest_lastWeek'] = nbTest_lastWeek
+        context['pourcen_testPlus'] = pourcen_testPlus
 
         chart = MeanLineChart()
         chart.context = context
