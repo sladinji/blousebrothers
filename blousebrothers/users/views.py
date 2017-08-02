@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django.views.generic import TemplateView
 from django.apps import apps
@@ -567,9 +567,7 @@ class Stats(TemplateView):
         # temps en moyenne pour chaque qcm = time moyen
         time_moyen = time_total / nb_test_fini
 
-        d = {}
-        for i in range(1, 13):
-            d[i] = 0
+        d = { i: 0 for i in range(1,13) }
 
         # date lorsqu'est effectué le test mis dans le mois correspondant
         for x in test_fini:
@@ -598,6 +596,20 @@ class Stats(TemplateView):
         for k, v in notes_spe.items():
             moy_spec[k] = round(mean(v), 2)
 
+        result_lastWeek = 0
+        test_lastWeek = datetime.now() - timedelta(days=7)
+
+        for x in user.tests.filter(date_created__gt=test_lastWeek):
+            if x.finished:
+                result_lastWeek = result_lastWeek +1
+
+        nbTest_lastWeek = 0
+        nbResult_lastWeek = datetime.now() - timedelta(days=7)
+
+        for x in user.tests.filter(date_created__lt=nbResult_lastWeek):
+            if x.finished:
+                nbTest_lastWeek = nbTest_lastWeek + 1
+
         # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini
 
@@ -611,6 +623,8 @@ class Stats(TemplateView):
         context['notes_item'] = notes_item
         context['moy_spec'] = moy_spec
         context['moy_item'] = moy_item
+        context['result_lastWeek'] = result_lastWeek
+        context['nbTest_lastWeek'] = nbTest_lastWeek
 
         mean_chart = MeanBarChart()
         mean_chart.context = context
