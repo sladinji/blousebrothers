@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block scripts %}
+{{ block.super }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 {% endblock %}
 
@@ -13,13 +14,13 @@
         <div class="col-md-8">
             <div class="col-sm-6 col-md-4 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="{% static 'images/confs/catalogue.png' %}">
+                    <img class="card-img-top hidden-xs" src="{% static 'images/confs/catalogue.png' %}">
                     <div class="card-block">
                         <figure class="profile">
                             <img src="{% static 'images/confs/catalogue.png' %}" alt="">
                         </figure>
                         <h4 class="card-title mt-3">Commencer à réviser</h4>
-                        <div class="meta">
+                        <div class="meta hidden-xs">
                             <a><span class="fa fa-history"></span></a>
                         </div>
                         <div class="card-text">
@@ -33,13 +34,13 @@
             </div>
             <div class="col-sm-6 col-md-4 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="{% static 'images/confs/create.png' %}">
+                    <img class="card-img-top hidden-xs" src="{% static 'images/confs/create.png' %}">
                     <div class="card-block">
                         <figure class="profile">
                             <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
                         </figure>
                         <h4 class="card-title mt-3">Créer<br>une fiche</h4>
-                        <div class="meta">
+                        <div class="meta hidden-xs">
                             <a><span class="fa fa-plus"></span></a>
                         </div>
                         <div class="card-text">
@@ -53,13 +54,13 @@
             </div>
             <div class="col-sm-6 col-md-4 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="{% static 'images/confs/my_confs.png' %}">
+                    <img class="card-img-top hidden-xs" src="{% static 'images/confs/my_confs.png' %}">
                     <div class="card-block">
                         <figure class="profile">
                             <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
                         </figure>
                         <h4 class="card-title mt-3">Voir toutes mes fiches</h4>
-                        <div class="meta">
+                        <div class="meta hidden-xs">
                             <a><span class="fa fa-list"></span></a>
                         </div>
                         <div class="card-text">
@@ -123,3 +124,6 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block oscar_init %}
+{% endblock %}

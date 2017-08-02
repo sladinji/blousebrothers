@@ -154,5 +154,7 @@ settings file. This will enable the on-the-fly less compiler.
 
 {% block onbodyload %}
 {{ block.super }}
+{% block oscar_init %}
 oscar.init();
+{% endblock %}
 {% endblock %}

@@ -23,7 +23,7 @@ urlpatterns = [
 
     # URL pattern for the UserUpdateView
     url(
-        regex=r'^compte/update/$',
+        regex=r'^profile/update/$',
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
