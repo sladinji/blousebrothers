@@ -570,7 +570,7 @@ class Stats(TemplateView):
         d = { i: 0 for i in range(1,13) }
 
         # date lorsqu'est effectué le test mis dans le mois correspondant
-        for x in test_fini:
+        for x in test_fini.filter(date_created__gt=(datetime.now()-timedelta(days=365))):
             d[x.date_created.month] += 1
 
         notes_spe = {}
