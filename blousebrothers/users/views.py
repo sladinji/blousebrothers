@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django.views.generic import TemplateView
 from django.apps import apps
@@ -499,10 +499,10 @@ class Stats(TemplateView):
         for x in user.tests.filter(finished=True):
             time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)/3600
             time_total = time_total + time
-        time_moyen = time_total / len(user.tests.filter(finished=True))
 
         # temps en moyenne pour chaque qcm = time moyen
         time_moyen = time_total / len(user.tests.filter(finished=True))
+        time_moyen = round(time_moyen, 2)
 
         # nombre de test effectuer
         nb_test = 0
@@ -510,9 +510,7 @@ class Stats(TemplateView):
             if x.finished:
                 nb_test = nb_test + 1
 
-        d = {}
-        for i in range(1, 13):
-            d[i] = 0
+        d = { i: 0 for i in range(1,13) }
 
         # date lorsque est effectuer le test mit dans le mois correspondant
         for x in user.tests.filter(finished=True):
@@ -543,8 +541,23 @@ class Stats(TemplateView):
         for k, v in notes_spe.items():
             moy_spec[k] = round(mean(v), 2)
 
+        result_lastWeek = 0
+        test_lastWeek = datetime.now() - timedelta(days=7)
+
+        for x in user.tests.filter(date_created__gt=test_lastWeek):
+            if x.finished:
+                result_lastWeek = result_lastWeek +1
+
+        nbTest_lastWeek = 0
+        nbResult_lastWeek = datetime.now() - timedelta(days=7)
+
+        for x in user.tests.filter(date_created__lt=nbResult_lastWeek):
+            if x.finished:
+                nbTest_lastWeek = nbTest_lastWeek + 1
+
         # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
+
         context['time_moyen'] = time_moyen
         context['nb_test'] = nb_test
         context['moy_error'] = moy_error
@@ -555,6 +568,8 @@ class Stats(TemplateView):
         context['notes_item'] = notes_item
         context['moy_spec'] = moy_spec
         context['moy_item'] = moy_item
+        context['result_lastWeek'] = result_lastWeek
+        context['nbTest_lastWeek'] = nbTest_lastWeek
 
         chart = MeanLineChart()
         chart.context = context

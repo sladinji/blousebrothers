@@ -8,6 +8,31 @@
 {% block content %}
 <h1> salut voici tes stats</h1>
 
+
+<div class="row tile_count">
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Nombre de tests</span>
+        <div class="count">{{ nb_test }}</div>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Temps moyen par test</span>
+        <div class="count">{{ time_moyen}}</div>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Tests ces 7 derniers jours</span>
+        <div class="count green">{{ result_lastWeek }}</div>
+        <!--   <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Moyenne sur tout tes tests</span>
+        <div class="count">{{ moy_allTest }}</div>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Erreur moyenne sur tes tests</span>
+        <div class="count">{{ moy_error }}</div>
+    </div>
+</div>
+
 <!--{% for test in object.tests.all %}
     {{test.score}}
     {% endfor %}-->
@@ -15,6 +40,7 @@
     Tu as fait 
     {{ nb_test }}
     tests depuis le debut
+    {{nbTest_lastWeek}}
     </br>
     tu as passé en moyenne
     {{ time_moyen }}
