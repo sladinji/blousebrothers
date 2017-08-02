@@ -27,11 +27,11 @@ import blousebrothers.context_processor
 from mangopay.constants import ERROR_MESSAGES_DICT
 from oscar.core.loading import get_class
 
-import statistics
 from statistics import mean
+import numpy as np
 
 from jchart import Chart
-from jchart.config import Axes, DataSet
+from jchart.config import Axes, DataSet, rgba
 
 from .models import User
 from .forms import (
@@ -465,18 +465,80 @@ class FAQ(TemplateView):
     template_name = 'faq/faq.html'
 
 
-class MeanLineChart(Chart):
+class MeanBarChart(Chart):
     chart_type = 'bar'
+    scales = {
+        'yAxes': [
+            Axes(ticks={
+                'beginAtZero': True,
+                "max": 100})
+        ]
+    }
     context = []
 
-    def get_labels(self, **kwargs):
-        return sorted([i for i in self.context['moy_spec']])
+    def color_picker(self, nb_categories):
+        scale = np.linspace(0.0, 5.0, num=nb_categories, endpoint=True)
+        color_scale = []
+        for i in scale:
+            if 0 <= i < 1:
+                r = 255
+                g = 0
+                b = (1-i)*255
+            elif 1 <= i < 2:
+                r = 255
+                g = (i-1)*255
+                b = 0
+            elif 2 <= i < 3:
+                r = (3-i)*255
+                g = 255
+                b = 0
+            elif 3 <= i < 4:
+                r = 0
+                g = 255
+                b = (i-3)*255
+            else:
+                r = 0
+                g = (5-i)*255
+                b = 255
+            color_scale.append(rgba(int(r), int(g), int(b), 0.4))
+        return color_scale
+
+    def get_labels(self, state,  **kwargs):
+        return sorted([i for i in self.context[state]])
+
+    def get_datasets(self, state, **kwargs):
+        choix = 'spécialités' if state == 'moy_spec' else 'items'
+        data = sorted([(spe, self.context[state][spe]) for spe in self.context[state]])
+        colors = self.color_picker(len(data))
+        return [DataSet(label='Ma moyenne par {}'.format(choix),
+                        data=[spe[1] for spe in data],
+                        backgroundColor=colors),
+                DataSet(label='Moyenne de tout les utilisateurs',
+                        data=[np.random.randint(10, 100) for i in range(len(data))],
+                        type='line')]
+
+
+class MonthlyLineChart(Chart):
+    chart_type = 'line'
+    scales = {
+        "yAxes": [
+            Axes(ticks={
+                "beginAtZero": True,
+                "suggestedMax": 10,
+                "stepSize": 1
+            })
+        ]
+    }
+    context = []
+    d = {}
+
+    def get_labels(self,  **kwargs):
+        return ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
     def get_datasets(self, **kwargs):
-        choix = 'spécialité'
-        data = sorted([(spe, self.context['moy_spec'][spe]) for spe in self.context['moy_spec']])
-        return [DataSet(label='Ma moyenne par {}'.format(choix),
-                        data=[spe[1] for spe in data])]
+        data = sorted([(mois, self.d[mois]) for mois in self.d])
+        return [DataSet(label='Nombre de dossiers terminés',
+                        data=[nb[1] for nb in data])]
 
 
 class Stats(TemplateView):
@@ -487,33 +549,28 @@ class Stats(TemplateView):
         context['object'] = self.request.user
 
         user = User.objects.prefetch_related("tests__answers").get(pk=self.request.user.pk)
+        test_fini = user.tests.filter(finished=True)
+        nb_test_fini = len(test_fini)
 
         # moy sur tout les test
-        moy_allTest = sum([x.score for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
+        moy_allTest = sum([x.score for x in test_fini])/nb_test_fini
 
         # nombre d'erreur total
-        nb_erreurTot = sum([x.nb_errors for x in user.tests.filter(finished=True)])
+        nb_erreurTot = sum([x.nb_errors for x in test_fini])
 
         # temps total time_total en heure
         time_total = 0
-        for x in user.tests.filter(finished=True):
-            time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)/3600
+        for x in test_fini:
+            time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)
             time_total = time_total + time
 
         # temps en moyenne pour chaque qcm = time moyen
-        time_moyen = time_total / len(user.tests.filter(finished=True))
-        time_moyen = round(time_moyen, 2)
-
-        # nombre de test effectuer
-        nb_test = 0
-        for x in user.tests.filter(finished=True):
-            if x.finished:
-                nb_test = nb_test + 1
+        time_moyen = time_total / nb_test_fini
 
         d = { i: 0 for i in range(1,13) }
 
-        # date lorsque est effectuer le test mit dans le mois correspondant
-        for x in user.tests.filter(finished=True):
+        # date lorsqu'est effectué le test mis dans le mois correspondant
+        for x in test_fini:
             d[x.date_created.month] += 1
 
         notes_spe = {}
@@ -521,16 +578,12 @@ class Stats(TemplateView):
         moy_spec = {}
         moy_item = {}
 
-        #note par specialite
-        for test in user.tests.filter(finished=True):
+        for test in test_fini:
             for spe in test.conf.specialities.all():
                 if spe.name in notes_spe:
                     notes_spe[spe.name] += [test.score]
                 else:
                     notes_spe[spe.name] = [test.score]
-
-        #note par item
-        for test in user.tests.filter(finished=True):
             for item in test.conf.items.all():
                 if item.number in notes_item:
                     notes_item[item.number] += [test.score]
@@ -563,14 +616,14 @@ class Stats(TemplateView):
         pourcen_testPlus = (nb_test/nbTest_lastWeek)*100
 
         # nombre d'erreurs par test en moyenne
-        moy_error = sum([x.nb_errors for x in user.tests.filter(finished=True)])/len(user.tests.filter(finished=True))
+        moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini
 
-        context['time_moyen'] = time_moyen
-        context['nb_test'] = nb_test
-        context['moy_error'] = moy_error
+        context['time_moyen'] = round(time_moyen, 0)
+        context['nb_test'] = nb_test_fini
+        context['moy_error'] = round(moy_error, 2)
         context['nb_erreurTot'] = nb_erreurTot
-        context['moy_allTest'] = moy_allTest
-        context['time_total'] = time_total
+        context['moy_allTest'] = round(moy_allTest, 2)
+        context['time_total'] = round(time_total, 2)
         context['notes_spe'] = notes_spe
         context['notes_item'] = notes_item
         context['moy_spec'] = moy_spec
@@ -579,7 +632,10 @@ class Stats(TemplateView):
         context['nbTest_lastWeek'] = nbTest_lastWeek
         context['pourcen_testPlus'] = pourcen_testPlus
 
-        chart = MeanLineChart()
-        chart.context = context
-        context['mean_chart'] = chart
+        mean_chart = MeanBarChart()
+        mean_chart.context = context
+        context['mean_chart'] = mean_chart
+        monthly_chart = MonthlyLineChart()
+        monthly_chart.d = d
+        context['monthly_chart'] = monthly_chart
         return context

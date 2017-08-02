@@ -46,7 +46,7 @@
     </br>
     tu as passé en moyenne
     {{ time_moyen }}
-    minutes par test
+    secondes par test
     </br>
     tu as en moyenne 
     {{ moy_allTest }}
@@ -54,7 +54,7 @@
     </br>
     tu as passé
     {{ time_total }}
-    heures à faire des tests
+    secondes à faire des tests
     </br>
     Tu as fait
     {{ nb_erreurTot }}
@@ -82,7 +82,14 @@
     {% for k,v in notes_spe.items%}
     {{ k }}{{ v }}
     {% endfor %}
-
-    {{ mean_chart.as_html }}
+    <div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        {% render_chart mean_chart 'moy_spec' %}
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        {% render_chart monthly_chart %}
+    </div>
+    </div>
 {% endblock content %}
+
 
