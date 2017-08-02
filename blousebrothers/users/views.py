@@ -561,7 +561,7 @@ class Stats(TemplateView):
         # temps total time_total en heure
         time_total = 0
         for x in test_fini:
-            time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)/3600
+            time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)
             time_total = time_total + time
 
         # temps en moyenne pour chaque qcm = time moyen
@@ -601,7 +601,7 @@ class Stats(TemplateView):
         # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini
 
-        context['time_moyen'] = round(time_moyen, 2)
+        context['time_moyen'] = round(time_moyen, 0)
         context['nb_test'] = nb_test_fini
         context['moy_error'] = round(moy_error, 2)
         context['nb_erreurTot'] = nb_erreurTot
