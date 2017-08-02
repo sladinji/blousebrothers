@@ -15,10 +15,11 @@ from django.views.generic import (
     TemplateView,
 )
 from jchart import Chart
-from jchart.config import Axes, DataSet
+from jchart.config import DataSet
 
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item
+from blousebrothers.users.models import User
 from .models import Card, Deck
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
@@ -68,8 +69,6 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         if not self.request.user.is_authenticated():
             False
-        if self.request.user.is_superuser:
-            return True
         self.object = self.get_object()
         card = self.object.card
         return card.author is None or card.author == self.request.user or card.public
@@ -260,7 +259,11 @@ class Dispatching(Chart):
         return zip(self.get_labels(), self.colors, self.data)
 
     def get_datasets(self, **kwargs):
-        self.data = [Deck.objects.filter(student=self.request.user, difficulty=dif).count()
+        user = self.request.user
+        if user.is_anonymous():
+            user = User.objects.get(username='BlouseBrothers')
+
+        self.data = [Deck.objects.filter(student=user, difficulty=dif).count()
                      for dif in range(3)]
         return [DataSet(data=self.data,
                         label="Répartition des fiches",
@@ -268,7 +271,7 @@ class Dispatching(Chart):
                         hoverBackgroundColor=self.colors)]
 
 
-class RevisionHome(RevisionPermissionMixin, TemplateView):
+class RevisionHome(TemplateView):
     template_name = 'cards/home.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -277,14 +280,17 @@ class RevisionHome(RevisionPermissionMixin, TemplateView):
         return super().get_context_data(*args, chart=dispatching_chart, **kwargs)
 
 
-class ListCardView(RevisionPermissionMixin, ListView):
+class ListCardView(ListView):
     model = Card
 
     def get_queryset(self):
-        qry = self.model.objects.filter(deck__student=self.request.user)
-        if self.request.GET.get('q', False):
-            qry = qry.filter(
-                Q(content__icontains=self.request.GET['q']) |
-                Q(tags__name__icontains=self.request.GET['q'])
-            )
+        if self.request.user.is_anonymous():
+            qry = self.model.objects.filter(public=True)
+        else:
+            qry = self.model.objects.filter(deck__student=self.request.user)
+            if self.request.GET.get('q', False):
+                qry = qry.filter(
+                    Q(content__icontains=self.request.GET['q']) |
+                    Q(tags__name__icontains=self.request.GET['q'])
+                )
         return qry.all().order_by('-deck__created')
