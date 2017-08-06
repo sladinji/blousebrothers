@@ -2,7 +2,6 @@
 // Bind to modal opening to set necessary data properties to be used to make request
 $('#confirm-go').on('show.bs.modal', function(e) {
   var data = $(e.relatedTarget).data();
-  console.log(data);
   $('.productPrice', this).text(data.productprice);
   $('.productTitle', this).text(data.producttitle);
   $('.productURL', this).attr('href', data.producturl);
