@@ -1704,3 +1704,14 @@ input#id_code {
 .dashboard-widget-content li {
     list-style: none;
 }
+
+.publi_text, #conference .checkbox .help-block {
+    padding-left: 110px;
+    display: block;
+}
+#conference label {
+    padding-left: 0;
+}
+.form-group {
+    margin-bottom: 30px;
+}

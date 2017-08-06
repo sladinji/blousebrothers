@@ -8,7 +8,7 @@ ProductClass, Product, Category, ProductCategory, ProductImage = get_classes(
                          'ProductCategory', 'ProductImage'))
 
 
-def create_product(conf):
+def get_or_create_product(conf):
     try:
         # Category names should be unique at the depth=1
         cat = Category.objects.get(depth=1, name=conf.type)
