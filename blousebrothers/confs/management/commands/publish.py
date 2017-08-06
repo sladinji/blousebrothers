@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from oscar.core.loading import get_classes
 from blousebrothers.confs.models import Conference
-from blousebrothers.confs.utils import create_product
+from blousebrothers.confs.utils import get_or_create_product
 
 
 ProductClass, Product, Category, ProductCategory, ProductImage = get_classes(
@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         conf = Conference.objects.get(slug=options['slug'])
-        create_product(conf)
+        get_or_create_product(conf)
         self.stdout.write(
             self.style.SUCCESS('{} "{}" created ({}€)'.format(
                 conf.type, conf.title, conf.price)

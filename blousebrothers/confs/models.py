@@ -87,7 +87,7 @@ class Conference(ModelMeta, models.Model):
                                 )
     deleted = models.BooleanField(_("Supprimée"), default=False)
     no_fees = models.BooleanField(_("Pas de frais"), default=False)
-    for_sale = models.BooleanField(_("Publier"), default=False,
+    for_sale = models.BooleanField(_("Publier"), default=True,
                                    help_text=mark_safe(
                                        _("Publier mon dossier avec les paramètres sélectionnés. Je certifie que "
                                          "le matériel de ma conférence est original et je dégage BlouseBrothers "

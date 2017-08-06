@@ -17,7 +17,7 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Conference
-        fields = ['items', 'specialities', 'price', 'for_sale']
+        fields = ['items', 'specialities', 'free', 'for_sale']
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
@@ -27,8 +27,8 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
         queryset=Item.objects.all(),
         required=True,
         help_text=mark_safe(_('Ne sélectionner que les items abordés de manière '
-                    '<strong>significative</strong> dans le dossier'))
-            )
+                              '<strong>significative</strong> dans le dossier'))
+    )
     specialities = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
             queryset=Speciality.objects.order_by('name').all(),
@@ -37,6 +37,11 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
         queryset=Speciality.objects.all(),
         required=True,
         label=_("Matières abordées"),
+    )
+    free = forms.BooleanField(
+        label=_("Gratuit"),
+        required=False,
+        help_text=mark_safe(_('Dossier accessible gratuitement par tout le monde. Vous pouvez changer quand vous le souhaitez.')),
     )
 
     def __init__(self, *args, **kwargs):
@@ -60,4 +65,3 @@ class RefundForm(ModelForm, Bootstrap3FormMixin):
         model = Test
         fields = []
     msg = forms.CharField(label=_('Message'), widget=forms.Textarea)
-
