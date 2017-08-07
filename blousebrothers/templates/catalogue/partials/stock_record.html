@@ -8,7 +8,7 @@
     {% if product.conf.price == 0 %}
         <p class="price_color">{% trans "Free" %}</p>
     {% else %}
-        <p class="price_color">{{ product.conf.price|currency }}</p>
+        <p class="price_color"></p>
     {% endif %}
 {% elif session.price.exists %}
     {% if session.price.excl_tax == 0 %}

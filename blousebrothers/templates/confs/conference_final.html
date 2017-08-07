@@ -44,26 +44,6 @@
                 <div class="tab-content">
                     <div id="conference">
                         {{ form | crispy }}
-                        <div class="form-group"> 
-                            <div class="checkbox"> 
-                                <label style="color: orange;" > 
-                                    <input class="checkboxinput" type="checkbox" disabled>
-                                    Offrir ce dossier pour le tutorat de ma ville
-                                    <p id="hint_id_for_sale" class="help-block">Bientôt disponible (si ta ville a un tutorat partenaire de BlouseBrothers, ce dossier sera librement accessible uniquement pour les externes de ta ville si tu coches la case)
-                                    </p> 
-                                </label> 
-                            </div> 
-                        </div>
-                        <div class="form-group"> 
-                            <div class="checkbox"> 
-                                <label style="color: orange;" > 
-                                    <input class="checkboxinput" type="checkbox" disabled>
-                                    Offrir les gains des ventes de ce dossier à une association
-                                    <p id="hint_id_for_sale" class="help-block">Bientôt disponible
-                                    </p> 
-                                </label> 
-                            </div> 
-                        </div>
                     </div>
                 </div>
                 <br>
@@ -73,7 +53,7 @@
                     </div>
                 </div>
             </form>
-            <i>Ta conférence sera accessible sur le catalogue dans quelques minutes. Tu peux également la retirer à tout moment.</i>
+            <i class="publi_text">Ta conférence sera accessible sur le catalogue dans quelques minutes. Tu peux également la retirer à tout moment en décochant "Publier".</i>
         </div>
     </div>
 </div>
@@ -84,3 +64,19 @@
 {{ block.super }}
 {% endblock %}
 
+{% block cdn_scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+{% endblock %}
+
+{% block extrastyles %}
+{{ block.super }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block onbodyload %}
+$("[name='free']").bootstrapSwitch('onText', 'Oui', 'offText', 'Non');
+$("[name='free']").bootstrapSwitch('offText', 'Non');
+$("[name='for_sale']").bootstrapSwitch('onText', 'Oui', 'offText', 'Non');
+$("[name='for_sale']").bootstrapSwitch('offText', 'Non');
+{% endblock %}

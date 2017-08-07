@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
+from decimal import Decimal
 import re
 import logging
 
@@ -33,8 +34,8 @@ from blousebrothers.auth import (
     TestPermissionMixin,
     BBLoginRequiredMixin,
 )
-from blousebrothers.tools import analyse_conf, get_full_url, classifier
-from blousebrothers.confs.utils import create_product
+from blousebrothers.tools import analyse_conf, get_full_url
+from blousebrothers.confs.utils import get_or_create_product
 from .models import (
     Conference,
     Question,
@@ -273,16 +274,21 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
     def form_valid(self, form):
         """
         Create a Test instance for user to be able to test is conference,
-        and create """
+        and create a disqus thread with owner as thread creator.
+        """
         if not Test.objects.filter(
             conf=self.object,
             student=self.request.user
         ).exists():
             Test.objects.create(conf=self.object, student=self.request.user)
-        create_product(self.object)
+        get_or_create_product(self.object)
         if self.object.for_sale:
             self.request.user.status = 'conf_publi_ok'
             self.request.user.save()
+        if form.cleaned_data["free"]:
+            self.object.price = 0
+        else:
+            self.object.price = Decimal('0.33')
         # Create disqus thread
         try:
             disqus = DisqusAPI(settings.DISQUS_SECRET_KEY, settings.DISQUS_PUBLIC_KEY)
@@ -294,7 +300,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
                        url=get_full_url(self.request, 'confs:result', args=(self.object.slug,)),
                        identifier=self.object.slug,
                        )
-        except APIError as ex:
+        except Exception as ex:
             if "thread already exists" in ex.message:
                 pass
             else:

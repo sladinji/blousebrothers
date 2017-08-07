@@ -613,7 +613,7 @@ class Stats(TemplateView):
         for x in user.tests.filter(date_created__lt=nbResult_lastWeek):
             if x.finished:
                 nbTest_lastWeek = nbTest_lastWeek + 1
-        pourcen_testPlus = (nb_test/nbTest_lastWeek)*100
+        pourcent_testPlus = (nb_test_fini/nbTest_lastWeek)*100
 
         # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini
@@ -630,7 +630,7 @@ class Stats(TemplateView):
         context['moy_item'] = moy_item
         context['result_lastWeek'] = result_lastWeek
         context['nbTest_lastWeek'] = nbTest_lastWeek
-        context['pourcen_testPlus'] = pourcen_testPlus
+        context['pourcen_testPlus'] = pourcent_testPlus
 
         mean_chart = MeanBarChart()
         mean_chart.context = context

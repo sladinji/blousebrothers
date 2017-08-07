@@ -13,6 +13,7 @@ class BrowsableProductManager(BaseBrowsableProductManager):
         """
         qs = super().get_queryset()
         qs = qs.prefetch_related('conf__owner')
+        qs = qs.prefetch_related('conf__specialities')
         qs = qs.prefetch_related('stockrecords')
         qs = qs.exclude(conf__deleted=True)
         qs = qs.exclude(conf__for_sale=False)
