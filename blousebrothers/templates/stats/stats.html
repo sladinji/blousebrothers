@@ -13,15 +13,19 @@
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> Nombre de tests</span>
         <div class="count">{{ nb_test }}</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{pourcen_testPlus}}% </i> depuis la semaine dernère</span>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i> Temps moyen par test</span>
-        <div class="count">{{ time_moyen}}</div>
+        <div class="count">{{ time_moyen }}</div>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i> Tests ces 7 derniers jours</span>
-        <div class="count green">{{ result_lastWeek }}</div>
+        <div class="count green">{{ nbTest_thisWeek }}</div>
+        {% if pourcent_testPlus < 0 %}
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ pourcent_testPlus }}% </i> depuis la semaine d'avant</span>
+        {% else %}
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ pourcent_testPlus }}% </i> depuis la semaine d'avant</span>
+        {% endif %}
         <!--   <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -42,7 +46,7 @@
     Tu as fait 
     {{ nb_test }}
     tests depuis le debut
-    {{nbTest_lastWeek}}
+    {{ nbTest_thisWeek }} {{ nbTest_lastWeek }}
     </br>
     tu as passé en moyenne
     {{ time_moyen }}
@@ -87,7 +91,7 @@
         {% render_chart mean_chart 'moy_spec' %}
     </div>
     <div class="col-md-6 col-sm-12 col-xs-12">
-        {% render_chart monthly_chart %}
+        {% render_chart monthly_chart '2016' %}
     </div>
     </div>
 {% endblock content %}
