@@ -70,7 +70,10 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         if not self.request.user.is_authenticated():
             False
         self.object = self.get_object()
-        card = self.object.card
+        if isinstance(self.object, Card):
+            card = self.object
+        else:
+            card = self.object.card
         return card.author is None or card.author == self.request.user or card.public
 
     def handle_no_permission(self):
@@ -79,7 +82,7 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         raise PermissionDenied
 
 
-class CreateCardView(RevisionPermissionMixin, CreateView):
+class CreateCardView(BBLoginRequiredMixin, CreateView):
     model = Card
     form_class = CreateCardForm
 

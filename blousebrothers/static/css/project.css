@@ -354,9 +354,6 @@ ul.djng-field-errors li.valid::before {
     position:relative;
 }
 
-.btn {   
-    background-color: white;
-}
 .btn-answer {
     border: 1px dashed #bcbcbc;
     background-color: #fff;
