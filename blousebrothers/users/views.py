@@ -506,7 +506,7 @@ class Stats(TemplateView):
         moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini
 
         context['time_moyen'] = round(time_moyen, 0)
-        context['nb_test'] = nb_test_fini
+        context['nb_test_fini'] = nb_test_fini
         context['moy_error'] = round(moy_error, 2)
         context['nb_erreurTot'] = nb_erreurTot
         context['moy_allTest'] = round(moy_allTest, 2)

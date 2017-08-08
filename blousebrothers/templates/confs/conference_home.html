@@ -1,11 +1,44 @@
 {% extends "layout.html" %}
 {% load static %}
 {% load i18n %}
+{% load jchart %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <h1 class="text-center">Dossiers</h1>
     <div class="space12"></div> <!-- 40px Vertical Spacing -->
+        <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Nombre de tests fini</span>
+                <div class="count">{{ nb_test_fini }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-clock-o"></i> Temps moyen par test</span>
+                <div class="count">{{ temps_moyen }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-clock-o"></i> Tests ces 7 derniers jours</span>
+                <div class="count green">{{ nb_test_this_week }}</div>
+                {% if pourcentage_progression < 0 %}
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ pourcentage_progression }}% </i> depuis la semaine d'avant</span>
+                {% else %}
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ pourcentage_progression }}% </i> depuis la semaine d'avant</span>
+                {% endif %}
+                <!--   <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Moyenne de test scores</span>
+                <div class="count">{{ moy_score}} / 100</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Erreur moyenne sur tes tests</span>
+                <div class="count">{{ moy_erreurs }}</div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-2">
             </div>
@@ -74,5 +107,15 @@
             <div class="col-md-2">
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                {% render_chart mean_chart 'moy_spec' %}
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                {% render_chart monthly_chart '2016' %}
+            </div>
+        </div>
+
+
 </div>
 {% endblock content %}
