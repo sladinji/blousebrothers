@@ -7,68 +7,71 @@
     <h1 class="text-center">Dossiers</h1>
     <div class="space12"></div> <!-- 40px Vertical Spacing -->
         <div class="row">
-            <div class="col-sm-6 col-md-4 mt-4">
-                <div class="card">
-                    <img class="card-img-top" src="{% static 'images/confs/catalogue.png' %}">
-                    <div class="card-block">
-                        <figure class="profile">
-                            <img src="{% static 'images/confs/catalogue.png' %}" alt="">
-                        </figure>
-                        <h4 class="card-title mt-3">Voir les dossiers disponibles</h4>
-                        <div class="meta">
-                            <a><span class="fa fa-history"></span></a>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <div class="col-sm-6 col-md-4 mt-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{% static 'images/confs/catalogue.png' %}">
+                        <div class="card-block">
+                            <figure class="profile">
+                                <img src="{% static 'images/confs/catalogue.png' %}" alt="">
+                            </figure>
+                            <h4 class="card-title mt-3">Voir les dossiers disponibles</h4>
+                            <div class="meta">
+                                <a><span class="fa fa-history"></span></a>
+                            </div>
+                            <div class="card-text">
+                            <small>Tu as effectué {{ request.user.tests|length}} dossiers.</small>
+                            </div>
                         </div>
-                        <div class="card-text">
-                            Liste de toutes les confs disponibles sur le site.
+                        <div class="card-footer">
+                            <a href="{% url 'catalogue:index' %}" class="btn btn-secondary float-right btn-sm">voir</a>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <small>Tu as effectué {{ request.user.tests|length}} dossiers.</small>
-                        <a href="{% url 'catalogue:index' %}" class="btn btn-secondary float-right btn-sm">voir</a>
+                </div>
+                <div class="col-sm-6 col-md-4 mt-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{% static 'images/confs/create.png' %}">
+                        <div class="card-block">
+                            <figure class="profile">
+                                <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
+                            </figure>
+                            <h4 class="card-title mt-3">Créer<br>un dossier</h4>
+                            <div class="meta">
+                                <a><span class="fa fa-plus"></span></a>
+                            </div>
+                            <div class="card-text">
+                            <small>Tu n'as qu'à te laisser guider...</small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'confs:create' %}" class="btn btn-secondary float-right btn-sm">commencer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 mt-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{% static 'images/confs/my_confs.png' %}">
+                        <div class="card-block">
+                            <figure class="profile">
+                                <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
+                            </figure>
+                            <h4 class="card-title mt-3">Voir mes dossiers créés</h4>
+                            <div class="meta">
+                                <a><span class="fa fa-list"></span></a>
+                            </div>
+                            <div class="card-text">
+                            <small>Tu as créé {{ request.user.created_confs|length }} dossiers.</small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'confs:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 mt-4">
-                <div class="card">
-                    <img class="card-img-top" src="{% static 'images/confs/create.png' %}">
-                    <div class="card-block">
-                        <figure class="profile">
-                            <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
-                        </figure>
-                        <h4 class="card-title mt-3">Créer un dossier</h4>
-                        <div class="meta">
-                            <a><span class="fa fa-plus"></span></a>
-                        </div>
-                        <div class="card-text">
-                            Tu veux participer au catalogue de BlouseBrothers ? C'est par ici !
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small>Tu n'as qu'à te laisser guider...</small>
-                        <a href="{% url 'confs:create' %}" class="btn btn-secondary float-right btn-sm">commencer</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 mt-4">
-                <div class="card">
-                    <img class="card-img-top" src="{% static 'images/confs/my_confs.png' %}">
-                    <div class="card-block">
-                        <figure class="profile">
-                            <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
-                        </figure>
-                        <h4 class="card-title mt-3">Voir mes dossiers créés</h4>
-                        <div class="meta">
-                            <a><span class="fa fa-list"></span></a>
-                        </div>
-                        <div class="card-text">
-                            Visualise en un coup d'oeil l'activité générée par tes dossiers.
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small>Tu as créé {{ request.user.created_confs|length }} dossiers.</small>
-                        <a href="{% url 'confs:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
-                    </div>
-                </div>
+            <div class="col-md-2">
             </div>
         </div>
 </div>

@@ -6,7 +6,7 @@ from django_select2.forms import ModelSelect2MultipleWidget
 from django.utils.safestring import mark_safe
 
 from blousebrothers.confs.models import Item, Speciality
-from .models import Card
+from .models import Card, Tag
 
 
 class UpdateCardForm(ModelForm, Bootstrap3FormMixin):
@@ -16,10 +16,18 @@ class UpdateCardForm(ModelForm, Bootstrap3FormMixin):
 
 
 class CreateCardForm(ModelForm, Bootstrap3FormMixin):
+    class Meta:
+        model = Card
+        fields = ['question', 'content']
+
+    question = forms.CharField()
+
+
+class FinalizeCardForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Card
-        fields = ['specialities', 'items', 'title', 'section', 'content']
+        fields = ['specialities', 'items', 'tags']
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
@@ -27,7 +35,7 @@ class CreateCardForm(ModelForm, Bootstrap3FormMixin):
             search_fields=['name__icontains']
         ),
         queryset=Item.objects.all(),
-        required=True,
+        required=False,
         help_text=mark_safe(_('Ne sélectionner que les items abordés de manière '
                               '<strong>significative</strong> dans le dossier'))
     )
@@ -37,6 +45,15 @@ class CreateCardForm(ModelForm, Bootstrap3FormMixin):
             search_fields=['name__icontains']
         ),
         queryset=Speciality.objects.all(),
-        required=True,
+        required=False,
         label=_("Matières abordées"),
+    )
+    tags = forms.ModelMultipleChoiceField(
+        widget=ModelSelect2MultipleWidget(
+            queryset=Tag.objects.order_by('name').all(),
+            search_fields=['name__icontains']
+        ),
+        queryset=Tag.objects.all(),
+        required=False,
+        label=_("Tags"),
     )

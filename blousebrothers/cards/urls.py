@@ -8,6 +8,11 @@ urlpatterns = [
         name='list'
     ),
     url(
+        regex=r'^(?P<slug>[\w.@+-]+)/fin/$',
+        view=views.FinalizeCardView.as_view(),
+        name='finalize'
+    ),
+    url(
         regex=r'^create/$',
         view=views.CreateCardView.as_view(),
         name='create'
@@ -44,8 +49,8 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^stats/$',
-        view=views.RevisionStats.as_view(),
-        name='stats'
+        regex=r'^home/$',
+        view=views.RevisionHome.as_view(),
+        name='home'
     ),
 ]

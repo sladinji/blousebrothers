@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="col-sm-6 col-md-4 mt-4">
+                <div class="card">
+                    <img class="card-img-top hidden-xs" src="{% static 'images/confs/catalogue.png' %}">
+                    <div class="card-block">
+                        <figure class="profile">
+                            <img src="{% static 'images/confs/catalogue.png' %}" alt="">
+                        </figure>
+                        <h4 class="card-title mt-3">Commencer à réviser</h4>
+                        <div class="meta hidden-xs">
+                            <a><span class="fa fa-history"></span></a>
+                        </div>
+                        <div class="card-text">
+                        <small>Nouvelle session automatique</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'cards:redirect' %}" class="btn btn-secondary float-right btn-sm">commencer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mt-4">
+                <div class="card">
+                    <img class="card-img-top hidden-xs" src="{% static 'images/confs/create.png' %}">
+                    <div class="card-block">
+                        <figure class="profile">
+                            <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
+                        </figure>
+                        <h4 class="card-title mt-3">Créer<br>une fiche</h4>
+                        <div class="meta hidden-xs">
+                            <a><span class="fa fa-plus"></span></a>
+                        </div>
+                        <div class="card-text">
+                        <small>From scratch...</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'cards:create' %}" class="btn btn-secondary float-right btn-sm">créer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mt-4">
+                <div class="card">
+                    <img class="card-img-top hidden-xs" src="{% static 'images/confs/my_confs.png' %}">
+                    <div class="card-block">
+                        <figure class="profile">
+                            <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
+                        </figure>
+                        <h4 class="card-title mt-3">Voir toutes mes fiches</h4>
+                        <div class="meta hidden-xs">
+                            <a><span class="fa fa-list"></span></a>
+                        </div>
+                        <div class="card-text">
+                        <small>Tu as {{ request.user.deck.count }} fiches.</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'cards:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-pie-chart"></i> Répartition de mes fiches</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:60%; width:60%">
+                                    {{ chart.as_html }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{count}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block oscar_init %}
+{% endblock %}

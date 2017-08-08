@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -13,11 +15,13 @@ from django.views.generic import (
     TemplateView,
 )
 from jchart import Chart
-from jchart.config import Axes, DataSet
+from jchart.config import DataSet
 
 from blousebrothers.auth import BBLoginRequiredMixin
+from blousebrothers.confs.models import Item
+from blousebrothers.users.models import User
 from .models import Card, Deck
-from .forms import CreateCardForm, UpdateCardForm
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
 
 def choose_new_card(request):
@@ -65,10 +69,11 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         if not self.request.user.is_authenticated():
             False
-        if self.request.user.is_superuser:
-            return True
         self.object = self.get_object()
-        card = self.object.card
+        if isinstance(self.object, Card):
+            card = self.object
+        else:
+            card = self.object.card
         return card.author is None or card.author == self.request.user or card.public
 
     def handle_no_permission(self):
@@ -77,23 +82,42 @@ class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         raise PermissionDenied
 
 
-class CreateCardView(RevisionPermissionMixin, CreateView):
+class CreateCardView(BBLoginRequiredMixin, CreateView):
     model = Card
     form_class = CreateCardForm
 
     def get_success_url(self):
-        return reverse('cards:list')
+        return reverse('cards:finalize', kwargs={'slug': self.object.slug})
+
+    def form_valid(self, form):
+        """
+        Find items and spe for the given data, and add @@ makers.
+        """
+        txt = "{question} {content}".format(**form.cleaned_data)
+        self.object = form.save()
+
+        for item in Item.objects.all():
+            for kw in item.kwords.all():
+                if re.search(r'[^\w]'+kw.value+r'([^\w]|$)', txt):
+                    self.object.items.add(item)
+                    break
+
+        self.object.content = '@@{question}@@\n{content}'.format(**form.cleaned_data)
+        self.object.author = self.request.user
+        self.object.save()
+
+        Deck.objects.create(card=self.object, student=self.request.user)
+
+        return super().form_valid(form)
 
 
-class UpdateCardView(RevisionPermissionMixin, UpdateView):
-    model = Card
-    form_class = UpdateCardForm
+class MockDeckMixin():
+    """
+    Share same template as Revision view. Because Revision view use Deck
+    as model, we mock Deck model with another class.
+    """
 
     def get_context_data(self, **kwargs):
-        """
-        Share same template as Revision view. Because Revision view use Deck
-        as model, we mock Deck model with another class.
-        """
         class Mock:
             card = None
 
@@ -102,6 +126,19 @@ class UpdateCardView(RevisionPermissionMixin, UpdateView):
         mock.card = context['object']
         context.update(object=mock)
         return context
+
+
+class FinalizeCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
+    model = Card
+    form_class = FinalizeCardForm
+
+    def get_success_url(self):
+        return reverse('cards:list')
+
+
+class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
+    model = Card
+    form_class = UpdateCardForm
 
     def form_valid(self, form):
         """
@@ -181,6 +218,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         context.update(is_favorite=self.is_favorite)
         context.update(dsp_card_on_load=self.kwargs['dsp_card_on_load'] == "True")
         context.update(other_versions=len(self.object.card.family(self.request.user)) > 1)
+        context.update(zen=True)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -218,10 +256,17 @@ class Dispatching(Chart):
         return [str(label[1]) for label in Card.LEVEL_CHOICES]
 
     def get_lab_col_cnt(self):
+        """
+        Used in template to display stat in table
+        """
         return zip(self.get_labels(), self.colors, self.data)
 
     def get_datasets(self, **kwargs):
-        self.data = [Deck.objects.filter(student=self.request.user, difficulty=dif).count()
+        user = self.request.user
+        if user.is_anonymous():
+            user = User.objects.get(username='BlouseBrothers')
+
+        self.data = [Deck.objects.filter(student=user, difficulty=dif).count()
                      for dif in range(3)]
         return [DataSet(data=self.data,
                         label="Répartition des fiches",
@@ -229,8 +274,8 @@ class Dispatching(Chart):
                         hoverBackgroundColor=self.colors)]
 
 
-class RevisionStats(RevisionPermissionMixin, TemplateView):
-    template_name = 'cards/stats.html'
+class RevisionHome(TemplateView):
+    template_name = 'cards/home.html'
 
     def get_context_data(self, *args, **kwargs):
         dispatching_chart = Dispatching()
@@ -238,15 +283,17 @@ class RevisionStats(RevisionPermissionMixin, TemplateView):
         return super().get_context_data(*args, chart=dispatching_chart, **kwargs)
 
 
-class ListCardView(RevisionPermissionMixin, ListView):
+class ListCardView(ListView):
     model = Card
 
     def get_queryset(self):
-        qry = self.model.objects.all()
-        if self.request.GET.get('q', False):
-            qry = qry.filter(
-                Q(title__icontains=self.request.GET['q']) |
-                Q(content__icontains=self.request.GET['q']) |
-                Q(section__icontains=self.request.GET['q'])
-            )
-        return qry.all()
+        if self.request.user.is_anonymous():
+            qry = self.model.objects.filter(public=True)
+        else:
+            qry = self.model.objects.filter(deck__student=self.request.user)
+            if self.request.GET.get('q', False):
+                qry = qry.filter(
+                    Q(content__icontains=self.request.GET['q']) |
+                    Q(tags__name__icontains=self.request.GET['q'])
+                )
+        return qry.all().order_by('-deck__created')
