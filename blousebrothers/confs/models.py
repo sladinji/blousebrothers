@@ -7,6 +7,7 @@ import uuid
 from decimal import Decimal
 from datetime import date
 import logging
+import numpy as np
 
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -45,7 +46,6 @@ class AdminConfManager(models.Manager):
         return super().get_queryset()
 
 
-
 class Conference(ModelMeta, models.Model):
     objects = ConfManager()
     all_objects = AdminConfManager()
@@ -79,6 +79,9 @@ class Conference(ModelMeta, models.Model):
                                    )
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences',
                                           blank=True)
+    average = models.DecimalField(_("Score moyen"), max_digits=6, decimal_places=2, default=0)
+    standard_deviation = models.DecimalField(_("Ecart-type"), max_digits=6, decimal_places=2, default=0)
+    median = models.DecimalField(_("Médiane"), max_digits=6, decimal_places=2, default=0)
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
                                 default=Decimal(1.00),
@@ -107,6 +110,13 @@ class Conference(ModelMeta, models.Model):
         'og_author_url': "get_author_url",
         "gplus_author": "get_author_gplus",
     }
+
+    def update_stats(self):
+        score_list = self.tests.values_list('score', flat=True) if self.tests.values_list('score', flat=True) != [] else [0]
+        self.average = np.mean(score_list)
+        self.standard_deviation = np.std(score_list)
+        self.median = np.median(score_list)
+        self.save()
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
@@ -175,7 +185,7 @@ class Conference(ModelMeta, models.Model):
         if self.type == 'LCA':
             return "lecture_critique_d_articles"
         if self.specialities.all():
-            return '_'.join(self.specialities.all()[0].name.lower().replace("'","_").split())
+            return '_'.join(self.specialities.all()[0].name.lower().replace("'", "_").split())
         return "no_spe"
 
 
@@ -454,8 +464,10 @@ class Subscription(models.Model):
     def is_past_due(self):
         return date.today() > self.date_over
 
+
 def classifier_directory_path(classifier, filename):
     return 'classifiers/{0}/{1}-{2}'.format(classifier.name, classifier.version, filename)
+
 
 class Classifier(models.Model):
     name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
