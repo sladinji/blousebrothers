@@ -1749,7 +1749,8 @@ input#id_code {
     font-size: 1.28571429em;
     font-weight: 700;
     line-height: 1.2857em;
-    text-align: center;
+    text-align: right;
+    margin-left: 63px;
 }
 
 .card-text {
@@ -1778,7 +1779,7 @@ input#id_code {
 
 .profile {
     position: absolute;
-    top: -38px;
+    top: 17px;
     display: inline-block;
     overflow: hidden;
     box-sizing: border-box;
@@ -2054,3 +2055,22 @@ div#calltoac {
     width: 100% !important;
     height: 100% !important;
 }
+@media (min-width: 768px){
+    .tile_count .tile_stats_count .count {
+        font-size: 40px;
+    }
+}
+.tile_count .tile_stats_count .count {
+    font-size: 30px;
+    line-height: 47px;
+    font-weight: 600;
+}
+@media (min-width: 768px){
+    .tile_count .tile_stats_count span {
+        font-size: 13px;
+    }
+}
+.row.tile_count {
+    background-color: rgba(152, 174, 176, 0.14);
+}
+
