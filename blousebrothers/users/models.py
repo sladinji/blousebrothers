@@ -142,6 +142,10 @@ class User(AbstractUser):
         return self.subs_board.order_by('-date_created').first()
 
     @property
+    def last_test(self):
+        return self.tests.filter(finished=True).order_by("-date_created").first()
+
+    @property
     def gave_all_required_info(self):
         """Used for permission management"""
         if self.wanabe_conferencier or self.is_conferencier:

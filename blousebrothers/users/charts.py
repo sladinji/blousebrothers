@@ -13,7 +13,11 @@ class MeanBarChart(Chart):
         'yAxes': [
             Axes(ticks={
                 'beginAtZero': True,
-                "max": 100})
+                "max": 100},
+                gridLines={
+                    'display': False,
+                }
+            )
         ]
     }
     context = None
@@ -64,10 +68,10 @@ class MeanBarChart(Chart):
                     notes_spe[spe.name] = [test.score]
         data = sorted([(spe, round(np.mean(notes_spe[spe]), 2)) for spe in notes_spe])
         colors = self.color_picker(len(data))
-        return [DataSet(label='Ma moyenne par spécialités',
+        return [DataSet(label='Ma moyenne',
                         data=[spe[1] for spe in data],
                         backgroundColor=colors),
-                DataSet(label='Moyenne de tout les utilisateurs',
+                DataSet(label='Moyenne de tous les utilisateurs',
                         data=[np.random.randint(10, 100) for i in range(len(data))],
                         type='line')]
 
@@ -80,14 +84,18 @@ class MonthlyLineChart(Chart):
                 "beginAtZero": True,
                 "suggestedMax": 10,
                 "stepSize": 1
-            })
+            },
+                gridLines={
+                    'display': False,
+                }
+            )
         ]
     }
     context = None
     d = {}
 
     def get_labels(self, year, **kwargs):
-        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier", year+" + 1"], "Février", "Mars", "Avril", "Mai", "Juin"]
+        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier {}".format(int(year) + 1)], "Février", "Mars", "Avril", "Mai", "Juin"]
         # return ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
     def get_datasets(self, year, **kwargs):
@@ -96,5 +104,5 @@ class MonthlyLineChart(Chart):
         for x in user.tests.filter(finished=True, date_created__range=(date(int(year), 7, 1), date(int(year)+1, 7, 1))):
             self.d[x.date_created.month] += 1
         data = sorted([(mois, self.d[mois]) for mois in self.d])
-        return [DataSet(label='Nombre de dossiers terminés en '+year,
+        return [DataSet(label='Dossiers terminés',
                 data=[nb[1] for nb in data[7:]+data[:7]])]
