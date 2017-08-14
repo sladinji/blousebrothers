@@ -112,7 +112,7 @@ class Conference(ModelMeta, models.Model):
     }
 
     def update_stats(self):
-        score_list = self.tests.values_list('score', flat=True) if self.tests.values_list('score', flat=True) != [] else [0]
+        score_list = self.tests.filter(finished == True).values_list('score', flat=True) if self.tests.filter(finished == True).values_list('score', flat=True) != [] else [0]
         self.average = np.mean(score_list)
         self.standard_deviation = np.std(score_list)
         self.median = np.median(score_list)
@@ -491,3 +491,17 @@ class PredictionValidation(models.Model):
     valid = models.NullBooleanField(default=None)
     date_created = models.DateField(_("Date created"), auto_now_add=True)
     date_modified = models.DateField(_("Date modified"), auto_now=True)
+
+
+class StatsSpe(models.Model):
+    speciality = models.ForeignKey('Speciality', related_name="stats")
+    average = models.DecimalField(_("Moyenne"), max_digits=6, decimal_places=2, default=0)
+    median = models.DecimalField(_("Médianne"), max_digits=6, decimal_places=2, default=0)
+    std_dev = models.DecimalField(_("Écart-type"), max_digits=6, decimal_places=2, default=0)
+
+
+class StatsItem(models.Model):
+    item = models.ForeignKey('Item', related_name="stats")
+    average = models.DecimalField(_("Moyenne"), max_digits=6, decimal_places=2, default=0)
+    median = models.DecimalField(_("Médianne"), max_digits=6, decimal_places=2, default=0)
+    std_dev = models.DecimalField(_("Écart-type"), max_digits=6, decimal_places=2, default=0)

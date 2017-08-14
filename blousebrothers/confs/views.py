@@ -27,7 +27,7 @@ from django.views.generic import (
 )
 from django.conf import settings
 
-from blousebrothers.tools import get_disqus_sso
+from blousebrothers.tools import get_disqus_sso, classifier
 from blousebrothers.auth import (
     BBConferencierReqMixin,
     ConferenceWritePermissionMixin,
