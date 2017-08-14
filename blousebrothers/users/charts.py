@@ -16,6 +16,11 @@ class MeanBarChart(Chart):
                 "max": 100})
         ]
     }
+    tooltips = {
+        'callbacks': {
+            'label': "function (tooltipItems, data) {return data[tooltipItems.index].lower()}"
+        }
+    }
     context = None
 
     def color_picker(self, nb_categories):
@@ -50,7 +55,7 @@ class MeanBarChart(Chart):
         labels_spe = set()
         for test in user.tests.filter(finished=True):
             for spe in test.conf.specialities.all():
-                labels_spe.add(spe.name)
+                labels_spe.add(spe.name[:4].upper())
         return sorted([i for i in labels_spe])
 
     def get_datasets(self, state, **kwargs):
@@ -87,7 +92,7 @@ class MonthlyLineChart(Chart):
     d = {}
 
     def get_labels(self, year, **kwargs):
-        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier", year+" + 1"], "Février", "Mars", "Avril", "Mai", "Juin"]
+        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier", str(int(year) + 1)], "Février", "Mars", "Avril", "Mai", "Juin"]
         # return ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
     def get_datasets(self, year, **kwargs):

@@ -348,7 +348,8 @@ class Test(models.Model):
     conf = models.ForeignKey('Conference', related_name='tests')
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     progress = models.PositiveIntegerField(_("Progression"), default=0)
-    max_score = models.PositiveIntegerField(_("Résultat"), default=0)
+    max_point = models.PositiveIntegerField(_("Point"), default=0)
+    point = models.DecimalField(_("Point"), max_digits=6, decimal_places=2, default=0)
     score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
     finished = models.BooleanField(default=False)
     personal_note = models.TextField(_("Remarques personnelles"), blank=True, null=True,
@@ -374,9 +375,10 @@ class Test(models.Model):
 
     def set_score(self):
         for t_answer in self.answers.all():
-            t_answer.set_score()
-        self.max_score = self.answers.aggregate(models.Sum('max_score')).get("max_score__sum")
-        self.score = self.answers.aggregate(models.Sum('score')).get("score__sum")
+            t_answer.set_point()
+        self.max_point = self.answers.aggregate(models.Sum('max_point')).get("max_point__sum")
+        self.point = self.answers.aggregate(models.Sum('point')).get("point__sum")
+        self.score = self.point / self.max_point * 100
         self.finished = True
         self.save()
 
@@ -415,13 +417,13 @@ class TestAnswer(models.Model):
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
                                      validators=[int_list_validator])
     """String representing a list of checked answer (ex: "0, 1, 3")"""
-    max_score = models.PositiveIntegerField(_("Résultat"), default=0)
-    score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
+    max_point = models.PositiveIntegerField(_("Point"), default=0)
+    point = models.DecimalField(_("Point"), max_digits=6, decimal_places=2, default=0)
     nb_errors = models.PositiveIntegerField(_("Nombre d'erreurs"), default=0)
     fatals = models.ManyToManyField('Answer', verbose_name=("Erreurs graves"))
 
-    def set_score(self):
-        self.max_score = self.question.coefficient
+    def set_point(self):
+        self.max_point = self.question.coefficient
         ga = ast.literal_eval(self.given_answers + ',')
         omissions = [ans for ans in self.question.good_answers if ans.index not in ga]
         errors = [ans for ans in self.question.bad_answers if ans.index in ga]
@@ -431,13 +433,13 @@ class TestAnswer(models.Model):
         if fatals:
             self.fatals.add(*fatals)
         if sorted(ga) == sorted(self.question.good_index):
-            self.score = self.max_score
+            self.point = self.max_point
         elif len(bga) > 2 or fatals:
-            self.score = 0
+            self.point = 0
         elif len(bga) == 2:
-            self.score = Decimal(0.2 * self.question.coefficient)
+            self.point = Decimal(0.2 * self.question.coefficient)
         elif len(bga) == 1:
-            self.score = Decimal(0.5 * self.question.coefficient)
+            self.point = Decimal(0.5 * self.question.coefficient)
         self.save()
 
 
