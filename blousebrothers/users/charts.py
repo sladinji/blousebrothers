@@ -16,11 +16,6 @@ class MeanBarChart(Chart):
                 "max": 100})
         ]
     }
-    tooltips = {
-        'callbacks': {
-            'label': "function (tooltipItems, data) {return data[tooltipItems.index].lower()}"
-        }
-    }
     context = None
 
     def color_picker(self, nb_categories):
