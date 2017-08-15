@@ -1573,7 +1573,7 @@ article.product_pod .douleur{
 article.product_pod .orl{
     background-image: url(/static/images/spe/orl.png);
 }
-article.product_pod .urgences-réa{
+.product_pod .urgences-réa{
     background-image: url(/static/images/spe/urg_rea.png);
 }
 article.product_pod .oncologie{

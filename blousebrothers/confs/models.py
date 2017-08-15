@@ -185,7 +185,7 @@ class Conference(ModelMeta, models.Model):
         if self.type == 'LCA':
             return "lecture_critique_d_articles"
         if self.specialities.all():
-            return '_'.join(self.specialities.all()[0].name.lower().replace("'", "_").split())
+            return '_'.join(self.specialities.all()[0].css)
         return "no_spe"
 
 
@@ -233,6 +233,12 @@ class Speciality(models.Model):
 
     def __str__(self):
         return self.name
+
+    def css(self):
+        return '_'.join(self.name.lower().replace("'", "_").split())
+
+    def image(self):
+        return 'images/spe/cardio.png'
 
 
 class Question(models.Model):

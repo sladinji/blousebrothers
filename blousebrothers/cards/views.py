@@ -18,7 +18,7 @@ from jchart import Chart
 from jchart.config import DataSet
 
 from blousebrothers.auth import BBLoginRequiredMixin
-from blousebrothers.confs.models import Item
+from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
 from .models import Card, Deck
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
@@ -280,7 +280,11 @@ class RevisionHome(TemplateView):
     def get_context_data(self, *args, **kwargs):
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
-        return super().get_context_data(*args, chart=dispatching_chart, **kwargs)
+        specialities = [
+            {'obj': spe, 'count': Card.objects.filter(specialities__in=[spe]).count()}
+            for spe in Speciality.objects.all()
+        ]
+        return super().get_context_data(*args, chart=dispatching_chart, specialities=specialities, **kwargs)
 
 
 class ListCardView(ListView):
