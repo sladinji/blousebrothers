@@ -1464,7 +1464,8 @@ a.share {
     padding: 10px 17px;
     display: inline-block;
     background: #FEFEFE;
-    border: 1px solid #fffcf9;
+    border: 1px solid #e6e9ed;
+    border-radius: 14px;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
@@ -1724,7 +1725,7 @@ input#id_code {
     overflow: hidden;
     padding: 0;
     border: none;
-    border-radius: .28571429rem;
+    border-radius: 14px;
     box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     margin: 40px 0;
 }
@@ -2086,4 +2087,17 @@ div#calltoac {
     .tile_count .tile_stats_count:first-child:before {
         border-left: 0;
     }
+}
+.tabbed-sidebar {
+    float: left;
+    width: 20%;
+}
+.tabbed-main {
+    float: right;
+    width: 76%;
+}
+.meta.hidden-xs {
+    position: absolute;
+    top: 128px;
+    left: 31px;
 }
