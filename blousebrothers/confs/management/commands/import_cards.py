@@ -1,7 +1,7 @@
 import difflib
 from glob import glob
 from django.core.management.base import BaseCommand
-from blousebrothers.cards.models import Card
+from blousebrothers.cards.models import Card, Tag
 from blousebrothers.confs.models import Item, Speciality
 
 
@@ -38,12 +38,18 @@ class Command(BaseCommand):
         kwargs["content"] = kwargs['content'].replace("~", "@@")
         items = kwargs.pop('items')
         specialities = kwargs.pop('specialities')
+        section = kwargs.pop('section', False)
+        title = kwargs.pop('title', False)
+
         card = Card(public=True, **kwargs)
         card.save()
         card.specialities = self.get_specialities(specialities.split(","))
         card.items = Item.objects.filter(
                           number__in=[int(x.strip()) for x in items.split(",")]
                       ).all()
+        for tag in section, title:
+            if tag:
+                card.tags.add(Tag.objects.get_or_create(name=tag)[0],)
         card.save()
 
     def handle(self, *args, **options):
