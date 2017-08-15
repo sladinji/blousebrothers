@@ -281,7 +281,10 @@ class RevisionHome(TemplateView):
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
         specialities = [
-            {'obj': spe, 'count': Card.objects.filter(specialities__in=[spe]).count()}
+            {'obj': spe,
+             'total': Card.objects.filter(specialities__in=[spe]).count(),
+             'user': self.request.user.deck.filter(card__specialities__in=[spe]).count(),
+             }
             for spe in Speciality.objects.all()
         ]
         return super().get_context_data(*args, chart=dispatching_chart, specialities=specialities, **kwargs)

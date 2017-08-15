@@ -6,7 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 {% endblock %}
 
-{% block content %}
+dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthratio value total_value 100 %}{% block content %}
 <div class="container">
     <div class="tabbed-sidebar">
         <div class="card">
@@ -65,54 +65,62 @@
         </div>
     </div>
     <div class="tabbed-main page">
-        <div class="space"></div> <!-- 40px Vertical Spacing -->
+        <div class="space"></div>
         {% for spe in specialities %}
         <div class="x_panel tile fixed_height_320">
             <div class="x_title">
-                <h2><i class="fa fa-pie-chart"></i> {{ spe.obj.name }} {{ spe.count }}</h2>
-                <div class="{{ spe.obj.css }}"></div>
+                <h2><i class="fa fa-pie-chart"></i> {{ spe.obj.name }}</h2><div class="text-right">{{spe.user }}/{{ spe.total }}</div>
                 <div class="clearfix"></div>
+                <div class="progress-bar-container"><div style="width: {% widthratio spe.user spe.total  100 %}%" class="progress-bar"></div></div>
             </div>
             <div class="x_content">
-                <table class="" style="width:100%">
-                    <tbody><tr>
-                            <th style="width:37%;">
-                                <p>Répartitions</p>
-                            </th>
-                            <th>
-                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                    <p class="">Catégorie</p>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <p class="">Total</p>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="width=37%" >
-                                <div style="position: relative; height:60%; width:60%">
-                                    {{ chart.as_html }}
-                                </div>
-                            </td>
-                            <td>
-                                <table class="tile_info" style="width:100%;">
-                                    <tbody>
-                                        {% for label, color, count in chart.get_lab_col_cnt %}
-                                        <tr>
-                                            <td>
-                                                <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
-                                            </td>
-                                            <td>{{count}}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-md-5">
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:60%; width:60%">
+                                        {{ chart.as_html }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{count}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="space12"></div>
+                <div class="col-md-7 text-right">
+                    <a class="btn btn-info"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a class="btn btn-success"><i class="fa fa-history"></i> Réviser</a>
+                </div>
             </div>
         </div>
+        <div class="space"></div> <!-- 40px Vertical Spacing -->
         {% endfor %}
         <div class="x_panel tile fixed_height_320">
             <div class="x_title">
