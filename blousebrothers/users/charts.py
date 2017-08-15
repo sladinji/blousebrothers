@@ -83,7 +83,6 @@ class MonthlyLineChart(Chart):
             Axes(ticks={
                 "beginAtZero": True,
                 "suggestedMax": 10,
-                "stepSize": 1
             },
                 gridLines={
                     'display': False,
@@ -95,11 +94,11 @@ class MonthlyLineChart(Chart):
     d = {}
 
     def get_labels(self, year, **kwargs):
-        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier {}".format(int(year) + 1)], "Février", "Mars", "Avril", "Mai", "Juin"]
-        # return ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+        return ["Juillet {}".format(year), "Août", "Septembre", "Octobre", "Novembre", "Décembre",
+                "Janvier {}".format(int(year) + 1), "Février", "Mars", "Avril", "Mai", "Juin"]
 
     def get_datasets(self, year, **kwargs):
-        self.d = { i: 0 for i in range(1, 13) }
+        self.d = {i: 0 for i in range(1, 13)}
         user = User.objects.prefetch_related("tests__answers").get(pk=self.context['object'].pk)
         for x in user.tests.filter(finished=True, date_created__range=(date(int(year), 7, 1), date(int(year)+1, 7, 1))):
             self.d[x.date_created.month] += 1

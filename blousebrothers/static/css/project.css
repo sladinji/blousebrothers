@@ -2074,3 +2074,16 @@ div#calltoac {
     background-color: rgba(152, 174, 176, 0.14);
 }
 
+.tile_count .tile_stats_count:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 65px;
+    border-left: 2px solid #ADB2B5;
+    margin-top: 10px;
+}
+@media (min-width: 992px){
+    .tile_count .tile_stats_count:first-child:before {
+        border-left: 0;
+    }
+}
