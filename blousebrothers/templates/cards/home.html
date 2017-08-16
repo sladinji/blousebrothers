@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load jchart %}
 
 {% block scripts %}
 {{ block.super }}
@@ -92,7 +93,7 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                             <tr>
                                 <td style="width=37%" >
                                     <div style="position: relative; height:60%; width:60%">
-                                        {{ chart.as_html }}
+                                        {% render_chart chart spe.obj %}
                                     </div>
                                 </td>
                                 <td>
@@ -115,8 +116,8 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                 </div>
                 <div class="space12"></div>
                 <div class="col-md-7 text-right">
-                    <a class="btn btn-info"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a class="btn btn-success"><i class="fa fa-history"></i> Réviser</a>
+                    <a href="{% url 'cards:redirect' %}?specilities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a class="btn btn-success{% if spe.user < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser</a>
                 </div>
             </div>
         </div>
@@ -145,7 +146,7 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                         <tr>
                             <td style="width=37%" >
                                 <div style="position: relative; height:60%; width:60%">
-                                    {{ chart.as_html }}
+                                    {% render_chart chart None %}
                                 </div>
                             </td>
                             <td>
