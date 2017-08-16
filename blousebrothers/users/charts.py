@@ -64,7 +64,7 @@ class MeanBarChart(Chart):
     def get_datasets(self, state, **kwargs):
         user = User.objects.get(pk=self.context['object'].pk)
         notes_spe = {}
-        for test in user.tests.filter(finished=True):
+        for test in user.tests.filter(finished=True).prefetch_related('conf__specialities'):
             for spe in test.conf.specialities.all():
                 if spe.name in notes_spe:
                     notes_spe[spe.name].append(test.score)
@@ -85,7 +85,6 @@ class MeanBarChart(Chart):
                         backgroundColor=colors),
                 DataSet(label='Moyenne de tous les utilisateurs',
                         data=average,
-                        #data=[np.random.randint(10, 100) for i in range(len(self.raw_data))],
                         type='line')]
 
 
