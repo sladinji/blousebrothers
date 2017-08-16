@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime, timedelta
 import numpy as np
 
 from jchart import Chart
