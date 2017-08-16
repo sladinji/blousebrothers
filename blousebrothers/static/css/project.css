@@ -17,6 +17,8 @@
     vertical-align: middle;
     font-size: 21pt;
     color: RGB(200, 200, 200);
+    position: absolute;
+    margin-top: 26px;
 }
 .main-menu-wapper {
     /*    background-color: black;*/
