@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load jchart %}
 
 {% block scripts %}
 {{ block.super }}
@@ -10,10 +11,9 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
 <div class="container">
     <div class="tabbed-sidebar">
         <div class="card">
-            <img class="card-img-top hidden-xs" src="{% static 'images/confs/catalogue.png' %}">
             <div class="card-block">
                 <figure class="profile">
-                    <img src="{% static 'images/confs/catalogue.png' %}" alt="">
+                    <img src="{% static 'images/go_rev.png' %}" alt="">
                 </figure>
                 <h4 class="card-title mt-3">Commencer à réviser</h4>
                 <div class="meta hidden-xs">
@@ -28,7 +28,6 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
             </div>
         </div>
         <div class="card">
-            <img class="card-img-top hidden-xs" src="{% static 'images/confs/create.png' %}">
             <div class="card-block">
                 <figure class="profile">
                     <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
@@ -46,7 +45,6 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
             </div>
         </div>
         <div class="card">
-            <img class="card-img-top hidden-xs" src="{% static 'images/confs/my_confs.png' %}">
             <div class="card-block">
                 <figure class="profile">
                     <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
@@ -92,7 +90,7 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                             <tr>
                                 <td style="width=37%" >
                                     <div style="position: relative; height:60%; width:60%">
-                                        {{ chart.as_html }}
+                                        {% render_chart chart spe.obj %}
                                     </div>
                                 </td>
                                 <td>
@@ -115,8 +113,8 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                 </div>
                 <div class="space12"></div>
                 <div class="col-md-7 text-right">
-                    <a class="btn btn-info"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a class="btn btn-success"><i class="fa fa-history"></i> Réviser</a>
+                    <a href="{% url 'cards:redirect' %}?specilities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a class="btn btn-success{% if spe.user < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser</a>
                 </div>
             </div>
         </div>
@@ -145,7 +143,7 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                         <tr>
                             <td style="width=37%" >
                                 <div style="position: relative; height:60%; width:60%">
-                                    {{ chart.as_html }}
+                                    {% render_chart chart None %}
                                 </div>
                             </td>
                             <td>

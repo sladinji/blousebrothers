@@ -1,5 +1,4 @@
 import re
-
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -20,20 +19,58 @@ from jchart.config import DataSet
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
-from .models import Card, Deck
+from .models import Card, Deck, Session, CardsPreference
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
+
+
+def create_new_session(request, specialities, items):
+    try:
+        duration = request.user.cards_preference.get().session_duration
+    except:
+        duration = CardsPreference.objects.get_or_create(student=request.user)[0].session_duration
+    session = Session.objects.create(student=request.user, selected_duration=duration)
+    session.specialities = specialities
+    session.items = items
+    session.save()
+    return session
+
+
+def get_or_create_session(request):
+    """
+    Get current session or create new session
+    """
+    specialities = Speciality.objects.filter(pk__in=request.GET.get('specialities') or [])
+    items = Item.objects.filter(pk__in=request.GET.get('items') or [])
+
+    session = Session.objects.filter(student=request.user, finished=False).first()
+    if not session or session and session.is_over(specialities, items):
+        session = create_new_session(request, specialities, items)
+    return session
+
+
+def session_filter(qs, session):
+    """
+    Apply session preference filter to queryset
+    """
+    if session.specialities.all():
+        qs = qs.filter(specialities__in=session.specialities.all())
+    if session.items.all():
+        qs = qs.filter(items__in=session.items.all())
+    return qs
 
 
 def choose_new_card(request):
     """
     Hot point.
     """
+    session = get_or_create_session(request)
     # choose a new original card never done by user
-    new_card = Card.objects.filter(
+    card_qs = Card.objects.filter(
         parent__isnull=True,
     ).exclude(
         id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True),
-    ).first()
+    )
+    new_card = session_filter(card_qs, session).first()
     # check if user have done card of this family
     if new_card and Deck.objects.filter(student=request.user,
                                         card_id__in=new_card.family(request.user),
@@ -41,12 +78,13 @@ def choose_new_card(request):
         new_card = None
     # if all card are already done choose the oldest and hardest one
     if not new_card:
-        new_card = Card.objects.filter(
+        new_card_qs = Card.objects.filter(
             deck__student=request.user,
         ).order_by(
             'deck__modified',
             '-deck__difficulty',
-        ).first()
+        )
+        new_card = session_filter(new_card_qs, session).first()
     return new_card
 
 
@@ -252,7 +290,7 @@ class Dispatching(Chart):
         "#d9534f"
     ]
 
-    def get_labels(self, **kwargs):
+    def get_labels(self, *args, **kwargs):
         return [str(label[1]) for label in Card.LEVEL_CHOICES]
 
     def get_lab_col_cnt(self):
@@ -261,13 +299,15 @@ class Dispatching(Chart):
         """
         return zip(self.get_labels(), self.colors, self.data)
 
-    def get_datasets(self, **kwargs):
+    def get_datasets(self, spe, **kwargs):
         user = self.request.user
         if user.is_anonymous():
             user = User.objects.get(username='BlouseBrothers')
 
-        self.data = [Deck.objects.filter(student=user, difficulty=dif).count()
-                     for dif in range(3)]
+        qs = Deck.objects.filter(student=user)
+        if spe:
+            qs = qs.filter(card__specialities__id__exact=spe.id)
+        self.data = [qs.filter(difficulty=dif).count() for dif in range(3)]
         return [DataSet(data=self.data,
                         label="Répartition des fiches",
                         backgroundColor=self.colors,
