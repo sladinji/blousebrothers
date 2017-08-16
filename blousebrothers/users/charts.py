@@ -54,7 +54,7 @@ class MeanBarChart(Chart):
         labels_spe = set()
         for test in user.tests.filter(finished=True):
             for spe in test.conf.specialities.all():
-                labels_spe.add(spe.name[:4].upper())
+                labels_spe.add(spe.name)
         return sorted([i for i in labels_spe])
 
     def get_datasets(self, state, **kwargs):
