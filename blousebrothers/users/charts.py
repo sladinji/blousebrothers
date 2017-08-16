@@ -95,7 +95,7 @@ class MonthlyLineChart(Chart):
     d = {}
 
     def get_labels(self, year, **kwargs):
-        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier {}".format(int(year) + 1)], "Février", "Mars", "Avril", "Mai", "Juin"]
+        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier", "{}".format(int(year) + 1)], "Février", "Mars", "Avril", "Mai", "Juin"]
         # return ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
     def get_datasets(self, year, **kwargs):
