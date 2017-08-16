@@ -2127,3 +2127,11 @@ i.red {
     height: 8px;
     margin-bottom: 4px;
 }
+.boutique-nav .fa-lg {
+    vertical-align: -9%;
+}
+@media (min-width: 767px){
+    li.menu-item-has-children.item-megamenu:last-child {
+        float: right;
+    }
+}
