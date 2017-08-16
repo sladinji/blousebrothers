@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date
 import numpy as np
 
 from jchart import Chart
@@ -50,7 +50,7 @@ class MeanBarChart(Chart):
         return color_scale
 
     def get_labels(self, state,  **kwargs):
-        user = User.objects.prefetch_related("tests__answers").get(pk=self.context['object'].pk)
+        user = User.objects.get(pk=self.context['object'].pk)
         labels_spe = set()
         for test in user.tests.filter(finished=True):
             for spe in test.conf.specialities.all():
@@ -58,7 +58,7 @@ class MeanBarChart(Chart):
         return sorted([i for i in labels_spe])
 
     def get_datasets(self, state, **kwargs):
-        user = User.objects.prefetch_related("tests__answers").get(pk=self.context['object'].pk)
+        user = User.objects.get(pk=self.context['object'].pk)
         notes_spe = {}
         for test in user.tests.filter(finished=True):
             for spe in test.conf.specialities.all():
@@ -83,7 +83,6 @@ class MonthlyLineChart(Chart):
             Axes(ticks={
                 "beginAtZero": True,
                 "suggestedMax": 10,
-                "stepSize": 1
             },
                 gridLines={
                     'display': False,
@@ -95,12 +94,12 @@ class MonthlyLineChart(Chart):
     d = {}
 
     def get_labels(self, year, **kwargs):
-        return [["Juillet", year], "Août", "Septembre", "Octobre", "Novembre", "Décembre", ["Janvier", "{}".format(int(year) + 1)], "Février", "Mars", "Avril", "Mai", "Juin"]
-        # return ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+        return ["Juillet {}".format(year), "Août", "Septembre", "Octobre", "Novembre", "Décembre",
+                "Janvier {}".format(int(year) + 1), "Février", "Mars", "Avril", "Mai", "Juin"]
 
     def get_datasets(self, year, **kwargs):
-        self.d = { i: 0 for i in range(1, 13) }
-        user = User.objects.prefetch_related("tests__answers").get(pk=self.context['object'].pk)
+        self.d = {i: 0 for i in range(1, 13)}
+        user = User.objects.get(pk=self.context['object'].pk)
         for x in user.tests.filter(finished=True, date_created__range=(date(int(year), 7, 1), date(int(year)+1, 7, 1))):
             self.d[x.date_created.month] += 1
         data = sorted([(mois, self.d[mois]) for mois in self.d])

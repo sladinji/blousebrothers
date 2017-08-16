@@ -1464,7 +1464,8 @@ a.share {
     padding: 10px 17px;
     display: inline-block;
     background: #FEFEFE;
-    border: 1px solid #fffcf9;
+    border: 1px solid #e6e9ed;
+    border-radius: 14px;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
@@ -1572,7 +1573,7 @@ article.product_pod .douleur{
 article.product_pod .orl{
     background-image: url(/static/images/spe/orl.png);
 }
-article.product_pod .urgences-réa{
+.product_pod .urgences-réa{
     background-image: url(/static/images/spe/urg_rea.png);
 }
 article.product_pod .oncologie{
@@ -1724,7 +1725,7 @@ input#id_code {
     overflow: hidden;
     padding: 0;
     border: none;
-    border-radius: .28571429rem;
+    border-radius: 14px;
     box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     margin: 40px 0;
 }
@@ -2074,3 +2075,63 @@ div#calltoac {
     background-color: rgba(152, 174, 176, 0.14);
 }
 
+.tile_count .tile_stats_count:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 65px;
+    border-left: 2px solid #ADB2B5;
+    margin-top: 10px;
+}
+@media (min-width: 992px){
+    .tile_count .tile_stats_count:first-child:before {
+        border-left: 0;
+    }
+}
+.tabbed-sidebar {
+    width: 100%;
+}
+@media (min-width: 992px){
+    .tabbed-sidebar {
+        float: left;
+        width: 20%;
+    }
+}
+@media (min-width: 992px){
+    .tabbed-main {
+        float: right;
+        width: 76%;
+    }
+}
+.meta.hidden-xs {
+    position: absolute;
+    top: 128px;
+    left: 31px;
+}
+i.green {
+    color: green;
+}
+i.red {
+    color: red;
+} 
+.x_content a.btn {
+    width: 328px;
+}
+.x_content .btn i.fa {
+    margin-right: 10px;
+}
+.progress-bar-container {
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.06) inset;
+    background-color: #f2f2f2;
+    height: 8px;
+    margin-bottom: 4px;
+}
+.boutique-nav .fa-lg {
+    vertical-align: -9%;
+}
+@media (min-width: 767px){
+    li.menu-item-has-children.item-megamenu:last-child {
+        float: right;
+    }
+}
