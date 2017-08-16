@@ -17,8 +17,12 @@
     vertical-align: middle;
     font-size: 21pt;
     color: RGB(200, 200, 200);
-    position: absolute;
-    margin-top: 26px;
+}
+@media (min-width: 992px){
+    .logo .blouse-font {
+        position: absolute;
+        margin-top: 26px;
+    }
 }
 .main-menu-wapper {
     /*    background-color: black;*/
@@ -2135,5 +2139,12 @@ i.red {
 @media (min-width: 767px){
     li.menu-item-has-children.item-megamenu:last-child {
         float: right;
+        margin-right: -38px;
+        margin-left: 38px;
+    }
+}
+@media (min-width: 992px){
+    .main-menu {
+        margin-left: -12%;
     }
 }
