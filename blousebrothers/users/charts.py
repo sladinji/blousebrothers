@@ -1,10 +1,11 @@
-from datetime import date, datetime, timedelta
+from datetime import date
 import numpy as np
 
 from jchart import Chart
 from jchart.config import Axes, DataSet, rgba
 
 from .models import User
+from blousebrothers.confs.models import StatsSpe
 
 
 class MeanBarChart(Chart):
@@ -18,9 +19,16 @@ class MeanBarChart(Chart):
                     'display': False,
                 }
             )
+        ],
+        'xAxes': [
+            Axes(ticks={
+                'display': False,
+            }
+            )
         ]
     }
     context = None
+    raw_data = None
 
     def color_picker(self, nb_categories):
         scale = np.linspace(0.0, 5.0, num=nb_categories, endpoint=True)
@@ -50,12 +58,8 @@ class MeanBarChart(Chart):
         return color_scale
 
     def get_labels(self, state,  **kwargs):
-        user = User.objects.get(pk=self.context['object'].pk)
-        labels_spe = set()
-        for test in user.tests.filter(finished=True):
-            for spe in test.conf.specialities.all():
-                labels_spe.add(spe.name)
-        return sorted([i for i in labels_spe])
+        labels_spe = [spe[0] for spe in self.raw_data]
+        return labels_spe
 
     def get_datasets(self, state, **kwargs):
         user = User.objects.get(pk=self.context['object'].pk)
@@ -66,13 +70,22 @@ class MeanBarChart(Chart):
                     notes_spe[spe.name].append(test.score)
                 else:
                     notes_spe[spe.name] = [test.score]
-        data = sorted([(spe, round(np.mean(notes_spe[spe]), 2)) for spe in notes_spe])
-        colors = self.color_picker(len(data))
+        self.raw_data = sorted(
+            [(spe, round(np.mean(notes_spe[spe]), 2)) for spe in notes_spe],
+            key=lambda x: x[1],
+            reverse=False
+        )
+        stats = dict(StatsSpe.objects.values_list('speciality__name', 'average'))
+        average = []
+        for spe, _ in self.raw_data:
+            average.append(stats[spe])
+        colors = self.color_picker(len(self.raw_data))
         return [DataSet(label='Ma moyenne',
-                        data=[spe[1] for spe in data],
+                        data=[spe[1] for spe in self.raw_data],
                         backgroundColor=colors),
                 DataSet(label='Moyenne de tous les utilisateurs',
-                        data=[np.random.randint(10, 100) for i in range(len(data))],
+                        data=average,
+                        #data=[np.random.randint(10, 100) for i in range(len(self.raw_data))],
                         type='line')]
 
 
