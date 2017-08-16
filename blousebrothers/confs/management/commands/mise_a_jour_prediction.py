@@ -19,16 +19,13 @@ def classifier(text_clf, string):
 
 class Command(BaseCommand):
     help = 'Update all classifier predictions for all questions in the "Prediction" table'
-    
+
     def handle(self, *args, **options):
         cl = Classifier.objects.get(name="toto")
         text_clf = joblib.load(cl.classifier)
         for interrogation in Question.objects.all():
             pred, _ = Prediction.objects.get_or_create(question = interrogation, classifier = cl)
             for p in classifier(text_clf, (interrogation.conf.statement or "")+" "+(interrogation.question or "")+" "+(interrogation.explaination or "")):
-                print(p)
                 if not (p == "Hématologie - Oncohématologie" or p == "Pharmacologie"):
                     pred.specialities.add(Speciality.objects.get(name=p))
             pred.save()
-            print("Saved")
-        
