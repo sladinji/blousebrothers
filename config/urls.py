@@ -8,11 +8,11 @@ from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from django.views import defaults as default_views
 from django.contrib.sitemaps.views import sitemap
-from oscar.app import application
 
 from paypal.express.dashboard.app import application as paypal
 
 import blousebrothers.users.views
+from blousebrothers.app import application
 
 from .sitemaps import StaticViewSitemap
 

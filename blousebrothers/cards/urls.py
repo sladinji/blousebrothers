@@ -3,53 +3,53 @@ from . import views
 
 urlpatterns = [
     url(
-        r'^liste/?$',
+        r'^fiches/liste/?$',
         view=views.ListCardView.as_view(),
         name='list'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/fin/$',
+        regex=r'^fiches/(?P<slug>[\w.@+-]+)/fin/$',
         view=views.FinalizeCardView.as_view(),
         name='finalize'
     ),
     url(
-        regex=r'^create/$',
+        regex=r'^fiche/create/$',
         view=views.CreateCardView.as_view(),
         name='create'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/edit$',
+        regex=r'^fiche/(?P<slug>[\w.@+-]+)/edit$',
         view=views.UpdateCardView.as_view(),
         name='update'
     ),
     url(
-        regex=r'^$',
+        regex=r'^fiches$',
         view=views.RevisionRedirectView.as_view(),
         name='redirect'
     ),
     url(
-        regex=r'^next/([0-9]+)$',
+        regex=r'^fiche/suivante/([0-9]+)$',
         view=views.RevisionNextCardView.as_view(),
         name='next'
     ),
     url(
-        regex=r'^previous/([0-9]+)$',
+        regex=r'^fiche/precedente/([0-9]+)$',
         view=views.RevisionPreviousCardView.as_view(),
         name='previous'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/fiche/(?P<dsp_card_on_load>\w*)?$',
+        regex=r'^fiche/(?P<slug>[\w.@+-]+)/(?P<dsp_card_on_load>\w*)?$',
         view=views.RevisionView.as_view(),
         name='revision'
     ),
     url(
-        regex=r'^bookmark/([0-9]+)$',
+        regex=r'^fiche/bookmark/([0-9]+)$',
         view=views.bookmark_card,
         name='bookmark'
     ),
 
     url(
-        regex=r'^home/$',
+        regex=r'^$',
         view=views.RevisionHome.as_view(),
         name='home'
     ),
