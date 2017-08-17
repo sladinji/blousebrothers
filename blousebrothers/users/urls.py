@@ -2,12 +2,13 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView
 
 from . import views
 
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='^abonnement/0'), name='home'),
     # URL pattern for the UserRedirectView
     url(
         regex=r'^compte/$',

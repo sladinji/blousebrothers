@@ -44,7 +44,7 @@ settings file. This will enable the on-the-fly less compiler.
     <div class="row">
         <div class="col-sm-12 col-md-2 logo-wrapper">
             <div class="logo">
-                <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=100px alt=""></a>
+                <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=66px alt="Logo BlouseBrothers"></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-primary">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -57,7 +57,7 @@ settings file. This will enable the on-the-fly less compiler.
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'cards:home' %}"><span class="fa fa-refresh fa-lg"></span> {% trans 'Révisions' %}</a>
+                            <a href="{% url 'cards:home' %}"><span class="fa fa-history fa-lg"></span> {% trans 'Révisions' %}</a>
                         </li>
                         <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}</a></li>
                         {% if request.user.is_authenticated %}
@@ -70,7 +70,7 @@ settings file. This will enable the on-the-fly less compiler.
                                 <span class="label label-important">{{ num_unread_notifications }}</span>
                             </a>
                             {% else %}
-                            <a href="{% url 'users:subscription' 0 %}"><i class="icon-user fa-lg"></i> {{ request.user.username }}</a>
+                            <a href="{% url 'users:home' %}"><i class="icon-user fa-lg"></i> {{ request.user.username }}</a>
                             {% endif %}
                         </li>
                         {% endif %}

@@ -24,7 +24,7 @@
 @media (min-width: 992px){
     .logo .blouse-font {
         position: absolute;
-        margin-top: 26px;
+        margin-top: 10px;
     }
 }
 .main-menu-wapper {
@@ -99,7 +99,7 @@ li.menu-item-has-children.item-megamenu.active {
     border-bottom: 5px solid #E8B510;
 }
 .main-menu>li>a {
-    padding: 14px 0;
+    padding: 6px 0;
 }
 .blouse-font {
 	font-family: 'lobster';
