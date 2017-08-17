@@ -12,20 +12,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
-from sklearn.externals import joblib
-from sklearn.pipeline import Pipeline
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.linear_model import SGDClassifier
-
 logger = logging.getLogger(__name__)
-
-
-def classifier(string):
-    text_clf = joblib.load("Nouveau_Book_classifier.pkl")
-    prediction = text_clf.predict_proba([string])
-    classement = sorted(zip(prediction[0], text_clf.classes_), reverse = True)
-    return [i[1] for i in classement[:3]]
 
 
 def analyse_conf(conf):

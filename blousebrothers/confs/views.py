@@ -27,7 +27,8 @@ from django.views.generic import (
 )
 from django.conf import settings
 
-from blousebrothers.tools import get_disqus_sso, classifier
+import blousebrothers.classifier as cl
+from blousebrothers.tools import get_disqus_sso
 from blousebrothers.auth import (
     BBConferencierReqMixin,
     ConferenceWritePermissionMixin,
@@ -117,9 +118,9 @@ class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin
             quest = context['object'].questions.all()
             for question in quest:
                 if question.explaination:
-                    res = classifier(intro+" "+question.question+" "+question.explaination)
+                    res = cl.classifier(str(intro)+" "+question.question+" "+question.explaination)
                 else:
-                    res = classifier(intro+" "+question.question)
+                    res = cl.classifier(str(intro)+" "+question.question)
                 l.append(res)
             context['specialities'] = l
         return context
