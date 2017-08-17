@@ -52,6 +52,9 @@ urlpatterns = [
     url(r'^ecni/', include('blousebrothers.confs.urls', namespace='confs')),
     url(r'^accounts/', include('allauth.urls')),
 
+    # URL change redirection
+    url(r'^catalogue/', RedirectView.as_view(url='/ecni/catalogue/')),
+
     # Your stuff: custom urls includes go here
     url(r'^$', view=blousebrothers.users.views.SignupView.as_view(), name='home'),
     url(r'', include(application.urls)),
