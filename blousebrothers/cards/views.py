@@ -271,7 +271,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         new_card = choose_new_card(request)
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 
-
+from django.db.models import Count
 class Dispatching(Chart):
     """
     How many cards in each category.
@@ -307,6 +307,8 @@ class Dispatching(Chart):
         qs = Deck.objects.filter(student=user)
         if spe:
             qs = qs.filter(card__specialities__id__exact=spe.id)
+#        dom = qs.annotate(nb_dif=Count('difficulty'))
+#        self.data = [dom[i].nb_dif for i in range(3)]
         self.data = [qs.filter(difficulty=dif).count() for dif in range(3)]
         return [DataSet(data=self.data,
                         label="Répartition des fiches",
