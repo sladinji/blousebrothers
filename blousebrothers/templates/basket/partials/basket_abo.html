@@ -80,7 +80,8 @@
 
         {% load currency_filters %}
         {% load staticfiles %}
-        <br><br>
+        <div class="space"></div>
+        <div class="space"></div>
         <div class="row">
             {% block payment_details_content %}
             <div class="col-md-6 col-xs-6 align-right">
@@ -92,7 +93,7 @@
                                                                                                                   data-image="{% static "images/apple-icon-120x120.png" %}"
                                                                                                                   data-locale="auto"
                                                                                                                   data-email="{{ user.email }}"
-                                                                                                                  data-label="Payer par carte">
+                                                                                                                  data-label='Payer par carte'>
                     </script>
                     <div style="display:none">
                         <input type="hidden" name="action" value="place_order" />

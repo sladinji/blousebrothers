@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load tinycontent_tags %}
 {% load crispy_forms_tags %}
+{% load history_tags %}
 
 {% block title %}{{ object.username }}{% endblock %}
 
@@ -13,14 +14,14 @@
         <div class="col-md-12">
             <div class="tab-content clearfix">
                 <ul class="nav nav-tabs nav-justified">
-                    <li class="tab-2a"><a href="#2a" data-toggle="tab"><i class="fa fa-list"></i> Mon abonnement</a>	      
+                    <li class="tab-2a"><a href="#2a" data-toggle="tab"><i class="fa fa-address-card-o"></i> Abonnement</a>	      
                     </li>
                     <li class="active tab-1a">
-                        <a href="#1a" data-toggle="tab"><i class="fa fa-user"></i> Mon profil</a>
+                        <a href="#1a" data-toggle="tab"><i class="fa fa-user"></i> Profil</a>
                     </li>
                     <!--	    <li class="tab-3a"><a href="#3a" data-toggle="tab"><i class="fa fa-thumbs-o-up"></i> Parrainage</a>
                         </li>-->
-                        <li class="tab-4a"><a href="#4a" data-toggle="tab"><i class="fa fa-euro"></i> Mon porte-monnaie</a>
+                        <li class="tab-4a"><a href="#4a" data-toggle="tab"><i class="fa fa-euro"></i> Gestion des gains</a>
                         </li>
 
                 </ul>
@@ -60,6 +61,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+
+                    {% recently_viewed_products %}
 
                 </div>
                 <div class="tab-pane" id="2a">

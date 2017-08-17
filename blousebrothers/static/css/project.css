@@ -17,6 +17,9 @@
     vertical-align: middle;
     font-size: 21pt;
     color: RGB(200, 200, 200);
+    background-color: black;
+    z-index: 100;
+    padding-right: 5px;
 }
 @media (min-width: 992px){
     .logo .blouse-font {
@@ -1477,6 +1480,7 @@ a.share {
     column-break-inside: avoid;
     opacity: 1;
     transition: all .2s ease;
+    margin-bottom: 40px;
 }
 
 .x_title {
@@ -2078,7 +2082,8 @@ div#calltoac {
     }
 }
 .row.tile_count {
-    background-color: rgba(152, 174, 176, 0.14);
+    background-color: rgb(242, 242, 242);
+    border-radius: 9px;
 }
 
 .tile_count .tile_stats_count:before {
@@ -2120,7 +2125,7 @@ i.green {
 i.red {
     color: red;
 } 
-.x_content a.btn {
+.rev_pod .x_content a.btn {
     width: 328px;
 }
 .x_content .btn i.fa {
@@ -2147,4 +2152,18 @@ i.red {
     .main-menu {
         margin-left: -12%;
     }
+}
+.tab-pane .container {
+    padding-left: 0px;
+    padding-right: 31px;
+}
+button.stripe-button-el {
+    border-radius: 20px;
+}
+.stripe-button-el span:before {
+    font-family: FontAwesome;
+    content: "\f283\ ";
+}
+.etape1 .tab-pane.fade.in.active {
+    padding: 0 64px;
 }

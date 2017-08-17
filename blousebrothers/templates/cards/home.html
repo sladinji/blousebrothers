@@ -65,7 +65,7 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
     <div class="tabbed-main page">
         <div class="space"></div>
         {% for spe in specialities %}
-        <div class="x_panel tile fixed_height_320">
+        <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="x_title">
                 <h2><i class="fa fa-chevron-right"></i> {{ spe.obj.name }}</h2><div class="text-right">{{spe.user }}/{{ spe.total }}</div>
                 <div class="clearfix"></div>
@@ -118,7 +118,6 @@ dthratio value total_value 100 %}{% widthratio value total_value 100 %}{% widthr
                 </div>
             </div>
         </div>
-        <div class="space"></div> <!-- 40px Vertical Spacing -->
         {% endfor %}
         <div class="x_panel tile fixed_height_320">
             <div class="x_title">

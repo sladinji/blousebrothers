@@ -24,6 +24,9 @@ from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
 
 def create_new_session(request, specialities, items):
+    """
+    Create new revision session record
+    """
     try:
         duration = request.user.cards_preference.get().session_duration
     except:
