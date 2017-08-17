@@ -57,8 +57,7 @@ class SearchForm(FacetedSearchForm):
         (NEWEST, _("Newest")),
         (RELEVANCY, _("Relevancy")),
         (TOP_RATED, _("Notes des dossiers")),
-        (PRICE_HIGH_TO_LOW, _("Price high to low")),
-        (PRICE_LOW_TO_HIGH, _("Price low to high")),
+        (PRICE_LOW_TO_HIGH, _("Dispo sans abonnement")),
         (TITLE_A_TO_Z, _("Title A to Z")),
         (TITLE_Z_TO_A, _("Title Z to A")),
     ]

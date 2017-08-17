@@ -3,10 +3,9 @@
 {% load i18n %}
 {% load bbtricks %}
 {% load tinycontent_tags %}
-{% load history_tags %}
 
 
-<div class="space12"></div> <!-- 40px Vertical Spacing -->
+<div class="space"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -18,17 +17,16 @@
                 <div class="x_content">
                     <div class="dashboard-widget-content">
                         <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        Provenance :
                         <ul class="col-md-12 stats">
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b><br> 
-                                    Personnel</span>
-                                <em>(que j'ai gagné)</em>
+                                <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b></span>
                             </li>
+                            {% comment %}
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.wallet_bonus.balance | wallet_clean | currency }}</b><br> 
                                     Bonus</span>
                             </li>
+                            {% endcomment %}
                         </ul>
                     </div>
                 </div>
@@ -87,20 +85,18 @@
                     {% if user.bank_account %}
                     <a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
                     {% else %}
-                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
+                    <div class="space12"></div>
+                    <div class="text-center">
+                        <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
+                    </div>
+                    <div class="space12"></div>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="space12"></div> <!-- 40px Vertical Spacing -->
 
-    {% if balance.amount != 0 or user.subscritpion != None %}
-    {% recently_viewed_products %}
-    {% endif %}
-
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
 
     {% if user.is_conferencier %}
     {% if user.last_subsboard %}
@@ -145,7 +141,7 @@
 
         <div class="col-md-9">
             <div id="order_graph">
-                <div class="bar-caption"><h1>{% trans "Activité à mes conférences" %}</h1></div>
+                <div class="bar-caption"><h1>{% trans "Activité" %}</h1></div>
                 <div class="bar-y-axis">
                     <ul>
                         {% for y_value in hourly_report_dict.y_range %}
@@ -242,7 +238,6 @@
                         <th>{% trans "Etudiant" %}</th>
                         <th>{% trans "Date" %}</th>
                         <th>{% trans "Crédit" %}</th>
-                        <th>{% trans "Frais" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -252,12 +247,11 @@
                         <td>{{ sell.student }}</td>
                         <td>{{ sell.create_timestamp }}</td>
                         <td>{{ sell.credited_funds | or_subscription  }}</td>
-                        <td>{{ sell.fees | or_subscription }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <p>*Abo : la valeur sera déterminée en fin de mois en fonction de la consomation des abonnés.</p>
+            <p>*Abo : la valeur est déterminée en fin de mois. 70% des gains des abonnements aux dossiers sont répartis entre les conférenciers au prorata de la consultation des dossiers par les étudiants.</p>
         </div>
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->

@@ -5,4 +5,4 @@ class ConfsConfig(AppConfig):
     name = 'confs'
 
     def ready(self):
-        import blousebrothers.checkout.signals
+        import blousebrothers.checkout.signals #  noqa

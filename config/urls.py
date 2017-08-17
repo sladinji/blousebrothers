@@ -8,11 +8,11 @@ from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from django.views import defaults as default_views
 from django.contrib.sitemaps.views import sitemap
-from oscar.app import application
 
 from paypal.express.dashboard.app import application as paypal
 
 import blousebrothers.users.views
+from blousebrothers.app import application
 
 from .sitemaps import StaticViewSitemap
 
@@ -51,6 +51,9 @@ urlpatterns = [
     url(r'^mon/', include('blousebrothers.users.urls', namespace='users')),
     url(r'^ecni/', include('blousebrothers.confs.urls', namespace='confs')),
     url(r'^accounts/', include('allauth.urls')),
+
+    # URL change redirection
+    url(r'^catalogue/', RedirectView.as_view(url='/ecni/catalogue/')),
 
     # Your stuff: custom urls includes go here
     url(r'^$', view=blousebrothers.users.views.SignupView.as_view(), name='home'),

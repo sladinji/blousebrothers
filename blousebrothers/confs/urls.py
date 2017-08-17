@@ -9,7 +9,7 @@ from . import crud
 urlpatterns = [
     # URL pattern for the ConferenceHomeView
     url(
-        r'^entrainement/?$',
+        r'^$',
         view=views.ConferenceHomeView.as_view(),
         name='home'
     ),
@@ -22,62 +22,56 @@ urlpatterns = [
 
     # URL pattern for the TestUpdateView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/entrainement$',
+        regex=r'^dossier/(?P<slug>[\w.@+-]+)$',
         view=views.TestUpdateView.as_view(),
         name='test'
     ),
     # URL pattern for the TestResetView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/resettest$',
+        regex=r'^dossier/(?P<slug>[\w.@+-]+)/resettest$',
         view=views.TestResetView.as_view(),
         name='test_reset'
     ),
 
     # URL pattern for the TestUpdateView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/resultats$',
+        regex=r'^dossier/(?P<slug>[\w.@+-]+)/resultats$',
         view=views.TestResult.as_view(),
         name='result'
-    ),
-    # URL pattern for the RefundView
-    url(
-        regex=r'^(?P<slug>[\w.@+-]+)/askrefund$',
-        view=views.RefundView.as_view(),
-        name='ask_refund'
     ),
 
 
     # URL pattern for the ConferenceDetailView
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/$',
+        regex=r'^dossier/(?P<slug>[\w.@+-]+)/$',
         view=views.ConferenceDetailView.as_view(),
         name='detail'
     ),
 
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^~creation/(?P<slug>[\w.@+-]+)/update$',
+        regex=r'^creation/(?P<slug>[\w.@+-]+)/update$',
         view=views.ConferenceUpdateView.as_view(),
         name='update'
     ),
     url(
-        regex=r'^(?P<slug>[\w.@+-]+)/delete$',
+        regex=r'^creation/(?P<slug>[\w.@+-]+)/delete$',
         view=views.ConferenceDeleteView.as_view(),
         name='delete'
     ),
     url(
-        regex=r'^~/creation/(?P<slug>[\w.@+-]+)/final$',
+        regex=r'^creation/(?P<slug>[\w.@+-]+)/final$',
         view=views.ConferenceFinalView.as_view(),
         name='final'
     ),
     # URL pattern for the ConferenceUpdateView
     url(
-        regex=r'^~creation/$',
+        regex=r'^creation/$',
         view=views.ConferenceCreateView.as_view(),
         name='create'
     ),
     url(
-        regex=r'^~creation/(?P<slug>[\w.@+-]+)/edit$',
+        regex=r'^creation/(?P<slug>[\w.@+-]+)/edit$',
         view=views.ConferenceEditView.as_view(),
         name='edit'
     ),

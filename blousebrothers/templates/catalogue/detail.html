@@ -142,12 +142,6 @@
                 <th>{% trans "Product Type" %}</th><td>{{ product.get_product_class.name }}</td>
             </tr>
 
-            {% purchase_info_for_product request product as session %}
-            {% if session.price.exists %}
-            <tr>
-                <th>{% trans "Price" %}</th><td>{{ session.price.excl_tax|currency:session.price.currency }}</td>
-            </tr>
-            {% endif %}
             {% for av in product.attribute_values.all %}
             <tr>
                 <th>{{ av.attribute.name }}</th>
