@@ -3,7 +3,6 @@
 {% load i18n %}
 {% load tinycontent_tags %}
 {% load crispy_forms_tags %}
-{% load history_tags %}
 
 {% block title %}{{ object.username }}{% endblock %}
 
@@ -61,10 +60,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
-
-                    {% recently_viewed_products %}
-
                 </div>
                 <div class="tab-pane" id="2a">
                     <!--          <div class="x_title">
