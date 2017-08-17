@@ -206,7 +206,7 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
 class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):
     """
     Root url of card app, reached by clicking on revision link.
-    Choose a card a redirect to revision view.
+    Choose a card and redirect to revision view.
     """
 
     def get_redirect_url(self, *args, **kwargs):
@@ -215,6 +215,9 @@ class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):
 
 
 class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):
+    """
+    Called when clicking on next card button.
+    """
     step = 1
 
     def get_redirect_url(self, *args, **kwargs):
@@ -229,6 +232,9 @@ class RevisionPreviousCardView(RevisionPermissionMixin, RevisionNextCardView):
 
 
 class RevisionView(RevisionPermissionMixin, DetailView):
+    """
+    Zen card view for revision.
+    """
     template_name = "cards/revision.html"
     model = Deck
     is_favorite = False
@@ -321,19 +327,22 @@ class RevisionHome(TemplateView):
     template_name = 'cards/home.html'
 
     def get_context_data(self, *args, **kwargs):
+        user = self.request.user
+        if user.is_anonymous():
+            user = User.objects.get(username='BlouseBrothers')
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
         specialities = [
             {'obj': spe,
              'total': Card.objects.filter(specialities__in=[spe]).count(),
-             'user': self.request.user.deck.filter(card__specialities__in=[spe]).count(),
+             'user': user.deck.filter(card__specialities__in=[spe]).count(),
              }
             for spe in Speciality.objects.all()
         ]
         return super().get_context_data(*args, chart=dispatching_chart, specialities=specialities, **kwargs)
 
 
-class ListCardView(ListView):
+class ListCardView(BBLoginRequiredMixin, ListView):
     model = Card
 
     def get_queryset(self):
