@@ -316,7 +316,7 @@ class Dispatching(Chart):
         if spe:
             qs = qs.filter(card__specialities__id__exact=spe.id)
         dom = qs.values('difficulty').annotate(nb_dif=Count('difficulty'))
-        self.data = [next((l['nb_dif'] for l in dom if l['difficulty'] == i), None) for i in range(3)]
+        self.data = [next((l['nb_dif'] for l in dom if l['difficulty'] == i), 0) for i in range(3)]
         return [DataSet(data=self.data,
                         label="Répartition des fiches",
                         backgroundColor=self.colors,
