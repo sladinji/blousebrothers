@@ -61,6 +61,9 @@ def session_filter(qs, session):
     return qs
 
 
+def choose_oldest_card(request):
+    pass
+
 def choose_new_card(request):
     """
     Hot point.

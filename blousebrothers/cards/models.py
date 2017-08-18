@@ -30,6 +30,8 @@ class Deck(models.Model):
                              related_name="deck", blank=False, null=False)
     difficulty = models.PositiveIntegerField(_("Difficulté"), choices=DIFFICULTY_CHOICES, default=1)
     created = models.DateTimeField(auto_now_add=True)
+    column = models.PositiveIntegerField(default=0)
+    wake_up = models.DateTimeField()
     modified = models.DateTimeField(auto_now=True)
     nb_views = models.IntegerField(default=0)
 
