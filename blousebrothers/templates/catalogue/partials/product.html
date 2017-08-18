@@ -27,8 +27,17 @@
         </div>
         {% endif %}
         {% endblock %}
+        {% if product.conf.done_tests %}
+        {% if product.conf.done_tests.0.finished %}
+        {{ product.conf.done_tests.0.score }} / 100
+        <div class="progress-bar-container"><div style="width: {{product.conf.done_tests.0.score | stringformat:'d' }}%" class="progress-bar"></div></div>
+        {% else %}
+        <i>Commencé</i>
+        {% endif %}
+        {% endif %}
         {% block product_review %}
         {% iffeature "reviews" %}
+        {% if not product.conf.done_tests %}
         <p class="star-rating {{ product.rating|as_stars }}">
         <i class="icon-star"></i>
         <i class="icon-star"></i>
@@ -36,6 +45,7 @@
         <i class="icon-star"></i>
         <i class="icon-star"></i>
         </p>
+        {% endif %}
         {% endiffeature %}
         {% endblock %}
 
@@ -43,8 +53,12 @@
 
     {% block product_price %}
     <div class="product_price">
+        {% if not product.conf.done_tests %}
         {% include "catalogue/partials/stock_record.html" %}
-        {% if not product.is_parent %}
+        {% endif %}
+        {% if product.conf.done_tests and not product.conf.done_tests.0.finished %}
+        {% include "confs/partials/go_button.html" %}
+        {% elif not product.is_parent %}
         {% include "catalogue/partials/add_to_basket_form_compact.html" %}
         {% endif %}
     </div>
