@@ -2,13 +2,13 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
 from . import views
 
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url='^abonnement/0'), name='home'),
     # URL pattern for the UserRedirectView
     url(
         regex=r'^compte/$',
@@ -95,6 +95,11 @@ urlpatterns = [
        regex=r'^stats$',
        view=views.Stats.as_view(),
        name='stats',
+    ),
+    url(
+        r'^$',
+        RedirectView.as_view(url=reverse_lazy('users:subscription', args=['0'])),
+        name='home'
     ),
   ]
 

@@ -15,7 +15,7 @@
         {% else %}
         <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
         <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.select_url }}" />
-        <a href="{{ item.select_url }}">{{ item.name }}</a>
+        <a href="{{ item.select_url }}" rel="nofollow">{{ item.name }}</a>
         {% endif %}
         {% endif %}
         {% if item.show_count %}
