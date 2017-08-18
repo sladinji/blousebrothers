@@ -41,7 +41,7 @@
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-trophy"></i> Dernier classement</span>
-            <div class="count"><a href="{{ user.last_test.conf.products.first.get_absolute_url }}">{{ user.last_test.position }}</a></div>
+            <div class="count"><a href="{{ user.last_test.conf.products.first.get_absolute_url }}">{{ user.last_test.position }} / {{ user.last_test.total }}</a></div>
         </div>
     </div>
     <div class="row">
