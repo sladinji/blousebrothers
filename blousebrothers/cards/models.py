@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from blousebrothers.confs.models import AutoSlugField
 from django.db.models import Q
 from django.core.urlresolvers import reverse
+from model_utils import Choices
 
 DURATION_CHOICES = (
     (timedelta(minutes=10), _('10 min')),
@@ -18,11 +19,16 @@ class Deck(models.Model):
     """
     User <--> Cards M2M relation with notes
     """
+    DIFFICULTY_CHOICES = Choices(
+        (0, 'EASY', _('Facile')),
+        (1, 'MIDDLE', _('Moyen')),
+        (2, 'HARD', _('Dur')),
+    )
     student = models.ForeignKey("users.User", verbose_name=_("Étudiant"), on_delete=models.CASCADE,
                                 related_name="deck", blank=False, null=False)
     card = models.ForeignKey("Card", verbose_name=_("Fiche"), on_delete=models.CASCADE,
                              related_name="deck", blank=False, null=False)
-    difficulty = models.PositiveIntegerField(_("Difficulté"), default=1)
+    difficulty = models.PositiveIntegerField(_("Difficulté"), choices=DIFFICULTY_CHOICES, default=1)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     nb_views = models.IntegerField(default=0)
@@ -43,11 +49,6 @@ class Card(models.Model):
     """
     Fiche de revision
     """
-    LEVEL_CHOICES = (
-        ('EASY', _('Facile')),
-        ('MIDDLE', _('Moyen')),
-        ('HARD', _('Dur')),
-    )
     specialities = models.ManyToManyField('confs.Speciality', verbose_name=("Specialities"),
                                           related_name='cards', blank=True)
     items = models.ManyToManyField('confs.Item', verbose_name=_("Items"),
@@ -62,8 +63,6 @@ class Card(models.Model):
     slug = AutoSlugField(_('Slug'), max_length=256, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
-    level = models.CharField(_("Level"), max_length=10, choices=LEVEL_CHOICES,
-                             blank=False, default='MIDDLE')
     free = models.BooleanField(default=True)
 
     def family(self, user):
