@@ -154,7 +154,7 @@
                                             <td>
                                                 <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
                                             </td>
-                                            <td>{{count}}</td>
+                                            <td>{{ count | default:0 }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -164,9 +164,6 @@
                     </tbody></table>
             </div>
         </div>
-
-
-
     </div>
 </div>
 {% endblock content %}

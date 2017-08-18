@@ -44,52 +44,40 @@
             <div class="count"><a href="{{ user.last_test.conf.products.first.get_absolute_url }}">{{ user.last_test.position }} / {{ user.last_test.total }}</a></div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-sm-6 col-md-4 mt-4">
-                <div class="card">
-                    <a href="{% url 'catalogue:index' %}">
-                        <div class="card-block">
-                            <figure class="profile">
-                                <img src="{% static 'images/confs/catalogue.png' %}" alt="">
-                            </figure>
-                            <h4 class="card-title mt-3">Voir les<br>dossiers disponibles</h4>
-                        </div>
-                    </a>
+    <div class="tabbed-sidebar">
+        <div class="card">
+            <a href="{% url 'catalogue:index' %}">
+                <div class="card-block">
+                    <figure class="profile">
+                        <img src="{% static 'images/confs/catalogue.png' %}" alt="">
+                    </figure>
+                    <h4 class="card-title mt-3">Voir les<br>dossiers disponibles</h4>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-4 mt-4">
-                <div class="card">
-                    <a href="{% url 'confs:create' %}">
-                        <div class="card-block">
-                            <figure class="profile">
-                                <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
-                            </figure>
-                            <h4 class="card-title mt-3">Créer<br>un dossier</h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 mt-4">
-                <div class="card">
-                    <a href="{% url 'confs:list' %}">
-                        <div class="card-block">
-                            <figure class="profile">
-                                <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
-                            </figure>
-                            <h4 class="card-title mt-3">Voir mes<br>dossiers créés</h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            </a>
         </div>
-        <div class="col-md-2">
+        <div class="card">
+            <a href="{% url 'confs:create' %}">
+                <div class="card-block">
+                    <figure class="profile">
+                        <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
+                    </figure>
+                    <h4 class="card-title mt-3">Créer<br>un dossier</h4>
+                </div>
+            </a>
+        </div>
+        <div class="card">
+            <a href="{% url 'confs:list' %}">
+                <div class="card-block">
+                    <figure class="profile">
+                        <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
+                    </figure>
+                    <h4 class="card-title mt-3">Voir mes<br>dossiers créés</h4>
+                </div>
+            </a>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-10">
+    <div class="tabbed-main page">
+        <div class="space"></div>
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                     <h2><i class="fa fa-line-chart"></i> Mon niveau par matière</h2>
@@ -99,15 +87,6 @@
                     {% render_chart mean_chart 'moy_spec' %}
                 </div>
             </div>
-        </div>
-        <div class="col-md-1">
-        </div>
-    </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-10">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                     <h2><i class="fa fa-calendar"></i> Mon travail sur l'année</h2>
@@ -117,8 +96,6 @@
                     {% render_chart monthly_chart '2016' %}
                 </div>
             </div>
-        </div>
-        <div class="col-md-1"></div>
     </div>
     <div class="space"></div> <!-- 40px Vertical Spacing -->
 </div>
