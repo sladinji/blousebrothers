@@ -183,6 +183,7 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
                    'wanabe_conferencier', 'university', "degree", 'date_joined', "status",
+                   'subs__price_paid',
                    EditionProgressListFilter, FinishedButNotForSaleFilter, GotCBFilter)
 
 admin.site.register(University)
