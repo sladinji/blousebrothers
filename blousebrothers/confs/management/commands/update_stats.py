@@ -24,10 +24,10 @@ class Command(BaseCommand):
             stats.save()
 
         for item in Item.objects.all():
-            stats = StatsSpe.objects.get_or_create(item=item)[0]
+            stats = StatsItem.objects.get_or_create(item=item)[0]
             l = [
                 test.score for test
-                in Test.objects.filter(conf__item__in=[item], finished=True).all()
+                in Test.objects.filter(conf__items__in=[item], finished=True).all()
             ]
             l = l if l != [] else [0]
             stats.average = np.mean(l)
