@@ -394,7 +394,7 @@ class Test(models.Model):
 
     @property
     def nb_errors(self):
-        return self.answers.aggregate(models.Sum('nb_errors')).get("nb_errors__sum")
+        return sum([x.nb_errors for x in self.answers.all()])
 
     def has_review(self):
         """

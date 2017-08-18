@@ -65,7 +65,7 @@ class ConferenceHomeView(LoginRequiredMixin, TemplateView):
         context['object'] = self.request.user
 
         user = User.objects.prefetch_related("tests__answers").get(pk=self.request.user.pk)
-        test_fini = user.tests.filter(finished=True)
+        test_fini = user.tests.filter(finished=True).prefetch_related('answers')
         nb_test_fini = len(test_fini)
 
         temps_moyen = sum([x.time_taken.hour*3600
