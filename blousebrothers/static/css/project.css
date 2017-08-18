@@ -277,6 +277,7 @@ ul.djng-field-errors li.valid::before {
 
 .progress-bar {
   background-color: #3cc72d;
+  border-radius: 4px;
 }
 
 .correct {
@@ -1554,7 +1555,7 @@ ul.quick-list li {
 article.product_pod{
     position:relative;
 }
-article.product_pod .prod-bg{
+.product_pod .prod-bg, .rev_pod .prod_bg{
     position:absolute;
     z-index:-1;
     width:100%;
@@ -1562,81 +1563,81 @@ article.product_pod .prod-bg{
     filter: grayscale(90%);
     opacity:0.8;
 }
-article.product_pod .cardiologie-chir_vasculaire {
+.cardiologie-chir_vasculaire {
     background-image: url(/static/images/spe/cardio.png);
 }
-article.product_pod .neurologie {
+.neurologie {
     background-image: url(/static/images/spe/neuro.png);
 }
-article.product_pod .pneumologie{
+.pneumologie{
     background-image: url(/static/images/spe/pneumo.png);
 }
-article.product_pod .hématologie{
+.hématologie{
     background-image: url(/static/images/spe/hémato.png);
 }
-article.product_pod .psychiatrie{
+.psychiatrie{
     background-image: url(/static/images/spe/psychiatrie.png);
 }
-article.product_pod .douleur{
+.douleur{
     background-image: url(/static/images/spe/doul.png);
 }
-article.product_pod .orl{
+.orl{
     background-image: url(/static/images/spe/orl.png);
 }
-.product_pod .urgences-réa{
+.urgences-réa{
     background-image: url(/static/images/spe/urg_rea.png);
 }
-article.product_pod .oncologie{
+.oncologie{
     background-image: url(/static/images/spe/onco.png);
 }
-article.product_pod .ophtalmologie{
+.ophtalmologie{
     background-image: url(/static/images/spe/opht.png);
 }
-article.product_pod .lecture_critique_d_articles{
+.lecture_critique_d_articles{
 /*    position:relative;*/
     background-image: url(/static/images/spe/lca.png);
 }
 
-article.product_pod .urologie{
+.urologie{
     background-image: url(/static/images/spe/uro.png);
 }
-article.product_pod .hépato-gastro-entérologie{
+.hépato-gastro-entérologie{
     background-image: url(/static/images/spe/hepato_gastro.png);
 }
-article.product_pod .dermatologie{
+.dermatologie{
     background-image: url(/static/images/spe/dermato.png);
 }
-article.product_pod .endocrinologie{
+.endocrinologie{
     background-image: url(/static/images/spe/endoc.png);
 }
-article.product_pod .néphrologie{
+.néphrologie{
     background-image: url(/static/images/spe/nephro.png);
 }
-article.product_pod .orthopédie{
+.orthopédie{
     background-image: url(/static/images/spe/ortho.png);
 }
-article.product_pod .gériatrie{
+.gériatrie{
     background-image: url(/static/images/spe/geria.png);
 }
-article.product_pod .médecine_interne{
+.médecine_interne{
     background-image: url(/static/images/spe/interne.png);
 }
-article.product_pod .santé_publique{
+.santé_publique{
     background-image: url(/static/images/spe/santepub.png);
 }
-article.product_pod .gynécologie_–_obstétrique{
+.gynécologie_–_obstétrique{
     background-image: url(/static/images/spe/gyneco.png);
 }
-article.product_pod .rhumatologie{
+.rhumatologie{
     background-image: url(/static/images/spe/rhumato.png);
 }
-article.product_pod .chirurgie_maxillo-faciale{
+.chirurgie_maxillo-faciale{
     background-image: url(/static/images/spe/maxillo.png);
 }
-article.product_pod .radiologie{
+.radiologie{
     background-image: url(/static/images/spe/radiologie.png);
 }
-article.product_pod .maladies_infectieuses{
+.maladies_infectieuses{
     background-image: url(/static/images/spe/infectio.png);
 }
 
@@ -2166,4 +2167,11 @@ button.stripe-button-el {
 }
 .etape1 .tab-pane.fade.in.active {
     padding: 0 64px;
+}
+.product_pod .progress-bar-container {
+    margin: 2px auto;
+    width: 86px;
+}
+.product_pod button.btn.btn-gray.btn-go {
+    font-size: inherit;
 }

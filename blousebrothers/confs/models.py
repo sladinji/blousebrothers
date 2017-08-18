@@ -185,7 +185,7 @@ class Conference(ModelMeta, models.Model):
         if self.type == 'LCA':
             return "lecture_critique_d_articles"
         if self.specialities.all():
-            return '_'.join(self.specialities.all()[0].css)
+            return self.specialities.all()[0].css()
         return "no_spe"
 
 
