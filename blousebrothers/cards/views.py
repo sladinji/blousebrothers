@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.views.generic import (
     ListView,
@@ -15,7 +15,6 @@ from django.views.generic import (
 )
 from jchart import Chart
 from jchart.config import DataSet
-
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
@@ -300,7 +299,7 @@ class Dispatching(Chart):
     ]
 
     def get_labels(self, *args, **kwargs):
-        return [str(label[1]) for label in Card.LEVEL_CHOICES]
+        return [str(Deck.DIFFICULTY_CHOICES[label[0]]) for label in Deck.DIFFICULTY_CHOICES]
 
     def get_lab_col_cnt(self):
         """
@@ -316,7 +315,8 @@ class Dispatching(Chart):
         qs = Deck.objects.filter(student=user)
         if spe:
             qs = qs.filter(card__specialities__id__exact=spe.id)
-        self.data = [qs.filter(difficulty=dif).count() for dif in range(3)]
+        dom = qs.values('difficulty').annotate(nb_dif=Count('difficulty'))
+        self.data = [next((l['nb_dif'] for l in dom if l['difficulty'] == i), None) for i in range(3)]
         return [DataSet(data=self.data,
                         label="Répartition des fiches",
                         backgroundColor=self.colors,
@@ -332,10 +332,12 @@ class RevisionHome(TemplateView):
             user = User.objects.get(username='BlouseBrothers')
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
+        total_count = Card.objects.values('specialities').annotate(spe_count=Count('specialities'))
+        user_count = user.deck.values('card__specialities').annotate(spe_count=Count('card__specialities'))
         specialities = [
             {'obj': spe,
-             'total': Card.objects.filter(specialities__in=[spe]).count(),
-             'user': user.deck.filter(card__specialities__in=[spe]).count(),
+             'total': next((l['spe_count'] for l in total_count if l['specialities'] == spe.id), 0),
+             'user': next((l['spe_count'] for l in user_count if l['card__specialities'] == spe.id), 0),
              }
             for spe in Speciality.objects.all()
         ]
