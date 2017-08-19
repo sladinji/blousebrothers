@@ -61,6 +61,12 @@ Product = apps.get_model('catalogue', 'Product')
 class ConferenceHomeView(LoginRequiredMixin, TemplateView):
     template_name = 'confs/conference_home.html'
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.tests.filter(finished=True).count():
+            return redirect(reverse('catalogue:index'))
+        else:
+            return super().get(request, *args, **kwargs)
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['object'] = self.request.user
