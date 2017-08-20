@@ -1,4 +1,6 @@
 import re
+import random
+from datetime import datetime, timedelta
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -18,6 +20,7 @@ from jchart.config import DataSet
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
+from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
@@ -61,6 +64,13 @@ def session_filter(qs, session):
     return qs
 
 
+def choose_oldest_card(session):
+    new_card_qs = session_filter(Card.objects.filter(wake_up__lt=datetime.now()), session)
+    count = new_card_qs.all().count()
+    new_card = new_card_qs.all()[random.randint(0, count-1)]
+    return new_card
+
+
 def choose_new_card(request):
     """
     Hot point.
@@ -80,13 +90,7 @@ def choose_new_card(request):
         new_card = None
     # if all card are already done choose the oldest and hardest one
     if not new_card:
-        new_card_qs = Card.objects.filter(
-            deck__student=request.user,
-        ).order_by(
-            'deck__modified',
-            '-deck__difficulty',
-        )
-        new_card = session_filter(new_card_qs, session).first()
+        new_card = choose_oldest_card(session)
     return new_card
 
 
@@ -267,15 +271,25 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         context.update(zen=True)
         return context
 
+    def update_deck(self, difficulty):
+        delta = revision_steps[self.object.column].next_time[difficulty]
+        if (delta < timedelta(days=1)):
+            self.object.wake_up = datetime.now()+delta
+        else:
+            self.object.wake_up = datetime.now()+delta
+            self.object.wake_up.hour = 5
+        self.object.column = revision_steps[self.object.column].get_next_column(difficulty).column
+        self.object.difficulty = difficulty
+        self.object.save()
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         if 'easy' in request.POST:
-            self.object.difficulty = 0
+            self.update_deck(0)
         elif 'average' in request.POST:
-            self.object.difficulty = 1
+            self.update_deck(1)
         elif 'hard' in request.POST:
-            self.object.difficulty = 2
-        self.object.save()
+            self.update_deck(2)
         new_card = choose_new_card(request)
         return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
 

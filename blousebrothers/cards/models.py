@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
@@ -30,6 +30,8 @@ class Deck(models.Model):
                              related_name="deck", blank=False, null=False)
     difficulty = models.PositiveIntegerField(_("Difficulté"), choices=DIFFICULTY_CHOICES, default=1)
     created = models.DateTimeField(auto_now_add=True)
+    column = models.PositiveIntegerField(default=0)
+    wake_up = models.DateTimeField(default=datetime(2000, 1, 1))
     modified = models.DateTimeField(auto_now=True)
     nb_views = models.IntegerField(default=0)
 
