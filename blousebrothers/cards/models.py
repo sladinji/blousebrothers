@@ -119,6 +119,9 @@ class Session(models.Model):
                                   related_name='sessions', blank=True)
     revision = models.BooleanField(default=False)
 
+    def __str__(self):
+        return '<Session [{}] revision: {}>'.format(self.pk, self.revision)
+
     def is_over(self, specialities, items):
         """
         Close session and raise SessionOverException if required.

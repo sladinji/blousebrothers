@@ -87,8 +87,6 @@ def choose_new_card(request):
             parent__isnull=True,
         ).exclude(
             id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True),
-        ).exclude(
-            id__in=Deck.objects.filter(student=request.user).values_list('card__parent', flat=True),
         )
         new_card = session.filter(card_qs).first()
         # check if user have done card of this family
