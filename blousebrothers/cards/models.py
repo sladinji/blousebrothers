@@ -117,17 +117,30 @@ class Session(models.Model):
                                    related_name='sessions', blank=True)
     tags = models.ManyToManyField('Tag', verbose_name=("Tags"),
                                   related_name='sessions', blank=True)
+    revision = models.BooleanField(default=False)
 
     def is_over(self, specialities, items):
         """
         Close session and raise SessionOverException if required.
         """
         self.save()  # update self.date_modified on save
-        if self.selected_duration < self.date_modified - self.date_created:
+        if self.selected_duration < self.date_modified - self.date_created \
+                or specialities and specialities != self.specialities \
+                or items and items != self.items:
             self.finished = True
             self.save()
             return True
         return False
+
+    def filter(self, qs):
+        """
+        Apply session preference filter to a Card queryset
+        """
+        if self.specialities.all():
+            qs = qs.filter(specialities__in=self.specialities.all())
+        if self.items.all():
+            qs = qs.filter(items__in=self.items.all())
+        return qs
 
 
 @receiver(pre_save, sender=Session)

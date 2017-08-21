@@ -1,6 +1,8 @@
 import re
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, MINYEAR
+import pytz
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -25,7 +27,7 @@ from .models import Card, Deck, Session, CardsPreference
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
 
-def create_new_session(request, specialities, items):
+def create_new_session(request, specialities, items, revision):
     """
     Create new revision session record
     """
@@ -33,7 +35,7 @@ def create_new_session(request, specialities, items):
         duration = request.user.cards_preference.get().session_duration
     except:
         duration = CardsPreference.objects.get_or_create(student=request.user)[0].session_duration
-    session = Session.objects.create(student=request.user, selected_duration=duration)
+    session = Session.objects.create(student=request.user, selected_duration=duration, revision=revision)
     session.specialities = specialities
     session.items = items
     session.save()
@@ -44,53 +46,61 @@ def get_or_create_session(request):
     """
     Get current session or create new session
     """
-    specialities = Speciality.objects.filter(pk__in=request.GET.get('specialities') or [])
+    specialities = Speciality.objects.filter(pk__in=[request.GET.get('specialities')] or [])
     items = Item.objects.filter(pk__in=request.GET.get('items') or [])
+    revision = request.GET.get('revision') == 'True'
 
-    session = Session.objects.filter(student=request.user, finished=False).first()
+    session = Session.objects.filter(student=request.user, finished=False, revision=revision).first()
     if not session or session and session.is_over(specialities, items):
-        session = create_new_session(request, specialities, items)
+        session = create_new_session(request, specialities, items, revision)
     return session
 
 
-def session_filter(qs, session):
+def choose_revision_card(session):
     """
-    Apply session preference filter to queryset
+    arg session: cards.models.Session
     """
-    if session.specialities.all():
-        qs = qs.filter(specialities__in=session.specialities.all())
-    if session.items.all():
-        qs = qs.filter(items__in=session.items.all())
-    return qs
-
-
-def choose_oldest_card(session):
-    new_card_qs = session_filter(Card.objects.filter(wake_up__lt=datetime.now()), session)
-    count = new_card_qs.all().count()
-    new_card = new_card_qs.all()[random.randint(0, count-1)]
-    return new_card
+    base_qry = Card.objects.filter(deck__in=Deck.objects.filter(student=session.student))
+    new_cards = session.filter(
+        base_qry.filter(
+            deck__wake_up__lt=datetime.now()
+        )
+    ).all()
+    if new_cards:  # randomly look into new cards
+        new_card = random.choice(new_cards[:100])
+        return new_card
+    else:
+        new_card = random.choice(base_qry.order_by('deck__wake_up').all()[:100])
+        return new_card
 
 
 def choose_new_card(request):
     """
-    Hot point.
+    Hot point. All requests for new card are done here.
     """
     session = get_or_create_session(request)
-    # choose a new original card never done by user
-    card_qs = Card.objects.filter(
-        parent__isnull=True,
-    ).exclude(
-        id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True),
-    )
-    new_card = session_filter(card_qs, session).first()
-    # check if user have done card of this family
-    if new_card and Deck.objects.filter(student=request.user,
-                                        card_id__in=new_card.family(request.user),
-                                        ).exists():
-        new_card = None
-    # if all card are already done choose the oldest and hardest one
-    if not new_card:
-        new_card = choose_oldest_card(session)
+    if session.revision:
+        new_card = choose_revision_card(session)
+    else:
+        # choose a new original card never done by user
+        card_qs = Card.objects.filter(
+            parent__isnull=True,
+        ).exclude(
+            id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True),
+        ).exclude(
+            id__in=Deck.objects.filter(student=request.user).values_list('card__parent', flat=True),
+        )
+        new_card = session.filter(card_qs).first()
+        # check if user have done card of this family
+        if new_card and Deck.objects.filter(student=request.user,
+                                            card_id__in=new_card.family(request.user),
+                                            ).exists():
+            new_card = None
+        # if all card are already done choose revision card
+        if not new_card:
+            new_card = choose_revision_card(session)
+
+    session.cards.add(new_card)
     return new_card
 
 
@@ -277,7 +287,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
             self.object.wake_up = datetime.now()+delta
         else:
             self.object.wake_up = datetime.now()+delta
-            self.object.wake_up.hour = 5
+            self.object.wake_up.replace(hour=5)
         self.object.column = revision_steps[self.object.column].get_next_column(difficulty).column
         self.object.difficulty = difficulty
         self.object.save()
@@ -346,15 +356,27 @@ class RevisionHome(TemplateView):
             user = User.objects.get(username='BlouseBrothers')
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
-        total_count = Card.objects.values('specialities').annotate(spe_count=Count('specialities'))
-        user_count = user.deck.values('card__specialities').annotate(spe_count=Count('card__specialities'))
+        total_count = Card.objects.values('specialities').annotate(
+            spe_count=Count('specialities')
+        )
+        user_count = user.deck.values('card__specialities').annotate(
+            spe_count=Count('card__specialities')
+        )
+        ready_count = user.deck.values('card__specialities').filter(wake_up__lt=datetime.now()).annotate(
+            spe_count=Count('card__specialities')
+        )
+        mindate = datetime(MINYEAR, 1, 1, tzinfo=pytz.UTC)
         specialities = [
             {'obj': spe,
              'total': next((l['spe_count'] for l in total_count if l['specialities'] == spe.id), 0),
              'user': next((l['spe_count'] for l in user_count if l['card__specialities'] == spe.id), 0),
+             'ready': next((l['spe_count'] for l in ready_count if l['card__specialities'] == spe.id), 0),
+             'last_access': user.deck.filter(card__specialities__id=spe.pk).order_by('-modified').first(),
              }
             for spe in Speciality.objects.all()
         ]
+        specialities.sort(key=lambda x: x['total'], reverse=True)
+        specialities.sort(key=lambda x: x['last_access'].modified if x['last_access'] else mindate, reverse=True)
         return super().get_context_data(*args, chart=dispatching_chart, specialities=specialities, **kwargs)
 
 
