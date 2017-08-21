@@ -379,6 +379,22 @@ class Test(models.Model):
         """
         return Test.objects.filter(conf=self.conf, finished=True).count()
 
+    def red_score(self):
+        """
+        Used for rgba score display
+        """
+        rs = 100 - self.score
+        return self.get_score_color(rs)
+
+    def green_score(self):
+        return self.get_score_color(self.score)
+
+    def get_score_color(self, score):
+        if score > 50:
+            return 100
+        else:
+            return score / 50 * 100
+
     def set_score(self):
         for t_answer in self.answers.all():
             t_answer.set_point()

@@ -24,7 +24,7 @@ class BrowsableProductManager(BaseBrowsableProductManager):
             qs = qs.prefetch_related(
                 Prefetch(
                     'conf__tests',
-                    queryset=Test.objects.filter(student=user),
+                    queryset=Test.objects.filter(student=user, finished=True),
                     to_attr="done_tests",
                 )
             )

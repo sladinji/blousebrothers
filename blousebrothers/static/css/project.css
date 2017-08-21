@@ -1564,7 +1564,7 @@ article.product_pod{
     z-index: -1;
     width: 100%;
     height: 100%;
-    filter: blur(2px) grayscale(53%);
+    filter: blur(1px);
     background-color: white;
 }
 .cardiologie-chir_vasculaire {
@@ -1619,6 +1619,9 @@ article.product_pod{
 }
 .orthopédie{
     background-image: url(/static/images/spe/ortho.png);
+}
+.pédiatrie{
+    background-image: url(/static/images/spe/pedia.png);
 }
 .gériatrie{
     background-image: url(/static/images/spe/geria.png);
@@ -2176,4 +2179,8 @@ button.stripe-button-el {
 }
 .test-main-col {
     background-color: white;
+}
+
+.star-rating i {
+    font-size: 22px;
 }
