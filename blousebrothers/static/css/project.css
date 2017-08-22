@@ -1754,6 +1754,7 @@ input#id_code {
     border: none;
     box-shadow: none;
     background: #fff;
+    height: 127px;
 }
 
 thead {
@@ -1775,8 +1776,8 @@ thead {
 }
 
 .card-text {
+    margin-top: 30px;
     clear: both;
-    margin-top: .5em;
     color: rgba(0, 0, 0, .68);
     text-align: center;
 }
@@ -1804,8 +1805,8 @@ thead {
     display: inline-block;
     overflow: hidden;
     box-sizing: border-box;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     margin: 0;
     border: 1px solid #fff;
     border-radius: 50%;
@@ -2122,7 +2123,8 @@ div#calltoac {
 }
 .meta.hidden-xs {
     position: absolute;
-    top: 128px;
+    top: 131px;
+    font-size: 14pt;
     left: 31px;
 }
 i.green {
@@ -2209,3 +2211,22 @@ img.reward {
     text-align: center;
     padding-top: 35px;
 }
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
