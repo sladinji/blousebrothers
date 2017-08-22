@@ -2194,3 +2194,9 @@ button.stripe-button-el {
         transform: translateY(-50%);
     }
 }
+.table-condensed td.day {
+    color: inherit;
+}
+.datetimepicker thead tr:first-child th:hover, .datetimepicker tfoot tr:first-child th:hover {
+    background-color: rgba(63, 83, 103, 0.75);
+}

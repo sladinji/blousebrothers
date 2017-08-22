@@ -68,8 +68,18 @@ def choose_new_card(request):
         # choose a new original card never done by user
         card_qs = Card.objects.filter(
             parent__isnull=True,
-        ).exclude(
-            id__in=Deck.objects.filter(student=request.user).values_list('card', flat=True),
+        ).exclude(  # exclude cards already done
+            id__in=Deck.objects.filter(
+                student=request.user
+            ).values_list(
+                'card', flat=True
+            ),
+        ).exclude(  # exclude sibling cards
+            id__in=session.student.deck.filter(
+                card__parent__is_null=False
+            ).values_list(
+                'card__parent', flat=True,
+            )
         )
         new_card = session.filter(card_qs).first()
         # check if user have done card of this family

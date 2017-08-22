@@ -10,8 +10,17 @@ class RevisionStep(object):
     Represent a cell of revision table.
     """
     column = None
+    """
+    Index in revision table
+    """
     next_time = (None, None, None)
+    """
+    Next wake up according to difficulty (easy, medium, hard)
+    """
     next_column = (None, None, None)
+    """
+    Next column according to difficulty (easy, medium, hard)
+    """
 
     def __init__(self, index, next_time):
         self.column = index
