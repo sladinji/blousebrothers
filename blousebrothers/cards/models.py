@@ -107,8 +107,8 @@ class Session(models.Model):
     """
     student = models.ForeignKey("users.User", verbose_name=_("Étudiant"), on_delete=models.CASCADE,
                                 related_name="sessions", blank=False, null=False)
-    date_created = models.DateField(_("Date created"), auto_now_add=True)
-    date_modified = models.DateField(_("Date modified"), auto_now=True)
+    date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
+    date_modified = models.DateTimeField(_("Date modified"), auto_now=True)
     selected_duration = models.DurationField()
     effective_duration = models.DurationField(default=timedelta())
     finished = models.BooleanField(default=False)

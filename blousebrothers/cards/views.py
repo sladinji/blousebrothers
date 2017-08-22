@@ -1,8 +1,10 @@
 import re
 from datetime import timedelta, datetime, MINYEAR
 from django.utils import timezone
+from django.core.urlresolvers import reverse_lazy
 import pytz
 
+from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -43,7 +45,7 @@ def create_new_session(request, specialities, items, revision):
     return session
 
 
-def get_or_create_session(request):
+def get_or_create_session(request, create=True):
     """
     Get current session or create new session
     """
@@ -52,9 +54,13 @@ def get_or_create_session(request):
     revision = request.GET.get('revision') == 'True'
 
     session = Session.objects.filter(student=request.user, finished=False).first()
-    if not session or session and session.is_over(specialities, items, revision):
+    if create and not session or session and session.is_over(specialities, items, revision):
         session = create_new_session(request, specialities, items, revision)
     return session
+
+
+def get_session(request):
+    return get_or_create_session(request, create=False)
 
 
 def choose_new_card(request):
@@ -76,7 +82,7 @@ def choose_new_card(request):
             ),
         ).exclude(  # exclude sibling cards
             id__in=session.student.deck.filter(
-                card__parent__is_null=False
+                card__parent__isnull=False
             ).values_list(
                 'card__parent', flat=True,
             )
@@ -205,6 +211,27 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('cards:revision', kwargs={'slug': self.object.slug})
+
+
+class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
+    url=reverse_lazy('cards:home')
+
+    def get(self, request, *args, **kwargs):
+        session = get_session(self.request)
+        if session:
+            #  remove last card, because no click on easy/medium...
+            session.cards.remove(Card.objects.get(slug=kwargs["slug"]))
+            session.effective_duration = timezone.now() - session.date_created
+            session.finished = True
+            session.save()
+            if session.cards.count() :
+                messages.info(self.request,
+                              "Pendant cette session, tu as {} {} fiches.".format(
+                                "révisé" if session.revision else "vu",
+                                session.cards.count(),
+                            )
+                            )
+        return super().get(request, *args, **kwargs)
 
 
 class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):

@@ -2200,3 +2200,12 @@ button.stripe-button-el {
 .datetimepicker thead tr:first-child th:hover, .datetimepicker tfoot tr:first-child th:hover {
     background-color: rgba(63, 83, 103, 0.75);
 }
+img.reward {
+    box-shadow: 4px 7px 5px rgba(0, 0, 0, 0.46);
+}
+.reward p {
+    font-family: lobster;
+    font-size: 30pt;
+    text-align: center;
+    padding-top: 35px;
+}

@@ -7,6 +7,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 {% endblock %}
 
+{% block alert_messages %}
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="tabbed-sidebar">
@@ -166,7 +169,45 @@
         </div>
     </div>
 </div>
+
+{% if messages %}
+    {% for message in messages %}
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form id="confirm-go-form" method="post">
+				{% csrf_token %}
+				<input id="id_quantity" name="quantity" type="hidden" value="1">
+				<div class="modal-content">
+					<div class="modal-header">
+                        <h2 class="blouse-font text-center" id="myModalLabel">Félicitations !</h2>
+					</div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img class="reward" src="{% static "images/badge_assured.jpg" %}" alt="Logo BlouseBrothers">
+                            </div>
+                            <div class="col-sm-8 reward">
+                                <p>{{ message|safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+    {% endfor %}
+{% endif %}
+
 {% endblock content %}
+
+{% block onbodyload %}
+{% if messages %}
+$('#myModal').modal('show');
+{% endif %}
+{% endblock onbodyload %}
 
 {% block oscar_init %}
 {% endblock %}
