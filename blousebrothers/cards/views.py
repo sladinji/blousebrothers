@@ -1,6 +1,6 @@
 import re
-import random
-from datetime import datetime, timedelta, MINYEAR
+from datetime import timedelta, datetime, MINYEAR
+from django.utils import timezone
 import pytz
 
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -31,6 +31,7 @@ def create_new_session(request, specialities, items, revision):
     """
     Create new revision session record
     """
+    Session.objects.filter(student=request.user).update(finished=True)
     try:
         duration = request.user.cards_preference.get().session_duration
     except:
@@ -50,28 +51,10 @@ def get_or_create_session(request):
     items = Item.objects.filter(pk__in=request.GET.get('items') or [])
     revision = request.GET.get('revision') == 'True'
 
-    session = Session.objects.filter(student=request.user, finished=False, revision=revision).first()
-    if not session or session and session.is_over(specialities, items):
+    session = Session.objects.filter(student=request.user, finished=False).first()
+    if not session or session and session.is_over(specialities, items, revision):
         session = create_new_session(request, specialities, items, revision)
     return session
-
-
-def choose_revision_card(session):
-    """
-    arg session: cards.models.Session
-    """
-    base_qry = Card.objects.filter(deck__in=Deck.objects.filter(student=session.student))
-    new_cards = session.filter(
-        base_qry.filter(
-            deck__wake_up__lt=datetime.now()
-        )
-    ).all()
-    if new_cards:  # randomly look into new cards
-        new_card = random.choice(new_cards[:100])
-        return new_card
-    else:
-        new_card = random.choice(base_qry.order_by('deck__wake_up').all()[:100])
-        return new_card
 
 
 def choose_new_card(request):
@@ -80,7 +63,7 @@ def choose_new_card(request):
     """
     session = get_or_create_session(request)
     if session.revision:
-        new_card = choose_revision_card(session)
+        new_card = session.choose_revision_card()
     else:
         # choose a new original card never done by user
         card_qs = Card.objects.filter(
@@ -96,7 +79,7 @@ def choose_new_card(request):
             new_card = None
         # if all card are already done choose revision card
         if not new_card:
-            new_card = choose_revision_card(session)
+            new_card = session.choose_revision_card()
 
     session.cards.add(new_card)
     return new_card
@@ -238,7 +221,7 @@ class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):
         return reverse('cards:revision', kwargs={'slug': new_card.slug, 'dsp_card_on_load': True})
 
 
-class RevisionPreviousCardView(RevisionPermissionMixin, RevisionNextCardView):
+class RevisionPreviousCardView(RevisionNextCardView):
     step = -1
 
 
@@ -282,9 +265,9 @@ class RevisionView(RevisionPermissionMixin, DetailView):
     def update_deck(self, difficulty):
         delta = revision_steps[self.object.column].next_time[difficulty]
         if (delta < timedelta(days=1)):
-            self.object.wake_up = datetime.now()+delta
+            self.object.wake_up = timezone.now()+delta
         else:
-            self.object.wake_up = datetime.now()+delta
+            self.object.wake_up = timezone.now()+delta
             self.object.wake_up.replace(hour=5)
         self.object.column = revision_steps[self.object.column].get_next_column(difficulty).column
         self.object.difficulty = difficulty
@@ -360,7 +343,7 @@ class RevisionHome(TemplateView):
         user_count = user.deck.values('card__specialities').annotate(
             spe_count=Count('card__specialities')
         )
-        ready_count = user.deck.values('card__specialities').filter(wake_up__lt=datetime.now()).annotate(
+        ready_count = user.deck.values('card__specialities').filter(wake_up__lt=timezone.now()).annotate(
             spe_count=Count('card__specialities')
         )
         mindate = datetime(MINYEAR, 1, 1, tzinfo=pytz.UTC)

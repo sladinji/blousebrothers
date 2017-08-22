@@ -10806,7 +10806,10 @@ FOOTER
 }
 .btn:hover, input[type="submit"]:hover {
 	background-color: #E8B510;
+	border-color: #E8B510;
 	color: #fff;
+    box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.3);
+
 }
 
 .box-control {

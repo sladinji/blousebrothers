@@ -1,4 +1,6 @@
+import random
 from datetime import timedelta, datetime
+from django.utils import timezone
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
@@ -122,14 +124,15 @@ class Session(models.Model):
     def __str__(self):
         return '<Session [{}] revision: {}>'.format(self.pk, self.revision)
 
-    def is_over(self, specialities, items):
+    def is_over(self, specialities, items, revision):
         """
         Close session and raise SessionOverException if required.
         """
         self.save()  # update self.date_modified on save
         if self.selected_duration < self.date_modified - self.date_created \
                 or specialities and specialities != self.specialities \
-                or items and items != self.items:
+                or items and items != self.items \
+                or revision and not self.revision:
             self.finished = True
             self.save()
             return True
@@ -144,6 +147,25 @@ class Session(models.Model):
         if self.items.all():
             qs = qs.filter(items__in=self.items.all())
         return qs
+
+    @property
+    def waiting_cards(self):
+        qs = self.student.deck.filter(
+            wake_up__lt=timezone.now()
+        )
+        if self.specialities.all():
+            qs = qs.filter(card__specialities__in=self.specialities.all())
+        if self.items.all():
+            qs = qs.filter(card__items__in=self.items.all())
+        return qs.order_by('wake_up')
+
+    def choose_revision_card(self):
+        if self.waiting_cards.count():  # randomly look into waiting cards
+            new_card = random.choice(self.waiting_cards[:100]).card
+            return new_card
+        else:  # randomly choose in the most 20 ready
+            new_card = random.choice(self.student.deck.order_by('wake_up').all()[:20]).card
+            return new_card
 
 
 @receiver(pre_save, sender=Session)

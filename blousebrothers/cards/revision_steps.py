@@ -1,7 +1,14 @@
+"""
+Here is a simple module to schedule next revision step according to previous answer and current one.
+You should only use revision_steps list from this module.
+"""
 from datetime import timedelta
 
 
 class RevisionStep(object):
+    """
+    Represent a cell of revision table.
+    """
     column = None
     next_time = (None, None, None)
     next_column = (None, None, None)
@@ -19,7 +26,7 @@ class RevisionStep(object):
     def get_next_time(self, difficulty):
         return self.next_time[difficulty]
 
-# Format is (index, (easy, medium, hard))
+#        Format is (index, (easy, medium, hard))
 
 next_time_table = ((0, (timedelta(days=4), timedelta(days=2), timedelta(minutes=10))),
                    (1, (timedelta(days=4), timedelta(days=2), timedelta(minutes=10))),
@@ -44,6 +51,10 @@ next_column_table = ((0, (+2, +1, 0)),
                      (9, (0, 0, -2)))
 
 revision_steps = [RevisionStep(i[0], i[1]) for i in next_time_table]
+"""
+This is actually the revision table.
+"""
+
 for i, rev in enumerate(revision_steps):
     rev.create_link((revision_steps[revision_steps[i].column+next_column_table[i][1][0]],
                      revision_steps[revision_steps[i].column+next_column_table[i][1][1]],

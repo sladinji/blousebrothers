@@ -2,7 +2,13 @@
 {% load static %}{% load i18n %}
 {% load crispy_forms_tags %}
 {% load djng_tags %}
-{% block title %}{% trans 'Confs' %}{% endblock %}
+{% block title %}
+{% if object %}
+{% trans 'Édition fiche' %}
+{% else %}
+{% trans 'Nouvelle fiche' %}
+{% endif %}
+{% endblock %}
 
 {% block styles %}
 {{ block.super }}
@@ -11,20 +17,20 @@
 
 {% block description %}
 <form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post">
-                {% csrf_token %}
-                <div class="tab-content">
-                    <div id="conference">
-                        {{ form | crispy }}
-                    </div>
-                </div>
-                <br>
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn">{% trans "Valider" %}</button>
-                        <a href="{% if object %}{% url 'cards:revision' object.card.slug %}{% else %}{% url 'cards:home' %}{% endif %}" class="btn">{% trans "Annuler" %}</a>
-                    </div>
-                </div>
-            </form>
+    {% csrf_token %}
+    <div class="tab-content">
+        <div id="conference">
+            {{ form | crispy }}
+        </div>
+    </div>
+    <br>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">{% trans "Valider" %}</button>
+            <a href="{% if object %}{% url 'cards:revision' object.card.slug %}{% else %}{% url 'cards:home' %}{% endif %}" class="btn">{% trans "Annuler" %}</a>
+        </div>
+    </div>
+</form>
 {% endblock description %}
 
 {% block card_footer %}

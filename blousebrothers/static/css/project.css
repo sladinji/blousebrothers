@@ -1894,6 +1894,7 @@ thead {
 }
 .day {
   font-size: 26px;
+  color: #fff;
 }
 div#calltoac {
     position: relative;
@@ -2185,4 +2186,11 @@ button.stripe-button-el {
 
 .star-rating i {
     font-size: 22px;
+}
+
+@media (min-width: 1600px){
+    .card-row {
+        margin-top: 50vh;
+        transform: translateY(-50%);
+    }
 }

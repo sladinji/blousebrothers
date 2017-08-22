@@ -14,6 +14,7 @@
 
 {% block content %}
 {% with object.card.specialities.all|first as spe %}
+<div class="card-row">
 <div class="row">
 	<div class="col-md-4 hidden-xs hidden-sm">
 	</div>
@@ -67,6 +68,8 @@
                                 <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
                             </a> 
                         </div>
+                    </div>
+                    <div class="btn_rev_block preview">
                         <div class="card_button end_revision">
                             <a href="{% url 'cards:home' %}" title="Revenir au site">
                                 <div class="day"><i class="fa fa-power-off" aria-hidden="true"></i></div>
@@ -106,6 +109,7 @@
 	<div class="col-md-4 text-right hidden-xs hidden-sm">
         {% include "cards/partials/rev_menu.html" %}
 	</div>
+</div>
 </div>
 
 {% endwith %}
