@@ -1742,8 +1742,7 @@ input#id_code {
     font-size: 1em;
     overflow: hidden;
     padding: 0;
-    border: none;
-    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    border: 1px solid #e6e9ed;
     margin: 40px 0;
 }
 
@@ -1753,11 +1752,14 @@ input#id_code {
     margin: 0;
     padding: 1em;
     border: none;
-    border-top: 1px solid rgba(34, 36, 38, .1);
     box-shadow: none;
     background: #fff;
 }
 
+thead {
+    background: rgba(52,73,94,.94);
+    color: #ECF0F1;
+}
 .card-img-top {
     display: block;
     width: 100%;
