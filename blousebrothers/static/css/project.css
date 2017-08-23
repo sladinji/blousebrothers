@@ -2230,3 +2230,13 @@ img.reward {
     vertical-align: middle;
 }
 
+@media (min-width: 548px){
+    #btn-noter{
+        margin-top: -65px;
+    }
+}
+.explication {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+}

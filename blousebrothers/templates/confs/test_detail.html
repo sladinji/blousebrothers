@@ -110,6 +110,9 @@ $(document).on('click', '.anchorlink', function(event){
                 </div>
             </div>       
             <br>
+            <div class="explication">
+                <p class="" ng-bind-html="question.explaination | safe"</p>
+            </div>       
             <form class="form-horizontal">
                 <fieldset>
                     <!--  {{ answers | is_good_css:answer }} -->
@@ -164,11 +167,17 @@ $(document).on('click', '.anchorlink', function(event){
             </form>
             {{ prediction_validation }}
 
-            <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
-            <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-            <br><br>
-            <div class="text-center" ng-if="question.index == 14"><a href="/catalogue"><button class="btn btn-primary"><i class="fa fa-undo"></i> Retour au catalogue </button></a></div>
+            <button class="btn btn-primary" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
+            <button ng-if="questions.indexOf(question) < 14" class="btn btn-primary pull-right" ng-click="next_question()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+            <br>
             {% endverbatim %}
+            {% if not object.has_review and object.student != object.conf.owner %}
+            <div class="text-center">
+                <a id="btn-noter" href="{% url 'catalogue:reviews-add' product_slug=object.conf.products.all.0.slug product_pk=object.conf.products.all.0.id %}#addreview" class="btn btn-success">
+                  <i class="fa fa-star-half-o" aria-hidden="true"></i> {% trans "Noter le dossier" %}
+                </a>
+            </div>
+            {% endif %}
     </div>
     <div class="row">
         <aside class="hidden-md col-xs-12 hidden-lg test-main-col">
