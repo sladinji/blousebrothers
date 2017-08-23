@@ -66,7 +66,10 @@ class Product(AbstractProduct):
 
     def get_title(self):
         if self.conf:
-            return self.conf.title + '<br>-- ' + self.conf.owner.username + ' --'
+            return self.conf.title + \
+                '<br><i class="fa fa-caret-right"></i> ' + \
+                self.conf.owner.username + \
+                ' <i class="fa fa-caret-left"></i> '
         return super().get_title()
 
     def user_test(self):
