@@ -7,6 +7,10 @@
 {% block shipping_address %}
 {% endblock shipping_address %}
 
+{% block checkout_title %}
+    {% trans "Paiement abonnement" %}
+{% endblock %}
+
 {% block payment_method %}
 <div class="span6">
 	<div class="sub-header">
@@ -14,15 +18,11 @@
 	</div>
 	<div class="well well-success">
 		<p>{{ order_total.incl_tax|currency }} {% trans 'seront débités sur votre carte.'%}</p>
-		<div class="alert-actions">
-			<a href="{% url 'checkout:payment-details' %}" class="btn">{% trans 'Changer de mode de paiement' %}</a>
-		</div>
 	</div>
 </div>
 {% endblock %}
 
 {% block place_order %}
-<h3>{% trans 'Si tout est OK pour toi, clique sur commander.' %}</h3>
 <form method="post" action="{% url 'checkout:preview' %}">
 	{% csrf_token %}
 
@@ -41,7 +41,7 @@
     <div class="sub-header">
 	{% block order_contents_actions %}
 	    <a href="{% url 'basket:summary' %}" class="pull-right">
-		{% trans "Modifier ma commande" %}
+		{% trans "Changer d'abonnement" %}
 	    </a>
 	{% endblock %}
 
@@ -63,7 +63,7 @@
 		    </div>
 		</div>
 		<div class="col-sm-7">
-		    <h3><a href="{{ line.product.get_absolute_url }}">{{ line.description }}</a></h3>
+		    <h3>{{ line.description }}</h3>
 		</div>
 		<div class="col-sm-1 align-center">
 		    {{ line.quantity }}
@@ -100,3 +100,5 @@
 {% endblock payment_details %}
 
 
+{% block footer %}
+{% endblock footer %}

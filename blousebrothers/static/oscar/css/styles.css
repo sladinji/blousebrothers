@@ -8798,7 +8798,8 @@ form.flat {
 }
 @media (min-width: 768px) {
   .header .page_inner {
-    padding: 50px 0 40px;
+    padding: 2px 0 2px;
+    background-color: #000;
   }
 }
 .header h1 {
@@ -10823,7 +10824,3 @@ FOOTER
 .border-right-solid {
 	border-right: 1px solid #e8e8e8;
 }
-.con-page {
-	padding: 0 40px;
-}
-

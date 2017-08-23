@@ -76,10 +76,9 @@
                                     <li><label>{% trans 'Validité' %} :</label> {{ object.subscription.date_over }}</li>
                                 </ul>
                                 <p><i>{{ object.subscription.type.description |safe }}</i></p>
-                                {% else %}
+                                {% endif %}
                                 {% include '../templates/basket/partials/basket_abo.html' %}
                                 <!-- <p> Tu n'as actuellement aucun abonnement.</p>-->
-                                {% endif %}
                             </div>
                         </div>
 

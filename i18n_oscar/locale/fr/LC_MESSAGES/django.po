@@ -5876,7 +5876,7 @@ msgstr "Modifier les contenus de commande"
 #: templates/oscar/customer/anon_order.html:53
 #: templates/oscar/dashboard/orders/order_detail.html:86
 msgid "Order contents"
-msgstr "Contenus de commande"
+msgstr "Récapitulatif"
 
 #: templates/oscar/checkout/checkout.html:109
 msgid "Item"

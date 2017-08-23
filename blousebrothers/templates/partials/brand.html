@@ -1,1 +1,17 @@
-<div class="col-sm-7 h1"><a href="{{ homepage_url }}">{% block brand_title %}{{ shop_name }}</a><small> {{ shop_tagline }}</small>{% endblock %}</div>
+{% load staticfiles %}
+
+<div class="pay_banner">
+    <div class="col-md-4 h1 text-left">
+        <a id="paylogo" class="blouse-font" href="{{ homepage_url }}">
+            <img src="{% static "images/logo_home.png" %}" width=100px alt="Logo BlouseBrothers">
+            {% block brand_title %}{{ shop_name }}
+        </a>
+    </div>
+    <div class="pay_tagline col-md-4 h1 text-center">
+        <small> {{ shop_tagline }}</small>
+    </div>
+    <div class="pay_tagline col-md-4 text-right">
+        <a class="pay_phone" href="tel:+33339250264"><i class="fa fa-phone"></i> 03 39 25 02 64</a> 
+    </div>
+</div>
+{% endblock %}
