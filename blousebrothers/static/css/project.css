@@ -1597,6 +1597,15 @@ article.product_pod{
 .ophtalmologie{
     background-image: url(/static/images/spe/opht.png);
 }
+.médecine_générale{
+    background-image: url(/static/images/spe/med_gé.png);
+}
+.médecine_légale{
+    background-image: url(/static/images/spe/legal.png);
+}
+.neurochirurgie{
+    background-image: url(/static/images/spe/neurochir.png);
+}
 .lecture_critique_d_articles{
 /*    position:relative;*/
     background-image: url(/static/images/spe/lca.png);
@@ -1679,7 +1688,7 @@ article.product_pod{
 }
 .btn-go {
     font-size: 25px;
-    color: rgb(25, 166, 25);
+    color: rgb(25, 166, 25) !important;
 }
 h1.faq {
     text-align: center;
@@ -2179,7 +2188,7 @@ button.stripe-button-el {
     margin: 2px auto;
     width: 86px;
 }
-.product_pod button.btn.btn-gray.btn-go {
+.product_pod .btn.btn-gray.btn-go {
     font-size: inherit;
 }
 .test-main-col {
@@ -2263,4 +2272,12 @@ img.reward {
 }
 .pay_tagline {
     margin: auto;
+}
+.prod-bg.recrutement {
+	background-image: url(/static/images/retro/4.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position-y: 91px;
+	filter: blur(0px);
+    background-color: #eef2f3;
 }

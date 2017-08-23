@@ -126,6 +126,9 @@
         <section>
             <div class="product-compact">
                 <ol class="row">
+                    {% if user.is_authenticated %}
+                    <li class="col-xs-6 col-md-4 col-lg-3">{% include "catalogue/partials/create_product.html" %}</li>
+                    {% endif %}
                     {% for product in products %}
                         <li class="col-xs-6 col-md-4 col-lg-3">{% render_product product %}</li>
                     {% endfor %}

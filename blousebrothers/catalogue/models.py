@@ -66,7 +66,7 @@ class Product(AbstractProduct):
 
     def get_title(self):
         if self.conf:
-            return self.conf.title
+            return self.conf.title + '<br>-- ' + self.conf.owner.username + ' --'
         return super().get_title()
 
     def user_test(self):
