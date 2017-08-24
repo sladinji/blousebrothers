@@ -105,14 +105,16 @@ class MonthlyLineChart(Chart):
     context = None
     d = {}
 
-    def get_labels(self, year, **kwargs):
+    def get_labels(self, **kwargs):
+        year = date.today().year
         return ["Juillet {}".format(year), "Août", "Septembre", "Octobre", "Novembre", "Décembre",
-                "Janvier {}".format(int(year) + 1), "Février", "Mars", "Avril", "Mai", "Juin"]
+                "Janvier {}".format(year + 1), "Février", "Mars", "Avril", "Mai", "Juin"]
 
-    def get_datasets(self, year, **kwargs):
+    def get_datasets(self, **kwargs):
+        year = date.today().year
         self.d = {i: 0 for i in range(1, 13)}
         user = User.objects.get(pk=self.context['object'].pk)
-        for x in user.tests.filter(finished=True, date_created__range=(date(int(year), 7, 1), date(int(year)+1, 7, 1))):
+        for x in user.tests.filter(finished=True, date_created__range=(date(year, 7, 1), date(year+1, 7, 1))):
             self.d[x.date_created.month] += 1
         data = sorted([(mois, self.d[mois]) for mois in self.d])
         return [DataSet(label='Dossiers terminés',

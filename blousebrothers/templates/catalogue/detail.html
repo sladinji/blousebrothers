@@ -45,7 +45,7 @@
                 {% if user.is_authenticated and user.is_staff %}
                 <a class="pull-right hidden-xs" href="{% url 'dashboard:catalogue-product' pk=product.id %}"><small><i class="icon-edit"></i> {% trans "Edit this product" %}</small></a>
                 {% endif %}
-                <h1 class="text-center">{{ product.get_title }}</h1>
+                <h1 class="text-center">{{ product.get_title | safe }}</h1>
                 <div class="review-share pull-right">
                     {% include 'catalogue/partials/share_product.html' %}
                 </div>
