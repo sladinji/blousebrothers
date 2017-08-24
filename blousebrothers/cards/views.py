@@ -373,6 +373,22 @@ class Dispatching(Chart):
 class RevisionHome(TemplateView):
     template_name = 'cards/home.html'
 
+    def get_next_session(self, spe, user):
+        deck = user.deck.filter(
+            card__specialities__id=spe.pk
+        ).order_by('-wake_up').first()
+        if not deck:
+            return None
+        else:
+            duration = deck.wake_up - timezone.now()
+            if duration.days:
+                return "{} jour{}".format(duration.days, "s" if duration.days > 1 else "")
+            hours = duration.seconds // 3600
+            if hours:
+                return "{} heures{}".format(hours, "s" if hours > 1 else "")
+            minutes = duration.seconds // 60
+            return "{} minute{}".format(minutes, "s" if minutes > 1 else "")
+
     def get_context_data(self, *args, **kwargs):
         user = self.request.user
         if user.is_anonymous():
@@ -394,6 +410,7 @@ class RevisionHome(TemplateView):
              'total': next((l['spe_count'] for l in total_count if l['specialities'] == spe.id), 0),
              'user': next((l['spe_count'] for l in user_count if l['card__specialities'] == spe.id), 0),
              'ready': next((l['spe_count'] for l in ready_count if l['card__specialities'] == spe.id), 0),
+             'next_session': self.get_next_session(spe, user),
              'last_access': user.deck.filter(card__specialities__id=spe.pk).order_by('-modified').first(),
              }
             for spe in Speciality.objects.all()

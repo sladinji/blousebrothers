@@ -118,7 +118,7 @@
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
                     <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.user < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser ({{ spe.ready }})</a>
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}({{ spe.ready }}){% elif spe.next_session %} (dans {{spe.next_session}}){% endif %}</a>
                 </div>
             </div>
         </div>
