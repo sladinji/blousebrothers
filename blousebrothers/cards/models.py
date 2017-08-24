@@ -49,10 +49,32 @@ class Tag(models.Model):
     name = models.CharField(_("Tags"), max_length=256, blank=False, null=False)
 
 
+class ForUserQuerySet(models.query.QuerySet):
+    """
+    MANAGER TO MANAGE USER ACCESS RIGHTS
+    """
+    def for_user(self, user):
+        """
+        Card accessible by user
+        """
+        return self.filter(
+            Q(author__isnull=True) | Q(author=user) | Q(public=True)
+        )
+
+
+class ForUserManager(models.Manager):
+    def get_query_set(self):
+            return ForUserQuerySet(self.model)
+
+    def for_user(self, *args, **kwargs):
+            return self.get_query_set().for_user(*args, **kwargs)
+
+
 class Card(models.Model):
     """
     Fiche de revision
     """
+    objects = ForUserManager()
     specialities = models.ManyToManyField('confs.Speciality', verbose_name=("Specialities"),
                                           related_name='cards', blank=True)
     items = models.ManyToManyField('confs.Item', verbose_name=_("Items"),
@@ -162,7 +184,7 @@ class Session(models.Model):
         """
         Apply session preference filter to a Card queryset
         """
-        qs = Card.objects.all()
+        qs = Card.objects.for_user(self.student)
         if self.specialities.all():
             qs = qs.filter(specialities__in=self.specialities.all())
         if self.items.all():
@@ -176,7 +198,7 @@ class Session(models.Model):
 
     @property
     def new_cards(self):
-        qs = Card.objects.filter(
+        qs = Card.objects.for_user(self.student).filter(
             parent__isnull=True,
         ).exclude(  # exclude cards already done
             id__in=Deck.objects.filter(

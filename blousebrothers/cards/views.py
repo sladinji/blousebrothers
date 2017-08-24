@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Min
 from django.http import JsonResponse
 from django.views.generic import (
     ListView,
@@ -357,21 +357,17 @@ class Dispatching(Chart):
 class RevisionHome(TemplateView):
     template_name = 'cards/home.html'
 
-    def get_next_session(self, spe, user):
-        deck = user.deck.filter(
-            card__specialities__id=spe.pk
-        ).order_by('wake_up').first()
-        if not deck:
-            return None
-        else:
-            duration = deck.wake_up - timezone.now()
-            if duration.days:
-                return "{} jour{}".format(duration.days, "s" if duration.days > 1 else "")
-            hours = duration.seconds // 3600
-            if hours:
-                return "{} heures{}".format(hours, "s" if hours > 1 else "")
-            minutes = duration.seconds // 60
-            return "{} minute{}".format(minutes, "s" if minutes > 1 else "")
+    def get_next_session(self, wake_up):
+        if not wake_up:
+            return
+        duration = wake_up - timezone.now()
+        if duration.days:
+            return "{} jour{}".format(duration.days, "s" if duration.days > 1 else "")
+        hours = duration.seconds // 3600
+        if hours:
+            return "{} heure{}".format(hours, "s" if hours > 1 else "")
+        minutes = duration.seconds // 60
+        return "{} minute{}".format(minutes, "s" if minutes > 1 else "")
 
     def get_context_data(self, *args, **kwargs):
         user = self.request.user
@@ -379,11 +375,12 @@ class RevisionHome(TemplateView):
             user = User.objects.get(username='BlouseBrothers')
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
-        total_count = Card.objects.values('specialities').annotate(
+        total_count = Card.objects.for_user(user).values('specialities').annotate(
             spe_count=Count('specialities')
         )
         user_count = user.deck.values('card__specialities').annotate(
-            spe_count=Count('card__specialities')
+            spe_count=Count('card__specialities'),
+            wake_up=Min('wake_up')
         )
         ready_count = user.deck.values('card__specialities').filter(wake_up__lt=timezone.now()).annotate(
             spe_count=Count('card__specialities')
@@ -394,17 +391,24 @@ class RevisionHome(TemplateView):
              'total': next((l['spe_count'] for l in total_count if l['specialities'] == spe.id), 0),
              'user': next((l['spe_count'] for l in user_count if l['card__specialities'] == spe.id), 0),
              'ready': next((l['spe_count'] for l in ready_count if l['card__specialities'] == spe.id), 0),
-             'next_session': self.get_next_session(spe, user),
-             'last_access': user.deck.filter(card__specialities__id=spe.pk).order_by('-modified').first(),
+             'next_session': self.get_next_session(
+                 next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0)
+             ),
+             'last_access': next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0),
              }
             for spe in Speciality.objects.all()
         ]
         specialities.sort(key=lambda x: x['total'], reverse=True)
-        specialities.sort(key=lambda x: x['last_access'].modified if x['last_access'] else mindate, reverse=True)
+        specialities.sort(key=lambda x: x['last_access'] if x['last_access'] else mindate, reverse=True)
         return super().get_context_data(*args,
                                         retro_img_nb=random.randint(1, 13),
                                         chart=dispatching_chart,
                                         specialities=specialities,
+                                        next_session=self.get_next_session(
+                                            min((l['wake_up'] for l in user_count)) if user_count else 0
+                                        ),
+                                        ready=sum((l['spe_count'] for l in ready_count)),
+                                        total=sum((l['spe_count'] for l in total_count)),
                                         **kwargs)
 
 

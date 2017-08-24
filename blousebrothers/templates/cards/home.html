@@ -66,7 +66,60 @@
         </div>
     </div>
     <div class="tabbed-main page">
-        <div class="space"></div>
+        <div class="space hidden-xs"></div>
+        <div class="x_panel tile fixed_height_320 rev_pod">
+            <div class="x_title">
+                <h2><i class="fa fa-pie-chart"></i> Répartition de mes fiches</h2><div class="text-right">{{ user.deck.count }}/{{ total }}</div>
+                <div class="clearfix"></div>
+                <div class="progress-bar-container"><div style="width: {% widthratio user.deck.count total  100 %}%" class="progress-bar"></div></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-5">
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:100px; width:100px">
+                                        {% render_chart chart None %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{ count | default:0 }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="space12"></div>
+                <div class="col-md-7 rev_btns">
+                    <a href="{% url 'cards:redirect' %}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}({{ ready }}){% elif next_session %} (dans {{next_session}}){% endif %}</a>
+                </div>
+            </div>
+        </div>
         {% for spe in specialities %}
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="prod-bg {{ spe.obj.css }}"></div>
@@ -123,50 +176,6 @@
             </div>
         </div>
         {% endfor %}
-        <div class="x_panel tile fixed_height_320">
-            <div class="x_title">
-                <h2><i class="fa fa-pie-chart"></i> Répartition de mes fiches</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <table class="" style="width:100%">
-                    <tbody><tr>
-                            <th style="width:37%;">
-                                <p>Répartitions</p>
-                            </th>
-                            <th>
-                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                    <p class="">Catégorie</p>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <p class="">Total</p>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="width=37%" >
-                                <div style="position: relative; height:60%; width:60%">
-                                    {% render_chart chart None %}
-                                </div>
-                            </td>
-                            <td>
-                                <table class="tile_info" style="width:100%;">
-                                    <tbody>
-                                        {% for label, color, count in chart.get_lab_col_cnt %}
-                                        <tr>
-                                            <td>
-                                                <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
-                                            </td>
-                                            <td>{{ count | default:0 }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody></table>
-            </div>
-        </div>
     </div>
 </div>
 
