@@ -28,6 +28,7 @@ from mangopay.constants import ERROR_MESSAGES_DICT
 from oscar.core.loading import get_class
 from oscar.apps.shipping.methods import NoShippingRequired
 
+from blousebrothers.confs.forms import ConferenceForm
 from .charts import MeanBarChart, MonthlyLineChart
 from .models import User
 from .forms import (
@@ -70,6 +71,7 @@ class UserDetailView(BBLoginRequiredMixin, CheckoutSessionMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['voucher_form'] = BasketVoucherForm()
         context.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
+        context.update(conf_form=ConferenceForm())
         self.checkout_session.use_shipping_method(
             NoShippingRequired().code)
         for line in self.request.basket.all_lines():
