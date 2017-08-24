@@ -1488,14 +1488,26 @@ a.share {
     margin-bottom: 40px;
 }
 
+.x_title a.btn {
+    margin: 10px 10px;
+    float: center;
+}
 .x_title {
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
+    text-align: center;
 }
 .x_title h2 {
     margin: 5px 0 6px;
     float: left;
     display: block;
+}
+@media (min-width: 992px){
+    .x_title a.btn {
+        margin: 0px 10px;
+        float: right;
+        text-align: left;
+    }
 }
 .nav > li {
     position: relative;
@@ -1802,6 +1814,37 @@ thead {
     border-top: 1px solid rgba(0, 0, 0, .05) !important;
     background: #fff;
     text-align: center;
+}
+.rev_btns{
+    text-align: right;
+}
+@media screen and (max-width: 992px){
+    .card {
+        padding: 0;
+        border: 1px solid #e6e9ed;
+        margin: 10px 0;
+        width: 32%;
+        display: inline-block;
+    }
+    .card-title {
+        margin-left: 0px;
+    }
+    .card-text {
+        display:none;
+    }
+    .meta{
+        display:none;
+    }
+    .card-block .profile {
+        top: 68px;
+    }
+    h4.card-title.mt-3{
+        font-size:12pt;
+        text-align: center;
+    }
+    .rev_btns{
+        text-align: center;
+    }
 }
 
 .card-inverse .btn {
@@ -2130,7 +2173,7 @@ div#calltoac {
         width: 76%;
     }
 }
-.meta.hidden-xs {
+.meta {
     position: absolute;
     top: 131px;
     font-size: 14pt;

@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 {% load currency_filters %}
 {% load i18n %}
 {% load bbtricks %}
@@ -120,6 +121,8 @@
                         {% trans "Détails des ventes effectuées" %}
                         {% endif %}
                     </h2>
+                    <a href="{% url 'confs:list' %}" class="btn btn-secondary"><span class="fa fa-list"></span> Voir mes dossiers créés</a>
+                    <a data-toggle="modal" data-target="#modalTip" class="btn btn-secondary"><span class="fa fa-cogs"></span> Comment ça marche ?</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -150,5 +153,29 @@
         </div>
         <div class="space"></div> <!-- 40px Vertical Spacing -->
         {% endif %}
+    </div>
+</div>
+<div class="modal fade" id="modalTip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel"><span class="fa fa-cogs"></span> Explications</h2>
+            </div>
+            <div class="modal-body">
+                <p>"70% des gains des abonnements reviennent aux Conférenciers. Les abonnements aux fiches sont indépendants et non pris en compte dans le calcul.</p>
+                <p>Les gains sont répartis au prorata du nombre de Dossiers consultés par les étudiants chaque mois.</p>
+                <p>Exemple: si il y a 2 Conférenciers sur la plateforme et 4 Etudiants:</p>
+                <p>Gains à répartir = 4 x total des gains des abonnements (mensualisés) x 0,7</p>
+                <p>Conférencier 1: 5 consultations de son "Dossier 1", 2 de son "Dossier 2", 5 de son "Dossier 3" = 12 consultations</p>
+                <p>Conférencier 2: 6 consultation de son seul"Dossier 4" = 6 consultations</p>
+                <p>--> 2/3 des gains à répartir pour Conférencier 1, 1/3 pour Conférencier 2.</p>
+                <p>Tes gains sont calculés mois après mois, et rapatriables sur ton compte bancaire quand tu le souhaites.</p>
+                <p>Ils doivent bien entendu être déclaré aux impôts.</p>
+                <p>Plus il y aura d'étudiants sur la plateforme, plus les gains seront conséquents, sans pour autant coûter trop cher aux Externes. Nous pouvons construire une organisation plus juste !</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
+        </div>
     </div>
 </div>

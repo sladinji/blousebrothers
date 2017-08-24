@@ -19,7 +19,7 @@
                     <img src="{% static 'images/go_rev.png' %}" alt="">
                 </figure>
                 <h4 class="card-title mt-3">Commencer à réviser</h4>
-                <div class="meta hidden-xs">
+                <div class="meta">
                     <a><span class="fa fa-history"></span></a>
                 </div>
                 <div class="card-text">
@@ -36,7 +36,7 @@
                     <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
                 </figure>
                 <h4 class="card-title mt-3">Créer<br>une fiche</h4>
-                <div class="meta hidden-xs">
+                <div class="meta">
                     <a><span class="fa fa-plus"></span></a>
                 </div>
                 <div class="card-text">
@@ -53,7 +53,7 @@
                     <img src="{% static 'images/retro/8.jpg' %}" class="profile-avatar" alt="">
                 </figure>
                 <h4 class="card-title mt-3">Comment ça marche ?</h4>
-                <div class="meta hidden-xs">
+                <div class="meta">
                     <a><span class="fa fa-list"></span></a>
                 </div>
                 <div class="card-text">
@@ -93,7 +93,7 @@
                             </tr>
                             <tr>
                                 <td style="width=37%" >
-                                    <div style="position: relative; height:60%; width:60%">
+                                    <div style="position: relative; height:100px; width:100px">
                                         {% render_chart chart spe.obj %}
                                     </div>
                                 </td>
@@ -116,7 +116,7 @@
                     </table>
                 </div>
                 <div class="space12"></div>
-                <div class="col-md-7 text-right">
+                <div class="col-md-7 rev_btns">
                     <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
                     <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.user < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser ({{ spe.ready }})</a>
                 </div>
