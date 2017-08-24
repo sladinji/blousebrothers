@@ -193,6 +193,8 @@ class ConferenceUpdateView(ConferenceWritePermissionMixin, JSONResponseMixin, Up
         conf.pop('specialities')
         conf_pk = conf.pop('pk')
         Conference.objects.filter(pk=conf_pk).update(**conf)
+        question.pop('specialities')
+        question.pop('items')
         Question.objects.filter(pk=question.pop('pk')).update(**question)
         for answer in answers:
             Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
