@@ -26,7 +26,7 @@ from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
-from .models import Card, Deck, Session, CardsPreference
+from .models import Card, Deck, Session, CardsPreference, SessionOverException
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
 
 
@@ -73,30 +73,10 @@ def choose_new_card(request):
         new_card = session.choose_revision_card()
     else:
         # choose a new original card never done by user
-        card_qs = Card.objects.filter(
-            parent__isnull=True,
-        ).exclude(  # exclude cards already done
-            id__in=Deck.objects.filter(
-                student=request.user
-            ).values_list(
-                'card', flat=True
-            ),
-        ).exclude(  # exclude sibling cards
-            id__in=session.student.deck.filter(
-                card__parent__isnull=False
-            ).values_list(
-                'card__parent', flat=True,
-            )
-        )
-        new_card = session.filter(card_qs).first()
-        # check if user have done card of this family
-        if new_card and Deck.objects.filter(student=request.user,
-                                            card_id__in=new_card.family(request.user),
-                                            ).exists():
-            new_card = None
+        new_card = session.new_cards.first()
         # if all card are already done choose revision card
         if not new_card:
-            new_card = session.choose_revision_card()
+            new_card = random.choice(session.matching_cards.all()[:20])
 
     session.cards.add(new_card)
     return new_card
@@ -221,7 +201,8 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
         session = get_session(self.request)
         if session:
             #  remove last card, because no click on easy/medium...
-            session.cards.remove(Card.objects.get(slug=kwargs["slug"]))
+            if kwargs["slug"] != "sessionover":
+                session.cards.remove(Card.objects.get(slug=kwargs["slug"]))
             session.effective_duration = timezone.now() - session.date_created
             session.finished = True
             session.save()
@@ -323,8 +304,11 @@ class RevisionView(RevisionPermissionMixin, DetailView):
             self.update_deck(1)
         elif 'hard' in request.POST:
             self.update_deck(2)
-        new_card = choose_new_card(request)
-        return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
+        try:
+            new_card = choose_new_card(request)
+            return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
+        except SessionOverException:
+            return redirect(reverse('cards:stop', kwargs={'slug': 'sessionover'}))
 
 
 class Dispatching(Chart):
@@ -376,7 +360,7 @@ class RevisionHome(TemplateView):
     def get_next_session(self, spe, user):
         deck = user.deck.filter(
             card__specialities__id=spe.pk
-        ).order_by('-wake_up').first()
+        ).order_by('wake_up').first()
         if not deck:
             return None
         else:

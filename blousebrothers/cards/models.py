@@ -124,6 +124,14 @@ class Session(models.Model):
     def __str__(self):
         return '<Session [{}] revision: {}>'.format(self.pk, self.revision)
 
+    def times_up(self):
+        """
+        Raise SessionOverException if required.
+        """
+        self.save()  # update self.date_modified on save
+        if self.selected_duration < self.date_modified - self.date_created:
+            raise SessionOverException()
+
     def is_over(self, specialities, items, revision):
         """
         Close session and raise SessionOverException if required.
@@ -138,16 +146,6 @@ class Session(models.Model):
             return True
         return False
 
-    def filter(self, qs):
-        """
-        Apply session preference filter to a Card queryset
-        """
-        if self.specialities.all():
-            qs = qs.filter(specialities__in=self.specialities.all())
-        if self.items.all():
-            qs = qs.filter(items__in=self.items.all())
-        return qs
-
     @property
     def waiting_cards(self):
         qs = self.student.deck.filter(
@@ -159,13 +157,52 @@ class Session(models.Model):
             qs = qs.filter(card__items__in=self.items.all())
         return qs.order_by('wake_up')
 
+    @property
+    def matching_cards(self):
+        """
+        Apply session preference filter to a Card queryset
+        """
+        qs = Card.objects.all()
+        if self.specialities.all():
+            qs = qs.filter(specialities__in=self.specialities.all())
+        if self.items.all():
+            qs = qs.filter(items__in=self.items.all())
+        qs = qs.exclude(
+            id__in=[card.id for card in self.cards.all()]
+        )
+        if not qs.count():
+            raise SessionOverException()
+        return qs
+
+    @property
+    def new_cards(self):
+        qs = Card.objects.filter(
+            parent__isnull=True,
+        ).exclude(  # exclude cards already done
+            id__in=Deck.objects.filter(
+                student=self.student,
+            ).values_list(
+                'card', flat=True
+            ),
+        ).exclude(  # exclude sibling cards
+            id__in=self.student.deck.filter(
+                card__parent__isnull=False
+            ).values_list(
+                'card__parent', flat=True,
+            )
+        )
+        if self.specialities.all():
+            qs = qs.filter(specialities__in=self.specialities.all())
+        if self.items.all():
+            qs = qs.filter(items__in=self.items.all())
+        return qs.all()
+
     def choose_revision_card(self):
         if self.waiting_cards.count():  # randomly look into waiting cards
             new_card = random.choice(self.waiting_cards[:100]).card
             return new_card
-        else:  # randomly choose in the most 20 ready
-            new_card = random.choice(self.student.deck.order_by('wake_up').all()[:20]).card
-            return new_card
+        else:
+            raise SessionOverException()
 
 
 @receiver(pre_save, sender=Session)
