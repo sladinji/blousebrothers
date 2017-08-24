@@ -50,18 +50,18 @@
         <div class="card">
             <div class="card-block">
                 <figure class="profile">
-                    <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
+                    <img src="{% static 'images/retro/8.jpg' %}" class="profile-avatar" alt="">
                 </figure>
-                <h4 class="card-title mt-3">Voir toutes mes fiches</h4>
+                <h4 class="card-title mt-3">Comment ça marche ?</h4>
                 <div class="meta hidden-xs">
                     <a><span class="fa fa-list"></span></a>
                 </div>
                 <div class="card-text">
-                    <small>Tu as {{ request.user.deck.count }} fiches.</small>
+                    <small>Quelques explications...</small>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{% url 'cards:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
+                <a data-toggle="modal" data-target="#modalTip" class="btn btn-secondary float-right btn-sm">voir</a>
             </div>
         </div>
     </div>
@@ -171,35 +171,61 @@
 </div>
 
 {% if messages %}
-    {% for message in messages %}
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<form id="confirm-go-form" method="post">
-				{% csrf_token %}
-				<input id="id_quantity" name="quantity" type="hidden" value="1">
-				<div class="modal-content">
-					<div class="modal-header">
-                        <h2 class="blouse-font text-center" id="myModalLabel">Félicitations !</h2>
-					</div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <img class="reward" src="{% static "images/badge_assured.jpg" %}" alt="Logo BlouseBrothers">
-                            </div>
-                            <div class="col-sm-8 reward">
-                                <p>{{ message|safe }}</p>
-                            </div>
-                        </div>
+{% for message in messages %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel">Félicitations !</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img class="reward" src="{% static "images/retro/" %}{{retro_img_nb}}.jpg" alt="Logo fin de révision">
                     </div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-    {% endfor %}
+                    <div class="col-sm-8 reward">
+                        <p>{{ message|safe }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="modal-footer-tips">
+                Tu les retrouveras en cliquant sur le bouton "Réviser". 
+                C'est normal qu'il y ait peu de cartes à réviser au début :
+                l'algorithme calcule les intervalles de révisions selon tes réponses. 
+                Tu ne vois QUE les cartes que tu dois réviser.
+                </p>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 {% endif %}
+
+<div class="modal fade" id="modalTip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel"><span class="fa fa-cogs"></span> Explications</h2>
+            </div>
+            <div class="modal-body">
+                <img src="{% static "images/retro/" %}13.jpg" alt="Logo fin de révision">
+                <p>Le principe des fiches est de te permettre de sélectionner les connaissances les plus importantes pour toi, en permanence, et de perdre le moins de temps possible à réviser des choses que tu sais déjà. Notre système est basé sur le principe des "flashcards" et de la révision espacée, avec un algorithme adapté aux ECNi.
+                </p>
+                <p>Tu peux créer des fiches en même temps que tu travailles, sous forme de Question/Réponse, et les taguer dans la matière appropriée. Nous en créons également de notre côté: notre base de travail nous a été fournie par un étudiant classé dans les 120 premiers aux ECN 2017.
+                </p>
+                <p>Le bouton "Apprendre" sert à voir des fiches que tu n'as jamais vu. Elles vont être basculées vers le bouton "Révisions" avec un intervalle de temps de révision correspondant à la difficulté que tu lui attribues. Tu verras souvent les fiches que tu trouves difficiles, et moins souvent celles qui sont faciles.
+                </p>
+                <p>Les fiches n'apparaissent dans l'onglet "Révisions" QUE quand il est temps que tu les révises.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
 

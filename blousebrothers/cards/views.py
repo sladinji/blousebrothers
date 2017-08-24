@@ -1,4 +1,5 @@
 import re
+import random
 from datetime import timedelta, datetime, MINYEAR
 from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy
@@ -214,7 +215,7 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
 
 
 class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
-    url=reverse_lazy('cards:home')
+    url = reverse_lazy('cards:home')
 
     def get(self, request, *args, **kwargs):
         session = get_session(self.request)
@@ -224,13 +225,17 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
             session.effective_duration = timezone.now() - session.date_created
             session.finished = True
             session.save()
-            if session.cards.count() :
+            duration = session.effective_duration.seconds // 60
+            duration_msg = " en {} minute{}".format(duration, "s" if duration > 1 else "") if duration else ""
+
+            if session.cards.count():
                 messages.info(self.request,
-                              "Pendant cette session, tu as {} {} fiches.".format(
-                                "révisé" if session.revision else "vu",
-                                session.cards.count(),
-                            )
-                            )
+                              "Tu as {} {} fiches{}.".format(
+                                  "révisé" if session.revision else "vu",
+                                  session.cards.count(),
+                                  duration_msg,
+                              )
+                              )
         return super().get(request, *args, **kwargs)
 
 
@@ -395,7 +400,11 @@ class RevisionHome(TemplateView):
         ]
         specialities.sort(key=lambda x: x['total'], reverse=True)
         specialities.sort(key=lambda x: x['last_access'].modified if x['last_access'] else mindate, reverse=True)
-        return super().get_context_data(*args, chart=dispatching_chart, specialities=specialities, **kwargs)
+        return super().get_context_data(*args,
+                                        retro_img_nb=random.randint(1, 13),
+                                        chart=dispatching_chart,
+                                        specialities=specialities,
+                                        **kwargs)
 
 
 class ListCardView(BBLoginRequiredMixin, ListView):

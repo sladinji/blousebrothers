@@ -2212,7 +2212,14 @@ button.stripe-button-el {
     background-color: rgba(63, 83, 103, 0.75);
 }
 img.reward {
-    box-shadow: 4px 7px 5px rgba(0, 0, 0, 0.46);
+    box-shadow: -6px 0px 7px rgba(0, 0, 0, 0.23);
+    top: 17px;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #fff;
+    border-radius: 50%;
 }
 .reward p {
     font-family: lobster;
@@ -2280,4 +2287,11 @@ img.reward {
 	background-position-y: 91px;
 	filter: blur(0px);
     background-color: #eef2f3;
+}
+.modal-footer-tips {
+    text-align: justify;
+}
+.modal-body img {
+    float: left;
+    margin: 0 20px 10px 0;
 }
