@@ -1,0 +1,930 @@
+####Cardiologie
+###232
+##Insuffisance cardiaque
+
+Quelle est la définition de l’insuffisance cardiaque?
+Incapacité du cœur à délivrer un débit suffisant aux besoins, à un niveau normal de pressions de remplissage
+
+Société européenne de cardiologie (2012): 
+Syndrome associant :
+	symptômes d’insuffisance cardiaque
+	preuve objective d’anomalie de structure ou de fonction du cœur, de préférence échographique
+	et répondant bien au traitement, en cas de doute diagnostic
+
+
+Quelle est la prévalence de l’insuffisance cardiaque dans la population générale? et l’âge moyen au diagnostic?
+1-2%
+âge moyen du diagnostic = 75 ans
+
+
+Quelle est la formule permettant de calculer le débit cardiaque?
+débit cardiaque = FC x VES
+(VES = volume télédiastolique VTD - volume télésystolique VTS)
+
+
+De quels paramètres dépend le volume d’éjection systolique?
+pré-charge (degré de remplissage du VG et d’étirement des fibres en fin de diastole)
+post-charge (forces opposées à l’éjection)
+contractilité du cœur
+
+Quelle est la formule permettant de calculer la fraction d’éjection?
+fraction d’éjection = % du volume télédiastolique éjecté
+= VES/VTD 
+= (VTD-VTS)/VTD
+
+Quel est le paramètre le plus important pour caractériser la fonction systolique?
+la fraction d’éjection (% du volume télédiastolique éjecté)
+
+Quels sont les différents mécanismes compensateurs de l’insuffisance cardiaque?
+mécanismes cardiaques:
+	dilatation ventriculaire
+	hypertrophie des parois
+	hausse de la contractilité (ionotropisme) via la loi de Starling
+	tachycardie
+mécanismes extracardiaques:
+	vasoconstriction
+	rétention hydrosodée
+	activation neurohormonale, catécholamines
+
+Quel est l’effet à court terme des mécanismes compensateurs de l’insuffisance cardiaque? et à long terme?
+bénéfiques à court terme via maintien du début cardiaque et des pressions de perfusions des organes
+délétères à long terme via augmentation du travail et de la consommation en oxygène du cœur
+
+
+Décrire la boucle délétère entraînant la dilatation ventriculaire dans l’insuffisance cardiaque
+Adaptation à une surcharge VOLUMETRIQUE
+Pathologie —> Altération fraction d’éjection
+hausse du volume télésystolique
+hausse de la pression diastolique à la diastole suivante —> contraintes
+hausse du volume télédiastolique via remodelage ou hypertrophie excentrique
+Loi de Laplace: tension pariétale = (pression VG x rayon VG) / épaisseur de la paroi
+(donc contrainte pariétale proportionnelle au rayon de la cavité)
+
+
+Décrire la loi de Laplace appliquée au fonctionnement cardiaque:
+Loi de Laplace (coeur assimilé à une sphère): 
+tension pariétale = (pression VG x rayon VG) / épaisseur de la paroi
+donc: 
+	contrainte pariétale proportionnelle au rayon de la cavité
+	et inversement proportionnelle à l’épaisseur de la paroi cardiaque
+
+
+Décrire la boucle délétère entraînant l’hypertrophie ventriculaire dans l’insuffisance cardiaque
+lutte contre surcharge BAROMETRIQUE (pressionnelle)
+hausse de postcharge via HTA, RA…
+entraîne hypertrophie concentrique permettant de normaliser le stress pariétal
+effet délétère : 
+	hausse du travail cardiaque
+	hausse de la rigidité des parois par fibrose progressive
+Loi de Laplace: tension pariétale = (pression VG x rayon VG) / épaisseur de la paroi
+(donc contrainte pariétale inversement proportionnel à l’épaisseur de la paroi)
+
+Quel est le mécanisme permettant d’augmenter l’inotropie cardiaque en cas de hausse de pression au remplissage?
+loi de Starling : 
+étirement des fibres par hausse de pression au remplissage (précharge)
+augmentat° d’inotropie du ventricule
+jusqu’à une certaine limite de dilatation
+
+Quel est l’effet à court terme de la tachycardie adaptative dans l’insuffisance cardiaque? et à long terme?
+contribue à maintenir le débit cardiaque
+mais entraîne une hausse du travail cardiaque
+et de la consommation en O2 du cœur
+
+Quel est le mécanisme et l’effet de la vasoconstriction adaptative lors de l’insuffisance cardiaque?
+système sympathique + SRAA:
+maintien d’une pression de perfusion
+afin d’épargner certains territoires (cerveau, cœur)
+au dépends d’autres (peau, muscles, rate, rein…)
+inconvénient: hausse du travail cardiaque
+
+Quel est le mécanisme et l’effet de la rétention hydrosodée lors de l’insuffisance cardiaque?
+activation du SRAA
+	baisse de la perfusion rénale
+	diminution d’excrétion sodée
+augmentation du volume circulant et de la précharge (loi de Starling)
+	entraîne des signes cliniques congestifs
+
+Quel est le mécanisme et l’effet de l’activation neurohormonale lors de l’insuffisance cardiaque?
+SN sympathique et SRAA
+hausse du travail cardiaque
+effets pro-arythmiques
+effets toxiques directs des catécholamines sur myocytes
+
+
+Quel est le lien entre troubles de la conduction et insuffisance cardiaque?
+Désynchronisation
+Contraction asynchrone des segments myocardiques
+aggravation de l’insuffisance cardiaque
+dans le BBG:
+	contraction retardée
+	commençant par le SIV
+	puis de proche en proche en 
+
+
+Quels sont les 2 grands mécanismes d’insuffisance cardiaque? Les décrire
+Insuffisance cardiaque systolique
+	défaut de contraction et d’éjection du VG
+	dilatation ventriculaire
+	FE < 45%
+Insuffisance cardiaque à fonction systolique préservée 
+	= Insuffisance cardiaque diastolique
+	trouble du remplissage+++
+	(et pas de l’éjection)
+	hypertrophie ventriculaire, rigidité
+	entraîne une hausse de pression diastolique+++
+	Signes d’IC malgré une FE > 45% 
+	Terrain: sujet âgé, femme, HTA+++
+
+
+
+Citer et détailler la classification de la sévérité de l’insuffisance cardiaqueclassification NYHA
+	Stade I : absence de dyspnée pour les efforts habituels, aucune gêne
+	Stade II : dyspnée, palpitations ou fatigue pour des efforts importants habituels
+		marche rapide ou en côte
+		montée d’escaliers ≥ 2 étages
+	Stade III : dyspnée, palpitations ou fatigue pour des efforts peu intenses de la vie courante
+		marche à plat
+		montée d’escaliers < 2 étages
+	Stade IV : dyspnée permanente de repos ou aux efforts minimes 
+		(s’habiller…)
+
+
+Quel est le mécanisme de l’orthopnée? et sa spécificité?
+dyspnée de décubitus
+par redistribution des volumes sanguins vers le thorax
+associée à une hausse de pression capillaire pulmonaire
+oblige à dormir la tête surélevée voire assis
+assez spécifique de l’IC
+
+Quels sont les signes respiratoires possible de l’insuffisance cardiaque?
+dyspnée d’effort
+orthopnée
+dyspnée paroxystique nocturne (également plus spécifique) : réveille le patient au
+asthme cardiaque
+toux
+hémoptysies
+subœdème pulmonaire
+OAP
+
+
+
+Qu’évoque une hépatalgie d’effort? Mécanisme?
+Insuffisance cardiaque droite     
+Distension de la capsule hépatique
+
+
+
+palpation : Comment est le choc de pointe dans l’insuffisance cardiaque?
+dévié en bas et à gauche (dilatation VG)
+
+
+
+Qu’évoque un éclat du B2 au foyer pulmonaire? 
+HTAP
+
+
+Quels souffles peut-on observer dans l’insuffisance cardiaque?
+souffles de valvulopathies organiques
+	IM, IA, RA, RM
+souffle d’IM ou d’IT fonctionnelles
+	dilatation d’anneau mitral ou tricuspide
+
+Que peut objectiver l’auscultation pulmonaire dans l’insuffisance cardiaque?
+râles crépitants ou sous-crépitants (le plus souvent bilatéraux)
+
+
+Quelles caractéristiques possède l’épanchement pleural dans l’insuffisance cardiaque?
+caractère transsudatif (protides < 30 g/L)
+
+
+Quelles sont les valeurs tensionnelles observées dans l’insuffisance cardiaque?
+On peut observer hypo ou hypertension.
+	PAS basse < 100 mmHg :
+		facteur de gravité
+		↓ VES ou effet TTT hypotenseurs
+	PAS parfois élevée 
+		si insuffisance cardiaque d’origine hypertensive
+
+Quels sont les signes d’insuffisance cardiaque droite?
+turgescence jugulaire
+	décubitus semi-assis
+	difficile chez les obèses+++
+reflux hépato-jugulaire
+	décubitus demi-assis
+	par congestion hépatique
+hépatomégalie
+	régulière, ferme et douloureuse à la compression 
+œdème périphériques
+	mous, blancs, indolores
+	prenant le godet
+	prédominant aux parties déclives du corps (MI, région lombaire chez l’alité)
+ascite
+	tardive
+	+ précoce si atteintes organiques de la tricuspide ou péricardite chronique constrictive
+anasarque
+	atteinte d’autres séreuses par l’accumulation liquide (péricarde)
+
+
+
+Quel trouble de conduction possède une importance particulière dans l’insuffisance cardiaque?
+bloc de branche gauche +++
+	implications thérapeutiques+++
+	si décompensations fréquentes IC sous traitement maximal + BBG:
+	implantation d'un pace-maker triple chambre (sonde OD, VD et VG)
+	ou greffe cardiaque
+
+Quel est l’intérêt principal de la radiographie thoracique lors de l’insuffisance cardiaque?
+	appréciation du retentissement pleuro-pulmonaire +++
+	moins intéressant pour l’appréciation de la taille du coeur depuis l’échographie
+	silhouette cardiaque augmentée, rapport cardio-thoracique > 0,5
+		mais la cardiomégalie peut être absente (IC à FE préservée = IC diastolique)
+
+
+Quels sont les signes radiologiques de stase pulmonaire sur la radiographie thoracique lors de l’insuffisance cardiaque?
+selon une gravité croissante :
+	tendance à la redistribution vasculaire de la base vers les sommets
+	œdème interstitiel
+		lignes B de Kerley
+		aspect flou des gros vaisseaux hilaires
+		images réticulo-nodulaires prédominant aux bases
+	œdème alvéolaire
+		opacités floconneuses à contours flous
+		des hiles vers la périphérie(en ailes de papillon)
+		le plus souvent bilatérales (parfois unilatérales)
+
+
+Quels sont les examens biologiques standards lors d’une insuffisance cardiaque, en dehors de NG/iono?
+bilan hépatique
+TSHus
+bilan ferrique (fer sérique, ferritine, capacité de transfert de transferrine)
+
+
+Quel est l’intérêt diagnostic des NT-proBNP?
+Bonne VPN+++
+(éliminent le diagnostic si négatifs)
+
+
+Comment sont synthétisés les peptides natriurétiques?
+augmentation de pression dans les cavités cardiaques
+étirement des myocites cardiaques
+production des peptides
+
+
+Quelles sont les valeurs normales des peptides natriurétiques?
+BNP < 100 pg/mL
+NT-proBNP < 125 pg/mL
+
+
+
+Quelles sont les valeurs seuils en faveur d’une origine cardiaque à une dyspnée?
+	chez le sujet < 50 ans:
+		BNP > 300 pg/mL
+		NT-proBNP > 450 pg/mL
+	chez le sujet de 50-75 ans: 
+		> 900 pg/mL
+	chez le sujet > 75 ans: 
+		> 1800 pg/mL
+interprétation selon clinique (+++)
+
+Quelles sont les paramètres étudiés à l’échographie cardiaque lors d’une insuffisance cardiaque?
+taille du VG:
+	diamètres (diastolique [DDVG] et systolique [DSVG])
+	volumes (VTD ou VTS)
+fonction systolique du VG: 
+	fraction d’éjection (VTD-VTS/VTD, normale > 60%)
+taille et fonction du VD
+taille de la VCI et de l’aorte
+taille des oreillettes
+aspect des valves
+niveau des pressions de remplissage (flux doppler)
+indices hémodynamiques: 
+	débit cardiaque
+	pressions dans la circulation pulmonaire
+
+
+
+Quelles sont les indications de la coronarographie dans l’insuffisance cardiaque?
+suspicion de cardiopathie ischémique
+souvent, dans le cadre d’une IC systolique (altération de la FEVG)
+
+
+
+Quel bilan et interrogatoire devant une FE basse (IC systolique) avec normalité du réseau coronaire? 
+En général la coronarographie a été nécessaire afin d’affirmer la normalité du réseau coronaire.
+Il s’agit donc de différencier:
+	cardiomyopathie dilatée secondaire
+		alcool, cocaïne
+		anthracyclines, herceptine
+		dysthyroïdie, carence thiamine
+		cardiomyopathie post-partum
+		radiothérapie thoracique
+		atcd myocardite
+	cardiomyopathie dilatée primitive
+		maladie du muscle cardiaque
+		= diagnostic d’élimination
+
+
+Indications préférentielles de l’IRM cardiaque dans l’insuffisance cardiaque?
+échogénicité insuffisante:
+	permet mesure de la FE 
+bilan étiologique:
+	myocardite
+	dysplasie arythmogène du VD
+	sarcoïdose cardiaque
+	amylose cardiaque
+	cardiopathie ischémique = rehaussement tardif sous-endocardique
+	cardiomyopathie dilatée: rehaussement tardif = marqueur de fibrose
+
+Quelles sont les indications de cathétérisme cardiaque droit? Trajet de la sonde? Quelles sont les mesures réalisées?
+Indications rares: 
+	HTAP 
+	Suspicion de péricardite chronique constrictive
+Trajet:
+	cathéter IV
+	artère pulmonaire via cavités droites
+	branche artérielle pulmonaire
+Mesures:
+	pression capillaire (PCAP ou PAPO < 15 mmHg)
+	pression artérielle pulmonaire (HTAP = PAP > 25 mmHg)
+	pression ventriculaire droite (Nle 25/0)
+	pression de l’oreillette droite (Nle < 5 mmHg)
+	débit cardiaque par thermodilution
+	résistances pulmonaires, important dans les greffes cardiaques (CI si > 5 unités Wood)
+
+
+Quelle est la principale étiologie d’insuffisance cardiaque? 
+Cardiopathie ischémique
+	post-IDM:
+		diminution du nombre de myocytes fonctionnels 
+		fibrose
+		perte de contractilité d’un/plusieurs segment(s) du VG
+		baisse de fraction d’éjection
+	ou ischémie chronique sur maladie coronaire:
+		altération de la FE,
+		potentiellement réversible si revascularisation
+
+
+3 mécanismes d’insuffisance cardiaque via hypertension artérielle:
+- dans l’IC diastolique:
+	fibrose et hypertrophie cardiaque
+	altération de la fonction diastolique et du remplissage
+- dans l’IC systolique: 
+	augmentation chronique de la postcharge
+	altération de la FE
+- via développement d’une maladie coronaire classique:
+	athérosclérose
+	IDM ou atteinte des petites artères coronaires
+
+
+Quelles sont les valvulopathies les plus fréquemment responsables d’insuffisance cardiaque?
+valvulopathies gauches 
+	IM
+	IA
+	RM
+	RA
+
+
+Quelle est la 1ère cause d’insuffisance cardiaque et de transplantation chez le jeune?
+Cardiomyopathie dilatée primitive
+prévalence: 1/2500 
+
+
+Quelles sont les caractéristiques génétiques de la cardiomyopathie dilatée?
+autosomique dominante le + svt (monogénique) 
+	mais autres mécanismes possibles:
+	nombreux gènes (protéines du sarcomère, du cytosquelette, ou de la membre nucléaire comme la lamine)
+	et mutations possibles (sur chaque gène)
+pénétrance variable augmentant habituellement avec l’âge
+
+
+
+Décrire les atteintes anatomiques dans la cardiomyopathie hypertrophique:
+(appartiennent aux IC diastoliques)
+hypertrophie des parois
+le + souvent asymétrique
+surtout septum interventriculaire 
+avec cavité de taille normale ou basse ++
+fraction d’éjection conservée ++
+trouble du remplissage cardiaque ++
+avec 25% d’obstruction sous-aortique à l’éjection associée:
+	gradient de pression VG-aorte en systole
+	= CMH obstructive
+
+Etiologies des cardiomyopathies hypertrophiques?
+(appartiennent aux IC diastoliques)
+Maladie monogénique +++
+	transmission AD
+	par mutations des gènes trophique des protéines du sarcomère
+Plus rarement:
+	maladie de Fabry = 
+		déficit en α-galactosidase
+		groupe des glycogénoses 
+
+Quelle est la cause principale de cardiomyopathie restrictive?
+amylose cardiaque: 
+	dépôts amyloïdes 
+	infiltration extraellulaire progressive
+	hausse épaisseur diffuse des parois, rigidité 
+	troubles remplissage cardiaque
+	atteinte fonction systolique dans un 2ème temps
+
+
+Quelles sont les causes principales d’insuffisance cardiaque droite?
+- GAUCHE, PULM/EP/HTAP, VD(ischémique et dysplasie arythmogène), IT, PCC
+- insuffisance cardiaque gauche
+	par augmentation induite des pressions dans la circulation pulmonaire 
+- toutes les pathologies pulmonaires: 
+	hypoxémie, vasodilatation artérielle, augmentation de pression pulmonaire, IC droite (= cœur pulmonaire)
+- embolie pulmonaire:
+	EP aiguë = IC droite aiguë brutale (= cœur pulmonaire aigu)
+	séquelles d’EP grave peuvent conduire à un cœur pulmonaire chronique
+- HTAP:
+	primitive
+	secondaire à une connectivite (sclérodermie)
+- cardiomyopathie ventriculaire droite arythmogène
+- infarctus du VD
+- insuffisance tricuspidiennes isolée (rétrécissement = rare++++)
+	post-traumatique
+	post-endocardite chez un toxicomane
+	syndromes carcinoïdes
+- péricardite chronique constrictive
+
+
+Quelles sont les causes  d’insuffisance cardiaque  à débit augmenté?
+anémie chronique
+fistule artérioveineuse
+	insuffisant rénale en hémodialyse
+	maladie de Rendu-Osler 
+		= télangiectasie hémorragique héréditaire 
+		= dérégulation de l'angiogenèse conduisant à des dilatations artério-veineuses
+hyperthyroïdie
+carence en thiamine (vit. B1) (béribéri)
+(dans l’IC cardiaque à débit augmenté: la hausse du débit est la CAUSE de la défaillance cardiaque)
+
+
+
+Physiopathologie de l’oedème aigü pulmonaire?
+augmentation très importante de la pression capillaire
+transsudat des capillaires vers les alvéoles
+détresse respiratoire aiguë 
+liée à une inondation alvéolaire 
+
+
+Signes cliniques de l’oedème aigü pulmonaire?
+polypnée
+orthopnée (position assise)
+sueurs, anxiété
+cyanose
+grésillement laryngé
+toux avec expectoration mousseuse saumonée
+poussée hypertensive
+râles crépitants à l’auscultation pulmonaire
+	d’autant plus haut dans les champs pulmonaires que le tableau est sévère
+
+
+Quel diagnostic faut-il penser à évoquer devant un OAP chez un sujet migrant?
+valvulopathie rhumatismale surtout mitrale
+surtout si FA associée
+
+
+Quels sont les signes du choc cardiogénique?
+hypotension artérielle (PAS < 85 mmHg)
+froideur des extrémités + marbrures + oligurie
+par bas débit cardiaque (index cardiaque < 2,2 L/min/m²)
+
+Quels sont les facteurs favorisant/déclencheurs d’un OAP, à rechercher?
+mauvaise compliance au traitement
+écarts de régime sans sel
+surinfection bronchique
+EP
+troubles du rythme
+anémie
+dysthyroïdie (amiodarone)
+causes iatrogènes :
+	effet inotrope négatif:
+		anti-arythmiques classe I
+		bêtabloquants
+		inhibiteurs calciques (diltiazem, vérapamil)
+	cardiotoxicité
+		salycilés
+		thiazidiques
+		anthracyclines	
+
+
+
+
+Quelle est la proportion d’insuffisance cardiaques diastoliques parmi le total des insuffisances cardiaques? Quel terrain?
+50% des causes d’insuffisance cardiaque
+femme ou sujet âgé
+
+
+Quels sont les critères diagnostics de l’insuffisance cardiaque diastolique?
+symptômes/signes d’IC 
++ fonction systolique normale
++ soit: 
+	hausse des pressions de remplissage gauches
+	HVG
+	dilatation de l’OG à l’ETT
+	hausse des BNP
+
+Quelle est la mortalité dans l’insuffisance cardiaque?
+mortalité élevée ≈ 50% à 5 ans
+jusqu’à 40-50% /an si IC grave (NYHA IV)
+
+
+A quelles complications thromboemboliques sont particulièrement exposés les patients insuffisants cardiaques?
+emboles gauches:
+	systémiques type AVC
+	via thrombus dans les cavités gauches dilatées
+	favorisé par le bas débit
+et droites: 
+	embolie pulmonaire
+	lors d’épisodes d’alitement ou d’hospitalisation 
+
+Citer les mauvais facteurs pronostics lors d’une insuffisance cardiaque: cliniques, biologiques, ECG, hémodynamiques
+clinique : 
+	classe NYHA III ou IV (versus I ou II)
+	réhospitalisations répétées
+	diminution du pic de consommation d’oxygène lors de l’épreuve d’effort métabolique
+biologie : 
+	hyponatrémie
+	augmentation du BNP
+ECG : 
+	augmentation de la durée des QRS > 120 ms (BBG)
+hémodynamique : 
+	FE basse
+	débit cardiaque diminué
+	pressions pulmonaires augmentées
+
+
+Quelle est la première mesure à prendre en cas de cardiomyopathie dilatée sur éthylisme chronique?
+arrêt total de l’alcool
+régression partielle ou totale possible!
+
+
+
+Quelles sont les mesures hygiéno-diététiques à prendre lors de l’insuffisance cardiaque?
+- éducation thérapeutique:
+	régime pauvre en sel < 5-6 g/jour
+		pas de salière à table
+		ne plus saler l’eau de cuisson
+		liste des aliments les plus salés
+		attention à la dénutrition, avis diététique
+	si écart de régime : 
+		augmenter la dose de diurétique du jour même
+		et voire du lendemain
+	surveillance du poids
+		consultation rapide si prise de poids de 2-3 kg
+		surtout si soudaine, 2-3 jours
+		perte de poids progressive = possible dénutrition /!\
+	surveillance des symptômes
+		consultation si aggravat° dyspnée
+		apparit° d’orthopnée
+		OMI…
+- arrêt tabac, réduction ou arrêt alcool
+- activité physique : 
+	régulière et prolongée (marche)
+	à un rythme n’essoufflant pas le malade
+	en dehors des épisodes de décompensation
+- reclassement/réinsertion professionnelle :
+	si efforts physiques importants
+	si emploi à risque (chauffeur de poids lourds)
+	si horaires décalés
+- vaccinations antipneumococcique et antigrippale
+- contraception si il y a lieu (grossesse = délétère)
+
+
+
+Comment agissent les IEC?
+blocage de l’enzyme de conversion de l’angiotensine
+	diminue la transformation de l’angiotensine I en angiotensine II
+	hausse des concentrations de rénine et d’angiotensine I, baisse de la production d’aldostérone
+	vasodilatation artérielle et veineuse, diminue la pré- et la post-charge
+	effet modéré sur la TA
+	hausse du VES, du débit cardiaque, baisse de la pression capillaire pulmonaire
+	également, baisse de la concentration de catécholamines circulantes (favorisées par AGII)
+aussi inhibition de la dégradation de la bradykinine (vasodilatatrice)
+	hausse de production de prostaglandines vasodilatatrices
+	effet secondaire de la bradykinie: toux.
+
+
+
+Quel est le critère imposant la prescription d’IEC chez l’insuffisant cardiaque, en l’absence de CI?
+tout patient avec une baisse de la FE
+quelle que soit la classe NYHA
+(idem bétabloquants)
+
+
+Epidémiologiquement, quels sont les bénéfices des IEC dans l’insuffisance cardiaque?
+amélioration des symptômes
+diminution de la mortalité
+diminution de de la fréquence des hospitalisation pour décompensation cardiaque
+
+
+
+Quels sont les effets indésirables principaux des IEC?
+toux (+++)
+hypotension artérielle
+insuffisance rénale
+
+
+Quelles sont les posologies maximales de l’énalapril, du captopril, du ramipril?
+énalapril 20 mg (1 ou 2 prises)
+captopril 150 mg (2 ou 3 prises)
+ramipril 10 mg / j (2 prises)
+
+
+Décrire la procédure d’initiation d’un traitement par IEC.
+- commencer à faible dose
+- surveillance à 1 semaine:
+	PA, bio (créatininémie, K+)
+- si hypotension artérielle ou si hausse créatinine > 20-30%:
+	arrêt ou baisse des posologies
+- hausse progressive des doses
+- CI association avec AINS, prudence +++ avec anti-aldostérone (hyperK+)
+- précautions ++ si:
+	âgés
+	déshydratés ou diurétiques à forte dose
+	diabétiques
+	insuffisants rénaux
+	hypotendus (PAS < 100 mmHg)
+
+
+
+Citer les contre-indications des IEC:
+	sténose bilatérale des artères rénales,
+	antécédent d’angiœdème
+	grossesse
+	hyperkaliémie
+
+
+
+Quel est le critère imposant la prescription de bétabloquants chez l’insuffisant cardiaque, en l’absence de CI?
+tout patient avec une baisse de la FE
+quelle que soit la classe NYHA
+(idem IEC)
+
+Epidémiologiquement, quels sont les bénéfices des bétabloquants dans l’insuffisance cardiaque?
+idem IEC:
+	amélioration symptômes
+	diminution de mortalité
+	diminution de la fréquence des hospitalisations pour IC aiguë
++ diminution du risque de mort subite par arythmie
+
+
+
+A quel degré d’urgence faut-il prescrire des bétabloquants après une insuffisance cardiaque aiguë?
+après stabilisation de quelques jours
+
+
+Que faire en cas de décompensation cardiaque chez un patient déjà sous bêtabloquant?
+pas d’arrêt+++
+	sauf si mauvaise réponse au ttt
+	ou choc cardiogénique
+
+Décrire la procédure d’initiation d’un traitement par béta-bloquants.
+début à doses très faibles (1/8e dose maximale)
+surveillance FC et PA
+hausse très progressive
+selon la tolérance
+
+
+
+Quelles sont les contre-indications  d’un traitement par béta-bloquants?
+asthme
+BPCO sévère
+bradycardie
+IC systolique
+hypotension symptomatique
+BAV 2 ou 3
+syndrome de Raynaud
+
+
+
+Comment adapter la posologie de diurétiques de l’anse dans l’insuffisance cardiaque?
+dose minimale permettant de contrôler les œdèmes
+adaptée selon les apports sodés
+de 20 mg (formes légères) à 1 g /jour (formes les plus sévères)
+
+
+Quelle est l’indication des diurétiques thiazidiques dans l’insuffisance cardiaque?
+formes graves d’IC
+en association aux diurétiques de l’anse
+si résistance aux diurétiques de l’anse
+
+(persistance de
+signes de rétention hydrosodée malgré fortes doses de furosémide)
+
+anti-aldostérone ou antagonistes des R aux minéralocorticoïdes (ARM)
+
+
+Quelle est l’indication des diurétiques épargneurs potassiques dans l’insuffisance cardiaque?
+tous les patients IC avec FE basse
++ classe II-IV NYHA
+
+
+Epidémiologiquement, quels sont les bénéfices des diurétiques épargneurs potassiques dans l’insuffisance cardiaque?
+réduction de mortalité
+réduction des épisodes de décompensation
+
+
+Quelle est l’indication de l’éplérénone après IDM? Quel effet épidémiologique?
+IDM étendu 
+	avec FE < 40% 
+	et/ou signes d’IC 
+entraîne:
+	diminution de la mortalité
+	du risque de mort subite
+	des récidives d’insuffisance cardiaque
+
+
+
+Quels sont les effets secondaires et CI des diurétiques épargneurs potassiques?
+hyperkaliémie
+insuffisance rénale (si IEC associés+++, prudence)
+gynécomastie et impuissance (spirololactone >> éplérénone)
+
+
+Mécanisme d’action des ARA II?
+blocage du SRAA de manière plus spécifique que les IEC
+via blocage du récepteur AT1 de l’angiotensine 2
+
+
+
+Quelle sont les règles de prescription des ARA II?
+mêmes règles de prescription que les IEC
+mieux tolérés, moins de toux, avec efficacité comparable
+coût plus élevé 
+réservés aux intolérances aux IEC
+
+
+Mécanisme d’action de l’ivabradine?
+bloquant le canal If du noeud sinusal
+qui contrôle la dépolarisation diastolique spontanée
+diminue la fréquence cardiaque
+
+
+
+Quelles sont les indications de l’ivabradine dans l’insuffisance cardiaque?
+symptomatique (NYHA II-IV)
+rythme sinusal
+FC élevée > 70-75 /min
+malgré dose maximale tolérée de bêtabloquant
+ou avec CI/intolérance aux bêtabloquants
+
+
+L’ivabradine a t’elle prouvé une réduction de la mortalité dans l’insuffisance cardiaque?
+non
+diminution du risque d’hospitalisation pour IC
+
+
+La digoxine a t’elle prouvé une réduction de la mortalité dans l’insuffisance cardiaque?
+effet neutre sur la survie
+amélioration des symptômes si persistence sous TTT optimal
+
+
+Quelles sont les indications de la digoxine dans l’insuffisance cardiaque?
+association aux IEC, bétabloquants… chez les patients avec IC grave
+ou si fibrillation atriale
+
+
+
+Quels calcium-bloquants sont contre-indiqués dans l’IC systolique?
+diltiazem et vérapamil
+
+ 
+Quelle classe d’anti-arythmiques est particulièrement contre-indiqués dans l’insuffisance cardiaque?
+classe I : flécaïne
+
+
+
+Quelles sont les indications et modalités de la pose de stimulateur cardiaque dans l’insuffisance cardiaque?
+- Indications:
+	IC systolique
+	grave, stade III-IV NYHA (voir II si BBG)
+	en rythme sinusal
+	avec FEVG ≤ 35% 
+	et allongement de la durée de QRS ≥ 120 ms (BBG +++),
+- Modalités:
+	stimulation biventriculaire simultanée (ou pacemaker triple chambre):
+	sondes dans l’OD, VD, et en regard de paroi latérale du VG
+	insérées via le sinus coronaire
+	= resynchronisation ventriculaire
+	restauration contraction synchrone et harmonieuse
+
+
+
+Quelles sont les indications de la pose d’un défibrillateur automatique implantable dans l’insuffisance cardiaque?
+- Indications: 
+	prévention secondaire :
+		après arrêt cardiaque
+		ou arythmie ventriculaire symptomatique
+	prévention primaire : 
+		patients symptomatiques (classe II-IV NYHA)
+		FE ≤ 35%
+		après 6 semaines d’un geste de revascularisation ou d’un IDM
+	réservé aux patients avec espérance de vie > 1 an
+	si indication de resynchronisation : dispositif avec les 2 fonctions
+
+
+
+
+
+Quelles sont les indications de transplantation cardiaque dans l’IC sévère?
+symptômes invalidants
+mauvais pronostic
+sous ttt optimal et maximal
+patient motivé et capable de suivre le traitement immunosuppresseur
+
+
+Quelles sont les contre-indications à la transplantation cardiaque dans l’IC sévère?
+âge physiologique > 65 ans
+espérance de vie limitée (cancer…)
+infection active
+insuff. rénale
+HTAP fixée avec résist. pulm. > 5 unités Wood
+atteinte artérielle périphérique diffuse
+
+Quelles sont les complications de la transplantation cardiaque?
+épisodes de rejet
+effets secondaires des immunosuppresseurs
+	infection
+	cancers
+	HTA
+	insuffisance rénale
+maladie coronaire du greffon (≈ athérome coronaire précoce et diffus)
+
+
+Quelle est l’escalade thérapeutique dans l’insuffisance cardiaque systolique?
+1 - IEC (ARA II si intolérance) + bêtabloquants + diurétiques de l’anse
+2 - si encore en stade II NYHA ou plus: 
+	ajout éplérénone ou spironolactone
+3 - si encore stade II NYHA ou plus avec FEVG ≤ 35% et rythme sinusal ≥ 70/min):
+	ivabradine
+4 - si encore stade II NYHA ou plus et FE < 35%: 
+	DAI 
+	+/- resynchronisation si QRS ≥ 120 ms
+5 - si encore stade II NYHA ou plus: 
+	envisager digoxine ou nitrés
+	voire greffe/assistance si IC avancée
+RETENIR+++: IEC + bêtabloquants + diurétiques de l’anse
+et ajout anti-aldostérone ou ARA II si symptômes persistants
+jamais d’anti-arythmiques de type I
+
+
+Traitement de l’insuffisance cardiaque diastolique (= à FE conservée)?
+- très mal codifié
+- contrôle des facteurs déclenchants:
+	poussées hypertensives
+	épisodes de FA et autres troubles du rythme
+	surcharges volumiques 
+- traitement de fond semblable à celui de l’IC systolique:
+	IEC ou ARA 2
+	bêtabloquants 
+		(ou, différent de l’IC systolique: possibilité des inhibiteurs calciques ralentisseurs: diltiazem, vérapamil)
+	diurétique (thiazidiques ou de l’anse) 
+
+
+Traitement de l’OAP?
+au domicile :
+	position assise
+	furosémide IV (1 mg/kg, à répéter si nécessaire),
+	dérivés nitrés sublinguaux
+à l’hôpital / SAMU:
+	VVP avec G5%
+	monitorage (FC, PA, SaO2, scope)
+	oxygénothérapie à la sonde nasale ou au masque : objectif SaO2 > 90%
+		(/!\ si risque d’hypercapnie)
+	furosémide IV (1 mg/kg, à adapter selon diurèse)
+	dérivés nitrés IV (trinitrine 1 mg/h, adapté à la PA) si PAS > 100 mmHg
+	HBPM en préventif
+	morphine IV : si anxiété +++ non contrôlée ou douleur thoracique
+Si FA rapide : 
+	digoxine IV et anticoagulation efficace
+Si poussée hypertensive : 
+	perfusion de nicardipine IV (1-5 mg/h)
+Si non-réponse aux traitements médicamenteux : 
+	ventilation CPAP
+Si pas de réponse au ttt et épuisement respiratoire : 
+	intubation - ventilation
+
+
+
+Traitement du choc cardiogénique?
+définition : PA < 90 mmHg, oligurie, marbrures cutanées
+- inotropes
+	perfusion de dobutamine IV 
+	ou inhibiteurs des phosphodiestérases (énoximone, si patient sous bêtabloquants)
+- sonde urinaire systématique
+- monitorage invasif de la PA (cathéter radial)
+- lévosimendan
+	non commercialisé en France
+	sensibilisateur des protéines contractiles au calcium
+	propriétés inotropes et vasodilatatrices
+	ATU si patient non sevrable en traitement par inotropes
+- si non-réponse: 
+	assistance circulatoire
+		de courte durée (ECMO) 
+		ou plus longue durée (assistance uni ou biventriculaire)
+	cœur artificiel
+	greffe cardiaque en urgence

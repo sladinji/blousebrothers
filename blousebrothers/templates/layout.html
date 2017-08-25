@@ -7,6 +7,10 @@
 {% load bbtricks %}
 {% load activeurl %}
 
+{% block zendesk %}
+{% endblock zendesk %}
+
+
 
 {% block styles %}
 {% comment %}
@@ -44,11 +48,11 @@ settings file. This will enable the on-the-fly less compiler.
     <div class="row">
         <div class="col-sm-12 col-md-2 logo-wrapper">
             <div class="logo">
-                <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=100px alt=""></a>
+                <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=66px alt="Logo BlouseBrothers"></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-primary">
                     <i class="fa fa-bars"></i>
                 </button>
-<span class="blouse-font">BlouseBrothers</span>
+                <span class="blouse-font">BlouseBrothers</span>
             </div>
         </div>
         {% activeurl %}
@@ -57,19 +61,10 @@ settings file. This will enable the on-the-fly less compiler.
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'catalogue:index' %}"><span class="fa fa-th"></span> {% trans 'Catalogue' %}</a>
+                            <a href="{% url 'cards:home' %}"><span class="fa fa-history fa-lg"></span> {% trans 'Révisions' %}</a>
                         </li>
-                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'users:faq' %}"><strong><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</strong></a></li>
-                        <li class="menu-item-has-children item-megamenu"><a id="btn-create-conf" href="{% url 'confs:create' %}"><strong><span class="fa fa-plus"></span> {% trans 'Créer une conf' %}</strong></a></li>
+                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}</a></li>
                         {% if request.user.is_authenticated %}
-                        {% if request.user.is_conferencier%}
-                        <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'confs:list' %}"><span class="fa fa-reorder"></span> {% trans 'Confs créées' %}</a>
-                        </li>
-                        {% endif %}
-                        <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'confs:my_confs' %}"><span class="fa fa-check-circle-o"></span> {% trans 'Confs achetées' %}</a>
-                        </li>
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}
@@ -79,15 +74,15 @@ settings file. This will enable the on-the-fly less compiler.
                                 <span class="label label-important">{{ num_unread_notifications }}</span>
                             </a>
                             {% else %}
-                            <a href="{% url 'users:subscription' 0 %}"><i class="icon-user"></i> {{ request.user.username }}</a>
+                            <a href="{% url 'users:home' %}"><i class="icon-user fa-lg"></i> {{ request.user.username }}</a>
                             {% endif %}
                         </li>
-                        {% if request.user.is_staff or perms.partner.dashboard_access %}
-                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
                         {% endif %}
+                        {% if request.user.is_staff or perms.partner.dashboard_access %}
+                        <li class="menu-item-has-children item-megamenu"><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul fa-lg"></i> {% trans "Dashboard" %}</a></li>
                         {% endif %}
                         {% if request.user.is_authenticated %}
-                        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
+                        <li class="menu-item-has-children item-megamenu"><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout fa-lg"></i></a></li>
                         {% else %}
                         {% block connect_link %}
                         <li class="menu-item-has-children item-megamenu"><a id="login_link" href="{% url 'account_login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
@@ -100,6 +95,7 @@ settings file. This will enable the on-the-fly less compiler.
         {% endactiveurl %}
         {% block submenu %}
         <div class="hidden-xs submenu_new pull-right">
+            <a href="{% url 'faq' %}"><span class="fa fa-cogs"></span> {% trans 'Comment ça marche ?' %}</a>
             <a href="tel:+33339250264"><i class="fa fa-phone"></i> 03 39 25 02 64</a> 
             <a href="https://www.facebook.com/iBlouseBrothers"><i class="fa fa-facebook"></i></a> 
             <a href="https://twitter.com/iBlouseBrothers"><i class="fa fa-twitter"></i></a> 
@@ -119,7 +115,9 @@ settings file. This will enable the on-the-fly less compiler.
             <h1>{% block headertext %}{% endblock %}</h1>
         </div>
         {% endblock %}
+        {% block alert_messages %}
         {% include "partials/alert_messages.html" %}
+        {% endblock %}
         {% block subnavigation %}{% endblock %}
         <div class="content">
             {% block subheader %}{% endblock subheader %}
@@ -162,5 +160,7 @@ settings file. This will enable the on-the-fly less compiler.
 
 {% block onbodyload %}
 {{ block.super }}
+{% block oscar_init %}
 oscar.init();
+{% endblock %}
 {% endblock %}

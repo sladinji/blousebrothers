@@ -7,6 +7,7 @@ import uuid
 from decimal import Decimal
 from datetime import date
 import logging
+import numpy as np
 
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -78,6 +79,9 @@ class Conference(ModelMeta, models.Model):
                                    )
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='conferences',
                                           blank=True)
+    average = models.DecimalField(_("Score moyen"), max_digits=6, decimal_places=2, default=0)
+    standard_deviation = models.DecimalField(_("Ecart-type"), max_digits=6, decimal_places=2, default=0)
+    median = models.DecimalField(_("Médiane"), max_digits=6, decimal_places=2, default=0)
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
                                 default=Decimal(1.00),
@@ -106,6 +110,13 @@ class Conference(ModelMeta, models.Model):
         'og_author_url': "get_author_url",
         "gplus_author": "get_author_gplus",
     }
+
+    def update_stats(self):
+        score_list = self.tests.filter(finished == True).values_list('score', flat=True) if self.tests.filter(finished == True).values_list('score', flat=True) != [] else [0]
+        self.average = np.mean(score_list)
+        self.standard_deviation = np.std(score_list)
+        self.median = np.median(score_list)
+        self.save()
 
     def get_absolute_url(self):
         return reverse('confs:detail', kwargs={'slug': self.slug})
@@ -174,7 +185,7 @@ class Conference(ModelMeta, models.Model):
         if self.type == 'LCA':
             return "lecture_critique_d_articles"
         if self.specialities.all():
-            return '_'.join(self.specialities.all()[0].name.lower().replace("'", "_").split())
+            return self.specialities.all()[0].css()
         return "no_spe"
 
 
@@ -223,6 +234,12 @@ class Speciality(models.Model):
     def __str__(self):
         return self.name
 
+    def css(self):
+        return '_'.join(self.name.lower().replace("'", "_").split())
+
+    def image(self):
+        return 'images/spe/cardio.png'
+
 
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False)
@@ -230,6 +247,13 @@ class Question(models.Model):
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     coefficient = models.PositiveIntegerField(_("Coéfficient"), default=1)
     explaination = models.TextField(_("Remarque globale pour la correction"), blank=True, null=True)
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='questions',
+                                   help_text=_('Ne sélectionner que les items abordés de manière '
+                                               '<strong>significative</strong> dans votre dossier'),
+                                   blank=True,
+                                   )
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='questions',
+                                          blank=True)
 
     def is_valid(self):
         one_good = len([a for a in self.answers.all() if a.answer and a.correct]) >= 1
@@ -330,7 +354,8 @@ class Test(models.Model):
     conf = models.ForeignKey('Conference', related_name='tests')
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     progress = models.PositiveIntegerField(_("Progression"), default=0)
-    max_score = models.PositiveIntegerField(_("Résultat"), default=0)
+    max_point = models.PositiveIntegerField(_("Point"), default=0)
+    point = models.DecimalField(_("Point"), max_digits=6, decimal_places=2, default=0)
     score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
     finished = models.BooleanField(default=False)
     personal_note = models.TextField(_("Remarques personnelles"), blank=True, null=True,
@@ -354,11 +379,28 @@ class Test(models.Model):
         """
         return Test.objects.filter(conf=self.conf, finished=True).count()
 
+    def red_score(self):
+        """
+        Used for rgba score display
+        """
+        rs = 100 - self.score
+        return self.get_score_color(rs)
+
+    def green_score(self):
+        return self.get_score_color(self.score)
+
+    def get_score_color(self, score):
+        if score > 50:
+            return 100
+        else:
+            return score / 50 * 100
+
     def set_score(self):
         for t_answer in self.answers.all():
-            t_answer.set_score()
-        self.max_score = self.answers.aggregate(models.Sum('max_score')).get("max_score__sum")
-        self.score = self.answers.aggregate(models.Sum('score')).get("score__sum")
+            t_answer.set_point()
+        self.max_point = self.answers.aggregate(models.Sum('max_point')).get("max_point__sum")
+        self.point = self.answers.aggregate(models.Sum('point')).get("point__sum")
+        self.score = self.point / self.max_point * 100
         self.finished = True
         self.save()
 
@@ -368,7 +410,7 @@ class Test(models.Model):
 
     @property
     def nb_errors(self):
-        return self.answers.aggregate(models.Sum('nb_errors')).get("nb_errors__sum")
+        return sum([x.nb_errors for x in self.answers.all()])
 
     def has_review(self):
         """
@@ -397,13 +439,13 @@ class TestAnswer(models.Model):
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
                                      validators=[int_list_validator])
     """String representing a list of checked answer (ex: "0, 1, 3")"""
-    max_score = models.PositiveIntegerField(_("Résultat"), default=0)
-    score = models.DecimalField(_("Résultat"), max_digits=6, decimal_places=2, default=0)
+    max_point = models.PositiveIntegerField(_("Point"), default=0)
+    point = models.DecimalField(_("Point"), max_digits=6, decimal_places=2, default=0)
     nb_errors = models.PositiveIntegerField(_("Nombre d'erreurs"), default=0)
     fatals = models.ManyToManyField('Answer', verbose_name=("Erreurs graves"))
 
-    def set_score(self):
-        self.max_score = self.question.coefficient
+    def set_point(self):
+        self.max_point = self.question.coefficient
         ga = ast.literal_eval(self.given_answers + ',')
         omissions = [ans for ans in self.question.good_answers if ans.index not in ga]
         errors = [ans for ans in self.question.bad_answers if ans.index in ga]
@@ -413,13 +455,13 @@ class TestAnswer(models.Model):
         if fatals:
             self.fatals.add(*fatals)
         if sorted(ga) == sorted(self.question.good_index):
-            self.score = self.max_score
+            self.point = self.max_point
         elif len(bga) > 2 or fatals:
-            self.score = 0
+            self.point = 0
         elif len(bga) == 2:
-            self.score = Decimal(0.2 * self.question.coefficient)
+            self.point = Decimal(0.2 * self.question.coefficient)
         elif len(bga) == 1:
-            self.score = Decimal(0.5 * self.question.coefficient)
+            self.point = Decimal(0.5 * self.question.coefficient)
         self.save()
 
 
@@ -451,3 +493,43 @@ class Subscription(models.Model):
     @property
     def is_past_due(self):
         return date.today() > self.date_over
+
+
+def classifier_directory_path(classifier, filename):
+    return 'classifiers/{0}/{1}-{2}'.format(classifier.name, classifier.version, filename)
+
+
+class Classifier(models.Model):
+    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
+    version = models.CharField(_("Version"), max_length=64)
+    date = models.DateField(_("Date created"), auto_now_add=True)
+    classifier = models.FileField(_("Classifier"), upload_to=classifier_directory_path)
+
+
+class Prediction(models.Model):
+    question = models.ForeignKey('Question', related_name="prediction")
+    classifier = models.ForeignKey('Classifier', related_name="prediction")
+    items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='prediction', blank=True)
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='prediction', blank=True)
+
+
+class PredictionValidation(models.Model):
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="prediction_validation")
+    prediction = models.ForeignKey('Prediction', blank=False, null=False, related_name="prediction_validation")
+    valid = models.NullBooleanField(default=None)
+    date_created = models.DateField(_("Date created"), auto_now_add=True)
+    date_modified = models.DateField(_("Date modified"), auto_now=True)
+
+
+class StatsSpe(models.Model):
+    speciality = models.ForeignKey('Speciality', related_name="stats")
+    average = models.DecimalField(_("Moyenne"), max_digits=6, decimal_places=2, default=0)
+    median = models.DecimalField(_("Médianne"), max_digits=6, decimal_places=2, default=0)
+    std_dev = models.DecimalField(_("Écart-type"), max_digits=6, decimal_places=2, default=0)
+
+
+class StatsItem(models.Model):
+    item = models.ForeignKey('Item', related_name="stats")
+    average = models.DecimalField(_("Moyenne"), max_digits=6, decimal_places=2, default=0)
+    median = models.DecimalField(_("Médianne"), max_digits=6, decimal_places=2, default=0)
+    std_dev = models.DecimalField(_("Écart-type"), max_digits=6, decimal_places=2, default=0)

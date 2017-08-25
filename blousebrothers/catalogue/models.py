@@ -14,7 +14,7 @@ class Product(AbstractProduct):
     interest_rating = models.SmallIntegerField(_("Intérêt global du dossier"), default=0)
     clarity_rating = models.SmallIntegerField(_("Clarté du dossier"), default=0)
     correction_rating = models.SmallIntegerField(_("Qualité de la correction"), default=0)
-    difficulty_rating = models.SmallIntegerField(_("Difficulté du dossier"), default=0)
+    difficulty_rating = models.SmallIntegerField(_("Difficulté du dossier"), default=6)
 
     def is_review_permitted(self, user):
         """
@@ -66,7 +66,10 @@ class Product(AbstractProduct):
 
     def get_title(self):
         if self.conf:
-            return self.conf.title
+            return self.conf.title + \
+                '<br><i class="fa fa-caret-right"></i> ' + \
+                self.conf.owner.username + \
+                ' <i class="fa fa-caret-left"></i> '
         return super().get_title()
 
     def user_test(self):

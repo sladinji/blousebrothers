@@ -1,0 +1,51 @@
+{% extends "cards/revision.html" %}
+{% load static %}{% load i18n %}
+{% load crispy_forms_tags %}
+{% load djng_tags %}
+{% block title %}
+{% if object %}
+{% trans 'Édition fiche' %}
+{% else %}
+{% trans 'Nouvelle fiche' %}
+{% endif %}
+{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock %}
+
+{% block description %}
+<form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="tab-content">
+        <div id="conference">
+            {{ form | crispy }}
+        </div>
+    </div>
+    <br>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">{% trans "Valider" %}</button>
+            <a href="{% if object %}{% url 'cards:revision' object.card.slug %}{% else %}{% url 'cards:home' %}{% endif %}" class="btn">{% trans "Annuler" %}</a>
+        </div>
+    </div>
+</form>
+{% endblock description %}
+
+{% block card_footer %}
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+{{ form.media.js }}
+{{ block.super }}
+{% endblock %}
+
+{% block extrascripts %}
+ <script type="text/javascript">
+$(document).ready(function() {
+    $('.description *:not(.preview)').css({opacity : 1.0});
+});
+</script>
+{% endblock extrascripts %}

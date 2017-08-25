@@ -18,6 +18,7 @@ from blousebrothers.tools import get_full_url
 @method_decorator(terms_required, name='dispatch')
 class BBLoginRequiredMixin(LoginRequiredMixin):
     login_url = '/accounts/login/'
+    permission_denied_message = 'Merci de te connecter'
 
 
 class BBConferencierReqMixin(BBLoginRequiredMixin, UserPassesTestMixin):
@@ -85,7 +86,9 @@ class MangoPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
     Check if user gave all info to deal with mangopay.
     """
 
-    msg_access_denied = _('Merci de compléter le formulaire ci-dessous avant de continuer.')
+    msg_access_denied = _('Ces informations sont confidentielles et sont obligatoires pour la création du compte. '
+                          'Elles ne seront ni utilisées pour de la publicité, ni revendues à des tiers sous aucune '
+                          'forme que ce soit')
 
     def test_func(self):
         return self.request.user.gave_all_mangopay_info

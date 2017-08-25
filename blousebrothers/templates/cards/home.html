@@ -1,0 +1,248 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load jchart %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
+
+{% block alert_messages %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="tabbed-sidebar">
+        <div class="card">
+            <div class="card-block">
+                <figure class="profile">
+                    <img src="{% static 'images/retro/8.jpg' %}" class="profile-avatar" alt="">
+                </figure>
+                <h4 class="card-title mt-3">Comment ça marche ?</h4>
+                <div class="meta">
+                    <a><span class="fa fa-list"></span></a>
+                </div>
+                <div class="card-text">
+                    <small>Quelques explications...</small>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a data-toggle="modal" data-target="#modalTip" class="btn btn-secondary float-right btn-sm">voir</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block">
+                <figure class="profile">
+                    <img src="{% static 'images/go_rev.png' %}" alt="">
+                </figure>
+                <h4 class="card-title mt-3">Commencer à réviser</h4>
+                <div class="meta">
+                    <a><span class="fa fa-history"></span></a>
+                </div>
+                <div class="card-text">
+                    <small>Nouvelle session automatique</small>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'cards:redirect' %}" class="btn btn-secondary float-right btn-sm">commencer</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block">
+                <figure class="profile">
+                    <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
+                </figure>
+                <h4 class="card-title mt-3">Créer<br>une fiche</h4>
+                <div class="meta">
+                    <a><span class="fa fa-plus"></span></a>
+                </div>
+                <div class="card-text">
+                    <small>From scratch...</small>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'cards:create' %}" class="btn btn-secondary float-right btn-sm">créer</a>
+            </div>
+        </div>
+    </div>
+    <div class="tabbed-main page">
+        <div class="space hidden-xs"></div>
+        <div class="x_panel tile fixed_height_320 rev_pod">
+            <div class="x_title">
+                <h2><i class="fa fa-pie-chart"></i> Répartition de mes fiches</h2><div class="text-right">{{ user.deck.count }}/{{ total }}</div>
+                <div class="clearfix"></div>
+                <div class="progress-bar-container"><div style="width: {% widthratio user.deck.count total  100 %}%" class="progress-bar"></div></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-5">
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:100px; width:100px">
+                                        {% render_chart chart None %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{ count | default:0 }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="space12"></div>
+                <div class="col-md-7 rev_btns">
+                    <a href="{% url 'cards:redirect' %}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}({{ ready }}){% elif next_session %} (dans {{next_session}}){% endif %}</a>
+                </div>
+            </div>
+        </div>
+        {% for spe in specialities %}
+        <div class="x_panel tile fixed_height_320 rev_pod">
+            <div class="prod-bg {{ spe.obj.css }}"></div>
+            <div class="x_title">
+                <h2><i class="fa fa-chevron-right"></i> {{ spe.obj.name }}</h2><div class="text-right">{{spe.user }}/{{ spe.total }}</div>
+                <div class="clearfix"></div>
+                <div class="progress-bar-container"><div style="width: {% widthratio spe.user spe.total  100 %}%" class="progress-bar"></div></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-5">
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:100px; width:100px">
+                                        {% render_chart chart spe.obj %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{count}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="space12"></div>
+                <div class="col-md-7 rev_btns">
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}({{ spe.ready }}){% elif spe.next_session %} (dans {{spe.next_session}}){% endif %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel">Félicitations !</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img class="reward" src="{% static "images/retro/" %}{{retro_img_nb}}.jpg" alt="Logo fin de révision">
+                    </div>
+                    <div class="col-sm-8 reward">
+                        <p>{{ message|safe }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="modal-footer-tips">
+                Tu les retrouveras en cliquant sur le bouton "Réviser". 
+                C'est normal qu'il y ait peu de cartes à réviser au début :
+                l'algorithme calcule les intervalles de révisions selon tes réponses. 
+                Tu ne vois QUE les cartes que tu dois réviser.
+                </p>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="modal fade" id="modalTip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel"><span class="fa fa-cogs"></span> Explications</h2>
+            </div>
+            <div class="modal-body">
+                <img src="{% static "images/retro/" %}13.jpg" alt="Logo fin de révision">
+                <p>Le principe des fiches est de te permettre de sélectionner les connaissances les plus importantes pour toi, en permanence, et de perdre le moins de temps possible à réviser des choses que tu sais déjà. Notre système est basé sur le principe des "flashcards" et de la révision espacée, avec un algorithme adapté aux ECNi.
+                </p>
+                <p>Tu peux créer des fiches en même temps que tu travailles, sous forme de Question/Réponse, et les taguer dans la matière appropriée. Nous en créons également de notre côté: notre base de travail nous a été fournie par un étudiant classé dans les 120 premiers aux ECN 2017.
+                </p>
+                <p>Le bouton "Apprendre" sert à voir des fiches que tu n'as jamais vu. Elles vont être basculées vers le bouton "Révisions" avec un intervalle de temps de révision correspondant à la difficulté que tu lui attribues. Tu verras souvent les fiches que tu trouves difficiles, et moins souvent celles qui sont faciles.
+                </p>
+                <p>Les fiches n'apparaissent dans l'onglet "Révisions" QUE quand il est temps que tu les révises.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block onbodyload %}
+{% if messages %}
+$('#myModal').modal('show');
+{% endif %}
+{% endblock onbodyload %}
+
+{% block oscar_init %}
+{% endblock %}

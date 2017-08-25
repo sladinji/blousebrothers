@@ -1,12 +1,12 @@
 {% load crispy_forms_tags %}
+{% load static %}
 {% load currency_filters %}
 {% load i18n %}
 {% load bbtricks %}
 {% load tinycontent_tags %}
-{% load history_tags %}
 
 
-<div class="space12"></div> <!-- 40px Vertical Spacing -->
+<div class="space"></div> <!-- 40px Vertical Spacing -->
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -18,50 +18,22 @@
                 <div class="x_content">
                     <div class="dashboard-widget-content">
                         <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        Provenance :
                         <ul class="col-md-12 stats">
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b><br> 
-                                    Personnel</span>
-                                <em>(que j'ai gagné)</em>
+                                <span><b class="value">{{ user.wallet.balance | wallet_clean | currency}}</b></span>
                             </li>
+                            {% comment %}
                             <li class="stat col-md-6 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.wallet_bonus.balance | wallet_clean | currency }}</b><br> 
                                     Bonus</span>
                             </li>
+                            {% endcomment %}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        {% comment %}
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-credit-card"></i> Cartes enregistrées</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        <ul class="col-md-12 stats">
-                            {% for card_registration in user.mangopay_user.mangopay_card_registrations.all %}
-                            {% if card_registration.mangopay_card.mangopay_id %}
-                            {{ card_registration.mangopay_card.request_card_info | default:"" }}
-                            <li class="stat col-md-6 col-sm-6 col-xs-12">
-                                <span><b class="value">{% trans 'Numéro de carte' %}</b><br> 
-                                    {{ card_registration.mangopay_card.alias }}</span>
-                                <em>{% trans "Valide jusqu'au" %} {{ card_registration.mangopay_card.expiration_date }}</em>
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <a href="{% url 'users:addcard' %}" class="btn"><i class="fa fa-plus"></i> Ajouter une carte</a>
-                </div>
-            </div>
-        </div>
-        {% endcomment %}
+
         <div class="col-md-6">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
@@ -87,20 +59,16 @@
                     {% if user.bank_account %}
                     <a href="{% url 'users:payout' %}" class="btn"><i class="fa fa-download"></i> Transférer sur mon compte</a>
                     {% else %}
-                    <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
+                    <div class="space12"></div>
+                    <div class="text-center">
+                        <a href="{% url 'users:addiban' %}" class="btn"><i class="fa fa-plus"></i> Ajouter un RIB</a>
+                    </div>
+                    <div class="space12"></div>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="space12"></div> <!-- 40px Vertical Spacing -->
-
-    {% if balance.amount != 0 or user.subscritpion != None %}
-    {% recently_viewed_products %}
-    {% endif %}
-
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
 
     {% if user.is_conferencier %}
     {% if user.last_subsboard %}
@@ -119,147 +87,95 @@
                             <li class="stat col-md-3 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.last_subsboard.nb_students }}</b><br> 
                                     Étudiants
-                                <em></em>
+                                    <em></em>
                             </li>
                             <li class="stat col-md-3 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.last_subsboard.nb_sales }}</b><br> 
                                     Dossiers
-                                <em></em>
+                                    <em></em>
                             </li>
                             <li class="stat col-md-3 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.last_subsboard.unit_price }}</b><br> 
                                     Prix unitaire
-                                <em></em>
+                                    <em></em>
                             </li>
                             <li class="stat col-md-3 col-sm-6 col-xs-12">
                                 <span><b class="value">{{ user.last_subsboard.credited_funds.amount }} €</b><br> 
                                     Total
-                                <em></em>
+                                    <em></em>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-    {% endif %}
-
-        <div class="col-md-9">
-            <div id="order_graph">
-                <div class="bar-caption"><h1>{% trans "Activité à mes conférences" %}</h1></div>
-                <div class="bar-y-axis">
-                    <ul>
-                        {% for y_value in hourly_report_dict.y_range %}
-                        <li><span>{{ y_value|currency }}</span></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <dl class="bar-chart">
-                    {% for item in hourly_report_dict.order_total_hourly %}
-                    <dd class="bar-layer">
-                    <em>{{ item.end_time|time }}</em>
-                    <span style="height: {{ item.percentage }}%;" >
-                        <p{% if item.percentage == 0 %} style="display: none;"{% endif %}>{{ item.total_incl_tax|currency }}</p>
-                    </span>
-                    </dd>
-                    {% endfor %}
-                </dl>
-            </div>
-        </div>
-        {% comment tableau récap %}
-        <div class="col-md-4">
-            <table class="table table-striped table-bordered table-hover">
-                <caption><i class="icon-group icon-large"></i> {% trans "Étudiants" %}</caption>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre total d'étudiants" %}</th>
-                    <td class="col-md-2" >{{ total_customers }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Nouveaux étudiants" %}</th>
-                    <td class="col-md-2" >{{ total_customers_last_day }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre total de questions" %}</th>
-                    <td class="col-md-2" >{{ total_open_baskets_last_day }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-4">
-            <table class="table table-striped table-bordered table-hover">
-                <caption><i class="icon-copy icon-large"></i> {% trans "Dernières 24 heures" %}</caption>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre de dossiers effectués" %}</th>
-                    <td class="col-md-2" >{{ total_orders_last_day }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Revenu total" %}</th>
-                    <td class="col-md-2" >{{ total_lines_last_day }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Prix moyen" %}</th>
-                    <td class="col-md-2" >{{ total_revenue_last_day|currency }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-4">
-            <table class="table table-striped table-bordered table-hover">
-                <caption>
-                    <i class="icon-copy icon-large"> </i>{% trans "Orders - All Time" %}
-                </caption>
-                <tr>
-                    <th class="col-md-10">{% trans "Nombre de dossiers effectués" %}</th>
-                    <td class="col-md-2" >{{ total_orders }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Revenu total" %}</th>
-                    <td class="col-md-2" >{{ total_lines }}</td>
-                </tr>
-                <tr>
-                    <th class="col-md-10">{% trans "Prix moyen" %}</th>
-                    <td class="col-md-2" >{{ total_revenue|currency }}</td>
-                </tr>
-            </table>
-        </div>
-        {% endcomment %}
+        {% endif %}
 
         <div class="col-sm-12">
-            <table class="table table-striped table-bordered table-hover">
-                <caption>
-                    <h3 class="pull-left"><i class="icon-star icon-large"></i>
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-star"></i> 
                         {% if search_filters %}
                         {% trans "Résultats de la recherche" %}
                         {% else %}
                         {% trans "Détails des ventes effectuées" %}
                         {% endif %}
-                    </h3>
-                </caption>
-
-                <thead>
-                    <tr>
-                        <th>{% trans "Conférence" %}</th>
-                        <th>{% trans "Etudiant" %}</th>
-                        <th>{% trans "Date" %}</th>
-                        <th>{% trans "Crédit" %}</th>
-                        <th>{% trans "Frais" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for sell in user.sales.all %}
-                    <tr>
-                        <td><a href="{% url 'catalogue:reviews-list' product_slug=sell.product.slug product_pk=sell.product.id %}">{{ sell.product }}</a></td>
-                        <td>{{ sell.student }}</td>
-                        <td>{{ sell.create_timestamp }}</td>
-                        <td>{{ sell.credited_funds | or_subscription  }}</td>
-                        <td>{{ sell.fees | or_subscription }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <p>*Abo : la valeur sera déterminée en fin de mois en fonction de la consomation des abonnés.</p>
+                    </h2>
+                    <a href="{% url 'confs:list' %}" class="btn btn-secondary"><span class="fa fa-list"></span> Voir mes dossiers créés</a>
+                    <a data-toggle="modal" data-target="#modalTip" class="btn btn-secondary"><span class="fa fa-cogs"></span> Comment ça marche ?</a>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table class="table table-striped table-hover">
+                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <thead>
+                            <tr>
+                                <th>{% trans "Conférence" %}</th>
+                                <th>{% trans "Etudiant" %}</th>
+                                <th>{% trans "Date" %}</th>
+                                <th>{% trans "Crédit" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sell in user.sales.all %}
+                            <tr>
+                                <td><a href="{% url 'catalogue:reviews-list' product_slug=sell.product.slug product_pk=sell.product.id %}">{{ sell.product }}</a></td>
+                                <td>{{ sell.student }}</td>
+                                <td>{{ sell.create_timestamp }}</td>
+                                <td>{{ sell.credited_funds | or_subscription  }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <p>*Abo : la valeur est déterminée en fin de mois. 70% des gains des abonnements aux dossiers sont répartis entre les conférenciers au prorata de la consultation des dossiers par les étudiants.</p>
+                </div>
+            </div>
+        </div>
+        <div class="space"></div> <!-- 40px Vertical Spacing -->
+        {% endif %}
+    </div>
+</div>
+<div class="modal fade" id="modalTip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel"><span class="fa fa-cogs"></span> Explications</h2>
+            </div>
+            <div class="modal-body">
+                <p>"70% des gains des abonnements reviennent aux Conférenciers. Les abonnements aux fiches sont indépendants et non pris en compte dans le calcul.</p>
+                <p>Les gains sont répartis au prorata du nombre de Dossiers consultés par les étudiants chaque mois.</p>
+                <p>Exemple: si il y a 2 Conférenciers sur la plateforme et 4 Etudiants:</p>
+                <p>Gains à répartir = 4 x total des gains des abonnements (mensualisés) x 0,7</p>
+                <p>Conférencier 1: 5 consultations de son "Dossier 1", 2 de son "Dossier 2", 5 de son "Dossier 3" = 12 consultations</p>
+                <p>Conférencier 2: 6 consultation de son seul"Dossier 4" = 6 consultations</p>
+                <p>--> 2/3 des gains à répartir pour Conférencier 1, 1/3 pour Conférencier 2.</p>
+                <p>Tes gains sont calculés mois après mois, et rapatriables sur ton compte bancaire quand tu le souhaites.</p>
+                <p>Ils doivent bien entendu être déclaré aux impôts.</p>
+                <p>Plus il y aura d'étudiants sur la plateforme, plus les gains seront conséquents, sans pour autant coûter trop cher aux Externes. Nous pouvons construire une organisation plus juste !</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
         </div>
     </div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
-    {% endif %}
 </div>

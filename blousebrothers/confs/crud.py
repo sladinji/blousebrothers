@@ -25,6 +25,7 @@ from .models import (
     Test,
     TestAnswer,
     QuestionComment,
+    PredictionValidation,
 )
 
 logger = logging.getLogger(__name__)
@@ -82,6 +83,16 @@ class TestAnswerCRUDView(StudentConfRelatedObjPermissionMixin, NgCRUDView):
             )
 
 
+class PredictionValidationCRUDView(NgCRUDView):
+    model = PredictionValidation
+
+    def get_queryset(self):
+        question = Question.objects.get(pk=self.request.GET['question_id'])
+        prediction, created = PredictionValidation.objects.get_or_create(prediction=question.prediction.first(),
+                                                                         user=self.request.user)
+        return prediction
+
+
 class BaseConferenceImageCRUDView(NgCRUDView):
     model = ConferenceImage
 
@@ -137,7 +148,7 @@ class StudentQuestionCRUDView(StudentConfRelatedObjPermissionMixin, BaseQuestion
             obj["answered"] = bool(test.answers.get(question_id=obj["pk"]).given_answers)
         if test.finished:
             for obj in object_data:
-                obj["score"] = test.answers.get(question_id=obj["pk"]).score
+                obj["score"] = test.answers.get(question_id=obj["pk"]).point
                 obj["nb_errors"] = test.answers.get(question_id=obj["pk"]).nb_errors
                 obj["nb_fatals"] = test.answers.get(question_id=obj["pk"]).fatals.count()
         return object_data

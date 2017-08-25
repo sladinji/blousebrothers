@@ -1,0 +1,22 @@
+{% load crispy_forms_tags %}
+{% load static %}{% load i18n %}
+
+{% if object %}
+<form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'confs:edit' object.slug %}">
+{% else %}
+<form class="form" name="{{ form.form_name }}" novalidate enctype="multipart/form-data" method="post" action="{% url 'confs:create' %}">
+{% endif %}
+    {% csrf_token %}
+    <div class="tab-content">
+        <div id="conference">
+            {{ form | crispy }}
+            <a class="btn btn-success" href="https://form.jotformeu.com/gdebel/prepa_ecni_collaborative"><i class="fa fa-lightbulb-o" aria-hidden="true" style="font-size: 18pt;"></i> Ma conf est déjà sur un fichier ! Je vais pas tout retaper...</a>
+        </div>
+    </div>
+    <br>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">{% trans "Enregistrer et continuer" %} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+        </div>
+    </div>
+</form>

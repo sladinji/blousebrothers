@@ -1,0 +1,166 @@
+{% extends "layout.html" %}
+{% load static %}{% load i18n %}
+{% load bbtricks%}
+{% block title %}{% trans 'Révisions' %}{% endblock %}
+
+{% block body_class %}{% if zen %}bodyrev{% endif %}{% endblock body_class %}
+
+{% block main_header %}
+{% if not zen %}{{ block.super }}{% endif %}
+{% endblock main_header %}
+
+{% block zendesk %}
+{% endblock zendesk %}
+
+{% block content %}
+{% with object.card.specialities.all|first as spe %}
+<div class="card-row">
+<div class="row">
+	<div class="col-md-4 hidden-xs hidden-sm">
+	</div>
+	<div class="col-md-4">
+		<div class="column"> 
+			<!-- Post-->
+			<div class="post-module"> 
+                {% if zen %}
+				<!-- Thumbnail-->
+				<div class="thumbnail">
+						<img src="{% static spe.image %}" class="img-responsive" alt="">
+                </div>
+                {% endif %}
+				<!-- Post Content-->
+				<div class="post-content">
+                    {% if spe.name and zen %}
+					<div class="category">{{ spe.name }}</div>
+                    {% endif %}
+                    {% if object.card.title %}
+                    <h1 class="title">{{ object.card.title }}</h1>
+                    {% endif %}
+                    {% if object.card.section %}
+                    <h2 class="sub_title">{{ object.card.section }}</h2>
+                    {% endif %}
+                    {% if dsp_card_on_load and object.card.author%}
+                    <i>Édité par</i> {{ object.card.author.username }}
+                    {% endif %}
+                    <div class="btn_rev_block{% if dsp_card_on_load %} btn_rev_nav{% endif %}">
+                        {% if zen %}
+                        {% if other_versions %}
+                        {% if dsp_card_on_load %}
+                        <div class="card_button card_fav">
+                            <a href="#0" title="Choisir cette version">
+                                <div class="day"><i class="fa fa-star{% if not is_favorite%}-o{% endif %}" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                        <div class="card_button card_prev">
+                            <a href="{% url 'cards:previous' object.card.pk %}" title="Voir la version precédente">
+                                <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                        {% endif %}
+                        <div class="card_button card_next">
+                            <a href="{% url 'cards:next' object.card.pk %}" title="Voir la version suivante">
+                                <div class="day"><i class="fa fa-{% if dsp_card_on_load %}chevron-right{% else %}clone{%endif%}" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                        {% endif %}
+                        <div class="card_button card_edit">
+                            <a href="{% url 'cards:update' object.card.slug %}" title="Éditer la carte">
+                                <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                    </div>
+                    <div class="btn_rev_block preview">
+                        <div class="card_button end_revision">
+                            <a href="{% url 'cards:stop' object.card.slug %}" title="Revenir au site">
+                                <div class="day"><i class="fa fa-power-off" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% block description %}
+                    <div class="description">
+                        <span>{{ object.card.content | rev_content | safe }}</span>
+                        <div class="card_button preview" id="calltoac">
+                            <a href="#0">
+                                <div class="day preview"><i class="fa fa-bars preview" aria-hidden="true"></i></div>
+                            </a> 
+                        </div>
+                    </div>
+                    {% endblock description %}
+                    {% block card_footer %}
+                    <div class="btn_rev_block btn_rev_eval">
+                        <form action="" method="POST" >
+                            {% csrf_token %}
+                            <div class="text-center">
+                                <button type="submit" name="easy" class="btn btn-success" disabled>Facile</button>
+                                <button class="btn btn-warning" name="average" disabled>Moyen</button>
+                                <button class="btn btn-danger" name="hard" disabled>Difficile</button>
+                            </div>
+                        </form>
+                    </div>
+					<div class="post-meta"><span class="timestamp"><i class="fa fa-clock"></i>{% for item in object.card.items.all %}{{ item.name }} {% endfor %}</span><span class="comments"></span></div>
+                    {% endblock %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 hidden-md hidden-lg">
+	</div>
+	<div class="col-md-4 text-right hidden-xs hidden-sm">
+        {% include "cards/partials/rev_menu.html" %}
+	</div>
+</div>
+</div>
+
+{% endwith %}
+{% comment %}
+{% if user.is_authenticated and object.card.parent.public %}
+{% load disqus_tags %}
+{% set_disqus_identifier object.card.parent.slug %}
+{% set_disqus_title object.card.parent.title %}
+{% set_disqus_url object.card.get_root_absolute_url %}
+{% disqus_dev %}
+{% get_disqus_sso user %}
+{% disqus_show_comments %}
+{% endif %}
+{% endcomment %}
+{% endblock content %}
+
+{% block footer %}
+{% if not zen %}{{ block.super }}{% endif %}
+{% endblock footer %}
+
+{% if zen %}
+{% block extrascripts %}
+ <script type="text/javascript">
+var myswitch = true;
+var myflag = true;
+$(document).ready(function() {
+    /* toggle preview / solution */
+    var toggle_card = function(){
+        $('.description *:not(.preview)').css({opacity: myswitch ? 0.0 : 1.0}).animate({opacity: myswitch ? 1.0 : 0.0});
+        if(myflag == true){
+            $('.btn_rev_block').css({opacity: 0.0, visibility:"visible"}).animate({opacity: 1.0});
+            $('button').prop('disabled', false);
+            myflag=false;
+        }
+        $('#calltoac').css({display: "none"});
+        myswitch = !myswitch;
+    };
+    /* manage favorit ajax call / star display */
+    $(".card_button.card_fav").click( function(){
+		$.ajax({
+			url: "{% url 'cards:bookmark' object.card.id %}",
+			success: function (data) {
+				$(".card_button.card_fav .day i").addClass('fa-star').removeClass('fa-star-o');
+			}
+		});
+    });
+    $('.description').click(toggle_card);
+    {% if dsp_card_on_load %}
+    toggle_card();
+    {% endif %}
+});
+</script>
+{% endblock extrascripts %}
+{% endif %}

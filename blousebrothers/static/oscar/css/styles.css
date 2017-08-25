@@ -1219,7 +1219,6 @@ a.bg-danger:hover {
 .page-header {
   padding-bottom: 9px;
   margin: 40px 0 20px;
-  border-bottom: 1px solid #eeeeee;
 }
 ul,
 ol {
@@ -2083,7 +2082,6 @@ th {
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
@@ -2747,7 +2745,7 @@ select[multiple].input-lg {
   user-select: none;
 }
 .btn, input[type="submit"] {
-	color: #fff;
+	color: #73879C;
 	display: inline-block;
 	padding: 9px 25px;
 	text-align: center;
@@ -2757,7 +2755,6 @@ select[multiple].input-lg {
 	transition: all 0.3s ease 0s;
 	background: transparent;
 	position: relative;
-	background-color: #568EBC;
 	font-size: 12px;
 	border: none;
 	border-radius: 0px;
@@ -2806,7 +2803,6 @@ fieldset[disabled] .btn {
 }
 .btn-default {
   color: #333;
-  background-color: #4281a4;
   border-color: #ccc;
 }
 .btn-default:hover,
@@ -2856,31 +2852,11 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #fff;
-  background-color: #3071a9;
-  border-color: #285e8e;
 }
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   background-image: none;
-}
-.btn-primary.disabled,
-.btn-primary[disabled],
-fieldset[disabled] .btn-primary,
-.btn-primary.disabled:hover,
-.btn-primary[disabled]:hover,
-fieldset[disabled] .btn-primary:hover,
-.btn-primary.disabled:focus,
-.btn-primary[disabled]:focus,
-fieldset[disabled] .btn-primary:focus,
-.btn-primary.disabled:active,
-.btn-primary[disabled]:active,
-fieldset[disabled] .btn-primary:active,
-.btn-primary.disabled.active,
-.btn-primary[disabled].active,
-fieldset[disabled] .btn-primary.active {
-  background-color: #428bca;
-  border-color: #357ebd;
 }
 .btn-primary .badge {
   color: #428bca;
@@ -5370,14 +5346,11 @@ a.list-group-item-danger.active:focus {
   padding-bottom: 75%;
 }
 .well {
-  min-height: 20px;
-  padding: 4px;
-  margin-bottom: 3px;
-  background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    min-height: 20px;
+    padding: 4px;
+    margin-bottom: 3px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
 }
 .well blockquote {
   border-color: #ddd;
@@ -8825,7 +8798,8 @@ form.flat {
 }
 @media (min-width: 768px) {
   .header .page_inner {
-    padding: 50px 0 40px;
+    padding: 2px 0 2px;
+    background-color: #000;
   }
 }
 .header h1 {
@@ -10813,7 +10787,10 @@ FOOTER
 }
 .btn:hover, input[type="submit"]:hover {
 	background-color: #E8B510;
+	border-color: #E8B510;
 	color: #fff;
+    box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.3);
+
 }
 
 .box-control {
@@ -10847,7 +10824,3 @@ FOOTER
 .border-right-solid {
 	border-right: 1px solid #e8e8e8;
 }
-.con-page {
-	padding: 0 40px;
-}
-

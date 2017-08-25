@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 from datetime import datetime
 from decimal import Decimal
+from datetime import date, datetime, timedelta
 import re
 import logging
 
@@ -22,9 +23,11 @@ from django.views.generic import (
     CreateView,
     FormView,
     DeleteView,
+    TemplateView,
 )
 from django.conf import settings
 
+import blousebrothers.classifier as cl
 from blousebrothers.tools import get_disqus_sso
 from blousebrothers.auth import (
     BBConferencierReqMixin,
@@ -35,6 +38,8 @@ from blousebrothers.auth import (
 )
 from blousebrothers.tools import analyse_conf, get_full_url
 from blousebrothers.confs.utils import get_or_create_product
+from blousebrothers.users.charts import MeanBarChart, MonthlyLineChart
+from blousebrothers.users.models import User
 from .models import (
     Conference,
     Question,
@@ -53,6 +58,52 @@ logger = logging.getLogger(__name__)
 Product = apps.get_model('catalogue', 'Product')
 
 
+class ConferenceHomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'confs/conference_home.html'
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.tests.filter(finished=True).count():
+            return redirect(reverse('catalogue:index'))
+        else:
+            return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = self.request.user
+
+        user = User.objects.prefetch_related("tests__answers").get(pk=self.request.user.pk)
+        test_fini = user.tests.filter(finished=True).prefetch_related('answers')
+        nb_test_fini = len(test_fini)
+
+        temps_moyen = sum([x.time_taken.hour*3600
+                           + x.time_taken.minute*60
+                           + x.time_taken.second for x in test_fini])/nb_test_fini
+
+        nb_test_this_week = sum([1 for x in test_fini.filter(date_created__gt=(datetime.now() - timedelta(days=7)))])
+        nb_test_last_week = sum([1 for x in test_fini.filter(date_created__range=(datetime.now() - timedelta(days=15),
+                                                                                 datetime.now() - timedelta(days=7)))])
+
+        pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 if nb_test_last_week > 0 else nb_test_this_week * 100
+
+        moy_score = sum([x.score for x in test_fini])/nb_test_fini
+        moy_erreurs = sum([x.nb_errors for x in test_fini])/nb_test_fini
+
+        context['nb_test_fini'] = nb_test_fini
+        context['temps_moyen'] = timedelta(seconds=int(temps_moyen))
+        context['moy_score'] = round(moy_score, 2)
+        context['moy_erreurs'] = round(moy_erreurs, 1)
+        context['nb_test_this_week'] = nb_test_this_week
+        context['pourcentage_progression'] = round(pourcentage_progression, 0)
+
+        mean_chart = MeanBarChart()
+        mean_chart.context = context
+        context['mean_chart'] = mean_chart
+        monthly_chart = MonthlyLineChart()
+        monthly_chart.context = context
+        context['monthly_chart'] = monthly_chart
+        return context
+
+
 class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
@@ -67,6 +118,17 @@ class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['meta'] = self.get_object().as_meta(self.request)
+        if self.request.user.is_superuser:
+            l = []
+            intro = context['object'].statement
+            quest = context['object'].questions.all()
+            for question in quest:
+                if question.explaination:
+                    res = cl.classifier(str(intro)+" "+question.question+" "+question.explaination)
+                else:
+                    res = cl.classifier(str(intro)+" "+question.question)
+                l.append(res)
+            context['specialities'] = l
         return context
 
 
@@ -131,6 +193,8 @@ class ConferenceUpdateView(ConferenceWritePermissionMixin, JSONResponseMixin, Up
         conf.pop('specialities')
         conf_pk = conf.pop('pk')
         Conference.objects.filter(pk=conf_pk).update(**conf)
+        question.pop('specialities')
+        question.pop('items')
         Question.objects.filter(pk=question.pop('pk')).update(**question)
         for answer in answers:
             Answer.objects.filter(pk=answer.pop('pk')).update(**answer)
@@ -249,7 +313,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
                 id__in=self.object.items.all()
             ).all():
                 for kw in item.kwords.all():
-                    if re.search(r'[^\w]'+kw.value+r'[^\w]', txt):
+                    if re.search(r'[^\w]'+kw.value+r'([^\w]|$)', txt):
                         items.append(item)
                         break
         context = super().get_context_data(**{'items': items})

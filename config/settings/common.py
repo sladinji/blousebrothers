@@ -74,12 +74,15 @@ THIRD_PARTY_APPS = [
     'localflavor',  # IbanField
     'disqus', #  Forum
     'paypal',
+    'jchart',
+
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'blousebrothers.users',  # custom users app
-    'blousebrothers.confs',  # custom users app
+    'blousebrothers.confs',  # confs app
+    'blousebrothers.cards',  # revisons/fiches app
     # Your stuff: custom apps go here
     'widget_tweaks',
 ]
@@ -237,7 +240,7 @@ TEMPLATES = [
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
                 'blousebrothers.context_processor.subscriptions',
-                'blousebrothers.context_processor.balance',
+                #'blousebrothers.context_processor.balance',
                 'blousebrothers.context_processor.invit_form',
             ],
         },
@@ -328,8 +331,9 @@ SOCIALACCOUNT_PROVIDERS = {
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/catalogue/?q=&sort_by=newest'
+LOGIN_REDIRECT_URL = reverse_lazy('confs:home')
 LOGIN_URL = 'account_login'
+ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('account_login')
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

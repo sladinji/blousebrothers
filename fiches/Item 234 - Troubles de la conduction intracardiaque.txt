@@ -1,0 +1,500 @@
+#### Cardiologie
+###234
+
+Décrire l’organisation des voies de conduction intracardiaques:
+voies de conduction séparées en 3 étages:
+	étage atrial: 
+		nœud sinusal
+	jonction atrioventriculaire:
+		nœud atrio-ventriculaire
+		et faisceau de His
+	étage ventriculaire:
+		branches du faisceau du His
+		et réseau de Purkinje
+
+
+Quelle est l’origine anatomique des dysfonctions sinusales?
+Le nœud sinusal
+
+
+Quels sont les 2 types de tissu permettant la conduction intra-cardiaque?
+tissu nodal:
+	noeud sinusal et noeud atrio-ventriculaire
+	neurones
+tissu de type « Purkinje »
+	faisceau de His et branches et réseau de Purkinje
+	tissus myocardiques différenciés ayant perdu leur fonction contractile (pas des neurones)
+
+
+Quelles sont les différentes fréquences d’échappement cardiaque?
+nœud atrio-ventriculaire = 40-50 bpm
+faisceau de His = 35-45 bpm
+branches et ventricules < 30 bpm
+
+Comment se fait la conduction intra-auriculaire?
+pas de voies de conduction spécialisées, mais conduction musculaire de proche en proche
+
+Comment se fait la conduction intra-ventriculaire?
+par le réseau de Purkinje
+mais aussi en intra- et interventriculaire de proche en proche
+
+
+Un bloc de branche isolé peut-il être symptomatique?
+Non.
+(ne pas confondre avec les BAV)
+
+
+Localisation anatomique, innervation, vascularisation du nœud sinusal?
+dans l’atrium droit, proche de la veine cave supérieure
+innervation: SN autonome: nerfs vagues, parasympathiques +++
+vascularisation : branche de l’artère coronaire droite ou de l’artère circonflexe
+
+
+De quoi est composée une « maladie de l’oreillette »?
+Dysfonction sinusale + fibrillation auriculaire
+= syndrome bradycardie-tachycardie
+
+Etiologies de dysfonction sinusale?
+Principales formes cliniques = 
+	idiopathique du sujet âgé
+	mécanisme vagal chez le sujet jeune (= DS extrinsèque)
+Aussi:
+	médicaments bradycardisants
+	chirurgie valvulaire, transplantation
+	pathologies cardiaques diverses
+	pathologies systémiques, hypothyroïdie
+
+
+  
+
+Localisation anatomique, innervation, vascularisation du nœud atrioventriculaire?
+Dans l’atrium droit, en avant et en haut de l’ostium du sinus coronaire
+innervation: SN autonome
+vascularisation: branche de la coronaire droite
+
+
+Trajet du faisceau de His?
+chemine dans le septum membraneux sous la racine de l’aorte
+vascularisation du faisceau et branches : 1ère branche septale de l’IVA et artère du NAV
+
+
+Quels sont les différences entre les blocs atrio-ventriculaires selon leur caractère nodal ou hissien?
+- BAV nodal: 
+	rythme d’échappement possible du faisceau de His (35-50 bpm)
+	quasiment pas d’évolution paroxystique ni de risque syncopal
+- BAV hissien ou infra-hissien : 
+	échappement instable et plus lent (15-30 bpm)
+	possibilité d’évolution paroxystique et risque syncopal élevé
+	gravité +++
+
+
+Anatomie de la structure concernée par les blocs de branche?
+branches droite et gauche du faisceau de His
+peu sensibles aux effets du SN autonome
+donnent des fascicules ou hémi-branches antérieure (fine) et postérieure (épaisse)
+qui se ramifient en réseau de Purkinje (même nature histologique que lui) : 
+cellules peu sensibles à l’ischémie et quasiment dépourvues d’activité mécanique
+bloc de branche = ralentissement ou interruption de conduction dans une des branches
+
+
+Mode de révélation d’une dysfonction sinusale?
+totalement asymptomatique
+lipothymies/syncopes
+dyspnée d’effort, asthénie chronique, angor
+aggravation d’une insuffisance cardiaque
+si FA associée: peut être révélée par la FA ou ses complications
+possible détérioration des fonctions cognitives chez le sujet âgé
+
+
+Dysfonction sinusale: clinique et ECG ?
+Clinique:
+	bradycardie en situation d’éveil (< 60 bpm chez l’adulte)
+	ou absence d’accélération de la FC à l’effort (= incompétence chronotrope)
+ECG:
+	pauses sans onde P visible > 3 secondes
+	bloc sino-atrial (BSA) du 2ème degré
+	bradycardie avec rythme d’échappement atrial ou jonctionnel
+	syndrome bradycardie-tachycardie
+
+   
+Nom, terrain, symptômes et PEC de la dysfonction sinusale du sujet âgé?
+dysfonction sinusale dégénérative liée à l’âge
+terrain : sujet féminin, recevant de multiples médicaments (BBloquants, penser aux collyres)
+chutes à répétition, déclin cognitif
+peut être associé à FA :maladie de l’oreillette
+et/ou troubles conductifs 
+prise en charge : souvent à traiter
+
+
+
+
+Nom, terrain, symptômes et PEC de la dysfonction sinusale du sujet jeune?
+dysfonction sinusale par hypervagotonie
+terrain : sportif ou jeune athlète (endurance, marathon, vélo +++)
+asymptomatique, bradycardie fortuite lors d’une réaction vasovagale
+ECG : 
+	bradycardie sinusale < 50 bpm en éveil et jusqu’à 30 bpm dans le sommeil
+	ou bradycardie sur rythme d’échappement, avec pauses jusqu’à 3 secondes
+tests diagnostics : test à l’atropine ou test d’effort (normalisent la situation)
+prise en charge : ne pas traiter +++
+
+
+Présentation clinique des BAV?  
+BAV 1 et la plupart des BAV 2: souvent totalement asymptomatique
+peut s’accompagner de lipothymies/syncopes de type Adams-Stokes
+faux vertiges, dyspnée d’effort, asthénie chronique, angor
+peut aggraver une insuffisance cardiaque
+détérioration des fonctions cognitives chez le sujet âgé
+peut être révélée ou s’accompagner de FV après torsade de pointe (↑ QT)
+
+
+Etiologies des blocs atrio-ventriculaires?
+- causes dégénératives : fibrose (maladies de Lev et de Lenègre)
+- hyperkaliémie (+++)
+- rétrécissement aortique
+- ischémie:
+	IDM inférieur —> siège nodal: bon pronostic, le plus souvent régressif
+	IDM antérieur —> siège hissien ou infra-hissien: très mauvais pronostic, car témoin d’infarctus très étendu avec insuffisance cardiaque ou choc cardiogénique
+- causes infectieuses : 
+	EI bactérienne de la valve aortique
+	maladie de Lyme compliquée de myocardite
+	myocardites virales
+- iatrogénie médicamenteuse: bétabloquant, inhibiteur calcique bradycardisant, amiodarone ou autre anti-arythmique, ivabradine, digitalique
+- iatrogénie chirurgicale: post-chirurgie valvulaire, post-cathétérisme, post-radiothérapie
+- causes vagales : hypertonie vagale (athlète) ou réflexe vagal (malaise vasovagal)
+- maladie systémiques, cardiopathies de surcharge, maladies neuromusculaires, cause néoplasique, cause congénitale
+
+
+Devant un bloc atrio-ventriculaire, si on observe des QRS < 120 ms, que peut-on penser?
+très en faveur d’un bloc nodal
+(= moins grave qu’un bloc hissien ou infra-hissien)
+
+Comment caractériser un bloc atrio-ventriculaire? (4 caractéristiques)
+- type de bloc (1er, 2ème ou 3ème degré)
+- caractère paroxystique ou permanent
+- caractère congénital ou acquis
+- siège du bloc (+++)
+	nodal : BAV 1, BAV 2 Möbitz I, ou BAV complet à échappement à QRS fins à 35-50 bpm
+	hissien ou infra-hissien: survient au préalable sur des BdB ou des BAV 2 Möbitz II
+
+
+Quels sont les risques d’un BAV complet?
+risque de décès par asystolie et torsades de pointes
+rythme d’échappement inconstant, instable et lent (< 30 bpm)
+
+BAV complet lors d’un infarctus inférieur: fréquence, physiopathologie, signes ECG, prise en charge
+- 13% des cas
+- si très précoce: secondaire à hypervagotonie —> atropine
+- si J4-J5: atteinte de l’artère du noeud atrio-ventriculaire +++
+- installation progressive du 1er au 3ème degré
+- en règle régressif : vers le BAV du 2ème degré, puis du 1er degré
+- facteurs favorisant possibles : bétabloquants
+- si non régressif à J15 : discuter exceptionnellement la pose de stimulateur (5%)
+
+
+Terrain, fréquence, étiologies et risques du BAV congénital?
+3-5% des BAV
+touche plutôt les filles
+dans un tiers des cas : 
+	lupus érythémateux ou syndrome de Gougerot-Sjögren avec Ac anti-SSA chez la mère
+	et Ac anti-ribonucléoprotéine soluble chez l’enfant
+peut causer une bradycardie fœtale ou néonatale
+risques:
+	insuffisance cardiaque
+	torsades de pointes et décès
+risque augmenté si:
+	association à une cardiopathie congénitale
+	fréquence ventriculaire < 50 bpm
+
+
+
+Que faut-il évoquer et faire si lipothymies/syncopes + bloc de branche?
+Bloc de branche isolé = toujours asymptomatique
+lipothymies/syncopes = gravité immédiate
+Evoquer:
+	cardiopathie (surtout bloc de branche gauche)
+	ou BAV paroxystique
+Faire: 
+	étude électrophysiologique endocavitaire
+
+Gravité des blocs de branche droit? Et gauche?
+- bloc de branche droite:
+	parfois bénin si isolé, variante de la normale (qu’il soit complet ou incomplet)
+	apparaît fréquemment dans les atteintes pulmonaires
+	facteur de gravité dans les SCA+++ (atteinte étendue)
+- bloc de branche gauche:
+	jamais bénin +++
+	facteur de gravité dans les SCA+++ (atteinte étendue)
+
+Etiologie des blocs de branche droit? Et gauche?
+Etiologies communes:
+	dégénératif
+	post SCA, témoin d’infarctus antérieur très étendu, très mauvais pronostic
+	hyperkaliémie+++
+	anti-arythmiques de classe I (Flécaïne)
+	intox antidépresseurs tricycliques
+droit: 
+	très fréquent dans les cardiopathies congénitale touchant le VD
+	et les pathologies pulmonaires (cœur pulmonaire aigu ou chronique, EP…)
+gauche : 
+	associé à une cardiopathie sous-jacente (HTA, ischémie)
+
+Sous-types de bloc de branche du sujet âgé avec perte de connaissance?
+BBD + HBAG (le plus souvent +++)
+ou BBD + HBPG
+parfois, BAV 1 associé
+risque de tachycardie ventriculaire → syncope
+rechercher une cardiopathie sous-jacente par étude endocavitaire (mesure de conduction infra-hissien)
+Stimulateur cardiaque si pathologique
+
+
+Cause et risques d’un BBG dans l’IDM antérieur?
+Signe de gros dégâts septaux, atteinte massive
+Risque de BAV complet brutal et asystolie
+ou TDR ventriculaire
+
+
+Que faut-il évoquer devant un BBD complet + BBG complet , ou BBD complet + alternance HBAG/HBPG, avec syncopes?
+Bloc alternant ou trifasciculaire (BBD complet + BBG complet, ou BBD complet + alternance
+Lors d’un bilan de syncope du sujet âgé, ou infarctus antérieur
+Grave+++
+
+ECG de la dysfonction sinusale?
+- Aspect:
+	pauses avec tracé plat
+	de longueur variable (parfois asystolie)
+	sans onde P bloquée (≠ BAV)
+- 1er degré : non visible sur un ECG
+- 2ème degré : pause d’une onde P à la suivante = multiple du cycle sinusal normal (x2-3)
+- arrêt sinusal ou BSA complet prolongé: 
+	asystolie
+	ou simple bradycardie par échappement atrial (bas situé avec onde P négative en DII, DIII, aVF) 
+	ou par échappement jonctionnel (pas d’ondes P visible)
+- bradycardie sinusale marquée inappropriée (patient éveillé)
+
+
+ECG de la BAV de 1er degré?
+allongement fixe et constant de PR > 200 ms
+Siège souvent supra-hissien ou nodal
+Asymptomatique
+
+ECG de la BAV du 2ème degré de type Luciani-Wenckebach?
+=  Möbitz I
++/- symptomatique
+allongement progressif de PR
+puis une seule onde P bloquée 
+suivie d’une onde P conduite avec un intervalle PR plus court
+souvent associé à un BAV 2:1
+souvent nodal, le plus souvent QRS fins < 120 ms
+
+
+ECG du BAV du 2ème degré de type Möbitz II?
++/- symptomatique
+PR normal
+survenue inopinée d’une seule onde P bloquée
+évoluant souvent vers le BAV complet
+souvent siège hissien ou infra-hissien
+souvent QRS larges
+
+ECG du BAV de haut degré?
+parfois assimilé au type Möbitz II
+symptomatique
+plusieurs ondes P bloquées consécutives
+ou conduction rythmée avec 2 ondes P bloquées et 1 conduite (3:1)
+évoluant souvent vers le BAV complet
+souvent siège hissien ou infra-hissien
+souvent à QRS larges
+
+ECG de la BAV du 2ème degré de type 2:1?
+inclassable en Möbitz I ou II
+2 ondes P pour un QRS
+siège du bloc indiqué par la largeur de QRS
+
+ECG de la BAV du 3ème degré?
+= complet
+symptomatique, surtout si QRS larges +++
+aucune onde P conduite: dissociation atrio-ventriculaire
+ventricules plus lents que les atrium
+siège du bloc déterminé par la fréquence d’échappement
+et par la durée des QRS
+
+
+ECG d’un BAV complet + FA?
+bradycardie régulière au lieu de la tachycardie irrégulière usuelle de la FA
+QRS de durée variable en fonction du siège du bloc
+
+
+ECG d’un bloc de branche droit complet?
+Rythme sinusal, fréquence normale
+durée de QRS > 120 ms
+aspect RsR’ en V1
+qR en aVR
+qRs en V6
+onde S arrondie
+ondes T négatives en V1-V2 voire V3
+
+
+ECG d’un bloc de branche gauche?
+QRS > 120 ms
+aspect rS ou QS en V1
+QS en aVR
+R exclusif en V6
+ondes T négatives en DI-aVL-V5-V6
+possible léger sus-ST en V1-V2-V3 < 1 mm
+
+
+EGG d’un bloc de branche non spécifique?
+QRS < 120ms
+après IDM sévère ou insuffisance cardiaque
+natomiquement à gauche par atteinte du tissu de conduction distal
+mais sans les critères morphologiques du bloc de branche gauche
+
+
+Que faire devant une symptomatologie d’IDM + un BBG?
+PEC équivalent à celle d’un sus-ST (+++)
+Car diagnostic gêné
+
+ECG d’un hémi-bloc ou bloc fasciculaire antérieur gauche?
+durée de QRS < 120 ms
+déviation axiale gauche du QRS (-30° en aVL)
+aspect qR en DI-aVL
+rS en DII-DIII-aVF (→ S3 > S2)
+onde S en V6
+
+ECG d’un hémi-bloc ou bloc fasciculaire postérieur gauche?
+durée de QRS < 120 ms
+déviation axiale droite du QRS (+90° en aVF) 
+aspect RS ou Rs en DI-aVL 
+qR en DII-DIII-aVF (→ S1Q3)
+
+CAT en pratique devant une dysfonction sinusale du sujet âgé? et du sujet jeune?
+confirmation de la corrélation électro-clinique par enregistrement Holter + journal des symptômes
+voir enregistreur externe de longue durée
+Explorations possibles: 
+	test d’effort sur tapis: rech incompétence chronotrope
+	test d’inclinaison: rech mécanisme vagal chez le jeune 
+	compression carotidienne: rech hyperréflectivité sino-carotidienne du sujet âgé
+		compression prudente d’une carotide puis l’autre
+		après vérification de l’absence de souffle
+		pendant 5 secondes
+		+ si pause > 3 secondes ou chute de PA > 50 mmHg
+	test à l’atropine: rech hypertonie vagale
++ Echocardiographie
+
+
+
+CAT en pratique devant un BAV?
+- Recherche étiologique:
+	SCA inférieur +++
+	médicament bradycardisant
+	myocardite
+- donc échocardiographie et troponine
+- si bloc permanent : ECG suffisant
+- si bloc paroxystique:
+	Holter-ECG +/- test d’effort si suspicion de bloc supra-hissien ou nodal
+	étude électrophysiologique endocavitaire si suspicion de BAV infra-hissien (QRS large)
+		intervalle HV normal entre 35-55 ms
+		pathologique si > 70 ms
+
+Que rechercher devant un BBG asymptomatique?
+HTA
+cardiopathie sous-jacente
+bloc dégénératif = diag d’élimination
+
+Que rechercher devant un BBD chez un sujet jeune asymptomatique?
+Rien, variante de la normale
+
+Que rechercher devant une syncope avec bloc de branche droit?
+BAV paroxystique
+et accès de tachycardie ventriculaire+++
+Si pas de BAV 2 ou 3 documenté: aller à l’exploration électrophysio
+
+
+Que faire devant une IC gauche sévère (NYHA 3) + BBG?
+discuter resynchronisation par stimulation biventriculaire
+
+
+Quel est le risque immédiat d’une bradycardie par BAV complet?
+torsades de pointes +++
+
+
+Critères définissant une bradycardie grave? CAT en pratique?
+Urgence vitale
+Transfert en USIC ou réanimation
+Scope et surveillance
+Recherche étiologique: 
+	IDM
+	iatrogène
+	hyperkaliémie
+Traitement:
+	tachycardisants
+		atropine
+		catécholamines (isoprénaline-Isuprel®)
+	stimulation cardiaque temporaire
+		percutanée (SEES) 
+		ou trans-thoracique
+Si TDR ventriculaire ou échec des traitements: réanimation cardiorespiratoire et sonde d’entraînement percutanée
+
+
+Quels sont les différents types de stimulateurs cardiaques?
+stimulateurs monochambre
+	électrode à la pointe du VD
+	mode « sentinelle » de type VVI
+stimulateurs séquentiels double chambre
+	stimulent successivement l’atrium puis les ventricules en mode DDD
+stimulateurs biventriculaires
+	stimulent simultanément le VD et VG
+	via sonde supplémentaire dans une branche du sinus coronaire
+
+
+
+
+Quelle est la surveillance d’un stimulateur cardiaque?
+Rx thoracique de face (position sondes)
+test à l’aimant (force le fonctionnement)
+vérification télémétrique des paramètres du système tous les ans
+
+Indication du stimulateur cardiaque dans la dysfonction sinusale?- symptomatique + causalité prouvée (bradycardie/symptômes)
+- absence de cause réversible
+	ou arrêt impossible d’un ttt bradycardisant causal
+- indications élargies  (avis spé):
+	bradycardies sévères diurnes (< 40/min) même asymptomatique 
+	hyperréflectivité syncopale
+
+
+Traitement d’un BAV du 3ème degré?
+Stimulateur en l’absence de cause curable ou réversible (majorité des cas)
+
+
+Traitement d’un BAV du 2ème degré?
+Stimulateur:
+	si évocateur d’un siège infra-hissien 
+	ou si symptomatique
+
+
+Indication du stimulateur dans les BAV 2 de type Möbitz I et les BAV 1?
+Quasiment jamais d’indication
+
+
+
+Traitement des blocs de branche?
+Etiologique:
+	hyperkaliémie
+	médicament en surdosage
+Surveillance clinique et ECG
+Stimulateur:
+	quasiment jamais
+	sauf si BAV paroxystique symptomatique associé
+	parfois stimulateur biventriculaire chez l’insuffisant cardiaque avec BBG
+
+Education thérapeutique du patient porteur de stimulateur cardiaque?
+Remise d’un carnet au patient
+Interférence possible avec les champs électromagnétiques de forte puissance (milieu industriel+++)
+Contre-indication à l’IRM (+++)
+Surveillance de l’état cutané
+Attention:
+	aux signes locaux
+	fièvres inexpliquée
+	infections respiratoires à répétition
+Contrôle annuel au centre d’implantation
+

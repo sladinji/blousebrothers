@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load jchart %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+    <div class="row tile_count">
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-check-square-o"></i> Dossiers effectués</span>
+            <div class="count">{{ nb_test_fini }}</div>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-braille"></i> 7 derniers jours</span>
+            <div class="count green">{{ nb_test_this_week }}</div>
+            {% if pourcentage_progression < 0 %}
+            <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ pourcentage_progression }}% </i> de moins</span>
+            {% else %}
+            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ pourcentage_progression }}% </i> de plus</span>
+            {% endif %}
+            <!--   <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-clock-o"></i> Temps par dossier</span>
+            <div class="count">{{ temps_moyen }}</div>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-balance-scale"></i> Moyenne</span>
+            <div class="count">{{ moy_score}} / 100</div>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-warning"></i> Nb erreur par dossier</span>
+            <div class="count">{{ moy_erreurs }}</div>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-trophy"></i> Dernier classement</span>
+            <div class="count"><a href="{{ user.last_test.conf.products.first.get_absolute_url }}">{{ user.last_test.position }} / {{ user.last_test.total }}</a></div>
+        </div>
+    </div>
+    <div class="tabbed-sidebar">
+        <div class="card">
+            <a href="{% url 'catalogue:index' %}">
+                <div class="card-block">
+                    <figure class="profile">
+                        <img src="{% static 'images/confs/catalogue.png' %}" alt="">
+                    </figure>
+                    <h4 class="card-title mt-3">Voir les<br>dossiers disponibles</h4>
+                </div>
+            </a>
+        </div>
+        <div class="card">
+            <a href="{% url 'confs:create' %}">
+                <div class="card-block">
+                    <figure class="profile">
+                        <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
+                    </figure>
+                    <h4 class="card-title mt-3">Créer<br>un dossier</h4>
+                </div>
+            </a>
+        </div>
+        <div class="card">
+            <a href="{% url 'confs:list' %}">
+                <div class="card-block">
+                    <figure class="profile">
+                        <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
+                    </figure>
+                    <h4 class="card-title mt-3">Voir mes<br>dossiers créés</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="tabbed-main page">
+        <div class="space"></div>
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-line-chart"></i> Mon niveau par matière</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    {% render_chart mean_chart 'moy_spec' %}
+                </div>
+            </div>
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-calendar"></i> Mon travail sur l'année</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    {% render_chart monthly_chart %}
+                </div>
+            </div>
+    </div>
+    <div class="space"></div> <!-- 40px Vertical Spacing -->
+</div>
+{% endblock content %}
+
+{% block oscar_init %}
+{% endblock oscar_init %}

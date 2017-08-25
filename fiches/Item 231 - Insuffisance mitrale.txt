@@ -1,0 +1,252 @@
+####Cardiologie
+###231 
+
+
+
+Citer la classification des insuffisances mitrales, la détailler
+Classification de Carpentier
+	type I :
+		valves = plan de l’anneau, jeu valvulaire normal
+		—> perforations, fentes, IM fonctionnelles +++
+	type II : 
+		une valve au moins dépasse le plan de l’anneau lors de la systole ventriculaire
+		jeu valvulaire exagéré
+		—> IM dystrophiques avec prolapsus d’une ou des 2 valves dans l’OG +++
+	type III : 
+		une valve au moins reste sous le plan de l’anneau lors de la systole
+		jeu valvulaire restrictif 
+		IM post-rhumatismale ou IM ischémique +++
+
+
+Anatomie de la valve mitrale?
+2 feuillets sur un anneaux fibreux
+intimement liés aux VG par les cordages insérés sur les piliers 
+
+
+De quoi dépend le volume régurgité lors d’une insuffisance mitrale? 
+3 facteurs:
+	taille de l’orifice
+	gradient de pression
+	durée de la systole
+
+
+Quelles sont les conséquences hémodynamiques en aval d’une insuffisance mitrale? et en amont?
+en aval:
+	surcharge diastolique du VG —> dilatation de la cavité
+	distension chronique des fibres —> altération de contractilité
+en amont : 
+	hausse de la pression dans l’oreillette gauche —> HTAP post-capillaire
+		si IM aiguë : HTAP immédiatement importante
+		si IM chronique : dilatation OG → maintien d’une pression intra-auriculaire quasi normale 
+		mais lorsque le volume régurgité devient trop important, HTAP
+
+
+Quel est la complication de la dilatation auriculaire gauche lors de l’insuffisance mitrale chronique?
+troubles du rythme atrial
+
+Définition et cause de la « maladie mitrale » ?
+sténose + insuffisance mitrale
+secondaire à RAA (rare)
+souvent, également atteinte de la valve aortique
+
+
+Quels sont les 2 types d’insuffisance mitrale dystrophique?
+- dégénérescence fibroélastique = plus fréquente, hommes âgés, valve postérieure
+	quantité de tissu valvulaire adaptée à la taille de l’orifice
+	mais fuite par rupture de cordage +++
+- dégénérescence myxoïde = maladie de Barlow
+	excès de tissu
+	valves redondantes, épaissies 
+	excès de mobilité, prolapsus
+	possibles ruptures par traction sur cordages
+
+
+Quels sont les 2 mécanismes d’insuffisance mitrale dite « ischémique »?
+complications aiguës de l’infarctus : 
+	rupture de pilier, très rare, grave+++
+remodelage chronique ventriculaire gauche post-infarctus: 
+	modification de l’architecture du VG 
+	et dilatation de l’anneau mitral
+	entraîne IM fonctionnelle 
+
+
+
+Quelles pathologies peuvent entraîner une IM fonctionnelle?
+Toutes les dilatations du VG !
+
+
+
+
+
+Quelles sont les causes possibles de rupture de cordage ou pilier mitral?
+Pilier = muscle:
+	infarctus
+	traumatisme
+Cordage = tissu fibreux:
+	dégénérescence myxoïde ou fibroélastique
+	endocardite, traumatisme thoracique
+Entraîne IM aigüe tableau hémodynamique grave
+
+
+
+
+Signes palpatoires de l’insuffisance mitrale?
+frémissement systolique à l’apex
+déviation et abaissement du choc de pointe (dilatation VG)
+
+
+Signes auscultatoires de l’insuffisance mitrale?
+souffle holosystolique de régurgitation
+siège apexo-axillaire
+augmenté en DLG
+en jet de vapeur
+parfois rude ou musical
+si HTAP: 
+	B2 claqué
+si prolapsus:
+	clic méso ou télésystolique
+si IM importante: 
+	galop protodiastolique (B3)
+	roulement mésodiastolique
+	souffle d’insuffisance tricuspide fonctionnelle
+
+
+ECG de
+longtemps normal dans les IM modérées
+
+hypertrophie auriculaire gauche
+PARACLINIQUE
+
+
+
+
+Signes ECG de l’insuffisance mitrale?
+longtemps normal
+hypertrophie auriculaire gauche
+hypertrophie ventriculaire gauche
+fibrillation atriale
+hypertrophie ventriculaire droite
+	si IM évoluées avec HTAP
+
+
+
+Signes d’insuffisance mitrale sur la radiographie thoracique?
+normale dans les IM minimes ou modérées
+cardiomégalie
+dilatation de l’OG:
+	arc moyen gauche convexe
+	débord arc inférieur droit
+signes d’HTAP si IM chronique évoluée ou aiguë: 
+	dilatation des artères pulmonaires
+	redistribution vasculaire vers les sommets
+	lignes de Kerley aux bases
+	œdème alvéolaire
+
+
+
+
+Comment faire le diagnostic positif d’insuffisance mitrale sur l’échodoppler cardiaque?
+signal doppler holosystolique en arrière du plancher mitral
+
+
+
+Quelles sont les indications de l’ETO dans l’insuffisance mitrale?
+recherche d’une endocardite 
+ou d’une rupture partielle de cordages
+atteinte des feuillets mitraux en cas de prolapsus (guide le chirurgien pour la plastie)
+
+
+Comment quantifier le degré de sévérité d’une insuffisance mitrale en échodoppler cardiaque?
+quantification de régurgitation : 
+	densité et largeur du signal doppler régurgitant
+	volume régurgité (VR)
+	fraction de régurgitation
+	surface de l’orifice de régurgitation (SOR, fuite sévère si > 40 mm²)
+quatre grades de sévérité croissante:
+	IM de grade I = minime: SOR < 20 mm², VR < 30 mL
+	IM de grade II = modérée: SOR = 20-29 mm², VR = 30-44 mL
+	IM de grade III = importante: SOR = 30-39 mm², VR = 45-59 mL
+	IM de grade IV = massive: SOR ≥ 40 mm², VR ≥ 60 mL
+
+Quels sont les buts de l’examen lors d’un échodoppler cardiaque dans une insuffisance mitrale?
+Diagnostic positif
+Classification de Carpentier
+Diagnostic étiologique
+Grade de sévérité (SOR, VR)
+Retentissement sur dilatation VG, FEVG, niveau des pressions droites, taille de l’oreillette gauche
+Vérification des autres valves: tricuspide (+++) (prolapsus, dilatation de l’anneau)
+
+
+Quelles sont les indications de la coronarographie lors d’une insuffisance mitrale?
+bilan préopératoire, si:
+	angor
+	homme > 40 ans
+	femme ménopausée
+	FDR CV
+
+
+
+Quelles sont les complications de l’insuffisance mitrale?
+endocardite infectieuse
+troubles du rythme:
+	FA et flutter, favorisés par la dilatation de l’OG
+	TDR ventriculaire, plus rares, si dysfonction ventriculaire
+insuffisance cardiaque (tardive si chronique, rapide si aigüe)
+complications thromboemboliques:
+	thrombose de l’oreillette gauche et embolie
+
+
+Etiologies du prolapsus valvulaire mitral?
+primitif : 
+	dégénérescence myxoïde ou fibroélastique isolée de la valve mitrale
+secondaire:
+	maladie de Marfan
+	maladie d’Ehlers-Danlos
+	communication inter-auriculaire (CIA)
+	cardiopathie ischémique
+	cardiomyopathie hypertrophique
+
+Définition du prolapsus valvulaire mitral?
+prolapsus d’un ou des 2 feuillets valvulaires mitraux dans l’oreillette gauche en systole
+
+
+Signes auscultatoires du prolapsus valvulaire mitral?
+souffle d’IM télésystolique, mésosystolique, ou holosystolique
+clic méso- ou télésystolique à l’apex ou à l’endapex
+
+
+
+
+Quelle est la prise en charge thérapeutique d’une IM asymptomatique?
+si grade I II, III, IV + VG normal:
+	surveillance
+	prévention de l’endocardite
+si grade III ou IV + retentissement VG de l’IM: 
+	DTS VG > 45 mm 
+	ou DTS VG > 40 mm + prolapsus valvulaire 
+	ou FE < 60%
+	ou hausse des pressions droites au repos (PAP systolique ≥ 50 mmHg)
+	ou FA associée
+	= plastie reconstructrice si possible 
+
+
+Quelle est la prise en charge chirurgicale d’une IM symptomatique?
+- plastie si possible:
+	moins de dysfonction VG post-opératoire
+	morbi-mortalité à long terme plus faible
+	moindre risque d’endocardite infectieuse
+	indications : prolapsus, rupture de cordage, post-rhumatismales si valve peu abîmée, certaines IM ischémiques 
+- prothèse mécanique:
+	si FEVG > 30%
+	plutôt avant 65 ans
+	longue durée de vie
+	AVK à vie
+- prothèse biologique:
+	si FEVG > 30%
+	plutôt après 70 ans
+	risque de dégénérescence à long terme
+	pas d’anticoagulants nécessaires 
+- choix selon autre indication d’anticoagulants (rythme…), préférences du patient, âge…
+- si plastie non réalisable et FE < 30% : 
+	traitement médical
+	ou discussion de transplantation cardiaque si sujet jeune

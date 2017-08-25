@@ -58,6 +58,10 @@ conf_app.factory('Question', ['$resource', function($resource) {
     return $resource('{% url 'confs:student_question_crud_view' %}', {'pk': '@pk'}, {
     });
 }]);
+conf_app.factory('PredictionValidation', ['$resource', function($resource) {
+    return $resource('{% url 'confs:prediction_validation_crud_view' %}', {'pk': '@pk'}, {
+    });
+}]);
 conf_app.factory('QuestionImage', ['$resource', function($resource) {
     return $resource('{% url 'confs:student_questionimage_crud_view' %}', {'pk': '@pk'}, {
     });
@@ -93,7 +97,7 @@ conf_app.config(function(djangoRMIProvider) {
 });
 
 conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope, $window, $location, djangoRMI,
-            Conference, ConferenceImage, AnswerImage, Question, QuestionImage, Answer, Upload, Test ) {
+            Conference, ConferenceImage, AnswerImage, Question, PredictionValidation, QuestionImage, Answer, Upload, Test ) {
 
     $scope.ans_label = ["A", "B", "C", "D", "E"];
     $scope.conferenceimages = [];
@@ -135,10 +139,21 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
         }
     };
 
+    var setPredictionValidation= function(question) {
+        console.log("ahaha");
+        if (question != null){
+            PredictionValidation.get({question_id: question.pk}).$promise
+                .then(function(result){
+                    $scope.prediction_validation = result;
+                });
+        }
+    };
+
     $scope.question_selected = function(question){
         $scope.question = question;
         setAnswers(question);
         setQuestionImages(question);
+        setPredictionValidation(question);
     }
     $scope.next_question = function(){
         var iq = $scope.questions.indexOf($scope.question);
@@ -175,6 +190,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
                         });
                         setAnswers($scope.question);
                         setQuestionImages($scope.question);
+                        setPredictionValidation($scope.question);
                     })
                 setConferenceImage();
             })

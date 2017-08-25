@@ -135,10 +135,9 @@ def get_migrations():
     """
     Remove local migration files et grab them from prod, nice to get a clean migration set.
     """
-    local("sudo rm -rf blousebrothers/users/migrations/*")
-    local("sudo rm -rf blousebrothers/confs/migrations/*")
-    get("%s/blousebrothers/users/migrations/*.py" % code_dir, "blousebrothers/users/migrations/")
-    get("%s/blousebrothers/confs/migrations/*.py" % code_dir, "blousebrothers/confs/migrations/")
+    for app in ['users', 'confs', 'cards']:
+        local("sudo rm -rf blousebrothers/%s/migrations/*" % app)
+        get("%s/blousebrothers/%s/migrations/*.py" % (code_dir, app), "blousebrothers/%s/migrations/" % app)
 
 
 @hosts('ubuntu@labresult.fr')

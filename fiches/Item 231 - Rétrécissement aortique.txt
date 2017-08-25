@@ -1,0 +1,252 @@
+####Cardiologie
+###231
+
+
+Quelles sont les 2 causes les plus fréquentes de rétrécissement aortique?
+sujet < 65-70 ans : congénital, sur bicuspidie qui se calcifie
+sujet > 65-70 ans : dégénératif maladie de Mönckeberg
+(post-RAA = rare)
+
+Causes d’obstruction à l’éjection du VG en aval ou amont de la valve aortique?
+rétrécissement aortique
+	congénital sur biscupidie
+	ou dégénératif
+	ou post-RAA
+rétrécissement supra-aortique(congénital, rare, en diaphragme fibreux ou étranglement)
+rétrécissement sous-aortique (congénital, en diaphragme fibreux)
+cardiomyopathies obstructives avec obstruction dynamique  
+
+
+Quelles association faut-il rechercher lors de la découverte d’un RA congénital?
+anévrisme de l’aorte ascendante (souvent)
+coarctation (beaucoup + rare)
+faire un dépistage familial
+
+
+Quelles sont les 2 étiologies de RA acquis (= pas sur bicuspidie)?
+RA dégénératif ou maladie de Mönckeberg
+	= dépôt de calcifications à la base des valvules qui deviennent rigides
+	âgé > 65-70 ans +++
+RA post-rhumatismal, rare, généralement associé à IA + RM + IM
+
+
+Quel est le retentissement hémodynamique, et physiologique, du rétrécissement aortique?
+diminution de surface de l’orifice aortique 
+résistance à l’éjection ventriculaire
+gradient systolique de pression ventriculo-aortique
+	donc hausse des contraintes pariétales (loi de Laplace)
+entraîne réplication des cellules myocardiques
+avec hypertrophie pariétale du VG
+donc souvent conservation de la performance systolique (Loi de Laplace)
+mais dysfonction diastolique
+`
+
+Quelle est la définition hémodynamique d’un RA serré?
+Gradient VG-aorte > 40 mmHg
+
+
+Physiopathologie de l’insuffisance cardiaque dans le rétrécissement aortique?
+hypertrophie pariétale 
+	altération de la compliance ventriculaire
+	ralentissement de relaxation 
+élévation des pressions VG diastolique
+	transmission en amont aux veines et capillaires pulmonaires 
+congestion pulmonaire, signes d’insuffisance cardiaque
+
+
+Que faut-il craindre devant un passage en FA sur RA? Pourquoi?
+poussée d’insuffisance cardiaque
+car rôle important de l’oreillette gauche dans le remplissage ventriculaire
+en raison de la dysfonction diastolique du VG
+
+
+Que signifie sur le plan pronostic, un rétrécissement mitral devenu symptomatique?
+pronostic vital mis en jeu : 
+	décès dans les 2 ans si signes d’IC
+	décès dans les 3 ans si syncope
+	décès dans les 5 ans si angor
+car longue période asymptomatique de plusieurs années
+symptômes apparaissent à un stade avancé
+
+Quel est l’espérance de vie d’un patient ayant un RA serré et présentant un angor? une syncope? des signes d’insuffisance cardiaque?
+	décès dans les 5 ans si angor
+	décès dans les 3 ans si syncope
+	décès dans les 2 ans si signes d’IC
+
+Quels sont les éléments du syndrome de Heyde?
+rétrécissement aortique
+angiomes digestifs
+anomalie du facteur von Willebrand
+
+
+Signes auscultatoires du rétrécissement aortique?
+généralement typique
+permet le diagnostic +++
+souffle mésosystolique, éjectionnel
+intense, rude, râpeux
+maximum au 2ème espace intercostal droit
+irradiant dans les vaisseaux du cou 
+abolition de B2 dans les RA serrés calcifiés
++/ souffle d’IA (= maladie aortique)
+
+
+Signes du rétrécissement aortique à la palpation?
+frémissement palpatoire au foyer aortique
+	en fin d’expiration, penché en avant
+	dans les RA hémodynamiquement significatifs++
+élargissement du choc de pointe
+	dévié en bas et à gauche
+	dans les cas évolué, signe la dilatation du VG
+
+Quelles sont les complications du rétrécissement aortique?
+insuffisance cardiaque
+FA (généralement mal tolérée car perte systole atriale)
+troubles de conduction
+mort subite +++ 
+endocardite (rare)
+hyperexcitabilité ventriculaire (rare)
+embolies calcaires systémiques (rares)
+
+
+
+Signes à la radiographie thoracique dans le rétrécissement aortique?
+peut être strictement normale
+dilatation VG (si RA évolué avec cardiomégalie)
+surcharge pulmonaire (si RA évolué avec IC gauche)
+
+
+Signes ECG du rétrécissement aortique?
+parfois normal si RA peu évolué
+Signes hypertrophiques:
+	HVG de type surcharge systolique
+	HAG
+Troubles de conduction:
+	BBG
+	BAV 1)
+Troubles du rythme
+	FA +++
+
+
+
+Critères diagnostics du rétrécissement aortique en échographie cardiaque?
+échographie 2D :
+	valve remaniée
+	calcifiée
+	baisse d’ouverture des sigmoïdes
+en doppler continu :
+	hausse de la vitesse maximale transvalvulaire (> 2,5 m/s)
+
+Comment quantifier le DEGRE DE SEVERITE d’un rétrécissement aortique en échographie cardiaque?
+- Vitesse transvalvulaire en doppler continu:
+	RA serré si V max > 4 m/s
+- Gradient de pression VG-aorte transvalvulaire en doppler continu:
+	RA serré si gradient moyen > 40 mmHg
+- Mesure de la surface valvulaire aortique par doppler:
+	normalement 2-3,5 cm²
+	RA serré si surface < 1 cm² ou < 0,60 cm²/m² de surface corporelle
+	critique si surface ≤ 0,75 cm² ou ≤ 0,4 cm²/m² de surface corporelle
+
+Comment quantifier le RETENTISSEMENT d’un rétrécissement aortique en échographie cardiaque?
+Ventriculaire gauche:
+	hypertrophie
+	dilatation
+	altération de fraction d’éjection
+Hémodynamique:
+	débit cardiaque:
+		longtemps conservé au repos
+		mais peut être abaissé dans le RA serré
+	pressions droites: 
+		pression artérielle pulmonaire (PAP) longtemps normale
+		mais s’élève dans le RA évolué avec altération de la fonction VG
+
+Quels sont les buts de l’échodoppler cardiaque dans le rétrécissement aortique?
+Confirmation diagnostique (aspect des valves, hausse de la vélocité transvalvulaire)
+Evaluation du degré de sévérité (vélocité transvalvulaire, gradient de pression transvalvulaire, surface valvulaire)
+Evaluation du retentissement (VG, débit cardiaque, pressions droites)
+Recherche d’autres atteintes valvulaires
+Mesure de la taille de l’aorte
+
+
+
+Quelle est l’indication principale du cathétérisme dans le rétrécissement mitral?
+Très rare à visée diagnostique (quand discordance clinique/échographie)
+Surtout pour coronarographie préopératoire +++ :
+	systé après 40 ans
+	systé après la ménopause
+	systé si FDR cardiovasc, angor d’effort, insuff cardiaque
+
+
+
+
+
+Quelle valvulopathie peut-être secondaire à un rétrécissement aortique?
+insuffisance tricuspide fonctionnelle
+car hausse chronique des pressions pulmonaires
+entraîne obstacle à l’éjection du VD 
+dilatation VD
+
+
+Quel est l’examen préopératoire majeur avant mise en place de valvulaire aortique percutanée (TAVI)?
+Scanner cardiaque+++
+mieux que l’ETT pour l’anatomie de l’anneau aortique
+(choix de la prothèse)
+
+
+Devant un rétrécissement aortique, quelles seront les différentes indications chirurgicales selon le terrain?
+- sujet jeune:
+	prothèse mécanique
+	traitement anticoagulant à vie (AVK)
+	longue durée de vie
+- chez le sujet > 65 ans:
+	prothèse biologique
+	évite le traitement anticoagulant
+	risque de dégénérescence dans les 10-15 ans
+- RA jugé inopérable: 
+	TAVI = valve aortique par voie percutanée
+- patients très âgés (> 80-85 ans) très fragiles:
+	valvuloplastie percutanée
+	quasiment abandonné
+
+
+
+Quelles sont les indications de l’épreuve d’effort dans le RA symptomatique?
+Epreuve d’effort formellement contre-indiquées dans le RA symptomatique (+++)
+
+
+Quelles sont les indications chirurgicales d’un RA symptomatique?
+tout RA serré symptomatique doit être opéré compte tenu du risque vital existant
+pas de limite d’âge
+sous réserve d’un état général conservé
+et absence d’une autre pathologie mettant en jeu le pronostic vital à court terme
+
+
+Que faire devant un RA asymptomatique?
+1 - degré de sténose?
+	si très serré (V max > 5,5 m/s) —> indic chir
+2 - HVG, altération FEVG < 50%? 
+	si oui —> indic chir
+3 - aggravation rapide de la sténose?
+	si oui —> indic chir
+4 - sinon: 
+	test d’effort +++ 
+	pour vérifier que le patient est réellement asymptomatique
+	si pas de hausse de TA lors de l’épreuve d’effort: discuter la chirurgie
+	si RA serré vraiment asymptomatique + FEVG normale + TA d’effort normale = surveillance
+
+
+Quelles sont les contre-indications à l’épreuve d’effort?
+	insuffisance cardiaque congestive
+	HTA sévère au repos (> 220/110 mmHg)
+	angor instable
+	RA serré et autres cardiomyopathies obstructives
+	IDM < 5 jours
+	CI orthopédiques
+	troubles du rythme ou de conduction
+
+Quel examen permet de poser une indication chirurgicale devant un RA avec FEVG < 35%
+risque opératoire plus élevé et pronostic plus mauvais à long terme
+échocardiographie-doppler de stress sous dobutamine
+	si réserve contractile : indication opératoire
+	si pas de réserve contractile : chir à discuter, risque opératoire majoré
+		—> TAVI ++
+

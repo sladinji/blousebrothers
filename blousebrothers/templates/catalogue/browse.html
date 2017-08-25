@@ -13,7 +13,15 @@
     {% if summary %}{{ summary }} |{% endif %} {{ block.super }}
 {% endblock %}
 
-{% block headertext %}{{ summary }}{% endblock %}
+{% block headertext %}
+{{ summary }}
+{% if user.subscription == None %}
+<br>
+<a href="{% url 'users:subscription' 0 %}" class="btn btn-noblock btn-lg btn-go pull-right">
+    <i class="fa fa-check-circle" aria-hidden="true"></i> S'abonner 
+</a>
+{% endif %}
+{% endblock %}
 
 {% block breadcrumbs %}
     <ul class="breadcrumb">
@@ -53,10 +61,9 @@
     {% endif %}
     {% endcomment %}
 
-    {% if user.subscription == None %}
     {% comment %}
+    {% if user.subscription == None %}
     <span class="presale"><a class="btn btn-success" href="{% url 'users:specialoffer' %}"><i class="fa fa-hand-scissors-o" aria-hidden="true"></i> Demande l'offre spéciale D4 !!!</a></span>
-    {% endcomment %}
     <section id="pricing">
         <div class="p-style1 column_left">
             <div class="package">
@@ -71,6 +78,7 @@
         </div>
     </section>
     {% endif %}
+    {% endcomment %}
 
     {% if has_facets %}
         <h4>{% trans "Refine by" %}</h4>
@@ -126,6 +134,9 @@
         <section>
             <div class="product-compact">
                 <ol class="row">
+                    {% if user.is_authenticated %}
+                    <li class="col-xs-6 col-md-4 col-lg-3">{% include "catalogue/partials/create_product.html" %}</li>
+                    {% endif %}
                     {% for product in products %}
                         <li class="col-xs-6 col-md-4 col-lg-3">{% render_product product %}</li>
                     {% endfor %}

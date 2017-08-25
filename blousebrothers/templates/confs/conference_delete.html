@@ -3,7 +3,8 @@
 {% block title %}Suppression de {{ object.title}}{% endblock %}
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-	<p>Tu confirmes la suppression de la conférence "{{ object }}" ?</p>
+    <p>Attention, Supprimer définitivement "{{ object }}" ?</p>
+    <p>Si tu souhaites simplement dépublier ton dossier, <a href="{% url 'confs:final' object.slug %}">clique ici</a> et décoche la case "Publier". Tu pourras ainsi changer d'avis plus tard! :-)  ?</p>
 	<input type="submit" value="Oui" />
         <a class="btn btn-primary" href="{% url 'confs:detail' object.slug %}">Non</a>
 </form>

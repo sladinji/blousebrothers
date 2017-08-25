@@ -1,4 +1,5 @@
 from decimal import Decimal, ROUND_UP
+import re
 from string import ascii_uppercase
 import datetime
 
@@ -14,6 +15,10 @@ from blousebrothers.tools import get_disqus_sso as get_remote_auth
 
 register = template.Library()
 Product = get_model('catalogue', 'Product')
+
+@register.filter
+def index(List, i):
+    return List[int(i)]
 
 
 @register.filter
@@ -71,7 +76,7 @@ def result_icon(answer, test_answer):
 @register.filter
 def score100(test):
     if test.finished:
-        score = Decimal(test.score * 100 / test.max_score).quantize(Decimal('.01'), rounding=ROUND_UP)
+        score = test.score
         span = '<span class="score"><big>{}</big> / 100</span>'.format(score)
         return mark_safe(span)
     else:
@@ -189,3 +194,26 @@ def get_disqus_sso(user):
 @register.simple_tag
 def settings_value(name):
     return getattr(settings, name, "")
+
+
+@register.filter
+def rev_content(txt):
+    #  Preview first line if no @ are present in text
+    if "@" not in txt:
+        txt = re.sub(r"(.+)\n", r"@@\1@@\n", txt, 1)
+    #  Replace - by font awesome >
+    txt = re.sub("(?m)^-(.*)", r'<i class="fa fa-chevron-right" aria-hidden="true"></i> \1', txt)
+    #  Add when txt is indented by space or tab
+    for i in range(1, 5):
+        txt = re.sub(r'(?m)^\t{%s}([^\t]+)' % i,
+                     '&nbsp;'*4*i + r'<i class="fa fa-check" aria-hidden="true"></i> \1', txt)
+        txt = re.sub(r'(?m)^ {%s}([^ ]+)' % i,
+                     '&nbsp;'*i + r'<i class="fa fa-check" aria-hidden="true"></i> \1', txt)
+    #  Replace @@ by preview span
+    txt = re.sub("([^@]*)@@([^@]*)@@", r"\1</span><span class='preview'>\2</span><span><br>", txt)
+    #  Replace new lines by <br>
+    txt = re.sub("\n", r"<br>", txt)
+    # Replace /!\ by icon
+    txt = re.sub(r'/!\\', '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ', txt)
+    txt = re.sub(r'—>', '<i class="fa fa-arrow-right" aria-hidden="true"></i> ', txt)
+    return txt

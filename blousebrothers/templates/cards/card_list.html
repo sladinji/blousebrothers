@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load bbtricks %}
+{% block title %}{% trans 'Fiches' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row theader">
+        <div class="col-md-3">
+            <h2>{% trans 'Fiches' %} </h2>
+        </div>
+        <div class="col-md-3 text-center">
+            <a class="btn btn-default" href="{% url 'cards:create' %}"><i class="fa fa-plus"></i> Ajouter une fiche</a>
+        </div>
+        <div class="col-md-6">
+            {% include 'partials/submenu_search.html' with actionurl="cards:list" %}
+        </div>
+    </div>
+
+    <div class="panel-group cardslist" id="accordion">
+        {% for object in object_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ object.slug }}">
+                <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="list-group-item-heading">{{ object.title }}</h4>
+                        </div>
+                        <div class="col-md-7">
+                            <h4 class="text-left list-group-item-heading">{{ object.section }}</h4>
+                        </div>
+                </div>
+            </div>
+            <div id="collapse{{ object.slug }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-8 cardcontent">
+                            <div class="col-md-7">
+                            <a href="{% url 'cards:revision' object.slug %}" ><i class="fa fa-eye"></i> </a>
+                            </div>
+                            <p>{{ object.content|linebreaks }}
+                        </div>
+                        <div class="col-md-4 cardsitems">
+                            <a href="{% url 'cards:update' object.slug %}" ><i class="fa fa-edit"></i> </a>
+                                <p class="list-group-item-heading">{{ object.specialities.all|join:", " }}
+                                </p>
+                                <p class="list-group-item-heading">{{ object.items.all|join:", " }}
+                                </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'partials/pagination.html' %}
+</div>
+
+{% endblock content %}

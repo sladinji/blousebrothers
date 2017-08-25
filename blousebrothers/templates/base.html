@@ -65,12 +65,16 @@
 
         {% block extrahead %}{% endblock %}
 
+    {% if not debug %}
 	{% google_analytics %}
 	{% analytical_head_bottom %}
+    {% endif %}
     </head>
 
     <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %}">
+    {% if not debug %}
 	{% analytical_body_top %}
+    {% endif %}
 	{% hijack_notification %}
         {# Main content goes in this 'layout' block #}
 	{% if request %}
@@ -84,6 +88,7 @@
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
             <script>window.jQuery || document.write('<script src="{% static "oscar/js/jquery/jquery-1.9.1.min.js" %}"><\/script>')</script>
+            {% block zendesk %}
             <!--Start of Zendesk Chat Script-->
             <script type="text/javascript">
               window.$zopim||(function(d,s){var z=$zopim=function(c){
@@ -94,6 +99,7 @@
               type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
             </script>
             <!--End of Zendesk Chat Script-->
+            {% endblock zendesk %}
         {% endblock %}
 
         {# Local scripts #}
@@ -112,7 +118,11 @@
 
         {# Page meta-data - this is populated by the 'metadata' template context processor #}
         <!-- {% trans "Version:" %} {{ version }} -->
+        {% if not debug %}
         {% analytical_body_bottom %}
+        {% endif %}
     </body>
+{% block footer %}
 {% include "partials/footer.html" %}
+{% endblock footer %}
 </html>
