@@ -474,6 +474,9 @@ class SubscriptionType(models.Model):
     bonus_sponsor = models.DecimalField(_("Montant parrainage"), max_digits=6, decimal_places=2, default=0)
     product = models.ForeignKey('catalogue.Product', null=False, related_name="subscription")
 
+    def __str__(self):
+        return self.name
+
 
 class Subscription(models.Model):
     user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
@@ -483,6 +486,9 @@ class Subscription(models.Model):
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
     bonus_taken = models.BooleanField(default=False)
     bonus_sponsor_taken = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "{} {} €- {}".format(self.type, self.price_paid, self.user)
 
     @property
     def is_past_due(self):
