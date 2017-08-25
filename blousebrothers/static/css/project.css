@@ -1836,7 +1836,12 @@ thead {
         display:none;
     }
     .card-block .profile {
-        top: 68px;
+        display: flex;
+        position: relative;
+        margin: auto;
+    }
+    .card-block figure {
+        top: -8px;
     }
     h4.card-title.mt-3{
         font-size:12pt;
