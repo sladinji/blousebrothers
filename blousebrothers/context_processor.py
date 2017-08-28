@@ -1,5 +1,4 @@
 from django.apps import apps
-from django.utils.safestring import mark_safe
 from blousebrothers.users.forms import EmailInvitationForm
 
 Product = apps.get_model('catalogue', 'Product')
@@ -16,14 +15,6 @@ def subscriptions(request):
     subs = Product.objects.filter(product_class=pclass)
     return {'subscriptions': subs}
 
-
-#def balance(request):
-#    try:
-#        print("#DOh!! "*100)
-#        return {'balance': request.user.balance()}
-#    except:
-#        return {'balance': mark_safe('<span style="color:orange;">Activer mon compte</span>')}
-#
 
 def invit_form(request):
     """
