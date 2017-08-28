@@ -6062,7 +6062,7 @@ msgid ""
 "\n"
 "                                Allocation of %(amount)s from type %(type)s (reference: %(reference)s)\n"
 "                            "
-msgstr "\n                                Allocation de %(amount)s à partir dy type %(type)s (réference: %(reference)s)\n                            "
+msgstr "\n                                Paiement de %(amount)s via %(type)s (réference: %(reference)s)\n                            "
 
 #: templates/oscar/checkout/thank_you.html:87
 #, python-format
@@ -6070,7 +6070,7 @@ msgid ""
 "\n"
 "                                Allocation of %(amount)s from type %(type)s\n"
 "                            "
-msgstr "\n                                Allocation de %(amount)s à partir du type %(type)s\n                            "
+msgstr "\n                                Paiement de %(amount)s via %(type)s\n                            "
 
 #: templates/oscar/checkout/thank_you.html:94
 msgid "No payment was required for this order."

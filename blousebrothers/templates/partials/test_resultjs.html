@@ -140,7 +140,6 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     };
 
     var setPredictionValidation= function(question) {
-        console.log("ahaha");
         if (question != null){
             PredictionValidation.get({question_id: question.pk}).$promise
                 .then(function(result){
