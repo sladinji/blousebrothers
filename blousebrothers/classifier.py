@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def classifier(string):
     global __classifier
     try:
-        if not __classifier:
+        if not __classifier and Classifier.objects.first():
             __classifier = joblib.load(Classifier.objects.first().classifier)
     except:
         logger.exception("No classifier available")
