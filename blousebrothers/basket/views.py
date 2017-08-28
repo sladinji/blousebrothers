@@ -71,7 +71,7 @@ class BasketAddView(CoreBasketAddView):
                         product=form.product,
                         conf=form.product.conf,
                     )
-                    self.request.user.conf_entam_url = get_full_url(
+                    self.request.user.conf_encours_url = get_full_url(
                         self.request, 'confs:test', args=(form.product.conf.slug,)
                     )
                     self.request.user.save()

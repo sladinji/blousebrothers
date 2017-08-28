@@ -466,6 +466,11 @@ class TestResult(TestPermissionMixin, DetailView):
             conf=conf, student=self.request.user)
         if not test.finished:
             self.request.user.status = "give_eval_notok"
+            self.request.user.last_dossier_url = get_full_url(
+                self.request,
+                'confs:detail',
+                args=(conf.slug,)
+            )
             self.request.user.save()
             test.set_score()
             try:

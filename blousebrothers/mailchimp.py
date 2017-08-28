@@ -45,6 +45,7 @@ tags = {
     "conf_entam_url": "MMERGE29",
     "conf_pub_url": "MMERGE30",
     "conf_encours_url": "MMERGE11",
+    "last_dossier_url": "MMERGE24",
 }
 
 
@@ -125,6 +126,10 @@ def sync(qs=None, name=LIST_NAME):
             tags["gain de ce mois"]: won30 if won30 else None,
             tags["status"]: user.status,
             tags["action"]: user.action,
+            tags["conf_entam_url"]: user.conf_entam_url,
+            tags["conf_pub_url"]: user.conf_pub_url,
+            tags["conf_encours_url"]: user.conf_encours_url,
+            tags["last_dossier_url"]: user.last_dossier_url,
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
         logger.info(merge_fields)

@@ -165,7 +165,6 @@ $(document).on('click', '.anchorlink', function(event){
         </div>
                 </fieldset>
             </form>
-            {{ prediction_validation }}
 
             <button class="btn btn-primary" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="hidden-xs">Question </span> précédente</button>
             <button ng-if="questions.indexOf(question) < 14" class="btn btn-primary pull-right" ng-click="next_question()"><span class="hidden-xs">Question </span> suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
