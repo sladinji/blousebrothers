@@ -69,3 +69,16 @@
 * - Change to credit_low: envoi email incitation à créditer le compte FORGET
 * - Change to abo_quasi_fin: envoi email incitation à se réabonner TODO
 
+
+**--> NB: CORRESPONDANCES URL:**
+
+* - last_dossier_url (MMERGE24) = dernier dossier terminé par un étudiant, nous sert à envoyer l'URL du dossier à évaluer quand l'étudiant est en give_eval_notok
+* - conf_entam_url (MMERGE29) =  url du dossier dont la création a été commencée par un Conférencier, nous sert à le relancer
+* - conf_pub_url (MMERGE30) =  url du dossier dont la publication a été actée par un Conférencier, nous sert à le féliciter
+* - conf_encours_url (MMERGE11) =  url du passage de dossier démarré par un étudiant, non terminé, nous sert à le relancer pour qu'il termine l'entraînement
+
+
+**--> NB: AUTRES MERGES TAG:**
+* - nombre_fiches (MMERGE5) = nombre de fiches de révisions à réviser
+
+
