@@ -336,8 +336,8 @@ class SubscriptionsBoard(models.Model):
 
     @property
     def mois(self):
-        return ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre',
-         'Octobre','Novembre','Décembre'][self.date_created.month - 1]
+        return ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre',
+                'Octobre', 'Novembre', 'Décembre'][self.date_created.month - 1]
 
     @property
     def unit_price(self):
