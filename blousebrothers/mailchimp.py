@@ -155,10 +155,10 @@ def reset_workflow():
     """
     Reset mailchimp status according to current state.
     """
-    User.objects.filter(mangopay_users__isnull=True).update(status="registred")
+    User.objects.filter(mangopay_users__isnull=True).update(status="registered")
     for user in User.objects.filter(mangopay_users__isnull=False):
         if not user.gave_all_mangopay_info():
-            user.status = 'registred'
+            user.status = 'registered'
             user.save()
             continue
         if user.created_confs.filter(edition_progress=100, for_sale=False).exists():
@@ -178,7 +178,7 @@ def reset_workflow():
             user.save()
             continue
         elif [rev for rev in user.tests.all() if not rev.has_review()]:
-            user.status = 'give_eval_not_ok'
+            user.status = 'give_eval_notok'
             user.save()
             continue
         else:
