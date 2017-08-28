@@ -58,14 +58,11 @@ class TestCRUDView(TestPermissionMixin, NgCRUDView):
             )
 
     def serialize_queryset(self, queryset):
-        """
-        Set all question to false before returning it
-        """
         object_data = super().serialize_queryset(queryset)
         ti = object_data['time_taken']
-        if ti :
+        if ti:
             object_data['time_taken'] = ti.hour * 3600 + ti.minute * 60 + ti.second
-        else :
+        else:
             object_data['time_taken'] = 0
         return object_data
 
@@ -88,9 +85,14 @@ class PredictionValidationCRUDView(NgCRUDView):
 
     def get_queryset(self):
         question = Question.objects.get(pk=self.request.GET['question_id'])
-        prediction, created = PredictionValidation.objects.get_or_create(prediction=question.prediction.first(),
-                                                                         user=self.request.user)
-        return prediction
+        if question.prediction.first():
+            prediction, created = PredictionValidation.objects.get_or_create(
+                prediction=question.prediction.first(),
+                user=self.request.user
+            )
+            return prediction
+        #  Must return a model object to avoid exception
+        return PredictionValidation()
 
 
 class BaseConferenceImageCRUDView(NgCRUDView):
