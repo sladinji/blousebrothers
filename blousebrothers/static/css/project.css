@@ -1679,6 +1679,11 @@ article.product_pod{
     padding:15px 20px;
     font-weight:200;
 }
+@media screen and (max-width: 767px){
+    #select-plan .etape1 .btn{
+        padding:15px 6px;
+    }
+}
 #select-plan .etape1 .btn.active{
     background-color: #E8B510;
     color:#fff;
@@ -2341,4 +2346,10 @@ img.reward {
 .modal-body img {
     float: left;
     margin: 0 20px 10px 0;
+}
+span.redStrikeHover {
+    /* color: red; */
+    text-decoration: line-through;
+    text-decoration-color: red;
+    font-size: 40px;
 }

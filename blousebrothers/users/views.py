@@ -77,7 +77,7 @@ class UserDetailView(BBLoginRequiredMixin, CheckoutSessionMixin, DetailView):
         for line in self.request.basket.all_lines():
             try:
                 if line.product.categories.first().name == '__Abonnements':
-                    context['selected_sub_id'] = line.product.id
+                    context['selected_sub'] = line.product
             except:
                 pass
         return context

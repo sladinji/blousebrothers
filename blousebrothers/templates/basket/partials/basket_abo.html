@@ -33,6 +33,7 @@
                 {% csrf_token %}
                 {{ formset.management_form }}
                 {# total basket shortcode #}
+                <span class="redStrikeHover">{{ selected_sub.attr.high_price }} €</span>
                 {% if offer_discounts or voucher_discounts %}
                 <tr>
                     <th class="total align-right">
@@ -59,7 +60,7 @@
             <br><br>
             <div class="btn-group">
                 {% for sub in subscriptions %}
-                <a class="btn btn-default{% if selected_sub_id == sub.id %} active{% endif %}" href="{% url 'users:subscription' sub.id %}">
+                <a class="btn btn-default{% if selected_sub.id == sub.id %} active{% endif %}" href="{% url 'users:subscription' sub.id %}">
                     {{ sub.title }}
                 </a>
                 {% endfor %}
@@ -67,7 +68,7 @@
             <br><br>
             <div class="tab-content">
                 {% for sub in subscriptions %}
-                <div id="pay_tab{{ sub.id }}" class="tab-pane fade{% if selected_sub_id == sub.id %} in active{% endif %}">
+                <div id="pay_tab{{ sub.id }}" class="tab-pane fade{% if selected_sub.id == sub.id %} in active{% endif %}">
                     <p>{{ sub.description | sub_desc_custo | safe }}</p>
                 </div>
                 {% endfor %}
