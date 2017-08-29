@@ -4,6 +4,11 @@
 {% load purchase_info_tags %}
 {% load widget_tweaks %}
 {% load bbtricks %}
+{% load shipping_tags %}
+
+{% if user.subscription %}
+<div class="space"></div>
+{% endif %}
 
 {% if basket_warnings %}
 <h5>{% trans "Important messages about items in your basket" %}</h5>
@@ -24,16 +29,19 @@
 {% endif %}
 
 {% if not basket.is_empty %}
+<h1 class="text-center">{% trans "Profite actuellement de nos offres de lancement !" %}</h1>
 <div class="row" id="select-plan">
     <div class="col-md-8 col-xs-12 etape1">{# eq select your plan #}
-        <h2>1. {% trans "Choisis ta formule" %}</h2>
+        <h2>1. {% trans "Choisis ton abonnement" %}</h2>
         {% block basket_form_main %}
         <form action="." method="post" class="basket_summary" id="basket_formset">
             <span class="the-total-price">
                 {% csrf_token %}
                 {{ formset.management_form }}
                 {# total basket shortcode #}
+                {% if selected_sub.attr.high_price %}
                 <span class="redStrikeHover">{{ selected_sub.attr.high_price }} €</span>
+                {% endif %}
                 {% if offer_discounts or voucher_discounts %}
                 <tr>
                     <th class="total align-right">
@@ -57,6 +65,16 @@
                 </tr>
                 {% endif %}
             </span>
+        {% with offer_discounts=basket.offer_discounts voucher_discounts=basket.grouped_voucher_discounts %} 
+        {% if voucher_discounts %}
+        <br>
+        {% for discount in voucher_discounts %}
+        <span class="voucher"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+            dont -{{ discount.discount|currency:basket.currency }} grâce au code <i>{{ discount.voucher.code }}</i>
+        </span>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
             <br><br>
             <div class="btn-group">
                 {% for sub in subscriptions %}

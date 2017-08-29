@@ -1689,8 +1689,9 @@ article.product_pod{
     color:#fff;
 }
 #select-plan .etape1 .the-total-price{
-    color:#000;
+    color:#3a9b00;
     font-size:4em;
+
 }
 #select-plan .etape1 h2, #select-plan .etape2 h2{
     color:#000;
@@ -2348,8 +2349,11 @@ img.reward {
     margin: 0 20px 10px 0;
 }
 span.redStrikeHover {
-    /* color: red; */
+    color: #000; 
     text-decoration: line-through;
     text-decoration-color: red;
     font-size: 40px;
+}
+span.voucher {
+    color: red;
 }
