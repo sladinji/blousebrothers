@@ -12,7 +12,7 @@ def subscriptions(request):
         requires_shipping=False,
         track_stock=False,
     )
-    subs = Product.objects.filter(product_class=pclass).order_by('-title')
+    subs = Product.objects.filter(product_class=pclass).order_by('id')
     return {'subscriptions': subs}
 
 
