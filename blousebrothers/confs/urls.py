@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
+from django.views.generic.base import RedirectView
 
 from . import views
 from . import crud
@@ -53,6 +54,11 @@ urlpatterns = [
         regex=r'^creation/(?P<slug>[\w.@+-]+)/update$',
         view=views.ConferenceUpdateView.as_view(),
         name='update'
+    ),
+    url(
+        regex=r'^~create/(?P<slug>[\w.@+-]+)/update$',
+        view=RedirectView.as_view(pattern_name='confs:update', permanent=True),
+        name='oldupdate'
     ),
     url(
         regex=r'^creation/(?P<slug>[\w.@+-]+)/delete$',
