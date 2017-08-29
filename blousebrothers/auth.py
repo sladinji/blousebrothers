@@ -55,6 +55,8 @@ class BBConferencierReqMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         return True
 
     def handle_no_permission(self):
+        if not self.request.user.is_authenticated():
+            return super().handle_no_permission()
         messages.warning(self.request,
                          _("Avant de pouvoir publier une conférence, merci de compléter le formulaire ci-dessous. "
                            "Ces informations sont nécessaires pour activer ton compte. "
