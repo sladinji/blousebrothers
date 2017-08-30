@@ -78,6 +78,7 @@ def proddb(pre=False, mangoreset='yes'):
             r"-v $(pwd):/backup ubuntu tar cvzf /backup/backup.tgz /backups/%s" % last)
 
     get("%s/backup.tgz" % code_dir)
+    local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
     if not pre:
         load_last_dump(last, mangoreset)
     return last
@@ -112,13 +113,11 @@ def load_last_dump(last="last_dump.sql", pre=False, mangoreset='yes'):
         backups = local("docker-compose run postgres list-backups", capture=True).replace("\r\n", '\t').split('\t')[3:]
         last = sorted(backups)[-1]
     if pre:
-        local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
         local("docker run --rm "
               "--volumes-from blousebrothers_postgres_1 "
               "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
               "blousebrothers_postgres cp /backup/%s /backups" % last)
     else:
-        local("cd admin@blousebrothers.fr && tar xzf backup.tgz")
         local("docker run --rm "
               "--volumes-from blousebrothers_postgres_1 "
               "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
