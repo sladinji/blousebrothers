@@ -696,7 +696,7 @@ background-color: #000;
 }
 
 .signup .slide1{
-    background:url('/static/images/slide1_bg.png');
+    background:url('/static/images/slide1_bg.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size:cover;
@@ -705,7 +705,7 @@ background-color: #000;
 }
 @media screen and (max-width: 767px){
 .signup .slide1 {
-        background:url('/static/images/slide1_bg_small.png');
+        background:url('/static/images/slide1_bg_small.jpg');
     }
 }
 .signup .slide4{
