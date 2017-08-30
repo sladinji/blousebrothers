@@ -12,7 +12,7 @@
     {% if user.subscription == None or sub.attr.month == 0 %}
     <div class="p-style1 column_left">
         <div class="package">
-            <h4>{{ sub.title }}</h4>
+            <h4>{{ sub.title | sub_title_split | safe }}</h4>
             {% purchase_info_for_product request sub as session %}
             {% if sub.attr.month != 0 %}
             <h6>{{ session.price.incl_tax | currency:session.price.currency }} pour {{ sub.attr.month }} mois</h6> 
@@ -21,7 +21,6 @@
             {% endif %}
         </div>
         <ul class="inclusion">
-            {{ sub.description | sub_desc_custo | safe }}
             <li><a href="{% url 'users:subscription' sub.id %}" class="btn btn-noblock btn-lg btn-gray">
                     <i class="fa fa-check-circle" aria-hidden="true"></i> {% if sub.attr.month != 0 %}Souscrire{% else %}Acheter{% endif %}</a>
             </li>

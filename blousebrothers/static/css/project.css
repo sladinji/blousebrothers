@@ -2357,3 +2357,8 @@ span.redStrikeHover {
 span.voucher {
     color: red;
 }
+@media screen and (max-width: 992px){
+    .respopac{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

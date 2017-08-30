@@ -104,6 +104,9 @@ def get_checked_fa(answer, test_answer):
     else:
         return mark_safe('<i class="fa fa-square-o" aria-hidden="true"></i>')
 
+@register.filter
+def sub_title_split(title):
+    return title.replace("1", "<br>1")
 
 @register.filter
 def sub_desc_custo(desc):
