@@ -122,6 +122,13 @@
         {% analytical_body_bottom %}
         {% endif %}
     </body>
+
+{% block subscribe %}
+{% if not user.subscription %}
+<a href="{% url 'users:subscription' 0 %}" class="btn btn-primary btn-subscribe"><i class="fa fa-sun-o" aria-hidden="true"></i> Je m'abonne</a>
+{% endif %}
+{% endblock subscribe %}
+
 {% block footer %}
 {% include "partials/footer.html" %}
 {% endblock footer %}

@@ -96,6 +96,8 @@ class MangoPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
         return self.request.user.gave_all_mangopay_info
 
     def handle_no_permission(self):
+        if not self.request.user.is_authenticated():
+            return super().handle_no_permission()
         messages.info(self.request, self.msg_access_denied)
         return redirect('users:update')
 

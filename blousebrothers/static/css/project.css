@@ -2369,3 +2369,13 @@ span.voucher {
         background-color: rgba(0, 0, 0, 0.5);
     }
 }
+a.btn.btn-primary.btn-subscribe {
+    position: fixed;
+    bottom: -9px;
+    margin-left: 15px;
+    box-shadow: none;
+    text-transform: none;
+    font-weight: bold;
+    border: 0px;
+    z-index: 1000000;
+}
