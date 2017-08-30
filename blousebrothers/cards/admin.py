@@ -7,6 +7,7 @@ from blousebrothers.cards.models import Card, Deck
 class CardAdmin(admin.ModelAdmin):
     list_display = ('id', 'content',)
     list_filter = ('specialities',)
+    list_editable = ("content",)
     filter_horizontal = ['items', 'specialities']
     search_fields = ['content', ]
 
