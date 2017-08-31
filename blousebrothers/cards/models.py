@@ -144,28 +144,15 @@ class Session(models.Model):
     revision = models.BooleanField(default=False)
 
     def __str__(self):
-        return '<Session [{}] revision: {}>'.format(self.pk, self.revision)
+        return '<Session {} revision: {}>'.format(self.pk, self.revision)
 
-    def times_up(self):
+    def check_is_not_over(self):
         """
         Raise SessionOverException if required.
         """
         self.save()  # update self.date_modified on save
         if self.selected_duration < self.date_modified - self.date_created:
             raise SessionOverException()
-
-    def is_over(self, specialities, items, revision):
-        """
-        Close session and raise SessionOverException if required.
-        """
-        self.save()  # update self.date_modified on save
-        if self.selected_duration < self.date_modified - self.date_created \
-                or specialities and specialities != self.specialities \
-                or items and items != self.items \
-                or revision and not self.revision:
-            self.finished = True
-            self.save()
-            return True
         return False
 
     @property

@@ -46,7 +46,7 @@ def create_new_session(request, specialities, items, revision):
     return session
 
 
-def get_or_create_session(request, create=True):
+def get_or_create_session(request):
     """
     Get current session or create new session
     """
@@ -55,13 +55,15 @@ def get_or_create_session(request, create=True):
     revision = request.GET.get('revision') == 'True'
 
     session = Session.objects.filter(student=request.user, finished=False).first()
-    if create and not session or session and session.is_over(specialities, items, revision):
+    if not session:
         session = create_new_session(request, specialities, items, revision)
+    else:
+        session.check_is_not_over()
     return session
 
 
 def get_session(request):
-    return get_or_create_session(request, create=False)
+    return Session.objects.filter(student=request.user, finished=False).first()
 
 
 def choose_new_card(request):
