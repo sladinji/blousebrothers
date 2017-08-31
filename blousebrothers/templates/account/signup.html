@@ -5,124 +5,166 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
-{% block main_header %}
-{% endblock main_header %}
 {% block header %}
 {% endblock header %}
 
 {% block main_container_class %}{% endblock %}
 {% block title %}{% trans "Signup" %}{% endblock title %}
 
-{% block content%}
-<form action="{% url 'account_signup' %}" id="signup_form" method="post">
-    {{ form.non_field_errors }}
-    {% csrf_token %}
-    {{ form.email.errors }}
-    {{ form.email }}
-    {{ form.username.errors }}
-    {{ form.username }}
-    {{ form.password1.errors }}
-    {{ form.password1 }}
-    {{ form.password2.errors }}
-    {{ form.password2 }}
-    <button class="btn">Créer mon compte</button>
-    <br><br>
-    {% get_providers as socialaccount_providers %}
-    {% if socialaccount_providers %}
-    {% include "partials/social_connect.html" with process="login" %}
-    {% include "socialaccount/snippets/login_extra.html" %}
-    {% endif %}
-    <br><br>
-</form>
-{% endblock content %}
+{% block content_wrapper %}
 
-{% block extra_slides %}
-<!-- slide 2-->
-<div class="slide2 slide container">
-    <div class="row">
-        <div class="col-xs-12 col-md-6 bg_left tcenter">
-            <div class="centrage">
-                <h3>Indépendance</h3>
-                <span class="txt_current">
-                    BlouseBrothers est une prépa ECNi collaborative, les<br>
-                    internes enseignent directement en ligne aux<br>
-                    externes, sans intermédiaires. 
-                </span>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-6 bg_right tcenter">
-            <div class="centrage">
-                <h3>Autonomie</h3>
-                <span class="txt_current">
-                    Tu es Interne? Tu peux déposer les dossiers cliniques que tu as réalisé. Tu es Externe? tu choisis dossier par dossier les items que tu souhaites réviser, et tu accèdes aux corrections et aux fiches de révisions en rapport.
-                </span>
-            </div> <!-- centrage -->
-        </div> <!-- col 6-->
-    </div> <!-- row -->
-</div> <!-- slide2 -->
+<div class="signup">
+<div class="{% block extra_slide_class %}{% endblock%} slide slide1  container">
+      <div class="row slide1-top">
+          <div class="space"></div>
+          <div class="space"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+              <div class="col-md-6">
+                  <h2>Des externes, des internes.</h2>
+                  <p>Blousebrothers est une nouvelle façon pour les étudiants en Médecine de se préparer aux ECNi, offrant un contenu de qualité et accessible à tous.
+                  </p>
 
-<!-- slide 3-->
-<div class="slide3 slide container">
-    <div class="row">
-        <div class="col-md-6 bg_left tcenter">
-            <div class="centrage">
-                <h3>Feedback</h3>
-                <span class="txt_current">
-                    Les étudiants peuvent noter les dossiers ECN qu’ils ont réalisés ainsi que les commenter, ce qui permet d’évaluer la qualité des dossier. Il est possible de contacter et d'échanger avec le Conférencier.
-                </span>
-            </div>
-        </div>
-        <div class="col-md-6 bg_right tcenter">
-            <div class="centrage">
-                <h3>Equité</h3>
-                <span class="txt_current">
-                    Les conférenciers gardent 70% de leurs ventes sur dossiers. Les 30% restants sont dédiés au développement de la plate-forme.
-                </span>
-            </div> <!-- centrage -->
-        </div> <!-- col 6-->
-    </div> <!-- row -->
-</div> <!-- slide3 -->
+              </div>
+              <div class="col-md-6">
+                  <div class="tcenter">
+                      <form action="{% url 'account_signup' %}" id="signup_form" method="post">
+                          {{ form.non_field_errors }}
+                          {% csrf_token %}
+                          {{ form.email.errors }}
+                          {{ form.email }}
+                          {{ form.username.errors }}
+                          {{ form.username }}
+                          {{ form.password1.errors }}
+                          {{ form.password1 }}
+                          {{ form.password2.errors }}
+                          {{ form.password2 }}
+                          <button class="btn">Créer mon compte</button>
+                          <br><br>
+                          {% get_providers as socialaccount_providers %}
+                          {% if socialaccount_providers %}
+                          {% include "partials/social_connect.html" with process="login" %}
+                          {% include "socialaccount/snippets/login_extra.html" %}
+                          {% endif %}
+                          <br><br>
+                      </form>                  
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-3"></div>
+      </div>
+      <div class="row slide1-bottom">
+          <div class="space"></div>
+          <div class="col-md-12 text-center">
+              <div class="col-md-4">
+                  <img class="reward" src="{% static "images/retro/1.jpg" %}" alt="Logo fin de révision">
+                  <h3>Cible tes révisions</h3>
+                      <p>Tu révise à l’aide d’une de nos fiches de révisions. 
+                      Passe un cas/dossier sous les conditions de l’ECNi.
+                      Selon tes résultats, le site réorganise tes révisions et te suggères uniquement ce dont tu as besoin de travailler.</p>
 
-<div class="signup slide4 slide container">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 bg_left tcenter">
-        <div class="centrage">
-            <h3>En résumé</h3>
-            <span class="txt_current">
-                BlouseBrothers est une plateforme collaborative pour la préparation aux ECNi. Tu y trouveras des dossiers cliniques progressifs (DCP) et des questions individuelles (QI) classés par items et par matières, ainsi que des dossiers de Lecture Critique d’Articles (LCA) réalisés et mis en ligne par des internes pour les externes.<br>
-                Les dossiers sont rédigés selon les recommandations du CNCI et suivent les programmes des Collèges. <br>
-                Des corrections détaillées sont fournies par les Conférenciers.<br>
-                Des fiches de révisions ECN et des statistiques permettant un suivi individuel des révisions sont également disponibles.<br>
-            </span>
-        </div>
-    </div>
-    <div class="col-md-3"></div>
-    <div class="space"></div> <!-- 40px Vertical Spacing -->
-</div>
-<div class="signup slide5 slide container">
-<div class="text-center">
-    <div class="space"></div> 
-    <div class="space"></div> 
-    <div class="col-md-12 opac">
-        <h3>Ils nous soutiennent</h3>
-        <img src="{% static 'images/village.png' %}" style="height: 170px; margin: 16px 0;"/>
-        <img src="{% static 'images/logo_bpifrance_fond_jaune.jpg' %}" style="height: 170px; margin: 16px 0;"/>
-        <img src="{% static 'images/ft_logo-3.jpg' %}" style="height: 170px; margin: 16px 0;"/>
-        <div class="space"></div> 
-        <div class="space"></div> 
-    </div>
-    <div class="space"></div> 
-    <div class="col-md-12">
-        {% include 'partials/subscriptions.html' %} 
-    </div>
-</div>
-</div>
-{% comment %}
-<div class="text-center">
-    <img src="https://www.mangopay.com/terms/powered-by-mangopay.png" height="40px" />
-</div>
-{% endcomment %}
-{% endblock extra_slides%}
+              </div>
+              <div class="col-md-4">
+                <img class="reward" src="{% static "images/retro/2.jpg" %}" alt="Logo fin de révision">
+                  <h3>Entraîne toi grâce aux dossiers de la commauté</h3>
+                  <p>Un site vivant ! Echange, pose des questions, propose des améliorations aux conférenciers du site qui mettent à jour leur travail si besoin !
+                  </p>
+              </div>
+              <div class="col-md-4">
+                <img class="reward" src="{% static "images/retro/3.jpg" %}" alt="Logo fin de révision">
+                  <h3>Apprends plus rapidement</h3>
+                  <p>Gagne du temps grâce à notre outil de révision conçu par nos soins: 
+                  L’Algorithme ré-organise tes révisions selon tes résultats aux Dossiers. CaD qu’il te suggère des fiches sur des sujets que tu as besoin de travailler, sans revenir sur ce que tu sais déjà !
+                  </p>
+              </div>
+          </div>
+      </div> <!-- row -->
+  </div> <!-- end slide1 -->    
+  <!-- slide 2-->
+  <div class="slide2 slide container">
+      <div class="row">
+          <div class="col-xs-12 col-md-6 bg_left tcenter">
+              <div class="centrage">
+                  <h3>Indépendance</h3>
+                  <span class="txt_current">
+                      BlouseBrothers est une prépa ECNi collaborative, les<br>
+                      internes enseignent directement en ligne aux<br>
+                      externes, sans intermédiaires. 
+                  </span>
+              </div>
+          </div>
+          <div class="col-xs-12 col-md-6 bg_right tcenter">
+              <div class="centrage">
+                  <h3>Autonomie</h3>
+                  <span class="txt_current">
+                      Tu es Interne? Tu peux déposer les dossiers cliniques que tu as réalisé. Tu es Externe? tu choisis dossier par dossier les items que tu souhaites réviser, et tu accèdes aux corrections et aux fiches de révisions en rapport.
+                  </span>
+              </div> <!-- centrage -->
+          </div> <!-- col 6-->
+      </div> <!-- row -->
+  </div> <!-- slide2 -->
+
+  <!-- slide 3-->
+  <div class="slide3 slide container">
+      <div class="row">
+          <div class="col-md-6 bg_left tcenter">
+              <div class="centrage">
+                  <h3>Feedback</h3>
+                  <span class="txt_current">
+                      Les étudiants peuvent noter les dossiers ECN qu’ils ont réalisés ainsi que les commenter, ce qui permet d’évaluer la qualité des dossier. Il est possible de contacter et d'échanger avec le Conférencier.
+                  </span>
+              </div>
+          </div>
+          <div class="col-md-6 bg_right tcenter">
+              <div class="centrage">
+                  <h3>Equité</h3>
+                  <span class="txt_current">
+                      Les conférenciers gardent 70% de leurs ventes sur dossiers. Les 30% restants sont dédiés au développement de la plate-forme.
+                  </span>
+              </div> <!-- centrage -->
+          </div> <!-- col 6-->
+      </div> <!-- row -->
+  </div> <!-- slide3 -->
+
+  <div class="signup slide4 slide container">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 bg_left tcenter">
+          <div class="centrage">
+              <h3>En résumé</h3>
+              <span class="txt_current">
+                  BlouseBrothers est une plateforme collaborative pour la préparation aux ECNi. Tu y trouveras des dossiers cliniques progressifs (DCP) et des questions individuelles (QI) classés par items et par matières, ainsi que des dossiers de Lecture Critique d’Articles (LCA) réalisés et mis en ligne par des internes pour les externes.<br>
+                  Les dossiers sont rédigés selon les recommandations du CNCI et suivent les programmes des Collèges. <br>
+                  Des corrections détaillées sont fournies par les Conférenciers.<br>
+                  Des fiches de révisions ECN et des statistiques permettant un suivi individuel des révisions sont également disponibles.<br>
+              </span>
+          </div>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="space"></div> <!-- 40px Vertical Spacing -->
+  </div>
+  <div class="signup slide5 slide container">
+  <div class="text-center">
+      <div class="space"></div> 
+      <div class="space"></div> 
+      <div class="col-md-12 opac">
+          <h3>Ils nous soutiennent</h3>
+          <img src="{% static 'images/village.png' %}" style="height: 170px; margin: 16px 0;"/>
+          <img src="{% static 'images/logo_bpifrance_fond_jaune.jpg' %}" style="height: 170px; margin: 16px 0;"/>
+          <img src="{% static 'images/ft_logo-3.jpg' %}" style="height: 170px; margin: 16px 0;"/>
+          <div class="space"></div> 
+          <div class="space"></div> 
+      </div>
+      <div class="space"></div> 
+      <div class="col-md-12">
+          {% include 'partials/subscriptions.html' %} 
+      </div>
+  </div>
+  </div>
+</div><!-- signup -->
+
+{% endblock content_wrapper %}
+
+
 
 
 
@@ -131,7 +173,7 @@
 
 $( document ).ready(function() {
 
-$('.slide1').css('min-height',$(window).height()+'px');
+$('.slide1').css('min-height',$(window).height() - 66 + 'px');
 $('.slide2').css('line-height', $(window).height()+'px');
 $('.slide2 .bg_right').height($(window).height());
 $('.slide2 .bg_left').height($(window).height());

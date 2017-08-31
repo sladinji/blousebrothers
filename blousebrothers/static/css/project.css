@@ -696,17 +696,12 @@ background-color: #000;
 }
 
 .signup .slide1{
-    background:url('/static/images/slide1_bg.jpg');
+    background: #f6f6f6;
     background-position: center;
     background-repeat: no-repeat;
     background-size:cover;
     width:100%;
     height:100%;
-}
-@media screen and (max-width: 767px){
-.signup .slide1 {
-        background:url('/static/images/slide1_bg_small.jpg');
-    }
 }
 .signup .slide4{
     background:url('/static/images/slide4_bg.jpg');
@@ -2378,4 +2373,14 @@ a.btn.btn-primary.btn-subscribe {
     font-weight: bold;
     border: 0px;
     z-index: 1000000;
+}
+.row.slide1-bottom {
+    color: black;
+}
+.row.slide1-bottom h3 {
+    color: black;
+    font-size:22pt;
+}
+.row.slide1-top{
+    background-color: #2b3137;
 }
