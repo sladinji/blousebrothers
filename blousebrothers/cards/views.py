@@ -222,13 +222,16 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
 
 class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):
     """
-    Root url of card app, reached by clicking on revision link.
+    Root url of card app, reached by clicking on revision or learn links.
     Choose a card and redirect to revision view.
     """
 
     def get_redirect_url(self, *args, **kwargs):
-        new_card = choose_new_card(self.request)
-        return reverse('cards:revision', kwargs={'slug': new_card.slug})
+        try:
+            new_card = choose_new_card(self.request)
+            return reverse('cards:revision', kwargs={'slug': new_card.slug})
+        except SessionOverException:
+            return reverse('cards:stop', kwargs={'slug': 'sessionover'})
 
 
 class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):

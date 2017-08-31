@@ -193,11 +193,16 @@ class Session(models.Model):
             id__in=[card.id for card in self.cards.all()]
         )
         if not qs.count():
+            """All cards have been seen in this session."""
             raise SessionOverException()
         return qs
 
     @property
     def new_cards(self):
+        """
+        Return a queryset with all card never done by user
+        according to session preferences.
+        """
         qs = Card.objects.for_user(self.student).filter(
             parent__isnull=True,
         ).exclude(  # exclude cards already done
