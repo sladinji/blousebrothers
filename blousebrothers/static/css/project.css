@@ -2384,3 +2384,44 @@ a.btn.btn-primary.btn-subscribe {
 .row.slide1-top{
     background-color: #2b3137;
 }
+.row.slide1-top {
+    background: 
+    linear-gradient(-120deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(-110deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(210deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(220deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(-210deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(-220deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(120deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(110deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    radial-gradient(circle, rgb(0, 111, 209) 0%, rgb(0, 111, 209) 100%);
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #edf3f3;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #edf3f3;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #edf3f3;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #edf3f3;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color:    #edf3f3;
+}
+img.homecircle{
+    top: 17px;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 50%;
+    height:200px;
+    width:200px;
+    box-shadow: -6px 0px 7px rgba(0, 0, 0, 0.23);
+}
