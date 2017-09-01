@@ -2423,7 +2423,16 @@ img.homecircle{
     box-sizing: border-box;
     margin: 0;
     border-radius: 50%;
-    height:200px;
-    width:200px;
-    box-shadow: -6px 0px 7px rgba(0, 0, 0, 0.23);
+    height:120px;
+    width:120px;
+    box-shadow: -1px 5px 7px rgba(0, 0, 0, 0.23);
+}
+img.logo-slide1{
+    height: 200px;
+    width: 200px;
+    margin: auto;
+    margin-top: 87px;
+    margin-left: 25%;
+    border: solid 5px;
+    border-radius: 50%;
 }
