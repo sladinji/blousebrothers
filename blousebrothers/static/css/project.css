@@ -2341,11 +2341,11 @@ img.reward {
     margin: auto;
 }
 .prod-bg.recrutement {
-	background-image: url(/static/images/retro/4.jpg);
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position-y: 91px;
-	filter: blur(0px);
+    background-repeat: no-repeat;
+    background-position-y: 100px;
+    background-border-radius: 50%;
+    filter: blur(0px);
+    background-position-x: center;
     background-color: #eef2f3;
 }
 .modal-footer-tips {
