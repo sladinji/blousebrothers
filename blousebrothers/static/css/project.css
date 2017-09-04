@@ -2115,10 +2115,18 @@ div#calltoac {
 }
 
 .bodyrev {
-    background-color: black;
-    background-image: url(/static/images/bg_rev.png);
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: 
+    linear-gradient(-120deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(-110deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(210deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(262deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+
+    linear-gradient(30deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(20deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(-300deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(-352deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+
+    radial-gradient(circle, rgb(242, 178, 2) 0%, rgb(0, 0, 0) 60%);
 }
 .btn_rev_block {
     opacity: 0.0;
@@ -2338,11 +2346,11 @@ img.reward {
     margin: auto;
 }
 .prod-bg.recrutement {
-	background-image: url(/static/images/retro/4.jpg);
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position-y: 91px;
-	filter: blur(0px);
+    background-repeat: no-repeat;
+    background-position-y: 100px;
+    background-border-radius: 50%;
+    filter: blur(0px);
+    background-position-x: center;
     background-color: #eef2f3;
 }
 .modal-footer-tips {
