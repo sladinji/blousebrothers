@@ -787,7 +787,7 @@ h1, h2{
 }
 
 .signup .slide2 .bg_right{
-    background:url('/static/images/slide2_bg_right.jpg');
+    background:url('/static/images/slide1_bg.jpg');
     background-size:cover;
     background-position: center;
     width:50%;
@@ -2383,6 +2383,13 @@ a.btn.btn-primary.btn-subscribe {
     font-weight: bold;
     border: 0px;
     z-index: 1000000;
+}
+@media screen and (max-width: 992px){
+    a.btn.btn-primary.btn-subscribe {
+        bottom: 18px;
+        height: 53px;
+        font-size: 18pt;
+    }
 }
 .row.slide1-bottom {
     color: black;
