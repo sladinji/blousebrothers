@@ -83,10 +83,15 @@ class TestAdmin(nested_admin.NestedModelAdmin):
     list_filter = ['student']
 
 
+class SpecialityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'other_names')
+    list_editable = ('other_names',)
+
+
 admin.site.register(Conference, ConferenceAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Item, ItemAdmin)
-admin.site.register(Speciality)
+admin.site.register(Speciality, SpecialityAdmin)
 admin.site.register(Subscription)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(QuestionComment, QuestionCommentAdmin)
