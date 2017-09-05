@@ -65,12 +65,14 @@ class BasketAddView(CoreBasketAddView):
         if created and not free_conf:
             try:
                 if self.request.user.has_full_access():
-                    Sale.objects.create(
-                        conferencier=form.product.conf.owner,
-                        student=self.request.user,
-                        product=form.product,
-                        conf=form.product.conf,
-                    )
+                    if self.request.user.subscription and self.request.user.subscription.price_paid > 0:
+                        # Do not create sale for user with subscription price = O (référents...)
+                        Sale.objects.create(
+                            conferencier=form.product.conf.owner,
+                            student=self.request.user,
+                            product=form.product,
+                            conf=form.product.conf,
+                        )
                     self.request.user.conf_encours_url = get_full_url(
                         self.request, 'confs:test', args=(form.product.conf.slug,)
                     )
