@@ -20,30 +20,56 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+rep_map = {
+    "ologie": "",
+    "icono": "",
+    "é": "e",
+    "è": "e",
+    "à": "a",
+    "ç": "c",
+    "î": "i",
+    "ê": "e",
+    "â": "a",
+    "ô": "o",
+}
+
+
+def clean(word):
+    word = word.strip()
+    word = word.lower()
+    for k, v in rep_map.items():
+        word = word.replace(k, v)
+    return word
+
 
 class Command(BaseCommand):
     help = 'Import .md cards in fiches folder'
     # Dictionnary of spe by word to enhance matches
-    spe_dic = {word: spe
-               for spe in Speciality.objects.all()
-               for word in spe.other_names.split(",")
-               }
+    spe_dic = {
+        clean(word): spe
+        for spe in Speciality.objects.all()
+        for word in spe.other_names.split(",")
+    }
 
     def get_specialities(self, spelist):
         """
         Get close match (remove "ologie" from str for better perfromances (infectiologie/infectieuse...))
         """
+        spelist = [clean(x) for x in spelist]
+        spelist = [x for x in spelist if x]
         try:
             ret = [
-                difflib.get_close_matches(x.strip().replace("ologie", ""), self.spe_dic.keys(), 1)
+                difflib.get_close_matches(clean(x), self.spe_dic.keys(), 1)
                 for x in spelist
                     ]
             ret = [self.spe_dic[x[0]] for x in ret if x]
-            print(spelist, ">>", ret)
+            #print('IN  :', spelist)
+            #print('OUT :', [x.name for x in ret])
+            #print('')
             return set(ret)
         except Exception:
             logger.exception("Rien")
-            print("Rien pour ", spelist)
+            #print("Rien pour ", spelist)
             return []
 
     def create_card(self, **kwargs):
@@ -51,7 +77,14 @@ class Command(BaseCommand):
         card = Card(public=True, **kwargs)
         return card
 
+    def add_arguments(self, parser):
+        # This is an optional argument
+        parser.add_argument('reset', nargs='*', type=str)
+
     def handle(self, *args, **options):
+        if "reset" in options['reset']:
+            if input("Reset ? N/y") == 'y':
+                Card.objects.all().delete()
         for fn in glob('apkgs/*'):
             cards = []
             specialities = []
@@ -70,7 +103,7 @@ class Command(BaseCommand):
             first_id = Card.objects.order_by('id').last().id - len(cards) + 1
             card_through = []
             for i, spes in enumerate(specialities):
-                for spe in self.get_specialities(spes.split(" ")):
+                for spe in self.get_specialities([x for x in spes.split(" ") if x]):
                     card_through.append(Card.specialities.through(
                         card_id=first_id+i,
                         speciality_id=spe.id
