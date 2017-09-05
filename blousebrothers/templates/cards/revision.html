@@ -64,14 +64,14 @@
                         </div>
                         {% endif %}
                         <div class="card_button card_edit">
-                            <a href="{% url 'cards:update' object.card.slug %}" title="Éditer la carte">
+                            <a href="{% url 'cards:update' object.card.id %}" title="Éditer la carte">
                                 <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
                             </a> 
                         </div>
                     </div>
                     <div class="btn_rev_block preview">
                         <div class="card_button end_revision">
-                            <a href="{% url 'cards:stop' object.card.slug %}" title="Revenir au site">
+                            <a href="{% url 'cards:stop' object.card.id %}" title="Revenir au site">
                                 <div class="day"><i class="fa fa-power-off" aria-hidden="true"></i></div>
                             </a> 
                         </div>
@@ -116,7 +116,7 @@
 {% comment %}
 {% if user.is_authenticated and object.card.parent.public %}
 {% load disqus_tags %}
-{% set_disqus_identifier object.card.parent.slug %}
+{% set_disqus_identifier object.card.parent.id %}
 {% set_disqus_title object.card.parent.title %}
 {% set_disqus_url object.card.get_root_absolute_url %}
 {% disqus_dev %}

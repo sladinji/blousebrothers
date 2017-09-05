@@ -86,7 +86,7 @@ class Card(models.Model):
                                related_name="children", blank=True, null=True)
     author = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
                                related_name="created_cards", blank=True, null=True)
-    slug = AutoSlugField(_('Slug'), max_length=256, unique=True)
+    #slug = AutoSlugField(_('Slug'), max_length=256, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     free = models.BooleanField(default=True)
@@ -101,7 +101,7 @@ class Card(models.Model):
         ).order_by("created"))
 
     def get_absolute_url(self):
-        return reverse('cards:revision', args=[self.slug])
+        return reverse('cards:revision', args=[self.id])
 
     @property
     def root(self):
@@ -109,7 +109,7 @@ class Card(models.Model):
 
     def get_root_absolute_url(self):
         parent = self.parent or self
-        return reverse('cards:revision', args=[parent.slug])
+        return reverse('cards:revision', args=[parent.id])
 
 
 class CardsPreference(models.Model):

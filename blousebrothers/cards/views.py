@@ -121,7 +121,7 @@ class CreateCardView(BBLoginRequiredMixin, CreateView):
     form_class = CreateCardForm
 
     def get_success_url(self):
-        return reverse('cards:finalize', kwargs={'slug': self.object.slug})
+        return reverse('cards:finalize', kwargs={'id': self.object.id})
 
     def form_valid(self, form):
         """
@@ -193,7 +193,7 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('cards:revision', kwargs={'slug': self.object.slug})
+        return reverse('cards:revision', kwargs={'id': self.object.id})
 
 
 class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
@@ -203,8 +203,8 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
         session = get_session(self.request)
         if session:
             #  remove last card, because no click on easy/medium...
-            if kwargs["slug"] != "sessionover":
-                session.cards.remove(Card.objects.get(slug=kwargs["slug"]))
+            if kwargs["id"] != "sessionover":
+                session.cards.remove(Card.objects.get(id=kwargs["id"]))
             session.effective_duration = timezone.now() - session.date_created
             session.finished = True
             session.save()
@@ -231,9 +231,9 @@ class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         try:
             new_card = choose_new_card(self.request)
-            return reverse('cards:revision', kwargs={'slug': new_card.slug})
+            return reverse('cards:revision', kwargs={'id': new_card.id})
         except SessionOverException:
-            return reverse('cards:stop', kwargs={'slug': 'sessionover'})
+            return reverse('cards:stop', kwargs={'id': 'sessionover'})
 
 
 class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):
@@ -246,7 +246,7 @@ class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):
         current_card = Card.objects.get(pk=args[0])
         family = current_card.family(self.request.user)
         new_card = family[(family.index(current_card) + self.step) % len(family)]
-        return reverse('cards:revision', kwargs={'slug': new_card.slug, 'dsp_card_on_load': True})
+        return reverse('cards:revision', kwargs={'id': new_card.id, 'dsp_card_on_load': True})
 
 
 class RevisionPreviousCardView(RevisionNextCardView):
@@ -267,7 +267,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         in user's deck, we return this deck instance with the requested card.
         Otherwise we create a new desk instance with request card.
         """
-        card = Card.objects.get(slug=self.kwargs['slug'])
+        card = Card.objects.get(id=self.kwargs['id'])
         obj = Deck.objects.filter(
             student=self.request.user,
             card__in=card.family(self.request.user),
@@ -311,9 +311,9 @@ class RevisionView(RevisionPermissionMixin, DetailView):
             self.update_deck(2)
         try:
             new_card = choose_new_card(request)
-            return redirect(reverse('cards:revision', kwargs={'slug': new_card.slug}))
+            return redirect(reverse('cards:revision', kwargs={'id': new_card.id}))
         except SessionOverException:
-            return redirect(reverse('cards:stop', kwargs={'slug': 'sessionover'}))
+            return redirect(reverse('cards:stop', kwargs={'id': 'sessionover'}))
 
 
 class Dispatching(Chart):
@@ -405,16 +405,21 @@ class RevisionHome(TemplateView):
         ]
         specialities.sort(key=lambda x: x['total'], reverse=True)
         specialities.sort(key=lambda x: x['last_access'] if x['last_access'] else mindate, reverse=True)
-        return super().get_context_data(*args,
-                                        retro_img_nb=random.randint(1, 13),
-                                        chart=dispatching_chart,
-                                        specialities=specialities,
-                                        next_session=self.get_next_session(
-                                            min((l['wake_up'] for l in user_count)) if user_count else 0
-                                        ),
-                                        ready=sum((l['spe_count'] for l in ready_count)),
-                                        total=sum((l['spe_count'] for l in total_count)),
-                                        **kwargs)
+        return super().get_context_data(
+            *args,
+            retro_img_nb=random.randint(1, 13),
+            chart=dispatching_chart,
+            specialities=specialities,
+            next_session=self.get_next_session(
+                min((l['wake_up'] for l in user_count)) if user_count else 0
+            ),
+            ready=sum((l['spe_count'] for l in ready_count)),
+            total=sum((l['spe_count'] for l in total_count)) + Card.objects.filter(
+                specialities=None,
+                parent=None,
+            ).count(),
+            **kwargs
+        )
 
 
 class ListCardView(BBLoginRequiredMixin, ListView):
