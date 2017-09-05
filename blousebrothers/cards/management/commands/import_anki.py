@@ -52,7 +52,6 @@ class Command(BaseCommand):
         return card
 
     def handle(self, *args, **options):
-        Card.objects.all().delete()
         for fn in glob('apkgs/*'):
             cards = []
             specialities = []
