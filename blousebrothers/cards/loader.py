@@ -84,6 +84,7 @@ def load_apkg(fn, user):
                 tags.append(tag)
     rmtree(dirpath)
     save(cards, tags)
+    return len(cards)
 
 
 def save(cards, tags):

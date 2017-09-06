@@ -52,6 +52,11 @@ urlpatterns = [
         view=views.bookmark_card,
         name='bookmark'
     ),
+    url(
+        regex=r'^anki$',
+        view=views.AnkiUploadView.as_view(),
+        name='ankiupload'
+    ),
 
     url(
         regex=r'^$',

@@ -57,3 +57,11 @@ class FinalizeCardForm(ModelForm, Bootstrap3FormMixin):
         required=False,
         label=_("Tags"),
     )
+
+
+class AnkiFileForm(forms.Form):
+    ankifile = forms.FileField(
+        label=mark_safe("<i class='fa fa-file'></i> Choisis ton fichier Anki"),
+        required=True,
+        widget=forms.ClearableFileInput(),
+    )

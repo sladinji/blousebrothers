@@ -88,7 +88,6 @@ class Card(models.Model):
                                related_name="children", blank=True, null=True)
     author = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
                                related_name="created_cards", blank=True, null=True)
-    #slug = AutoSlugField(_('Slug'), max_length=256, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     free = models.BooleanField(default=True)
@@ -112,6 +111,18 @@ class Card(models.Model):
     def get_root_absolute_url(self):
         parent = self.parent or self
         return reverse('cards:revision', args=[parent.id])
+
+
+def apkg_directory_path(apkg, filename):
+    return 'anki/{0}/{1}'.format(apkg.owner.username, filename)
+
+
+class AnkiPackage(models.Model):
+    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
+    owner = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
+                              related_name="anki_packages", blank=False, null=True)
+    date = models.DateField(_("Date created"), auto_now_add=True)
+    file = models.FileField(_("Fichier"), upload_to=apkg_directory_path)
 
 
 class CardsPreference(models.Model):

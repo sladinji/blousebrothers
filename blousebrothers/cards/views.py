@@ -1,4 +1,5 @@
 import re
+import logging
 import random
 from datetime import timedelta, datetime, MINYEAR
 from django.utils import timezone
@@ -19,6 +20,7 @@ from django.views.generic import (
     DetailView,
     RedirectView,
     TemplateView,
+    FormView,
 )
 from jchart import Chart
 from jchart.config import DataSet
@@ -27,7 +29,10 @@ from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException
-from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm
+from .loader import load_apkg
+
+logger = logging.getLogger(__name__)
 
 
 def create_new_session(request, specialities, items, revision):
@@ -418,6 +423,7 @@ class RevisionHome(TemplateView):
                 specialities=None,
                 parent=None,
             ).count(),
+            anki_form=AnkiFileForm(),
             **kwargs
         )
 
@@ -436,3 +442,20 @@ class ListCardView(BBLoginRequiredMixin, ListView):
                     Q(tags__name__icontains=self.request.GET['q'])
                 )
         return qry.all().order_by('-deck__created')
+
+
+class AnkiUploadView(BBLoginRequiredMixin, FormView):
+    form_class = AnkiFileForm
+    template_name = 'cards/anki.html'
+    success_url = reverse_lazy('cards:home')
+
+    def form_valid(self, form):
+        try:
+            cnt = load_apkg(form.cleaned_data["ankifile"], self.request.user)
+            messages.info(self.request,
+                      "{} fiches ont été importées.".format(cnt)
+                      )
+        except:
+            logger.exception("Anki import failed")
+            messages.error(self.request, "Un problème est survenu lors de l'import du fichier :/")
+        return super().form_valid(form)
