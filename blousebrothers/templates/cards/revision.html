@@ -14,6 +14,10 @@
 
 {% block content %}
 {% with object.card.specialities.all|first as spe %}
+Crédit : {{ object.card.author }}<br>
+{% if object.card.tags.count %}
+Tags : {{ object.card.tags.all | join:", "}}
+{% endif %}
 <div class="card-row">
 <div class="row">
 	<div class="col-md-4 hidden-xs hidden-sm">

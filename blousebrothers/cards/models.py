@@ -5,7 +5,6 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.utils.translation import ugettext_lazy as _
-from blousebrothers.confs.models import AutoSlugField
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from model_utils import Choices
@@ -47,6 +46,9 @@ class Deck(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(_("Tags"), max_length=256, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
 
 
 class ForUserQuerySet(models.query.QuerySet):

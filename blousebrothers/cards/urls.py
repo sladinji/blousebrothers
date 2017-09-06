@@ -23,7 +23,7 @@ urlpatterns = [
         name='update'
     ),
     url(
-        regex=r'^fiche/(?P<id>\d+)/stop$',
+        regex=r'^fiche/(?P<id>\w+)/stop$',
         view=views.RevisionCloseSessionView.as_view(),
         name='stop'
     ),
