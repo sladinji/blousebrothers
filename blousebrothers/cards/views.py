@@ -419,10 +419,7 @@ class RevisionHome(TemplateView):
                 min((l['wake_up'] for l in user_count)) if user_count else 0
             ),
             ready=sum((l['spe_count'] for l in ready_count)),
-            total=sum((l['spe_count'] for l in total_count)) + Card.objects.filter(
-                specialities=None,
-                parent=None,
-            ).count(),
+            total= Card.objects.for_user(user).count(),
             anki_form=AnkiFileForm(),
             **kwargs
         )
