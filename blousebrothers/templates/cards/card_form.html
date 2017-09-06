@@ -27,7 +27,7 @@
     <div class="control-group">
         <div class="controls">
             <button type="submit" class="btn">{% trans "Valider" %}</button>
-            <a href="{% if object %}{% url 'cards:revision' object.card.slug %}{% else %}{% url 'cards:home' %}{% endif %}" class="btn">{% trans "Annuler" %}</a>
+            <a href="{% if object %}{% url 'cards:revision' object.card.id %}{% else %}{% url 'cards:home' %}{% endif %}" class="btn">{% trans "Annuler" %}</a>
         </div>
     </div>
 </form>
