@@ -8,7 +8,7 @@ urlpatterns = [
         name='list'
     ),
     url(
-        regex=r'^fiches/(?P<id>\d+)/fin/$',
+        regex=r'^fiches/(?P<pk>\d+)/fin/$',
         view=views.FinalizeCardView.as_view(),
         name='finalize'
     ),

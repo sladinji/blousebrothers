@@ -121,7 +121,7 @@ class CreateCardView(BBLoginRequiredMixin, CreateView):
     form_class = CreateCardForm
 
     def get_success_url(self):
-        return reverse('cards:finalize', kwargs={'id': self.object.id})
+        return reverse('cards:finalize', kwargs={'pk': self.object.id})
 
     def form_valid(self, form):
         """
