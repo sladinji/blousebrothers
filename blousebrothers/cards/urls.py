@@ -8,7 +8,7 @@ urlpatterns = [
         name='list'
     ),
     url(
-        regex=r'^fiches/(?P<id>[\w.@+-]+)/fin/$',
+        regex=r'^fiches/(?P<id>\d+)/fin/$',
         view=views.FinalizeCardView.as_view(),
         name='finalize'
     ),
@@ -18,12 +18,12 @@ urlpatterns = [
         name='create'
     ),
     url(
-        regex=r'^fiche/(?P<id>[\w.@+-]+)/edit$',
+        regex=r'^fiche/(?P<pk>\d+)/edit$',
         view=views.UpdateCardView.as_view(),
         name='update'
     ),
     url(
-        regex=r'^fiche/(?P<id>[\w.@+-]+)/stop$',
+        regex=r'^fiche/(?P<id>\d+)/stop$',
         view=views.RevisionCloseSessionView.as_view(),
         name='stop'
     ),
@@ -43,7 +43,7 @@ urlpatterns = [
         name='previous'
     ),
     url(
-        regex=r'^fiche/(?P<id>[\w.@+-]+)/(?P<dsp_card_on_load>\w*)?$',
+        regex=r'^fiche/(?P<id>\d+)/(?P<dsp_card_on_load>\w*)?$',
         view=views.RevisionView.as_view(),
         name='revision'
     ),
