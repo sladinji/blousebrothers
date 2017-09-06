@@ -57,7 +57,7 @@ def split_spes_tags(tags):
 
 def create_card(**kwargs):
     kwargs["content"] = kwargs['content'].replace("\u001F", "\n")  # question separator
-    card = Card(public=True, **kwargs)
+    card = Card(public=False, **kwargs)
     return card
 
 
