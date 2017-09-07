@@ -1,4 +1,4 @@
-from decimal import Decimal, ROUND_UP
+from django.utils import timezone
 import re
 from string import ascii_uppercase
 import datetime
@@ -15,6 +15,7 @@ from blousebrothers.tools import get_disqus_sso as get_remote_auth
 
 register = template.Library()
 Product = get_model('catalogue', 'Product')
+
 
 @register.filter
 def index(List, i):
@@ -104,9 +105,11 @@ def get_checked_fa(answer, test_answer):
     else:
         return mark_safe('<i class="fa fa-square-o" aria-hidden="true"></i>')
 
+
 @register.filter
 def sub_title_split(title):
     return title.replace("1", "<br>1")
+
 
 @register.filter
 def sub_desc_custo(desc):
@@ -220,3 +223,19 @@ def rev_content(txt):
     txt = re.sub(r'/!\\', '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ', txt)
     txt = re.sub(r'—>', '<i class="fa fa-arrow-right" aria-hidden="true"></i> ', txt)
     return txt
+
+
+@register.filter
+def next_session(wake_up):
+    if wake_up < timezone.now():
+        return "Maintenant"
+    if not wake_up:
+        return
+    duration = wake_up - timezone.now()
+    if duration.days:
+        return "{} jour{}".format(duration.days, "s" if duration.days > 1 else "")
+    hours = duration.seconds // 3600
+    if hours:
+        return "{} heure{}".format(hours, "s" if hours > 1 else "")
+    minutes = duration.seconds // 60
+    return "{} minute{}".format(minutes, "s" if minutes > 1 else "")

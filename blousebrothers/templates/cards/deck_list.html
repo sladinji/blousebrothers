@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load bbtricks %}
+{% block title %}{% trans 'Mes fiches' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row theader">
+        <div class="col-md-3">
+            <h2>{% trans 'Mes fiches' %} </h2>
+        </div>
+        <div class="col-md-3 text-center">
+            <a class="btn btn-default" href="{% url 'cards:create' %}"><i class="fa fa-plus"></i> Ajouter une fiche</a>
+        </div>
+        <div class="col-md-6">
+            {% include 'partials/submenu_search.html' with actionurl="cards:list" %}
+        </div>
+    </div>
+
+    {{ paginator.count }} fiche{{ paginator.count|pluralize }}.
+    <div class="panel-group cardslist" id="accordion">
+        {% for object in object_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ object.card.id}}">
+                {{ object.card.content | rev_content | safe}}
+                <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="list-group-item-heading">{{ object.card.title }}</h4>
+                        </div>
+                        <div class="col-md-7">
+                            <h4 class="text-left list-group-item-heading">{{ object.card.section }}</h4>
+                        </div>
+                </div>
+            </div>
+            <div id="collapse{{ object.card.id}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-8 cardcontent">
+                            <ul class="col-md-12 stats">
+                                <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                    <span><b class="value">{{ object.card.specialities.all|join:", "|default:"Aucune" }}</b><br>
+                                        Spécialités
+                                    </span>
+                                </li>
+                                <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                    <span><b class="value">{{ object.card.items.all|join:", "|default:"Aucun" }}</b><br>
+                                        Items
+                                    </span>
+                                </li>
+                                <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                    <span><b class="value">{{ object.wake_up | next_session }} </b><br>
+                                        Prochaine session
+                                    </span>
+                                </li>
+                                <li class="stat col-md-3 col-sm-6 col-xs-12">
+                                    <span><b class="value">{{ object.card.author }}</b><br>
+                                        Crédit
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 cardsitems">
+                            <a class="btn btn-primary" href="{% url 'cards:revision' object.card.id %}" ><i class="fa fa-eye"></i> Voir</a>
+                            <a class="btn btn-primary" href="{% url 'cards:update' object.card.id %}" ><i class="fa fa-edit"></i> Modifier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'partials/pagination.html' %}
+</div>
+
+{% endblock content %}

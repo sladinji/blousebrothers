@@ -60,7 +60,7 @@ class ForUserQuerySet(models.query.QuerySet):
         Card accessible by user
         """
         return self.filter(
-            Q(author__isnull=True) | Q(author=user) | Q(public=True)
+            Q(author=user) | Q(public=True)
         )
 
 

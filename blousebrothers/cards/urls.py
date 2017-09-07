@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     url(
-        r'^fiches/liste/?$',
+        r'^mes/fiches$',
         view=views.ListCardView.as_view(),
         name='list'
     ),

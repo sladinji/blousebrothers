@@ -2451,3 +2451,6 @@ img.logo-slide1{
     border: solid 5px;
     border-radius: 50%;
 }
+.cardslist .panel-heading {
+    background-color: white;
+}

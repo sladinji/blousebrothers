@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% load jchart %}
+{% load bbtricks %}
 
 {% block scripts %}
 {{ block.super }}
@@ -69,16 +70,16 @@
                 <figure class="profile">
                     <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
                 </figure>
-                <h4 class="card-title mt-3">Créer<br>une fiche</h4>
+                <h4 class="card-title mt-3">Gérer<br>mes fiches</h4>
                 <div class="meta">
                     <a><span class="fa fa-plus"></span></a>
                 </div>
                 <div class="card-text">
-                    <small>From scratch...</small>
+                    <small>Rechercher, modifier, créer...</small>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{% url 'cards:create' %}" class="btn btn-secondary float-right btn-sm">créer</a>
+                <a href="{% url 'cards:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
             </div>
         </div>
     </div>
@@ -133,7 +134,7 @@
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
                     <a href="{% url 'cards:redirect' %}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}({{ ready }}){% elif next_session %} (dans {{next_session}}){% endif %}</a>
+                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}({{ ready }}){% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
                 </div>
             </div>
         </div>
@@ -188,7 +189,7 @@
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
                     <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}({{ spe.ready }}){% elif spe.next_session %} (dans {{spe.next_session}}){% endif %}</a>
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}({{ spe.ready }}){% elif spe.wake_up %} (dans {{spe.wake_up | next_session}}){% endif %}</a>
                 </div>
             </div>
         </div>

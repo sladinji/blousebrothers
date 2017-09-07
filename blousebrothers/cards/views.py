@@ -367,18 +367,6 @@ class Dispatching(Chart):
 class RevisionHome(TemplateView):
     template_name = 'cards/home.html'
 
-    def get_next_session(self, wake_up):
-        if not wake_up:
-            return
-        duration = wake_up - timezone.now()
-        if duration.days:
-            return "{} jour{}".format(duration.days, "s" if duration.days > 1 else "")
-        hours = duration.seconds // 3600
-        if hours:
-            return "{} heure{}".format(hours, "s" if hours > 1 else "")
-        minutes = duration.seconds // 60
-        return "{} minute{}".format(minutes, "s" if minutes > 1 else "")
-
     def get_context_data(self, *args, **kwargs):
         user = self.request.user
         if user.is_anonymous():
@@ -401,9 +389,7 @@ class RevisionHome(TemplateView):
              'total': next((l['spe_count'] for l in total_count if l['specialities'] == spe.id), 0),
              'user': next((l['spe_count'] for l in user_count if l['card__specialities'] == spe.id), 0),
              'ready': next((l['spe_count'] for l in ready_count if l['card__specialities'] == spe.id), 0),
-             'next_session': self.get_next_session(
-                 next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0)
-             ),
+             'wake_up': next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0),
              'last_access': next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0),
              }
             for spe in Speciality.objects.all()
@@ -415,30 +401,27 @@ class RevisionHome(TemplateView):
             retro_img_nb=random.randint(1, 13),
             chart=dispatching_chart,
             specialities=specialities,
-            next_session=self.get_next_session(
-                min((l['wake_up'] for l in user_count)) if user_count else 0
-            ),
+            wake_up=min((l['wake_up'] for l in user_count)) if user_count else 0,
             ready=sum((l['spe_count'] for l in ready_count)),
-            total= Card.objects.for_user(user).count(),
+            total=Card.objects.for_user(user).count(),
             anki_form=AnkiFileForm(),
             **kwargs
         )
 
 
 class ListCardView(BBLoginRequiredMixin, ListView):
-    model = Card
+    model = Deck
+    paginate_by = 50
 
     def get_queryset(self):
-        if self.request.user.is_anonymous():
-            qry = self.model.objects.filter(public=True)
-        else:
-            qry = self.model.objects.filter(deck__student=self.request.user)
-            if self.request.GET.get('q', False):
-                qry = qry.filter(
-                    Q(content__icontains=self.request.GET['q']) |
-                    Q(tags__name__icontains=self.request.GET['q'])
-                )
-        return qry.all().order_by('-deck__created')
+        qry = self.model.objects.filter(student=self.request.user)
+        qry = qry.prefetch_related('card')
+        if self.request.GET.get('q', False):
+            qry = qry.filter(
+                Q(card__content__icontains=self.request.GET['q']) |
+                Q(card__tags__name__icontains=self.request.GET['q'])
+            )
+        return qry.all().order_by('-created')
 
 
 class AnkiUploadView(BBLoginRequiredMixin, FormView):
