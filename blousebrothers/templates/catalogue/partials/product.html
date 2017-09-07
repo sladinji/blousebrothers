@@ -33,7 +33,7 @@
         {% endif %}
         {% block product_review %}
         {% iffeature "reviews" %}
-        {% if not product.conf.done_tests.0.finished %}
+        {% if not product.conf.done_tests.0.finished and product.rating %}
         <p class="star-rating {{ product.rating|as_stars }}">
         <i class="icon-star"></i>
         <i class="icon-star"></i>
