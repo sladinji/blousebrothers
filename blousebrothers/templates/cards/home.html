@@ -34,18 +34,18 @@
         <div class="card">
             <div class="card-block">
                 <figure class="profile">
-                    <img src="{% static 'images/go_rev.png' %}" alt="">
+                    <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
                 </figure>
-                <h4 class="card-title mt-3">Commencer à réviser</h4>
+                <h4 class="card-title mt-3">Gérer<br>mes fiches</h4>
                 <div class="meta">
-                    <a><span class="fa fa-history"></span></a>
+                    <a><span class="fa fa-plus"></span></a>
                 </div>
                 <div class="card-text">
-                    <small>Nouvelle session automatique</small>
+                    <small>Rechercher, modifier, créer...</small>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{% url 'cards:redirect' %}" class="btn btn-secondary float-right btn-sm">commencer</a>
+                <a href="{% url 'cards:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
             </div>
         </div>
         <div class="card">
@@ -63,23 +63,6 @@
             </div>
             <div class="card-footer">
                 <a data-toggle="modal" data-target="#modalAnki" class="btn btn-secondary float-right btn-sm">importer</a>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-block">
-                <figure class="profile">
-                    <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
-                </figure>
-                <h4 class="card-title mt-3">Gérer<br>mes fiches</h4>
-                <div class="meta">
-                    <a><span class="fa fa-plus"></span></a>
-                </div>
-                <div class="card-text">
-                    <small>Rechercher, modifier, créer...</small>
-                </div>
-            </div>
-            <div class="card-footer">
-                <a href="{% url 'cards:list' %}" class="btn btn-secondary float-right btn-sm">voir</a>
             </div>
         </div>
     </div>

@@ -46,34 +46,46 @@
     </div>
     <div class="tabbed-sidebar">
         <div class="card">
-            <a href="{% url 'catalogue:index' %}">
-                <div class="card-block">
-                    <figure class="profile">
-                        <img src="{% static 'images/confs/catalogue.png' %}" alt="">
-                    </figure>
-                    <h4 class="card-title mt-3">Voir les<br>dossiers disponibles</h4>
+            <div class="card-block">
+                <figure class="profile">
+                    <img src="{% static 'images/confs/catalogue.png' %}" alt="">
+                </figure>
+                <h4 class="card-title mt-3">Dossiers<br>disponibles</h4>
+                <div class="card-text">
+                    <small>Rechercher, modifier, créer...</small>
                 </div>
-            </a>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'catalogue:index' %}" class="btn btn-secondary float-right btn-sm">voir</a>
+            </div>
         </div>
         <div class="card">
-            <a href="{% url 'confs:create' %}">
                 <div class="card-block">
                     <figure class="profile">
                         <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
                     </figure>
                     <h4 class="card-title mt-3">Créer<br>un dossier</h4>
+                    <div class="card-text">
+                        <small>L'essence de BlouseBrothers...</small>
+                    </div>
                 </div>
-            </a>
+                <div class="card-footer">
+                    <a href="{% url 'confs:create' %}" class="btn btn-secondary float-right btn-sm">Commencer</a>
+                </div>
         </div>
         <div class="card">
-            <a href="{% url 'confs:list' %}">
                 <div class="card-block">
                     <figure class="profile">
                         <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
                     </figure>
-                    <h4 class="card-title mt-3">Voir mes<br>dossiers créés</h4>
+                    <h4 class="card-title mt-3">Dossiers<br>créés</h4>
+                    <div class="card-text">
+                        <small>Ma galerie !</small>
+                    </div>
                 </div>
-            </a>
+                <div class="card-footer">
+                    <a href="{% url 'confs:list' %}" class="btn btn-secondary float-right btn-sm">Voir</a>
+                </div>
         </div>
     </div>
     <div class="tabbed-main page">

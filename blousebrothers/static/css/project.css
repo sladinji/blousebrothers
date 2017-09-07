@@ -813,6 +813,8 @@ h1, h2{
     vertical-align:middle;
     display:inline-block;
     line-height:1.2; /* on rÃ©tablit le line-height */
+    background-color: rgba(0, 0, 0, 0.49);
+    padding: 10px;
 }
 .signup h1{
     color:#fff;
@@ -2453,4 +2455,12 @@ img.logo-slide1{
 }
 .cardslist .panel-heading {
     background-color: white;
+}
+
+.tile_count {
+    background: radial-gradient(circle, rgb(228, 228, 228) -100%, rgb(174, 174, 174) 81%);
+    color: white;
+}
+.row.tile_count {
+    margin: 0;
 }
