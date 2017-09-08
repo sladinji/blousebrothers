@@ -5,8 +5,9 @@ import sqlite3
 import os
 import logging
 from shutil import rmtree
+from django.core.files import File
 from blousebrothers.confs.models import Speciality
-from blousebrothers.cards.models import Card, Tag
+from .models import Card, Tag, AnkiPackage, AnkiImage
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +62,50 @@ def create_card(**kwargs):
     return card
 
 
+class Importer():
+    """
+    Replace media address in anki content with the address where we saved it.
+    """
+
+    def __init__(self, map, anki_package):
+        """
+        :params map: { old_path: new_path }
+        """
+        self.map = map
+        self.anki_package = anki_package
+
+    def update(self, content):
+        """
+        Replace old media path by new ones in content.
+        """
+        for k, v in self.map.items():
+            content = content.replace("src='{}'".format(k), "src='{}'".format(v))
+            content = content.replace('src="{}"'.format(k), 'src="{}"'.format(v))
+        return content
+
+
+def get_importer(fn, user, dirpath):
+    """
+    Importer factory, save media and return an Importer object to update card content.
+    """
+    pkg = AnkiPackage(owner=user)
+    pkg.save()
+    with open(fn, "rb") as f:
+        afile = File(f)
+        pkg.file.save(os.path.basename(fn), afile)
+    new_map = {}
+    with open(os.path.join(dirpath, "media")) as media:
+        dic = eval(media.read())
+        for k, v in dic.items():
+            ai = AnkiImage(package=pkg)
+            ai.save()
+            with open(os.path.join(dirpath, k), "rb") as f:
+                ifile = File(f)
+                ai.image.save(v, ifile)
+            new_map.update(**{v: ai.image.url})
+    return Importer(new_map, pkg)
+
+
 def load_apkg(fn, user):
     """
     Import an anki package.
@@ -71,14 +116,18 @@ def load_apkg(fn, user):
     tags = []
     with zipfile.ZipFile(fn, 'r') as zf:
         dirpath = tempfile.mkdtemp()
-        zf.extract('collection.anki2', dirpath)
+        zf.extractall(dirpath)
+        importer = get_importer(fn, user, dirpath)  # upload media and archive on amazon
         with sqlite3.connect(os.path.join(dirpath, 'collection.anki2')) as con:
-            cursor = con.execute('select tags, flds from notes;')
-            for tag, content in cursor.fetchall():
+            cursor = con.execute('select id, tags, flds from notes;')
+            for pkg_id, tag, content in cursor.fetchall():
+                content = importer.update(content)  # update image address with new amazon ones
                 cards.append(
                     create_card(
                         content=content,
                         author=user,
+                        anki_pkg=importer.anki_package,
+                        anki_id=pkg_id,
                     )
                 )
                 tags.append(tag)

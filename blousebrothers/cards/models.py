@@ -1,4 +1,5 @@
 import random
+from os.path import splitext, basename
 from datetime import timedelta, datetime
 from django.utils import timezone
 from django.db import models
@@ -7,6 +8,7 @@ from django.db.models.signals import pre_save
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django.core.urlresolvers import reverse
+from image_cropping import ImageCropField, ImageRatioField
 from model_utils import Choices
 
 DURATION_CHOICES = (
@@ -91,6 +93,9 @@ class Card(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     free = models.BooleanField(default=True)
+    anki_pkg = models.ForeignKey("AnkiPackage", verbose_name=_("Package Anki"), on_delete=models.SET_NULL,
+                                 related_name="cards", blank=True, null=True)
+    anki_id = models.BigIntegerField(_("id in anki package"), null=True, default=None)
 
     def family(self, user):
         """
@@ -118,11 +123,23 @@ def apkg_directory_path(apkg, filename):
 
 
 class AnkiPackage(models.Model):
-    name = models.CharField(_('Nom'), blank=False, null=False, max_length=64)
     owner = models.ForeignKey("users.User", verbose_name=_("Auteur"), on_delete=models.SET_NULL,
                               related_name="anki_packages", blank=False, null=True)
     date = models.DateField(_("Date created"), auto_now_add=True)
     file = models.FileField(_("Fichier"), upload_to=apkg_directory_path)
+
+
+def anki_image_directory_path(anki_image, filename):
+    return '{0}/{1}'.format(
+        splitext(anki_image.package.file.name)[0],
+        filename)
+
+
+class AnkiImage(models.Model):
+    package = models.ForeignKey("AnkiPackage", verbose_name=_("Package"), on_delete=models.CASCADE,
+                                related_name="images", blank=False, null=False)
+    image = ImageCropField(_("Image"), upload_to=anki_image_directory_path, max_length=255,)
+    cropping = ImageRatioField('image', '430x360', free_crop=True)
 
 
 class CardsPreference(models.Model):

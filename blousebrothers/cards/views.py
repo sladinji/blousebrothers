@@ -103,17 +103,18 @@ def bookmark_card(request, card_id):
     return JsonResponse({'success': True})
 
 
-class RevisionPermissionMixin(BBLoginRequiredMixin, UserPassesTestMixin):
+class RevisionPermissionMixin(UserPassesTestMixin):
 
     def test_func(self):
-        if not self.request.user.is_authenticated():
-            False
         self.object = self.get_object()
         if isinstance(self.object, Card):
             card = self.object
         else:
             card = self.object.card
-        return card.author is None or card.author == self.request.user or card.public
+        if not self.request.user.is_authenticated():
+            return card.public
+        else:
+            return card.author is None or card.author == self.request.user or card.public
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated():
@@ -150,6 +151,10 @@ class CreateCardView(BBLoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class Mock:
+    card = None
+
+
 class MockDeckMixin():
     """
     Share same template as Revision view. Because Revision view use Deck
@@ -157,9 +162,6 @@ class MockDeckMixin():
     """
 
     def get_context_data(self, **kwargs):
-        class Mock:
-            card = None
-
         context = super().get_context_data(**kwargs)
         mock = Mock()
         mock.card = context['object']
@@ -178,6 +180,12 @@ class FinalizeCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
 class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
     model = Card
     form_class = UpdateCardForm
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect(reverse('account_login'))
+        else:
+            return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         """
@@ -273,6 +281,12 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         Otherwise we create a new desk instance with request card.
         """
         card = Card.objects.get(id=self.kwargs['id'])
+
+        if not self.request.user.is_authenticated():
+            obj = Mock()
+            obj.card = card
+            return obj
+
         obj = Deck.objects.filter(
             student=self.request.user,
             card__in=card.family(self.request.user),
@@ -291,7 +305,8 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         context = super().get_context_data(*args, **kwargs)
         context.update(is_favorite=self.is_favorite)
         context.update(dsp_card_on_load=self.kwargs['dsp_card_on_load'] == "True")
-        context.update(other_versions=len(self.object.card.family(self.request.user)) > 1)
+        if self.request.user.is_authenticated():
+            context.update(other_versions=len(self.object.card.family(self.request.user)) > 1)
         context.update(zen=True)
         return context
 
@@ -307,6 +322,8 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         self.object.save()
 
     def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect(reverse('account_login'))
         self.object = self.get_object()
         if 'easy' in request.POST:
             self.update_deck(0)
