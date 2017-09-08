@@ -17,7 +17,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
         return statics + list(
             Product.objects.all()
         ) + list(
-            Card.objects.filter(public=True).all()
+            Card.objects.filter(public=True).all()[:100000]
         )
 
     def location(self, item):
