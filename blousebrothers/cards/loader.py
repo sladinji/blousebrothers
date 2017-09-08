@@ -56,10 +56,20 @@ def split_spes_tags(tags):
     return spes, tags
 
 
-def create_card(**kwargs):
-    kwargs["content"] = kwargs['content'].replace("\u001F", "\n")  # question separator
-    card = Card(public=False, **kwargs)
-    return card
+def create_cards(**kwargs):
+    length = len(kwargs['content'].split("\u001F"))
+    contents = iter(kwargs['content'].split("\u001F")) # question separator
+
+    if length == 3:
+            return [Card(public=False, content="\n".join([next(contents), next(contents), next(contents)]))]
+
+    cards = []
+    for content in contents:
+        if not content:
+            break
+        card = Card(public=False, content="\n".join([content, next(contents)]))
+        cards.append(card)
+    return cards
 
 
 class Importer():
@@ -122,15 +132,14 @@ def load_apkg(fn, user):
             cursor = con.execute('select id, tags, flds from notes;')
             for pkg_id, tag, content in cursor.fetchall():
                 content = importer.update(content)  # update image address with new amazon ones
-                cards.append(
-                    create_card(
-                        content=content,
-                        author=user,
-                        anki_pkg=importer.anki_package,
-                        anki_id=pkg_id,
-                    )
-                )
-                tags.append(tag)
+                for card in create_cards(
+                    content=content,
+                    author=user,
+                    anki_pkg=importer.anki_package,
+                    anki_id=pkg_id,
+                ):
+                    cards.append(card)
+                    tags.append(tag)
     rmtree(dirpath)
     save(cards, tags)
     return len(cards)
