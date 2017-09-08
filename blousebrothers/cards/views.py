@@ -447,8 +447,12 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
     success_url = reverse_lazy('cards:home')
 
     def form_valid(self, form):
-        cnt = load_apkg(form.cleaned_data["ankifile"], self.request.user)
-        messages.info(self.request,
-                    "{} fiches ont été importées.".format(cnt)
-                    )
+        try:
+            cnt = load_apkg(form.cleaned_data["ankifile"], self.request.user)
+            messages.info(self.request,
+                      "{} fiches ont été importées.".format(cnt)
+                      )
+        except:
+            logger.exception("Anki import failed")
+            messages.error(self.request, "Un problème est survenu lors de l'import du fichier :/")
         return super().form_valid(form)
