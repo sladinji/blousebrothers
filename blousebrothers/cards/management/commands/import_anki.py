@@ -1,4 +1,3 @@
-import sys
 from glob import glob
 from django.core.management.base import BaseCommand
 from blousebrothers.users.models import User
@@ -19,4 +18,5 @@ class Command(BaseCommand):
                 Card.objects.all().delete()
         user = User.objects.get(username="BlouseBrothers")
         for fn in glob('apkgs/*'):
-            load_apkg(fn, user)
+            with open(fn, "rb") as fd:
+                load_apkg(fd, user)

@@ -11,6 +11,7 @@ Local settings
 from .common import *  # noqa
 import socket
 import os
+import sys
 
 # DEBUG
 # ------------------------------------------------------------------------------

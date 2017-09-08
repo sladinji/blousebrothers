@@ -57,17 +57,22 @@ def split_spes_tags(tags):
 
 
 def create_cards(**kwargs):
-    length = len(kwargs['content'].split("\u001F"))
-    contents = iter(kwargs['content'].split("\u001F")) # question separator
+    content = kwargs.pop('content')
+    length = len(content.split("\u001F"))
+    contents = iter(content.split("\u001F")) # question separator
 
     if length == 3:
-            return [Card(public=False, content="\n".join([next(contents), next(contents), next(contents)]))]
+            return [Card(
+                public=False,
+                content="\n".join([next(contents), next(contents), next(contents),])
+                **kwargs,
+            )]
 
     cards = []
     for content in contents:
         if not content:
             break
-        card = Card(public=False, content="\n".join([content, next(contents)]))
+        card = Card(public=False, content="\n".join([content, next(contents)]), **kwargs)
         cards.append(card)
     return cards
 
@@ -94,15 +99,14 @@ class Importer():
         return content
 
 
-def get_importer(fn, user, dirpath):
+def get_importer(fd, user, dirpath):
     """
     Importer factory, save media and return an Importer object to update card content.
     """
     pkg = AnkiPackage(owner=user)
     pkg.save()
-    with open(fn, "rb") as f:
-        afile = File(f)
-        pkg.file.save(os.path.basename(fn), afile)
+    afile = File(fd)
+    pkg.file.save(os.path.basename(fd.name), afile)
     new_map = {}
     with open(os.path.join(dirpath, "media")) as media:
         dic = eval(media.read())
@@ -116,18 +120,18 @@ def get_importer(fn, user, dirpath):
     return Importer(new_map, pkg)
 
 
-def load_apkg(fn, user):
+def load_apkg(fd, user):
     """
     Import an anki package.
-    :params fn : apkg filename or file-like object to import
+    :params fd : apkg file-like object to import
     :params user : card are imported with user as author
     """
     cards = []
     tags = []
-    with zipfile.ZipFile(fn, 'r') as zf:
+    with zipfile.ZipFile(fd, 'r') as zf:
         dirpath = tempfile.mkdtemp()
         zf.extractall(dirpath)
-        importer = get_importer(fn, user, dirpath)  # upload media and archive on amazon
+        importer = get_importer(fd, user, dirpath)  # upload media and archive on amazon
         with sqlite3.connect(os.path.join(dirpath, 'collection.anki2')) as con:
             cursor = con.execute('select id, tags, flds from notes;')
             for pkg_id, tag, content in cursor.fetchall():
