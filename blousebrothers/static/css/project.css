@@ -2148,6 +2148,8 @@ div#calltoac {
 }
 .column {
     min-width: 428px;
+    max-width: 800px;
+    margin: auto;
 }
 .x_content canvas {
     width: 100% !important;
@@ -2266,11 +2268,9 @@ button.stripe-button-el {
     font-size: 22px;
 }
 
-@media (min-width: 1600px){
-    .card-row {
-        margin-top: 50vh;
-        transform: translateY(-50%);
-    }
+.card-row {
+    text-align: center;
+    display: flex;
 }
 .table-condensed td.day {
     color: inherit;
