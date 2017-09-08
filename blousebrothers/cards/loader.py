@@ -4,6 +4,7 @@ import tempfile
 import sqlite3
 import os
 import logging
+import threading
 from shutil import rmtree
 from django.core.files import File
 from blousebrothers.confs.models import Speciality
@@ -64,8 +65,8 @@ def create_cards(**kwargs):
     if length == 3:
             return [Card(
                 public=False,
-                content="\n".join([next(contents), next(contents), next(contents),])
-                **kwargs,
+                content="\n".join([next(contents), next(contents), next(contents),]),
+                **kwargs
             )]
 
     cards = []
@@ -99,14 +100,14 @@ class Importer():
         return content
 
 
-def get_importer(fd, user, dirpath):
+def get_importer(fd, user, dirpath, filename):
     """
     Importer factory, save media and return an Importer object to update card content.
     """
     pkg = AnkiPackage(owner=user)
     pkg.save()
     afile = File(fd)
-    pkg.file.save(os.path.basename(fd.name), afile)
+    pkg.file.save(filename, afile)
     new_map = {}
     with open(os.path.join(dirpath, "media")) as media:
         dic = eval(media.read())
@@ -119,6 +120,32 @@ def get_importer(fd, user, dirpath):
             new_map.update(**{v: ai.image.url})
     return Importer(new_map, pkg)
 
+def work(tmpf, user, filename):
+    try:
+        cards = []
+        tags = []
+        with zipfile.ZipFile(tmpf, 'r') as zf:
+            dirpath = tempfile.mkdtemp()
+            zf.extractall(dirpath)
+            importer = get_importer(tmpf, user, dirpath, filename)  # upload media and archive on amazon
+            with sqlite3.connect(os.path.join(dirpath, 'collection.anki2')) as con:
+                cursor = con.execute('select id, tags, flds from notes;')
+                for pkg_id, tag, content in cursor.fetchall():
+                    content = importer.update(content)  # update image address with new amazon ones
+                    for card in create_cards(
+                        content=content,
+                        author=user,
+                        anki_pkg=importer.anki_package,
+                        anki_id=pkg_id,
+                    ):
+                        cards.append(card)
+                        tags.append(tag)
+        tmpf.close()  # tmpfile is removed on close
+        rmtree(dirpath)
+        save(cards, tags)
+        return len(cards)
+    except:
+        logger.exception("Anki thread import failed")
 
 def load_apkg(fd, user):
     """
@@ -126,28 +153,11 @@ def load_apkg(fd, user):
     :params fd : apkg file-like object to import
     :params user : card are imported with user as author
     """
-    cards = []
-    tags = []
-    with zipfile.ZipFile(fd, 'r') as zf:
-        dirpath = tempfile.mkdtemp()
-        zf.extractall(dirpath)
-        importer = get_importer(fd, user, dirpath)  # upload media and archive on amazon
-        with sqlite3.connect(os.path.join(dirpath, 'collection.anki2')) as con:
-            cursor = con.execute('select id, tags, flds from notes;')
-            for pkg_id, tag, content in cursor.fetchall():
-                content = importer.update(content)  # update image address with new amazon ones
-                for card in create_cards(
-                    content=content,
-                    author=user,
-                    anki_pkg=importer.anki_package,
-                    anki_id=pkg_id,
-                ):
-                    cards.append(card)
-                    tags.append(tag)
-    rmtree(dirpath)
-    save(cards, tags)
-    return len(cards)
-
+    tmpf = tempfile.TemporaryFile()
+    tmpf.write(fd.read())
+    tmpf.seek(0)
+    filename = os.path.basename(fd.name)
+    threading.Thread(target=work, args=(tmpf, user, filename)).start()
 
 def save(cards, tags):
     """

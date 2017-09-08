@@ -448,9 +448,9 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         try:
-            cnt = load_apkg(form.cleaned_data["ankifile"], self.request.user)
+            load_apkg(form.cleaned_data["ankifile"], self.request.user)
             messages.info(self.request,
-                      "{} fiches ont été importées.".format(cnt)
+                      "Le fichier a bien été reçu. Les fiches devraient être disponibles d'ici quelques minutes (2 minutes pour une archive de 30 Mo...)"
                       )
         except:
             logger.exception("Anki import failed")
