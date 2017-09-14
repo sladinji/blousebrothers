@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-md-12">
       <h1>{% trans "Inscription" %}</h1>
-      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+      <form class="signup" id="signup_form" method="post" action="{% url 'home' %}">
         {% csrf_token %}
         {{ form|crispy }}
         {% if redirect_field_value %}

@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from oscar.forms.widgets import DatePickerInput
 from localflavor.generic.forms import IBANFormField, BICFormField, DateField
 from django.utils.safestring import mark_safe
+from blousebrothers.confs.models import Speciality
 
 
 from .models import User
@@ -91,3 +92,14 @@ class CardRegistrationForm(forms.Form):
                                   attrs={'data-inputmask': "'mask': '999'"}
                               )
                               )
+
+
+class DemoForm(forms.Form):
+    specialities = forms.ChoiceField(
+        choices=[(spe.id, spe.name) for spe in Speciality.objects.filter(
+            conferences__for_sale=True, conferences__price=0
+        ).distinct().all()
+        ],
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label=mark_safe("&nbsp;&nbsp;&nbsp;Je veux travailler :")
+    )

@@ -3,7 +3,6 @@ from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
 from datetime import date, datetime, timedelta
 
-from django.views.generic import TemplateView
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
@@ -29,6 +28,7 @@ from oscar.core.loading import get_class
 from oscar.apps.shipping.methods import NoShippingRequired
 
 from blousebrothers.confs.forms import ConferenceForm
+from blousebrothers.confs.models import Conference, Test
 from .charts import MeanBarChart, MonthlyLineChart
 from .models import User
 from .forms import (
@@ -37,9 +37,9 @@ from .forms import (
     CardRegistrationForm,
     EmailInvitationForm,
     ImageForm,
-    UserSmallerForm,
     IbanForm,
     PayOutForm,
+    DemoForm,
 )
 from mangopay.models import (
     MangoPayCardRegistration,
@@ -429,7 +429,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         return super().handle_no_permission()
 
     def get_login_url(self):
-        return reverse("account_signup")
+        return reverse("home")
 
     def get(self, request, *args, **kwargs):
         """
@@ -454,11 +454,31 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         return super().get(request, *args, **kwargs)
 
 
+class DemoLoginView(allauth.account.views.LoginView):
+    """
+    Update login view for demo user
+    """
+    def get_success_url(self):
+        spe_id = self.request.POST.get("specialities")
+        user = User.objects.get(username='demo')
+        if 'conf' in self.request.POST:
+            conf = Conference.objects.filter(
+                price=0, for_sale=True, specialities__id__in=[spe_id]
+            ).first()
+            test, created = Test.objects.get_or_create(conf=conf, student=user)
+            return reverse('confs:test', kwargs={"slug": conf.slug})
+        else:
+            return reverse('cards:redirect') + "?specialities=" + spe_id
+
+
 class SignupView(MetadataMixin, allauth.account.views.SignupView):
     title = 'BlouseBrothers prépa ECNi collaborative'
     description = """Plateforme collaborative d'entraînement aux ECNi. Etudiant: n'achète que les dossiers dont tu as
     besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:wi
     dépose tes dossiers et garde 70% des gains."""
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(demo_form=DemoForm(), **kwargs)
 
 
 class FAQ(TemplateView):
@@ -506,7 +526,8 @@ class Stats(TemplateView):
         for x in user.tests.filter(date_created__range=(date_lastWeek, date_thisWeek)):
             if x.finished:
                 nbTest_lastWeek = nbTest_lastWeek + 1
-        pourcent_testPlus = (nbTest_thisWeek-nbTest_lastWeek) / nbTest_lastWeek * 100 if nbTest_lastWeek > 0 else nbTest_thisWeek * 100
+        pourcent_testPlus = (nbTest_thisWeek-nbTest_lastWeek) / nbTest_lastWeek * 100 \
+            if nbTest_lastWeek > 0 else nbTest_thisWeek * 100
 
         # nombre d'erreurs par test en moyenne
         moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini

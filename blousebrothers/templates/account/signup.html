@@ -17,24 +17,21 @@
 <div class="{% block extra_slide_class %}{% endblock%} slide slide1  container">
       <div class="row slide1-top">
           <div class="col-md-2">
-              <img class="logo-slide1 hidden-xs" src="{% static "images/home/BBfiltre.png" %}" alt="Logo fin de révision">
           </div>
           <div class="col-md-8">
               <div class="space"></div>
 	            {% include "partials/alert_messages.html" %}
-              <div class="space"></div>
               <div class="col-md-6">
-                  <h2>Avant, il y avait des boîtes de conf.</h2>
-                  <p style="text-align: justify;">BlouseBrothers est un nouveau concept de préparation aux ECNi. C'est une nouvelle manière d'organiser les relations financières entre Conférenciers et Etudiants. Ce sont de nouveaux outils pour t'aider à savoir quoi réviser, et quand, pour maximiser ta mémorisation selon tes forces et faiblesses. C'est le seul endroit où les Internes peuvent créer facilement des dossiers cliniques, et les mettre gratuitement à disposition de tous s'il le souhaitent (oui, c'est plus égalitaire que SIDES).
-                  <strong>Maintenant, si tu préfères payer 400 boules pour rester assis à écouter les confs à papa, c'est toi qui vois (mais dans ce cas, arrête de râler).</strong>
-                  </p>
+                  <h2 class="text-left;">Booste ta préparation aux ECNi avec BlouseBrothers</h2>
+                  Méthode, contenu, feedback... Essaie.
                   <div class="space"></div>
 
               </div>
               <div class="col-md-6">
                   <div class="space12"></div>
+                  <h3 class="text-center">Je crée mon compte</h3>
                   <div class="tcenter">
-                      <form action="{% url 'account_signup' %}" id="signup_form" method="post">
+                      <form action="{% url 'home' %}" id="signup_form" method="post">
                           {{ form.non_field_errors }}
                           {% csrf_token %}
                           {{ form.email.errors }}
@@ -55,37 +52,62 @@
                           <br><br>
                       </form>                  
                   </div>
+                  <div class="space"></div>
+                  <div class="space"></div>
               </div>
           </div>
           <div class="col-md-2">
           </div>
           <div class="space"></div>
       </div>
-      <div class="row slide1-bottom">
-          <div class="space"></div>
-          <div class="col-md-12 text-center">
-              <div class="col-md-4">
-                  <img class="homecircle" src="{% static "images/home/1.png" %}" alt="Logo fin de révision"/>
-                  <h3>Planning de révisions optimisé</h3>
-                  <p>Révise ce qui t'intéresse à l'aide de nos fiches de révisions. Fais des DCP et des QI dans les matières en rapport. Tu visualises tes résultats comparativement à ceux des autres utilisateurs. L'algorithme réorganise tes révisions et te suggère ce que tu as besoin de travailler selon tes résultats.
-                  </p>
-
+      <form action="{% url 'demologin' %}" id="signup_form" method="post">
+          <div class="row interslide">
+              <div class="col-md-6 col-xs-2">
+                  <img class="logo-slide1" src="{% static "images/retro/4.jpg" %}" alt="Logo fin de révision">
               </div>
-              <div class="col-md-4">
-                  <img class="homecircle" src="{% static "images/home/2.png" %}" alt="Logo fin de révision">
-                  <h3>Création et évaluation par les membres</h3>
-                  <p>
-                  Si un Conférencier décide de mettre sa conf en accès gratuit, tout le monde peut y accéder. Tout le monde. Sinon, l'abonnement te permet d'accéder sans limites à tous les dossiers du site, ce qui permet de soutenir les Conférenciers et notre travail. Tu peux évaluer tous les dossiers et voir les évaluations des autres. Un forum est présent à la fin de chaque dossier pour échanger avec le Conférencier.
-                  </p>
-              </div>
-              <div class="col-md-4">
-                  <img class="homecircle" src="{% static "images/home/3.png" %}" alt="Logo fin de révision">
-                  <h3>J'ai déjà toutes mes fiches sur Anki !</h3>
-                  <p>Super ! Tu vas pouvoir passer à la vitesse supérieure : importe-les sur BlouseBrothers (elles sont privées, visibles uniquement par toi). Si tu fais une erreur sur un dossier et que notre algorithme détecte que tu possèdes une fiche en rapport qui était marquée comme maîtrisée, la fiche repasse en haut du tas !
-                  </p>
+              <div class="col-xs-6">
+                  <div class="form-group">
+                      {{ demo_form }}
+                      {% csrf_token %}
+                      <input id="id_login" name="login" type="hidden" value="demo@blousebrothers.fr">
+                      <input id="id_password" name="password" type="hidden" value="demo@blousebrothers.fr">
+                  </div>
               </div>
           </div>
-      </div> <!-- row -->
+          <div class="row slide1-bottom">
+              <div class="col-xs-6">
+                  <i class="fa fa-long-arrow-down pull-right" aria-hidden="true" style="margin-top: 28px; right: 30px; position: absolute; transform: rotate(45deg); font-size: 36pt; color: #006fd1; float: right;"></i>
+                  <button id="demo-conf-button" class="btn btn-primary pull-right" type="submit" name="conf" value="conf">en faisant un dossier</button>
+              </div>
+              <div class="col-xs-6">
+                  <i class="fa fa-long-arrow-down pull-left" style="margin-top: 28px; margin-left: 15px; position: absolute; transform: rotate(-45deg); font-size: 36pt; color: #006fd1;" aria-hidden="true"></i>
+                  <button id="demo-cards-button" class="btn btn-primary pull-left" type="submit" name="card" value="card">en révisant des fiches</button>
+              </div>
+              <div class="space"></div>
+              <div class="col-md-12 text-center">
+                  <div class="col-md-4">
+                      <img class="homecircle" src="{% static "images/home/1.png" %}" alt="Logo fin de révision"/>
+                      <h3>Planning de révisions optimisé</h3>
+                      <p>Révise ce qui t'intéresse à l'aide de nos fiches de révisions. Fais des DCP et des QI dans les matières en rapport. Tu visualises tes résultats comparativement à ceux des autres utilisateurs. L'algorithme réorganise tes révisions et te suggère ce que tu as besoin de travailler selon tes résultats.
+                      </p>
+
+                  </div>
+                  <div class="col-md-4">
+                      <img class="homecircle" src="{% static "images/home/2.png" %}" alt="Logo fin de révision">
+                      <h3>Création et évaluation par les membres</h3>
+                      <p>
+                      Si un Conférencier décide de mettre sa conf en accès gratuit, tout le monde peut y accéder. Tout le monde. Sinon, l'abonnement te permet d'accéder sans limites à tous les dossiers du site, ce qui permet de soutenir les Conférenciers et notre travail. Tu peux évaluer tous les dossiers et voir les évaluations des autres. Un forum est présent à la fin de chaque dossier pour échanger avec le Conférencier.
+                      </p>
+                  </div>
+                  <div class="col-md-4">
+                      <img class="homecircle" src="{% static "images/home/3.png" %}" alt="Logo fin de révision">
+                      <h3>J'ai déjà toutes mes fiches sur Anki !</h3>
+                      <p>Super ! Tu vas pouvoir passer à la vitesse supérieure : importe-les sur BlouseBrothers (elles sont privées, visibles uniquement par toi). Si tu fais une erreur sur un dossier et que notre algorithme détecte que tu possèdes une fiche en rapport qui était marquée comme maîtrisée, la fiche repasse en haut du tas !
+                      </p>
+                  </div>
+              </div>
+          </div> <!-- row -->
+      </form>                  
 </div> <!-- end slide1 -->    
 <!-- slide 2-->
   <div class="slide2 slide container">
@@ -215,4 +237,6 @@ function alertModal(msg){
     $("#myModal").modal('show');
 }
 
+{% endblock %}
+{% block subscribe %}
 {% endblock %}

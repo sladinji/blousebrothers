@@ -68,6 +68,8 @@ settings file. This will enable the on-the-fly less compiler.
                                 {{ request.user.username }}
                                 <span class="label label-important">{{ num_unread_notifications }}</span>
                             </a>
+                            {% elif request.user.username == "demo" %}
+                            <a href="{% url 'account_logout' %}"><i class="icon-user fa-lg"></i> Créer mon compte</a>
                             {% else %}
                             <a href="{% url 'users:home' %}"><i class="icon-user fa-lg"></i> {{ request.user.username }}</a>
                             {% endif %}

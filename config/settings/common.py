@@ -333,7 +333,7 @@ SOCIALACCOUNT_PROVIDERS = {
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = reverse_lazy('confs:home')
 LOGIN_URL = 'account_login'
-ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('account_login')
+ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

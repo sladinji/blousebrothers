@@ -778,6 +778,11 @@ h1, h2{
     color:#fff;
     font-size:40px;
 }
+@media (min-width: 1200px) {
+    .signup .slide1 h2 {
+        margin-top: 113px;
+    }
+}
 
 .signup .slide2 .bg_left{
     background:url('/static/images/slide2_bg_left.jpg');
@@ -822,7 +827,7 @@ h1, h2{
 }
 .signup h3{
     color:#fff;
-    font-size:60px;
+    font-size:30px;
     font-weight:100;
 }
 
@@ -2405,6 +2410,8 @@ a.btn.btn-primary.btn-subscribe {
 }
 .row.slide1-top {
     background: 
+    linear-gradient(-172deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
+    linear-gradient(172deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
     linear-gradient(-120deg, rgba(245, 33, 33, 0) 87%, rgba(255, 255, 255, 0.08) 15%),
     linear-gradient(-110deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
     linear-gradient(210deg, rgba(27, 0, 255, 0) 85%, rgba(255, 255, 255, 0.08) 15%),
@@ -2444,14 +2451,25 @@ img.homecircle{
     width:120px;
     box-shadow: -1px 5px 7px rgba(0, 0, 0, 0.23);
 }
-img.logo-slide1{
+img.logo-slide1 {
     height: 200px;
-    width: 200px;
-    margin: auto;
-    margin-top: 87px;
-    margin-left: 10%;
-    border: solid 5px;
+    width: 200PX;
     border-radius: 50%;
+    position: relative;
+    float: right;
+    border: none;
+    display: inline-block;
+    margin-right: -98px;
+    margin-top: -85px;
+    border: 3px solid;
+    max-width: none;
+    max-height: none;
+}
+.interslide {
+    position: absolute;
+    float: center;
+    margin-top: -50px;
+    width: 84%;
 }
 .cardslist .panel-heading {
     background-color: white;
@@ -2463,4 +2481,36 @@ img.logo-slide1{
 }
 .row.tile_count {
     margin: 0;
+}
+.slide1-bottom label {
+    color: white;
+    font-size: 20pt;
+    font-family: serif;
+    font-weight: 100;
+    font-family: 'lobster';
+}
+.interslide .form-group{
+    width: 354px;
+}
+select#id_specialities {
+    width: 354px;
+    font-size: 14pt;
+    height: 40px;
+}
+.interslide label {
+    background-color: #006fd1;
+    font-size: 18pt;
+    font-family: 'lobster';
+    line-height: 28px;
+    margin-bottom: -5px;
+}
+.signup .slide1-bottom .btn {
+    color: #006fd1;
+    border-color: #006fd1;
+    margin-top: 90px;
+    margin-bottom: 35px;
+}
+.signup .errorlist{
+    font-weight: 900;
+    color: #ff9e9c;
 }
