@@ -2495,6 +2495,11 @@ select#id_specialities {
     border-radius: 9px;
     font-family: 'lobster';
 }
+@media screen and (max-width: 1024px){
+select#id_specialities {
+        width: 273px;
+    }
+}
 .interslide label {
     background-color: #006fd1;
     font-size: 18pt;
