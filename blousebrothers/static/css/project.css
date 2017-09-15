@@ -686,7 +686,6 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .signup{    
     font-family: 'Roboto', sans-serif;
-    font-weight:100;
     color:#fff;
 background-color: #000;
 }
@@ -744,7 +743,7 @@ background-color: #000;
 }
 
 .signup .btn, a.signup.btn {
-    background:none;
+    background: rgba(0,0,0,0.1);
     border:1px solid #fff;
     color:#fff;
     box-shadow: none;
@@ -768,7 +767,7 @@ background-color: #000;
     font-family: 'lobster';
 }
 h1, h2{
-    font-weight:100;
+    font-weight:300;
 }
 .signup .slide1 h1{    
     color:#fff;
@@ -777,11 +776,6 @@ h1, h2{
 .signup .slide1 h2{    
     color:#fff;
     font-size:40px;
-}
-@media (min-width: 1200px) {
-    .signup .slide1 h2 {
-        margin-top: 113px;
-    }
 }
 
 .signup .slide2 .bg_left{
@@ -828,7 +822,7 @@ h1, h2{
 .signup h3{
     color:#fff;
     font-size:30px;
-    font-weight:100;
+    font-weight:300;
 }
 
 .signup .txt_current{
@@ -2493,9 +2487,13 @@ img.logo-slide1 {
     width: 354px;
 }
 select#id_specialities {
-    width: 354px;
+    width: 319px;
     font-size: 14pt;
-    height: 40px;
+    height: 69px;
+    font-weight: 400;
+    text-align: center;
+    border-radius: 9px;
+    font-family: 'lobster';
 }
 .interslide label {
     background-color: #006fd1;
