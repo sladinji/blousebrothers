@@ -4703,7 +4703,6 @@ a.thumbnail.active {
   margin-left: 0.5em;
 }
 .alert .alertinner [class*="icon-"] {
-  position: absolute;
   top: 0.3em;
   right: 100%;
 }

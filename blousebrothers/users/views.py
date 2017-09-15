@@ -466,6 +466,9 @@ class DemoLoginView(allauth.account.views.LoginView):
                 price=0, for_sale=True, specialities__id__in=[spe_id]
             ).first()
             test, created = Test.objects.get_or_create(conf=conf, student=user)
+            if not created:
+                test.delete()
+            test, created = Test.objects.get_or_create(conf=conf, student=user)
             return reverse('confs:test', kwargs={"slug": conf.slug})
         else:
             return reverse('cards:redirect') + "?specialities=" + spe_id
