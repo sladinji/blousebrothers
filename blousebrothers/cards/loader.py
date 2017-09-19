@@ -116,9 +116,14 @@ def get_importer(fd, user, dirpath, filename):
             ai.save()
             with open(os.path.join(dirpath, k), "rb") as f:
                 ifile = File(f)
-                ai.image.save(v, ifile)
+                try:
+                    ai.image.save(v, ifile)
+                except:
+                    logger.exception("Anki image not found")
+                    continue
             new_map.update(**{v: ai.image.url})
     return Importer(new_map, pkg)
+
 
 def work(tmpf, user, filename):
     try:
