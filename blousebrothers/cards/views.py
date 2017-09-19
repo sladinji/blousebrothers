@@ -197,6 +197,7 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
             form.instance.parent = current_card.parent or current_card
             form.instance.pk = None
             form.instance.author = self.request.user
+            form.instance.public = current_card.public
             obj = form.save()
             # Must save obj before setting m2m attributes
             obj.items.set(current_card.items.all())
