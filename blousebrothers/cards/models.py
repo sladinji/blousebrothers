@@ -1,5 +1,5 @@
 import random
-from os.path import splitext, basename
+from os.path import splitext
 from datetime import timedelta, datetime
 from django.utils import timezone
 from django.db import models

@@ -6,18 +6,18 @@
 
 {% block content %}
 <div class="container">
-
+    {% block list_header %}
     <div class="row theader">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <h2>{% trans 'Mes fiches' %} </h2>
-        </div>
-        <div class="col-md-3 text-center">
             <a class="btn btn-default" href="{% url 'cards:create' %}"><i class="fa fa-plus"></i> Ajouter une fiche</a>
+            <a class="btn btn-default" href="{% url 'cards:trashed' %}"><i class="fa fa-plus"></i> Voir les fiches oubliées</a>
         </div>
         <div class="col-md-6">
             {% include 'partials/submenu_search.html' with actionurl="cards:list" %}
         </div>
     </div>
+    {% endblock list_header %}
 
     {{ paginator.count }} fiche{{ paginator.count|pluralize }}.
     <div class="panel-group cardslist" id="accordion">

@@ -441,9 +441,10 @@ class RevisionHome(TemplateView):
 class ListCardView(BBLoginRequiredMixin, ListView):
     model = Deck
     paginate_by = 50
+    trashed = False
 
     def get_queryset(self):
-        qry = self.model.objects.filter(student=self.request.user)
+        qry = self.model.objects.filter(student=self.request.user, trashed=self.trashed)
         qry = qry.prefetch_related('card')
         if self.request.GET.get('q', False):
             qry = qry.filter(
@@ -451,6 +452,13 @@ class ListCardView(BBLoginRequiredMixin, ListView):
                 Q(card__tags__name__icontains=self.request.GET['q'])
             )
         return qry.all().order_by('-created')
+
+
+class ListTrashedCardView(ListCardView):
+    model = Deck
+    paginate_by = 50
+    template_name = 'cards/trash_list.html'
+    trashed = True
 
 
 class AnkiUploadView(BBLoginRequiredMixin, FormView):
