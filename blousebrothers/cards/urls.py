@@ -28,6 +28,11 @@ urlpatterns = [
         name='stop'
     ),
     url(
+        regex=r'^oublie/(?P<pk>\d+)$',
+        view=views.RevisionDeleteView.as_view(),
+        name='delete'
+    ),
+    url(
         regex=r'^fiches$',
         view=views.RevisionRedirectView.as_view(),
         name='redirect'

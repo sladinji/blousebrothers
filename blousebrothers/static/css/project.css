@@ -1989,6 +1989,10 @@ div#calltoac {
     top: 20px;
     left: 260px;
 }
+.card_button.card_delete{
+    top: 20px;
+    left: 340px;
+}
 .card_button.card_edit{
     top: 20px;
     left: 180px;
@@ -2516,4 +2520,8 @@ select#id_specialities {
 .signup .errorlist{
     font-weight: 900;
     color: #ff9e9c;
+}
+.card_button a {
+    margin: 0;
+    padding: 0;
 }

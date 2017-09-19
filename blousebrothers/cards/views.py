@@ -18,6 +18,7 @@ from django.views.generic import (
     UpdateView,
     CreateView,
     DetailView,
+    DeleteView,
     RedirectView,
     TemplateView,
     FormView,
@@ -197,7 +198,6 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
             form.instance.parent = current_card.parent or current_card
             form.instance.pk = None
             form.instance.author = self.request.user
-            form.instance.public = current_card.public
             obj = form.save()
             # Must save obj before setting m2m attributes
             obj.items.set(current_card.items.all())
@@ -234,6 +234,17 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
                               )
                               )
         return super().get(request, *args, **kwargs)
+
+
+class RevisionDeleteView(BBLoginRequiredMixin, DetailView):
+    model = Deck
+    success_url = reverse_lazy('cards:redirect')
+
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.trashed = True
+        self.object.save()
+        return redirect('cards:redirect')
 
 
 class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):

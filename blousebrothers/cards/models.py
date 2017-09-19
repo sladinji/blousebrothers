@@ -37,6 +37,7 @@ class Deck(models.Model):
     wake_up = models.DateTimeField(default=datetime(2000, 1, 1))
     modified = models.DateTimeField(auto_now=True)
     nb_views = models.IntegerField(default=0)
+    trashed = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         """
@@ -188,7 +189,8 @@ class Session(models.Model):
     @property
     def waiting_cards(self):
         qs = self.student.deck.filter(
-            wake_up__lt=timezone.now()
+            wake_up__lt=timezone.now(),
+            trashed=False,
         )
         if self.specialities.all():
             qs = qs.filter(card__specialities__in=self.specialities.all())

@@ -47,25 +47,30 @@ Tags : {{ object.card.tags.all | join:", "}}
                     {% if other_versions %}
                     {% if dsp_card_on_load %}
                     <div class="card_button card_fav">
-                        <a href="#0" rel="nofollow" title="Choisir cette version">
+                        <a class="btn disabled" href="#0" rel="nofollow" title="Choisir cette version">
                             <div class="day"><i class="fa fa-star{% if not is_favorite%}-o{% endif %}" aria-hidden="true"></i></div>
                         </a> 
                     </div>
                     <div class="card_button card_prev">
-                        <a href="{% url 'cards:previous' object.card.pk %}" rel="nofollow" title="Voir la version precédente">
+                        <a class="btn disabled" href="{% url 'cards:previous' object.card.pk %}" rel="nofollow" title="Voir la version precédente">
                             <div class="day"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
                         </a> 
                     </div>
                     {% endif %}
                     <div class="card_button card_next">
-                        <a href="{% url 'cards:next' object.card.pk %}" rel="nofollow" title="Voir la version suivante">
+                        <a class="btn disabled" href="{% url 'cards:next' object.card.pk %}" rel="nofollow" title="Voir la version suivante">
                             <div class="day"><i class="fa fa-{% if dsp_card_on_load %}chevron-right{% else %}clone{%endif%}" aria-hidden="true"></i></div>
                         </a> 
                     </div>
                     {% endif %}
                     <div class="card_button card_edit">
-                        <a href="{% url 'cards:update' object.card.id %}" rel="nofollow" title="Éditer la carte">
+                        <a class="btn disabled" href="{% url 'cards:update' object.card.id %}" rel="nofollow" title="Éditer la carte">
                             <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
+                        </a> 
+                    </div>
+                    <div class="card_button card_delete">
+                        <a class="btn disabled" href="{% url 'cards:delete' object.id %}" rel="nofollow" title="Oublier la carte">
+                            <div class="day"><i class="fa fa-trash" aria-hidden="true"></i></div>
                         </a> 
                     </div>
                 </div>
@@ -134,6 +139,7 @@ $(document).ready(function() {
         $('.description *:not(.preview)').css({opacity: myswitch ? 0.0 : 1.0}).animate({opacity: myswitch ? 1.0 : 0.0});
         if(myflag == true){
             $('.btn_rev_block').css({opacity: 0.0, visibility:"visible"}).animate({opacity: 1.0});
+            $('.btn_rev_block a').removeClass("btn disabled");
             $('button').prop('disabled', false);
             myflag=false;
         }
