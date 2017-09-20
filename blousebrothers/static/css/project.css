@@ -30,7 +30,6 @@
 .main-menu-wapper {
     /*    background-color: black;*/
     background:#000;
-    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.37);
 }
 .main-menu-wapper .row {
     margin-left: 0px;
@@ -2524,4 +2523,54 @@ select#id_specialities {
 .card_button a {
     margin: 0;
     padding: 0;
+}
+aside .panel-heading {
+    cursor: default;
+}
+
+/*
+ * GITHUB
+ */
+.repohead.experiment-repo-nav {
+    padding-bottom: 0;
+    background-color: #fafbfc;
+}
+.pagehead {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e1e4e8;
+}
+.repohead .repohead-details-container {
+    margin-bottom: 20px;
+}
+.reponav {
+    position: relative;
+    top: 1px;
+    margin-top: -5px;
+}
+.reponav-item.selected {
+    color: #24292e;
+    background-color: #fff;
+    border-color: #f8ce00 #e1e4e8 transparent;
+}
+.reponav-item {
+    float: left;
+    padding: 7px 15px 8px;
+    color: #586069;
+    white-space: nowrap;
+    border: solid transparent;
+    border-width: 3px 1px 1px;
+    border-radius: 3px 3px 0 0;
+}
+.Counter {
+    display: inline-block;
+    padding: 2px 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    color: #586069;
+    background-color: rgba(27,31,35,0.08);
+    border-radius: 20px;
 }

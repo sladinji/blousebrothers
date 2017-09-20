@@ -1,14 +1,22 @@
 from django.conf.urls import url
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic import RedirectView
+
 from . import views
 
+
 urlpatterns = [
+    url(regex=r'^$',
+        view=RedirectView.as_view(url=reverse_lazy('cards:home'), permanent=False),
+        name='root'
+        ),
     url(
         r'^mes/fiches$',
         view=views.ListCardView.as_view(),
         name='list'
     ),
     url(
-        r'^mes/fiches/oubliees$',
+        r'^fiches/oubliees$',
         view=views.ListTrashedCardView.as_view(),
         name='trashed'
     ),
@@ -69,7 +77,7 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^$',
+        regex=r'^dashboard$',
         view=views.RevisionHome.as_view(),
         name='home'
     ),

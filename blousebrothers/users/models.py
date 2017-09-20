@@ -138,6 +138,12 @@ class User(AbstractUser):
     last_dossier_url = models.CharField(max_length=512, null=True, blank=True)
     cards = models.ManyToManyField('cards.Card', through='cards.deck', related_name='students')
 
+    def nb_activ_cards(self):
+        return self.deck.filter(trashed=False).count()
+
+    def nb_trashed_cards(self):
+        return self.deck.filter(trashed=True).count()
+
     @property
     def last_subsboard(self):
         return self.subs_board.order_by('-date_created').first()

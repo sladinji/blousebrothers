@@ -1,5 +1,5 @@
 import random
-from os.path import splitext
+from os.path import splitext, basename
 from datetime import timedelta, datetime
 from django.utils import timezone
 from django.db import models
@@ -129,6 +129,8 @@ class AnkiPackage(models.Model):
     date = models.DateField(_("Date created"), auto_now_add=True)
     file = models.FileField(_("Fichier"), upload_to=apkg_directory_path)
 
+    def filename(self):
+        return basename(self.file.name)
 
 def anki_image_directory_path(anki_image, filename):
     return '{0}/{1}'.format(
