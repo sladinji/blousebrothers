@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% load activeurl %}
+
+{% block subnavigation %}
+<div class="pagehead repohead instapaper_ignore experiment-repo-nav">
+    <div class="container">
+        {% activeurl css_class="selected" parent_tag="self" %}
+        <nav class="reponav">
+            <a href="{% url 'cards:home' %}" class="reponav-item">
+                <i class="fa fa-signal" aria-hidden="true"></i>
+                <span>Tableau de bord
+                </span>
+            </a>  
+            <a href="{% url 'cards:list' %}" class="reponav-item">
+                <i class="fa fa-paperclip" aria-hidden="true"></i>
+                <span itemprop="name">Fiches actives
+                </span>
+                <span class="Counter">{{ user.nb_activ_cards }}
+                </span>
+            </a>    
+            <a href="{% url 'cards:trashed' %}" class="reponav-item">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                <span itemprop="name">Fiches oubliées
+                </span>
+                <span class="Counter">{{ user.nb_trashed_cards }}
+                </span>
+            </a>  
+            <a href="{% url 'cards:ankiupload' %}" class="reponav-item">
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                Packages
+                <span class="Counter">{{ user.anki_packages.count }}
+            </a>
+            {% comment %}
+            <a href="/sladinji/blousebrothers/projects" class="reponav-item">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                Amis
+                <span class="Counter">12
+                </span>
+            </a>
+            <a href="/sladinji/blousebrothers/wiki" class="reponav-item">
+                <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                Stats
+            </a>
+            <a href="/sladinji/blousebrothers/settings" class="reponav-item">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                Préférences
+            </a>
+{% endcomment %}
+        </nav>
+        {% endactiveurl %}
+    </div>
+</div>
+{% endblock subnavigation %}
+
+
