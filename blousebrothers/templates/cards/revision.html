@@ -68,11 +68,13 @@ Tags : {{ object.card.tags.all | join:", "}}
                             <div class="day"><i class="fa fa-edit" aria-hidden="true"></i></div>
                         </a> 
                     </div>
+                    {% if object.id %}
                     <div class="card_button card_delete">
                         <a class="btn disabled" href="{% url 'cards:delete' object.id %}" rel="nofollow" title="Oublier la carte">
                             <div class="day"><i class="fa fa-trash" aria-hidden="true"></i></div>
                         </a> 
                     </div>
+                    {% endif %}
                 </div>
                 <div class="btn_rev_block preview">
                     <div class="card_button end_revision">

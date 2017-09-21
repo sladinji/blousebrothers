@@ -1975,22 +1975,22 @@ div#calltoac {
     left: 100px;
 }
 .btn_rev_nav .card_button.card_prev {
-    left: 100px;
+    left: 80px;
 }
 .btn_rev_nav .card_button.card_next {
-    left: 180px;
+    left: 150px;
 }
 .card_button.end_revision {
     top: 20px;
-    right: 20px;
+    right: 10px;
 }
 .btn_rev_nav .card_button.card_edit{
     top: 20px;
-    left: 260px;
+    left: 10px;
 }
 .card_button.card_delete{
     top: 20px;
-    left: 340px;
+    left: 290px;
 }
 .card_button.card_edit{
     top: 20px;
@@ -1998,7 +1998,7 @@ div#calltoac {
 }
 .card_button.card_fav {
     top: 20px;
-    left: 20px;
+    left: 220px;
 }
 .card_button.card_prev {
     top: 20px;
