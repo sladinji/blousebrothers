@@ -18,7 +18,6 @@ from django.views.generic import (
     UpdateView,
     CreateView,
     DetailView,
-    DeleteView,
     RedirectView,
     TemplateView,
     FormView,
@@ -27,10 +26,10 @@ from jchart import Chart
 from jchart.config import DataSet
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
-from blousebrothers.users.models import User
+from blousebrothers.users.models import User, FriendShipRequest
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException
-from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, FriendsForm
 from .loader import load_apkg
 
 logger = logging.getLogger(__name__)
@@ -470,9 +469,35 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
         try:
             load_apkg(form.cleaned_data["ankifile"], self.request.user)
             messages.info(self.request,
-                      "Le fichier a bien été reçu. Les fiches devraient être disponibles d'ici quelques minutes (2 minutes pour une archive de 30 Mo...)"
-                      )
+                          "Le fichier a bien été reçu. Les fiches devraient être disponibles "
+                          "d'ici quelques minutes (2 minutes pour une archive de 30 Mo...)"
+                          )
         except:
             logger.exception("Anki import failed")
             messages.error(self.request, "Un problème est survenu lors de l'import du fichier :/")
+            return super().form_valid(form)
+
+
+class FriendsView(BBLoginRequiredMixin, FormView):
+    form_class = FriendsForm
+    template_name = 'cards/friends.html'
+    success_url = "."
+
+    def form_valid(self, form):
+        for friend in form.cleaned_data['friends']:
+            FriendShipRequest.objects.create(requester=self.request.user, target=friend)
+
+        messages.info(self.request, "Demandes envoyées !")
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(user=self.request.user)
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            offers=self.request.user.friendship_offers.filter(deleted=False, accepted=False),
+        )
+        return kwargs

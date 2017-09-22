@@ -316,6 +316,14 @@ class User(AbstractUser):
         return payout
 
 
+class FriendShipRequest(models.Model):
+    requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_requests')
+    target = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_offers')
+    create_timestamp = models.DateTimeField(auto_now_add=True, null=True)
+    accepted = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
+
+
 class Sale(models.Model):
     class Meta:
         ordering = ['-create_timestamp']

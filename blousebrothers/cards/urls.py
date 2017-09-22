@@ -81,4 +81,9 @@ urlpatterns = [
         view=views.RevisionHome.as_view(),
         name='home'
     ),
+    url(
+        regex=r'^amis$',
+        view=views.FriendsView.as_view(),
+        name='friends'
+    ),
 ]

@@ -2,10 +2,11 @@ from django import forms
 from django.forms.models import ModelForm
 from djng.styling.bootstrap3.forms import Bootstrap3FormMixin
 from django.utils.translation import ugettext_lazy as _
-from django_select2.forms import ModelSelect2MultipleWidget
+from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget
 from django.utils.safestring import mark_safe
 
 from blousebrothers.confs.models import Item, Speciality
+from blousebrothers.users.models import User
 from .models import Card, Tag
 
 
@@ -65,3 +66,30 @@ class AnkiFileForm(forms.Form):
         required=True,
         widget=forms.ClearableFileInput(),
     )
+
+
+class FriendsWidget(ModelSelect2MultipleWidget):
+    def label_from_instance(self, user):
+        return "{username} ({first_name} {last_name})".format(**user.__dict__)
+
+
+class FriendsForm(forms.Form, Bootstrap3FormMixin):
+    friends = forms.ModelMultipleChoiceField(
+        label="",
+        queryset=User.objects.all(),
+        widget=FriendsWidget(
+            model=User,
+            search_fields=['username__icontains',
+                           'first_name__icontains',
+                           'last_name__icontains',
+                           'email__icontains', ]
+        ),
+        required=True,
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user")
+        super().__init__(*args, **kwargs)
+        self.fields['friends'].queryset=User.objects.exclude(
+            id__in=[x.target.id for x in user.friendship_requests.all()]
+        )

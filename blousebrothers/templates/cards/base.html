@@ -30,13 +30,13 @@
                 Packages
                 <span class="Counter">{{ user.anki_packages.count }}
             </a>
-            {% comment %}
-            <a href="/sladinji/blousebrothers/projects" class="reponav-item">
+            <a href="{% url 'cards:friends' %}" class="reponav-item">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
                 Amis
                 <span class="Counter">12
                 </span>
             </a>
+            {% comment %}
             <a href="/sladinji/blousebrothers/wiki" class="reponav-item">
                 <i class="fa fa-pie-chart" aria-hidden="true"></i>
                 Stats
