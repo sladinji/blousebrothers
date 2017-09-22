@@ -90,6 +90,6 @@ class FriendsForm(forms.Form, Bootstrap3FormMixin):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
         super().__init__(*args, **kwargs)
-        self.fields['friends'].queryset=User.objects.exclude(
-            id__in=[x.target.id for x in user.friendship_requests.all()]
+        self.fields['friends'].queryset = User.objects.exclude(
+            id__in=[x.id for x in user.friends.all()]
         )

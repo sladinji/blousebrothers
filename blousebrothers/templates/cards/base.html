@@ -31,8 +31,10 @@
             <a href="{% url 'cards:friends' %}" class="reponav-item">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
                 Amis
+                {% if user.nb_activ_friendship_offers %}
                 <span class="Counter">{{ user.nb_activ_friendship_offers }}
                 </span>
+                {% endif %}
             </a>
             {% comment %}
             <a href="/sladinji/blousebrothers/wiki" class="reponav-item">

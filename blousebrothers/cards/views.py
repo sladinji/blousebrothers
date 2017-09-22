@@ -481,7 +481,7 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
 class FriendsView(BBLoginRequiredMixin, FormView):
     form_class = FriendsForm
     template_name = 'cards/friends.html'
-    success_url = "."
+    success_url = reverse_lazy('cards:friends')
 
     def form_valid(self, form):
         for friend in form.cleaned_data['friends']:
@@ -501,3 +501,39 @@ class FriendsView(BBLoginRequiredMixin, FormView):
             offers=self.request.user.friendship_offers.filter(deleted=False, accepted=False),
         )
         return kwargs
+
+
+class AcceptFriendsView(BBLoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        offer = FriendShipRequest.objects.get(pk=self.request.GET['pk'])
+        assert(offer in self.request.user.friendship_offers.all())
+        offer.accepted = True
+        offer.save()
+        self.request.user.friends.add(offer.requester)
+        messages.info(self.request,
+                      "Félicitations ! Tu es mantenant ami avec {}."
+                      " Chacun a maintenant accès aux fiches de l'autre.".format(offer.requester.username)
+                      )
+        return reverse("cards:friends")
+
+
+class RefuseFriendsView(BBLoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        offer = FriendShipRequest.objects.get(pk=self.request.GET['pk'])
+        assert(offer in self.request.user.friendship_offers.all())
+        offer.accepted = True
+        offer.save()
+        messages.info(self.request,
+                      "La demande de {} a été déclinée.".format(offer.requester.username)
+                      )
+        return reverse("cards:friends")
+
+
+class RemoveFriendsView(BBLoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        friend = User.objects.get(pk=self.request.GET['pk'])
+        self.request.user.friends.remove(friend)
+        messages.info(self.request,
+                      "{} ne fait plus partie de tes amis.".format(friend.username)
+                      )
+        return reverse("cards:friends")
