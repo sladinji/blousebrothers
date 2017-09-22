@@ -1498,7 +1498,7 @@ a.share {
 .x_title {
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
-    text-align: center;
+    text-align: right;
 }
 .x_title h2 {
     margin: 5px 0 6px;
@@ -2570,10 +2570,74 @@ aside .panel-heading {
     font-size: 12px;
     font-weight: 600;
     line-height: 1;
-    color: #586069;
-    background-color: rgba(27,31,35,0.08);
+    color: #ffffff;
+    background-color: #5cb85c;
     border-radius: 20px;
+}
+.btn .Counter{
+    background-color: #73879c;
 }
 input::placeholder {
     color: #ac919c;
+}
+/*
+ * FRIENDS
+ */
+ul.msg_list li {
+    background: #f7f7f7;
+    padding: 5px;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 6px 6px 0;
+    width: 96%!important;
+}
+ul.msg_list li .image img {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    float: left;
+    margin-right: 10px;
+    width: 60px;
+}
+ul.msg_list li .message {
+    display: block!important;
+    font-size: 11px;
+}
+ul.msg_list li .time {
+    font-size: 11px;
+    font-style: italic;
+    font-weight: 700;
+    position: absolute;
+    right: 35px;
+}
+ul.msg_list li .friends-control {
+    font-size: 11px;
+    font-style: italic;
+    font-weight: 700;
+    position: relative;
+}
+
+ul.msg_list li .friends-profile {
+    width: 78%;
+    display: inline-block;
+    position: relative;
+}
+ul.msg_list li .friends-control{
+    width: 20%;
+    display: inline-block;
+    position: relative;
+    text-align: right;
+    vertical-align: bottom;
+
+}
+.x_content .friends-control .btn i.fa {
+    margin-right: 0px;
+}
+.x_content .friends-control .btn {
+    padding: 10px;
+    width: 40px;
+}
+@media (min-width: 1200px){
+    .x_content .friends-control .btn.btn-success {
+        margin-right: 10px;
+    }
 }

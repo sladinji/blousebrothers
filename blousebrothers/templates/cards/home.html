@@ -70,7 +70,7 @@
         <div class="space hidden-xs"></div>
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="x_title">
-                <h2><i class="fa fa-pie-chart"></i> Répartition de mes fiches</h2><div class="text-right">{{ user.deck.count }}/{{ total }}</div>
+                <h2><i class="fa fa-pie-chart"></i> Toutes mes fiches</h2><div class="text-right">{{ user.deck.count }}/{{ total }}</div>
                 <div class="clearfix"></div>
                 <div class="progress-bar-container"><div style="width: {% widthratio user.deck.count total  100 %}%" class="progress-bar"></div></div>
             </div>
@@ -117,7 +117,7 @@
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
                     <a href="{% url 'cards:redirect' %}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}({{ ready }}){% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
+                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span>{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
                 </div>
             </div>
         </div>
@@ -172,7 +172,7 @@
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
                     <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}({{ spe.ready }}){% elif spe.wake_up %} (dans {{spe.wake_up | next_session}}){% endif %}</a>
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}<span class="Counter">{{ spe.ready }}</span>{% elif spe.wake_up %} (dans {{spe.wake_up | next_session}}){% endif %}</a>
                 </div>
             </div>
         </div>

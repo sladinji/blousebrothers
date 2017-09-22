@@ -10,30 +10,28 @@
                 <i class="fa fa-signal" aria-hidden="true"></i>
                 <span>Tableau de bord
                 </span>
+                {% if user.nb_cards_ready %}
+                <span class="Counter">{{ user.nb_cards_ready }}</span>
+                {% endif %}
             </a>  
             <a href="{% url 'cards:list' %}" class="reponav-item">
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
                 <span itemprop="name">Fiches actives
-                </span>
-                <span class="Counter">{{ user.nb_activ_cards }}
                 </span>
             </a>    
             <a href="{% url 'cards:trashed' %}" class="reponav-item">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 <span itemprop="name">Fiches oubliées
                 </span>
-                <span class="Counter">{{ user.nb_trashed_cards }}
-                </span>
             </a>  
             <a href="{% url 'cards:ankiupload' %}" class="reponav-item">
                 <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                 Packages
-                <span class="Counter">{{ user.anki_packages.count }}
             </a>
             <a href="{% url 'cards:friends' %}" class="reponav-item">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
                 Amis
-                <span class="Counter">12
+                <span class="Counter">{{ user.nb_activ_friendship_offers }}
                 </span>
             </a>
             {% comment %}

@@ -144,6 +144,15 @@ class User(AbstractUser):
     def nb_trashed_cards(self):
         return self.deck.filter(trashed=True).count()
 
+    def activ_friendship_offers(self):
+        return self.friendship_offers.filter(deleted=False, accepted=False)
+
+    def nb_activ_friendship_offers(self):
+        return self.friendship_offers.filter(deleted=False, accepted=False).count()
+
+    def nb_cards_ready(self):
+        return self.deck.filter(wake_up__lt=timezone.now()).count()
+
     @property
     def last_subsboard(self):
         return self.subs_board.order_by('-date_created').first()
