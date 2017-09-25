@@ -63,7 +63,9 @@ class ForUserQuerySet(models.query.QuerySet):
         Card accessible by user
         """
         return self.filter(
-            Q(author=user) | Q(public=True)
+            Q(author=user) | Q(public=True) | Q(author__in=[
+                x.from_user for x in user.to_people.filter(share_cards=True)
+            ])
         )
 
 
