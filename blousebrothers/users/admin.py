@@ -117,6 +117,8 @@ class EditionProgressListFilter(admin.SimpleListFilter):
             ('1w', _('depuis une semaine')),
             ('1m', _('depuis un mois')),
             ('xm', _("depuis plus d'un mois")),
+            ('OK', _("en vente")),
+            ('NOK', _("finis pas en vente")),
         )
 
     def queryset(self, request, queryset):
@@ -139,6 +141,14 @@ class EditionProgressListFilter(admin.SimpleListFilter):
         if self.value() == 'xm':
             return queryset.filter(created_confs__edition_progress__lt=100,
                                    created_confs__date_created__lt=last_month,
+                                   )
+        if self.value() == 'OK':
+            return queryset.filter(created_confs__edition_progress=100,
+                                   created_confs__for_sale=True,
+                                   )
+        if self.value() == 'NOK':
+            return queryset.filter(created_confs__edition_progress=100,
+                                   created_confs__for_sale=False,
                                    )
 
 
@@ -181,9 +191,9 @@ class MyUserAdmin(AuthUserAdmin, HijackUserAdminMixin, CSVExportAdmin):
     csv_fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'address1', 'address2', 'zip_code',
                   'city']
     search_fields = ['username', 'name', 'first_name', 'last_name', 'email', 'mobile', 'phone']
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'is_conferencier',
+    list_filter = (EditionProgressListFilter, 'is_staff', 'is_superuser', 'is_active', 'is_conferencier',
                    'wanabe_conferencier', 'university', "degree", 'date_joined', "status",
                    'subs__price_paid',
-                   EditionProgressListFilter, FinishedButNotForSaleFilter, GotCBFilter)
+                   FinishedButNotForSaleFilter, GotCBFilter)
 
 admin.site.register(University)
