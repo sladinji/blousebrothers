@@ -24,4 +24,14 @@ urlpatterns = [
         view=views.RemoveFriendsView.as_view(),
         name='remove_friend'
     ),
+    url(
+        regex=r'^share_cards$',
+        view=views.update_sharecards,
+        name='share_cards'
+    ),
+    url(
+        regex=r'^share_results$',
+        view=views.update_shareresults,
+        name='share_results'
+    ),
 ]

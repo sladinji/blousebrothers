@@ -1,7 +1,9 @@
 from django import forms
+from django.forms.models import ModelForm
 from django_select2.forms import ModelSelect2MultipleWidget
 from djng.styling.bootstrap3.forms import Bootstrap3FormMixin
 from blousebrothers.users.models import User
+from .models import Relationship
 
 
 class FriendsWidget(ModelSelect2MultipleWidget):
@@ -29,3 +31,10 @@ class FriendsForm(forms.Form, Bootstrap3FormMixin):
         self.fields['friends'].queryset = User.objects.exclude(
             id__in=[x.id for x in user.friends.all()]
         )
+
+
+class SharingForm(ModelForm, Bootstrap3FormMixin):
+
+    class Meta:
+        model = Relationship
+        fields = ['share_cards', 'share_results']

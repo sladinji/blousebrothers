@@ -31,6 +31,7 @@ from mangopay.models import (
 )
 from blousebrothers.catalogue.models import Product
 from blousebrothers.confs.models import Conference
+from blousebrothers.friends.models import Relationship
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +119,9 @@ class User(AbstractUser):
                               blank=False, default=None, null=True)
     """Degree level"""
     """Degree level"""
-    friends = models.ManyToManyField('self')
+    friends = models.ManyToManyField('self', through='friends.Relationship',
+                                     symmetrical=False,
+                                     related_name='related_to+')
     """Friends"""
     country_of_residence = CountryField(_("Pays de résidence"), default="FR", blank=False)
     nationality = CountryField(_("Nationalité"), default="FR", blank=False)
@@ -138,6 +141,37 @@ class User(AbstractUser):
     last_dossier_url = models.CharField(max_length=512, null=True, blank=True)
     cards = models.ManyToManyField('cards.Card', through='cards.deck', related_name='students')
     last_last_login = models.DateTimeField(auto_now_add=True, null=True)
+
+    def add_relationship(self, user, symm=True):
+        relationship, created = Relationship.objects.get_or_create(
+            from_user=self,
+            to_user=user,
+        )
+        if symm:
+            # avoid recursion by passing `symm=False`
+            user.add_relationship(self, False)
+            return relationship
+
+    def remove_relationship(self, user, symm=True):
+        Relationship.objects.filter(
+            from_user=self,
+            to_user=user,
+        ).delete()
+        if symm:
+            # avoid recursion by passing `symm=False`
+            user.remove_relationship(self, False)
+
+    def get_relations(self):
+        return [
+            {
+                'user': friend,
+                'share_cards': friend.from_people.get(to_user=self).share_cards,
+                'share_results': friend.from_people.get(to_user=self).share_results,
+                'i_share_cards': self.from_people.get(to_user=friend).share_cards,
+                'i_share_results': self.from_people.get(to_user=friend).share_results,
+            }
+            for friend in self.friends.all()
+        ]
 
     def nb_activ_cards(self):
         return self.deck.filter(trashed=False).count()
@@ -159,6 +193,9 @@ class User(AbstractUser):
             return Conference.objects.filter(date_created__gte=self.last_last_login).count()
         else:
             return 0
+
+    def nb_tests_done(self):
+        return self.tests.filter(finished=True).count()
 
     @property
     def last_subsboard(self):

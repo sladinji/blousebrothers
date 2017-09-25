@@ -89,20 +89,35 @@
                     <div class="dashboard-widget-content">
 						<div class="space12"></div> <!-- 40px Vertical Spacing -->
                         <ul class="list-unstyled msg_list">
-                            {% for friend in user.friends.all %}
+                            {% for relation in user.get_relations %}
                             <li>
                                 <div class="friends-profile"> 
                                     <span class="image">
-                                        <img style="width: 50px;" src="{{friend.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                        <img style="width: 50px;" src="{{relation.user.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
                                     </span>
                                     <span>
-                                        <span>{{ friend.username }}</span>
+                                        <span>{{ relation.user.username }}</span>
                                     </span>
                                     <span class="message">
-                                        {% with total=friend.created_cards.count %}
-                                        {{ total }} carte{{ total|pluralize }} crée{{ total|pluralize }}.
+                                        {% with total=relation.user.created_cards.count %}
+                                        {{ total }} carte{{ total|pluralize }} crée{{ total|pluralize }}.<br>
+                                        {% endwith %}
+                                        {% with total=relation.user.nb_tests_done %}
+                                        {{ total }} dossier{{ total|pluralize }} fait{{ total|pluralize }}.<br>
                                         {% endwith %}
                                     </span>
+                                </div>
+                                <div class="share_cards text-center">
+                                    <label>Partage ses fiches :</label>{{ relation.share_cards |yesno:"Oui,Non" }}
+                                </div>
+                                <div class="share_cards text-center">
+                                    <label>Partage ses résultats:</label>{{ relation.share_results |yesno:"Oui,Non" }}
+                                </div>
+                                <div class="share_cards text-center">
+                                    <label>Partage fiches</label><input type="checkbox" name="share_cards"   data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_cards %} checked{% endif %}>
+                                </div>
+                                <div class="share_results text-center">
+                                    <label>Partage résultats</label><input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_results %} checked{% endif %}>
                                 </div>
                                 <div class="friends-control"> 
                                     <a href="{% url 'friends:remove_friend' %}?pk={{friend.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
@@ -128,6 +143,34 @@
 {% endblock %}
 
 
+{% block extrastyles %}
+{{ block.super }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block onbodyload %}
 $('.django-select2').djangoSelect2({placeholder: 'Nom, prénom, pseudo ou email...'});
+var toggle_share_cards = function(event, state) {
+    $.ajax({
+        url: "{% url 'friends:share_cards' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
+    });
+};
+var toggle_share_results = function(event, state) {
+    $.ajax({
+        url: "{% url 'friends:share_results' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
+    });
+}
+$("[name='share_cards']").bootstrapSwitch('onText', 'Oui');
+$("[name='share_cards']").bootstrapSwitch('offText', 'Non');
+$("[name='share_results']").bootstrapSwitch('onText', 'Oui');
+$("[name='share_results']").bootstrapSwitch('offText', 'Non');
+$('input[name="share_cards"]').on('switchChange.bootstrapSwitch', toggle_share_cards)
+$('input[name="share_results"]').on('switchChange.bootstrapSwitch', toggle_share_results)
+
 {% endblock %}
+
+{% block cdn_scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+{% endblock %}
+
