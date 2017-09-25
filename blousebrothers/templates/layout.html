@@ -56,10 +56,28 @@ settings file. This will enable the on-the-fly less compiler.
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'cards:root' %}"><span class="fa fa-history fa-lg"></span> {% trans 'Révisions' %}</a>
+                            <a href="{% url 'cards:root' %}"><span class="fa fa-history fa-lg"></span> {% trans 'Révisions' %}
+                            {% if user.nb_cards_ready %}
+                            <span class="Counter">{{ user.nb_cards_ready }}</span>
+                            {% endif %}
+                            </a>
                         </li>
-                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}</a></li>
+                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}
+                            {% if user.nb_new_confs %}
+                            <span class="Counter">{{ user.nb_new_confs }}
+                            </span>
+                            {% endif %}
+                            </a>
+                        </li>
                         {% if request.user.is_authenticated %}
+                        <li class="menu-item-has-children item-megamenu">
+                            <a href="{% url 'friends:home' %}"><span class="fa fa-users fa-lg"></span> {% trans 'Amis' %}
+                            {% if user.nb_activ_friendship_offers %}
+                            <span class="Counter">{{ user.nb_activ_friendship_offers }}
+                            </span>
+                            {% endif %}
+                            </a>
+                        </li>
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}

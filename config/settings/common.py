@@ -9,13 +9,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
-from oscar.defaults import *
+from oscar.defaults import *  #noqa
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.conf import Settings as thumbnail_settings
-from boto.s3.connection import OrdinaryCallingFormat
-from django.utils import six
+from boto.s3.connection import OrdinaryCallingFormat  #noqa
+from django.utils import six  #noqa
 
 import environ
 
@@ -72,7 +72,7 @@ THIRD_PARTY_APPS = [
     'meta',  # SEO
     'invitations',  # Sponsoring
     'localflavor',  # IbanField
-    'disqus', #  Forum
+    'disqus',  # Forum
     'paypal',
     'jchart',
 
@@ -83,6 +83,7 @@ LOCAL_APPS = [
     'blousebrothers.users',  # custom users app
     'blousebrothers.confs',  # confs app
     'blousebrothers.cards',  # revisons/fiches app
+    'blousebrothers.friends',  # friends relationship, cards sharing
     # Your stuff: custom apps go here
     'widget_tweaks',
 ]
@@ -240,7 +241,7 @@ TEMPLATES = [
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
                 'blousebrothers.context_processor.subscriptions',
-                #'blousebrothers.context_processor.balance',
+                #  'blousebrothers.context_processor.balance',
                 'blousebrothers.context_processor.invit_form',
             ],
         },
@@ -349,7 +350,7 @@ HAYSTACK_CONNECTIONS = {
         'URL': 'http://solr:8983/solr/mycore',
         'INCLUDE_SPELLING': True,
         'EXCLUDED_INDEXES': ['oscar.apps.search.search_indexes.ProductIndex',
-                             'blousebrothers.search.search_indexes.CoreProductIndex',],
+                             'blousebrothers.search.search_indexes.CoreProductIndex', ],
     },
 }
 OSCAR_SEARCH_FACETS = {
@@ -360,19 +361,19 @@ OSCAR_SEARCH_FACETS = {
         ('conf_items', {'name': 'Items', 'field': 'conf_items'}),
     ]),
     'queries': OrderedDict([
-    #    ('price_range',
-    #     {
-    #         'name': _('Price range'),
-    #         'field': 'price',
-    #         'queries': [
-    #             # This is a list of (name, query) tuples where the name will
-    #             # be displayed on the front-end.
-    #             (_('0 to 20'), u'[0 TO 20]'),
-    #             (_('20 to 40'), u'[20 TO 40]'),
-    #             (_('40 to 60'), u'[40 TO 60]'),
-    #             (_('60+'), u'[60 TO *]'),
-    #         ]
-    #     }),
+        #    ('price_range',
+        #     {
+        #         'name': _('Price range'),
+        #         'field': 'price',
+        #         'queries': [
+        #             # This is a list of (name, query) tuples where the name will
+        #             # be displayed on the front-end.
+        #             (_('0 to 20'), u'[0 TO 20]'),
+        #             (_('20 to 40'), u'[20 TO 40]'),
+        #             (_('40 to 60'), u'[40 TO 60]'),
+        #             (_('60+'), u'[60 TO *]'),
+        #         ]
+        #     }),
     ]),
 }
 OSCAR_DASHBOARD_NAVIGATION.append(

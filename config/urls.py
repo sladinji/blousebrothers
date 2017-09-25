@@ -62,6 +62,7 @@ urlpatterns = [
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^select2/', include('django_select2.urls')),
     url(r'^revisions/', include('blousebrothers.cards.urls', namespace='cards')),
+    url(r'^amis/', include('blousebrothers.friends.urls', namespace='friends')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

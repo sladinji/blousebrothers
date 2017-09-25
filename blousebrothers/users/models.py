@@ -137,6 +137,7 @@ class User(AbstractUser):
     conf_encours_url = models.CharField(max_length=512, null=True, blank=True)
     last_dossier_url = models.CharField(max_length=512, null=True, blank=True)
     cards = models.ManyToManyField('cards.Card', through='cards.deck', related_name='students')
+    last_last_login = models.DateTimeField(auto_now_add=True, null=True)
 
     def nb_activ_cards(self):
         return self.deck.filter(trashed=False).count()
@@ -152,6 +153,12 @@ class User(AbstractUser):
 
     def nb_cards_ready(self):
         return self.deck.filter(wake_up__lt=timezone.now()).count()
+
+    def nb_new_confs(self):
+        if self.last_last_login:
+            return Conference.objects.filter(date_created__gte=self.last_last_login).count()
+        else:
+            return 0
 
     @property
     def last_subsboard(self):
@@ -323,14 +330,6 @@ class User(AbstractUser):
         payout.save()
         payout.create()
         return payout
-
-
-class FriendShipRequest(models.Model):
-    requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_requests')
-    target = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_offers')
-    create_timestamp = models.DateTimeField(auto_now_add=True, null=True)
-    accepted = models.BooleanField(default=False)
-    deleted = models.BooleanField(default=False)
 
 
 class Sale(models.Model):

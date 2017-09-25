@@ -26,10 +26,10 @@ from jchart import Chart
 from jchart.config import DataSet
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
-from blousebrothers.users.models import User, FriendShipRequest
+from blousebrothers.users.models import User
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException
-from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, FriendsForm
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm
 from .loader import load_apkg
 
 logger = logging.getLogger(__name__)
@@ -476,64 +476,3 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
             logger.exception("Anki import failed")
             messages.error(self.request, "Un problème est survenu lors de l'import du fichier :/")
             return super().form_valid(form)
-
-
-class FriendsView(BBLoginRequiredMixin, FormView):
-    form_class = FriendsForm
-    template_name = 'cards/friends.html'
-    success_url = reverse_lazy('cards:friends')
-
-    def form_valid(self, form):
-        for friend in form.cleaned_data['friends']:
-            FriendShipRequest.objects.create(requester=self.request.user, target=friend)
-
-        messages.info(self.request, "Demandes envoyées !")
-        return super().form_valid(form)
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update(user=self.request.user)
-        return kwargs
-
-    def get_context_data(self, **kwargs):
-        kwargs = super().get_context_data(**kwargs)
-        kwargs.update(
-            offers=self.request.user.friendship_offers.filter(deleted=False, accepted=False),
-        )
-        return kwargs
-
-
-class AcceptFriendsView(BBLoginRequiredMixin, RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        offer = FriendShipRequest.objects.get(pk=self.request.GET['pk'])
-        assert(offer in self.request.user.friendship_offers.all())
-        offer.accepted = True
-        offer.save()
-        self.request.user.friends.add(offer.requester)
-        messages.info(self.request,
-                      "Félicitations ! Tu es mantenant ami avec {}."
-                      " Chacun a maintenant accès aux fiches de l'autre.".format(offer.requester.username)
-                      )
-        return reverse("cards:friends")
-
-
-class RefuseFriendsView(BBLoginRequiredMixin, RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        offer = FriendShipRequest.objects.get(pk=self.request.GET['pk'])
-        assert(offer in self.request.user.friendship_offers.all())
-        offer.accepted = True
-        offer.save()
-        messages.info(self.request,
-                      "La demande de {} a été déclinée.".format(offer.requester.username)
-                      )
-        return reverse("cards:friends")
-
-
-class RemoveFriendsView(BBLoginRequiredMixin, RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        friend = User.objects.get(pk=self.request.GET['pk'])
-        self.request.user.friends.remove(friend)
-        messages.info(self.request,
-                      "{} ne fait plus partie de tes amis.".format(friend.username)
-                      )
-        return reverse("cards:friends")
