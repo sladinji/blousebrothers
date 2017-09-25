@@ -114,7 +114,8 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         if not self.request.user.is_authenticated():
             return card.public
         else:
-            return card.author is None or card.author == self.request.user or card.public
+            return card.author is None or card.author == self.request.user or card.public \
+                or card.author.id in self.request.user.to_people.filter(share_cards=True).values('from_user_id')
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated():
