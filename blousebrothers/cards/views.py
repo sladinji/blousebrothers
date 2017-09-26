@@ -114,7 +114,8 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         if not self.request.user.is_authenticated():
             return card.public
         else:
-            return Card.objects.for_user(self.request.user).filter(id=card.id).exists()
+            return Card.objects.for_user(self.request.user).filter(id=card.id).exists() or \
+                self.request.user.deck.filter(card=card).exists()
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated():
@@ -287,37 +288,48 @@ class RevisionView(RevisionPermissionMixin, DetailView):
 
     def get_object(self, queryset=None):
         """
+        Permission check is done on card. So we just return the card. Object is supposed to
+        be a Deck instance, but we have to check user's permission on card before : if user's
+        doesn't have permission anymore with requested card but the card is already in his deck,
+        he still can access to it. This means we have to get or create deck instance later
+        because we first have to check if record already exists !
+        """
+        return Card.objects.get(id=self.kwargs['id'])
+
+    def get(self, request, *args, **kwargs):
+        """
         Only one card by family in user's deck. If a sibling card is present
         in user's deck, we return this deck instance with the requested card.
-        Otherwise we create a new desk instance with request card.
+        Otherwise we create a new deck instance with request card.
         """
-        card = Card.objects.get(id=self.kwargs['id'])
+        card = self.get_object()
 
         if not self.request.user.is_authenticated():
             obj = Mock()
             obj.card = card
-            return obj
-
-        obj = Deck.objects.filter(
-            student=self.request.user,
-            card__in=card.family(self.request.user),
-        ).exclude(
-            card=card,
-        ).first()
-        if obj:
-            obj.card = card
-            self.is_favorite = False
         else:
-            obj, _ = Deck.objects.get_or_create(card=card, student=self.request.user)
-            self.is_favorite = True
-        return obj
+            obj = Deck.objects.filter(
+                student=self.request.user,
+                card__in=card.family(self.request.user),
+            ).exclude(
+                card=card,
+            ).first()
+            if obj:
+                obj.card = card
+                self.is_favorite = False
+            else:
+                obj = Deck.objects.get_or_create(card=card, student=self.request.user)[0]
+                self.is_favorite = True
+
+        context = self.get_context_data(object=obj)
+        return self.render_to_response(context)
 
     def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context.update(is_favorite=self.is_favorite)
+        context = {}
+        context.update(is_favorite=self.is_favorite, **kwargs)
         context.update(dsp_card_on_load=self.kwargs['dsp_card_on_load'] == "True")
         if self.request.user.is_authenticated():
-            context.update(other_versions=len(self.object.card.family(self.request.user)) > 1)
+            context.update(other_versions=len(context['object'].card.family(self.request.user)) > 1)
         context.update(zen=True)
         return context
 
