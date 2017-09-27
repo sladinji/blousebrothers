@@ -333,15 +333,16 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         return context
 
     def update_deck(self, difficulty):
-        delta = revision_steps[self.object.column].next_time[difficulty]
+        deck = self.request.user.deck.get(card_id=self.kwargs['id'])
+        delta = revision_steps[deck.column].next_time[difficulty]
         if (delta < timedelta(days=1)):
-            self.object.wake_up = timezone.now()+delta
+            deck.wake_up = timezone.now()+delta
         else:
-            self.object.wake_up = timezone.now()+delta
-            self.object.wake_up.replace(hour=5)
-        self.object.column = revision_steps[self.object.column].get_next_column(difficulty).column
-        self.object.difficulty = difficulty
-        self.object.save()
+            deck.wake_up = timezone.now()+delta
+            deck.wake_up.replace(hour=5)
+        deck.column = revision_steps[deck.column].get_next_column(difficulty).column
+        deck.difficulty = difficulty
+        deck.save()
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
