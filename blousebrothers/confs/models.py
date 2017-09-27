@@ -483,7 +483,7 @@ class Subscription(models.Model):
     user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
     type = models.ForeignKey('SubscriptionType', related_name="subs", blank=False, null=False)
     date_created = models.DateField(_("Date created"), auto_now_add=True)
-    date_over = models.DateField(_("Date created"), null=False)
+    date_over = models.DateField(_("Valide jusqu'au"), null=False)
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
     bonus_taken = models.BooleanField(default=False)
     bonus_sponsor_taken = models.BooleanField(default=False)
