@@ -62,7 +62,8 @@ class IbanForm(forms.Form):
 
 
 class EmailInvitationForm(forms.Form):
-    email = forms.EmailField(label=_('Email de ton filleul'), required=True)
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email de ton collègue'}), label="",
+                             required=True)
 
 
 class ImageForm(forms.Form):

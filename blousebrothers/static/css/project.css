@@ -2641,3 +2641,42 @@ ul.msg_list li .friends-control{
         margin-right: 10px;
     }
 }
+.select2-container--default .select2-selection--multiple {
+    border-radius: 0px !important;
+}
+.friend-header img{
+    position: absolute;
+    margin-left: -181px;
+    margin-top: -60px;
+    border-radius: 44%;
+    background: white;
+}
+.friend-header h2{
+    border-bottom: 3px solid;
+    border-right: 3px solid;
+    padding-bottom: 13px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 0 0 50px 0;
+    box-shadow: 10px 15px 10px -12px #73879c;
+}
+.friend-header2 img{
+    position: absolute;
+    right: -123px;
+    margin-top: -105px;
+    border-radius: 50%;
+    z-index:-1;
+}
+.friend-header2 h2 {
+    border-bottom: solid;
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 0 0px 0 50px;
+    box-shadow: 10px 15px 10px -12px #73879c;
+    background-color: #f7f7f7;
+}
+.friend-header2 {
+    height: 200px;
+    margin-top: -61px;
+}

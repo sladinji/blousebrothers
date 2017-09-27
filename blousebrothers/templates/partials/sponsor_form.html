@@ -8,16 +8,23 @@
         <div class="clearfix"></div>
     </div>
 -->
-    <div class="space12"></div> <!-- 40px Vertical Spacing -->
     <div class="x_content">
         <div class="dashboard-widget-content">
+            <div class="x_title">
+                <h2><i class="fa fa-send"></i> Tu ne le trouves pas ? <small>Envoie lui un mail</small></h2>
+                <div class="clearfix">
+                    <strong>!</strong>
+                </div>
+            </div>
+            <div class="space12"></div>
             {% tinycontent 'regleparrainage' %}
             {% endtinycontent %}
+            <div class="space12"></div>
             <form class="form-horizontal" method="post" action="{% url 'users:invitation' %}">
                 {% csrf_token %}
                 {{ invit_form | crispy }}
                 <input name="current_url" type="hidden" value="{{request.path}}"></input>
-                <button type="submit" class="btn pull-right">Envoyer</button>
+                <button type="submit" class="btn btn-success pull-right"><i class="fa fa-send"></i> Envoyer</button>
             </form>
         </div>
     </div>
