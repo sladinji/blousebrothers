@@ -491,7 +491,7 @@ def update_status_timestamp(sender, **kwargs):
     if instance.previous_status != instance.status or instance.previous_action != instance.action or created:
         instance.status_timestamp = timezone.now()
         logger.info("New user status : previous_status / new status / previous_action/ new_action / created")
-        logger.info("==============> :",
+        logger.info("==============> : {} {} {} {} {}",
                     instance.previous_status,
                     instance.status, instance.previous_action,
                     instance.action, created
