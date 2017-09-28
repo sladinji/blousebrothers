@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load tinycontent_tags %}
+{% load social_share %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% load i18n %}
@@ -19,6 +20,11 @@
         {% endtinycontent %}
     </h2>
     <img src="{% static 'images/retro/phone.png' %}"/>
+    <div class="pull-right">
+        {% post_to_facebook "https://blousebrothers.fr" '<span class="btn btn-share"><i class="fa fa-facebook"></i> Like</span>' %}
+        {% post_to_gplus "https://blousebrothers.fr" '<span class="btn btn-share btn-gplus"><i class="fa fa-google-plus"></i></span>' %}
+        {% post_to_twitter "Je partage mes fiche de révisions ECN sur BlouseBrothers. #ecn #ecni" product '<span class="btn btn-share btn-twitter"><i class="fa fa-twitter"></i> #killtheconf</span>' %}
+    </div>
 </div>
 {% endblock subnavigation %}
 

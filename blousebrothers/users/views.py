@@ -476,9 +476,8 @@ class DemoLoginView(allauth.account.views.LoginView):
 
 class SignupView(MetadataMixin, allauth.account.views.SignupView):
     title = 'BlouseBrothers prépa ECNi collaborative'
-    description = """Plateforme collaborative d'entraînement aux ECNi. Etudiant: n'achète que les dossiers dont tu as
-    besoin, directement auprès de l'interne qui l'a créé. Corrections détaillées, icono, note et classement. Interne:wi
-    dépose tes dossiers et garde 70% des gains."""
+    description = """Prépa ecn en ligne. Entraîne-toi aux ECN nos QI, DCP, LCA, révise
+    avec les fiches intelligentes (flashcard anki) et deviens toi-même Conférencier."""
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(demo_form=DemoForm(), **kwargs)

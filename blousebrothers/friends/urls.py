@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     url(
-        regex=r'^amis$',
+        regex=r'^$',
         view=views.FriendsView.as_view(),
         name='home'
     ),
