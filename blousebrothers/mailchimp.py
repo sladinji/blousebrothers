@@ -46,6 +46,9 @@ tags = {
     "conf_pub_url": "MMERGE30",
     "conf_encours_url": "MMERGE4",
     "last_dossier_url": "MMERGE24",
+    "nombre_fiches": "MMERGE5",
+    "status_fiches": "MMERGE6",
+    "preview_fiches": "MMERGE7",
 }
 
 
@@ -117,6 +120,8 @@ def sync(qs=None, name=LIST_NAME):
             create_timestamp__gt=now - timedelta(days=10)
         ).aggregate(won=Sum('credited_funds'))['won']
         handle_status(user)
+        card_ready_qry = user.deck.filter(wake_up__gt=now-timedelta(days=1), wake_up__lt=now)
+        nb_new_cards_ready = card_ready_qry.count()
 
         merge_fields = {
             'FNAME': user.first_name,
@@ -130,6 +135,13 @@ def sync(qs=None, name=LIST_NAME):
             tags["conf_pub_url"]: user.conf_pub_url,
             tags["conf_encours_url"]: user.conf_encours_url,
             tags["last_dossier_url"]: user.last_dossier_url,
+            tags["nombre_fiches"]: nb_new_cards_ready,
+            tags["status_fiches"]: "go" if nb_new_cards_ready > 0 else "nogo",
+            tags["preview_fiches"]:  "<br>".join([x.card.content.split('\n')[0].replace("@", "")
+                                                  for x in card_ready_qry[:10]
+                                                  ]),
+
+
         }
         merge_fields = {k: v for k, v in merge_fields.items() if v}
         logger.info(merge_fields)
