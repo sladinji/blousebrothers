@@ -83,9 +83,18 @@ class AcceptFriendsView(BBLoginRequiredMixin, RedirectView):
         offer.save()
         self.request.user.add_relationship(offer.requester)
         messages.info(self.request,
-                      "Félicitations ! Tu es mantenant ami avec {}."
-                      " Chacun a maintenant accès aux fiches de l'autre.".format(offer.requester.username)
+                      "Félicitations ! Tu es mantenant ami avec {}.".format(offer.requester.username)
                       )
+        ctx = dict(friend=self.request.user, user=offer.requester)
+        msg_plain = render_to_string('friends/emails/friend_accept.txt', ctx)
+        msg_html = render_to_string('friends/emails/friend_accept.html', ctx)
+        send_mail(
+                "{} a accepté ta demande d'ajout aux amis sur BlouseBrothers.".format(self.request.user.username),
+                msg_plain,
+                'noreply@blousebrothers.fr',
+                [offer.requester.email],
+                html_message=msg_html,
+        )
         return reverse("friends:home")
 
 

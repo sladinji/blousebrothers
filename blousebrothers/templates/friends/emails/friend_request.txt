@@ -5,7 +5,7 @@ Bonjour {{ user.username }},
 
 Une fois ami, vous pourrez choisir de partager ou non vos classements, fiches et les dossiers que vous avez créés.
 
-Tu peux visualiser la demande à l'adresse suivante : http//blousebrothers.fr/amis/
+Tu peux visualiser la demande à l'adresse suivante : https://blousebrothers.fr/amis/
 
 Merci pour ta confiance.
 

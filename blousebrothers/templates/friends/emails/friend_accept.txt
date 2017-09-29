@@ -1,0 +1,11 @@
+Bonjour {{ user.username }},
+
+
+{{ friend.username }} a accepté de devenir ami avec toi sur BlouseBrothers.
+
+
+Tu peux gérer vos partages à l'adresse suivante : https://blousebrothers.fr/amis/
+
+Merci pour ta confiance.
+
+BlouseBrothers.
