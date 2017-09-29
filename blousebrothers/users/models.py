@@ -162,13 +162,17 @@ class User(AbstractUser):
             user.remove_relationship(self, False)
 
     def get_relations(self):
+        if self.friends.count() == 0:
+            self.add_relationship(User.objects.get(username="BlouseBrothers"))
         return [
             {
                 'user': friend,
                 'share_cards': friend.from_people.get(to_user=self).share_cards,
                 'share_results': friend.from_people.get(to_user=self).share_results,
+                'share_confs': friend.from_people.get(to_user=self).share_confs,
                 'i_share_cards': self.from_people.get(to_user=friend).share_cards,
                 'i_share_results': self.from_people.get(to_user=friend).share_results,
+                'i_share_confs': self.from_people.get(to_user=friend).share_confs,
             }
             for friend in self.friends.all()
         ]

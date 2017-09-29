@@ -14,30 +14,29 @@ from .models import FriendShipRequest
 from .forms import FriendsForm
 
 
-def update_sharecards(request):
+def ajax_switch(request, attribute):
     """
-    Ajax view.
+    Ajax generic switch view.
     """
     status = request.GET['state'] == 'true'
     request.user.from_people.filter(
         to_user_id=request.GET['friend_id']
     ).update(
-        share_cards=status
+        **{attribute: status}
     )
     return JsonResponse({'success': True})
+
+
+def update_sharecards(request):
+    return ajax_switch(request, "share_cards")
 
 
 def update_shareresults(request):
-    """
-    Ajax view.
-    """
-    status = request.GET['state'] == 'true'
-    request.user.from_people.filter(
-        to_user_id=request.GET['friend_id']
-    ).update(
-        share_results=status,
-    )
-    return JsonResponse({'success': True})
+    return ajax_switch(request, "share_results")
+
+
+def update_shareconfs(request):
+    return ajax_switch(request, "share_confs")
 
 
 class FriendsView(BBLoginRequiredMixin, FormView):

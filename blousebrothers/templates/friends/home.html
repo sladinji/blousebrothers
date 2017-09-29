@@ -74,7 +74,7 @@
                             <li>
                                 <div class="friends-profile"> 
                                     <span class="image">
-                                        <img style="width: 50px;" src="{{offer.requester.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                        <img style="width: 60px;" src="{{offer.requester.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
                                     </span>
                                     <span>
                                         <span>{{ offer.requester.username }}</span>
@@ -108,11 +108,10 @@
             </div>
         </div>
         {% endcomment %}
-        {% if user.friends.count %}
         <div class="col-md-12">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                    <h2><i class="fa fa-users"></i> Amis</h2>
+                    <h2><i class="fa fa-arrows-h"></i> Partages avec mes amis</h2>
                     <div class="clearfix">{{ user.friends.count }}
                     </div>
                 </div>
@@ -122,35 +121,43 @@
                         <ul class="list-unstyled msg_list">
                             {% for relation in user.get_relations %}
                             <li>
-                                <div class="friends-profile"> 
+                                <div class="friends-profile hidden-xs"> 
                                     <span class="image">
-                                        <img style="width: 50px;" src="{{relation.user.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                        <img style="width: 100px;" src="{{relation.user.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
                                     </span>
-                                    <span>
-                                        <span>{{ relation.user.username }}</span>
-                                    </span>
-                                    <span class="message">
+                                    <span class="share_cards">
+                                        <br>
                                         {% with total=relation.user.created_cards.count %}
                                         {{ total }} carte{{ total|pluralize }} crée{{ total|pluralize }}.<br>
                                         {% endwith %}
                                         {% with total=relation.user.nb_tests_done %}
                                         {{ total }} dossier{{ total|pluralize }} fait{{ total|pluralize }}.<br>
                                         {% endwith %}
+                                        {% with total=relation.user.nb_tests_done %}
+                                        {{ total }} dossier{{ total|pluralize }} créé{{ total|pluralize }}.<br>
+                                        {% endwith %}
                                     </span>
                                 </div>
-                                <div class="share_cards text-center">
-                                    <label>Partage ses fiches :</label>{{ relation.share_cards |yesno:"Oui,Non" }}
+                                <div class="share_cards">
+                                    <label class="hidden-xs">Partages</label><br>
+                                    Cartes<br>
+                                    Résultats<br>
+                                    Dossiers<br>
                                 </div>
                                 <div class="share_cards text-center">
-                                    <label>Partage ses résultats:</label>{{ relation.share_results |yesno:"Oui,Non" }}
+                                    <label>{{ relation.user.username }}</label><br>
+                                    {{ relation.share_cards |yesno:"Oui,Non" }}<br>
+                                    {{ relation.share_results |yesno:"Oui,Non" }}<br>
+                                    {{ relation.share_results |yesno:"Oui,Non" }}<br>
                                 </div>
                                 <div class="share_cards text-center">
-                                    <label>Partage fiches</label><input type="checkbox" name="share_cards"   data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_cards %} checked{% endif %}>
-                                </div>
-                                <div class="share_results text-center">
-                                    <label>Partage résultats</label><input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_results %} checked{% endif %}>
+                                    <label>Moi</label><br>
+                                    <input type="checkbox" name="share_cards"   data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_cards %} checked{% endif %}><br>
+                                    <input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_results %} checked{% endif %}><br>
+                                    <input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_confs %} checked{% endif %}><br>
                                 </div>
                                 <div class="friends-control"> 
+                                    <label class="hidden-xs">Supprimer</label><br>
                                     <a href="{% url 'friends:remove_friend' %}?pk={{ relation.user.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
                                 </div>
                             </li>
@@ -161,7 +168,6 @@
 				</div>
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
 
@@ -191,12 +197,20 @@ var toggle_share_results = function(event, state) {
         url: "{% url 'friends:share_results' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
     });
 }
+var toggle_share_confs = function(event, state) {
+    $.ajax({
+        url: "{% url 'friends:share_confs' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
+    });
+}
 $("[name='share_cards']").bootstrapSwitch('onText', 'Oui');
 $("[name='share_cards']").bootstrapSwitch('offText', 'Non');
 $("[name='share_results']").bootstrapSwitch('onText', 'Oui');
 $("[name='share_results']").bootstrapSwitch('offText', 'Non');
+$("[name='share_confs']").bootstrapSwitch('onText', 'Oui');
+$("[name='share_confs']").bootstrapSwitch('offText', 'Non');
 $('input[name="share_cards"]').on('switchChange.bootstrapSwitch', toggle_share_cards)
 $('input[name="share_results"]').on('switchChange.bootstrapSwitch', toggle_share_results)
+$('input[name="share_confs"]').on('switchChange.bootstrapSwitch', toggle_share_confs)
 
 {% endblock %}
 

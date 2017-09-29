@@ -2680,3 +2680,6 @@ ul.msg_list li .friends-control{
     height: 200px;
     margin-top: -61px;
 }
+.share_cards {
+    width: 50%;
+}

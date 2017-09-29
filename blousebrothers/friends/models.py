@@ -14,6 +14,9 @@ class Relationship(models.Model):
     to_user = models.ForeignKey('users.User', related_name='to_people')
     share_cards = models.BooleanField(default=True)
     share_results = models.BooleanField(default=True)
+    share_confs = models.BooleanField(default=True)
 
     def __repr__(self):
-        return "<{0.from_user} --> {0.to_user}, cards : {0.share_cards}, results : {0.share_results}>".format(self)
+        text = "<{0.from_user} --> {0.to_user}, cards : {0.share_cards}, "
+        "results : {0.share_results}, confs: {0.share_confs}>"
+        return text.format(self)

@@ -34,4 +34,9 @@ urlpatterns = [
         view=views.update_shareresults,
         name='share_results'
     ),
+    url(
+        regex=r'^share_confs$',
+        view=views.update_shareresults,
+        name='share_confs'
+    ),
 ]
