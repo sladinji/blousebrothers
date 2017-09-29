@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import JsonResponse
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.views.generic import (
     RedirectView,
     FormView,
@@ -47,8 +49,17 @@ class FriendsView(BBLoginRequiredMixin, FormView):
     def form_valid(self, form):
         for friend in form.cleaned_data['friends']:
             FriendShipRequest.objects.create(requester=self.request.user, target=friend)
-
-        messages.info(self.request, "Demandes envoyées !")
+            ctx = dict(requester=self.request.user, user=friend)
+            msg_plain = render_to_string('friends/emails/friend_request.txt', ctx)
+            msg_html = render_to_string('friends/emails/friend_request.html', ctx)
+            send_mail(
+                    "{} t'invite à rejoindre son groupe d’amis sur BlouseBrothers.".format(self.request.user.username),
+                    msg_plain,
+                    'noreply@blousebrothers.fr',
+                    [friend.email],
+                    html_message=msg_html,
+            )
+        messages.info(self.request, "Demande envoyée !")
         return super().form_valid(form)
 
     def get_form_kwargs(self):
