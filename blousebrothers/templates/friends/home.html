@@ -111,7 +111,7 @@
         <div class="col-md-12">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                    <h2><i class="fa fa-arrows-h"></i> Partages avec mes amis</h2>
+                    <h2><i class="fa fa-arrows-h"></i> Partages{% if user.friends.count <= 1 %} <small>(tu es ami avec nous pour commencer :)</small>{% endif %}</h2>
                     <div class="clearfix">{{ user.friends.count }}
                     </div>
                 </div>

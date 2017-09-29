@@ -64,7 +64,7 @@ class ForUserQuerySet(models.query.QuerySet):
         """
         return self.filter(
             Q(author=user) | Q(public=True) | Q(author__in=[
-                x.from_user for x in user.to_people.filter(share_cards=True)
+                x.from_user for x in user.has_friendship.filter(share_cards=True)
             ])
         )
 
@@ -133,6 +133,7 @@ class AnkiPackage(models.Model):
 
     def filename(self):
         return basename(self.file.name)
+
 
 def anki_image_directory_path(anki_image, filename):
     return '{0}/{1}'.format(

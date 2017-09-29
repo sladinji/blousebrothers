@@ -19,7 +19,7 @@ def ajax_switch(request, attribute):
     Ajax generic switch view.
     """
     status = request.GET['state'] == 'true'
-    request.user.from_people.filter(
+    request.user.gives_friendship.filter(
         to_user_id=request.GET['friend_id']
     ).update(
         **{attribute: status}

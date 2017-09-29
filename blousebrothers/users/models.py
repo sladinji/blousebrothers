@@ -167,12 +167,12 @@ class User(AbstractUser):
         return [
             {
                 'user': friend,
-                'share_cards': friend.from_people.get(to_user=self).share_cards,
-                'share_results': friend.from_people.get(to_user=self).share_results,
-                'share_confs': friend.from_people.get(to_user=self).share_confs,
-                'i_share_cards': self.from_people.get(to_user=friend).share_cards,
-                'i_share_results': self.from_people.get(to_user=friend).share_results,
-                'i_share_confs': self.from_people.get(to_user=friend).share_confs,
+                'share_cards': friend.gives_friendship.get(to_user=self).share_cards,
+                'share_results': friend.gives_friendship.get(to_user=self).share_results,
+                'share_confs': friend.gives_friendship.get(to_user=self).share_confs,
+                'i_share_cards': self.gives_friendship.get(to_user=friend).share_cards,
+                'i_share_results': self.gives_friendship.get(to_user=friend).share_results,
+                'i_share_confs': self.gives_friendship.get(to_user=friend).share_confs,
             }
             for friend in self.friends.all()
         ]

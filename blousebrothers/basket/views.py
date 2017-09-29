@@ -64,7 +64,11 @@ class BasketAddView(CoreBasketAddView):
 
         if created and not free_conf:
             try:
-                if self.request.user.has_full_access():
+                if self.request.user.has_full_access() \
+                        or self.request.user.has_friendship.filter(
+                            from_user=form.product.conf.owner,
+                            share_confs=True,
+                        ).exists():
                     if self.request.user.subscription and self.request.user.subscription.price_paid > 0:
                         # Do not create sale for user with subscription price = O (référents...)
                         Sale.objects.create(
@@ -80,7 +84,7 @@ class BasketAddView(CoreBasketAddView):
                     return self.redirect_success(form)
                 else:
                     return self.debit_wallet(form, test, self.request.user.wallet_bonus)
-            except:
+            except Exception as ex:
                 try:
                     return self.debit_wallet(form, test, self.request.user.wallet)
                 except MangoNoEnoughCredit:

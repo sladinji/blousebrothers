@@ -10,13 +10,13 @@ class FriendShipRequest(models.Model):
 
 
 class Relationship(models.Model):
-    from_user = models.ForeignKey('users.User', related_name='from_people')
-    to_user = models.ForeignKey('users.User', related_name='to_people')
+    from_user = models.ForeignKey('users.User', related_name='gives_friendship')
+    to_user = models.ForeignKey('users.User', related_name='has_friendship')
     share_cards = models.BooleanField(default=True)
     share_results = models.BooleanField(default=True)
     share_confs = models.BooleanField(default=True)
 
     def __repr__(self):
         text = "<{0.from_user} --> {0.to_user}, cards : {0.share_cards}, "
-        "results : {0.share_results}, confs: {0.share_confs}>"
+        text += "results : {0.share_results}, confs: {0.share_confs}>"
         return text.format(self)
