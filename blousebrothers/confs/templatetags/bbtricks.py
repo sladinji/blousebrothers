@@ -1,7 +1,9 @@
 from django.utils import timezone
+from decimal import Decimal
 import re
 from string import ascii_uppercase
 import datetime
+from decimal import ROUND_DOWN
 
 from django import template
 from django.conf import settings
@@ -239,3 +241,8 @@ def next_session(wake_up):
         return "{} heure{}".format(hours, "s" if hours > 1 else "")
     minutes = duration.seconds // 60
     return "{} minute{}".format(minutes, "s" if minutes > 1 else "")
+
+
+@register.filter
+def tva(amount):
+    return (amount - (amount / Decimal("1.20"))).quantize(Decimal('.01'), rounding=ROUND_DOWN)

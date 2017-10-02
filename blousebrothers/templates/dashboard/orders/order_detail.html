@@ -1,0 +1,7 @@
+{% extends "oscar/dashboard/orders/order_detail.html" %}
+{% load i18n %}
+
+{% block headertext %}
+{{ block.super }}
+<a class="btn btn-success" href="{% url 'invoice' object.id %}">PDF</a>
+{% endblock %}

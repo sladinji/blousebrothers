@@ -12,6 +12,7 @@ from django.contrib.sitemaps.views import sitemap
 from paypal.express.dashboard.app import application as paypal
 
 import blousebrothers.users.views
+import blousebrothers.dashboard.orders.views
 from blousebrothers.app import application
 
 from .sitemaps import StaticViewSitemap
@@ -63,7 +64,9 @@ urlpatterns = [
     url(r'^select2/', include('django_select2.urls')),
     url(r'^revisions/', include('blousebrothers.cards.urls', namespace='cards')),
     url(r'^amis/', include('blousebrothers.friends.urls', namespace='friends')),
-
+    url(r'^facture/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFView.as_view(), name="invoice"),
+    url(r'^facture_pdf/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFViewPrintView.as_view(),
+        name="invoice_pdf"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -2683,3 +2683,6 @@ ul.msg_list li .friends-control{
 .share_cards {
     width: 50%;
 }
+.invoice, .invoice table{
+    color: #000;
+}
