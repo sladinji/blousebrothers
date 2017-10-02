@@ -5,6 +5,11 @@
 	<head>
 		<style>
 			html { font-family: sans-serif; text-size-adjust: 100%; }
+            @page {
+                size: a4 portrait;
+                margin: 17mm 10mm 17mm 10mm;
+                counter-increment: page;a
+            }
 			body { margin: 0px; }
 			article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
 			audio, canvas, progress, video { display: inline-block; vertical-align: baseline; }
@@ -274,7 +279,7 @@
 			.signup .slide1 .btn { margin-top: 10px; }
 			h1, h2 { font-weight: 300; }
 			html { position: relative; min-height: 100%; }
-			body { margin: 0px 0px 100px; padding: 25px; background-color: rgb(247, 247, 247); }
+			body { margin: 0px 0px 100px; padding: 25px; 
 			footer { display: table-row; height: 69px; line-height: 29px; }
 			footer { border-top: 1px solid rgb(102, 102, 102); padding: 20px; background-color: rgb(0, 0, 0); color: rgb(200, 200, 200); }
 			footer a { color: rgb(200, 200, 200); padding-right: 12px; }
@@ -324,26 +329,29 @@
 	<body>
 		<div class="container invoice">
 			<div class="row pad-top-botm ">
-				<div class="col-lg-6 col-md-6 col-sm-6 invoicielogo">
-					<img src="{% static "images/logo_home.png" %}" style="padding-bottom:20px;" /> 
-					{% if print_btn %}
-					<span class="blouse-font" style="font-size: 25pt;">BlouseBrothers</span>
-					{% endif %}
+				<div class="col-lg-6 col-md-6 col-sm-6 invoicelogo" style="background: black;">
+					<img src="{% static "images/logo_home.png" %}" style="top:-25px;position: absolute;" /> 
+					<span class="blouse-font" style="font-size: 25pt;margin-left: 100px; color:white;">BlouseBrothers</span>
 				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6">
-					<strong>   BlouseBrothers</strong>
+				<div class="col-lg-6 col-md-6 col-sm-6 text-right">
+					<br />
+					SAS Fosfen
 					<br />
 					4 place Saint Jacques
 					<br />
 					25000 Besançon
 				</div>
 			</div>
+            <br>
+            <br>
             <div style="text-align:center; font-weight:bold;">Facture n°{{ order.number }}</div>
+            <br>
+            <br>
 			<div  class="row pad-top-botm client-info">
 				<div class="col-lg-6 col-md-6 col-sm-6">
-					<h4>  <strong>Destinataire</strong></h4>
+					<h4>  <strong>Destinataire :</strong></h4>
 					<br />
-                    <strong>  Jhon Deo Chuixae</strong><br>
+                    <strong>  {{ order.user.first_name }} {{ order.user.last_name }}</strong><br>
                     {{ order.user.address1|default:"-" }}
                     {% if order.user.address2 %}
 					<br /> {{ order.user.address2|default:"" }}
@@ -402,7 +410,7 @@
 				<div class="col-lg-12 col-md-12 col-sm-12">
 				</div>
 			</div>
-            <div  class="row text-center contact-info">
+            <div  class="row text-center contact-info" style="position: fixed; bottom:-45px;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <hr />
                     <span>
@@ -414,6 +422,7 @@
                     <span>
                         <strong>SIREN : </strong> 828 973 412
                     </span>
+                    <br>
                     <span>
                         <strong>CGU/CGV : </strong> <u>https://blousebrothers.fr/cgu/</u>
                     </span>

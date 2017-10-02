@@ -22,7 +22,6 @@ class PDFView(LoginRequiredMixin, DetailView):
 
 class PDFViewPrintView(PDFTemplateResponseMixin, PDFView):
     print_btn = False
-    stylesheets = [
-        settings.STATIC_ROOT + "css/project.css",
-        settings.STATIC_ROOT + "oscar/css/styles.css",
-    ]
+
+    def get_filename(self):
+        return "facture_{0.number}.pdf".format(self.object)
