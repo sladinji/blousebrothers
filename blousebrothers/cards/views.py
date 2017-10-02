@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 import pytz
 
 from django.contrib import messages
+from django.http import HttpResponse
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -94,6 +95,9 @@ def bookmark_card(request, card_id):
     Bookmark given card by updating user deck with given card.
     Other revision of the card are parent or brothers of the given card.
     """
+    if request.user.is_anonymous():
+        return HttpResponse(status=410)
+
     bcard = Card.objects.get(pk=card_id)
     Deck.objects.filter(
         Q(card__in=bcard.children.all()) | Q(card=bcard.parent),
