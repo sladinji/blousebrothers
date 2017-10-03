@@ -201,6 +201,9 @@ class User(AbstractUser):
     def nb_tests_done(self):
         return self.tests.filter(finished=True).count()
 
+    def nb_created_confs(self):
+        return self.created_confs.filter(for_sale=True, edition_progress=100).count()
+
     @property
     def last_subsboard(self):
         return self.subs_board.order_by('-date_created').first()

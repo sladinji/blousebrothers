@@ -133,7 +133,7 @@
                                         {% with total=relation.user.nb_tests_done %}
                                         {{ total }} dossier{{ total|pluralize }} fait{{ total|pluralize }}.<br>
                                         {% endwith %}
-                                        {% with total=relation.user.nb_tests_done %}
+                                        {% with total=relation.user.nb_created_confs %}
                                         {{ total }} dossier{{ total|pluralize }} créé{{ total|pluralize }}.<br>
                                         {% endwith %}
                                     </span>
