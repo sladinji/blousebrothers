@@ -344,7 +344,7 @@
 			</div>
             <br>
             <br>
-            <div style="text-align:center; font-weight:bold;">Facture n°{{ order.number }}</div>
+            <div style="text-align:center; font-weight:bold;">Facture n°{{ order.id|add:"-61"|add:100000 }}</div>
             <br>
             <br>
 			<div  class="row pad-top-botm client-info">
@@ -407,11 +407,12 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="col-lg-12 col-md-12 col-sm-12 text-center" style="font-size:30pt; color: #dddddd;">
+                    Merci
 				</div>
 			</div>
-            <div  class="row text-center contact-info" style="position: fixed; bottom:-45px;">
-                <div class="col-lg-12 col-md-12 col-sm-12">
+            <div  class="row text-center contact-info" style="position: fixed; bottom:-45px; font-size: 8pt;margin: auto;width: 100%;">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                     <hr />
                     <span>
                         <strong>Email : </strong> contact@blousebrothers.fr 

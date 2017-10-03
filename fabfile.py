@@ -122,9 +122,19 @@ def load_last_dump(last="last_dump.sql", pre=False, mangoreset='yes'):
               "--volumes-from blousebrothers_postgres_1 "
               "-v $(pwd)/admin@blousebrothers.fr/backups:/backup "
               "blousebrothers_postgres cp /backup/%s /backups" % last)
-    local("docker-compose stop django")
+    try:
+        local("docker-compose stop django")
+    except:
+        print("No django docker running, continue")
+    try:
+        local("docker-compose start postgres")
+    except:
+        print("Postgres docker's already running, continue")
     local("docker exec blousebrothers_postgres_1 restore %s" % last)
-    local("docker-compose start django")
+    try:
+        local("docker-compose start django")
+    except:
+        print("Can't start django docker, continue")
     local("docker-compose run django ./manage.py migrate")
     if mangoreset=='yes':
         local("docker-compose run django ./manage.py mango_reset")
