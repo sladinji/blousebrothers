@@ -93,11 +93,48 @@
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                     <h2><i class="fa fa-line-chart"></i> Mon niveau par matière</h2>
-                    <div class="clearfix"></div>
+                    <div class="clearfix">
+                        comparé aux moyennes de
+                        <select id="select_friend" class="selectpicker">
+                            <option value="0">tout le monde</option> 
+                            {% for fs in user.has_friendship.all %}
+                            {% if fs.share_results %}
+                            <option value="{{ fs.from_user_id }}">{{ fs.from_user.username }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select><br><br>
+                        <a href="{% url 'friends:home' %}"><small>Ajouter des amis</small></a>
+                    </div>
                 </div>
+                <div class="x_content"><iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                    <canvas class="chart" id="chart-mean" height="413" width="830" style="display: block; width: 830px; height: 413px;">
+                    </canvas>
+                    <script type="text/javascript">
+window.addEventListener("DOMContentLoaded", function() {
+    $.get('{% url "confs:mb_chart" user.id 0 %}', function(configuration) {
+        var ctx = document.getElementById("chart-mean").getContext("2d");    
+        average_chart = new Chart(ctx, configuration);
+    });
+    $("#select_friend").change(function () {
+        if (average_chart) {
+            var str = "";
+            $( "select option:selected" ).each(function() {
+                $.get('{% url "confs:mb_chart" user.id %}' + $(this).val(), function(configuration) {
+                    var ctx = document.getElementById("chart-mean").getContext("2d");    
+                    average_chart.destroy();
+                    average_chart = new Chart(ctx, configuration);
+                });
+            });
+        }
+    })
+});
+                    </script>
+                </div> 
+                {% comment %}
                 <div class="x_content">
-                    {% render_chart mean_chart 'moy_spec' %}
+                    {% render_chart 'confs:mb_chart' user.id 0 %}
                 </div>
+                {% endcomment %}
             </div>
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">

@@ -28,7 +28,6 @@ class MeanBarChart(Chart):
         ]
     }
     context = None
-    raw_data = None
 
     def color_picker(self, nb_categories):
         scale = np.linspace(0.0, 5.0, num=nb_categories, endpoint=True)
@@ -57,12 +56,12 @@ class MeanBarChart(Chart):
             color_scale.append(rgba(int(r), int(g), int(b), 0.4))
         return color_scale
 
-    def get_labels(self, state,  **kwargs):
-        labels_spe = [spe[0] for spe in self.raw_data]
+    def get_labels(self, **kwargs):
+        labels_spe = [spe[0] for spe in self.user_stats]
         return labels_spe
 
-    def get_datasets(self, state, **kwargs):
-        user = User.objects.get(pk=self.context['object'].pk)
+    def get_user_stats(self, user_id):
+        user = User.objects.get(pk=user_id)
         notes_spe = {}
         for test in user.tests.filter(finished=True).prefetch_related('conf__specialities'):
             for spe in test.conf.specialities.all():
@@ -70,21 +69,31 @@ class MeanBarChart(Chart):
                     notes_spe[spe.name].append(test.score)
                 else:
                     notes_spe[spe.name] = [test.score]
-        self.raw_data = sorted(
+        return sorted(
             [(spe, round(np.mean(notes_spe[spe]), 2)) for spe in notes_spe],
             key=lambda x: x[1],
             reverse=False
-        )
-        stats = dict(StatsSpe.objects.values_list('speciality__name', 'average'))
-        average = []
-        for spe, _ in self.raw_data:
-            average.append(stats[spe])
-        colors = self.color_picker(len(self.raw_data))
+        ), user
+
+    def get_datasets(self, **kwargs):
+        self.user_stats = self.get_user_stats(kwargs["user_id"])[0]
+        if kwargs['friend_id'] == '0':
+            stats = dict(StatsSpe.objects.values_list('speciality__name', 'average'))
+            other_stats = []
+            for spe, _ in self.user_stats:
+                other_stats.append(stats[spe])
+                other_label = "Moyenne de tous les utilisateurs"
+        else:
+            other_raw_stats, friend = self.get_user_stats(kwargs["friend_id"])
+            dic_other_stat = dict(other_raw_stats)
+            other_stats = [dic_other_stat.get(spe[0], 0) for spe in self.user_stats]
+            other_label = friend.username
+        colors = self.color_picker(len(self.user_stats))
         return [DataSet(label='Ma moyenne',
-                        data=[spe[1] for spe in self.raw_data],
+                        data=[spe[1] for spe in self.user_stats],
                         backgroundColor=colors),
-                DataSet(label='Moyenne de tous les utilisateurs',
-                        data=average,
+                DataSet(label=other_label,
+                        data=other_stats,
                         type='line')]
 
 

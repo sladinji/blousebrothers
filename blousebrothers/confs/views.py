@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from datetime import datetime
 from decimal import Decimal
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import re
 import logging
 
-from disqusapi import DisqusAPI, APIError
+from disqusapi import DisqusAPI
 from django.contrib import messages
 from django.apps import apps
 from django.core.mail import mail_admins
@@ -38,7 +37,7 @@ from blousebrothers.auth import (
 )
 from blousebrothers.tools import analyse_conf, get_full_url
 from blousebrothers.confs.utils import get_or_create_product
-from blousebrothers.users.charts import MeanBarChart, MonthlyLineChart
+from blousebrothers.users.charts import MonthlyLineChart
 from blousebrothers.users.models import User
 from .models import (
     Conference,
@@ -75,15 +74,16 @@ class ConferenceHomeView(LoginRequiredMixin, TemplateView):
         test_fini = user.tests.filter(finished=True).prefetch_related('answers')
         nb_test_fini = len(test_fini)
 
-        temps_moyen = sum([x.time_taken.hour*3600
-                           + x.time_taken.minute*60
-                           + x.time_taken.second for x in test_fini])/nb_test_fini
+        temps_moyen = sum([x.time_taken.hour*3600 +
+                           x.time_taken.minute*60 +
+                           x.time_taken.second for x in test_fini])/nb_test_fini
 
         nb_test_this_week = sum([1 for x in test_fini.filter(date_created__gt=(datetime.now() - timedelta(days=7)))])
         nb_test_last_week = sum([1 for x in test_fini.filter(date_created__range=(datetime.now() - timedelta(days=15),
-                                                                                 datetime.now() - timedelta(days=7)))])
+                                                                                  datetime.now() - timedelta(days=7)))])
 
-        pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 if nb_test_last_week > 0 else nb_test_this_week * 100
+        pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 \
+            if nb_test_last_week > 0 else nb_test_this_week * 100
 
         moy_score = sum([x.score for x in test_fini])/nb_test_fini
         moy_erreurs = sum([x.nb_errors for x in test_fini])/nb_test_fini
@@ -95,9 +95,6 @@ class ConferenceHomeView(LoginRequiredMixin, TemplateView):
         context['nb_test_this_week'] = nb_test_this_week
         context['pourcentage_progression'] = round(pourcentage_progression, 0)
 
-        mean_chart = MeanBarChart()
-        mean_chart.context = context
-        context['mean_chart'] = mean_chart
         monthly_chart = MonthlyLineChart()
         monthly_chart.context = context
         context['monthly_chart'] = monthly_chart

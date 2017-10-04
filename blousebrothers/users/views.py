@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from decimal import Decimal
-from datetime import date, datetime, timedelta
+from datetime import date
 
 from django.apps import apps
 from django.conf import settings
@@ -29,7 +29,6 @@ from oscar.apps.shipping.methods import NoShippingRequired
 
 from blousebrothers.confs.forms import ConferenceForm
 from blousebrothers.confs.models import Conference, Test
-from .charts import MeanBarChart, MonthlyLineChart
 from .models import User
 from .forms import (
     UserForm,
@@ -485,69 +484,3 @@ class SignupView(MetadataMixin, allauth.account.views.SignupView):
 
 class FAQ(TemplateView):
     template_name = 'faq/faq.html'
-
-
-class Stats(TemplateView):
-    template_name = 'stats/stats.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['object'] = self.request.user
-
-        user = User.objects.prefetch_related("tests__answers").get(pk=self.request.user.pk)
-        test_fini = user.tests.filter(finished=True)
-        nb_test_fini = len(test_fini)
-
-        # moy sur tout les test
-        moy_allTest = sum([x.score for x in test_fini])/nb_test_fini
-
-        # nombre d'erreur total
-        nb_erreurTot = sum([x.nb_errors for x in test_fini])
-
-        # temps total time_total en heure
-        time_total = 0
-        for x in test_fini:
-            time = (x.time_taken.hour*3600+x.time_taken.minute*60+x.time_taken.second)
-            time_total = time_total + time
-
-        # temps en moyenne pour chaque qcm = time moyen
-        time_moyen = time_total / nb_test_fini
-
-        # nombre de test fait la semaine derniere
-        nbTest_thisWeek = 0
-        date_thisWeek = datetime.now() - timedelta(days=7)
-
-        for x in user.tests.filter(date_created__gt=date_thisWeek):
-            if x.finished:
-                nbTest_thisWeek = nbTest_thisWeek + 1
-
-        # nombre de test fait avant la semaine derniere
-        nbTest_lastWeek = 0
-        date_lastWeek = datetime.now() - timedelta(days=15)
-
-        for x in user.tests.filter(date_created__range=(date_lastWeek, date_thisWeek)):
-            if x.finished:
-                nbTest_lastWeek = nbTest_lastWeek + 1
-        pourcent_testPlus = (nbTest_thisWeek-nbTest_lastWeek) / nbTest_lastWeek * 100 \
-            if nbTest_lastWeek > 0 else nbTest_thisWeek * 100
-
-        # nombre d'erreurs par test en moyenne
-        moy_error = sum([x.nb_errors for x in test_fini])/nb_test_fini
-
-        context['time_moyen'] = round(time_moyen, 0)
-        context['nb_test_fini'] = nb_test_fini
-        context['moy_error'] = round(moy_error, 2)
-        context['nb_erreurTot'] = nb_erreurTot
-        context['moy_allTest'] = round(moy_allTest, 2)
-        context['time_total'] = round(time_total, 2)
-        context['nbTest_thisWeek'] = nbTest_thisWeek
-        context['nbTest_lastWeek'] = nbTest_lastWeek
-        context['pourcent_testPlus'] = pourcent_testPlus
-
-        mean_chart = MeanBarChart()
-        mean_chart.context = context
-        context['mean_chart'] = mean_chart
-        monthly_chart = MonthlyLineChart()
-        monthly_chart.context = context
-        context['monthly_chart'] = monthly_chart
-        return context

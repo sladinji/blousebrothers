@@ -90,16 +90,9 @@ urlpatterns = [
         view=views.FAQ.as_view(),
         name='faq'
     ),
-    # WIEWS
-    url(
-       regex=r'^stats$',
-       view=views.Stats.as_view(),
-       name='stats',
-    ),
     url(
         r'^$',
         RedirectView.as_view(url=reverse_lazy('users:subscription', args=['0'])),
         name='home'
     ),
   ]
-

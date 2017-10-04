@@ -7,7 +7,16 @@ from django.views.generic.base import RedirectView
 from . import views
 from . import crud
 
+from jchart.views import ChartView
+from blousebrothers.users.charts import MeanBarChart
+mb_chart = MeanBarChart()
+
 urlpatterns = [
+    url(
+        r'^charts/mean_chart/(?P<user_id>\d+)/(?P<friend_id>\d+)?$',
+        ChartView.from_chart(mb_chart),
+        name='mb_chart'
+    ),
     # URL pattern for the ConferenceHomeView
     url(
         r'^$',
