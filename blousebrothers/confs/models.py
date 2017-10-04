@@ -112,7 +112,9 @@ class Conference(ModelMeta, models.Model):
     }
 
     def update_stats(self):
-        score_list = self.tests.filter(finished == True).values_list('score', flat=True) if self.tests.filter(finished == True).values_list('score', flat=True) != [] else [0]
+        if not self.tests.filter(finished=True).count():
+            return
+        score_list = self.tests.filter(finished=True).values_list('score', flat=True)
         self.average = np.mean(score_list)
         self.standard_deviation = np.std(score_list)
         self.median = np.median(score_list)
@@ -187,6 +189,9 @@ class Conference(ModelMeta, models.Model):
         if self.specialities.all():
             return self.specialities.all()[0].css()
         return "no_spe"
+
+    def nb_tests(self):
+        return self.tests.filter(finished=True).count()
 
 
 def conf_directory_path(conf_image, filename):

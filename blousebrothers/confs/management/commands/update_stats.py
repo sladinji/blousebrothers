@@ -4,7 +4,12 @@ from django.core.management.base import BaseCommand
 from oscar.core.loading import get_classes
 
 
-StatsSpe, StatsItem, Test, Speciality, Item = get_classes('confs.models', ("StatsSpe", "StatsItem", "Test", "Speciality", "Item"))
+StatsSpe, StatsItem, Test, Speciality, Item, Conference = get_classes(
+    'confs.models',
+    (
+        "StatsSpe", "StatsItem", "Test", "Speciality", "Item", "Conference"
+    )
+)
 
 
 class Command(BaseCommand):
@@ -32,5 +37,8 @@ class Command(BaseCommand):
             l = l if l != [] else [0]
             stats.average = np.mean(l)
             stats.median = np.median(l)
-            stats.std_dec = np.std(l)
+            stats.std_dev = np.std(l)
             stats.save()
+
+        for conf in Conference.objects.filter(tests__isnull=False, for_sale=True).distinct():
+            conf.update_stats()
