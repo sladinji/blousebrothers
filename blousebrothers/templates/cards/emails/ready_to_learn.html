@@ -613,7 +613,7 @@ Voici un aperçu des {{ nb_new_cards_ready }} fiche{{ nb_new_cards_ready|plurali
         {% for preview in previews %}
 		<tr>
 			<td style="padding: 10px; border: 0 solid #ddd; border-width: 1px 0 1px 0">
-                {{ preview }}
+                {{ preview | safe }}
 			</td>
 		</tr>
         {% endfor %}
