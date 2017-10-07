@@ -20,8 +20,9 @@ class Command(BaseCommand):
         for user in qs.all():
             card_ready_qry = user.deck.filter(wake_up__gt=now-timedelta(days=1), wake_up__lt=now)
             nb_new_cards_ready = card_ready_qry.count()
-            if not nb_new_cards_ready :
+            if not nb_new_cards_ready:
                 continue
+            print("{} has {} to learn.".format(user, nb_new_cards_ready))
             ctx = {'previews': [x.card.content.split('\n')[0].replace("@", "")
                                 for x in card_ready_qry[:10]
                                 ],
