@@ -1,7 +1,6 @@
 
 from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
-from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 
 from blousebrothers.users.models import User
@@ -20,10 +19,13 @@ class Command(BaseCommand):
         now = timezone.now()
         for user in qs.all():
             card_ready_qry = user.deck.filter(wake_up__gt=now-timedelta(days=1), wake_up__lt=now)
+            nb_new_cards_ready = card_ready_qry.count()
+            if not nb_new_cards_ready :
+                continue
             ctx = {'previews': [x.card.content.split('\n')[0].replace("@", "")
                                 for x in card_ready_qry[:10]
                                 ],
-                   'nb_new_cards_ready': card_ready_qry.count(),
+                   'nb_new_cards_ready': nb_new_cards_ready,
                    'user': user,
                    }
 
