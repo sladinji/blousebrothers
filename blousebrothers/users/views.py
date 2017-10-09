@@ -16,6 +16,8 @@ from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from invitations.models import Invitation
 from meta.views import MetadataMixin
 import allauth.account.views
@@ -453,6 +455,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         return super().get(request, *args, **kwargs)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class DemoLoginView(allauth.account.views.LoginView):
     """
     Update login view for demo user
