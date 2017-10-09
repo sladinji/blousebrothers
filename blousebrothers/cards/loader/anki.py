@@ -8,7 +8,7 @@ import threading
 from shutil import rmtree
 from django.core.files import File
 from blousebrothers.confs.models import Speciality
-from .models import Card, Tag, AnkiPackage, AnkiImage
+from ..models import Card, Tag, AnkiPackage, AnkiImage
 
 logger = logging.getLogger(__name__)
 

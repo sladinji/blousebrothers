@@ -29,7 +29,7 @@ from blousebrothers.users.models import User
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm
-from .loader import load_apkg
+from .loader import anki, text
 from .charts import Dispatching
 
 logger = logging.getLogger(__name__)
@@ -440,12 +440,18 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         try:
-            load_apkg(form.cleaned_data["ankifile"], self.request.user)
-            messages.info(self.request,
-                          "Le fichier a bien été reçu. Les fiches devraient être disponibles "
-                          "d'ici quelques minutes (2 minutes pour une archive de 30 Mo...)"
-                          )
+            if form.cleaned_data["ankifile"].name.endswith("txt"):
+                text.load(form.cleaned_data["ankifile"], self.request.user)
+                messages.info(self.request,
+                              "Fichier importé !"
+                              )
+            else:
+                anki.load_apkg(form.cleaned_data["ankifile"], self.request.user)
+                messages.info(self.request,
+                              "Le fichier a bien été reçu. Les fiches devraient être disponibles "
+                              "d'ici quelques minutes (2 minutes pour une archive de 30 Mo...)"
+                              )
         except:
             logger.exception("Anki import failed")
             messages.error(self.request, "Un problème est survenu lors de l'import du fichier :/")
-            return super().form_valid(form)
+        return super().form_valid(form)
