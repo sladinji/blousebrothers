@@ -1,4 +1,6 @@
 from decimal import Decimal, ROUND_HALF_UP
+from datetime import date
+from django.shortcuts import redirect
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -6,18 +8,22 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from oscar.apps.basket.views import BasketAddView as CoreBasketAddView
 from oscar.apps.basket.views import BasketView as CoreBasketView
+from oscar.apps.basket.views import VoucherAddView as CoreVoucherAddView
 from oscar.core.loading import get_class
 from blousebrothers.confs.models import Test
 from blousebrothers.users.models import Sale
 from money import Money
 from mangopay.models import MangoPayTransfer
 from oscar.apps.shipping.methods import NoShippingRequired
+from django.apps import apps
 from blousebrothers.tools import get_full_url
 
 
 BasketMessageGenerator = get_class('basket.utils', 'BasketMessageGenerator')
 selector = get_class('partner.strategy', 'Selector')()
 CheckoutSessionMixin = get_class('checkout.session', 'CheckoutSessionMixin')
+SubscriptionType = apps.get_model('confs', 'SubscriptionType')
+Subscription = apps.get_model('confs', 'Subscription')
 
 
 class BasketView(CheckoutSessionMixin, CoreBasketView):
@@ -167,3 +173,21 @@ class BasketAddView(CoreBasketAddView):
             sender=self, product=form.product, user=self.request.user,
             request=self.request)
         return HttpResponseRedirect(self.get_success_url(form.product))
+
+
+class VoucherAddView(CoreVoucherAddView):
+
+    def form_valid(self, form):
+        code = form.cleaned_data['code']
+        if code == "ECNIMEMO3M" and not self.request.user.subscription:
+            subtype = SubscriptionType.objects.get(name="Dossiers + fiches 12 Mois")
+            sub = Subscription(user=self.request.user, type=subtype)
+            sub.date_over = date(2017, 12, 31)
+            sub.price_paid = 0
+            sub.save()
+            messages.info(self.request, _("Tu peux profiter de tout le site jusqu'à la fin de l'année !"),
+                          extra_tags='safe noicon')
+            return redirect(reverse('cards:home'))
+        return super().form_valid(form)
+
+
