@@ -438,15 +438,11 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         """
         if kwargs['sub_id']:
             if kwargs['sub_id'] == '0':
-                sub = Product.objects.filter(
-                    attribute_values__attribute__name="month"
+                sub = Product.objects.exclude(
+                    categories__name="__HIDDEN"
                 ).filter(
-                    attribute_values__value_integer="1"
+                    categories__name="__Abonnements"
                 ).first()
-                if not sub:
-                    sub = Product.objects.filter(
-                        attribute_values__attribute__name="month"
-                    ).first()
             else:
                 sub = Product.objects.get(id=kwargs['sub_id'])
             request.basket.flush()
