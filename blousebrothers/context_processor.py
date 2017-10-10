@@ -12,7 +12,11 @@ def subscriptions(request):
         requires_shipping=False,
         track_stock=False,
     )
-    subs = Product.objects.filter(product_class=pclass).order_by('id')
+    subs = Product.objects.filter(
+        product_class=pclass
+    ).exclude(
+        categories__name="__HIDDEN"
+    ).order_by('id')
     return {'subscriptions': subs}
 
 
