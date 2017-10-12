@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     url(regex=r'^$',
-        view=RedirectView.as_view(url=reverse_lazy('cards:home'), permanent=False),
+        view=RedirectView.as_view(url=reverse_lazy('cards:home'), permanent=True),
         name='root'
         ),
     url(

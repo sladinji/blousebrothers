@@ -9,6 +9,7 @@ main content area to split it into a sidebar and a content block
 
 {% block content_wrapper %}
 <div class="container-fluid page">
+    {% block subnavigation %}{% endblock %}
     <div class="page_inner">
         {% block breadcrumbs %}{% endblock %}
         <div class="row">

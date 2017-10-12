@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic.base import RedirectView
 
 from . import views
@@ -12,6 +13,10 @@ from blousebrothers.users.charts import MeanBarChart
 mb_chart = MeanBarChart()
 
 urlpatterns = [
+    url(regex=r'^$',
+        view=RedirectView.as_view(url=reverse_lazy('confs:home'), permanent=True),
+        name='root'
+        ),
     url(
         r'^charts/mean_chart/(?P<user_id>\d+)/(?P<friend_id>\d+)?$',
         ChartView.from_chart(mb_chart),
@@ -19,7 +24,7 @@ urlpatterns = [
     ),
     # URL pattern for the ConferenceHomeView
     url(
-        r'^$',
+        r'^dashboard$',
         view=views.ConferenceHomeView.as_view(),
         name='home'
     ),

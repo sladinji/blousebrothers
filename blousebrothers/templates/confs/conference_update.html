@@ -1,14 +1,11 @@
-{% extends "layout_angular.html" %}
+{% extends "confs/base_angular.html" %}
 {% load static %}
 {% load i18n %}
 {% load tinycontent_tags %}
 {% block title %}{% trans 'Confs' %}{% endblock %}
 
-{% block submenu %}
-{% include 'partials/submenu_conf_edit.html' %}
-{% endblock %}
-
 {% block content %}
+{% include 'partials/submenu_conf_edit.html' %}
 <div class="container">
     <toaster-container toaster-options="{'time-out': 10000}"></toaster-container>
     {% comment %}

@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "confs/base.html" %}
 {% load static %}{% load i18n %}
 {% load djng_tags %}
 {% load tinycontent_tags %}
@@ -9,14 +9,8 @@
 {{ form.media.css }}
 {% endblock %}
 
-{% block submenu %}
-{% include 'partials/submenu_conf_edit.html' %}
-{% endblock %}
-
 {% block content %}
-
-
-
+{% include 'partials/submenu_conf_edit.html' %}
 <div class='row'>
     <aside class="col-md-3">
         {% tinycontent 'redaction_tips' %}
