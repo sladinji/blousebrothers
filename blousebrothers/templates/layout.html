@@ -62,7 +62,7 @@ settings file. This will enable the on-the-fly less compiler.
                             {% endif %}
                             </a>
                         </li>
-                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}
+                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:root' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}
                             {% if user.nb_new_confs %}
                             <span class="Counter">{{ user.nb_new_confs }}
                             </span>
