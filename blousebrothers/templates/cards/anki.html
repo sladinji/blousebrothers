@@ -1,44 +1,93 @@
 {% extends "cards/base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
 <div class="row">
+    <h2 class="text-center">Importer des fiches</h2>
+    <div class="space"></div>
     <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <h2>Importer un paquet de fiches Anki</h2>
-		<div class="space"></div>
-        <form class="form-horizontal" method="post" action="{% url 'cards:ankiupload' %}" enctype="multipart/form-data">
-            <div class="tab-content">
-                <div class="row">
-                    <div class="col-md-2">
-                        <img style="width: 200px;" src="https://lh3.googleusercontent.com/4aLlAwUKGg5Keo8zz-pPI1QS9KnjSsa3vKX2NINqq5Fv1jfPK3bl6ghLaZ371OcH9A=w300-rw" alt="Logo Anki">
-                    </div>
-                    <div class="col-md-10">
-                        <p>Tu peux importer un fichier Anki (avec l'extension .apkg) sur le site.</p>
-                        <p>Les fiches ne seront visibles que par toi.</p>
-                        <br>
-                        <p>Nous travaillons actuellement pour mettre en place un système de partage avec tes amis.</p>
-                        <br>
-                        <p>Stay tuned !</p>
-                        <div class="space"></div>
-                        {% csrf_token %}
-                        {{ form }}
-                        <div class="space"></div>
-                        <a class="btn btn-default" href="{% url 'cards:home' %}"><i class="fa fa-close" aria-hidden="true"></i> Annuler</a>
-                        <button type="submit" class="btn btn-default" data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i> Transfert...'><i class="fa fa-check" aria-hidden="true"></i> Importer</button>
-                    </div>
+    <div class="col-md-4">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2><i class="fa fa-star"></i> Importer un deck Anki</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                    <form class="form-horizontal" method="post" action="{% url 'cards:ankiupload' %}" enctype="multipart/form-data">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-4 hidden-xs">
+                                    <div class="space"></div>
+                                    <img style="width: 100px;" src="https://lh3.googleusercontent.com/4aLlAwUKGg5Keo8zz-pPI1QS9KnjSsa3vKX2NINqq5Fv1jfPK3bl6ghLaZ371OcH9A=w300-rw" alt="Logo Anki">
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Tu peux importer un fichier Anki (avec l'extension .apkg) sur le site.</p>
+                                    <p>Les fiches ne seront visibles que par toi.</p>
+                                    <br>
+                                    <div class="space12"></div>
+                                    {{ form }}
+                                    <div class="space"></div>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-default" href="{% url 'cards:home' %}"><i class="fa fa-close" aria-hidden="true"></i> Annuler</a>
+                                    <button type="submit" class="btn btn-default" data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i> Transfert...'>
+                                        <i class="fa fa-check" aria-hidden="true"></i> Importer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-4">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2><i class="fa fa-file-text"></i> Importer un fichier texte</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                    <form class="form-horizontal" method="post" action="{% url 'cards:ankiupload' %}" enctype="multipart/form-data">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="space"></div>
+                                    <a data-toggle="modal" data-target="#modalText" class="btn btn-info">comment<br> rédiger<br> un fichier<br> d'import ?</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Tu peux également rédiger et importer des fichers textes.</p>
+                                    <p>Regarde comment rédiger un fichier d'import pour connaitre la syntaxe à respecter.</p>
+                                    <br>
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <div class="space"></div>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-default" href="{% url 'cards:home' %}"><i class="fa fa-close" aria-hidden="true"></i> Annuler</a>
+                                    <button type="submit" class="btn btn-default" data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i> Transfert...'>
+                                        <i class="fa fa-check" aria-hidden="true"></i> Importer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="space"></div>
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h2>Mes packages importés</h2>
-		<div class="space"></div>
+        <div class="space"></div>
         <div class="x_content">
             <table class="table table-striped table-hover">
                 <div class="space12"></div> <!-- 40px Vertical Spacing -->
@@ -62,5 +111,65 @@
         </div>
     </div>
     <div class="col-md-2"></div>
+</div>
+<div class="modal fade" id="modalText" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="blouse-font text-center" id="myModalLabel"><span class="fa fa-file-text"></span> Rédiger un fichier d'import</h2>
+            </div>
+            <div class="modal-body">
+                <img src="{% static "images/cards/tipmodal1.png"%}" alt="Logo conseils de rédaction">
+                <p>Le fichier doit être un .txt (par exemple "mesfiches.txt").</p>
+                <p>Les fiches sont séparées entre elles par des sauts de ligne, et les questions sont séparées des réponses par des retours simples à la ligne.</p>
+                <p>Les Matière, numéro d'item, cours et chapitre sont indiqués par des # en nombre défini.</p>
+                <p>Tant que tu ne retape pas un #, il reste valable pour les fiches suivantes.</p>
+                <br>
+                <p>Format:<p>
+                <pre>
+            ####Matière
+            ###Num Item
+            ##Cours
+            #Chapitre
+
+            Enoncé de la première question, puis retour à la ligne
+            Contenu de la fiche
+
+            Enoncé de la deuxième question, puis retour à la ligne
+            Contenu de la fiche
+                </pre>
+                Exemple:
+                <pre>
+            ####Ophtalmologie
+            ###44
+            ##Troubles visuels chez l’enfant
+            #Epidémiologie
+
+            Quel pourcentage d’enfants de moins de 6 ans est atteint d’une anomalie visuelle?
+            15-20% soit 800.000 en France
+
+            Quel pourcentage d’enfant présente un strabisme?
+            4%
+
+            #Clinique
+
+            A partir de quel âge est présent le réflexe photo-moteur?
+            Dès la naissance, de faible amplitude
+
+            A partir de quel âge est présent le réflexe de poursuite?
+            entre 2 et 4 semaines, doit être présent avant 2 mois
+
+            A partir de quel âge est présent le réflexe de fusion et de coordination binoculaire?
+            entre 4 et 12 semaines
+
+            etc...
+                </pre>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> OK</button>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
