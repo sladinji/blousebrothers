@@ -6,10 +6,6 @@
 {% load bbtricks %}
 {% load shipping_tags %}
 
-{% if user.subscription %}
-<div class="space"></div>
-{% endif %}
-
 {% if basket_warnings %}
 <h5>{% trans "Important messages about items in your basket" %}</h5>
 {% for warning in basket_warnings %}
@@ -30,6 +26,39 @@
 
 {% if not basket.is_empty %}
 <h1 class="text-center">{% trans "Profite de nos offres de lancement valables jusqu'au 31 / 10 / 17 !" %}</h1>
+<div class="row voucher-plan align-center">
+    {% block vouchers %}
+    {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
+    {% if voucher_form %}
+    <div class="col-xs-12 col-md-12">
+        <div class="sub-header">
+            <h2>{% trans "Voucher/promo code" %}</h2>
+        </div>
+        <p id="voucher_form_link"><a class="btn btn-default btn-full">{% trans "I have a voucher code..." %}</a></p>
+
+        <div id="voucher_form_container" style="display:none">
+            <form id="voucher_form" action="{% url 'basket:vouchers-add' %}" method="post">
+                {% csrf_token %}
+                {% include "partials/form_fields.html" with form=voucher_form %}
+                <button type="submit" class="btn btn-info" data-loading-text="{% trans 'Adding...' %}">{% trans "Add voucher" %}</button>
+                {% trans "or" %} <a href="#" id="voucher_form_cancel">{% trans "cancel" %}</a>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    {% endblock vouchers %}
+
+    <div style="display:none;">
+        {% block baskettotals %}
+        <div class="col-sm-6">
+            <div class="sub-header">
+                <h2>{% trans "Totals" %}</h2>
+            </div>
+            {% include 'basket/partials/basket_totals.html' with editable=1 %}
+        </div>
+        {% endblock baskettotals %}
+    </div>
+</div>
 <div class="row" id="select-plan">
     <div class="col-md-8 col-xs-12 etape1">{# eq select your plan #}
         <h2>1. {% trans "Choisis ton abonnement" %}</h2>
@@ -198,39 +227,6 @@
 </form>
 {% endblock %}
 
-<div class="row voucher-plan align-center">
-    {% block vouchers %}
-    {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
-    {% if voucher_form %}
-    <div class="col-xs-12 col-md-12">
-        <div class="sub-header">
-            <h2>{% trans "Voucher/promo code" %}</h2>
-        </div>
-        <p id="voucher_form_link"><a class="btn btn-default btn-full">{% trans "I have a voucher code..." %}</a></p>
-
-        <div id="voucher_form_container" style="display:none">
-            <form id="voucher_form" action="{% url 'basket:vouchers-add' %}" method="post">
-                {% csrf_token %}
-                {% include "partials/form_fields.html" with form=voucher_form %}
-                <button type="submit" class="btn btn-info" data-loading-text="{% trans 'Adding...' %}">{% trans "Add voucher" %}</button>
-                {% trans "or" %} <a href="#" id="voucher_form_cancel">{% trans "cancel" %}</a>
-            </form>
-        </div>
-    </div>
-    {% endif %}
-    {% endblock vouchers %}
-
-    <div style="display:none;">
-        {% block baskettotals %}
-        <div class="col-sm-6">
-            <div class="sub-header">
-                <h2>{% trans "Totals" %}</h2>
-            </div>
-            {% include 'basket/partials/basket_totals.html' with editable=1 %}
-        </div>
-        {% endblock baskettotals %}
-    </div>
-</div>
 
 <div style="display:none;">
     {% block formactions %}
