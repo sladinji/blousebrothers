@@ -79,10 +79,8 @@ class MeanBarChart(Chart):
         self.user_stats = self.get_user_stats(kwargs["user_id"])[0]
         if kwargs['friend_id'] == '0':
             stats = dict(StatsSpe.objects.values_list('speciality__name', 'average'))
-            other_stats = []
-            for spe, _ in self.user_stats:
-                other_stats.append(stats[spe])
-                other_label = "Moyenne de tous les utilisateurs"
+            other_stats = [stats[spe] for spe, _ in self.user_stats]
+            other_label = "Moyenne de tous les utilisateurs"
         else:
             other_raw_stats, friend = self.get_user_stats(kwargs["friend_id"])
             dic_other_stat = dict(other_raw_stats)
