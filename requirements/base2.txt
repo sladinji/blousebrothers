@@ -3,3 +3,4 @@ numpy
 scipy
 scikit-learn==0.18.1
 django_weasyprint
+django-bleach

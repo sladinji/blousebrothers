@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% load static %}{% load i18n %}
 {% load bbtricks%}
+{% load bleach_tags %}
+
 {% block title %}{% trans 'Fiche ECN' %}{% endblock %}
 
 {% block body_class %}{% if zen %}bodyrev{% endif %}{% endblock body_class %}
@@ -86,7 +88,7 @@ Tags : {{ object.card.tags.all | join:", "}}
                 </div>
                 {% block description %}
                 <div class="description">
-                    <span>{{ object.card.content | rev_content | safe }}</span>
+                    <span>{{ object.card.content | bleach | rev_content | safe}}</span>
                     <div class="card_button preview" id="calltoac">
                         <a rel="nofollow" href="#0">
                             <div class="day preview"><i class="fa fa-bars preview" aria-hidden="true"></i></div>

@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     'disqus',  # Forum
     'paypal',
     'jchart',
+    'django_bleach',
 
 ]
 
@@ -449,4 +450,20 @@ DISQUS_PUBLIC_KEY = 'ZrL5cW1Ej4uUYOUx3kIjkK9T2m3lxp4mBHU5WdIG5WzqFmuCpgFfXHmo779
 DISQUS_SECRET_KEY = 'CA69jaIVIPCWKhZH353BA0sRdkn4PyhU5Yl5Xmmc1f5bvaKmQ6lnUreaJVX0BcHu'
 DISQUS_WEBSITE_SHORTNAME = 'blousebrothers'
 
-# HAYSTACK
+# bleach
+# Which HTML tags are allowed
+BLEACH_ALLOWED_TAGS = ['br', 'img', 'div', 'ul', 'li', 'font', 'color', 'span', 'p', 'b', 'i', 'u', 'em', 'strong', 'a']
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'src', 'color', 'title', 'style']
+
+# Which CSS properties are allowed in 'style' attributes (assuming style is
+# an allowed attribute)
+BLEACH_ALLOWED_STYLES = [
+        'opacity','font-family', 'font-weight', 'font-color', 'color',  'text-decoration', 'font-variant']
+
+# Strip unknown tags if True, replace with HTML escaped characters if False
+BLEACH_STRIP_TAGS = True
+
+# Strip HTML comments, or leave them in.
+BLEACH_STRIP_COMMENTS = True
