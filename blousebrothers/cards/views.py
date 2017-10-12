@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Q, Count, Min
 from django.http import JsonResponse
 from django.views.generic import (
@@ -297,7 +297,8 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         he still can access to it. This means we have to get or create deck instance later
         because we first have to check if record already exists !
         """
-        return Card.objects.get(id=self.kwargs['id'])
+        return get_object_or_404(Card, pk=self.kwargs['id'])
+
 
     def get(self, request, *args, **kwargs):
         """
