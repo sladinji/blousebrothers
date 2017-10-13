@@ -53,8 +53,8 @@
                                     </span>
                                 </li>
                                 <li class="stat col-md-3 col-sm-6 col-xs-12">
-                                    <span><b class="value">{{ object.wake_up | next_session }} </b><br>
-                                        Prochaine session
+                                    <span><b class="value">{{ object.card.tags.all|join:", "|default:"Aucun" }}</b><br>
+                                        Tags
 
                                     </span>
                                 </li>
