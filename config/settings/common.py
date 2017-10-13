@@ -333,7 +333,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = reverse_lazy('confs:home')
+LOGIN_REDIRECT_URL = reverse_lazy('cards:home')
 LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
