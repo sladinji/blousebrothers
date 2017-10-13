@@ -22,7 +22,7 @@ class CreateCardForm(ModelForm, Bootstrap3FormMixin):
 
     question = forms.CharField()
     image = forms.ImageField(
-        label=mark_safe("<i class='fa fa-camera'></i> Insère une image"),
+        label=mark_safe("<i class='fa fa-camera'></i> Ajouter une image"),
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'btn btn-upload'}))
 
