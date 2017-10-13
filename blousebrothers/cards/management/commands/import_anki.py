@@ -2,7 +2,7 @@ from glob import glob
 from django.core.management.base import BaseCommand
 from blousebrothers.users.models import User
 from blousebrothers.cards.models import Card
-from blousebrothers.cards.loader import load_apkg
+from blousebrothers.cards.loader.anki import load_apkg
 
 
 class Command(BaseCommand):

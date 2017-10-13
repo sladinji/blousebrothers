@@ -6,7 +6,6 @@ from django_select2.forms import ModelSelect2MultipleWidget
 from django.utils.safestring import mark_safe
 
 from blousebrothers.confs.models import Item, Speciality
-from blousebrothers.users.models import User
 from .models import Card, Tag
 
 
@@ -19,9 +18,13 @@ class UpdateCardForm(ModelForm, Bootstrap3FormMixin):
 class CreateCardForm(ModelForm, Bootstrap3FormMixin):
     class Meta:
         model = Card
-        fields = ['question', 'content']
+        fields = ['question', 'content', 'image']
 
     question = forms.CharField()
+    image = forms.ImageField(
+        label=mark_safe("<i class='fa fa-camera'></i> Insère une image"),
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'btn btn-upload'}))
 
 
 class FinalizeCardForm(ModelForm, Bootstrap3FormMixin):
@@ -65,4 +68,3 @@ class AnkiFileForm(forms.Form):
         required=True,
         widget=forms.ClearableFileInput(),
     )
-

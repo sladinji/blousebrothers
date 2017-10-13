@@ -27,7 +27,7 @@ from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
-from .models import Card, Deck, Session, CardsPreference, SessionOverException
+from .models import Card, Deck, Session, CardsPreference, SessionOverException, CardImage
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm
 from .loader import anki, text
 from .charts import Dispatching
@@ -148,6 +148,11 @@ class CreateCardView(BBLoginRequiredMixin, CreateView):
 
         self.object.content = '@@{question}@@\n{content}'.format(**form.cleaned_data)
         self.object.author = self.request.user
+        image = form.cleaned_data['image']
+        if image:
+            cimage = CardImage(owner=self.request.user, image=image)
+            cimage.save()
+            self.object.content += '<br><img src="{}"/>'.format(cimage.image.url)
         self.object.save()
 
         Deck.objects.create(card=self.object, student=self.request.user)
@@ -298,7 +303,6 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         because we first have to check if record already exists !
         """
         return get_object_or_404(Card, pk=self.kwargs['id'])
-
 
     def get(self, request, *args, **kwargs):
         """

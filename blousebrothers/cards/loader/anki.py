@@ -61,12 +61,12 @@ def split_spes_tags(tags):
 def create_cards(**kwargs):
     content = kwargs.pop('content')
     length = len(content.split("\u001F"))
-    contents = iter(content.split("\u001F")) # question separator
+    contents = iter(content.split("\u001F"))  # question separator
 
     if length == 3:
             return [Card(
                 public=False,
-                content="\n".join([next(contents), next(contents), next(contents),]),
+                content="\n".join([next(contents), next(contents), next(contents), ]),
                 **kwargs
             )]
 
@@ -103,7 +103,7 @@ class Importer():
 
 def get_importer(fd, user, dirpath, filename):
     """
-    Importer factory, save media and return an Importer object to update card content.
+    Importer factory, save media and return an Importer object to update card content (images urls).
     """
     pkg = AnkiPackage(owner=user)
     pkg.save()
@@ -153,6 +153,7 @@ def work(tmpf, user, filename):
     except:
         logger.exception("Anki thread import failed")
 
+
 def load_apkg(fd, user):
     """
     Import an anki package.
@@ -164,6 +165,7 @@ def load_apkg(fd, user):
     tmpf.seek(0)
     filename = os.path.basename(fd.name)
     threading.Thread(target=work, args=(tmpf, user, filename)).start()
+
 
 def save(cards, tags):
     """

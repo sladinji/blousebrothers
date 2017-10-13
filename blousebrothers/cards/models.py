@@ -155,6 +155,17 @@ class CardsPreference(models.Model):
                                             blank=False, default=DURATION_CHOICES[0][0], null=False)
 
 
+def card_image_directory_path(card_image, filename):
+    return '{0.owner.username}/cards_images/{1}'.format(card_image, filename)
+
+
+class CardImage(models.Model):
+    owner = models.ForeignKey("users.User", verbose_name=_("Image"), on_delete=models.CASCADE,
+                              related_name="card_images", blank=False, null=False)
+    image = ImageCropField(_("Image"), upload_to=card_image_directory_path, max_length=255)
+    cropping = ImageRatioField('image', '430x360', allow_fullsize=True)
+
+
 class SessionOverException(Exception):
     pass
 
