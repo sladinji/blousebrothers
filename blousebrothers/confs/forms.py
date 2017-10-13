@@ -55,9 +55,16 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
 
     class Meta:
         model = Conference
-        fields = ['title', 'type', 'summary']
+        fields = ['title', 'type', 'summary', "nb_questions"]
 
     form_name = 'conf_form'
+    nb_questions = forms.IntegerField(
+        label=_("Nombre de questions"),
+        required=True,
+        initial=15,
+        min_value=10,
+        max_value=30,
+    )
 
 
 class RefundForm(ModelForm, Bootstrap3FormMixin):

@@ -265,7 +265,7 @@ class ConferenceCreateView(BBLoginRequiredMixin, CreateView, FormView):
             self.object.owner = self.request.user
             self.object.save()
             # create questions
-            for i in range(15):
+            for i in range(form.cleaned_data['nb_questions']):
                 q = Question.objects.create(conf=self.object, index=i)
                 for j in range(5):
                     Answer.objects.create(question=q, index=j)
