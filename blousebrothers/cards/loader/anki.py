@@ -1,3 +1,4 @@
+import ast
 import difflib
 import zipfile
 import tempfile
@@ -110,7 +111,7 @@ def get_importer(fd, user, dirpath, filename):
     pkg.file.save(filename, afile)
     new_map = {}
     with open(os.path.join(dirpath, "media")) as media:
-        dic = eval(media.read())
+        dic = ast.literal_eval(media.read())
         for k, v in dic.items():
             ai = AnkiImage(package=pkg)
             ai.save()
