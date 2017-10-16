@@ -36,7 +36,7 @@ urlpatterns = [
     ),
     url(
         regex=r'^share_confs$',
-        view=views.update_shareresults,
+        view=views.update_shareconfs,
         name='share_confs'
     ),
 ]

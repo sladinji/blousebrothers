@@ -148,13 +148,13 @@
                                     <label>{{ relation.user.username }}</label><br>
                                     {{ relation.share_cards |yesno:"Oui,Non" }}<br>
                                     {{ relation.share_results |yesno:"Oui,Non" }}<br>
-                                    {{ relation.share_results |yesno:"Oui,Non" }}<br>
+                                    {{ relation.share_confs |yesno:"Oui,Non" }}<br>
                                 </div>
                                 <div class="share_cards text-center">
                                     <label>Moi</label><br>
                                     <input type="checkbox" name="share_cards"   data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_cards %} checked{% endif %}><br>
                                     <input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_results %} checked{% endif %}><br>
-                                    <input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_confs %} checked{% endif %}><br>
+                                    <input type="checkbox" name="share_confs" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_confs %} checked{% endif %}><br>
                                 </div>
                                 <div class="friends-control"> 
                                     <label class="hidden-xs">Supprimer</label><br>

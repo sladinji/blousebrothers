@@ -10,6 +10,7 @@ import logging
 import numpy as np
 
 from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
@@ -90,7 +91,14 @@ class Conference(ModelMeta, models.Model):
                                 )
     deleted = models.BooleanField(_("Supprimée"), default=False)
     no_fees = models.BooleanField(_("Pas de frais"), default=False)
-    for_sale = models.BooleanField(_("Publier"), default=True,
+    for_share = models.BooleanField(_("Accessible à mes élèves / amis"), default=True,
+                                    help_text=mark_safe(
+                                        _("Le dossier est accessible aux personnes autorisées dans la section "
+                                          "<a href='/amis'>Amis</a>, même si le dossier n'est pas accessible "
+                                          "publiquement.")
+                                    )
+                                    )
+    for_sale = models.BooleanField(_("Accessible à tous"), default=True,
                                    help_text=mark_safe(
                                        _("Publier mon dossier avec les paramètres sélectionnés. Je certifie que "
                                          "le matériel de ma conférence est original et je dégage BlouseBrothers "
@@ -516,7 +524,8 @@ class Prediction(models.Model):
     question = models.ForeignKey('Question', related_name="prediction")
     classifier = models.ForeignKey('Classifier', related_name="prediction")
     items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='prediction', blank=True)
-    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='prediction', blank=True)
+    specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='prediction',
+                                          blank=True)
 
 
 class PredictionValidation(models.Model):

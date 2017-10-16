@@ -37,4 +37,4 @@ class SharingForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Relationship
-        fields = ['share_cards', 'share_results']
+        fields = ['share_cards', 'share_results', 'share_confs']

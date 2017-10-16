@@ -3,6 +3,8 @@ This Oscar modules is overrided to define pricing strategy.
 """
 from decimal import Decimal as D
 
+from cuser.middleware import CuserMiddleware
+
 from oscar.apps.partner import strategy, prices, availability
 
 DEFAULT_RATE = D('0.0')
@@ -57,6 +59,9 @@ class FRStrategy(
     - Charge FR VAT on prices.  Assume everything is standard-rated.
     """
     def availability_policy(self, product, stockrecord):
+        user = CuserMiddleware.get_user()
+        if user and product.conf and product.conf.owner.gives_friendship.filter(to_user=user, share_confs=True).exists():
+            return availability.Available()
         if product.conf and product.conf.for_sale and product.conf.owner.gave_all_mangopay_info:
             return availability.Available()
         elif product.conf:

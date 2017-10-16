@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from oscar.core.loading import get_classes
 from blousebrothers.confs.models import Conference
 from blousebrothers.confs.utils import get_or_create_product
+from django.db.models import Q
 
 
 ProductClass, Product, Category, ProductCategory, ProductImage = get_classes(
@@ -13,7 +14,7 @@ class Command(BaseCommand):
     help = 'Create products from confs'
 
     def handle(self, *args, **options):
-        for conf in Conference.objects.filter(for_sale=True, edition_progress=100):
+        for conf in Conference.objects.filter(Q(for_share=True) | Q(for_sale=True), edition_progress=100):
             if conf.products.count() > 0:
                 self.stdout.write(
                     self.style.WARNING('{} "{}" already in shop ({}€)'.format(
