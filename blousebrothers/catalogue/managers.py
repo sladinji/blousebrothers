@@ -34,7 +34,7 @@ class BrowsableProductManager(BaseBrowsableProductManager):
                 )
             )
         else:
-            qs = qs.filter.exclude(conf__for_sale=False)
+            qs = qs.exclude(conf__for_sale=False)
         if not user or not user.is_staff:
             qs = qs.exclude(product_class__name='Abonnements')
         qs = qs.order_by('stockrecords__price_excl_tax')
