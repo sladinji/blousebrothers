@@ -136,9 +136,9 @@
                 </fieldset>
             </form>
             <button class="btn" ng-click="previous_question()" ng-disabled="questions.indexOf(question) <= 0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Question précédente</button>
-            <button ng-if="questions.indexOf(question) < 14" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+            <button ng-if="questions.indexOf(question) < questions.length - 1" class="btn pull-right" ng-click="next_question()" ng-disabled=>Question suivante <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
             {% endverbatim %}
-            <a ng-if="questions.indexOf(question) == 14" class="btn pull-right" href="{% url 'confs:final' object.slug %}" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+            <a ng-if="questions.indexOf(question) == questions.length - 1" class="btn pull-right" href="{% url 'confs:final' object.slug %}" ng-disabled="conference.edition_progress != 100">Dernière étape<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             {% verbatim %}
             <div ng-if="conference.edition_progress != 100">
                 <h2 class="text-center">Sujet complété à {{ conference.edition_progress | number : 0 }}%</h2>

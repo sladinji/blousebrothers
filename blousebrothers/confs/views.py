@@ -51,7 +51,7 @@ from .models import (
     Test,
     TestAnswer,
 )
-from .forms import ConferenceForm, ConferenceFinalForm, RefundForm
+from .forms import ConferenceForm, ConferenceFinalForm, RefundForm, ConferenceFormSimple
 
 logger = logging.getLogger(__name__)
 Product = apps.get_model('catalogue', 'Product')
@@ -356,7 +356,7 @@ class ConferenceFinalView(ConferenceWritePermissionMixin, BBConferencierReqMixin
 
 class ConferenceEditView(ConferenceWritePermissionMixin, BBConferencierReqMixin, UpdateView):
     template_name = 'confs/conference_form.html'
-    form_class = ConferenceForm
+    form_class = ConferenceFormSimple
     model = Conference
 
     def get_redirect_url(self):

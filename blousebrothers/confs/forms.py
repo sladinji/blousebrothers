@@ -67,6 +67,15 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
     )
 
 
+class ConferenceFormSimple(ModelForm,  Bootstrap3FormMixin):
+
+    class Meta:
+        model = Conference
+        fields = ['title', 'type', 'summary']
+
+    form_name = 'conf_form'
+
+
 class RefundForm(ModelForm, Bootstrap3FormMixin):
     class Meta:
         model = Test

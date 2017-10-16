@@ -154,7 +154,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
     })
     $scope.next_question = function(){
         var iq = $scope.questions.indexOf($scope.question);
-        if ( iq < 14 ) {
+        if ( iq < $scope.questions.length - 1 ) {
             djangoRMI.send_answers({'answers': $scope.answers, 'millis': $scope.timer.millis})
             .success(function(result){
                 $scope.question['answered'] = true;
@@ -162,7 +162,7 @@ conf_app.controller("ConfFormCtrl", function(textAngularManager, toaster, $scope
                 $scope.question_selected($scope.questions[iq + 1]);
             });
         }
-        else if (iq == 14){
+        else if (iq == $scope.questions.length - 1){
             djangoRMI.send_answers({'answers': $scope.answers, 'millis': $scope.timer.millis})
             .success(function(result){
                 window.location="{% url 'confs:result' object.conf.slug %}";
