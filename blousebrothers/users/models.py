@@ -280,7 +280,7 @@ class User(AbstractUser):
 
     @property
     def subscription(self):
-        subs = [x for x in self.subs.all().order_by('-date_created') if not x.is_past_due]
+        subs = [x for x in self.subs.all().order_by('-date_over') if not x.is_past_due]
         if subs:
             return subs[0]
 

@@ -1,15 +1,23 @@
 {% extends 'cards/base.html' %}
+{% load i18n %}
 {% load static %}
 {% load jchart %}
 {% load bbtricks %}
+{% load crispy_forms_tags %}
 
 {% block scripts %}
+{{ form.media.js }}
 {{ block.super }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 {% endblock %}
 
 {% block alert_messages %}
 {% endblock %}
+
+{% block styles %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock styles %}
 
 {% block content %}
 <div class="container">
@@ -71,9 +79,9 @@
         <div class="space hidden-xs"></div>
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="x_title">
-                <h2><i class="fa fa-pie-chart"></i> Toutes mes fiches</h2><div class="text-right">{{ user.deck.count }}/{{ total }}</div>
+                <h2><i class="fa fa-pie-chart"></i> Toutes mes fiches</h2><div class="text-right">{{ deck.count }}/{{ total }}</div>
                 <div class="clearfix"></div>
-                <div class="progress-bar-container"><div style="width: {% widthratio user.deck.count total  100 %}%" class="progress-bar"></div></div>
+                <div class="progress-bar-container"><div style="width: {% widthratio deck.count total  100 %}%" class="progress-bar"></div></div>
             </div>
             <div class="x_content">
                 <div class="col-md-5">
@@ -117,12 +125,21 @@
                 </div>
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
-                    <a href="{% url 'cards:redirect' %}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?revision=True" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span>{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
+                    <a href="{% url 'cards:redirect' %}?{{request.GET.urlencode}}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a href="{% url 'cards:redirect' %}?revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span>{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
                 </div>
+                <hr/>
+                <h2>Filtres</h2>
+                <form method="get" action="{% url "cards:home" %}">
+                    <div class="form-group">
+                        {{ form | crispy }}
+                    </div>
+                    <input type="submit" value="{% trans "Filtrer" %}" class="btn btn-default" />
+                </form>
             </div>
         </div>
         {% for spe in specialities %}
+        {% if spe.total %}
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="prod-bg {{ spe.obj.css }}"></div>
             <div class="x_title">
@@ -172,12 +189,13 @@
                 </div>
                 <div class="space12"></div>
                 <div class="col-md-7 rev_btns">
-                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}<span class="Counter">{{ spe.ready }}</span>{% elif spe.wake_up %} (dans {{spe.wake_up | next_session}}){% endif %}</a>
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&{{request.GET.urlencode}}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
+                    <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}<span class="Counter">{{ spe.ready }}</span>{% elif spe.wake_up %} (dans {{spe.wake_up | next_session}}){% endif %}</a>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        {% endif %}  
+        {% endfor %}  
     </div>
 </div>
 

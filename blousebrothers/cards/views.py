@@ -27,15 +27,15 @@ from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
-from .models import Card, Deck, Session, CardsPreference, SessionOverException, CardImage
-from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm
+from .models import Card, Deck, Session, CardsPreference, SessionOverException, CardImage, Tag
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, CardHomeFilterForm
 from .loader import anki, text
 from .charts import Dispatching
 
 logger = logging.getLogger(__name__)
 
 
-def create_new_session(request, specialities, items, revision):
+def create_new_session(request, specialities, items, revision, tags):
     """
     Create new revision session record
     """
@@ -47,6 +47,7 @@ def create_new_session(request, specialities, items, revision):
     session = Session.objects.create(student=request.user, selected_duration=duration, revision=revision)
     session.specialities = specialities
     session.items = items
+    session.tags = tags
     session.save()
     return session
 
@@ -57,11 +58,12 @@ def get_or_create_session(request):
     """
     specialities = Speciality.objects.filter(pk__in=[request.GET.get('specialities')] or [])
     items = Item.objects.filter(pk__in=request.GET.get('items') or [])
+    tags = Tag.objects.filter(pk__in=request.GET.get('tags') or [])
     revision = request.GET.get('revision') == 'True'
 
     session = Session.objects.filter(student=request.user, finished=False).first()
     if not session:
-        session = create_new_session(request, specialities, items, revision)
+        session = create_new_session(request, specialities, items, revision, tags)
     else:
         session.check_is_not_over()
     return session
@@ -375,21 +377,35 @@ class RevisionHome(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         user = self.request.user
+        qry = Card.objects.for_user(user)
+        if user.is_authenticated():
+            deck = user.deck
+        else:
+            deck = User.objects.get(username="BlouseBrothers").deck
+        for filters in ['specialities', 'items', 'tags']:
+            ids = self.request.GET.getlist(filters)
+            if ids:
+                qry = qry.filter(**{filters+'__id__in': ids})
+                deck = deck.filter(**{'card__'+filters+'__id__in': ids})
         if user.is_anonymous():
             user = User.objects.get(username='BlouseBrothers')
         dispatching_chart = Dispatching()
         dispatching_chart.request = self.request
-        total_count = Card.objects.for_user(user).values('specialities').annotate(
+        total_count = qry.values('specialities').annotate(
             spe_count=Count('specialities')
         )
-        user_count = user.deck.values('card__specialities').annotate(
+        user_count = deck.values('card__specialities').annotate(
             spe_count=Count('card__specialities'),
             wake_up=Min('wake_up')
         )
-        ready_count = user.deck.values('card__specialities').filter(wake_up__lt=timezone.now()).annotate(
+        ready_count = deck.values('card__specialities').filter(wake_up__lt=timezone.now()).annotate(
             spe_count=Count('card__specialities')
         )
         mindate = datetime(MINYEAR, 1, 1, tzinfo=pytz.UTC)
+        spe_qry = Speciality.objects.all()
+        spe_ids = self.request.GET.getlist('specialities')
+        if spe_ids:
+            spe_qry = spe_qry.filter(id__in=spe_ids)
         specialities = [
             {'obj': spe,
              'total': next((l['spe_count'] for l in total_count if l['specialities'] == spe.id), 0),
@@ -398,7 +414,7 @@ class RevisionHome(TemplateView):
              'wake_up': next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0),
              'last_access': next((l['wake_up'] for l in user_count if l['card__specialities'] == spe.id), 0),
              }
-            for spe in Speciality.objects.all()
+            for spe in spe_qry.all()
         ]
         specialities.sort(key=lambda x: x['total'], reverse=True)
         specialities.sort(key=lambda x: x['last_access'] if x['last_access'] else mindate, reverse=True)
@@ -409,8 +425,15 @@ class RevisionHome(TemplateView):
             specialities=specialities,
             wake_up=min((l['wake_up'] for l in user_count)) if user_count else 0,
             ready=sum((l['spe_count'] for l in ready_count)),
-            total=Card.objects.for_user(user).count(),
-            anki_form=AnkiFileForm(),
+            total=qry.count(),
+            form=CardHomeFilterForm(
+                initial={
+                    'items': self.request.GET.getlist('items'),
+                    'specialities': self.request.GET.getlist('specialities'),
+                    'tags': self.request.GET.getlist('tags'),
+                }
+            ),
+            deck=deck,
             **kwargs
         )
 

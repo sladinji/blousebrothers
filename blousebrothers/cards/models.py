@@ -62,11 +62,14 @@ class ForUserQuerySet(models.query.QuerySet):
         """
         Card accessible by user
         """
-        return self.filter(
-            Q(author=user) | Q(public=True) | Q(author__in=[
-                x.from_user for x in user.has_friendship.filter(share_cards=True)
-            ])
-        )
+        if user.is_authenticated():
+            return self.filter(
+                Q(author=user) | Q(public=True) | Q(author__in=[
+                    x.from_user for x in user.has_friendship.filter(share_cards=True)
+                ])
+            )
+        else:
+            return self.filter(public=True)
 
 
 class ForUserManager(models.Manager):
@@ -211,6 +214,8 @@ class Session(models.Model):
         if self.specialities.all():
             qs = qs.filter(card__specialities__in=self.specialities.all())
         if self.items.all():
+            qs = qs.filter(card__items__in=self.items.all())
+        if self.tags.all():
             qs = qs.filter(card__items__in=self.items.all())
         return qs.order_by('wake_up')
 

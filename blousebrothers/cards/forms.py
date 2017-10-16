@@ -74,6 +74,37 @@ class FinalizeCardForm(ModelForm, Bootstrap3FormMixin):
     )
 
 
+class CardHomeFilterForm(FinalizeCardForm):
+
+    items = forms.ModelMultipleChoiceField(
+        widget=ModelSelect2MultipleWidget(
+            queryset=Item.objects.order_by('number').all(),
+            search_fields=['name__icontains']
+        ),
+        queryset=Item.objects.all(),
+        required=False,
+        label="Items",
+    )
+    specialities = forms.ModelMultipleChoiceField(
+        widget=ModelSelect2MultipleWidget(
+            queryset=Speciality.objects.order_by('name').all(),
+            search_fields=['name__icontains']
+        ),
+        queryset=Speciality.objects.all(),
+        required=False,
+        label=_("Matières"),
+    )
+    tags = forms.ModelMultipleChoiceField(
+        widget=ModelSelect2MultipleWidget(
+            queryset=Tag.objects.order_by('name').all(),
+            search_fields=['name__icontains']
+        ),
+        queryset=Tag.objects.all(),
+        required=False,
+        label=_("Tags"),
+    )
+
+
 class AnkiFileForm(forms.Form):
     ankifile = forms.FileField(
         required=True,
