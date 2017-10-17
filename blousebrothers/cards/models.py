@@ -2,11 +2,11 @@ import random
 from os.path import splitext, basename
 from datetime import timedelta, datetime
 from django.utils import timezone
+from django.db.models import Q
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import Q
 from django.core.urlresolvers import reverse
 from image_cropping import ImageCropField, ImageRatioField
 from model_utils import Choices
@@ -192,6 +192,7 @@ class Session(models.Model):
     tags = models.ManyToManyField('Tag', verbose_name=("Tags"),
                                   related_name='sessions', blank=True)
     revision = models.BooleanField(default=False)
+    search = models.TextField(_('Rechercher'), blank=True, null=True)
 
     def __str__(self):
         return '<Session {} revision: {}>'.format(self.pk, self.revision)
@@ -217,6 +218,13 @@ class Session(models.Model):
             qs = qs.filter(card__items__in=self.items.all())
         if self.tags.all():
             qs = qs.filter(card__items__in=self.items.all())
+        if self.search:
+            qs = qs.filter(
+                Q(content__icontains=self.search) |
+                Q(specialities__name__icontains=self.search) |
+                Q(tags__name__icontains=self.search) |
+                Q(items__name__icontains=self.search)
+            )
         return qs.order_by('wake_up')
 
     @property
@@ -225,6 +233,13 @@ class Session(models.Model):
         Apply session preference filter to a Card queryset
         """
         qs = Card.objects.for_user(self.student)
+        if self.search:
+            qs = qs.filter(
+                Q(content__icontains=self.search) |
+                Q(specialities__name__icontains=self.search) |
+                Q(tags__name__icontains=self.search) |
+                Q(items__name__icontains=self.search)
+            )
         if self.specialities.all():
             qs = qs.filter(specialities__in=self.specialities.all())
         if self.items.all():
@@ -262,6 +277,13 @@ class Session(models.Model):
             qs = qs.filter(specialities__in=self.specialities.all())
         if self.items.all():
             qs = qs.filter(items__in=self.items.all())
+        if self.search:
+            qs = qs.filter(
+                Q(content__icontains=self.search) |
+                Q(specialities__name__icontains=self.search) |
+                Q(tags__name__icontains=self.search) |
+                Q(items__name__icontains=self.search)
+            )
         return qs.all()
 
     def choose_revision_card(self):

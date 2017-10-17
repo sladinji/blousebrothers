@@ -35,7 +35,7 @@ from .charts import Dispatching
 logger = logging.getLogger(__name__)
 
 
-def create_new_session(request, specialities, items, revision, tags):
+def create_new_session(request, specialities, items, revision, tags, search):
     """
     Create new revision session record
     """
@@ -48,6 +48,7 @@ def create_new_session(request, specialities, items, revision, tags):
     session.specialities = specialities
     session.items = items
     session.tags = tags
+    session.search = search
     session.save()
     return session
 
@@ -60,10 +61,11 @@ def get_or_create_session(request):
     items = Item.objects.filter(pk__in=request.GET.get('items') or [])
     tags = Tag.objects.filter(pk__in=request.GET.get('tags') or [])
     revision = request.GET.get('revision') == 'True'
+    search = request.GET.get('search', None)
 
     session = Session.objects.filter(student=request.user, finished=False).first()
     if not session:
-        session = create_new_session(request, specialities, items, revision, tags)
+        session = create_new_session(request, specialities, items, revision, tags, search)
     else:
         session.check_is_not_over()
     return session
@@ -387,6 +389,20 @@ class RevisionHome(TemplateView):
             if ids:
                 qry = qry.filter(**{filters+'__id__in': ids})
                 deck = deck.filter(**{'card__'+filters+'__id__in': ids})
+        search = self.request.GET.get('search', '')
+        if search:
+            qry = qry.filter(
+                Q(content__icontains=search) |
+                Q(specialities__name__icontains=search) |
+                Q(tags__name__icontains=search) |
+                Q(items__name__icontains=search)
+            )
+            deck = deck.filter(
+                Q(card__content__icontains=search) |
+                Q(card__specialities__name__icontains=search) |
+                Q(card__tags__name__icontains=search) |
+                Q(card__items__name__icontains=search)
+            )
         if user.is_anonymous():
             user = User.objects.get(username='BlouseBrothers')
         dispatching_chart = Dispatching()

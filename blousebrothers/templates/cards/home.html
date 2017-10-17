@@ -76,6 +76,23 @@
     </div>
     <div class="tabbed-main page">
         <div class="space hidden-xs"></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="input-group stylish-input-group">
+                        <form method="get" action="{% url "cards:home" %}">
+                            <input type="text" class="form-control"  id="id_search" name="search" placeholder="Rechercher" value="{{request.GET.search}}">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>  
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %}
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
                 <div class="panel-heading accordion-toggle card_filter" data-toggle="collapse" href="#collapseOne">
@@ -97,11 +114,12 @@
                 </div>
             </div>
         </div>
+        {% endcomment %}
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="x_title">
                 <h2><i class="fa fa-pie-chart"></i> 
-                    {% if request.GET.urlencode %}
-                    Fiches correspondant à la recherche
+                    {% if request.GET.search %}
+                    Fiches correspondant à "{{ request.GET.search }}"
                     {% else %}
                     Toutes mes fiches
                     {% endif %}

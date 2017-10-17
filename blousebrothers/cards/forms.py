@@ -74,7 +74,11 @@ class FinalizeCardForm(ModelForm, Bootstrap3FormMixin):
     )
 
 
-class CardHomeFilterForm(FinalizeCardForm):
+class CardHomeFilterForm(forms.Form, Bootstrap3FormMixin):
+    search = forms.CharField(label=_("Rechercher"), required=False)
+
+
+class CardHomeAdvancedFilterForm(FinalizeCardForm):
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
