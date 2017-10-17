@@ -2686,3 +2686,12 @@ ul.msg_list li .friends-control{
 .invoice, .invoice table{
     color: #000;
 }
+
+.select2-container {
+    width: 90% !important;
+}
+
+.panel-heading.accordion-toggle.card_filter{
+    background-color: #fefefe;
+    color: inherit;
+}

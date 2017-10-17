@@ -77,9 +77,36 @@
     <div class="tabbed-main page">
         <h1 class="text-center">Accès libre jusqu'au 31 / 10 / 17 !</h1>
         <div class="space hidden-xs"></div>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading accordion-toggle card_filter" data-toggle="collapse" href="#collapseOne">
+                    <h4 class="panel-title">
+                        <i class="fa fa-chevron-down"></i> Filtres
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse{% if request.GET.urlencode %} in{% endif %}">
+                    <div class="panel-body">
+                        <div class="row">
+                            <form method="get" action="{% url "cards:home" %}">
+                                <div class="form-group">
+                                    {{ form | crispy }}
+                                </div>
+                                <input type="submit" value="{% trans "Filtrer" %}" class="btn btn-default" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="x_title">
-                <h2><i class="fa fa-pie-chart"></i> Toutes mes fiches</h2><div class="text-right">{{ deck.count }}/{{ total }}</div>
+                <h2><i class="fa fa-pie-chart"></i> 
+                    {% if request.GET.urlencode %}
+                    Fiches correspondant à la recherche
+                    {% else %}
+                    Toutes mes fiches
+                    {% endif %}
+                </h2><div class="text-right">{{ deck.count }}/{{ total }}</div>
                 <div class="clearfix"></div>
                 <div class="progress-bar-container"><div style="width: {% widthratio deck.count total  100 %}%" class="progress-bar"></div></div>
             </div>
@@ -129,13 +156,6 @@
                     <a href="{% url 'cards:redirect' %}?revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span>{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
                 </div>
                 <hr/>
-                <h2>Filtres</h2>
-                <form method="get" action="{% url "cards:home" %}">
-                    <div class="form-group">
-                        {{ form | crispy }}
-                    </div>
-                    <input type="submit" value="{% trans "Filtrer" %}" class="btn btn-default" />
-                </form>
             </div>
         </div>
         {% for spe in specialities %}
