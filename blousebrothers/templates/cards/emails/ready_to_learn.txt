@@ -1,7 +1,7 @@
 Salut {{ user.username }},
 
 Tu as récemment appris de nouvelles fiches sur BlouseBrothers. 
-Selon le procédé de mémorisation par répétition espacée, elles sont maintenant prêtes à être révisées afin de renforcer leur encrage dans ta mémoire à long terme.
+Selon le procédé de mémorisation par répétition espacée, elles sont maintenant prêtes à être révisées afin de renforcer leur ancrage dans ta mémoire à long terme.
 
 Rendez-vous sur https://blousebrothers.fr pour réviser.
 
