@@ -16,6 +16,7 @@ class ProductIndex(CoreProductIndex):
     """
     conf_items = indexes.MultiValueField(null=True, faceted=True)
     spe = indexes.MultiValueField(null=True, faceted=True)
+    owner = indexes.CharField(model_attr="conf__owner__username")
 
     def prepare_conf_items(self, obj):
         if not obj.conf:

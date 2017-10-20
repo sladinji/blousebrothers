@@ -138,6 +138,7 @@ class SearchForm(FacetedSearchForm):
                 sqs = sqs.order_by(sort_field)
 
         return sqs
+        #return sqs.filter(owner="BlouseBrothers")
 
 
 class BrowseCategoryForm(SearchForm):
