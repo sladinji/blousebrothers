@@ -63,7 +63,7 @@ class ConferenceForm(ModelForm,  Bootstrap3FormMixin):
         required=True,
         initial=15,
         min_value=10,
-        max_value=30,
+        max_value=40,
     )
 
 
