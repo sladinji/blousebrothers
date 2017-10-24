@@ -1,0 +1,12 @@
+Bonjour,
+
+{{ requester.username }} t'invite à rejoindre le groupe "{{ group.name }}" sur BlouseBrothers.
+
+BlouseBrothers est une plateforme collaborative de préparation aux ECNi.
+
+Tu peux visualiser sa demande à l'adresse suivante : https://blousebrothers.fr/communaute/
+
+Une fois dans le groupe, tu pourras accéder à tous les dossiers que le groupe partage.
+Tu pourras également créer et partager des dossiers avec le groupe.
+
+

@@ -1,0 +1,10 @@
+Bonjour {{ user.username }},
+
+
+{{ requester.username }} t'invite à rejoindre le groupe {{ group.name }}.
+
+Tu peux visualiser sa demande à l'adresse suivante : https://blousebrothers.fr/communaute/
+
+Merci pour ta confiance.
+
+BlouseBrothers.

@@ -112,7 +112,7 @@ class SearchForm(FacetedSearchForm):
         # Note, we call super on a parent class as the default faceted view
         # escapes everything (which doesn't work for price range queries)
         sqs = super(FacetedSearchForm, self).search()
-        if self.cleaned_data['q']:
+        if hasattr(self, 'cleaned_data') and self.cleaned_data['q']:
             sqs = sqs.filter_or(owner=self.cleaned_data['q'])
 
         # We need to process each facet to ensure that the field name and the

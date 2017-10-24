@@ -55,6 +55,7 @@ urlpatterns = [
 
     # URL change redirection
     url(r'^catalogue/', RedirectView.as_view(url='/ecni/catalogue/')),
+    url(r'^search/', RedirectView.as_view(url='/ecni/catalogue/')),
 
     # Your stuff: custom urls includes go here
     url(r'^$', view=blousebrothers.users.views.SignupView.as_view(), name='home'),
@@ -63,7 +64,7 @@ urlpatterns = [
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^select2/', include('django_select2.urls')),
     url(r'^revisions/', include('blousebrothers.cards.urls', namespace='cards')),
-    url(r'^amis/', include('blousebrothers.friends.urls', namespace='friends')),
+    url(r'^communaute/', include('blousebrothers.friends.urls', namespace='friends')),
     url(r'^facture/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFView.as_view(), name="invoice"),
     url(r'^facture_pdf/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFViewPrintView.as_view(),
         name="invoice_pdf"),

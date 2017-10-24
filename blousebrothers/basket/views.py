@@ -75,6 +75,9 @@ class BasketAddView(CoreBasketAddView):
                         or self.request.user.has_friendship.filter(
                             from_user=form.product.conf.owner,
                             share_confs=True,
+                        ).exists() \
+                        or form.product.conf.owner.bbgroups.filter(
+                            id__in=self.request.user.bbgroups
                         ).exists():
                     if self.request.user.subscription and self.request.user.subscription.price_paid > 0:
                         # Do not create sale for user with subscription price = O (référents...)

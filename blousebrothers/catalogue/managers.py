@@ -31,6 +31,9 @@ class BrowsableProductManager(BaseBrowsableProductManager):
                 Q(conf__for_sale=True) |
                 Q(
                     conf__owner__in=[x.from_user for x in user.has_friendship.filter(share_confs=True)]
+                ) |
+                Q(
+                    conf__owner__bbgroups__in=user.bbgroups.all()
                 )
             )
         else:

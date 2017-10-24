@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "friends/base.html" %}
 {% load tinycontent_tags %}
 {% load social_share %}
 {% load crispy_forms_tags %}
@@ -14,6 +14,7 @@
 {% endblock %}
 
 {% block subnavigation %}
+{{ block.super }}
 <div class="container friend-header">
     <h2> 
         {% tinycontent 'amis_header' %}

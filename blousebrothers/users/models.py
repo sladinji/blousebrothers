@@ -189,6 +189,9 @@ class User(AbstractUser):
     def nb_activ_friendship_offers(self):
         return self.friendship_offers.filter(deleted=False, accepted=False).count()
 
+    def active_group_invits(self):
+        return self.group_invits.filter(deleted=False, accepted=False)
+
     def nb_cards_ready(self):
         return self.deck.filter(wake_up__lt=timezone.now()).count()
 
@@ -200,6 +203,9 @@ class User(AbstractUser):
 
     def nb_tests_done(self):
         return self.tests.filter(finished=True).count()
+
+    def total_points(self):
+        return sum(x.point for x in self.tests.filter(finished=True).all())
 
     def nb_created_confs(self):
         return self.created_confs.filter(for_sale=True, edition_progress=100).count()

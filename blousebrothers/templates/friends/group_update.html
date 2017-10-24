@@ -1,0 +1,180 @@
+{% extends "friends/base.html" %}
+{% load crispy_forms_tags %}
+{% load bbtricks %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <a href={% url 'friends:group' %}><i class="fa fa-chevron-left"></i> Retour</a>
+        <div class="space12"></div>
+        <h1>
+        <img style="width: 100px;" src="{{ object.avatar | default_icon }}" alt="avatar">
+        {{ object.name}}
+        </h1>
+        {% if object.active_requests.count %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-user-plus"></i><strong>?</strong> Demandes pour rejoindre le groupe</h2>
+                    <div class="clearfix">
+                         <i class="fa fa-id-card"></i>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+                        {% for offer in object.active_requests.all %}
+                        <li>
+                            <div class="friends-profile"> 
+                                <span class="image">
+                                    <img style="width: 60px;" src="{{offer.requester.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                </span>
+                                <span>
+                                    <span class="time hidden-xs">({{ offer.create_timestamp | date:'d/m/y' }})</span>
+                                    <span>{{ offer.requester.username }}</span> souhaite intégrer le groupe.
+                                    <br>Accepter ?
+                                </span>
+                                <span class="message">
+                                </span>
+                            </div>
+                            <div class="friends-control"> 
+                                <a href="{% url 'friends:accept_member' %}?pk={{offer.id}}" class="btn btn-success"><i class="fa fa-check fa-lg"></i></a> 
+                                <a href="{% url 'friends:refuse_member' %}?pk={{offer.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div> 
+        {% endif %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-users"></i> Membre{{ object.members.count|pluralizefr}}</h2>
+                    <div class="clearfix">
+                         <i class="fa fa-id-card"></i>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+                            {% for user in object.members.all %}
+                            <li>
+                                <div class="friends-profile"> 
+                                    <span class="image">
+                                        <img style="width: 100px;" src="{{user.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                    </span>
+                                    <span class="share_cards">
+                                        <strong>{{ user.username }}</strong>
+                                        <br>
+                                        {% with total=user.nb_created_confs %}
+                                        {{ total }} dossier{{ total|pluralizefr }} créé{{ total|pluralizefr }}.
+                                        {% endwith %}
+                                        <br>
+                                        {% with total=user.nb_tests_done %}
+                                        {{ total }} dossier{{ total|pluralizefr }} effectué{{ total|pluralizefr }}.
+                                        {% endwith %}
+                                        <br>
+                                        {% with total=user.total_points %}
+                                        {{ total }} point{{ total|pluralizefr }} cumulé{{ total|pluralizefr }}.
+                                        {% endwith %}
+                                    </span>
+                                </div>
+                                <div class="friends-control"> 
+                                    {% if request.user in object.moderators.all %}
+                                    <label class="hidden-xs">Supprimer</label><br>
+                                    <a href="{% url 'friends:remove_member' %}?user_id={{ user.id}}&group_id={{object.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-legal"></i> Moderateur{{ object.moderators.count|pluralizefr}}</h2>
+                    <div class="clearfix">
+                         <i class="fa fa-bank"></i>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+                            {% for user in object.moderators.all %}
+                            <li>
+                                <div class="friends-profile"> 
+                                    <span class="image">
+                                        <img style="width: 100px;" src="{{user.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                    </span>
+                                    <span class="share_cards">
+                                        <strong>{{ user.username }}</strong>
+                                        <br>
+                                        {% with total=user.nb_created_confs %}
+                                        {{ total }} dossier{{ total|pluralizefr }} créé{{ total|pluralizefr }}.
+                                        {% endwith %}
+                                        <br>
+                                        {% with total=user.nb_tests_done %}
+                                        {{ total }} dossier{{ total|pluralizefr }} effectué{{ total|pluralizefr }}.
+                                        {% endwith %}
+                                        <br>
+                                        {% with total=user.total_points %}
+                                        {{ total }} point{{ total|pluralizefr }} cumulé{{ total|pluralizefr }}.
+                                        {% endwith %}
+                                    </span>
+                                </div>
+                                <div class="friends-control"> 
+                                    {% if request.user in object.moderators.all and object.moderators.count > 1 %}
+                                    <label class="hidden-xs">Supprimer</label><br>
+                                    <a href="{% url 'friends:remove_member' %}?user_id={{ user.id}}&group_id={{ object.id }}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    {% if request.user in object.moderators.all %}
+    <div class="col-md-6">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2><i class="fa fa-send"></i> Envoyer des invitations</h2>
+                <div class="clearfix">
+                    <i class="fa fa-magic"></i>
+                </div>
+            </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div class="space"></div> <!-- 40px Vertical Spacing -->
+                    <form class="form" name="{{ form.form_name }}" method="post" action="{{ object.get_absolute_url }}">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-smile-o fa-lg" aria-hidden="true"></i> {% trans "Demander à être amis" %}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endif%}
+</div>
+{% endblock content %}

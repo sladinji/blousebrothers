@@ -8,7 +8,8 @@ class BBShop(app.Shop):
         """
         Replace catalogue URL (first one in original func)
         """
-        urls = [url(r'^ecni/catalogue/', self.catalogue_app.urls)] + super().get_urls()[1:]
+        urls = [url(r'^ecni/catalogue/', self.catalogue_app.urls),
+                url(r'^ecni/catalogue/search/', self.search_app.urls)] + super().get_urls()[1:]
         return urls
 
 application = BBShop()

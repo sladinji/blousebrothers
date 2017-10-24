@@ -71,7 +71,7 @@ settings file. This will enable the on-the-fly less compiler.
                         </li>
                         {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'friends:home' %}"><span class="fa fa-users fa-lg"></span> {% trans 'Amis' %}
+                            <a href="{% url 'friends:root' %}"><span class="fa fa-users fa-lg"></span> {% trans 'Communauté' %}
                             {% if user.nb_activ_friendship_offers %}
                             <span class="Counter">{{ user.nb_activ_friendship_offers }}
                             </span>

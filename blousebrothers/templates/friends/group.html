@@ -1,0 +1,272 @@
+{% extends "friends/base.html" %}
+{% load tinycontent_tags %}
+{% load social_share %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+{% load bbtricks %}
+
+{% block title %}{% trans 'Mes amis' %}{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock %}
+
+{% block subnavigation %}
+{{ block.super }}
+<div class="container friend-header">
+    <h2> 
+        {% tinycontent 'group_header' %}
+        {% endtinycontent %}
+    </h2>
+    <img src="{% static 'images/retro/phone.png' %}"/>
+    <div class="pull-right">
+        {% post_to_facebook "https://blousebrothers.fr" '<span class="btn btn-share"><i class="fa fa-facebook"></i> Like</span>' %}
+        {% post_to_gplus "https://blousebrothers.fr" '<span class="btn btn-share btn-gplus"><i class="fa fa-google-plus"></i></span>' %}
+        {% post_to_twitter "J'ai créé un tutorat médecine sur BlouseBrothers. #ecn #ecni" product '<span class="btn btn-share btn-twitter"><i class="fa fa-twitter"></i> #killtheconf</span>' %}
+    </div>
+</div>
+{% endblock subnavigation %}
+
+{% block content %}
+<div class="container">
+    <div class="row theader">
+        {% if user.active_group_invits.count %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-party"></i> Invitations</h2>
+                    <div class="clearfix">{{ user.active_group_invits.count }}
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+                        {% for offer in user.active_group_invits.all %}
+                        <li>
+                            <div class="friends-profile"> 
+                                <span class="image">
+                                    <img style="width: 60px;" src="{{offer.requester.avatar | default_icon }}" alt="avatar">
+                                </span>
+                                <span>
+                                    <span class="time hidden-xs">({{ offer.create_timestamp | date:'d/m/y' }})</span>
+                                    Invitation à rejoindre le groupe <strong>"{{ offer.requester.name }}"</strong>.
+                                    <br>Accepter ?
+                                </span>
+                                <span class="message">
+                                </span>
+                            </div>
+                            <div class="friends-control"> 
+                                <a href="{% url 'friends:accept_group_invit' %}?pk={{offer.id}}" class="btn btn-success"><i class="fa fa-check fa-lg"></i></a> 
+                                <a href="{% url 'friends:refuse_group_invit' %}?pk={{offer.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if user.groups_moderator.count %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-legal"></i> Groupes que je modère</h2>
+                    <div class="clearfix">{{ user.groups_moderator.count }}
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+						<div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+                        {% for group in user.groups_moderator.all %}
+                        {% for offer in group.active_requests.all %}
+                        <li>
+                            <div class="friends-profile"> 
+                                <span class="image">
+                                    <img style="width: 60px;" src="{{offer.requester.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                </span>
+                                <span>
+                                    <span class="time hidden-xs">({{ offer.create_timestamp | date:'d/m/y' }})</span>
+                                    <span>{{ offer.requester.username }}</span> souhaite intégrer le groupe "{{ offer.target.name }}".
+                                    <br>Accepter ?
+                                </span>
+                                <span class="message">
+                                </span>
+                            </div>
+                            <div class="friends-control"> 
+                                <a href="{% url 'friends:accept_member' %}?pk={{offer.id}}" class="btn btn-success"><i class="fa fa-check fa-lg"></i></a> 
+                                <a href="{% url 'friends:refuse_member' %}?pk={{offer.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% endfor %}
+                            {% for group in user.groups_moderator.all %}
+                            <li>
+                                <div class="friends-profile"> 
+                                        <span class="image">
+                                            <img style="width: 100px;" src="{{ group.avatar | default_icon }}" alt="avatar">
+                                        </span>
+                                        <strong>{{group.name}}</strong><br>
+                                        {% with total=group.nb_members %}
+                                        {{ total }} inscrit{{ total|pluralize}}
+                                        {% endwith %}
+                                        <br>
+                                        {% with total=group.shared_confs.count %}
+                                        {{ total }} dossier{{ total|pluralize}} partagé{{ total |pluralize}}
+                                        {% endwith %}
+                                    </a>
+                                </div>
+                            <div class="friends-control"> 
+                                <a href="{{ group.get_absolute_url }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i></a> 
+                            </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+						
+					</div>
+				</div>
+            </div>
+        </div>
+        {% endif %}
+        {% if user.bbgroups.count != 0 %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-arrows-h"></i> Groupes dont je suis membre</h2>
+                    <div class="clearfix">{{ user.bbgroups.count }}
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+						<div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+                            {% for group in user.bbgroups.all %}
+                            <li>
+                                <div class="friends-profile"> 
+                                        <span class="image">
+                                            <img style="width: 100px;" src="{{ group.avatar | default_icon }}" alt="avatar">
+                                        </span>
+                                        <strong>{{group.name}}</strong><br>
+                                        {% with total=group.nb_members %}
+                                        {{ total }} inscrit{{ total|pluralize}}
+                                        {% endwith %}
+                                        <br>
+                                        {% with total=group.shared_confs.count %}
+                                        {{ total }} dossier{{ total|pluralize}} partagé{{ total |pluralize}}
+                                        {% endwith %}
+                                </div>
+                                <div class="friends-control"> 
+                                    <a href="{{ group.get_absolute_url }}" class="btn btn-info"><i class="fa fa-eye fa-lg"></i></a> 
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+					</div>
+				</div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-users"></i> Groupes<small> existants, faire une demande d'adhésions.</small></h2>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space"></div> <!-- 40px Vertical Spacing -->
+                        <form class="form" name="{{ form.form_name }}" method="post">
+                            {{ form | crispy }}
+                            {% csrf_token %}
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> {% trans "Demander à intégrer le groupe" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-plus"></i> Créer un groupe<small>, gérer un tutorat...</small></h2>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space"></div> <!-- 40px Vertical Spacing -->
+                        <form class="form" method="post" action="{% url 'friends:create_group' %}">
+                            {% csrf_token %}
+                            <div id="div_id_name" class="form-group"> <label for="id_name" class="control-label  requiredField">
+                                    Nom du groupe<span class="asteriskField">*</span> </label> <div class="controls "> <input class="textinput textInput form-control" id="id_name" maxlength="512" name="name" type="text">
+                                    <p id="hint_id_name" class="help-block">Tu peux par exemple entrer le nom de ta corpo :)</p> 
+                                </div> 
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-plus fa-lg" aria-hidden="true"></i> {% trans "Créer" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+{{ block.super }}
+{{ form.media.js }}
+{{ block.super }}
+{% endblock %}
+
+
+{% block extrastyles %}
+{{ block.super }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block onbodyload %}
+var toggle_share_cards = function(event, state) {
+    $.ajax({
+        url: "{% url 'friends:share_cards' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
+    });
+};
+var toggle_share_results = function(event, state) {
+    $.ajax({
+        url: "{% url 'friends:share_results' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
+    });
+}
+var toggle_share_confs = function(event, state) {
+    $.ajax({
+        url: "{% url 'friends:share_confs' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
+    });
+}
+$("[name='share_cards']").bootstrapSwitch('onText', 'Oui');
+$("[name='share_cards']").bootstrapSwitch('offText', 'Non');
+$("[name='share_results']").bootstrapSwitch('onText', 'Oui');
+$("[name='share_results']").bootstrapSwitch('offText', 'Non');
+$("[name='share_confs']").bootstrapSwitch('onText', 'Oui');
+$("[name='share_confs']").bootstrapSwitch('offText', 'Non');
+$('input[name="share_cards"]').on('switchChange.bootstrapSwitch', toggle_share_cards)
+$('input[name="share_results"]').on('switchChange.bootstrapSwitch', toggle_share_results)
+$('input[name="share_confs"]').on('switchChange.bootstrapSwitch', toggle_share_confs)
+
+{% endblock %}
+
+{% block cdn_scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+{% endblock %}
+
