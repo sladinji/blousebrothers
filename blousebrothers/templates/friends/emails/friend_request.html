@@ -2,14 +2,14 @@
 {% extends 'friends/emails/base.html' %}
 
 
-{% block h1 %}Tu es invité(e).{% endblock h1 %}
+{% block h1 %}Demande en ami(e).{% endblock h1 %}
 
 {% block h2 %}{{ requester.username }} souhaiterait devenir ami(e) avec toi sur BlouseBrothers.{% endblock h2 %}
 
 {% block content %}
 <p><br>
 <br>
-Une fois amis, vous pourrez choisir de partager ou non vos classements, fiches et les dossiers que vous avez créés.
+Une fois amis, vous pourrez choisir de partager (ou non) vos classements, vos fiches et les dossiers que vous avez créés.
 <br>
 </p>
 {% endblock content %}
@@ -17,8 +17,7 @@ Une fois amis, vous pourrez choisir de partager ou non vos classements, fiches e
 {% block signature %}
 <br>
 <p>
-Guillaume et Julien<br>
-contact@blousebrothers.fr
+L'équipe BlouseBrothers.<br>
 </p>
 {% endblock signature %}
 
