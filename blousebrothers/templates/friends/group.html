@@ -70,6 +70,56 @@
             </div>
         </div>
         {% endif %}
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-users"></i> Groupes<small> existants, faire une demande d'adhésions.</small></h2>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space"></div> <!-- 40px Vertical Spacing -->
+                        <form class="form" name="{{ form.form_name }}" method="post">
+                            {{ form | crispy }}
+                            {% csrf_token %}
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> {% trans "Demander à intégrer le groupe" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-plus"></i> Créer un groupe<small> (tutorat de ville, sous-colle...)</small></h2>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space"></div> <!-- 40px Vertical Spacing -->
+                        <form class="form" method="post" action="{% url 'friends:create_group' %}">
+                            {% csrf_token %}
+                            <div id="div_id_name" class="form-group"> <label for="id_name" class="control-label  requiredField">
+                                    Nom du groupe<span class="asteriskField">*</span> </label> <div class="controls "> <input class="textinput textInput form-control" id="id_name" maxlength="512" name="name" type="text">
+                                    <p id="hint_id_name" class="help-block">Tu peux par exemple entrer le nom de ta corpo :)</p> 
+                                </div> 
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-plus fa-lg" aria-hidden="true"></i> {% trans "Créer" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% if user.groups_moderator.count %}
         <div class="col-md-12">
             <div class="x_panel tile fixed_height_320">
@@ -170,56 +220,6 @@
             </div>
         </div>
         {% endif %}
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-users"></i> Groupes<small> existants, faire une demande d'adhésions.</small></h2>
-                    <div class="clearfix">
-                    </div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space"></div> <!-- 40px Vertical Spacing -->
-                        <form class="form" name="{{ form.form_name }}" method="post">
-                            {{ form | crispy }}
-                            {% csrf_token %}
-                            <div class="control-group">
-                                <div class="controls">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> {% trans "Demander à intégrer le groupe" %}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-plus"></i> Créer un groupe<small>, gérer un tutorat...</small></h2>
-                    <div class="clearfix">
-                    </div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div class="space"></div> <!-- 40px Vertical Spacing -->
-                        <form class="form" method="post" action="{% url 'friends:create_group' %}">
-                            {% csrf_token %}
-                            <div id="div_id_name" class="form-group"> <label for="id_name" class="control-label  requiredField">
-                                    Nom du groupe<span class="asteriskField">*</span> </label> <div class="controls "> <input class="textinput textInput form-control" id="id_name" maxlength="512" name="name" type="text">
-                                    <p id="hint_id_name" class="help-block">Tu peux par exemple entrer le nom de ta corpo :)</p> 
-                                </div> 
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-plus fa-lg" aria-hidden="true"></i> {% trans "Créer" %}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
