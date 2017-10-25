@@ -3,6 +3,7 @@ Bonjour {{ user.username }},
 
 {{ friend.username }} a accepté de devenir ami avec toi sur BlouseBrothers.
 
+Vous avez à présent accès à vos fiches respectives.
 
 Tu peux gérer vos partages à l'adresse suivante : https://blousebrothers.fr/communaute/amis/
 
