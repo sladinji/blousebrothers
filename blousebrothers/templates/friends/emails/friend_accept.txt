@@ -3,10 +3,7 @@ Bonjour {{ user.username }},
 
 {{ friend.username }} a accepté ton invitation sur BlouseBrothers.
 
-Vous avez à présent accès à vos fiches respectives.
+Tu peux gérer tes partages à l'adresse suivante : https://blousebrothers.fr/communaute/amis/
 
-Tu peux gérer vos partages à l'adresse suivante : https://blousebrothers.fr/communaute/amis/
 
-Merci pour ta confiance.
-
-BlouseBrothers.
+L'équipe BlouseBrothers.
