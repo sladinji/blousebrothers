@@ -1,4 +1,5 @@
 import re
+from django.db.models import Q
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
@@ -12,6 +13,7 @@ from django.views.generic import (
     FormView,
     CreateView,
     UpdateView,
+    ListView,
 )
 
 from blousebrothers.users.models import User
@@ -78,6 +80,21 @@ class FriendsView(BBLoginRequiredMixin, FormView):
             offers=self.request.user.friendship_offers.filter(deleted=False, accepted=False),
         )
         return kwargs
+
+
+class FriendsListView(BBLoginRequiredMixin, ListView):
+    paginate_by = 20
+    template_name = "friends/friends_list.html"
+
+    def get_queryset(self):
+        qs = self.request.user.friends
+        if self.request.GET.get('q', False):
+            qs = qs.filter(
+                Q(username__icontains=self.request.GET['q']) |
+                Q(first_name__icontains=self.request.GET['q']) |
+                Q(last_name__icontains=self.request.GET['q'])
+            )
+        return self.request.user.get_relations(qs)
 
 
 class GroupView(BBLoginRequiredMixin, FormView):

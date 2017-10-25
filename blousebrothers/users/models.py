@@ -161,7 +161,9 @@ class User(AbstractUser):
             # avoid recursion by passing `symm=False`
             user.remove_relationship(self, False)
 
-    def get_relations(self):
+    def get_relations(self, qs=None):
+        if not qs:
+            qs = self.friends
         if self.friends.count() == 0:
             self.add_relationship(User.objects.get(username="BlouseBrothers"))
         return [
@@ -174,7 +176,7 @@ class User(AbstractUser):
                 'i_share_results': self.gives_friendship.get(to_user=friend).share_results,
                 'i_share_confs': self.gives_friendship.get(to_user=friend).share_confs,
             }
-            for friend in self.friends.all()
+            for friend in qs.all()
         ]
 
     def nb_activ_cards(self):

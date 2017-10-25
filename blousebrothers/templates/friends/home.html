@@ -19,6 +19,8 @@
     <h2> 
         {% tinycontent 'amis_header' %}
         {% endtinycontent %}
+        <br>
+        <a class="btn btn-success" href="{% url 'friends:friend_list' %}"><i class="fa fa-chevron-right"></i> Actuellement {{ user.friends.count }} ami{{ user.friends.count | pluralizefr}}</a>
     </h2>
     <img src="{% static 'images/retro/phone.png' %}"/>
     <div class="pull-right">
@@ -109,66 +111,6 @@
             </div>
         </div>
         {% endcomment %}
-        <div class="col-md-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2><i class="fa fa-arrows-h"></i> Partages{% if user.friends.count <= 1 %} <small>(tu es ami avec nous pour commencer :)</small>{% endif %}</h2>
-                    <div class="clearfix">{{ user.friends.count }}
-                    </div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-						<div class="space12"></div> <!-- 40px Vertical Spacing -->
-                        <ul class="list-unstyled msg_list">
-                            {% for relation in user.get_relations %}
-                            <li>
-                                <div class="friends-profile hidden-xs"> 
-                                    <span class="image">
-                                        <img style="width: 100px;" src="{{relation.user.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
-                                    </span>
-                                    <span class="share_cards">
-                                        <br>
-                                        {% with total=relation.user.created_cards.count %}
-                                        {{ total }} carte{{ total|pluralize }} crée{{ total|pluralize }}.<br>
-                                        {% endwith %}
-                                        {% with total=relation.user.nb_tests_done %}
-                                        {{ total }} dossier{{ total|pluralize }} fait{{ total|pluralize }}.<br>
-                                        {% endwith %}
-                                        {% with total=relation.user.nb_created_confs %}
-                                        {{ total }} dossier{{ total|pluralize }} créé{{ total|pluralize }}.<br>
-                                        {% endwith %}
-                                    </span>
-                                </div>
-                                <div class="share_cards">
-                                    <label class="hidden-xs">Partages</label><br>
-                                    Cartes<br>
-                                    Résultats<br>
-                                    Dossiers<br>
-                                </div>
-                                <div class="share_cards text-center">
-                                    <label>{{ relation.user.username }}</label><br>
-                                    {{ relation.share_cards |yesno:"Oui,Non" }}<br>
-                                    {{ relation.share_results |yesno:"Oui,Non" }}<br>
-                                    {{ relation.share_confs |yesno:"Oui,Non" }}<br>
-                                </div>
-                                <div class="share_cards text-center">
-                                    <label>Moi</label><br>
-                                    <input type="checkbox" name="share_cards"   data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_cards %} checked{% endif %}><br>
-                                    <input type="checkbox" name="share_results" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_results %} checked{% endif %}><br>
-                                    <input type="checkbox" name="share_confs" data-size="mini" data-friend-id="{{relation.user.id}}"{% if relation.i_share_confs %} checked{% endif %}><br>
-                                </div>
-                                <div class="friends-control"> 
-                                    <label class="hidden-xs">Supprimer</label><br>
-                                    <a href="{% url 'friends:remove_friend' %}?pk={{ relation.user.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-						
-					</div>
-				</div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -180,12 +122,6 @@
 {{ block.super }}
 {% endblock %}
 
-
-{% block extrastyles %}
-{{ block.super }}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
-{% endblock %}
-
 {% block onbodyload %}
 $('.django-select2').djangoSelect2({placeholder: 'Nom, prénom, pseudo ou email...'});
 var toggle_share_cards = function(event, state) {
@@ -193,30 +129,4 @@ var toggle_share_cards = function(event, state) {
         url: "{% url 'friends:share_cards' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
     });
 };
-var toggle_share_results = function(event, state) {
-    $.ajax({
-        url: "{% url 'friends:share_results' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
-    });
-}
-var toggle_share_confs = function(event, state) {
-    $.ajax({
-        url: "{% url 'friends:share_confs' %}?friend_id=" + this.dataset.friendId + "&state=" + state,
-    });
-}
-$("[name='share_cards']").bootstrapSwitch('onText', 'Oui');
-$("[name='share_cards']").bootstrapSwitch('offText', 'Non');
-$("[name='share_results']").bootstrapSwitch('onText', 'Oui');
-$("[name='share_results']").bootstrapSwitch('offText', 'Non');
-$("[name='share_confs']").bootstrapSwitch('onText', 'Oui');
-$("[name='share_confs']").bootstrapSwitch('offText', 'Non');
-$('input[name="share_cards"]').on('switchChange.bootstrapSwitch', toggle_share_cards)
-$('input[name="share_results"]').on('switchChange.bootstrapSwitch', toggle_share_results)
-$('input[name="share_confs"]').on('switchChange.bootstrapSwitch', toggle_share_confs)
-
-{% endblock %}
-
-{% block cdn_scripts %}
-{{ block.super }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
-{% endblock %}
-
+{% endblock onbodyload %}

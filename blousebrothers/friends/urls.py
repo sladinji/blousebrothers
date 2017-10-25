@@ -11,6 +11,11 @@ urlpatterns = [
         name='root'
         ),
     url(
+        regex=r'^amis/liste$',
+        view=views.FriendsListView.as_view(),
+        name='friend_list'
+    ),
+    url(
         regex=r'^amis$',
         view=views.FriendsView.as_view(),
         name='home'
