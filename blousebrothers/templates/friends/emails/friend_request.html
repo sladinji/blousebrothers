@@ -1,76 +1,27 @@
-{% extends 'account/email/email_base.html' %}
+
+{% extends 'friends/emails/base.html' %}
 
 
-{% block body %}
-<div style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;line-height:14px;color:#ffffff;text-align:left;">
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(230, 185, 255); font-size: 12px; line-height: 14px;">
-        <strong>
-            <span style="font-size: 24px; line-height: 28px;">﻿<span style="color: rgb(255, 204, 153); font-size: 24px; line-height: 28px;">Bonjour {{ user.username }},</span>
-            </span>
-        </strong>
-    </span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">&nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 12px; line-height: 14px;">&nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
-        <strong>
-        <span style="line-height: 21px; font-size: 18px;">
-            {{ requester.username }} souhaiterait devenir ami avec toi sur BlouseBrothers.
-            <br>
-            <br>
-            Une fois amis, vous pourrez choisir de partager ou non vos classements, fiches et les dossiers que vous avez créés.
-            <br>
-            <br>
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
-                <tbody>
-                    <tr>
-                        <td style="padding-top:0;padding-right:18px;padding-bottom:18px;padding-left:18px" valign="top" align="center" class="m_8349965259918947219mcnButtonBlockInner">
-                            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate!important;border-radius:3px;background-color:#2baadf">
-                                <tbody>
-                                    <tr>
-                                        <td align="center" valign="middle" style="font-family:Arial;font-size:16px;padding:15px;padding:15px;background-color:#2baadf;padding:15px;margin:15px;display:inline-block;">
-                                            <a title="Voir le demande sur BlouseBrothers" href="https://blousebrothers.fr/amis/" style="font-weight:bold;letter-spacing:normal;line-height:100%;text-align:center;text-decoration:none;color:#ffffff;display:block" target="_blank">Voir la demande sur BlouseBrothers</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </span>
-        </strong>
-    </span>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">
-        <strong>
-            <span style="line-height: 21px; font-size: 18px;">Merci pour ta confiance et à tout de suite sur BlouseBrothers.<br>
-            </span>
-        </strong>
-    </span>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="font-size: 18px; line-height: 21px; color: rgb(255, 204, 153);">&nbsp;</span>
-    <br>
-    </p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px">
-    <span style="color: rgb(230, 185, 255); font-size: 18px; line-height: 21px;">
-        <strong>
-            <span style="line-height: 21px; font-size: 18px;">
-                <span style="color: rgb(255, 204, 153); font-size: 18px; line-height: 21px;">Guillaume et Julien.</span> <br>
-            </span>
-        </strong>
-    </span>
-    </p>
-</div>
-{% endblock body %}
+{% block h1 %}Tu es invité(e).{% endblock h1 %}
+
+{% block h2 %}{{ requester.username }} souhaiterait devenir ami(e) avec toi sur BlouseBrothers.{% endblock h2 %}
+
+{% block content %}
+<p><br>
+<br>
+Une fois amis, vous pourrez choisir de partager ou non vos classements, fiches et les dossiers que vous avez créés.
+<br>
+</p>
+{% endblock content %}
+
+{% block signature %}
+<br>
+<p>
+Guillaume et Julien<br>
+contact@blousebrothers.fr
+</p>
+{% endblock signature %}
+
+{% block call_address %}{% url 'friends:home' %}{% endblock call_address %}
+
+{% block call_text %}Voir la demande sur le site{% endblock call_text %}

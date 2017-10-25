@@ -54,7 +54,10 @@ class FriendsView(BBLoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         for friend in form.cleaned_data['friends']:
-            FriendShipRequest.objects.create(requester=self.request.user, target=friend)
+            req = FriendShipRequest.objects.get_or_create(requester=self.request.user, target=friend)[0]
+            req.deleted = False
+            req.accepted = False
+            req.save()
             ctx = dict(requester=self.request.user, user=friend)
             msg_plain = render_to_string('friends/emails/friend_request.txt', ctx)
             msg_html = render_to_string('friends/emails/friend_request.html', ctx)
@@ -102,7 +105,10 @@ class GroupView(BBLoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         for group in form.cleaned_data['groups']:
-            MemberShipRequest.objects.get_or_create(requester=self.request.user, target=group)[0]
+            req = MemberShipRequest.objects.get_or_create(requester=self.request.user, target=group)[0]
+            req.deleted = False
+            req.accepted = False
+            req.save()
             ctx = dict(requester=self.request.user, group=group)
             msg_plain = render_to_string('friends/emails/group_request.txt', ctx)
             msg_html = render_to_string('friends/emails/group_request.html', ctx)
@@ -264,7 +270,7 @@ class RefuseMemberView(BBLoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         offer = MemberShipRequest.objects.get(pk=self.request.GET['pk'])
         assert(self.request.user in offer.target.moderators.all())
-        offer.accepted = False
+        offer.deleted = True
         offer.save()
         messages.info(self.request,
                       "La demande de {} a été déclinée.".format(offer.requester.username)
@@ -276,10 +282,10 @@ class RefuseGroupInvitView(BBLoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         offer = GroupInvitRequest.objects.get(pk=self.request.GET['pk'])
         assert(self.request.user == offer.target)
-        offer.accepted = False
+        offer.deleted = True
         offer.save()
         messages.info(self.request,
-                      "La demande de {} a été déclinée.".format(offer.requester.username)
+                      "La demande de {} a été déclinée.".format(offer.requester.name)
                       )
         return reverse("friends:group")
 

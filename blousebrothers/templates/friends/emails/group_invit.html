@@ -22,6 +22,6 @@ contact@blousebrothers.fr
 </p>
 {% endblock signature %}
 
-{% block call_address %}https://blousebrothers.fr{% endblock call_address %}
+{% block call_address %}{% url 'friends:group' %}{% endblock call_address %}
 
 {% block call_text %}Rejoindre le groupe{% endblock call_text %}

@@ -20,7 +20,7 @@
         {% tinycontent 'amis_header' %}
         {% endtinycontent %}
         <br>
-        <a class="btn btn-success" href="{% url 'friends:friend_list' %}"><i class="fa fa-chevron-right"></i> Actuellement {{ user.friends.count }} ami{{ user.friends.count | pluralizefr}}</a>
+        <a class="btn btn-success" href="{% url 'friends:friends_list' %}"><i class="fa fa-chevron-right"></i> Actuellement {{ user.friends.count }} ami{{ user.friends.count | pluralizefr}}</a>
     </h2>
     <img src="{% static 'images/retro/phone.png' %}"/>
     <div class="pull-right">

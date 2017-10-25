@@ -13,7 +13,7 @@ urlpatterns = [
     url(
         regex=r'^amis/liste$',
         view=views.FriendsListView.as_view(),
-        name='friend_list'
+        name='friends_list'
     ),
     url(
         regex=r'^amis$',
