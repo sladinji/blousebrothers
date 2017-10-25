@@ -9,10 +9,24 @@ from django.forms.models import model_to_dict
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
 logger = logging.getLogger(__name__)
+
+
+def bbmail(title, msg_plain, dests, html_message=None, tags=None):
+    email = EmailMultiAlternatives(
+            title,
+            msg_plain,
+            '<BlouseBrothers contact@blousebrothers.fr>',
+            dests,
+    )
+    if html_message:
+        email.attach_alternative(html_message, "text/html")
+    if tags:
+        email.extra_headers['X-Mailgun-Tag'] = tags
+    email.send()
 
 
 def analyse_conf(conf):
@@ -59,10 +73,9 @@ def check_bonus(request=None, user=None, sub=None):
             ctx = dict(bonus=bonus, user=user)
             msg_plain = render_to_string('confs/email/bonus.txt', ctx)
             msg_html = render_to_string('confs/email/bonus.html', ctx)
-            send_mail(
+            bbmail(
                     'Bonus BlouseBrothers',
                     msg_plain,
-                    'noreply@blousebrothers.fr',
                     [user.email],
                     html_message=msg_html,
             )
@@ -81,10 +94,9 @@ def check_bonus(request=None, user=None, sub=None):
                        )
             msg_plain = render_to_string('confs/email/bonus_sponsor.txt', ctx)
             msg_html = render_to_string('confs/email/bonus_sponsor.html', ctx)
-            send_mail(
+            bbmail(
                     'Bonus filleul',
                     msg_plain,
-                    'noreply@blousebrothers.fr',
                     [invitation.inviter.email],
                     html_message=msg_html,
             )

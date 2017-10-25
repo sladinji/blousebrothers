@@ -5,9 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
 from django.views.generic import (
     RedirectView,
     FormView,
@@ -18,6 +16,7 @@ from django.views.generic import (
 
 from blousebrothers.users.models import User
 from blousebrothers.auth import BBLoginRequiredMixin
+from blousebrothers.tools import bbmail
 
 from .models import FriendShipRequest, Group, MemberShipRequest, GroupInvitRequest
 from .forms import FriendsForm, GroupForm, GroupInvitForm
@@ -59,10 +58,9 @@ class FriendsView(BBLoginRequiredMixin, FormView):
             ctx = dict(requester=self.request.user, user=friend)
             msg_plain = render_to_string('friends/emails/friend_request.txt', ctx)
             msg_html = render_to_string('friends/emails/friend_request.html', ctx)
-            send_mail(
+            bbmail(
                     "{} t'invite à rejoindre son groupe d’amis sur BlouseBrothers.".format(self.request.user.username),
                     msg_plain,
-                    'noreply@blousebrothers.fr',
                     [friend.email],
                     html_message=msg_html,
             )
@@ -108,10 +106,9 @@ class GroupView(BBLoginRequiredMixin, FormView):
             ctx = dict(requester=self.request.user, group=group)
             msg_plain = render_to_string('friends/emails/group_request.txt', ctx)
             msg_html = render_to_string('friends/emails/group_request.html', ctx)
-            send_mail(
+            bbmail(
                     "{} souhaiterait rejoindre le groupe '{}'.".format(self.request.user.username, group.name),
                     msg_plain,
-                    'noreply@blousebrothers.fr',
                     [user.email for user in group.moderators.all()],
                     html_message=msg_html,
             )
@@ -137,10 +134,9 @@ class AcceptFriendsView(BBLoginRequiredMixin, RedirectView):
         ctx = dict(friend=self.request.user, user=offer.requester)
         msg_plain = render_to_string('friends/emails/friend_accept.txt', ctx)
         msg_html = render_to_string('friends/emails/friend_accept.html', ctx)
-        send_mail(
+        bbmail(
                 "{} a accepté ta demande d'ajout aux amis sur BlouseBrothers.".format(self.request.user.username),
                 msg_plain,
-                'noreply@blousebrothers.fr',
                 [offer.requester.email],
                 html_message=msg_html,
         )
@@ -205,28 +201,24 @@ class GroupUpdateView(BBLoginRequiredMixin, UpdateView):
                 ctx = dict(group=self.object, user=user, requester=self.request.user)
                 msg_plain = render_to_string('friends/emails/group_invit.txt', ctx)
                 msg_html = render_to_string('friends/emails/group_invit.html', ctx)
-                email = EmailMultiAlternatives(
-                        '{}, tu es invité(e) à rejoindre le groupe "{}"'.format(user.username, self.object.name),
-                        msg_plain,
-                        '<BlouseBrothers noreply@blousebrothers.fr>',
-                        [user.email],
+                bbmail(
+                    '{}, tu es invité(e) à rejoindre le groupe "{}"'.format(user.username, self.object.name),
+                    msg_plain,
+                    [user.email],
+                    html_message=msg_html,
+                    tags=['GroupInvit']
                 )
-                email.attach_alternative(msg_html, "text/html")
-                email.extra_headers['X-Mailgun-Tag'] = ['GroupInvit']
-                email.send()
             except:
                 ctx = dict(group=self.object, requester=self.request.user)
                 msg_plain = render_to_string('friends/emails/group_invit_new_user.txt', ctx)
                 msg_html = render_to_string('friends/emails/group_invit_new_user.html', ctx)
-                email = EmailMultiAlternatives(
+                bbmail(
                         'Invitation pour rejoindre le groupe "{}"'.format(self.object.name),
                         msg_plain,
-                        '<BlouseBrothers noreply@blousebrothers.fr>',
                         [match.group(0)],
+                    html_message=msg_html,
+                    tags=['GroupInvitNewUser']
                 )
-                email.attach_alternative(msg_html, "text/html")
-                email.extra_headers['X-Mailgun-Tag'] = ['GroupInvitNewUser']
-                email.send()
         messages.info(self.request, 'Les invitations sont bien parties !')
         return super().form_valid(form)
 
@@ -245,10 +237,9 @@ class AcceptMemberView(BBLoginRequiredMixin, RedirectView):
         ctx = dict(group=offer.target, user=offer.requester)
         msg_plain = render_to_string('friends/emails/group_accept.txt', ctx)
         msg_html = render_to_string('friends/emails/group_accept.html', ctx)
-        send_mail(
+        bbmail(
                 'Bienvenue dans le groupe "{}"'.format(offer.target.name),
                 msg_plain,
-                'noreply@blousebrothers.fr',
                 [offer.requester.email],
                 html_message=msg_html,
         )

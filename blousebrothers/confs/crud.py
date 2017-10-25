@@ -2,7 +2,6 @@ import logging
 
 from django.views.generic import FormView
 from django.http import JsonResponse
-from django.core.mail import EmailMultiAlternatives
 
 from djng.views.crud import NgCRUDView
 
@@ -24,7 +23,6 @@ from .models import (
     QuestionExplainationImage,
     Test,
     TestAnswer,
-    QuestionComment,
     PredictionValidation,
 )
 
@@ -193,7 +191,8 @@ class QuestionImageExplainationCRUDView(BaseQuestionExplainationImageCRUDView, C
     """What else ?"""
 
 
-class StudentQuestionExplainationImageCRUDView(BaseQuestionExplainationImageCRUDView, StudentConfRelatedObjPermissionMixin):
+class StudentQuestionExplainationImageCRUDView(BaseQuestionExplainationImageCRUDView,
+                                               StudentConfRelatedObjPermissionMixin):
     allowed_methods = ['GET']
 
 
@@ -268,82 +267,6 @@ class StudentAnswerImageCRUDView(BaseAnswerImageCRUDView, StudentConfRelatedObjP
     Crud view for conferencier access
     """
     allowed_methods = ['GET']
-
-
-class StudentQuestionCommentView(StudentConfRelatedObjPermissionMixin, FormView):
-
-    def send_thx(self, request, conf):
-        body = """Bonjour,
-
-{username} t'envoie un message concernant la conference {title}:
-
-{comment}
-
----
-
-Tu peux lui répondre directement directement via cet email.
-"""
-
-        tags = dict(username=request.user.username,
-                    title=conf.title,
-                    comment=request.POST['comment'],
-                    )
-        body = body.format(**tags)
-
-        msg = EmailMultiAlternatives(
-            'Remerciement conférence"{}"'.format(conf.title),
-            body,
-            request.user.email,
-            [conf.owner.email, ],
-        )
-        msg.esp_extra = {"sender_domain": "blousebrothers.fr"}
-        msg.send()
-
-    def send_comment(self, request, q):
-        QuestionComment.objects.create(
-            question_id=request.POST['question_id'],
-            student=request.user,
-            comment=request.POST['comment'],
-        )
-        body = """Bonjour,
-
-{username} a une remarque sur la question {index} de la conference {title}:
-
-{comment}
-
----
-
-Tu peux lui répondre directement directement via cet email.
-Nous te conseillons de modifier ta correction si la question
-est pertinente afin d'éviter qu'elle ne revienne plusieurs fois.
-"""
-
-        tags = dict(username=request.user.username,
-                    index=q.index + 1,
-                    title=q.conf.title,
-                    comment=request.POST['comment'],
-                    )
-        body = body.format(**tags)
-
-        msg = EmailMultiAlternatives(
-            'Question conférence "{}"'.format(q.conf.title),
-            body,
-            request.user.email,
-            [q.conf.owner.email, ],
-        )
-        msg.esp_extra = {"sender_domain": "blousebrothers.fr"}
-        msg.send()
-
-    def post(self, request, **kwargs):
-
-        if 'conf_id' in request.POST:
-            conf = Conference.objects.get(pk=request.POST['conf_id'])
-            self.send_thx(request, conf)
-        else:
-            q = Question.objects.get(pk=request.POST['question_id'])
-            self.send_comment(request, q)
-
-        return JsonResponse(dict(success=1))
 
 
 class BaseUploadImage(ConfRelatedObjPermissionMixin, FormView):

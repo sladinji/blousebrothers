@@ -1,11 +1,11 @@
+from datetime import timedelta
 
+from django.utils import timezone
 from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
 
+from blousebrothers.tools import bbmail
 from blousebrothers.users.models import User
-from datetime import timedelta
-from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -32,15 +32,13 @@ class Command(BaseCommand):
 
             msg_plain = render_to_string('cards/emails/ready_to_learn.txt', ctx)
             msg_html = render_to_string('cards/emails/ready_to_learn.html', ctx)
-            email = EmailMultiAlternatives(
+            bbmail(
                 "Nouvelles fiches prêtes à revoir",
                 msg_plain,
-                '<BlouseBrothers noreply@blousebrothers.fr>',
                 [user.email],
+                html_message=msg_html,
+                tags=['RelanceFiches']
             )
-            email.attach_alternative(msg_html, "text/html")
-            email.extra_headers['X-Mailgun-Tag'] = ['RelanceFiches']
-            email.send()
 
     def handle(self, *args, **options):
         from raven import Client

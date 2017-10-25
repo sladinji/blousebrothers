@@ -14,7 +14,6 @@ from django.views.generic import DetailView, RedirectView, UpdateView, TemplateV
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.db.utils import IntegrityError
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -46,7 +45,7 @@ from mangopay.models import (
     MangoPayCardRegistration,
     MangoPayPayInByCard,
 )
-from blousebrothers.tools import get_full_url, check_bonus
+from blousebrothers.tools import get_full_url, check_bonus, bbmail
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
@@ -150,9 +149,9 @@ class SpecialOffer(BBLoginRequiredMixin, FormView):
 
             with mail.get_connection() as connection:
                 mail.EmailMessage(
-                    "Demande D4", msg, 'noreply@blousebrothers.fr',
+                    "Demande D4", msg, 'contact@blousebrothers.fr',
                     ['julien@blousebrothers.fr',
-                     'guillaume@blousebrothers.fr', 'philippe@blousebrothers.fr',
+                     'guillaume@blousebrothers.fr',
                      ],
                     connection=connection,
                     attachments=[(image.name, image, image.content_type)],
@@ -278,12 +277,12 @@ class UserWalletView(BaseWalletFormView):
             ctx = dict(payin=payin, user=self.request.user)
             msg_plain = render_to_string('confs/email/confirm_credit.txt', ctx)
             msg_html = render_to_string('confs/email/confirm_credit.html', ctx)
-            send_mail(
-                    'Confirmation Crédit [réf. {}]'.format(payin.mangopay_id),
-                    msg_plain,
-                    'noreply@blousebrothers.fr',
-                    [self.request.user.email],
-                    html_message=msg_html,
+            bbmail(
+                'Confirmation Crédit [réf. {}]'.format(payin.mangopay_id),
+                msg_plain,
+                [self.request.user.email],
+                html_message=msg_html,
+                tags=['PayIn']
             )
         else:
             messages.error(self.request,
@@ -367,12 +366,12 @@ class PayOutView(BaseWalletFormView):
             ctx = dict(payout=payout, user=self.request.user)
             msg_plain = render_to_string('confs/email/confirm_payout.txt', ctx)
             msg_html = render_to_string('confs/email/confirm_payout.html', ctx)
-            send_mail(
-                    'Confirmation Retrait [réf. {}]'.format(payout.mangopay_id),
-                    msg_plain,
-                    'noreply@blousebrothers.fr',
-                    [self.request.user.email],
-                    html_message=msg_html,
+            bbmail(
+                'Confirmation Retrait [réf. {}]'.format(payout.mangopay_id),
+                msg_plain,
+                [self.request.user.email],
+                html_message=msg_html,
+                tags=['PayOut']
             )
         else:
             messages.error(self.request,
