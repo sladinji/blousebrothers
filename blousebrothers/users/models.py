@@ -250,6 +250,14 @@ class User(AbstractUser):
             if not cr.mangopay_card.is_active:
                 cr.mangopay_card.delete()
 
+    def has_group_request(self):
+        if not self.groups_moderator.count():
+            return False
+        for group in self.groups_moderator.all():
+            if group.active_requests.count():
+                return True
+        return False
+
     @property
     def has_more_than_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()

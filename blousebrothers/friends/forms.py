@@ -69,5 +69,5 @@ class GroupInvitForm(ModelForm, Bootstrap3FormMixin):
     emails = forms.CharField(
         widget=forms.Textarea,
         label="Emails",
-        help_text="Copie colle une liste d'emails, on s'occupe du reste ;)",
+        help_text="Copie colle une liste d'emails et nous envoyons une invitation à tout le monde."
     )

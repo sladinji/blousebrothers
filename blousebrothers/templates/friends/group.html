@@ -32,6 +32,47 @@
 {% block content %}
 <div class="container">
     <div class="row theader">
+        {% if user.has_group_request %}
+        <div class="col-md-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2><i class="fa fa-party"></i> Demandes d'intégration</h2>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div class="space12"></div> <!-- 40px Vertical Spacing -->
+                        <ul class="list-unstyled msg_list">
+
+                            {% for group in user.groups_moderator.all %}
+                            {% for offer in group.active_requests.all %}
+                            <li>
+                                <div class="friends-profile"> 
+                                    <span class="image">
+                                        <img style="width: 60px;" src="{{offer.requester.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
+                                    </span>
+                                    <span>
+                                        <span class="time hidden-xs">({{ offer.create_timestamp | date:'d/m/y' }})</span>
+                                        <span>{{ offer.requester.username }}</span> souhaite intégrer le groupe "{{ offer.target.name }}".
+                                        <br>Accepter ?
+                                    </span>
+                                    <span class="message">
+                                    </span>
+                                </div>
+                                <div class="friends-control"> 
+                                    <a href="{% url 'friends:accept_member' %}?pk={{offer.id}}" class="btn btn-success"><i class="fa fa-check fa-lg"></i></a> 
+                                    <a href="{% url 'friends:refuse_member' %}?pk={{offer.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         {% if user.active_group_invits.count %}
         <div class="col-md-12">
             <div class="x_panel tile fixed_height_320">
@@ -132,28 +173,6 @@
                     <div class="dashboard-widget-content">
 						<div class="space12"></div> <!-- 40px Vertical Spacing -->
                         <ul class="list-unstyled msg_list">
-                        {% for group in user.groups_moderator.all %}
-                        {% for offer in group.active_requests.all %}
-                        <li>
-                            <div class="friends-profile"> 
-                                <span class="image">
-                                    <img style="width: 60px;" src="{{offer.requester.socialaccount_set.first.get_avatar_url | default_icon }}" alt="avatar">
-                                </span>
-                                <span>
-                                    <span class="time hidden-xs">({{ offer.create_timestamp | date:'d/m/y' }})</span>
-                                    <span>{{ offer.requester.username }}</span> souhaite intégrer le groupe "{{ offer.target.name }}".
-                                    <br>Accepter ?
-                                </span>
-                                <span class="message">
-                                </span>
-                            </div>
-                            <div class="friends-control"> 
-                                <a href="{% url 'friends:accept_member' %}?pk={{offer.id}}" class="btn btn-success"><i class="fa fa-check fa-lg"></i></a> 
-                                <a href="{% url 'friends:refuse_member' %}?pk={{offer.id}}" class="btn btn-danger"><i class="fa fa-times fa-lg"></i></a>
-                            </div>
-                        </li>
-                        {% endfor %}
-                        {% endfor %}
                             {% for group in user.groups_moderator.all %}
                             <li>
                                 <div class="friends-profile"> 

@@ -299,4 +299,4 @@ class RemoveMemberView(BBLoginRequiredMixin, RedirectView):
         messages.info(self.request,
                       "{} ne fait plus partie du groupe {}".format(friend.username, group.name)
                       )
-        return reverse("friends:group")
+        return reverse("friends:group_update", kwargs={'pk': group.id})
