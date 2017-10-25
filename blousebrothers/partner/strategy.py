@@ -60,7 +60,13 @@ class FRStrategy(
     """
     def availability_policy(self, product, stockrecord):
         user = CuserMiddleware.get_user()
-        if user and product.conf and product.conf.owner.gives_friendship.filter(to_user=user, share_confs=True).exists():
+        if user and product.conf and product.conf.owner.bbgroups.filter(
+            id__in=user.bbgroups.all()
+        ).exists():
+            return availability.Available()
+        if user and product.conf and product.conf.owner.gives_friendship.filter(
+            to_user=user, share_confs=True
+        ).exists():
             return availability.Available()
         if product.conf and product.conf.for_sale and product.conf.owner.gave_all_mangopay_info:
             return availability.Available()

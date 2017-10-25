@@ -77,7 +77,7 @@ class BasketAddView(CoreBasketAddView):
                             share_confs=True,
                         ).exists() \
                         or form.product.conf.owner.bbgroups.filter(
-                            id__in=self.request.user.bbgroups
+                            id__in=self.request.user.bbgroups.all()
                         ).exists():
                     if self.request.user.subscription and self.request.user.subscription.price_paid > 0:
                         # Do not create sale for user with subscription price = O (référents...)
