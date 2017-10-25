@@ -3,10 +3,9 @@ Bonjour {{ user.username }},
 
 {{ requester.username }} souhaiterait devenir ami avec toi sur BlouseBrothers.
 
-Une fois ami, vous pourrez choisir de partager ou non vos classements, fiches et les dossiers que vous avez créés.
+Vous pourrez alors partager vos fiches et vos classements (ou pas ;-)
 
 Tu peux visualiser la demande à l'adresse suivante : https://blousebrothers.fr/amis/
 
-Merci pour ta confiance.
 
-BlouseBrothers.
+L'équipe BlouseBrothers.
