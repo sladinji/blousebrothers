@@ -2,7 +2,7 @@
 {% extends 'friends/emails/base.html' %}
 
 
-{% block h1 %}Demande en ami(e).{% endblock h1 %}
+{% block h1 %}{{ requester.username }} te kiffe{% endblock h1 %}
 
 {% block h2 %}{{ requester.username }} souhaiterait devenir ami(e) avec toi sur BlouseBrothers.{% endblock h2 %}
 
