@@ -199,7 +199,11 @@ class User(AbstractUser):
 
     def nb_new_confs(self):
         if self.last_last_login:
-            return Conference.objects.filter(date_created__gte=self.last_last_login).count()
+            return Conference.objects.filter(
+                for_sale=True,
+                edition_progress=100,
+                date_created__gt=self.last_last_login
+            ).count()
         else:
             return 0
 
