@@ -17,7 +17,7 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
 
     class Meta:
         model = Conference
-        fields = ['items', 'specialities', 'for_share', 'for_sale', 'free']
+        fields = ['items', 'specialities', 'for_share', 'for_sale', 'free', 'correction_dispo']
 
     items = forms.ModelMultipleChoiceField(
         widget=ModelSelect2MultipleWidget(
@@ -41,7 +41,8 @@ class ConferenceFinalForm(ModelForm, Bootstrap3FormMixin):
     free = forms.BooleanField(
         label=_("Gratuit"),
         required=False,
-        help_text=mark_safe(_('Dossier accessible gratuitement par tout le monde. Vous pouvez changer quand vous le souhaitez.')),
+        help_text=mark_safe(_('Dossier accessible gratuitement par tout le monde. '
+                              'Vous pouvez changer quand vous le souhaitez.')),
     )
 
     def __init__(self, *args, **kwargs):

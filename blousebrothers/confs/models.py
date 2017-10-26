@@ -108,6 +108,13 @@ class Conference(ModelMeta, models.Model):
                                          )
                                    )
                                    )
+    correction_dispo = models.BooleanField(
+        _("Correction accessible"), default=True,
+        help_text=mark_safe(
+            _("Désactive l'accès à la correction si tu fais une correction en présentiel. "
+              "N'oublie pas de le ré-activer après !")
+        )
+    )
     date_tuto = models.DateTimeField(_("Accès gratuit aux étudiants de ma ville le "),
                                      blank=True, null=True)
 
