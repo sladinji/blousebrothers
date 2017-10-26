@@ -123,6 +123,34 @@ class Card(models.Model):
         parent = self.parent or self
         return reverse('cards:revision', args=[parent.id])
 
+    @staticmethod
+    def new_cards(user, search=None, specialities=None, items=None):
+        qs = Card.objects.for_user(user).filter(
+            parent__isnull=True,
+        ).exclude(  # exclude cards already done
+                  id__in=user.deck.values_list(
+                      'card__id', flat=True,
+                  )
+        ).exclude(  # exclude sibling cards
+            id__in=user.deck.filter(
+                card__parent__isnull=False
+            ).values_list(
+                'card__parent', flat=True,
+            )
+        )
+        if specialities:
+            qs = qs.filter(specialities__in=specialities)
+        if items:
+            qs = qs.filter(items__in=items)
+        if search:
+            qs = qs.filter(
+                Q(content__icontains=search) |
+                Q(specialities__name__icontains=search) |
+                Q(tags__name__icontains=search) |
+                Q(items__name__icontains=search)
+            )
+        return qs.all()
+
 
 def apkg_directory_path(apkg, filename):
     return 'anki/{0}/{1}'.format(apkg.owner.username, filename)
@@ -258,33 +286,11 @@ class Session(models.Model):
         Return a queryset with all card never done by user
         according to session preferences.
         """
-        qs = Card.objects.for_user(self.student).filter(
-            parent__isnull=True,
-        ).exclude(  # exclude cards already done
-            id__in=Deck.objects.filter(
-                student=self.student,
-            ).values_list(
-                'card', flat=True
-            ),
-        ).exclude(  # exclude sibling cards
-            id__in=self.student.deck.filter(
-                card__parent__isnull=False
-            ).values_list(
-                'card__parent', flat=True,
-            )
-        )
-        if self.specialities.all():
-            qs = qs.filter(specialities__in=self.specialities.all())
-        if self.items.all():
-            qs = qs.filter(items__in=self.items.all())
-        if self.search:
-            qs = qs.filter(
-                Q(content__icontains=self.search) |
-                Q(specialities__name__icontains=self.search) |
-                Q(tags__name__icontains=self.search) |
-                Q(items__name__icontains=self.search)
-            )
-        return qs.all()
+        return Card.new_cards(self.student,
+                              self.search,
+                              self.specialities.all(),
+                              self.items.all(),
+                              )
 
     def choose_revision_card(self):
         if self.waiting_cards.count():  # randomly look into waiting cards

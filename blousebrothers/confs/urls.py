@@ -14,7 +14,7 @@ mb_chart = MeanBarChart()
 
 urlpatterns = [
     url(regex=r'^$',
-        view=RedirectView.as_view(url=reverse_lazy('confs:home'), permanent=True),
+        view=RedirectView.as_view(url=reverse_lazy('catalogue:index'), permanent=True),
         name='root'
         ),
     url(

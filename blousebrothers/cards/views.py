@@ -167,6 +167,9 @@ class CreateCardView(BBLoginRequiredMixin, CreateView):
 class Mock:
     card = None
 
+    def __init__(self, card=None):
+        self.card = card
+
 
 class MockDeckMixin():
     """
@@ -475,6 +478,20 @@ class ListTrashedCardView(ListCardView):
     paginate_by = 50
     template_name = 'cards/trash_list.html'
     trashed = True
+
+
+class UnseenCardsListView(BBLoginRequiredMixin, ListView):
+    paginate_by = 50
+    template_name = 'cards/unseen_cards_list.html'
+    trashed = True
+
+    def get_queryset(self, studentsearch=None):
+        return Card.new_cards(self.request.user, self.request.GET.get('q', None))
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update(object_list=[Mock(x) for x in ctx['object_list']])
+        return ctx
 
 
 class AnkiUploadView(BBLoginRequiredMixin, FormView):
