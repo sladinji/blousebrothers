@@ -5,6 +5,4 @@ Bonjour {{ user.username }},
 
 Tu peux visualiser sa demande à l'adresse suivante : https://blousebrothers.fr/communaute/
 
-Merci pour ta confiance.
-
-BlouseBrothers.
+L'équipe BlouseBrothers.

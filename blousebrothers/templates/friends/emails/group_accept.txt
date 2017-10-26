@@ -1,12 +1,11 @@
 Bonjour {{ user.username }},
 
 
-Nous sommes heureux de t'annoncer que ta demande pour 
-rejoindre le groupe "{{ group.name }}" a été acceptée !
+Ta demande pour rejoindre le groupe "{{ group.name }}" a été acceptée par le modérateur.
 
 Tu peux maintenant accéder à tous les dossiers que le groupe partage.
 Tu peux également créer et partager des dossiers avec le groupe.
 
 A tout de suite sur https://blousebrothers.fr !
 
-BlouseBrothers.
+L'équipe BlouseBrothers.
