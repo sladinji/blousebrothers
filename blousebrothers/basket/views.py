@@ -182,16 +182,16 @@ class BasketAddView(CoreBasketAddView):
 class VoucherAddView(CoreVoucherAddView):
 
     def form_valid(self, form):
-        code = form.cleaned_data['code']
-        if code == "ECNIMEMO3" or code == "ECNIMEMO3M" and not self.request.user.subscription:
-            subtype = SubscriptionType.objects.get(name="Fiches")
-            sub = Subscription(user=self.request.user, type=subtype)
-            sub.date_over = date(2017, 12, 31)
-            sub.price_paid = 0
-            sub.save()
-            messages.info(self.request, _("Bien reçu! Enjoy :-)"),
-                          extra_tags='safe noicon')
-            return redirect(reverse('cards:home'))
+        #  code = form.cleaned_data['code']
+        #  if code == "ECNIMEMO3" or code == "ECNIMEMO3M" and not self.request.user.subscription:
+        #      subtype = SubscriptionType.objects.get(name="Fiches")
+        #      sub = Subscription(user=self.request.user, type=subtype)
+        #      sub.date_over = date(2017, 12, 31)
+        #      sub.price_paid = 0
+        #      sub.save()
+        #      messages.info(self.request, _("Bien reçu! Enjoy :-)"),
+        #                    extra_tags='safe noicon')
+        #      return redirect(reverse('cards:home'))
         return super().form_valid(form)
 
 
