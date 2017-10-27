@@ -395,7 +395,7 @@ OSCAR_SHOP_TAGLINE = 'Prépa ECNi Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
 
-OSCAR_PRODUCTS_PER_PAGE = 24
+OSCAR_PRODUCTS_PER_PAGE = 31
 OSCAR_HOMEPAGE = reverse_lazy('catalogue:index')
 
 THUMBNAIL_PROCESSORS = (
