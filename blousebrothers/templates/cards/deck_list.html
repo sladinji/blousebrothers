@@ -6,17 +6,23 @@
 
 {% block title %}{% trans 'Mes fiches' %}{% endblock %}
 
+{% block scripts %}
+{{ form.media.js }}
+{{ block.super }}
+{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock styles %}
+
 {% block content %}
 <div class="container">
     {% block list_header %}
     <div class="row theader">
-        <div class="col-md-6">
             <h2>{% trans 'Mes fiches' %} </h2>
-            <a class="btn btn-success" href="{% url 'cards:create' %}"><i class="fa fa-plus"></i> Ajouter une fiche</a>
-        </div>
-        <div class="col-md-6">
-            {% include 'partials/submenu_search.html' with actionurl="cards:list" %}
-        </div>
+            <br>
+            {% include 'partials/submenu_search_advanced.html' with actionurl="cards:list" %}
     </div>
     {% endblock list_header %}
 

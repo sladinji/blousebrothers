@@ -77,45 +77,7 @@
     </div>
     <div class="tabbed-main page">
         <div class="space hidden-xs"></div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <div class="input-group stylish-input-group">
-                        <form method="get" action="{% url "cards:home" %}">
-                            <input type="text" class="form-control"  id="id_search" name="search" placeholder="Rechercher" value="{{request.GET.search}}">
-                            <span class="input-group-addon">
-                                <button type="submit">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>  
-                            </span>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% comment %}
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading accordion-toggle card_filter" data-toggle="collapse" href="#collapseOne">
-                    <h4 class="panel-title">
-                        <i class="fa fa-chevron-down"></i> Filtres
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse{% if request.GET.urlencode %} in{% endif %}">
-                    <div class="panel-body">
-                        <div class="row">
-                            <form method="get" action="{% url "cards:home" %}">
-                                <div class="form-group">
-                                    {{ form | crispy }}
-                                </div>
-                                <input type="submit" value="{% trans "Filtrer" %}" class="btn btn-default" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endcomment %}
+        {% include 'partials/submenu_search_advanced.html' with actionurl="cards:home" %}
         <div class="x_panel tile fixed_height_320 rev_pod">
             <div class="x_title">
                 <h2><i class="fa fa-pie-chart"></i> 

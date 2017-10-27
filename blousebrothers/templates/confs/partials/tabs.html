@@ -4,11 +4,6 @@
     <div class="container">
         {% activeurl css_class="selected" parent_tag="self" %}
         <nav class="reponav">
-            <a href="{% url 'confs:home' %}" class="reponav-item">
-                <i class="fa fa-signal" aria-hidden="true"></i>
-                <span>Tableau de bord
-                </span>
-            </a>  
             <a href="{% url 'catalogue:index' %}" class="reponav-item">
                 <i class="fa fa-folder" aria-hidden="true"></i>
                 <span itemprop="name">Dossiers disponibles
@@ -18,6 +13,11 @@
                 </span>
                 {% endif %}
             </a>    
+            <a href="{% url 'confs:home' %}" class="reponav-item">
+                <i class="fa fa-signal" aria-hidden="true"></i>
+                <span>Tableau de bord
+                </span>
+            </a>  
             <a href="{% url 'confs:create' %}" class="reponav-item">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Créer un dossier 

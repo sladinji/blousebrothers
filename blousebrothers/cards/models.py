@@ -124,7 +124,7 @@ class Card(models.Model):
         return reverse('cards:revision', args=[parent.id])
 
     @staticmethod
-    def new_cards(user, search=None, specialities=None, items=None):
+    def new_cards(user, search=None, specialities=None, items=None, tags=None):
         qs = Card.objects.for_user(user).filter(
             parent__isnull=True,
         ).exclude(  # exclude cards already done
@@ -142,6 +142,8 @@ class Card(models.Model):
             qs = qs.filter(specialities__in=specialities)
         if items:
             qs = qs.filter(items__in=items)
+        if tags:
+            qs = qs.filter(tags__in=tags)
         if search:
             qs = qs.filter(
                 Q(content__icontains=search) |

@@ -3,11 +3,8 @@
 
 {% block list_header %}
 <div class="row theader">
-    <div class="col-md-6">
-        <h2>{% trans 'Fiches disponibles' %} </h2>
-    </div>
-    <div class="col-md-6">
-        {% include 'partials/submenu_search.html' with actionurl="cards:unseen_cards_list" %}
-    </div>
+    <h2>{% trans 'Fiches disponibles' %} </h2>
+    <br>
+    {% include 'partials/submenu_search_advanced.html' with actionurl="cards:unseen_cards_list" %}
 </div>
 {% endblock list_header %}

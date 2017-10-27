@@ -28,7 +28,7 @@ from blousebrothers.confs.models import Item, Speciality
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException, CardImage, Tag
-from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, CardHomeFilterForm
+from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, CardHomeAdvancedFilterForm
 from .loader import anki, text
 from .charts import Dispatching
 
@@ -445,7 +445,7 @@ class RevisionHome(TemplateView):
             wake_up=min((l['wake_up'] for l in user_count)) if user_count else 0,
             ready=sum((l['spe_count'] for l in ready_count)),
             total=qry.count(),
-            form=CardHomeFilterForm(
+            form=CardHomeAdvancedFilterForm(
                 initial={
                     'items': self.request.GET.getlist('items'),
                     'specialities': self.request.GET.getlist('specialities'),
@@ -453,40 +453,78 @@ class RevisionHome(TemplateView):
                 }
             ),
             deck=deck,
+            filter_visible=self.request.GET.getlist(
+                'items'
+            ) or self.request.GET.getlist(
+                'specialities'
+            ) or self.request.GET.getlist(
+                'tags'
+            ),
             **kwargs
         )
 
 
 class ListCardView(BBLoginRequiredMixin, ListView):
     model = Deck
-    paginate_by = 50
+    paginate_by = 25
     trashed = False
+
 
     def get_queryset(self):
         qry = self.model.objects.filter(student=self.request.user, trashed=self.trashed)
         qry = qry.prefetch_related('card')
-        if self.request.GET.get('q', False):
+        if self.request.GET.get('search', False):
             qry = qry.filter(
-                Q(card__content__icontains=self.request.GET['q']) |
-                Q(card__tags__name__icontains=self.request.GET['q'])
+                Q(card__content__icontains=self.request.GET['search']) |
+                Q(card__tags__name__icontains=self.request.GET['search'])
             )
+        for filters in ['specialities', 'items', 'tags']:
+            ids = self.request.GET.getlist(filters)
+            if ids:
+                qry = qry.filter(**{'card__'+ filters + '__id__in': ids})
         return qry.all().order_by('-created')
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update(
+            form=CardHomeAdvancedFilterForm(
+                initial={
+                    'items': self.request.GET.getlist('items'),
+                    'specialities': self.request.GET.getlist('specialities'),
+                    'tags': self.request.GET.getlist('tags'),
+                }
+            ),
+            filter_visible=self.request.GET.getlist(
+                'items'
+            ) or self.request.GET.getlist(
+                'specialities'
+            ) or self.request.GET.getlist(
+                'tags'
+            ),
+        )
+        return ctx
 
 
 class ListTrashedCardView(ListCardView):
     model = Deck
-    paginate_by = 50
+    paginate_by = 25
     template_name = 'cards/trash_list.html'
     trashed = True
 
 
-class UnseenCardsListView(BBLoginRequiredMixin, ListView):
-    paginate_by = 50
+class UnseenCardsListView(ListCardView):
+    paginate_by = 25
     template_name = 'cards/unseen_cards_list.html'
     trashed = True
 
     def get_queryset(self, studentsearch=None):
-        return Card.new_cards(self.request.user, self.request.GET.get('q', None))
+        return Card.new_cards(
+            self.request.user,
+            search=self.request.GET.get('search', None),
+            items=self.request.GET.getlist('items'),
+            specialities=self.request.GET.getlist('specialities'),
+            tags=self.request.GET.getlist('tags'),
+        )
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

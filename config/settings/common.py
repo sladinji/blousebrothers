@@ -395,7 +395,7 @@ OSCAR_SHOP_TAGLINE = 'Prépa ECNi Collaborative'
 
 OSCAR_FROM_EMAIL = 'support@blousebrothers.fr'
 
-OSCAR_PRODUCTS_PER_PAGE = 25
+OSCAR_PRODUCTS_PER_PAGE = 24
 OSCAR_HOMEPAGE = reverse_lazy('catalogue:index')
 
 THUMBNAIL_PROCESSORS = (
@@ -461,7 +461,7 @@ BLEACH_ALLOWED_ATTRIBUTES = ['href', 'src', 'color', 'title', 'style']
 # Which CSS properties are allowed in 'style' attributes (assuming style is
 # an allowed attribute)
 BLEACH_ALLOWED_STYLES = [
-        'opacity','font-family', 'font-weight', 'font-color', 'color',  'text-decoration', 'font-variant']
+        'opacity', 'font-family', 'font-weight', 'font-color', 'color',  'text-decoration', 'font-variant']
 
 # Strip unknown tags if True, replace with HTML escaped characters if False
 BLEACH_STRIP_TAGS = True
