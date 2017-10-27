@@ -133,6 +133,8 @@ Tags : {{ object.card.tags.all | join:", "}}
 {% endblock footer %}
 
 {% if zen %}
+{% block subscribe %}
+{% endblock subscribe %}
 {% block extrascripts %}
  <script type="text/javascript">
 var myswitch = true;
