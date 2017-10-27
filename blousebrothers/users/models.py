@@ -202,7 +202,8 @@ class User(AbstractUser):
             return Conference.objects.filter(
                 for_sale=True,
                 edition_progress=100,
-                date_created__gt=self.last_last_login
+                date_created__gt=self.last_last_login,
+                products__isnull=False,
             ).count()
         else:
             return 0
