@@ -60,11 +60,11 @@ class FRStrategy(
     """
     def availability_policy(self, product, stockrecord):
         user = CuserMiddleware.get_user()
-        if user and product.conf and product.conf.owner.bbgroups.filter(
+        if user and user.is_authenticated() and product.conf and product.conf.owner.bbgroups.filter(
             id__in=user.bbgroups.all()
         ).exists():
             return availability.Available()
-        if user and product.conf and product.conf.owner.gives_friendship.filter(
+        if user and user.is_authenticated() and product.conf and product.conf.owner.gives_friendship.filter(
             to_user=user, share_confs=True
         ).exists():
             return availability.Available()
