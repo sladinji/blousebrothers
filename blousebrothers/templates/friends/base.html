@@ -10,11 +10,19 @@
                 <i class="fa fa-users" aria-hidden="true"></i>
                 <span itemprop="name">Groupes, Tutorats
                 </span>
+                {% if user.active_group_invits.count %}
+                <span class="Counter">{{ user.active_group_invits.count }}
+                </span>
+                {% endif %}
             </a>    
             <a href="{% url 'friends:home' %}" class="reponav-item">
                 <i class="fa fa-comments" aria-hidden="true"></i>
                 <span>Amis
                 </span>
+                {% if user.nb_activ_friendship_offers  %}
+                <span class="Counter">{{ user.nb_activ_friendship_offers }}
+                </span>
+                {% endif %}
             </a>  
         </nav>
         {% endactiveurl %}

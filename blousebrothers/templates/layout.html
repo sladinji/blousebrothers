@@ -69,11 +69,10 @@ settings file. This will enable the on-the-fly less compiler.
                             {% endif %}
                             </a>
                         </li>
-                        {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu">
                             <a href="{% url 'friends:root' %}"><span class="fa fa-users fa-lg"></span> {% trans 'Tutorats' %}
-                            {% if user.nb_activ_friendship_offers %}
-                            <span class="Counter">{{ user.nb_activ_friendship_offers }}
+                            {% if user.nb_activ_friendship_offers or user.active_group_invits.count %}
+                            <span class="Counter">{{ user.nb_activ_friendship_offers |add:user.active_group_invits.count }}
                             </span>
                             {% else %}
                             <span class="Counter">Nouveau
@@ -81,6 +80,7 @@ settings file. This will enable the on-the-fly less compiler.
                             {% endif %}
                             </a>
                         </li>
+                        {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}
