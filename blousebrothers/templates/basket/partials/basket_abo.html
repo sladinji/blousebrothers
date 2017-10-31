@@ -25,7 +25,6 @@
 {% endif %}
 
 {% if not basket.is_empty %}
-<h1 class="text-center">{% trans "Profite de nos offres de lancement valables jusqu'au 31 / 10 / 17 !" %}</h1>
 <div class="row voucher-plan align-center">
     {% block vouchers %}
     {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
