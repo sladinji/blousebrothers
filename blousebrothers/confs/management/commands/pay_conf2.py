@@ -10,7 +10,7 @@ def get_monthly_amount(sub):
     """
     Return amount divided by number of available month
     """
-    price = sub.price_paid / Decimal('1.2') * Decimal('0.7')
+    price = max(60, sub.price_paid) / Decimal('1.2') * Decimal('0.7')
     nb_month = max([(sub.date_over - sub.date_created).days//30, 1])
     return (price / nb_month).quantize(Decimal('1.00'))
 
