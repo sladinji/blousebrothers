@@ -113,14 +113,25 @@ def bookmark_card(request, card_id):
 class RevisionPermissionMixin(UserPassesTestMixin):
 
     def test_func(self):
+        """
+        Check if trial period is over and if user is allowed to access requested object.
+        """
+        #  Check Trial Period
         if self.request.user.is_authenticated() and self.request.user.deck.count() > 50:
             try:
                 if not self.request.user.subscription.type.product.attr.access_cards:
                     return False
             except:
                 return False
+
+        #  Check if user is authenticated to access ListView (UnseenCardsListView, ListTrashedCardView ...)
         if not hasattr(self, 'get_object'):
-            return True
+            if self.request.user.is_authenticated():
+                return True
+            else:
+                return False
+
+        # Check if user can access requested object (RevisionView, RevisionNextCardView...)
         self.object = self.get_object()
         if isinstance(self.object, Card):
             card = self.object
@@ -133,6 +144,9 @@ class RevisionPermissionMixin(UserPassesTestMixin):
                 self.request.user.deck.filter(card=card).exists()
 
     def handle_no_permission(self):
+        """
+        Ask user to login or to subscribe to a cards plan.
+        """
         if not self.request.user.is_authenticated():
             return BBLoginRequiredMixin.handle_no_permission(self)
         try:
