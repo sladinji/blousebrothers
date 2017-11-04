@@ -119,6 +119,8 @@ class RevisionPermissionMixin(UserPassesTestMixin):
                     return False
             except:
                 return False
+        if not hasattr(self, 'get_object'):
+            return True
         self.object = self.get_object()
         if isinstance(self.object, Card):
             card = self.object
