@@ -22,7 +22,9 @@
 {% block content %}
 <div class="container">
     <div class="tabbed-sidebar">
-        <h2>Section en libre accès jusqu'au <B>31/10/2017</B></h2>
+        {% if not request.user.subscription.type.product.attr.access_cards %}
+        <h2>En libre accès jusqu'à 50 cartes. </h2>
+        {% endif %}
         <div class="card">
             <div class="card-block">
                 <figure class="profile">

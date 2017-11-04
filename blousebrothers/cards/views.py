@@ -113,6 +113,12 @@ def bookmark_card(request, card_id):
 class RevisionPermissionMixin(UserPassesTestMixin):
 
     def test_func(self):
+        if self.request.user.is_authenticated() and self.request.user.deck.count() > 50:
+            try:
+                if not self.request.user.subscription.type.product.attr.access_cards:
+                    return False
+            except:
+                return False
         self.object = self.get_object()
         if isinstance(self.object, Card):
             card = self.object
@@ -127,6 +133,11 @@ class RevisionPermissionMixin(UserPassesTestMixin):
     def handle_no_permission(self):
         if not self.request.user.is_authenticated():
             return BBLoginRequiredMixin.handle_no_permission(self)
+        try:
+            if not self.student.subscription.type.product.attr.access_cards:
+                return redirect(reverse('cards:stop', kwargs={'id': 'trialover'}))
+        except:
+            return redirect(reverse('cards:stop', kwargs={'id': 'trialover'}))
         raise PermissionDenied
 
 
@@ -229,10 +240,16 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
     url = reverse_lazy('cards:home')
 
     def get(self, request, *args, **kwargs):
+        if kwargs["id"] == "trialover":
+            messages.info(self.request, "Tu es arrivé au bout de la période d'essai du module de révision. "
+                          "Si l'outil te plait et que tu souhaites continuer, merci de souscrire à un abonnement."
+                          )
+            return redirect('users:redirect')
+
         session = get_session(self.request)
         if session:
             #  remove last card, because no click on easy/medium...
-            if kwargs["id"] != "sessionover":
+            if kwargs["id"] not in ("sessionover", "trialover"):
                 session.cards.remove(Card.objects.get(id=kwargs["id"]))
             session.effective_duration = timezone.now() - session.date_created
             session.finished = True
@@ -248,6 +265,7 @@ class RevisionCloseSessionView(BBLoginRequiredMixin, RedirectView):
                                   duration_msg,
                               )
                               )
+
         return super().get(request, *args, **kwargs)
 
 
@@ -464,11 +482,10 @@ class RevisionHome(TemplateView):
         )
 
 
-class ListCardView(BBLoginRequiredMixin, ListView):
+class ListCardView(RevisionPermissionMixin, ListView):
     model = Deck
     paginate_by = 25
     trashed = False
-
 
     def get_queryset(self):
         qry = self.model.objects.filter(student=self.request.user, trashed=self.trashed)
@@ -481,7 +498,7 @@ class ListCardView(BBLoginRequiredMixin, ListView):
         for filters in ['specialities', 'items', 'tags']:
             ids = self.request.GET.getlist(filters)
             if ids:
-                qry = qry.filter(**{'card__'+ filters + '__id__in': ids})
+                qry = qry.filter(**{'card__' + filters + '__id__in': ids})
         return qry.all().order_by('-created')
 
     def get_context_data(self, **kwargs):

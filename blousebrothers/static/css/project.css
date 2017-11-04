@@ -27,6 +27,11 @@
         margin-top: 10px;
     }
 }
+@media (max-width: 1400px){
+    .blouse-font {
+        display: none;
+    }
+}
 .main-menu-wapper {
     /*    background-color: black;*/
     background:#000;
@@ -2712,4 +2717,9 @@ ul.msg_list li .friends-control{
 }
 .input-group.stylish-input-group{
     width: 100%;
+}
+
+.alert {
+    padding: 30px;
+    font-size: 15pt;
 }
