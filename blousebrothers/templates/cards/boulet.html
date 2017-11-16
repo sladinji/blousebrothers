@@ -1,0 +1,82 @@
+{% extends "cards/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load bbtricks %}
+{% load bleach_tags %}
+
+{% block title %}{% trans 'Mes fiches' %}{% endblock %}
+
+{% block scripts %}
+{{ form.media.js }}
+{{ block.super }}
+{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock styles %}
+
+{% block content %}
+<div class="container">
+    {% block list_header %}
+    <div class="row theader">
+            <h2 class="text-center">{% trans 'Partenariat Nicolas Boulet' %} </h2>
+            <br>
+    </div>
+    {% endblock list_header %}
+
+    <strong>{{ paginator.count }} abonnement{{ paginator.count|pluralizefr }} :</strong><br>
+    <br>
+    <strong>Abo fiches seules :</strong><br>
+    {{ total_simple }}€ HT x 50% = {{ total_simple_du }}€<br>
+    <strong>Fiches + dossiers :</strong><br>
+    {{ total_double }}€ HT x 25% = {{ total_double_du }}€<br>
+    <br><strong>Total dû :</strong> {{ total_du }}€
+    <hr>
+    <h2>Détails</h2>
+    <div class="panel-group cardslist" id="accordion">
+        <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ object.card.id}}">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4 class="list-group-item-heading">Utilisateur</h4>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-left list-group-item-heading">Prix TTC</h4>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-left list-group-item-heading">TVA</h4>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-left list-group-item-heading">Prix HT</h4>
+                </div>
+            </div>
+        </div>
+        {% for object in object_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ object.card.id}}">
+                {{ object.lines.first.product.title }}
+                {% if object.basket_discounts.first %}
+                <i> ({{ object.basket_discounts.first.offer.name }} => {{object.basket_discounts.first.offer.vouchers.first.benefit }})</i>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4 class="list-group-item-heading">{{ object.basket.owner.username }}</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="text-left list-group-item-heading">{{ object.basket_total_incl_tax }}</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="text-left list-group-item-heading">{{ object.basket_total_incl_tax | tva }}</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="text-left list-group-item-heading">{{ object.basket_total_incl_tax | HT }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'partials/pagination.html' %}
+</div>
+
+{% endblock content %}
