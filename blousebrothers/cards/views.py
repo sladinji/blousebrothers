@@ -1,11 +1,14 @@
 import re
 import logging
 import random
+from decimal import Decimal
+from decimal import ROUND_DOWN
 from datetime import timedelta, datetime, MINYEAR
 from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy
 import pytz
 
+from django.db.models import Sum
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -14,6 +17,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Q, Count, Min
 from django.http import JsonResponse
+from django.apps import apps
 from django.views.generic import (
     ListView,
     UpdateView,
@@ -31,8 +35,11 @@ from .models import Card, Deck, Session, CardsPreference, SessionOverException, 
 from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, CardHomeAdvancedFilterForm
 from .loader import anki, text
 from .charts import Dispatching
+from blousebrothers.confs.templatetags.bbtricks import HT
+
 
 logger = logging.getLogger(__name__)
+Order = apps.get_model('order', 'Order')
 
 
 def create_new_session(request, specialities, items, revision, tags, search):
@@ -587,3 +594,54 @@ class AnkiUploadView(BBLoginRequiredMixin, FormView):
             logger.exception("Anki import failed")
             messages.error(self.request, "Un problème est survenu lors de l'import du fichier :/")
         return super().form_valid(form)
+
+
+class BouletListView(UserPassesTestMixin, ListView):
+    model = Order
+    # These next two lines tell the view to index lookups by conf
+    paginate_by = 20
+    template_name = 'cards/boulet.html'
+
+    def test_func(self):
+        return self.request.user.username == 'Nicota' or self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        raise PermissionDenied()
+
+    def get_queryset(self):
+        qry = Order.objects.filter(
+            lines__product__attribute_values__attribute__name='access_cards',
+            lines__product__attribute_values__value_boolean=True,
+        )
+        return qry.all()
+
+    def get_context_data(self, **kwargs):
+        double = Order.objects.filter(
+            lines__product__attribute_values__attribute__name='access_cards',
+            lines__product__attribute_values__value_boolean=True,
+        )
+        double = double.filter(
+            lines__product__attribute_values__attribute__name='access_confs',
+            lines__product__attribute_values__value_boolean=True,
+        )
+        simple = Order.objects.filter(
+            lines__product__attribute_values__attribute__name='access_cards',
+            lines__product__attribute_values__value_boolean=True,
+        )
+        simple = simple.filter(
+            lines__product__attribute_values__attribute__name='access_confs',
+            lines__product__attribute_values__value_boolean=False,
+        )
+
+        total_simple = HT(simple.aggregate(total_simple=Sum('total_incl_tax'))['total_simple'])
+        total_double = HT(double.aggregate(total_double=Sum('total_incl_tax'))['total_double'])
+        total_simple_du = (total_simple / Decimal(2)).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+        total_double_du = (total_double / Decimal(4)).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+        total_du = total_simple_du + total_double_du
+        return super().get_context_data(
+            total_simple=total_simple,
+            total_simple_du=total_simple_du,
+            total_double=total_double,
+            total_double_du=total_double_du,
+            total_du=total_du
+        )

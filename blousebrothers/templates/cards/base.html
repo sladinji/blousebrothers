@@ -38,6 +38,12 @@
                 <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                 Packages
             </a>
+            {% if user.is_superuser %}
+            <a href="{% url 'cards:boulet' %}" class="reponav-item">
+                <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                Partenariat
+            </a>
+            {% endif %}
             {% comment %}
             <a href="/sladinji/blousebrothers/wiki" class="reponav-item">
                 <i class="fa fa-pie-chart" aria-hidden="true"></i>

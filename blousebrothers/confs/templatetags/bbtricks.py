@@ -249,6 +249,11 @@ def tva(amount):
 
 
 @register.filter
+def HT(amount):
+    return (amount / Decimal("1.20")).quantize(Decimal('.01'), rounding=ROUND_DOWN)
+
+
+@register.filter
 def pluralizefr(n):
     if n > 1:
         return 's'

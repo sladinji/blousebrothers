@@ -10,6 +10,10 @@ urlpatterns = [
         view=RedirectView.as_view(url=reverse_lazy('cards:home'), permanent=True),
         name='root'
         ),
+    url(regex=r'^partenariatnico$',
+        view=views.BouletListView.as_view(),
+        name='boulet'
+        ),
     url(
         r'^mes/fiches$',
         view=views.ListCardView.as_view(),
