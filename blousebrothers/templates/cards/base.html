@@ -38,7 +38,7 @@
                 <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                 Packages
             </a>
-            {% if user.is_superuser %}
+            {% if user.is_superuser or user.username == 'Nicota' %}
             <a href="{% url 'cards:boulet' %}" class="reponav-item">
                 <i class="fa fa-handshake-o" aria-hidden="true"></i>
                 Partenariat
