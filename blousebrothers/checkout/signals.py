@@ -35,7 +35,7 @@ def handle_subscription(sender, **kwargs):
                     subtype.bonus_sponsor = 0
                 subtype.save()
                 sub = Subscription(user=line.order.user, type=subtype)
-                sub.date_over = date.today() + relativedelta(months=+line.product.attr.month)
+                sub.date_over = date(2018, 6, 30)
                 sub.price_paid = line.unit_price_incl_tax
                 sub.save()
                 line.order.user.status = "money_ok"
