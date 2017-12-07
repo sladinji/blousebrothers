@@ -44,51 +44,7 @@
             <div class="count"><a href="{{ user.last_test.conf.products.first.get_absolute_url }}">{{ user.last_test.position }} / {{ user.last_test.total }}</a></div>
         </div>
     </div>
-    <div class="tabbed-sidebar">
-        <div class="card">
-            <div class="card-block">
-                <figure class="profile">
-                    <img src="{% static 'images/confs/catalogue.png' %}" alt="">
-                </figure>
-                <h4 class="card-title mt-3">Dossiers<br>disponibles</h4>
-                <div class="card-text">
-                    <small>Rechercher, modifier, créer...</small>
-                </div>
-            </div>
-            <div class="card-footer">
-                <a href="{% url 'catalogue:index' %}" class="btn btn-secondary float-right btn-sm">voir</a>
-            </div>
-        </div>
-        <div class="card">
-                <div class="card-block">
-                    <figure class="profile">
-                        <img src="{% static 'images/confs/create.png' %}" class="profile-avatar" alt="">
-                    </figure>
-                    <h4 class="card-title mt-3">Créer<br>un dossier</h4>
-                    <div class="card-text">
-                        <small>L'essence de BlouseBrothers...</small>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'confs:create' %}" class="btn btn-secondary float-right btn-sm">Commencer</a>
-                </div>
-        </div>
-        <div class="card">
-                <div class="card-block">
-                    <figure class="profile">
-                        <img src="{% static 'images/confs/my_confs.png' %}" class="profile-avatar" alt="">
-                    </figure>
-                    <h4 class="card-title mt-3">Dossiers<br>créés</h4>
-                    <div class="card-text">
-                        <small>Ma galerie !</small>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'confs:list' %}" class="btn btn-secondary float-right btn-sm">Voir</a>
-                </div>
-        </div>
-    </div>
-    <div class="tabbed-main page">
+    <div class="page">
         <div class="space"></div>
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
