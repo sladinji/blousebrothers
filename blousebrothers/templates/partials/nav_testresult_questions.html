@@ -1,8 +1,16 @@
-{% verbatim %}
 <div class="bb-card-2 bb-margin">
-<header class="tips bb-container bb-light-grey">
-Questions
-</header>
+{% load bbtricks %}
+<div class="tips tips-bottom bb-container bb-light-grey text-center">
+    <p>SCORE : {{ object | score100 }}</p>
+    <p>CLASSEMENT : <big>{{ object.position }}</big> / {{ object.total }}</p>
+    <br>
+    <div class="short-separator"></div>
+    <br>
+    <p>Temps : {{object.time_taken | time:"H:i:s" }}</p>
+    <p>Erreurs : {{object.nb_errors }}</p>
+    <p>Erreurs graves : {{object.fatal_errors | length }}</p>
+</div>
+{% verbatim %}
 <ul class="bb-ul">
 	<li ng-repeat="x in questions" class=" nopadding {{ x.pk == question.pk ? 'active' : ''}}">
 		<a href ng-click="question_selected(x)">
@@ -28,16 +36,5 @@ Questions
 	</li>
 </ul>
 {% endverbatim %}
-{% load bbtricks %}
-<div class="tips tips-bottom bb-container bb-light-grey text-center">
-    <p>SCORE : {{ object | score100 }}</p>
-    <p>CLASSEMENT : <big>{{ object.position }}</big> / {{ object.total }}</p>
-    <br>
-    <div class="short-separator"></div>
-    <br>
-    <p>Temps : {{object.time_taken | time:"H:i:s" }}</p>
-    <p>Erreurs : {{object.nb_errors }}</p>
-    <p>Erreurs graves : {{object.fatal_errors | length }}</p>
-</div>
 </div>
 

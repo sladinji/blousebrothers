@@ -31,7 +31,11 @@ $(document).on('click', '.anchorlink', function(event){
     {% endcomment %}
     <div class='row'>
         <aside class="col-md-3 hidden-sm hidden-xs">
+            {% if object.conf.correction_dispo %}
             {% include 'partials/nav_testresult_questions.html' %}
+            {% else %}
+            {% include 'partials/nav_questions.html' %}
+            {% endif %}
         </aside>
 
         <div class="col-sm-9 text-center">
@@ -101,7 +105,7 @@ $(document).on('click', '.anchorlink', function(event){
                     <span class='well-title'><span class="hidden-xs">Question </span>{{ question.index + 1 }} </span>
                 </div>
                 <div class="col-xs-12">
-                    <p class="angular-with-newlines" ng-bind-html="question.question | safe"</p>
+                    <p class="angular-with-newlines" ng-bind-html="question.question | safe"></p>
                 </div>
 
                 <div ng-repeat="image in questionimages">
@@ -111,8 +115,10 @@ $(document).on('click', '.anchorlink', function(event){
             </div>       
             <br>
             <div class="explication">
-                <p class="" ng-bind-html="question.explaination | safe"</p>
+                <p ng-if="conference.correction_dispo" class="" ng-bind-html="question.explaination | safe"></p>
+                <p ng-if="!conference.correction_dispo" style="color: orange;"> <strong>Le Conférencier n'a pas encore activé la correction.</strong><br></p>
             </div>       
+            <div class="space"></div>
             <form class="form-horizontal">
                 <fieldset>
                     <!--  {{ answers | is_good_css:answer }} -->
@@ -122,7 +128,7 @@ $(document).on('click', '.anchorlink', function(event){
                                 <b>{{answer.answer}}</b>
                                 <div class="text-center">
                                     <br>
-                                    <div ng-class="answer.correct ? 'correct' : 'notcorrect'">
+                                    <div ng-if="conference.correction_dispo" ng-class="answer.correct ? 'correct' : 'notcorrect'">
                                         <span ng-if="answer.correct" class="text-center txt-green">VRAI</span>
                                         <span ng-if="answer.correct != true">FAUX</span>
                                         <span ng-if="answer.ziw"> zéro si erreur</span>
@@ -131,7 +137,7 @@ $(document).on('click', '.anchorlink', function(event){
                                     <br>
                                 </div>
                                 <div class="explication">
-                                    <p class="" ng-bind-html="answer.explaination | safe"</p>
+                                    <p ng-if="conference.correction_dispo" class="" ng-bind-html="answer.explaination | safe"></p>
                                 </div>
 
                                 <div ng-repeat="image in answersimages[answer.index]">

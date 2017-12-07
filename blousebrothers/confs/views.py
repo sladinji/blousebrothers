@@ -487,12 +487,6 @@ class TestResult(TestPermissionMixin, DetailView):
         conf = Conference.objects.get(slug=self.kwargs['slug'])
         product = Product.objects.get(conf=conf)
         try:
-            if not conf.correction_dispo:
-                messages.warning(
-                    self.request,
-                    "La correction du dossier n'est pas disponible pour l'instant. "
-                    "Le conférencier l'activera après le tutorat. Sinon n'hésite pas à nous le signaler !")
-                return redirect(product.get_absolute_url())
             return super().get(*args, **kwargs)
         except ObjectDoesNotExist:
             return redirect(product.get_absolute_url())
