@@ -99,6 +99,15 @@ urlpatterns = [
         views.BuyedConferenceListView.as_view(),
         name='my_confs'),
 
+    url(r'^switch_correction$',
+        view=views.ajax_switch_correction,
+        name="switch_correction",
+        ),
+    url(r'^switch_for_sale$',
+        view=views.ajax_switch_for_sale,
+        name="switch_for_sale",
+        ),
+
 
     #   #####  ############  #####   #
     #    ###   # CRUD API #   ###    #

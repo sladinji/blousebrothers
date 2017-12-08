@@ -354,6 +354,7 @@ HAYSTACK_CONNECTIONS = {
                              'blousebrothers.search.search_indexes.CoreProductIndex', ],
     },
 }
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 OSCAR_SEARCH_FACETS = {
     'fields': OrderedDict([
         ('product_class', {'name': _('Type'), 'field': 'product_class'}),

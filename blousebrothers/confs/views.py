@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
+from django.http import JsonResponse
 from decimal import Decimal
 from datetime import datetime, timedelta
 import re
@@ -217,6 +217,28 @@ class ConferenceUpdateView(ConferenceWritePermissionMixin, JSONResponseMixin, Up
                     ret.append("{} => {}".format(kw.value, item.name))
                     break
         return ret
+
+
+def ajax_switch_correction(request):
+    """
+    Ajax switch correction available.
+    """
+    status = request.GET['state'] == 'true'
+    conf = request.user.created_confs.get(id=request.GET['conf_id'])
+    conf.correction_dispo = status
+    conf.save()
+    return JsonResponse({'success': True})
+
+
+def ajax_switch_for_sale(request):
+    """
+    Ajax conf available.
+    """
+    status = request.GET['state'] == 'true'
+    conf = request.user.created_confs.get(id=request.GET['conf_id'])
+    conf.for_sale = status
+    conf.save()
+    return JsonResponse({'success': True})
 
 
 class ConferenceListView(BBConferencierReqMixin, ListView):
