@@ -87,6 +87,22 @@ def score100(test):
 
 
 @register.filter
+def get_test(user, conf):
+    """
+    Give user's score for given conf.
+    """
+    return user.tests.get(conf=conf)
+
+
+@register.filter
+def conf_score(user, conf):
+    """
+    Give user's score for given conf.
+    """
+    return user.tests.get(conf=conf).score
+
+
+@register.filter
 def get_test_url(test):
     try:
         if not test.finished or test.has_review():
@@ -259,3 +275,8 @@ def pluralizefr(n):
         return 's'
     else:
         return ''
+
+
+@register.filter(name='get_object_name')
+def get_object_name(d):
+    return d._meta.object_name

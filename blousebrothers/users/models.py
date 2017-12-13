@@ -57,6 +57,31 @@ class User(AbstractUser):
         ('MEDECIN', _('Médecin')),
     )
 
+    def last_activities(self):
+        """
+        Return the last activities (revision session, test, conference) ordered by age.
+        """
+        choices = {
+            'deck': self.deck.order_by('-modified').first(),
+            'test': self.tests.order_by('-date_created').first(),
+            'conf': self.created_confs.order_by('-date_created').first()
+        }
+
+        choices = dict((k, v) for k, v in choices.items() if v)  # remove None
+
+        if not choices:
+            return []
+
+        return [
+            choices[ordered] for ordered in sorted(
+                choices,
+                key=lambda x: choices[x].modified
+                if hasattr(choices[x], 'modified')
+                else choices[x].date_created,
+                reverse=True
+            )
+        ]
+
     def already_done(self, conf):
         return self.tests.filter(conf=conf)
 
