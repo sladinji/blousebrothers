@@ -6,35 +6,32 @@
 
 {% block product %}
 <article class="product_pod post-module">
-  <div class="prod-bg {{ product.conf.spe_css }}">
-  </div>
-    <a href="{{ product.get_absolute_url }}" title="{% trans "Accéder au détail" %}">
-        {% block product_title %}
-        <h3>
+    <div class="prod-bg {{ product.conf.spe_css }}">
+    </div>
+    {% block product_title %}
+    <h3>
         {% if product.conf.date_created > request.user.last_last_login %}
         <span class="Counter" style="position:absolute; left: 10px; top: 8px;">Nouveau</span>
         {% endif %}
         {{ product.get_title | safe }}
-        </h3>
+    </h3>
 
-        {% endblock %}
-        {% block product_image %}
-        {% if product.conf %}
-        <div class="image_container">
-            {{ product.conf.summary }}
-        </div>
-        {% else %}
-        <div class="image_container">
-            {% with image=product.primary_image %}
-            {% thumbnail image.original "x155" upscale=False as thumb %}
-            <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="thumbnail"></a>
-            {% endthumbnail %}
-            {% endwith %}
-        </div>
-        {% endif %}
-        {% endblock %}
-
-    </a>
+    {% endblock %}
+    {% block product_image %}
+    {% if product.conf %}
+    <div class="image_container">
+        {{ product.conf.summary }}
+    </div>
+    {% else %}
+    <div class="image_container">
+        {% with image=product.primary_image %}
+        {% thumbnail image.original "x155" upscale=False as thumb %}
+        <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="thumbnail"></a>
+        {% endthumbnail %}
+        {% endwith %}
+    </div>
+    {% endif %}
+    {% endblock %}
 
     {% block product_price %}
     <div class="product_price">

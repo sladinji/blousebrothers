@@ -2293,6 +2293,7 @@ button.stripe-button-el {
 .card-row {
     text-align: center;
     display: flex;
+    margin-top: 3px;
 }
 .table-condensed td.day {
     color: inherit;

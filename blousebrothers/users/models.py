@@ -64,7 +64,9 @@ class User(AbstractUser):
         Return the last activities (revision session, test, conference) ordered by age.
         """
         choices = {
-            'session': self.sessions.order_by('-date_created').first(),
+            'session': self.sessions.exclude(
+                cards__isnull=True
+            ).order_by('-date_created').first(),
             'test': self.tests.order_by('-date_created').first(),
             'conf': self.created_confs.order_by('-date_created').first()
         }
