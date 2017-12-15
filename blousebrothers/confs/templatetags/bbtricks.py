@@ -285,9 +285,11 @@ def get_object_name(d):
 @register.filter()
 def smooth_timedelta(timedeltaobj):
     """Convert a datetime.timedelta object into Days, Hours, Minutes, Seconds."""
+    if not timedeltaobj:
+        return
     secs = timedeltaobj.total_seconds()
     timetot = ""
-    if secs > 86400: # 60sec * 60min * 24hrs
+    if secs > 86400:  # 60sec * 60min * 24hrs
         days = secs // 86400
         timetot += "{} jour".format(int(days))
         secs = secs - days*86400

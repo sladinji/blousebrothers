@@ -88,17 +88,30 @@ class User(AbstractUser):
     def stats(self):
         test_fini = self.tests.filter(finished=True).prefetch_related('answers')
         nb_test_fini = len(test_fini)
+        stat = {}
+        if nb_test_fini:
+            temps_moyen = sum([x.time_taken.hour*3600 +
+                               x.time_taken.minute*60 +
+                               x.time_taken.second for x in test_fini])/nb_test_fini
 
-        temps_moyen = sum([x.time_taken.hour*3600 +
-                           x.time_taken.minute*60 +
-                           x.time_taken.second for x in test_fini])/nb_test_fini
+            nb_test_this_week = test_fini.filter(date_created__gt=(datetime.now() - timedelta(days=7))).count()
+            nb_test_last_week = test_fini.filter(
+                date_created__range=(datetime.now() - timedelta(days=15),
+                                     datetime.now() - timedelta(days=7))
+            ).count()
+            moy_score = sum([x.score for x in test_fini])/nb_test_fini
+            moy_erreurs = sum([x.nb_errors for x in test_fini])/nb_test_fini
 
-        nb_test_this_week = sum([1 for x in test_fini.filter(date_created__gt=(datetime.now() - timedelta(days=7)))])
-        nb_test_last_week = sum([1 for x in test_fini.filter(date_created__range=(datetime.now() - timedelta(days=15),
-                                                                                  datetime.now() - timedelta(days=7)))])
-
-        pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 \
-            if nb_test_last_week > 0 else nb_test_this_week * 100
+            pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 \
+                if nb_test_last_week > 0 else nb_test_this_week * 100
+            stat = {
+                'nb_test_fini': nb_test_fini,
+                'temps_moyen': timedelta(seconds=int(temps_moyen)),
+                'moy_score': round(moy_score, 2),
+                'moy_erreurs': round(moy_erreurs, 1),
+                'nb_test_this_week': nb_test_this_week,
+                'pourcentage_progression': round(pourcentage_progression, 0),
+            }
 
         nb_cards_this_week = sum([
             x.cards.count()
@@ -115,28 +128,22 @@ class User(AbstractUser):
             )
         ])
 
-        pourcentage_progression_fiches = (nb_cards_this_week - nb_cards_last_week) / nb_test_last_week * 100 \
+        pourcentage_progression_fiches = (nb_cards_this_week - nb_cards_last_week) / nb_cards_last_week * 100 \
             if nb_cards_last_week > 0 else nb_cards_this_week * 100
 
         revision_time_this_week = self.sessions.filter(
                 date_created__gt=(datetime.now() - timedelta(days=7))
             ).aggregate(Sum('effective_duration'))['effective_duration__sum']
+        if not revision_time_this_week:
+            revision_time_this_week = timedelta(0)
         revision_time_last_week = self.sessions.filter(
                 date_created__range=(datetime.now() - timedelta(days=15),
                                      datetime.now() - timedelta(days=7))
             ).aggregate(Sum('effective_duration'))['effective_duration__sum']
         revision_progress = (revision_time_this_week - revision_time_last_week) / revision_time_last_week * 100 \
             if revision_time_last_week else 0
-        moy_score = sum([x.score for x in test_fini])/nb_test_fini
-        moy_erreurs = sum([x.nb_errors for x in test_fini])/nb_test_fini
 
-        return {
-            'nb_test_fini': nb_test_fini,
-            'temps_moyen': timedelta(seconds=int(temps_moyen)),
-            'moy_score': round(moy_score, 2),
-            'moy_erreurs': round(moy_erreurs, 1),
-            'nb_test_this_week': nb_test_this_week,
-            'pourcentage_progression': round(pourcentage_progression, 0),
+        stat.update(**{
             'nb_cards_this_week': nb_cards_this_week,
             'pourcentage_progression_fiches': round(pourcentage_progression_fiches, 0),
             'revision_time_this_week': revision_time_this_week,
@@ -145,6 +152,8 @@ class User(AbstractUser):
             'last_created_conf': self.created_confs.order_by('-date_created').first(),
             'last_session': self.sessions.order_by('-date_created').first(),
         }
+        )
+        return stat
 
     def already_done(self, conf):
         return self.tests.filter(conf=conf)

@@ -1,0 +1,26 @@
+<article class="product_pod post-module">
+    <div class="prod-bg {{ conference.spe_css }}">
+    </div>
+    <a href="{% url 'confs:detail' conference.slug %}" >
+        <h3><strong>{{ conference.title }}</strong><br>
+            <i class="fa fa-caret-right"></i> {{ conference.owner.username }} <i class="fa fa-caret-left"></i>
+        </h3>
+    </a>
+
+
+    <div class="image_container">
+        {{ conference.summary }}
+        <div class="space12"></div>
+        <ul class="col-md-12 stats">
+            <li class="stat col-xs-6">
+                <span><b class="value">Conférence accessible</b><br></span>
+                <input type="checkbox" name="switch_for_sale"   data-size="mini" data-conf-id="{{conference.id}}"{% if conference.for_sale %} checked{% endif %}><br>
+            </li>
+            <li class="stat col-xs-6">
+                <span><b class="value">Correction accessible</b><br></span>
+                <input type="checkbox" name="switch_correction"   data-size="mini" data-conf-id="{{conference.id}}"{% if conference.correction_dispo %} checked{% endif %}><br>
+            </li>
+        </ul>
+    </div>
+    <a class="btn" href="{% url 'confs:edit' conference.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
+</article>
