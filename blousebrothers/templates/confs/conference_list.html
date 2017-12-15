@@ -18,17 +18,17 @@
 
 {% block onbodyload %}
 var toggle_correction= function(event, state) {
-    $.ajax({
-        url: "{% url 'confs:switch_correction' %}?conf_id=" + this.dataset.confId + "&state=" + state,
-    });
+$.ajax({
+url: "{% url 'confs:switch_correction' %}?conf_id=" + this.dataset.confId + "&state=" + state,
+});
 }
 $("[name='switch_correction']").bootstrapSwitch('onText', 'Oui');
 $("[name='switch_correction']").bootstrapSwitch('offText', 'Non');
 $('input[name="switch_correction"]').on('switchChange.bootstrapSwitch', toggle_correction)
 var toggle_for_sale= function(event, state) {
-    $.ajax({
-        url: "{% url 'confs:switch_for_sale' %}?conf_id=" + this.dataset.confId + "&state=" + state,
-    });
+$.ajax({
+url: "{% url 'confs:switch_for_sale' %}?conf_id=" + this.dataset.confId + "&state=" + state,
+});
 }
 $("[name='switch_for_sale']").bootstrapSwitch('onText', 'Oui');
 $("[name='switch_for_sale']").bootstrapSwitch('offText', 'Non');
@@ -66,29 +66,29 @@ $('input[name="switch_for_sale"]').on('switchChange.bootstrapSwitch', toggle_for
             </div>
 
 
-			<div class="panel-body">
-				<ul class="col-md-12 stats">
-					<li class="stat col-md-3 col-sm-3 col-xs-6">
+            <div class="panel-body">
+                <ul class="col-md-12 stats">
+                    <li class="stat col-md-3 col-sm-3 col-xs-6">
                         <span><b class="value">Conférence accessible</b><br></span>
                         <input type="checkbox" name="switch_for_sale"   data-size="mini" data-conf-id="{{conference.id}}"{% if conference.for_sale %} checked{% endif %}><br>
-					</li>
-					<li class="stat col-md-3 col-sm-3 col-xs-6">
-						<span><b class="value">Correction accessible</b><br></span>
+                    </li>
+                    <li class="stat col-md-3 col-sm-3 col-xs-6">
+                        <span><b class="value">Correction accessible</b><br></span>
                         <input type="checkbox" name="switch_correction"   data-size="mini" data-conf-id="{{conference.id}}"{% if conference.correction_dispo %} checked{% endif %}><br>
-					</li>
-					<li class="stat col-md-3 col-sm-3 col-xs-6">
-						<span><b class="value"><a href="{{ conference.products.first.get_absolute_url }}#disqus_thread" data-disqus-identifier="{{ conference.slug }}">Pas de commentaire</a>
-                        {% disqus_num_replies %}
-</b></span>
-                        
-						<em>Sur le forum</em>
-					</li>
-					<li class="stat col-md-3 col-sm-3 col-xs-6">
-						<span><b class="value">{{ conference | month_revenu | default:0 | currency }}</b><br> Revenus</span>
-						<em>Ce mois</em>
-					</li>
-				</ul>
-			</div>
+                    </li>
+                    <li class="stat col-md-3 col-sm-3 col-xs-6">
+                        <span><b class="value"><a href="{{ conference.products.first.get_absolute_url }}#disqus_thread" data-disqus-identifier="{{ conference.slug }}">Pas de commentaire</a>
+                                {% disqus_num_replies %}
+                            </b></span>
+
+                            <em>Sur le forum</em>
+                    </li>
+                    <li class="stat col-md-3 col-sm-3 col-xs-6">
+                        <span><b class="value">{{ conference | month_revenu | default:0 | currency }}</b><br> Revenus</span>
+                        <em>Ce mois</em>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="{{conference.edition_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{conference.edition_progress}}%">

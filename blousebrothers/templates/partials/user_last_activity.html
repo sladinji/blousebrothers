@@ -1,0 +1,117 @@
+{% load bbtricks static %}
+{% load product_tags %}
+{% load jchart %}
+{% load bleach_tags %}
+
+
+<h1><i class="fa fa-gear"></i> 
+    Mes dernières actions
+</h1>
+<div class="x_panel tile fixed_height_320">
+    <div class="x_title">
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-history"></i> Dernière révision</span>
+                <div class="count_bottom">{{ last_session.cards.count }} fiches</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-braille"></i> 7 derniers jours</span>
+                <div class="count green">{{ nb_cards_this_week }} fiches</div>
+                {% if pourcentage_progression_fiches < 0 %} 
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ pourcentage_progression_fiches }}% </i> de moins</span>
+                {% else %}
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ pourcentage_progression_fiches }}% </i> de plus</span>
+                {% endif %}
+                <!--   <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-clock-o"></i> Temps à réviser</span>
+                <div class="count">{{ revision_time_this_week|smooth_timedelta }}</div>
+                {% if revision_progress < 0 %} 
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ revision_progress }}% </i> de moins</span>
+                {% else %}
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ revision_progress }}% </i> de plus</span>
+                {% endif %}
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-check-square-o"></i> Dossiers effectués</span>
+                <div class="count">{{ nb_test_fini }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-balance-scale"></i> Moyenne</span>
+                <div class="count">{{ moy_score}} / 100</div>
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-trophy"></i> Dernier classement</span>
+                <div class="count"><a href="{{ user.last_test.conf.products.first.get_absolute_url }}">{{ user.last_test.position }} / {{ user.last_test.total }}</a></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="space12"></div>
+        {% for activity in last_activities %}
+        <div class="col-md-4">
+            {% if activity|get_object_name == "Test" %}
+            <h2><i class="fa fa-chevron-right"></i> Dernier dossier effectué</h2><br>
+            {% render_product activity.conf.products.first %}
+            {% elif activity|get_object_name == "Session" %}
+            <h2><i class="fa fa-chevron-right"></i> Dernière fiche vue</h2><br>
+            {% with object=activity.cards.last spe=activity.cards.last.specialities.first %}
+            <div class="card-row">
+                <div> 
+                    <!-- Post-->
+                    <div class="post-module"> 
+                        <!-- Thumbnail-->
+                        <div class="thumbnail">
+                            <img src="{% static spe.image %}" class="img-responsive" alt="{{ spe.name }}">
+                        </div>
+                        <!-- Post Content-->
+                        <div class="post-content">
+                    {{ activity.cards.first.question }}<br>
+                    <div class="space12"></div>
+                    <a href="{% url 'cards:revision' activity.cards.first.id %}?{{request.GET.urlencode}}" class="btn"><i class="fa fa-play"></i> Réponse</a>
+                    <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% elif activity|get_object_name == "Conference" %}
+            <h2><i class="fa fa-chevron-right"></i> Dernier dossier créé</h2><br>
+            <article class="product_pod post-module">
+                {% with conference=activity %}
+                <div class="prod-bg {{ conference.spe_css }}">
+                </div>
+                <a href="{% url 'confs:detail' conference.slug %}" >
+                    <h3><strong>{{ conference.title }}</strong><br>
+                        <i class="fa fa-caret-right"></i> {{ conference.owner.username }} <i class="fa fa-caret-left"></i>
+                    </h3>
+                </a>
+
+
+                <div class="image_container">
+                    {{ conference.summary }}
+                    <div class="space12"></div>
+                    <ul class="col-md-12 stats">
+                        <li class="stat col-xs-6">
+                            <span><b class="value">Conférence accessible</b><br></span>
+                            <input type="checkbox" name="switch_for_sale"   data-size="mini" data-conf-id="{{conference.id}}"{% if conference.for_sale %} checked{% endif %}><br>
+                        </li>
+                        <li class="stat col-xs-6">
+                            <span><b class="value">Correction accessible</b><br></span>
+                            <input type="checkbox" name="switch_correction"   data-size="mini" data-conf-id="{{conference.id}}"{% if conference.correction_dispo %} checked{% endif %}><br>
+                        </li>
+                    </ul>
+                </div>
+                <a class="btn" href="{% url 'confs:edit' conference.slug %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer la conférence</a>
+            </article>
+
+            {% endwith %}
+
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

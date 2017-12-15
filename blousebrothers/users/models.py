@@ -3,8 +3,9 @@ from __future__ import unicode_literals, absolute_import
 import logging
 import hashlib
 import threading
-from django.utils import timezone
+from datetime import datetime, timedelta
 
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -15,6 +16,7 @@ from django.dispatch import receiver
 from django.core.mail import mail_admins
 from django_countries.fields import CountryField
 from django.db.models.signals import post_init, pre_save
+from django.db.models import Sum
 
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
@@ -62,7 +64,7 @@ class User(AbstractUser):
         Return the last activities (revision session, test, conference) ordered by age.
         """
         choices = {
-            'deck': self.deck.order_by('-modified').first(),
+            'session': self.sessions.order_by('-date_created').first(),
             'test': self.tests.order_by('-date_created').first(),
             'conf': self.created_confs.order_by('-date_created').first()
         }
@@ -81,6 +83,68 @@ class User(AbstractUser):
                 reverse=True
             )
         ]
+
+    @property
+    def stats(self):
+        test_fini = self.tests.filter(finished=True).prefetch_related('answers')
+        nb_test_fini = len(test_fini)
+
+        temps_moyen = sum([x.time_taken.hour*3600 +
+                           x.time_taken.minute*60 +
+                           x.time_taken.second for x in test_fini])/nb_test_fini
+
+        nb_test_this_week = sum([1 for x in test_fini.filter(date_created__gt=(datetime.now() - timedelta(days=7)))])
+        nb_test_last_week = sum([1 for x in test_fini.filter(date_created__range=(datetime.now() - timedelta(days=15),
+                                                                                  datetime.now() - timedelta(days=7)))])
+
+        pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 \
+            if nb_test_last_week > 0 else nb_test_this_week * 100
+
+        nb_cards_this_week = sum([
+            x.cards.count()
+            for x in self.sessions.filter(
+                date_created__gt=(datetime.now() - timedelta(days=7)
+                                  )
+            )
+        ])
+        nb_cards_last_week = sum([
+            x.cards.count()
+            for x in self.sessions.filter(
+                date_created__range=(datetime.now() - timedelta(days=15),
+                                     datetime.now() - timedelta(days=7))
+            )
+        ])
+
+        pourcentage_progression_fiches = (nb_cards_this_week - nb_cards_last_week) / nb_test_last_week * 100 \
+            if nb_cards_last_week > 0 else nb_cards_this_week * 100
+
+        revision_time_this_week = self.sessions.filter(
+                date_created__gt=(datetime.now() - timedelta(days=7))
+            ).aggregate(Sum('effective_duration'))['effective_duration__sum']
+        revision_time_last_week = self.sessions.filter(
+                date_created__range=(datetime.now() - timedelta(days=15),
+                                     datetime.now() - timedelta(days=7))
+            ).aggregate(Sum('effective_duration'))['effective_duration__sum']
+        revision_progress = (revision_time_this_week - revision_time_last_week) / revision_time_last_week * 100 \
+            if revision_time_last_week else 0
+        moy_score = sum([x.score for x in test_fini])/nb_test_fini
+        moy_erreurs = sum([x.nb_errors for x in test_fini])/nb_test_fini
+
+        return {
+            'nb_test_fini': nb_test_fini,
+            'temps_moyen': timedelta(seconds=int(temps_moyen)),
+            'moy_score': round(moy_score, 2),
+            'moy_erreurs': round(moy_erreurs, 1),
+            'nb_test_this_week': nb_test_this_week,
+            'pourcentage_progression': round(pourcentage_progression, 0),
+            'nb_cards_this_week': nb_cards_this_week,
+            'pourcentage_progression_fiches': round(pourcentage_progression_fiches, 0),
+            'revision_time_this_week': revision_time_this_week,
+            'revision_progress': round(revision_progress, 0),
+            'last_deck': self.deck.order_by('-modified').first(),
+            'last_created_conf': self.created_confs.order_by('-date_created').first(),
+            'last_session': self.sessions.order_by('-date_created').first(),
+        }
 
     def already_done(self, conf):
         return self.tests.filter(conf=conf)

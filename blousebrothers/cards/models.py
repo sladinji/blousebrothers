@@ -116,6 +116,10 @@ class Card(models.Model):
         return reverse('cards:revision', args=[self.id])
 
     @property
+    def question(self):
+        return self.content.split("\n")[0].replace('@', '')
+
+    @property
     def root(self):
         return self if not self.parent else self.parent
 

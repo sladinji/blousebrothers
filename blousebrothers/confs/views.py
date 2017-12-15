@@ -71,30 +71,7 @@ class ConferenceHomeView(LoginRequiredMixin, TemplateView):
         context['object'] = self.request.user
 
         user = User.objects.prefetch_related("tests__answers").get(pk=self.request.user.pk)
-        test_fini = user.tests.filter(finished=True).prefetch_related('answers')
-        nb_test_fini = len(test_fini)
-
-        temps_moyen = sum([x.time_taken.hour*3600 +
-                           x.time_taken.minute*60 +
-                           x.time_taken.second for x in test_fini])/nb_test_fini
-
-        nb_test_this_week = sum([1 for x in test_fini.filter(date_created__gt=(datetime.now() - timedelta(days=7)))])
-        nb_test_last_week = sum([1 for x in test_fini.filter(date_created__range=(datetime.now() - timedelta(days=15),
-                                                                                  datetime.now() - timedelta(days=7)))])
-
-        pourcentage_progression = (nb_test_this_week-nb_test_last_week) / nb_test_last_week * 100 \
-            if nb_test_last_week > 0 else nb_test_this_week * 100
-
-        moy_score = sum([x.score for x in test_fini])/nb_test_fini
-        moy_erreurs = sum([x.nb_errors for x in test_fini])/nb_test_fini
-
-        context['nb_test_fini'] = nb_test_fini
-        context['temps_moyen'] = timedelta(seconds=int(temps_moyen))
-        context['moy_score'] = round(moy_score, 2)
-        context['moy_erreurs'] = round(moy_erreurs, 1)
-        context['nb_test_this_week'] = nb_test_this_week
-        context['pourcentage_progression'] = round(pourcentage_progression, 0)
-
+        context.update(**user.stats)
         monthly_chart = MonthlyLineChart()
         monthly_chart.context = context
         context['monthly_chart'] = monthly_chart

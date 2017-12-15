@@ -9,6 +9,7 @@
 {{ form.media.js }}
 {{ block.super }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
 {% endblock %}
 
 {% block alert_messages %}
@@ -17,6 +18,7 @@
 {% block styles %}
 {{ block.super }}
 {{ form.media.css }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
 {% endblock styles %}
 
 {% block content %}
@@ -271,6 +273,22 @@ $("div[id^='modalTip']").each(function(){
 {% if messages %}
 $('#myModal').modal('show');
 {% endif %}
+var toggle_correction= function(event, state) {
+$.ajax({
+url: "{% url 'confs:switch_correction' %}?conf_id=" + this.dataset.confId + "&state=" + state,
+});
+}
+$("[name='switch_correction']").bootstrapSwitch('onText', 'Oui');
+$("[name='switch_correction']").bootstrapSwitch('offText', 'Non');
+$('input[name="switch_correction"]').on('switchChange.bootstrapSwitch', toggle_correction)
+var toggle_for_sale= function(event, state) {
+$.ajax({
+url: "{% url 'confs:switch_for_sale' %}?conf_id=" + this.dataset.confId + "&state=" + state,
+});
+}
+$("[name='switch_for_sale']").bootstrapSwitch('onText', 'Oui');
+$("[name='switch_for_sale']").bootstrapSwitch('offText', 'Non');
+$('input[name="switch_for_sale"]').on('switchChange.bootstrapSwitch', toggle_for_sale)
 {% endblock onbodyload %}
 
 {% block oscar_init %}

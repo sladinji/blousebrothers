@@ -422,10 +422,12 @@ class RevisionHome(TemplateView):
     template_name = 'cards/home.html'
 
     def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
         user = self.request.user
         qry = Card.objects.for_user(user)
         if user.is_authenticated():
             deck = user.deck
+            ctx.update(**user.stats)
         else:
             deck = User.objects.get(username="BlouseBrothers").deck
         for filters in ['specialities', 'items', 'tags']:
@@ -478,8 +480,7 @@ class RevisionHome(TemplateView):
         ]
         specialities.sort(key=lambda x: x['total'], reverse=True)
         specialities.sort(key=lambda x: x['last_access'] if x['last_access'] else mindate, reverse=True)
-        return super().get_context_data(
-            *args,
+        ctx.update(
             retro_img_nb=random.randint(1, 13),
             chart=dispatching_chart,
             specialities=specialities,
@@ -501,8 +502,8 @@ class RevisionHome(TemplateView):
             ) or self.request.GET.getlist(
                 'tags'
             ),
-            **kwargs
         )
+        return ctx
 
 
 class ListCardView(RevisionPermissionMixin, ListView):
