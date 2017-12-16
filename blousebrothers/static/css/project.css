@@ -33,8 +33,7 @@
     }
 }
 .main-menu-wapper {
-    /*    background-color: black;*/
-    background:#000;
+    background-image: linear-gradient(130deg, #010102, #0078cb);
 }
 .main-menu-wapper .row {
     margin-left: 0px;
