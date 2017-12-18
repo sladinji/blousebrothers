@@ -2,62 +2,6 @@
 {% load activeurl %}
 
 {% block subnavigation %}
-<div class="pagehead repohead instapaper_ignore experiment-repo-nav">
-    <div class="container">
-        {% activeurl css_class="selected" parent_tag="self" %}
-        <nav class="reponav">
-            <a href="{% url 'cards:home' %}" class="reponav-item">
-                <i class="fa fa-signal" aria-hidden="true"></i>
-                <span>Tableau de bord
-                </span>
-                {% if user.nb_cards_ready %}
-                <span class="Counter">{{ user.nb_cards_ready }}</span>
-                {% endif %}
-            </a>  
-            <a href="{% url 'cards:list' %}" class="reponav-item">
-                <i class="fa fa-heart" aria-hidden="true"></i>
-                <span itemprop="name">Fiches actives
-                </span>
-            </a>    
-            <a href="{% url 'cards:unseen_cards_list' %}" class="reponav-item">
-                <i class="fa fa-stack-overflow" aria-hidden="true"></i>
-                <span itemprop="name">Fiches non vues
-                </span>
-            </a>  
-            <a href="{% url 'cards:trashed' %}" class="reponav-item">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                <span itemprop="name">Fiches oubliées
-                </span>
-            </a>  
-            <a href="{% url 'cards:create' %}" class="reponav-item">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                <span itemprop="name">Créer une fiche
-                </span>
-            </a>    
-            <a href="{% url 'cards:ankiupload' %}" class="reponav-item">
-                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                Packages
-            </a>
-            {% if user.is_superuser or user.username == 'Nicota' %}
-            <a href="{% url 'cards:boulet' %}" class="reponav-item">
-                <i class="fa fa-handshake-o" aria-hidden="true"></i>
-                Partenariat
-            </a>
-            {% endif %}
-            {% comment %}
-            <a href="/sladinji/blousebrothers/wiki" class="reponav-item">
-                <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                Stats
-            </a>
-            <a href="/sladinji/blousebrothers/settings" class="reponav-item">
-                <i class="fa fa-cog" aria-hidden="true"></i>
-                Préférences
-            </a>
-{% endcomment %}
-        </nav>
-        {% endactiveurl %}
-    </div>
-</div>
 {% endblock subnavigation %}
 
 

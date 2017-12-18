@@ -4,30 +4,35 @@
 {% load bleach_tags %}
 
 
-<h1 class="black-font">
-    Mes dernières actions
-</h1>
-<div class="x_panel tile fixed_height_320 panel_shadow">
+<div class="x_panel tile fixed_height_320 panel_shadow panel_last_activities">
     <div class="x_content">
         <div class="space12"></div>
-        {% for activity in last_activities %}
-        <div class="col-md-4">
-            {% if activity|get_object_name == "Test" %}
-            <h2><i class="fa fa-chevron-right"></i> Dernier dossier effectué</h2><br>
-            {% render_product activity.conf.products.first %}
-            {% elif activity|get_object_name == "Session" %}
-            <h2><i class="fa fa-chevron-right"></i> Dernière fiche vue</h2><br>
-            {% with card=activity.cards.last spe=activity.cards.last.specialities.first %}
-            {% include 'cards/partials/card_preview.html' %}
-            {% endwith %}
-            {% elif activity|get_object_name == "Conference" %}
-            <h2><i class="fa fa-chevron-right"></i> Dernier dossier créé</h2><br>
-            {% with conference=activity %}
-            {% include 'confs/partials/created_conf_preview.html' %}
-            {% endwith %}
+        <div class="row">
+            {% for activity in last_activities %}
+            <div class="col-md-4">
+                {% if activity|get_object_name == "Test" %}
+                <h2><i class="fa fa-chevron-right"></i> Dernier dossier effectué</h2><br>
+                {% render_product activity.conf.products.first %}
+                {% elif activity|get_object_name == "Session" %}
+                <h2><i class="fa fa-chevron-right"></i> Dernière fiche vue</h2><br>
+                {% with card=activity.cards.last spe=activity.cards.last.specialities.first %}
+                {% include 'cards/partials/card_preview.html' %}
+                {% endwith %}
+                {% elif activity|get_object_name == "Conference" %}
+                <h2><i class="fa fa-chevron-right"></i> Dernier dossier créé</h2><br>
+                {% with conference=activity %}
+                {% include 'confs/partials/created_conf_preview.html' %}
+                {% endwith %}
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% if last_activities|length < 3 %}
+            <div class="col-md-4">
+                <h2><i class="fa fa-chevron-right"></i> We need you !</h2><br>
+                {% include "catalogue/partials/create_product.html" %}</li>
+            </div>
             {% endif %}
         </div>
-        {% endfor %}
     </div>
     <br>&nbsp;<br>
     <div class="x_footer">

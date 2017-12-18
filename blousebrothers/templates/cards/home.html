@@ -24,7 +24,13 @@
 {% block content %}
 <div class="container">
     <div class="space hidden-xs"></div>
+    <h1 class="black-font">
+        Mes dernières actions
+    </h1>
     {% include 'partials/user_last_activity.html' with last_activities=user.last_activities %}
+    <h2 class="black-font">
+       Réviser 
+    </h2>
     <div class="x_panel tile fixed_height_320 rev_pod">
         <div class="x_title">
             <h2><i class="fa fa-pie-chart"></i> 
@@ -82,67 +88,46 @@
                 <a href="{% url 'cards:redirect' %}?{{request.GET.urlencode}}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
                 <a href="{% url 'cards:redirect' %}?revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span>{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
             </div>
-            <hr/>
         </div>
-    </div>
-    {% for spe in specialities %}
-    {% if spe.total %}
-    <div class="x_panel tile fixed_height_320 rev_pod">
-        <div class="prod-bg {{ spe.obj.css }}"></div>
-        <div class="x_title">
-            <h2><i class="fa fa-chevron-right"></i> {{ spe.obj.name }}</h2><div class="text-right">{{spe.user }}/{{ spe.total }}</div>
-            <div class="clearfix"></div>
-            <div class="progress-bar-container"><div style="width: {% widthratio spe.user spe.total  100 %}%" class="progress-bar"></div></div>
-        </div>
-        <div class="x_content">
-            <div class="col-md-5">
-                <table class="" style="width:100%">
-                    <tbody><tr>
-                            <th style="width:37%;">
-                                <p>Répartitions</p>
-                            </th>
-                            <th>
-                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                    <p class="">Catégorie</p>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <p class="">Total</p>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="width=37%" >
-                                <div style="position: relative; height:100px; width:100px">
-                                    {% render_chart chart spe.obj %}
-                                </div>
-                            </td>
-                            <td>
-                                <table class="tile_info" style="width:100%;">
-                                    <tbody>
-                                        {% for label, color, count in chart.get_lab_col_cnt %}
-                                        <tr>
-                                            <td>
-                                                <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
-                                            </td>
-                                            <td>{{count}}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        &nbsp;<br>
+        &nbsp;<br>
+        <div class="x_footer revision">
+            <div class="col-md-6">
+                <a href="{% url 'cards:list' %}" class="btn">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    <span itemprop="name">Actives
+                    </span>
+                </a>    
+                <a href="{% url 'cards:unseen_cards_list' %}" class="btn">
+                    <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+                    <span itemprop="name">Non vues
+                    </span>
+                </a>  
+                <a href="{% url 'cards:trashed' %}" class="btn">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <span itemprop="name">Oubliées
+                    </span>
+                </a>  
             </div>
-            <div class="space12"></div>
-            <div class="col-md-7 rev_btns">
-                <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&{{request.GET.urlencode}}"class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                <a href="{% url 'cards:redirect' %}?specialities={{ spe.obj.pk }}&revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if spe.ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if spe.ready > 0 %}<span class="Counter">{{ spe.ready }}</span>{% elif spe.wake_up %} (dans {{spe.wake_up | next_session}}){% endif %}</a>
+            <div class="col-md-6">
+                <a href="{% url 'cards:create' %}" class="btn">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span itemprop="name">Créer
+                    </span>
+                </a>    
+                <a href="{% url 'cards:ankiupload' %}" class="btn">
+                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    Packages
+                </a>
+                {% if user.is_superuser or user.username == 'Nicota' %}
+                <a href="{% url 'cards:boulet' %}" class="btn">
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                    Partenariat
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>
-    {% endif %}  
-    {% endfor %}  
 </div>
 
 {% if messages %}
