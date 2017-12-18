@@ -7,4 +7,10 @@
     <br>
     {% include 'partials/submenu_search_advanced.html' with actionurl="cards:unseen_cards_list" %}
 </div>
+{% if request.GET.urlencode %}
+<div class="text-center">
+<a href="{% url 'cards:redirect' %}?{{request.GET.urlencode}}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-forward"></i> Réviser les cartes correspondant à la recherche</a>
+</div>
+<br>
+{% endif %}
 {% endblock list_header %}

@@ -94,7 +94,7 @@ def choose_new_card(request):
         new_card = session.new_cards.first()
         # if all card are already done choose revision card
         if not new_card:
-            new_card = random.choice(session.matching_cards.all()[:20])
+            new_card = random.choice(session.matching_cards().all()[:20])
 
     session.cards.add(new_card)
     return new_card

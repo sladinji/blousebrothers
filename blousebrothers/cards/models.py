@@ -254,15 +254,14 @@ class Session(models.Model):
             qs = qs.filter(card__items__in=self.items.all())
         if self.search:
             qs = qs.filter(
-                Q(content__icontains=self.search) |
-                Q(specialities__name__icontains=self.search) |
-                Q(tags__name__icontains=self.search) |
-                Q(items__name__icontains=self.search)
+                Q(card__content__icontains=self.search) |
+                Q(card__specialities__name__icontains=self.search) |
+                Q(card__tags__name__icontains=self.search) |
+                Q(card__items__name__icontains=self.search)
             )
         return qs.order_by('wake_up')
 
-    @property
-    def matching_cards(self):
+    def matching_cards(self, exclude=True):
         """
         Apply session preference filter to a Card queryset
         """
@@ -278,13 +277,26 @@ class Session(models.Model):
             qs = qs.filter(specialities__in=self.specialities.all())
         if self.items.all():
             qs = qs.filter(items__in=self.items.all())
-        qs = qs.exclude(
-            id__in=[card.id for card in self.cards.all()]
-        )
+        if exclude:
+            qs = qs.exclude(
+                id__in=[card.id for card in self.cards.all()]
+            )
         if not qs.count():
             """All cards have been seen in this session."""
             raise SessionOverException()
         return qs
+
+    def total(self):
+        """
+        Return matching cards without throwing SessionOverException
+        """
+        try:
+            return self.matching_cards(exclude=False).count()
+        except SessionOverException:
+            return 0
+
+    def done(self):
+        return self.total() - self.waiting_cards.count()
 
     @property
     def new_cards(self):

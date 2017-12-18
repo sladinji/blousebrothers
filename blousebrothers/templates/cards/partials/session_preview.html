@@ -1,0 +1,23 @@
+{% load bbtricks static %}
+
+<div class="card-row">
+    <!-- Post-->
+    <div class="post-module"> 
+        <!-- Thumbnail-->
+        <div class="thumbnail">
+            <img src="{% static 'images/spe/cardio.png' %}" class="img-responsive" alt="{{ spe.name }}">
+        </div>
+        <!-- Post Content-->
+        <div class="post-content">
+            <b>{{ session.search }}</b><br>
+            <br>
+            {{ session.total }} fiches<br>
+        </div>
+            <div style="position: absolute; bottom: 4px; text-align: center; width: 100%;">
+                <a href="{% url 'cards:redirect' %}?search={{session.search}}" class="btn">
+                    <div class="progress-bar-container"><div style="width: {% widthratio session.done session.total 100 %}%" class="progress-bar"></div></div>
+                    <i class="fa fa-play"></i> Reprendre
+                </a>
+            </div>
+    </div>
+</div>

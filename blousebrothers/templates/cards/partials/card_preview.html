@@ -1,4 +1,5 @@
 {% load bbtricks static %}
+{% load bleach_tags %}
 
 <div class="card-row">
     <!-- Post-->
@@ -10,7 +11,7 @@
         <!-- Post Content-->
         <div class="post-content">
             {% if card %}
-            {{ card.question }}<br>
+                {{ card.question | bleach | rev_content | safe}}
             {% else %}
             Aucune !!
             {% endif %}
