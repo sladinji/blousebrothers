@@ -291,12 +291,16 @@ class Session(models.Model):
         Return matching cards without throwing SessionOverException
         """
         try:
+            if self.revision:
+                return self.waiting_cards.count() + self.cards.count()
             return self.matching_cards(exclude=False).count()
         except SessionOverException:
             return 0
 
     def done(self):
-        return self.total() - self.waiting_cards.count()
+        if self.revision:
+            return self.total() - self.waiting_cards.count()
+        return self.waiting_cards.count()
 
     @property
     def new_cards(self):

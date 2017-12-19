@@ -44,53 +44,73 @@
             <div class="progress-bar-container"><div style="width: {% widthratio deck.count total  100 %}%" class="progress-bar"></div></div>
         </div>
         <div class="x_content">
-            <div class="col-md-5">
-                <table class="" style="width:100%">
-                    <tbody><tr>
-                            <th style="width:37%;">
-                                <p>Répartitions</p>
-                            </th>
-                            <th>
-                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                    <p class="">Catégorie</p>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <p class="">Total</p>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="width=37%" >
-                                <div style="position: relative; height:100px; width:100px">
-                                    {% render_chart chart None %}
-                                </div>
-                            </td>
-                            <td>
-                                <table class="tile_info" style="width:100%;">
-                                    <tbody>
-                                        {% for label, color, count in chart.get_lab_col_cnt %}
-                                        <tr>
-                                            <td>
-                                                <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
-                                            </td>
-                                            <td>{{ count | default:0 }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="space12"></div>
-            <div class="col-md-7 rev_btns">
-                <a href="{% url 'cards:redirect' %}?{{request.GET.urlencode}}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Apprendre</a>
-                <a href="{% url 'cards:redirect' %}?revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> Réviser {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span>{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
+            <div class="row">
+                <div class="col-md-5">
+                    <table class="" style="width:100%">
+                        <tbody><tr>
+                                <th style="width:37%;">
+                                    <p>Répartitions</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Catégorie</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Total</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="width=37%" >
+                                    <div style="position: relative; height:100px; width:100px">
+                                        {% render_chart chart None %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <table class="tile_info" style="width:100%;">
+                                        <tbody>
+                                            {% for label, color, count in chart.get_lab_col_cnt %}
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square" style="color: {{color}};"></i> {{ label }}</p>
+                                                </td>
+                                                <td>{{ count | default:0 }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="space12"></div>
+                <div class="col-md-7 rev_btns">
+                    <a href="{% url 'cards:start_new_session' %}?{{request.GET.urlencode}}" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-plus"></i> Voir de nouvelles fiches</a>
+                    <a href="{% url 'cards:start_new_session' %}?revision=True&{{request.GET.urlencode}}" class="btn btn-success{% if ready < 1 %} disabled{% endif %}"><i class="fa fa-history"></i> {% if ready > 0 %}<span class="Counter">{{ user.nb_cards_ready }}</span> fiches prêtes à être révisées{% elif wake_up %} (dans {{wake_up | next_session}}){% endif %}</a>
+                </div>
             </div>
         </div>
-        &nbsp;<br>
-        &nbsp;<br>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-center">
+                    <form method="get" action="{% url 'cards:unseen_cards_list' %}" class="box-search pull-left">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control"  id="id_search" name="search" placeholder="Je souhaite réviser..." value="{{request.GET.search}}">
+                        <span class="input-group-addon">
+                            <button type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>  
+                        </span>
+                    </div>
+                </h4>
+            </div>
+                    </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
         <div class="x_footer revision">
             <div class="col-md-6">
                 <a href="{% url 'cards:list' %}" class="btn">

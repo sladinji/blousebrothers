@@ -9,12 +9,18 @@
         </div>
         <!-- Post Content-->
         <div class="post-content">
-            <b>{{ session.search }}</b><br>
+            {% if session.revision %}
+            <b>- Révision -</b><br>
+            {{ session.search |default:"* Révision *" }}<br>
+            {% else %}
+            <b>{{ session.search |default:"Session automatique" }}</b><br>
+            {% endif %}
             <br>
             {{ session.total }} fiches<br>
+            {% widthratio session.done session.total 100 %}% vues<br>
         </div>
             <div style="position: absolute; bottom: 4px; text-align: center; width: 100%;">
-                <a href="{% url 'cards:redirect' %}?search={{session.search}}" class="btn">
+                <a href="{% url 'cards:redirect' %}?search={{session.search}}{% if session.revision %}&revision=True{% endif %}" class="btn">
                     <div class="progress-bar-container"><div style="width: {% widthratio session.done session.total 100 %}%" class="progress-bar"></div></div>
                     <i class="fa fa-play"></i> Reprendre
                 </a>

@@ -20,7 +20,7 @@
                 {% if card %}
                 <a href="{% url 'cards:revision' card.id %}" class="btn"><i class="fa fa-play"></i> Réponse</a>
                 {% else %}
-                <a href="{% url 'cards:redirect' %}" class="btn"><i class="fa fa-play"></i> Apprendre</a>
+                <a href="{% url 'cards:start_new_session' %}" class="btn"><i class="fa fa-play"></i> Apprendre</a>
                 {% endif %}
                 <br>
             </div>

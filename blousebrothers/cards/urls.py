@@ -60,6 +60,11 @@ urlpatterns = [
         name='redirect'
     ),
     url(
+        regex=r'^letsgo$',
+        view=views.RevisionRedirectView.as_view(),
+        name='start_new_session'
+    ),
+    url(
         regex=r'^fiche/suivante/([0-9]+)$',
         view=views.RevisionNextCardView.as_view(),
         name='next'

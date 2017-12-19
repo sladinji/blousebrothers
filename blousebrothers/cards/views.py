@@ -68,7 +68,7 @@ def get_or_create_session(request):
     items = Item.objects.filter(pk__in=request.GET.get('items') or [])
     tags = Tag.objects.filter(pk__in=request.GET.get('tags') or [])
     revision = request.GET.get('revision') == 'True'
-    search = request.GET.get('search', None)
+    search = request.GET.get('search', '')
 
     session = Session.objects.filter(student=request.user, finished=False).first()
     if not session:
@@ -317,6 +317,16 @@ class RevisionRedirectView(BBLoginRequiredMixin, RedirectView):
             return reverse('cards:stop', kwargs={'id': 'sessionover'})
 
 
+class StartRevisionSession(RevisionRedirectView):
+    """
+    Close user's sessions before calling RevisionRedirectView.
+    """
+
+    def get_redirect_url(self, *args, **kwargs):
+        Session.objects.filter(student=self.request.user).update(finished=True)
+        return super().get_redirect_url(*args, **kwargs)
+
+
 class RevisionNextCardView(BBLoginRequiredMixin, RedirectView):
     """
     Called when clicking on next card button.
@@ -353,29 +363,14 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         return get_object_or_404(Card, pk=self.kwargs['id'])
 
     def get(self, request, *args, **kwargs):
-        """
-        Only one card by family in user's deck. If a sibling card is present
-        in user's deck, we return this deck instance with the requested card.
-        Otherwise we create a new deck instance with request card.
-        """
         card = self.get_object()
 
         if not self.request.user.is_authenticated():
             obj = Mock()
             obj.card = card
         else:
-            obj = Deck.objects.filter(
-                student=self.request.user,
-                card__in=card.family(self.request.user),
-            ).exclude(
-                card=card,
-            ).first()
-            if obj:
-                obj.card = card
-                self.is_favorite = False
-            else:
-                obj = Deck.objects.get_or_create(card=card, student=self.request.user)[0]
-                self.is_favorite = True
+            obj = Deck.objects.get_or_create(card=card, student=self.request.user)[0]
+            self.is_favorite = True
 
         context = self.get_context_data(object=obj)
         return self.render_to_response(context)

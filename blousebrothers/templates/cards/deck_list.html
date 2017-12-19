@@ -24,6 +24,9 @@
             <br>
             {% include 'partials/submenu_search_advanced.html' with actionurl="cards:list" %}
     </div>
+    <div class="text-center">
+    <a href="{% url 'cards:start_new_session' %}?{{request.GET.urlencode}}&revision=True" class="btn btn-info{% if spe.total < 1 %} disabled{% endif %}"><i class="fa fa-forward"></i> Réviser les cartes correspondant à la recherche</a>
+    </div>
     {% endblock list_header %}
 
     {{ paginator.count }} fiche{{ paginator.count|pluralizefr }}.
