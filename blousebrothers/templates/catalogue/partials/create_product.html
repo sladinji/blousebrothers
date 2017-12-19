@@ -7,7 +7,7 @@
         <h3>Dossier de {{ user.username }}... et pourquoi pas ?</h3>
         
         <div class="image_container">
-            <img style="width:150px;height:150px;border-radius:50%; margin-top:20px;" src="{{user.socialaccount_set.first.get_avatar_url | default_icon }}"/>
+            <img style="width:150px;height:150px;border-radius:50%; margin-top:20px;opacity: 1;" src="{{user.socialaccount_set.first.get_avatar_url | default_icon }}"/>
         </div>
     </a>
     <div class="product_price">

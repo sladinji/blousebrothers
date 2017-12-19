@@ -162,7 +162,7 @@ li.menu-item-has-children.item-megamenu.active {
 
 .bb-light-grey, .bb-hover-light-grey:hover {
 	color: #000 !important;
-	background-color: gray;
+    background-image: linear-gradient(130deg, #014476, #0078cb);
 }
 
 .bb-margin-right {
@@ -184,6 +184,7 @@ ul.bb-ul li {
 	border-bottom: 1px solid #ddd;
 	font-weight:300;
 	font-size:14px;	
+    background-color: #FFF;
 }
 
 ul.bb-ul li.nopadding{
@@ -385,12 +386,14 @@ ul.djng-field-errors li.valid::before {
     width: 100%;
     padding: 10px;
     text-align: left;
+    transition: all .2s linear;
 }
 .btn-answer .fa {
     font-size: 19px;
 }
 .btn-checked {
     background-color: #ceffce;
+    transition: all .5s ease;
 }
 .answer-label {
     display: table-cell;
@@ -508,7 +511,7 @@ ul li.active a {
 
 ul.bb-ul li:hover,
 ul.bb-ul li.active {
-	background-color: #c99947;
+	background-color: #e8b50f;
 }
 ul.bb-ul li:hover a,
 ul.bb-ul li.active a {
@@ -873,7 +876,7 @@ footer {
 footer{
     border-top:1px solid #666;
     padding:20px;
-    background-color: #000;
+    background-color: #01508a;
     color: RGB(200, 200, 200);
 }
 footer a{
@@ -2291,6 +2294,7 @@ button.stripe-button-el {
 }
 .test-main-col {
     background-color: white;
+    margin-bottom: 20px;
 }
 
 .star-rating i {
