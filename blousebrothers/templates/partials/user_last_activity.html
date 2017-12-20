@@ -45,9 +45,9 @@
                 <span class="count_top"><i class="fa fa-braille"></i> 7 derniers jours</span>
                 <div class="count green">{{ nb_cards_this_week }} fiches</div>
                 {% if pourcentage_progression_fiches < 0 %} 
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ pourcentage_progression_fiches }}% </i> de moins</span>
+                <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>{{ pourcentage_progression_fiches }}% </i></span>
                 {% else %}
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ pourcentage_progression_fiches }}% </i> de plus</span>
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ pourcentage_progression_fiches }}% </i></span>
                 {% endif %}
                 <!--   <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
             </div>
@@ -55,9 +55,9 @@
                 <span class="count_top"><i class="fa fa-clock-o"></i> Temps à réviser</span>
                 <div class="count">{{ revision_time_this_week | smooth_timedelta | default:0 }}</div>
                 {% if revision_progress < 0 %} 
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>{{ revision_progress }}% </i> de moins</span>
+                <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>{{ revision_progress }}% </i></span>
                 {% else %}
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ revision_progress }}% </i> de plus</span>
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ revision_progress }}% </i></span>
                 {% endif %}
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
