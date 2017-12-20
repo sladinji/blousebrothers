@@ -28,7 +28,7 @@ from django.views.generic import (
     FormView,
 )
 from blousebrothers.auth import BBLoginRequiredMixin
-from blousebrothers.confs.models import Item, Speciality
+from blousebrothers.confs.models import Item, Speciality, Conference
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException, CardImage, Tag
@@ -497,6 +497,12 @@ class RevisionHome(TemplateView):
             ) or self.request.GET.getlist(
                 'tags'
             ),
+            last_confs=Conference.objects.exclude(
+                deleted=True,
+            ).filter(
+                products__isnull=False,
+                for_sale=True,
+            ).order_by('-date_created')[:4]
         )
         return ctx
 

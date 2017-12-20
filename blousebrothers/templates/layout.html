@@ -43,7 +43,7 @@ settings file. This will enable the on-the-fly less compiler.
     <div class="row">
         <div class="col-sm-12 col-md-2 logo-wrapper">
             <div class="logo">
-                <a href="{% url 'catalogue:index' %}"><img src="{% static "images/logo_home.png" %}" width=66px alt="Logo BlouseBrothers"></a>
+                <a href="{% url 'cards:home' %}"><img src="{% static "images/logo_home.png" %}" width=66px alt="Logo BlouseBrothers"></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-primary">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -55,14 +55,7 @@ settings file. This will enable the on-the-fly less compiler.
             <div class="top-header">
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
-                        <li class="menu-item-has-children item-megamenu">
-                            <a href="{% url 'cards:root' %}"><span class="fa fa-history fa-lg"></span> {% trans 'Révisions' %}
-                            {% if user.nb_cards_ready %}
-                            <span class="Counter">{{ user.nb_cards_ready }}</span>
-                            {% endif %}
-                            </a>
-                        </li>
-                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'confs:root' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Dossiers' %}
+                        <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'cards:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Tableau de bord' %}
                             {% if user.nb_new_confs %}
                             <span class="Counter">{{ user.nb_new_confs }}
                             </span>
@@ -73,9 +66,6 @@ settings file. This will enable the on-the-fly less compiler.
                             <a href="{% url 'friends:root' %}"><span class="fa fa-users fa-lg"></span> {% trans 'Tutorats' %}
                             {% if user.nb_activ_friendship_offers or user.active_group_invits.count %}
                             <span class="Counter">{{ user.nb_activ_friendship_offers |add:user.active_group_invits.count }}
-                            </span>
-                            {% else %}
-                            <span class="Counter">Nouveau
                             </span>
                             {% endif %}
                             </a>
