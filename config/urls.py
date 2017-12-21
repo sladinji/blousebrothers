@@ -58,8 +58,10 @@ urlpatterns = [
     url(r'^search/', RedirectView.as_view(url='/ecni/catalogue/')),
 
     # Your stuff: custom urls includes go here
-    url(r'^$', view=blousebrothers.users.views.SignupView.as_view(), name='home'),
+    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^signup/$', view=blousebrothers.users.views.SignupView.as_view(), name='signup'),
     url(r'^demologin$', view=blousebrothers.users.views.DemoLoginView.as_view(), name='demologin'),
+    url(r'^demologout$', view=blousebrothers.users.views.DemoLogoutView.as_view(), name='demologout'),
     url(r'', include(application.urls)),
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^select2/', include('django_select2.urls')),

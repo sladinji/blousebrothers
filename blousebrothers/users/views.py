@@ -429,7 +429,7 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         return super().handle_no_permission()
 
     def get_login_url(self):
-        return reverse("home")
+        return reverse("signup")
 
     def get(self, request, *args, **kwargs):
         """
@@ -456,19 +456,20 @@ class DemoLoginView(allauth.account.views.LoginView):
     Update login view for demo user
     """
     def get_success_url(self):
-        spe_id = self.request.POST.get("specialities")
-        user = User.objects.get(username='demo')
-        if 'conf' in self.request.POST:
-            conf = Conference.objects.filter(
-                price=0, for_sale=True, specialities__id__in=[spe_id]
-            ).first()
-            test, created = Test.objects.get_or_create(conf=conf, student=user)
-            if not created:
-                test.delete()
-            test, created = Test.objects.get_or_create(conf=conf, student=user)
-            return reverse('confs:test', kwargs={"slug": conf.slug})
-        else:
-            return reverse('cards:redirect') + "?specialities=" + spe_id
+        search = self.request.POST.get("search")
+        messages.success(self.request, "Tu es maintenant connecté avec le compte de démonstration."
+                         " Clique sur \"CRÉER MON COMPTE\" pour garder l'historique de ta progression !"
+                         )
+        return reverse('cards:revision_groups') + "?search=" + search
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class DemoLogoutView(allauth.account.views.LogoutView):
+    def get(self, *args, **kwargs):
+        ret = super().get(*args, **kwargs)
+        storage = messages.get_messages(self.request)
+        storage.used = True
+        return ret
 
 
 class SignupView(MetadataMixin, allauth.account.views.SignupView):

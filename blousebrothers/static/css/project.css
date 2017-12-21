@@ -2323,8 +2323,7 @@ img.reward {
     border-radius: 50%;
 }
 .reward p {
-    font-family: lobster;
-    font-size: 30pt;
+    font-size: 16pt;
     text-align: center;
     padding-top: 35px;
 }
@@ -2467,6 +2466,25 @@ a.btn.btn-primary.btn-subscribe {
     color:    #edf3f3;
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
+    color:    #edf3f3;
+}
+
+
+.signup ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #edf3f3;
+}
+.signup :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #edf3f3;
+    opacity:  1;
+}
+.signup ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #edf3f3;
+    opacity:  1;
+}
+.signup :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #edf3f3;
+}
+.signup ::-ms-input-placeholder { /* Microsoft Edge */
     color:    #edf3f3;
 }
 img.homecircle{
