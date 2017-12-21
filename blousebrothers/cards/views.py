@@ -507,6 +507,10 @@ class RevisionHome(TemplateView):
         return ctx
 
 
+class RevisionGroups(RevisionHome):
+    template_name = 'cards/revision_groups.html'
+
+
 class ListCardView(RevisionPermissionMixin, ListView):
     model = Deck
     paginate_by = 25

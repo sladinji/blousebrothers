@@ -89,10 +89,14 @@ urlpatterns = [
         view=views.AnkiUploadView.as_view(),
         name='ankiupload'
     ),
-
     url(
         regex=r'^dashboard$',
         view=views.RevisionHome.as_view(),
         name='home'
+    ),
+    url(
+        regex=r'^matieres$',
+        view=views.RevisionGroups.as_view(),
+        name='revision_groups'
     ),
 ]

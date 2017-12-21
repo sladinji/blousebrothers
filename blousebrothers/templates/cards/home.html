@@ -104,7 +104,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6 text-center">
-                    <form method="get" action="{% url 'cards:unseen_cards_list' %}" class="box-search pull-left">
+                    <form method="get" action="{% url 'cards:revision_groups' %}" class="box-search pull-left">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <div class="input-group stylish-input-group">
@@ -140,6 +140,11 @@
                 </a>  
             </div>
             <div class="col-md-6">
+                <a href="{% url 'cards:revision_groups' %}" class="btn">
+                    <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                    <span itemprop="name">Répartition
+                    </span>
+                </a>    
                 <a href="{% url 'cards:create' %}" class="btn">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <span itemprop="name">Créer
