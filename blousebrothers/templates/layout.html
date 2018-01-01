@@ -55,6 +55,7 @@ settings file. This will enable the on-the-fly less compiler.
             <div class="top-header">
                 <div class="collapse navbar-collapse nav-primary">
                     <ul class="boutique-nav main-menu clone-main-menu">
+                        {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu"><a id="btn-conf-home" href="{% url 'cards:home' %}"><span class="fa fa-gamepad fa-lg"></span> {% trans 'Tableau de bord' %}
                             {% if user.nb_new_confs %}
                             <span class="Counter">{{ user.nb_new_confs }}
@@ -70,7 +71,6 @@ settings file. This will enable the on-the-fly less compiler.
                             {% endif %}
                             </a>
                         </li>
-                        {% if request.user.is_authenticated %}
                         <li class="menu-item-has-children item-megamenu">
                             {% if num_unread_notifications > 0 %}
                             {# If user has new notifications - we change account link to go to inbox #}
