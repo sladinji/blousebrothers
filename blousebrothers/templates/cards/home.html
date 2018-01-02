@@ -25,10 +25,12 @@
 {% block content %}
 <div class="container">
     <div class="space hidden-xs"></div>
+    {% if user.last_activities %}
     <h1 class="black-font">
         Dernières actions
     </h1>
     {% include 'partials/user_last_activity.html' with last_activities=user.last_activities %}
+    {% endif %}
     <div class="row">
         <div class="col-xs-6">
             <h2 class="black-font">
