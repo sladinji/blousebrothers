@@ -450,7 +450,6 @@ class Subscription(BBLoginRequiredMixin, TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class DemoLoginView(allauth.account.views.LoginView):
     """
     Update login view for demo user
@@ -460,7 +459,7 @@ class DemoLoginView(allauth.account.views.LoginView):
         messages.success(self.request, "Tu es maintenant connecté avec le compte de démonstration."
                          " Clique sur \"CRÉER MON COMPTE\" pour garder l'historique de ta progression !"
                          )
-        return reverse('cards:revision_groups') + "?search=" + search
+        return reverse('cards:unseen_cards_list') + "?search=" + search
 
 
 @method_decorator(csrf_exempt, name='dispatch')

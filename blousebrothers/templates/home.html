@@ -66,6 +66,7 @@
                   <div class="space"></div>
                   <div class="tcenter">
                   <form method="post" action="{% url 'demologin' %}" class="box-search pull-left">
+                      {% csrf_token %}
                       <div class="panel-heading">
                           <h4 class="panel-title">
                               <div class="input-group stylish-input-group">
