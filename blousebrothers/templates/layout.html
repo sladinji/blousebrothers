@@ -77,6 +77,7 @@ settings file. This will enable the on-the-fly less compiler.
                             <a href="{% url 'customer:notifications-inbox' %}">
                                 <i class="icon-user"></i>
                                 {{ request.user.username }}
+                                {{ request.user.sessions.count }} XP
                                 <span class="label label-important">{{ num_unread_notifications }}</span>
                             </a>
                             {% elif request.user.username == "demo" %}

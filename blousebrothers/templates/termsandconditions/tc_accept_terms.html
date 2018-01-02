@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block title %}Accept Terms and Conditions{% endblock %}
+{% block title %}CGU CGV{% endblock %}
 {% block styles %}
     {{ block.super }}
     <link href="{% static 'termsandconditions/css/view_accept.css' %}" rel="stylesheet">
@@ -13,6 +13,7 @@
 {% block presale %}
 {% endblock %}
 
+{% block extra_slide_class %}signup slide1 slide4{% endblock%}
 {% block content %}
     <section id="termsandconditions-section" title="termsandconditions" data-role="content">
         {{ form.errors }}
