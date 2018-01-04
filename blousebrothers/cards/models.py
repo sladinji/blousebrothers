@@ -149,8 +149,14 @@ class Card(models.Model):
         if tags:
             qs = qs.filter(tags__in=tags)
         if search:
+            and_list = []
+            for element in search.split():
+                and_list.append(Q(content__icontains=element))
+            sub_qry = and_list.pop()
+            for q in and_list:
+                sub_qry &= q
             qs = qs.filter(
-                Q(content__icontains=search) |
+                sub_qry |
                 Q(specialities__name__icontains=search) |
                 Q(tags__name__icontains=search) |
                 Q(items__name__icontains=search)
@@ -253,8 +259,14 @@ class Session(models.Model):
         if self.tags.all():
             qs = qs.filter(card__items__in=self.items.all())
         if self.search:
+            and_list = []
+            for element in self.search.split():
+                and_list.append(Q(card__content__icontains=element))
+            sub_qry = and_list.pop()
+            for q in and_list:
+                sub_qry &= q
             qs = qs.filter(
-                Q(card__content__icontains=self.search) |
+                sub_qry |
                 Q(card__specialities__name__icontains=self.search) |
                 Q(card__tags__name__icontains=self.search) |
                 Q(card__items__name__icontains=self.search)
@@ -267,8 +279,14 @@ class Session(models.Model):
         """
         qs = Card.objects.for_user(self.student)
         if self.search:
+            and_list = []
+            for element in self.search.split():
+                and_list.append(Q(content__icontains=element))
+            sub_qry = and_list.pop()
+            for q in and_list:
+                sub_qry &= q
             qs = qs.filter(
-                Q(content__icontains=self.search) |
+                sub_qry |
                 Q(specialities__name__icontains=self.search) |
                 Q(tags__name__icontains=self.search) |
                 Q(items__name__icontains=self.search)

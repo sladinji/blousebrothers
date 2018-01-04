@@ -520,10 +520,13 @@ class ListCardView(RevisionPermissionMixin, ListView):
         qry = self.model.objects.filter(student=self.request.user, trashed=self.trashed)
         qry = qry.prefetch_related('card')
         if self.request.GET.get('search', False):
-            qry = qry.filter(
-                Q(card__content__icontains=self.request.GET['search']) |
-                Q(card__tags__name__icontains=self.request.GET['search'])
-            )
+            and_list = []
+            for element in self.request.GET['search'].split():
+                and_list.append(Q(card__content__icontains=element))
+            sub_qry = and_list.pop()
+            for q in and_list:
+                sub_qry &= q
+            qry = qry.filter(sub_qry | Q(card__tags__name__icontains=self.request.GET['search']))
         for filters in ['specialities', 'items', 'tags']:
             ids = self.request.GET.getlist(filters)
             if ids:
