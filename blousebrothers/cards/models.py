@@ -161,7 +161,7 @@ class Card(models.Model):
                 Q(tags__name__icontains=search) |
                 Q(items__name__icontains=search)
             )
-        return qs.all()
+        return qs.distinct().all()
 
 
 def apkg_directory_path(apkg, filename):
