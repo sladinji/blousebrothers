@@ -124,7 +124,7 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         Check if trial period is over and if user is allowed to access requested object.
         """
         #  Check Trial Period
-        if self.request.user.is_authenticated() and self.request.user.deck.count() > 500:
+        if self.request.user.is_authenticated() and self.request.user.deck.count() > 50:
             try:
                 if not self.request.user.subscription.type.product.attr.access_cards:
                     return False
