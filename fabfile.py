@@ -19,7 +19,7 @@ def send_simple_message(msg):
                 auth=("api", "key-0cb37ccb0c2de16fc921df70228346bc"),
                 data={"from": "Futur Bot <noreply@blousebrothers.fr>",
                       "to": ["julien.almarcha@gmail.com", "guillaume@blousebrothers.fr"],
-                      "subject": "https://labresult.fr updated",
+                      "subject": "https://137.74.25.128 updated",
                       "text": msg})
 
 
@@ -41,7 +41,7 @@ def deploy():
         run("docker-compose run django ./manage.py rebuild_index --noinput")
 
 
-@hosts('ubuntu@labresult.fr')
+@hosts('ubuntu@137.74.25.128')
 def futur(branch='master',reset='no'):
     """
     Deploy on futur
@@ -87,7 +87,7 @@ def proddb(pre=False, mangoreset='yes'):
 class FabricException(Exception):
     pass
 
-@hosts('ubuntu@labresult.fr')
+@hosts('ubuntu@137.74.25.128')
 def backup():
     with settings(abort_exception = FabricException):
         try:
@@ -98,7 +98,7 @@ def backup():
         except Exception:
     	    sentry.captureException()
 
-@hosts('ubuntu@labresult.fr')
+@hosts('ubuntu@137.74.25.128')
 def preproddb():
     """
     Dump prrprod and loat it locallly.
@@ -149,7 +149,7 @@ def get_migrations():
         get("%s/blousebrothers/%s/migrations/*.py" % (code_dir, app), "blousebrothers/%s/migrations/" % app)
 
 
-@hosts('ubuntu@labresult.fr')
+@hosts('ubuntu@137.74.25.128')
 def futur_publish_confs():
     """
     Publish_confs on futur.
@@ -159,14 +159,14 @@ def futur_publish_confs():
             run("docker-compose run django ./manage.py publish_confs")
 
 
-@hosts('ubuntu@labresult.fr')
+@hosts('ubuntu@137.74.25.128')
 def futur_gen_code():
     with cd(code_dir):
         with prefix("source blouserc"):
             run('./manage.py gen_code "https://s3.amazonaws.com/blousebrothers/imgemail/members.csv"')
 
 
-@hosts('ubuntu@labresult.fr')
+@hosts('ubuntu@137.74.25.128')
 def futur_syncdb():
     with cd(code_dir):
         with prefix("source blouserc"):
