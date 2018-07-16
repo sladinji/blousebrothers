@@ -115,7 +115,7 @@ MIDDLEWARE = (
     'oscar.apps.basket.middleware.BasketMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'googlebot.middleware.GooglebotMiddleware',
+  #  'googlebot.middleware.GooglebotMiddleware',
     'termsandconditions.middleware.TermsAndConditionsRedirectMiddleware',
 
 

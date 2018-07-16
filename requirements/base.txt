@@ -2,101 +2,101 @@
 # like Pillow and psycopg2
 # See http://bitly.com/wheel-building-fails-CPython-35
 # Verified bug on Python 3.5.1
-wheel==0.29.0
+wheel
 
 # Bleeding edge Django
-django==1.11
+django<2.0
 
 # Configuration
-django-environ==0.4.0
-whitenoise==3.2
+django-environ
+whitenoise
 
 
 # Forms
-django-braces==1.9.0
-django-crispy-forms==1.6.0
-django-floppyforms==1.6.2
+django-braces
+django-crispy-forms
+django-floppyforms
 
 # Models
-django-model-utils==2.5
+django-model-utils
 
 # Images
-Pillow==5.2.0
+Pillow
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
-django-allauth==0.36
+django-allauth
 
 
 # Python-PostgreSQL Database Adapter
-psycopg2==2.6.1
+psycopg2
 
 # Unicode slugification
-unicode-slugify==0.1.3
-django-autoslug==1.9.3
+unicode-slugify
+django-autoslug
 
 # Time zones support
-pytz==2016.4
+pytz
 
 # Redis support
-django-redis==4.4.3
-redis>=2.10.0
+django-redis
+redis
 
 
 
 # Your custom requirements go here
-django-shortuuidfield==0.1.3
-django-helpdesk==0.1.18
-feedparser==5.2.1
-django-constance[database]==2.0.0
-django-picklefield==0.3.2
-django-axes==2.3.2
-django-oscar==1.6
-shortuuid==0.4.3
+django-shortuuidfield
+django-helpdesk
+feedparser
+django-constance[database]
+django-picklefield
+django-axes
+django-oscar
+shortuuid
 django_easy_pdf
-django-angular==0.8.4
-django-nested-admin==3.0.16
-django-bootstrap3==8.2.1
-django-bootstrap-dynamic-formsets==0.5.0
-django-multiupload==0.5.2
-django-mailgun==0.9.1
-django-select2==5.8.10
-django-activeurl==0.1.9
-django-cookie-law==1.0.13
-django-tinycontent==0.6.1
-stripe==1.55.2
-django-image-cropping==1.0.4
-easy_thumbnails==2.3
-django-countries==4.3
+django-angular
+django-nested-admin
+django-bootstrap3
+django-bootstrap-dynamic-formsets
+django-multiupload
+django-mailgun
+django-select2
+django-activeurl
+django-cookie-law
+django-tinycontent
+stripe
+django-image-cropping
+easy_thumbnails
+django-countries
 
 # mongopay
 #django-mangopay
-money==1.3.0
-django-jsonfield==1.0.1
-django-money==0.10.2
-django-moneyfield==0.2.1
-django-filepicker==0.2.2
+money
+django-jsonfield
+django-money
+django-moneyfield
+django-filepicker
 mangopaysdk==2.1.1
-django-localflavor==1.4.1
+django-localflavor
 
 # Static and Media Storage
 # ------------------------------------------------
-boto==2.40.0
-django-storages-redux==1.3.2
+boto
+django-storages-redux
 
-django-hijack==2.1.3
-django-hijack-admin==2.1.3
-django-analytical==2.2.2
-python-dateutil==2.6.0
-django-robots==3.0
-django-cuser==2017.3.16
-django-social-share==1.1.1
-django-termsandconditions==1.1.10
-django-meta==1.3.2
-django-invitations==1.9
-django-disqus==0.5
-pysolr==3.6.0
-mailchimp3==2.0.10
+django-hijack
+django-hijack-admin
+django-analytical
+python-dateutil
+django-robots
+django-cuser
+django-social-share
+django-termsandconditions
+django-meta
+django-invitations
+django-disqus
+pysolr
+mailchimp3
 git+https://github.com/sladinji/django-oscar-paypal.git
 git+https://github.com/disqus/disqus-python.git
 
