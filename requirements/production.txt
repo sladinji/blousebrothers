@@ -11,7 +11,7 @@ gunicorn==19.6.0
 
 # Email backends for Mailgun, Postmark, SendGrid and more
 # -------------------------------------------------------
-django-anymail==0.3.1
+django-anymail==3.0
 
 
 

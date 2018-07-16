@@ -5,7 +5,7 @@
 wheel==0.29.0
 
 # Bleeding edge Django
-django==1.9.7
+django==1.11
 
 # Configuration
 django-environ==0.4.0
@@ -21,11 +21,11 @@ django-floppyforms==1.6.2
 django-model-utils==2.5
 
 # Images
-Pillow==3.2.0
+Pillow==5.2.0
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
-django-allauth==0.25.2
+django-allauth==0.36
 
 
 # Python-PostgreSQL Database Adapter
@@ -51,9 +51,9 @@ feedparser==5.2.1
 django-constance[database]==2.0.0
 django-picklefield==0.3.2
 django-axes==2.3.2
-django-oscar==1.4
+django-oscar==1.6
 shortuuid==0.4.3
-weasyprint==0.36
+django_easy_pdf
 django-angular==0.8.4
 django-nested-admin==3.0.16
 django-bootstrap3==8.2.1

@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 from oscar.core.loading import get_model
-from django_weasyprint.views import PDFTemplateResponseMixin
+from easy_pdf.views import PDFTemplateResponseMixin
 
 
 Order = get_model('order', 'Order')
