@@ -124,7 +124,7 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         Check if trial period is over and if user is allowed to access requested object.
         """
         #  Check Trial Period
-        if self.request.user.is_authenticated() and self.request.user.deck.count() > 50:
+        if self.request.user.is_authenticated and self.request.user.deck.count() > 50:
             try:
                 if not self.request.user.subscription.type.product.attr.access_cards:
                     return False
@@ -133,7 +133,7 @@ class RevisionPermissionMixin(UserPassesTestMixin):
 
         #  Check if user is authenticated to access ListView (UnseenCardsListView, ListTrashedCardView ...)
         if not hasattr(self, 'get_object'):
-            if self.request.user.is_authenticated():
+            if self.request.user.is_authenticated:
                 return True
             else:
                 return False
@@ -144,7 +144,7 @@ class RevisionPermissionMixin(UserPassesTestMixin):
             card = self.object
         else:
             card = self.object.card
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return card.public
         else:
             return Card.objects.for_user(self.request.user).filter(id=card.id).exists() or \
@@ -154,7 +154,7 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         """
         Ask user to login or to subscribe to a cards plan.
         """
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return BBLoginRequiredMixin.handle_no_permission(self)
         try:
             if not self.student.subscription.type.product.attr.access_cards:
@@ -232,7 +232,7 @@ class UpdateCardView(MockDeckMixin, RevisionPermissionMixin, UpdateView):
     form_class = UpdateCardForm
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return redirect(reverse('account_login'))
         else:
             return super().get(request, *args, **kwargs)
@@ -365,7 +365,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
     def get(self, request, *args, **kwargs):
         card = self.get_object()
 
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             obj = Mock()
             obj.card = card
         else:
@@ -379,7 +379,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         context = {}
         context.update(is_favorite=self.is_favorite, **kwargs)
         context.update(dsp_card_on_load=self.kwargs['dsp_card_on_load'] == "True")
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             context.update(other_versions=len(context['object'].card.family(self.request.user)) > 1)
         context.update(zen=True)
         return context
@@ -397,7 +397,7 @@ class RevisionView(RevisionPermissionMixin, DetailView):
         deck.save()
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return redirect(reverse('account_login'))
         self.object = self.get_object()
         if 'easy' in request.POST:
@@ -420,7 +420,7 @@ class RevisionHome(TemplateView):
         ctx = super().get_context_data(*args, **kwargs)
         user = self.request.user
         qry = Card.objects.for_user(user)
-        if user.is_authenticated():
+        if user.is_authenticated:
             deck = user.deck
             ctx.update(**user.stats)
         else:

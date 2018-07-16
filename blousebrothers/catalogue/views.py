@@ -20,14 +20,14 @@ class CatalogueView(CoreCatalogueView):
 
     def get(self, *args, **kwargs):
         check_bonus(self.request, self.request.user)
-        if self.request.user.is_authenticated() and not self.request.user.gave_all_mangopay_info:
+        if self.request.user.is_authenticated and not self.request.user.gave_all_mangopay_info:
             return redirect(reverse("users:wallet"))
-        elif not self.request.user.is_authenticated() \
-                or self.request.user.is_authenticated() and not self.request.user.subscription \
+        elif not self.request.user.is_authenticated \
+                or self.request.user.is_authenticated and not self.request.user.subscription \
                 and 'sort_by' not in self.request.GET:
             self.request.GET = self.request.GET.copy()
             self.request.GET.update(sort_by="price-asc")
-        elif self.request.user.is_authenticated() and self.request.user.subscription \
+        elif self.request.user.is_authenticated and self.request.user.subscription \
                 and 'sort_by' not in self.request.GET:
             self.request.GET = self.request.GET.copy()
             self.request.GET.update(sort_by="newest")

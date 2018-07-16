@@ -19,7 +19,7 @@ class BrowsableProductManager(BaseBrowsableProductManager):
         qs = qs.prefetch_related('stockrecords')
         qs = qs.exclude(conf__deleted=True)
         user = CuserMiddleware.get_user()
-        if user and user.is_authenticated():
+        if user and user.is_authenticated:
             qs = qs.prefetch_related(
                 Prefetch(
                     'conf__tests',

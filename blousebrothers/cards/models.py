@@ -62,7 +62,7 @@ class ForUserQuerySet(models.query.QuerySet):
         """
         Card accessible by user
         """
-        if user.is_authenticated():
+        if user.is_authenticated:
             return self.filter(
                 Q(author=user) | Q(public=True) | Q(author__in=[
                     x.from_user for x in user.has_friendship.filter(share_cards=True)
