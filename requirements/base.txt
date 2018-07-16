@@ -53,7 +53,7 @@ django-picklefield
 django-axes
 django-oscar
 shortuuid
-django_easy_pdf
+weasyprint
 django-angular
 django-nested-admin
 django-bootstrap3

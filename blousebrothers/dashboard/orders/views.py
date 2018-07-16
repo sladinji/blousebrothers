@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 from oscar.core.loading import get_model
-from easy_pdf.views import PDFTemplateResponseMixin
+from django_weasyprint.views import WeasyTemplateResponseMixin
 
 
 Order = get_model('order', 'Order')
@@ -20,7 +20,7 @@ class PDFView(LoginRequiredMixin, DetailView):
         return super().get_context_data(print_btn=self.print_btn, **kwargs)
 
 
-class PDFViewPrintView(PDFTemplateResponseMixin, PDFView):
+class PDFViewPrintView(WeasyTemplateResponseMixin, PDFView):
     print_btn = False
 
     def get_filename(self):
