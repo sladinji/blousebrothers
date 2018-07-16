@@ -137,4 +137,4 @@ INSTALLED_APPS += ("anymail", )
 ANYMAIL = {
     "MAILGUN_API_KEY": 'key-0cb37ccb0c2de16fc921df70228346bc',
 }
-EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
