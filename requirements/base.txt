@@ -8,101 +8,102 @@ wheel
 django<2.0
 
 # Configuration
-django-environ
-whitenoise
+django-environ==0.4.5
+whitenoise==3.3.1
 
 
 # Forms
-django-braces
-django-crispy-forms
-django-floppyforms
+django-braces==1.13.0
+django-crispy-forms==1.7.2
+django-floppyforms==1.7.0
 
 # Models
-django-model-utils
+django-model-utils==3.1.2
 
 # Images
-Pillow
+Pillow==5.2.0
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
-django-allauth
+django-allauth==0.36.0
 
 
 # Python-PostgreSQL Database Adapter
-psycopg2
+psycopg2==2.7.5
 
 # Unicode slugification
-unicode-slugify
-django-autoslug
+unicode-slugify==0.1.3
+django-autoslug==1.9.3
 
 # Time zones support
-pytz
+pytz==2018.5
 
 # Redis support
-django-redis
-redis
+django-redis==4.9.0
+redis==2.10.6
 
 
 
 # Your custom requirements go here
-django-shortuuidfield
-django-helpdesk
-feedparser
+django-shortuuidfield==0.1.3
+django-helpdesk==0.2.8
+feedparser==5.2.1
+django-constance==2.2.0
 django-constance[database]
-django-picklefield
-django-axes
-django-oscar
-shortuuid
-weasyprint
-django-angular
+django-picklefield==1.0.0
+django-axes==4.4.0
+django-oscar==1.6.2
+shortuuid==0.5.0
+django-weasyprint==0.5.4
+django-angular==2.0.3
 django-nested-admin
-django-bootstrap3
-django-bootstrap-dynamic-formsets
-django-multiupload
-django-mailgun
-django-select2
-django-activeurl
-django-cookie-law
-django-tinycontent
-stripe
-django-image-cropping
+django-bootstrap3==10.0.1
+django-bootstrap-dynamic-formsets==0.5.0
+django-multiupload==0.5.2
+django-mailgun==0.9.1
+django-select2==6.1.0
+django-activeurl==0.1.12
+django-cookie-law==2.0.1
+django-tinycontent==0.7.1
+stripe==2.0.1
+django-image-cropping==1.1.0
 easy_thumbnails
-django-countries
+django-countries==5.3.1
 
 # mongopay
 #django-mangopay
-money
-django-jsonfield
-django-money
-django-moneyfield
-django-filepicker
+money==1.3.0
+django-jsonfield==1.0.1
+django-money==0.14
+django-moneyfield==0.2.1
+django-filepicker==0.2.2
 mangopaysdk==2.1.1
-django-localflavor
+django-localflavor==2.0
 
 # Static and Media Storage
 # ------------------------------------------------
 boto
-django-storages
+django-storages==1.6.6
 
-django-hijack
-django-hijack-admin
-django-analytical
-python-dateutil
-django-robots
-django-cuser
-django-social-share
-django-termsandconditions
-django-meta
-django-invitations
-django-disqus
-pysolr
-mailchimp3
+django-hijack==2.1.9
+django-hijack-admin==2.1.9
+django-analytical==2.4.0
+python-dateutil==2.7.3
+django-robots==3.0
+django-cuser==2017.3.16
+django-social-share==1.3.0
+django-termsandconditions==1.2.11
+django-meta==1.4.1
+django-invitations==1.9.2
+django-disqus==0.5
+pysolr==3.7.0
+mailchimp3==3.0.4
 git+https://github.com/sladinji/django-oscar-paypal.git
 git+https://github.com/disqus/disqus-python.git
 
 # Raven is the Sentry client
 # --------------------------
-raven
+raven==6.9.0
 
 # Add a second requirements to speed up Docker image build
 -r base2.txt
