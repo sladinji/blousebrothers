@@ -61,7 +61,7 @@ class Conference(ModelMeta, models.Model):
         return self.title
 
     owner = models.ForeignKey('users.User', blank=False, null=False,
-                              related_name="created_confs")
+                              related_name="created_confs", on_delete=models.CASCADE)
     """ Owner/creator """
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     title = models.CharField(_('Titre'), blank=False, null=False, max_length=64)
@@ -226,7 +226,7 @@ class ConferenceImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Légende"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
-    conf = models.ForeignKey('Conference', related_name='images')
+    conf = models.ForeignKey('Conference', related_name='images', on_delete=models.CASCADE)
 
 
 class Item(models.Model):
@@ -241,7 +241,7 @@ class Item(models.Model):
 
 
 class ItemKeyWord(models.Model):
-    item = models.ForeignKey('Item', related_name='kwords')
+    item = models.ForeignKey('Item', related_name='kwords', on_delete=models.CASCADE)
     value = models.CharField('Valeur', max_length=128, blank=False)
 
     def __str__(self):
@@ -264,7 +264,8 @@ class Speciality(models.Model):
 
 class Question(models.Model):
     question = models.TextField(_("Enoncé"), blank=False, null=False)
-    conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"))
+    conf = models.ForeignKey('Conference', related_name='questions', verbose_name=_("Conference"),
+                             on_delete=models.CASCADE)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
     coefficient = models.PositiveIntegerField(_("Coéfficient"), default=1)
     explaination = models.TextField(_("Remarque globale pour la correction"), blank=True, null=True)
@@ -302,9 +303,9 @@ class Question(models.Model):
 
 
 class QuestionComment(models.Model):
-    question = models.ForeignKey(Question, related_name="comments")
+    question = models.ForeignKey(Question, related_name="comments", on_delete=models.CASCADE)
     student = models.ForeignKey('users.User', blank=False, null=False,
-                                related_name="comments")
+                                related_name="comments", on_delete=models.CASCADE)
     comment = models.TextField(_("Explication"), blank=True, null=True)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
 
@@ -312,7 +313,7 @@ class QuestionComment(models.Model):
 class Answer(models.Model):
     class Meta:
         ordering = ['index']
-    question = models.ForeignKey(Question, related_name="answers")
+    question = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE)
     answer = models.TextField(_("Proposition"), blank=True, null=True)
     explaination = models.TextField(_("Explication"), blank=True, null=True)
     correct = models.BooleanField(_("Correct"), default=False)
@@ -337,7 +338,7 @@ class AnswerImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
-    answer = models.ForeignKey('Answer', related_name='images')
+    answer = models.ForeignKey('Answer', related_name='images', on_delete=models.CASCADE)
 
 
 def question_image_directory_path(question_image, filename):
@@ -357,7 +358,7 @@ class QuestionImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
-    question = models.ForeignKey('Question', related_name='images')
+    question = models.ForeignKey('Question', related_name='images', on_delete=models.CASCADE)
 
 
 class QuestionExplainationImage(models.Model):
@@ -366,13 +367,13 @@ class QuestionExplainationImage(models.Model):
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     caption = models.CharField(_("Libellé"), max_length=500, blank=True)
     index = models.PositiveIntegerField(_("Ordre"), default=0)
-    question = models.ForeignKey('Question', related_name='explaination_images')
+    question = models.ForeignKey('Question', related_name='explaination_images', on_delete=models.CASCADE)
 
 
 class Test(models.Model):
     student = models.ForeignKey('users.User', blank=False, null=False,
-                                related_name="tests")
-    conf = models.ForeignKey('Conference', related_name='tests')
+                                related_name="tests", on_delete=models.CASCADE)
+    conf = models.ForeignKey('Conference', related_name='tests', on_delete=models.CASCADE)
     date_created = models.DateTimeField(_("Date created"), auto_now_add=True)
     progress = models.PositiveIntegerField(_("Progression"), default=0)
     max_point = models.PositiveIntegerField(_("Point"), default=0)
@@ -454,8 +455,8 @@ class Test(models.Model):
 
 
 class TestAnswer(models.Model):
-    test = models.ForeignKey('Test', related_name='answers')
-    question = models.ForeignKey('Question', related_name='test_answers')
+    test = models.ForeignKey('Test', related_name='answers', on_delete=models.CASCADE)
+    question = models.ForeignKey('Question', related_name='test_answers', on_delete=models.CASCADE)
     time_taken = models.TimeField(_("Temps passé"), null=True)
     given_answers = models.CharField(_("Réponses"), max_length=30, blank=True,
                                      validators=[int_list_validator])
@@ -493,15 +494,15 @@ class SubscriptionType(models.Model):
     price = models.DecimalField(_("Prix"), max_digits=6, decimal_places=2, default=0)
     bonus = models.DecimalField(_("Montant crédit wallet"), max_digits=6, decimal_places=2, default=0)
     bonus_sponsor = models.DecimalField(_("Montant parrainage"), max_digits=6, decimal_places=2, default=0)
-    product = models.ForeignKey('catalogue.Product', null=False, related_name="subscription")
+    product = models.ForeignKey('catalogue.Product', null=False, related_name="subscription", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
 class Subscription(models.Model):
-    user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs")
-    type = models.ForeignKey('SubscriptionType', related_name="subs", blank=False, null=False)
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="subs", on_delete=models.CASCADE)
+    type = models.ForeignKey('SubscriptionType', related_name="subs", blank=False, null=False, on_delete=models.CASCADE)
     date_created = models.DateField(_("Date created"), auto_now_add=True)
     date_over = models.DateField(_("Valide jusqu'au"), null=False)
     price_paid = models.DecimalField(_("Vendu pour"), max_digits=6, decimal_places=2, default=0)
@@ -528,30 +529,30 @@ class Classifier(models.Model):
 
 
 class Prediction(models.Model):
-    question = models.ForeignKey('Question', related_name="prediction")
-    classifier = models.ForeignKey('Classifier', related_name="prediction")
+    question = models.ForeignKey('Question', related_name="prediction", on_delete=models.CASCADE)
+    classifier = models.ForeignKey('Classifier', related_name="prediction", on_delete=models.CASCADE)
     items = models.ManyToManyField('Item', verbose_name=("Items"), related_name='prediction', blank=True)
     specialities = models.ManyToManyField('Speciality', verbose_name=_('Spécialités'), related_name='prediction',
                                           blank=True)
 
 
 class PredictionValidation(models.Model):
-    user = models.ForeignKey('users.User', blank=False, null=False, related_name="prediction_validation")
-    prediction = models.ForeignKey('Prediction', blank=False, null=False, related_name="prediction_validation")
+    user = models.ForeignKey('users.User', blank=False, null=False, related_name="prediction_validation", on_delete=models.CASCADE)
+    prediction = models.ForeignKey('Prediction', blank=False, null=False, related_name="prediction_validation", on_delete=models.CASCADE)
     valid = models.NullBooleanField(default=None)
     date_created = models.DateField(_("Date created"), auto_now_add=True)
     date_modified = models.DateField(_("Date modified"), auto_now=True)
 
 
 class StatsSpe(models.Model):
-    speciality = models.ForeignKey('Speciality', related_name="stats")
+    speciality = models.ForeignKey('Speciality', related_name="stats", on_delete=models.CASCADE)
     average = models.DecimalField(_("Moyenne"), max_digits=6, decimal_places=2, default=0)
     median = models.DecimalField(_("Médianne"), max_digits=6, decimal_places=2, default=0)
     std_dev = models.DecimalField(_("Écart-type"), max_digits=6, decimal_places=2, default=0)
 
 
 class StatsItem(models.Model):
-    item = models.ForeignKey('Item', related_name="stats")
+    item = models.ForeignKey('Item', related_name="stats", on_delete=models.CASCADE)
     average = models.DecimalField(_("Moyenne"), max_digits=6, decimal_places=2, default=0)
     median = models.DecimalField(_("Médianne"), max_digits=6, decimal_places=2, default=0)
     std_dev = models.DecimalField(_("Écart-type"), max_digits=6, decimal_places=2, default=0)

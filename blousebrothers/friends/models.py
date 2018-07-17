@@ -21,8 +21,8 @@ class FriendShipRequest(models.Model):
 
 
 class Relationship(models.Model):
-    from_user = models.ForeignKey('users.User', related_name='gives_friendship')
-    to_user = models.ForeignKey('users.User', related_name='has_friendship')
+    from_user = models.ForeignKey('users.User', related_name='gives_friendship', on_delete=models.CASCADE)
+    to_user = models.ForeignKey('users.User', related_name='has_friendship', on_delete=models.CASCADE)
     share_cards = models.BooleanField(default=True)
     share_results = models.BooleanField(default=True)
     share_confs = models.BooleanField(default=True)
@@ -77,7 +77,8 @@ class Group(models.Model):
                             )
     avatar = ImageCropField(_("Avatar"), upload_to=group_avatar_path, max_length=255, null=True)
     cropping = ImageRatioField('avatar', '430x360', free_crop=True)
-    university = models.ForeignKey('users.University', blank=True, null=True, verbose_name=_("Ville"))
+    university = models.ForeignKey('users.University', blank=True, null=True, on_delete=models.SET_NULL,
+                                   verbose_name=_("Ville"))
 
     def __str__(self):
         if self.university:

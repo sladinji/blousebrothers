@@ -179,7 +179,7 @@ class User(AbstractUser):
     """Comes from cookie cutter.import..."""
     sponsor_code = models.CharField(_("Code Parrain"), max_length=8, default=gen_sponsor_code, unique=True)
     """Code referencing that user in case of sponsorship"""
-    sponsor = models.ForeignKey('self', null=True, blank=True)
+    sponsor = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
     """Reference to the sponsor user"""
     uuid = ShortUUIDField(unique=True, db_index=True)
     """UUID than can be used in public link to identify user"""
@@ -213,7 +213,8 @@ class User(AbstractUser):
     """Date when request to be conferencier was made"""
     is_patriot = models.BooleanField("Conférencier", default=False)
     """Patriot will offer free stuff to students of his university"""
-    university = models.ForeignKey('University', blank=False, null=True, verbose_name=_("Ville de CHU actuelle"))
+    university = models.ForeignKey('University', blank=False, null=True, verbose_name=_("Ville de CHU actuelle"),
+                                   on_delete=models.SET_NULL)
     """University"""
     degree = models.CharField(_("Niveau"), max_length=10, choices=DEGREE_LEVEL,
                               blank=False, default=None, null=True)
@@ -389,7 +390,10 @@ class User(AbstractUser):
 
     @property
     def wallet(self):
-        return self._get_or_create_wallet("{}'s personal wallet".format(self.username))
+        try:
+            return self._get_or_create_wallet("{}'s personal wallet".format(self.username))
+        except Exception:
+            return None
 
     @property
     def wallet_bonus(self):

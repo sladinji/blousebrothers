@@ -82,7 +82,7 @@ django-localflavor
 # Static and Media Storage
 # ------------------------------------------------
 boto
-django-storages-redux
+django-storages
 
 django-hijack
 django-hijack-admin

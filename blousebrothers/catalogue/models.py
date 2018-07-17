@@ -9,7 +9,7 @@ from blousebrothers.confs.models import Test
 
 class Product(AbstractProduct):
     conf = models.ForeignKey('confs.Conference', related_name='products', default=None,
-                             null=True)
+                             null=True, on_delete=models.SET_NULL)
     for_sale = models.BooleanField(default=False)
     interest_rating = models.SmallIntegerField(_("Intérêt global du dossier"), default=0)
     clarity_rating = models.SmallIntegerField(_("Clarté du dossier"), default=0)

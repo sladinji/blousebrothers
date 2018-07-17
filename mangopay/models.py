@@ -86,7 +86,7 @@ class MangoPayUser(models.Model):
     last_edit_timestamp = models.DateTimeField(auto_now=True, null=True)
 
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
-    user = models.ForeignKey(auth_user_model, related_name="mangopay_users")
+    user = models.ForeignKey(auth_user_model, related_name="mangopay_users", on_delete=models.CASCADE)
     type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES,
                             null=True)
     first_name = models.CharField(null=True, blank=True, max_length=99)
@@ -283,7 +283,7 @@ class MangoPayLegalUser(MangoPayUser):
 class MangoPayDocument(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
     mangopay_user = models.ForeignKey(MangoPayUser,
-                                      related_name="mangopay_documents")
+                                      related_name="mangopay_documents", on_delete=models.CASCADE)
     type = models.CharField(max_length=2,
                             choices=DOCUMENT_TYPE_CHOICES)
     status = models.CharField(blank=True, null=True, max_length=1,
@@ -344,7 +344,7 @@ def page_storage():
 
 class MangoPayPage(models.Model):
     document = models.ForeignKey(MangoPayDocument,
-                                 related_name="mangopay_pages")
+                                 related_name="mangopay_pages", on_delete=models.CASCADE)
     file = django_filepicker.models.FPUrlField(
         max_length=255,
         additional_params={
@@ -368,7 +368,7 @@ class MangoPayPage(models.Model):
 
 class MangoPayBankAccount(models.Model):
     mangopay_user = models.ForeignKey(MangoPayUser,
-                                      related_name="mangopay_bank_accounts")
+                                      related_name="mangopay_bank_accounts", on_delete=models.CASCADE)
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
 
     address = models.CharField(max_length=254)
@@ -454,7 +454,7 @@ class MangoPayBankAccount(models.Model):
 class MangoPayWallet(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
     mangopay_user = models.ForeignKey(
-        MangoPayUser, related_name="mangopay_wallets")
+        MangoPayUser, related_name="mangopay_wallets", on_delete=models.CASCADE)
     currency = models.CharField(max_length=3, default="EUR")
     description = models.CharField(max_length=128, default="EUR")
 
@@ -480,8 +480,8 @@ class MangoPayWallet(models.Model):
 
 class MangoPayPayIn(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
-    mangopay_user = models.ForeignKey(MangoPayUser, related_name="mangopay_payins")
-    mangopay_wallet = models.ForeignKey(MangoPayWallet, related_name="mangopay_payins")
+    mangopay_user = models.ForeignKey(MangoPayUser, related_name="mangopay_payins", on_delete=models.CASCADE)
+    mangopay_wallet = models.ForeignKey(MangoPayWallet, related_name="mangopay_payins", on_delete=models.CASCADE)
 
     execution_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=9, choices=TRANSACTION_STATUS_CHOICES,
@@ -494,7 +494,7 @@ class MangoPayPayIn(models.Model):
     type = models.CharField(null=False, blank=False, choices=MANGOPAY_PAYIN_CHOICES, max_length=10)
 
     # Pay in by card via web - mangopay_card needs custom validation so it's not null on save
-    mangopay_card = models.ForeignKey("MangoPayCard", related_name="mangopay_payins", null=True, blank=True)
+    mangopay_card = models.ForeignKey("MangoPayCard", related_name="mangopay_payins", null=True, blank=True, on_delete=models.SET_NULL)
     secure_mode_redirect_url = models.URLField(null=True, blank=True)
 
     # Pay in via bank wire
@@ -606,11 +606,11 @@ class MangoPayPayInBankWire(MangoPayPayIn):
 class MangoPayPayOut(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
     mangopay_user = models.ForeignKey(MangoPayUser,
-                                      related_name="mangopay_payouts")
+                                      related_name="mangopay_payouts", on_delete=models.CASCADE)
     mangopay_wallet = models.ForeignKey(MangoPayWallet,
-                                        related_name="mangopay_payouts")
+                                        related_name="mangopay_payouts", on_delete=models.CASCADE)
     mangopay_bank_account = models.ForeignKey(MangoPayBankAccount,
-                                              related_name="mangopay_payouts")
+                                              related_name="mangopay_payouts", on_delete=models.CASCADE)
     execution_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=9, choices=TRANSACTION_STATUS_CHOICES,
                               blank=True, null=True)
@@ -672,10 +672,10 @@ class MangoPayCard(models.Model):
 class MangoPayCardRegistration(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
     mangopay_user = models.ForeignKey(
-        MangoPayUser, related_name="mangopay_card_registrations")
+        MangoPayUser, related_name="mangopay_card_registrations", on_delete=models.CASCADE)
     mangopay_card = models.OneToOneField(
         MangoPayCard, null=True, blank=True,
-        related_name="mangopay_card_registration")
+        related_name="mangopay_card_registration", on_delete=models.SET_NULL)
 
     def create(self, currency):
         client = get_mangopay_api_client()
@@ -721,9 +721,9 @@ class MangoPayCardRegistration(models.Model):
 class MangoPayRefund(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
     mangopay_user = models.ForeignKey(MangoPayUser,
-                                      related_name="mangopay_refunds")
+                                      related_name="mangopay_refunds", on_delete=models.CASCADE)
     mangopay_pay_in = models.ForeignKey(MangoPayPayIn,
-                                        related_name="mangopay_refunds")
+                                        related_name="mangopay_refunds", on_delete=models.CASCADE)
     execution_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=9, choices=TRANSACTION_STATUS_CHOICES,
                               blank=True, null=True)
@@ -747,9 +747,9 @@ class MangoPayRefund(models.Model):
 class MangoPayTransfer(models.Model):
     mangopay_id = models.PositiveIntegerField(null=True, blank=True)
     mangopay_debited_wallet = models.ForeignKey(
-        MangoPayWallet, related_name="mangopay_debited_wallets")
+        MangoPayWallet, related_name="mangopay_debited_wallets", on_delete=models.CASCADE)
     mangopay_credited_wallet = models.ForeignKey(
-        MangoPayWallet, related_name="mangopay_credited_wallets")
+        MangoPayWallet, related_name="mangopay_credited_wallets", on_delete=models.CASCADE)
     debited_funds = MoneyField(default=0, default_currency="EUR",
                                decimal_places=2, max_digits=12)
     execution_date = models.DateTimeField(blank=True, null=True)
