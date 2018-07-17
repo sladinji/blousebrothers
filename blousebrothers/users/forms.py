@@ -61,11 +61,6 @@ class IbanForm(forms.Form):
     bic = BICFormField(label=_("BIC"), required=True)
 
 
-class EmailInvitationForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email de ton collègue'}), label="",
-                             required=True)
-
-
 class ImageForm(forms.Form):
     image = forms.ImageField(
         label=mark_safe("<i class='fa fa-camera'></i> Prend une photo de carte d'étudiant"),
