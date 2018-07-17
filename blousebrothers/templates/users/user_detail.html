@@ -81,7 +81,7 @@
                     {% include 'partials/sponsor_form.html' %}
                 </div>
                 <div class="tab-pane" id="4a">
-                    {% if user.created_confs.count %}
+                    {% if user.created_confs.count  and user.wallet %}
                         {% include 'users/wallet.html' %}
                     {% else %}
                     <div class="space"></div>
