@@ -1,14 +1,8 @@
 from django.apps import apps
-from django import forms
+from blousebrothers.users.forms import EmailInvitationForm
 
 Product = apps.get_model('catalogue', 'Product')
 ProductClass = apps.get_model('catalogue', 'ProductClass')
-
-class EmailInvitationForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email de ton collègue'}), label="",
-                             required=True)
-
-
 invit_form = EmailInvitationForm()
 
 
