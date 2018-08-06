@@ -1,4 +1,4 @@
-FROM solr:6
+FROM solr:7
 
 RUN mkdir -p /opt/solr/server/solr/mycores
 
