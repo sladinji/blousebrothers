@@ -58,10 +58,10 @@ def futur(branch='master',reset='no'):
         run("git merge origin/{}".format(branch))
         with prefix("source blouserc"):
             run("docker-compose build")
+            if reset == 'yes':
+                run("fab load_last_dump")
             run("docker-compose up -d")
             run("docker-compose run django ./manage.py migrate")
-            if reset == 'yes':
-                run("fab proddb")
             run("docker-compose run django ./manage.py cgu_sync")
             run("docker-compose run django ./manage.py rebuild_index --noinput")
 
