@@ -9,20 +9,21 @@ from datetime import date
 import logging
 import numpy as np
 
+from autoslug import AutoSlugField as RealAutoSlugField
 from django.core.urlresolvers import reverse
-from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.core.validators import int_list_validator
-
-from autoslug import AutoSlugField as RealAutoSlugField
+from django.utils import six  # Python 3 compatibility
+from django.utils.functional import lazy
 from image_cropping import ImageCropField, ImageRatioField
 from meta.models import ModelMeta
 
 
 logger = logging.getLogger(__name__)
+mark_safe_lazy = lazy(mark_safe, six.text_type)
 
 
 class AutoSlugField(RealAutoSlugField):
@@ -86,20 +87,20 @@ class Conference(ModelMeta, models.Model):
     edition_progress = models.PositiveIntegerField(_("Progression"), default=0)
     price = models.DecimalField(_("Prix de vente"), max_digits=6, decimal_places=2,
                                 default=Decimal(1.00),
-                                help_text=mark_safe(
+                                help_text=mark_safe_lazy(
                                     _(""))
                                 )
     deleted = models.BooleanField(_("Supprimée"), default=False)
     no_fees = models.BooleanField(_("Pas de frais"), default=False)
     for_share = models.BooleanField(_("Accessible à mes élèves / amis"), default=True,
-                                    help_text=mark_safe(
+                                    help_text=mark_safe_lazy(
                                         _("Le dossier est accessible aux personnes autorisées dans la section "
                                           "<a href='/amis'>Amis</a>, même si le dossier n'est pas accessible "
                                           "publiquement.")
                                     )
                                     )
     for_sale = models.BooleanField(_("Accessible à tous"), default=True,
-                                   help_text=mark_safe(
+                                   help_text=mark_safe_lazy(
                                        _("Publier mon dossier avec les paramètres sélectionnés. Je certifie que "
                                          "le matériel de ma conférence est original et je dégage BlouseBrothers "
                                          "de toute responsabilité concernant son contenu. Je suis au courant de "
@@ -110,7 +111,7 @@ class Conference(ModelMeta, models.Model):
                                    )
     correction_dispo = models.BooleanField(
         _("Correction accessible"), default=True,
-        help_text=mark_safe(
+        help_text=mark_safe_lazy(
             _("Désactive l'accès à la correction si tu fais une correction en présentiel. "
               "N'oublie pas de le ré-activer après !")
         )
