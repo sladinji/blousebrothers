@@ -6,9 +6,9 @@
 
 <form action="{% url 'checkout:preview' %}" class="form-stacked" method="POST">
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="{{ stripe_publishable_key }}" data-amount="{{ order_total_incl_tax_cents }}"
+            data-key="{{ stripe_publishable_key }}"
             data-name="{{ shop_name }}"
-            data-description="{{ basket.num_items }} items ({{ order_total.incl_tax|currency }})"
+            data-description="15 jours d'essais gratuits"
             data-image="{% static "images/apple-icon-120x120.png" %}"
             data-locale="auto"
             data-email="{{ user.email }}"

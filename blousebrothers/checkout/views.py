@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 from oscar.apps.checkout.views import PaymentDetailsView as CorePaymentDetailsView
+from djstripe.models import Customer
 from .facade import Facade
 
 from . import PAYMENT_METHOD_STRIPE, PAYMENT_EVENT_PURCHASE, STRIPE_EMAIL, STRIPE_TOKEN
@@ -15,7 +16,15 @@ SourceType = apps.get_model('payment', 'SourceType')
 Source = apps.get_model('payment', 'Source')
 
 
-class PaymentDetailsView(CorePaymentDetailsView):
+class CustomerMixin(object):
+    def get_customer(self):
+        try:
+            return self.request.user.customer
+        except:
+            return Customer.create(self.request.user)
+
+
+class PaymentDetailsView(CustomerMixin, CorePaymentDetailsView):
     preview = True
 
     @method_decorator(csrf_exempt)

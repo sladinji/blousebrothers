@@ -76,7 +76,7 @@ THIRD_PARTY_APPS = [
     'paypal',
     'jchart',
     'django_bleach',
-
+    'djstripe',
 ]
 
 # Apps specific for this project go here.

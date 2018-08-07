@@ -70,6 +70,7 @@ urlpatterns = [
     url(r'^facture/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFView.as_view(), name="invoice"),
     url(r'^facture_pdf/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFViewPrintView.as_view(),
         name="invoice_pdf"),
+    url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

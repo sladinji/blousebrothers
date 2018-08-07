@@ -65,6 +65,11 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 STRIPE_SECRET_KEY = "sk_test_2KQKtb6qy1MPyReB6Kr3petm"
 STRIPE_PUBLISHABLE_KEY = "pk_test_UbddRFpfPbpdIZqor6NZY5Zc"
 STRIPE_CURRENCY = "EUR"
+# Var used by dj-stripe
+STRIPE_TEST_PUBLIC_KEY = STRIPE_PUBLISHABLE_KEY
+STRIPE_TEST_SECRET_KEY = STRIPE_SECRET_KEY
+STRIPE_LIVE_MODE = False
+
 
 MANGOPAY_DEBUG_MODE = True
 MANGOPAY_BASE_URL = "https://api.sandbox.mangopay.com"

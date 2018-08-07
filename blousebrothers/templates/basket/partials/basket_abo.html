@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load currency_filters %}
+{% load staticfiles %}
 {% load thumbnail %}
 {% load currency_filters %}
 {% load purchase_info_tags %}
@@ -46,204 +48,84 @@
     </div>
     {% endif %}
     {% endblock vouchers %}
-
-    <div style="display:none;">
-        {% block baskettotals %}
-        <div class="col-sm-6">
-            <div class="sub-header">
-                <h2>{% trans "Totals" %}</h2>
-            </div>
-            {% include 'basket/partials/basket_totals.html' with editable=1 %}
-        </div>
-        {% endblock baskettotals %}
-    </div>
-</div>
-<div class="row" id="select-plan">
-    <div class="col-md-8 col-xs-12 etape1">{# eq select your plan #}
-        <h2>1. {% trans "Choisis ton abonnement" %}</h2>
-        {% block basket_form_main %}
-        <form action="." method="post" class="basket_summary" id="basket_formset">
-            <span class="the-total-price">
-                {% csrf_token %}
-                {{ formset.management_form }}
-                {# total basket shortcode #}
-                {% if selected_sub.attr.high_price %}
-                <span class="redStrikeHover">{{ selected_sub.attr.high_price }} €</span>
-                {% endif %}
-                {% if offer_discounts or voucher_discounts %}
-                <tr>
-                    <th class="total align-right">
-                        {% if not show_tax_separately and basket.is_tax_known %}
-                        {{ basket.total_incl_tax|currency:basket.currency }}
-                        {% else %}
-                        {{ basket.total_excl_tax|currency:basket.currency }}
-                        {% endif %}
-                    </th>
-                </tr>
-                {% else %}
-                {# No discounts to basket #}
-                <tr>
-                    <th class="total align-right">
-                        {% if not show_tax_separately and basket.is_tax_known %}
-                        {{ basket.total_incl_tax|currency:basket.currency }}
-                        {% else %}
-                        {{ basket.total_excl_tax|currency:basket.currency }}
-                        {% endif %}
-                    </th>
-                </tr>
-                {% endif %}
-            </span>
-        {% with offer_discounts=basket.offer_discounts voucher_discounts=basket.grouped_voucher_discounts %} 
-        {% if voucher_discounts %}
-        <br>
-        {% for discount in voucher_discounts %}
-        <span class="voucher"><i class="fa fa-arrow-right" aria-hidden="true"></i>
-            dont -{{ discount.discount|currency:basket.currency }} grâce au code <i>{{ discount.voucher.code }}</i>
-        </span>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-            <br><br>
-            <div class="btn-group">
-                {% for sub in subscriptions %}
-                <a class="btn btn-default{% if selected_sub.id == sub.id %} active{% endif %}" href="{% url 'users:subscription' sub.id %}">
-                    {{ sub.title }}
-                </a>
-                {% endfor %}
-            </div>
-            <br><br>
-            <div class="tab-content">
-                {% for sub in subscriptions %}
-                <div id="pay_tab{{ sub.id }}" class="tab-pane fade{% if selected_sub.id == sub.id %} in active{% endif %}">
-                    <p>{{ sub.description | sub_desc_custo | safe }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </form>
-    </div> {# end select your plan #}
-    {# billing info #}
-    <div class="col-md-4 col-xs-12 etape2">
-        <h2 class="align-center">2. {% trans "Choisis ton mode de paiement" %}</h2>
-
-        {% load currency_filters %}
-        {% load staticfiles %}
-        <div class="space"></div>
-        <div class="space"></div>
-        <div class="row">
-            {% block payment_details_content %}
-            <div class="col-md-6 col-xs-6 align-right">
-                <form action="{% url 'checkout:preview' %}" class="form-stacked" method="POST">
-                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                                                          data-key="{{ stripe_publishable_key }}" data-amount="{{ order_total_incl_tax_cents }}"
-                                                                                                                  data-name="{{ shop_name }}"
-                                                                                                                  data-description="{{ basket.num_items }} items ({{ order_total.incl_tax|currency }})"
-                                                                                                                  data-image="{% static "images/apple-icon-120x120.png" %}"
-                                                                                                                  data-locale="auto"
-                                                                                                                  data-email="{{ user.email }}"
-                                                                                                                  data-label='Payer par carte'>
-                    </script>
-                    <div style="display:none">
-                        <input type="hidden" name="action" value="place_order" />
-                        {{ stripe_token_form.as_p }}
-                    </div>
-                </form>
-            </div>
-            {% endblock %}	
-            {% if anon_checkout_allowed or request.user.is_authenticated %}
-            <div class="col-md-6 col-xs-6">
-                <a href="{% url 'paypal-redirect' %}"><img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"></a>
-            </div>
-            {% endif %}
-        </div> {# end row #}
-
-    </div>
-</div>
-
-
-<div style="display:none;">
-
-    {% for form in formset %}
-    {% with line=form.instance product=form.instance.product %}
-    {% purchase_info_for_line request line as session %}
-    <div class="basket-items">
-        <div class="row">
-            <div class="col-sm-2">
-                {{ form.id }}
-            </div>
-            <div class="col-sm-4">
-                <h3><a href="{{ product.get_absolute_url }}">{{ line.description }}</a></h3>
-            </div>
-            <div class="col-sm-3">
-                <div class="checkout-quantity">
-                    <div class="input-group  {% if form.errors %}error{% endif %}">
-                        {% render_field form.quantity class+="form-control" %}
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit" data-loading-text="{% trans 'Updating...' %}">{% trans "Update" %}</button>
-                        </span>
-                    </div>
-                </div>
-                <div>
-                    <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove" class="inline">{% trans "Remove" %}</a>
-                    {% if user.is_authenticated %}
-                    | <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="save" class="inline">{% trans "Save for later" %}</a>
+    <div class="row" id="select-plan">
+        <div class="etape1">{# eq select your plan #}
+            <h2>{% trans "Teste gratuitement pendant 15 jours puis" %}</h2>
+            {% block basket_form_main %}
+            <form action="." method="post" class="basket_summary" id="basket_formset">
+                <span class="the-total-price">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {# total basket shortcode #}
+                    {% if selected_sub.attr.high_price %}
+                    <span class="redStrikeHover">{{ selected_sub.attr.high_price }} €</span>
                     {% endif %}
-                    <div style="display:none">
-                        {{ form.save_for_later }}
-                        {{ form.DELETE }}
+                    {% if offer_discounts or voucher_discounts %}
+                    <tr>
+                        <th class="total align-right">
+                            {% if not show_tax_separately and basket.is_tax_known %}
+                            {{ basket.total_incl_tax|currency:basket.currency }}
+                            {% else %}
+                            {{ basket.total_excl_tax|currency:basket.currency }}
+                            {% endif %}
+                        </th>
+                    </tr>
+                    {% else %}
+                    {# No discounts to basket #}
+                    <tr>
+                        <th class="total align-right">
+                            {% if not show_tax_separately and basket.is_tax_known %}
+                            {{ basket.total_incl_tax|currency:basket.currency }}
+                            {% else %}
+                            {{ basket.total_excl_tax|currency:basket.currency }}
+                            {% endif %}
+                            / mois
+                        </th>
+                    </tr>
+                    {% endif %}
+                </span>
+                {% with offer_discounts=basket.offer_discounts voucher_discounts=basket.grouped_voucher_discounts %} 
+                {% if voucher_discounts %}
+                <br>
+                {% for discount in voucher_discounts %}
+                <span class="voucher"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    dont -{{ discount.discount|currency:basket.currency }} grâce au code <i>{{ discount.voucher.code }}</i>
+                </span>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <br><br>
+                <div class="tab-content">
+                    <form action="{% url 'checkout:preview' %}" class="form-stacked" method="POST">
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                                              data-key="{{ stripe_publishable_key }}" 
+                                                                              data-name="{{ shop_name }}"
+                                                                              data-description="15 jours d'essais gratuits"
+                                                                              data-image="{% static "images/apple-icon-120x120.png" %}"
+                                                                              data-locale="auto"
+                                                                              data-email="{{ user.email }}"
+                                                                              data-panel-label="Valider"
+                                                                              data-label="Démarrer">
+                        </script>
+                        <div style="display:none">
+                            <input type="hidden" name="action" value="place_order" />
+                            {{ stripe_token_form.as_p }}
+                        </div>
+                    </form>
+                    <br><br>
+                    {% for sub in subscriptions %}
+                    <div id="pay_tab{{ sub.id }}" class="tab-pane fade{% if selected_sub.id == sub.id %} in active{% endif %}">
+                        <p>{{ sub.description | sub_desc_custo | safe }}</p>
                     </div>
-                    {% for field_errors in form.errors.values %}
-                    {% for error in field_errors %}
-                    <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
-                    {% endfor %}
-
                     {% endfor %}
                 </div>
-
-            </div>
-            <div class="col-sm-1">
-                <p class="price_color align-right">
-                {% if line.is_tax_known %}
-                {{ line.unit_price_incl_tax|currency:line.price_currency }}
-                {% else %}
-                {{ line.unit_price_excl_tax|currency:line.price_currency }}
-                {% endif %}
-                </p>
-            </div>
-            <div class="col-sm-2">
-                <p class="price_color align-right">
-                {% if line.is_tax_known %}
-                {{ line.line_price_incl_tax|currency:line.price_currency }}
-                {% else %}
-                {{ line.line_price_excl_tax|currency:line.price_currency }}
-                {% endif %}
-                </p>
-            </div>
-        </div>
+            </form>
+        </div> {# end select your plan #}
     </div>
-    {% endwith %}
-    {% endfor %}
+
 </div>
-</form>
 {% endblock %}
 
-
-<div style="display:none;">
-    {% block formactions %}
-    <div class="form-group clearfix">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-8">
-                <a href="{% url 'checkout:index' %}" class="btn btn-lg btn-primary btn-block">{% trans "Proceed to checkout" %}</a>
-            </div>
-        </div>
-    </div>
-    <div class="form-actions">
-        {% if anon_checkout_allowed or request.user.is_authenticated %}
-        <a href="{% url 'paypal-redirect' %}"><img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;"></a>
-        {% endif %}
-        <a href="{% url 'checkout:index' %}" class="pull-right btn btn-large btn-primary">{% trans "Proceed to checkout" %}</a>
-    </div>
-    {% endblock formactions %}
-</div>
 
 {% else %}
 {% block emptybasket %}
@@ -253,56 +135,3 @@
 </p>
 {% endblock %}
 {% endif %}
-
-{% block savedbasket %}
-{% if user.is_authenticated and saved_formset %}
-<div class="well">
-    <div class="sub-header">
-        <h2>{% trans "Items to buy later" %}</h2>
-    </div>
-    <div class="row basket-title hidden-xs">
-        <p class="col-sm-8 h4">{% trans "Items" %}</p>
-        <p class="col-sm-2 h4 align-center">{% trans "Price" %}</p>
-        <div class="col-sm-2">&nbsp;</div>
-    </div>
-    <form action="{% url 'basket:saved' %}" method="post" class="form-stacked later_summary" id="saved_basket_formset">
-        {% csrf_token %}
-        {{ saved_formset.management_form }}
-        {% for form in saved_formset %}
-        {% purchase_info_for_product request form.instance.product as session %}
-        <div class="basket-items">
-            <div class="row">
-                <div class="col-sm-2">
-                    {{ form.id }}
-                </div>
-                <div class="col-sm-6">
-                    <h3><a href="{{ form.instance.product.get_absolute_url }}">{{ form.instance.description }}</a></h3>
-                    <p class="availability {{ session.availability.code }}">{{ session.availability.message }}</p>
-                    <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove">{% trans "Remove" %}</a>
-                    <div style="display:none">
-                        {{ form.move_to_basket }}
-                        {{ form.DELETE }}
-                    </div>
-                </div>
-                {% purchase_info_for_product request form.instance.product as saved %}
-                <div class="col-sm-2 align-center">
-                    <p class="price_color">
-                    {% if saved.price.is_tax_known %}
-                    {{ saved.price.incl_tax|currency:saved.price.currency }}
-                    {% else %}
-                    {{ saved.price.excl_tax|currency:saved.price.currency }}
-                    {% endif %}
-                    </p>
-                </div>
-                <div class="col-sm-2">
-                    <a href="#" data-id="{{ forloop.counter0 }}" class="btn pull-right btn-block" data-behaviours="move">{% trans "Move to basket" %}</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </form>
-</div>
-{% endif %}
-{% endblock %}
-
-
