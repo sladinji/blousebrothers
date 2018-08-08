@@ -13,6 +13,7 @@ from paypal.express.dashboard.app import application as paypal
 
 import blousebrothers.users.views
 import blousebrothers.dashboard.orders.views
+import blousebrothers.checkout.views
 from blousebrothers.app import application
 
 from .sitemaps import StaticViewSitemap
@@ -71,7 +72,7 @@ urlpatterns = [
     url(r'^facture_pdf/(?P<pk>\d+)/$', view=blousebrothers.dashboard.orders.views.PDFViewPrintView.as_view(),
         name="invoice_pdf"),
     url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
-
+    url(r'subscribe/', view=blousebrothers.checkout.views.SubscribeView.as_view(), name='subscribe'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

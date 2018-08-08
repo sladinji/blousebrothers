@@ -66,7 +66,7 @@ django-activeurl==0.1.12
 django-cookie-law==2.0.1
 django-tinycontent==0.7.1
 stripe==2.0.1
-dj-stripe==1.2
+dj-stripe==1.2.1
 django-image-cropping==1.1.0
 easy_thumbnails
 django-countries==5.3.1

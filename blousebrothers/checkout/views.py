@@ -1,30 +1,24 @@
 from decimal import Decimal
 from django.apps import apps
+from django.contrib import messages
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic import FormView
 
 from oscar.apps.checkout.views import PaymentDetailsView as CorePaymentDetailsView
-from djstripe.models import Customer
+
+from blousebrothers import stripe
 from .facade import Facade
-
 from . import PAYMENT_METHOD_STRIPE, PAYMENT_EVENT_PURCHASE, STRIPE_EMAIL, STRIPE_TOKEN
-
 from . import forms
 
 SourceType = apps.get_model('payment', 'SourceType')
 Source = apps.get_model('payment', 'Source')
 
 
-class CustomerMixin(object):
-    def get_customer(self):
-        try:
-            return self.request.user.customer
-        except:
-            return Customer.create(self.request.user)
-
-
-class PaymentDetailsView(CustomerMixin, CorePaymentDetailsView):
+class PaymentDetailsView(CorePaymentDetailsView):
     preview = True
 
     @method_decorator(csrf_exempt)
@@ -68,3 +62,19 @@ class PaymentDetailsView(CustomerMixin, CorePaymentDetailsView):
 
     def payment_metadata(self, order_number, total, **kwargs):
         return {'order_number': order_number}
+
+
+class SubscribeView(FormView):
+    form_class = forms.StripeTokenForm
+    success_url = reverse_lazy('cards:home')
+
+    def form_valid(self, form):
+        customer = self.request.user.djstripe_customers.get_or_create()[0]
+        customer.add_card(form.cleaned_data['stripeToken'])
+        #customer.subscribe('plan_DNCfz58DVpORr8', trial_end=datetime.today() + timedelta(days=15))
+        customer.subscribe(stripe.plan_id)
+        messages.info(self.request, """OK c'est parti !
+Tu peux maintenant profiter de toutes les fonctionnalités du site.
+Bonnes révisions.""")
+
+        return super(SubscribeView, self).form_valid(form)

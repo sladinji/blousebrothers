@@ -48,11 +48,16 @@
     </div>
     {% endif %}
     {% endblock vouchers %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="row" id="select-plan">
         <div class="etape1">{# eq select your plan #}
-            <h2>{% trans "Teste gratuitement pendant 15 jours puis" %}</h2>
+            <h2>{% trans "Profite de toutes les fonctionnalités du site pour" %}</h2>
             {% block basket_form_main %}
-            <form action="." method="post" class="basket_summary" id="basket_formset">
+            <form action="{% url 'subscribe' %}" method="post" class="basket_summary" id="basket_formset">
                 <span class="the-total-price">
                     {% csrf_token %}
                     {{ formset.management_form }}
@@ -96,16 +101,15 @@
                 {% endwith %}
                 <br><br>
                 <div class="tab-content">
-                    <form action="{% url 'checkout:preview' %}" class="form-stacked" method="POST">
+                    <form action="{% url 'subscribe' %}" class="form-stacked" method="POST">
                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                                               data-key="{{ stripe_publishable_key }}" 
                                                                               data-name="{{ shop_name }}"
-                                                                              data-description="15 jours d'essais gratuits"
+                                                                              data-description="Abonnement mensuel ({{ order_total.incl_tax|currency }})"
                                                                               data-image="{% static "images/apple-icon-120x120.png" %}"
                                                                               data-locale="auto"
                                                                               data-email="{{ user.email }}"
-                                                                              data-panel-label="Valider"
-                                                                              data-label="Démarrer">
+                                                                              data-label="Payer par carte">
                         </script>
                         <div style="display:none">
                             <input type="hidden" name="action" value="place_order" />
