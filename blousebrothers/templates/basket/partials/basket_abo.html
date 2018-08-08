@@ -26,7 +26,7 @@
 </div>
 {% endif %}
 
-{% if not basket.is_empty %}
+{% if not user.customer or not user.customer.has_active_subscription %}
 <div class="row voucher-plan align-center">
     {% block vouchers %}
     {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
@@ -132,10 +132,24 @@
 
 
 {% else %}
-{% block emptybasket %}
-<p>
-{% trans "Aucun abonnement sélectionné." %}
-<a href="{{ homepage_url }}">{% trans "Retourner sur la page d'accueil" %}</a>
-</p>
-{% endblock %}
+<h1 class="black-font">Abonnement en cours</h2>
+<div class="x_panel tile fixed_height_320 panel_shadow panel_last_activities">
+    <div class="x_content">
+        <div class="col-md-2">
+        <img src="{% static "images/retro/13.jpg" %}"/>
+        </div>
+        <div class="col-md-10">
+            <h4><i class="fa fa-chevron-right"></i> Montant : {{ user.customer.subscription.plan.amount }} € / mois</h4><br>
+            {% if user.customer.subscription.cancel_at_period_end %}
+            <h4><i class="fa fa-chevron-right"></i> Abonnement annulé le : {{ user.customer.subscription.canceled_at}} </h4><br>
+            <h4><i class="fa fa-chevron-right"></i> Fin de l'abonnement : {{ user.customer.subscription.current_period_end }} </h4><br>
+            <div class="align-center">
+            <h4>Merci d'avoir utilisé BlouseBrothers !</h4>
+            </div>
+            {% else %}
+            <h4><i class="fa fa-chevron-right"></i> Prochain échéance : {{ user.customer.subscription.current_period_end }} </h4><br>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endif %}

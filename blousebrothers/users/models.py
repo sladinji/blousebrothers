@@ -87,6 +87,10 @@ class User(AbstractUser):
         ]
 
     @property
+    def customer(self):
+        return self.djstripe_customers.first()
+
+    @property
     def stats(self):
         test_fini = self.tests.filter(finished=True).prefetch_related('answers')
         nb_test_fini = len(test_fini)
