@@ -114,3 +114,7 @@ class AnkiFileForm(forms.Form):
         required=True,
         widget=forms.ClearableFileInput(),
     )
+
+class StripeTokenForm(forms.Form):
+    stripeEmail = forms.EmailField(widget=forms.HiddenInput())
+    stripeToken = forms.CharField(widget=forms.HiddenInput())

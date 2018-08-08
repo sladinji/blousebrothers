@@ -62,19 +62,3 @@ class PaymentDetailsView(CorePaymentDetailsView):
 
     def payment_metadata(self, order_number, total, **kwargs):
         return {'order_number': order_number}
-
-
-class SubscribeView(FormView):
-    form_class = forms.StripeTokenForm
-    success_url = reverse_lazy('cards:home')
-
-    def form_valid(self, form):
-        customer = self.request.user.djstripe_customers.get_or_create()[0]
-        customer.add_card(form.cleaned_data['stripeToken'])
-        #customer.subscribe('plan_DNCfz58DVpORr8', trial_end=datetime.today() + timedelta(days=15))
-        customer.subscribe(stripe.plan_id)
-        messages.info(self.request, """OK c'est parti !
-Tu peux maintenant profiter de toutes les fonctionnalités du site.
-Bonnes révisions.""")
-
-        return super(SubscribeView, self).form_valid(form)

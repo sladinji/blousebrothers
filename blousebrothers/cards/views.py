@@ -27,12 +27,15 @@ from django.views.generic import (
     TemplateView,
     FormView,
 )
+from blousebrothers import stripe
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality, Conference
 from blousebrothers.users.models import User
 from .revision_steps import revision_steps
 from .models import Card, Deck, Session, CardsPreference, SessionOverException, CardImage, Tag
-from .forms import CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, CardHomeAdvancedFilterForm
+from .forms import (
+    CreateCardForm, UpdateCardForm, FinalizeCardForm, AnkiFileForm, CardHomeAdvancedFilterForm, StripeTokenForm
+)
 from .loader import anki, text
 from .charts import Dispatching
 from blousebrothers.confs.templatetags.bbtricks import HT
@@ -126,8 +129,8 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         #  Check Trial Period
         if self.request.user.is_authenticated and self.request.user.deck.count() > 50:
             try:
-                if not self.request.user.subscription.type.product.attr.access_cards:
-                    return False
+                return self.request.user.customer.has_active_subscription() or \
+                    self.request.user.subscription.type.product.attr.access_cards
             except:
                 return False
 
@@ -654,3 +657,27 @@ class BouletListView(UserPassesTestMixin, ListView):
             total_double_du=total_double_du,
             total_du=total_du
         )
+
+
+class SubscribeView(BBLoginRequiredMixin, FormView):
+    form_class = StripeTokenForm
+    success_url = reverse_lazy('cards:home')
+
+    def form_valid(self, form):
+        customer = self.request.user.djstripe_customers.get_or_create()[0]
+        customer.add_card(form.cleaned_data['stripeToken'])
+        # customer.subscribe('plan_DNCfz58DVpORr8', trial_end=datetime.today() + timedelta(days=15))
+        customer.subscribe(stripe.plan_id)
+        messages.info(self.request, """OK c'est parti !
+Tu peux maintenant profiter de toutes les fonctionnalités du site.
+Bonnes révisions.""")
+
+        return super(SubscribeView, self).form_valid(form)
+
+
+class CancelSubscription(BBLoginRequiredMixin, RedirectView):
+    url = reverse_lazy('users:redirect')
+
+    def get(self, request, *args, **kwargs):
+        self.request.user.customer.subscription.cancel()
+        return super().get(request, *args, **kwargs)

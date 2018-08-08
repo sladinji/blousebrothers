@@ -148,6 +148,9 @@
             </div>
             {% else %}
             <h4><i class="fa fa-chevron-right"></i> Prochain échéance : {{ user.customer.subscription.current_period_end }} </h4><br>
+            <div class="align-center">
+                <a class="btn" href="{% url 'cancel_subscription' %}"><span class="glyphicon glyphicon-delete" aria-hidden="true"></span> Stopper l'abonnement</a>
+            </div>
             {% endif %}
         </div>
     </div>
