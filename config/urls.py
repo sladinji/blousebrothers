@@ -77,6 +77,7 @@ urlpatterns = [
     url(r'cancel_subscription/', view=blousebrothers.cards.views.CancelSubscription.as_view(),
         name='cancel_subscription'
         ),
+    url(r'update_card/', view=blousebrothers.cards.views.UpdateCBView.as_view(), name='update_card'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

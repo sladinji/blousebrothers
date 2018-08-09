@@ -148,7 +148,25 @@
             </div>
             {% else %}
             <h4><i class="fa fa-chevron-right"></i> Prochain échéance : {{ user.customer.subscription.current_period_end }} </h4><br>
-            <div class="align-center">
+            <div class="col-md-6 align-center">
+                <form action="{% url 'update_card' %}" class="form-stacked" method="POST">
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                                          data-key="{{ stripe_publishable_key }}" 
+                                                                          data-name="{{ shop_name }}"
+                                                                          data-description="Abonnement mensuel ({{ order_total.incl_tax|currency }})"
+                                                                          data-image="{% static "images/apple-icon-120x120.png" %}"
+                                                                          data-locale="auto"
+                                                                          data-email="{{ user.email }}"
+                                                                          data-label="Changer de carte">
+                    </script>
+                    {% csrf_token %}
+                    <div style="display:none">
+                        <input type="hidden" name="action" value="place_order" />
+                        {{ stripe_token_form.as_p }}
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 align-center">
                 <a class="btn" href="{% url 'cancel_subscription' %}"><span class="glyphicon glyphicon-delete" aria-hidden="true"></span> Stopper l'abonnement</a>
             </div>
             {% endif %}

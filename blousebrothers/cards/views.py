@@ -682,3 +682,15 @@ class CancelSubscription(BBLoginRequiredMixin, RedirectView):
     def get(self, request, *args, **kwargs):
         self.request.user.customer.subscription.cancel()
         return super().get(request, *args, **kwargs)
+
+
+class UpdateCBView(BBLoginRequiredMixin, FormView):
+    form_class = StripeTokenForm
+    success_url = reverse_lazy('users:redirect')
+
+    def form_valid(self, form):
+        customer = Customer.get_or_create(subscriber=self.request.user)[0]
+        customer.add_card(form.cleaned_data['stripeToken'])
+        messages.info(self.request, """La CB a bien été mise à jour !""")
+
+        return super(UpdateCBView, self).form_valid(form)
