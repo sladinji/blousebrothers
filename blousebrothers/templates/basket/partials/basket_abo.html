@@ -153,7 +153,7 @@
                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                                           data-key="{{ stripe_publishable_key }}" 
                                                                           data-name="{{ shop_name }}"
-                                                                          data-description="Abonnement mensuel ({{ order_total.incl_tax|currency }})"
+                                                                          data-description="Abonnement mensuel ({{ sub_amount }} €)"
                                                                           data-image="{% static "images/apple-icon-120x120.png" %}"
                                                                           data-locale="auto"
                                                                           data-email="{{ user.email }}"

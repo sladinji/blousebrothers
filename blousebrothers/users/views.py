@@ -17,6 +17,7 @@ from django.db.utils import IntegrityError
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from djstripe.models import Plan
 from invitations.models import Invitation
 from meta.views import MetadataMixin
 import allauth.account.views
@@ -71,6 +72,7 @@ class UserDetailView(BBLoginRequiredMixin, CheckoutSessionMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['voucher_form'] = BasketVoucherForm()
         context.update(stripe_publishable_key=settings.STRIPE_PUBLISHABLE_KEY)
+        context.update(sub_amount=Plan.objects.first().amount)
         context.update(conf_form=ConferenceForm())
         self.checkout_session.use_shipping_method(
             NoShippingRequired().code)
