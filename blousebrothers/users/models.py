@@ -17,6 +17,7 @@ from django.core.mail import mail_admins
 from django_countries.fields import CountryField
 from django.db.models.signals import post_init, pre_save
 from django.db.models import Sum
+from django.utils.functional import cached_property
 
 from djmoney.models.fields import MoneyField
 from allauth.account.signals import user_signed_up
@@ -86,11 +87,11 @@ class User(AbstractUser):
             )
         ]
 
-    @property
+    @cached_property
     def customer(self):
         return self.djstripe_customers.first()
 
-    @property
+    @cached_property
     def stats(self):
         test_fini = self.tests.filter(finished=True).prefetch_related('answers')
         nb_test_fini = len(test_fini)
@@ -322,28 +323,28 @@ class User(AbstractUser):
     def nb_created_confs(self):
         return self.created_confs.filter(for_sale=True, edition_progress=100).count()
 
-    @property
+    @cached_property
     def last_subsboard(self):
         return self.subs_board.order_by('-date_created').first()
 
-    @property
+    @cached_property
     def last_test(self):
         return self.tests.filter(finished=True).order_by("-date_created").first()
 
-    @property
+    @cached_property
     def gave_all_required_info(self):
         """Used for permission management"""
         if self.wanabe_conferencier or self.is_conferencier:
             return self.university and self.first_name and self.last_name and self.degree
         return True
 
-    @property
+    @cached_property
     def gave_all_mangopay_info(self):
         return bool(self.birth_date and self.country_of_residence and self.nationality and
                     self.first_name and self.last_name and self.address1 and self.city and
                     self.zip_code)
 
-    @property
+    @cached_property
     def mangopay_user(self):
         if self.gave_all_mangopay_info:
             mp_user, mpu_created = MangoPayNaturalUser.objects.get_or_create(user=self)
@@ -368,12 +369,12 @@ class User(AbstractUser):
                 return True
         return False
 
-    @property
+    @cached_property
     def has_more_than_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
                     if x.mangopay_card.mangopay_id]) > 1
 
-    @property
+    @cached_property
     def has_at_least_one_card(self):
         return len([x for x in self.mangopay_user.mangopay_card_registrations.all()
                     if x.mangopay_card.mangopay_id]) > 0
@@ -392,33 +393,38 @@ class User(AbstractUser):
     def balance(self):
         return self.wallet.balance() + self.wallet_bonus.balance()
 
-    @property
+    @cached_property
     def wallet(self):
         try:
             return self._get_or_create_wallet("{}'s personal wallet".format(self.username))
         except Exception:
             return None
 
-    @property
+    @cached_property
     def wallet_bonus(self):
         return self._get_or_create_wallet("{}'s bonus wallet".format(self.username))
 
-    @property
+    @cached_property
     def bank_account(self):
         return MangoPayBankAccount.objects.filter(mangopay_user=self.mangopay_user).first()
 
-    @property
+    @cached_property
     def subscription(self):
         subs = [x for x in self.subs.all().order_by('-date_over') if not x.is_past_due]
         if subs:
             return subs[0]
 
+    @cached_property
+    def has_active_subscription(self):
+        return self.customer and self.customer.has_active_subscription()
+
+    @cached_property
     def has_full_access(self):
-        if self.customer.has_active_subscription():
+        if self.has_active_subscription:
             return True
         return [x for x in self.subs.all() if not x.is_past_due]
 
-    @property
+    @cached_property
     def products(self):
         return Product.objects.filter(conf__owner=self)
 
@@ -470,7 +476,7 @@ class User(AbstractUser):
                 subscription.save()
                 return invitation
 
-    @property
+    @cached_property
     def mango_address(self):
         return {
             "AddressLine1": self.address1,
@@ -531,12 +537,12 @@ class SubscriptionsBoard(models.Model):
                                 decimal_places=2, max_digits=12)
     transfer = models.ForeignKey(MangoPayTransfer, on_delete=models.SET_NULL, null=True)
 
-    @property
+    @cached_property
     def mois(self):
         return ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre',
                 'Octobre', 'Novembre', 'Décembre'][self.date_created.month - 1]
 
-    @property
+    @cached_property
     def unit_price(self):
         return self.credited_funds / self.nb_sales
 

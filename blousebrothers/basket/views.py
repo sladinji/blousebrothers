@@ -67,7 +67,7 @@ class BasketAddView(CoreBasketAddView):
         if created and not free_conf:
             try:
                 if self.request.user.subscription \
-                        or self.request.user.customer.has_active_subscription() \
+                        or self.request.user.has_active_subscription \
                         or self.request.user.has_friendship.filter(
                             from_user=form.product.conf.owner,
                             share_confs=True,

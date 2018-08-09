@@ -26,7 +26,7 @@
 </div>
 {% endif %}
 
-{% if not user.customer or not user.customer.has_active_subscription %}
+{% if not user.has_active_subscription %}
 <div class="row voucher-plan align-center">
     {% block vouchers %}
     {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}

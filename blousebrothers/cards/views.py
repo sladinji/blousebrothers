@@ -130,7 +130,7 @@ class RevisionPermissionMixin(UserPassesTestMixin):
         #  Check Trial Period
         if self.request.user.is_authenticated and self.request.user.deck.count() > 50:
             try:
-                return self.request.user.customer.has_active_subscription() or \
+                return self.request.user.has_active_subscription or \
                     self.request.user.subscription.type.product.attr.access_cards
             except:
                 return False
