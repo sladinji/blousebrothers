@@ -61,17 +61,12 @@ class BasketAddView(CoreBasketAddView):
                              extra_tags='safe noicon')
             return HttpResponseRedirect(reverse("home"))
         free_conf = form.product.conf.owner.username == "BlouseBrothers"
-        if not free_conf and not self.request.user.gave_all_mangopay_info:
-            messages.success(self.request, _("Merci de compléter ce formulaire pour pouvoir continuer"),
-                             extra_tags='safe noicon')
-            return HttpResponseRedirect(reverse("users:update") + '?next={}'.format(self.request.path))
 
         test, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
 
         if created and not free_conf:
             try:
                 if self.request.user.subscription \
-                        and self.request.user.subscription.type.product.attr.access_confs \
                         or self.request.user.has_friendship.filter(
                             from_user=form.product.conf.owner,
                             share_confs=True,
@@ -93,70 +88,18 @@ class BasketAddView(CoreBasketAddView):
                     self.request.user.save()
                     return self.redirect_success(form)
                 else:
-                    return self.debit_wallet(form, test, self.request.user.wallet_bonus)
-            except Exception as ex:
-                try:
-                    return self.debit_wallet(form, test, self.request.user.wallet)
-                except MangoNoEnoughCredit:
-                    msg = _("Merci de choisir un abonnement.")
+                    msg = _("Merci de souscrire un abonnement.")
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
                     return HttpResponseRedirect(
                         reverse("users:subscription",
                                 kwargs={'sub_id': 0}) + '?next={}'.format(self.request.path)
                     )
-                except Exception as ex:
-                    test.delete()
-                    raise ex
+            except Exception as ex:
+                test.delete()
+                raise ex
 
         return self.redirect_success(form)
-
-    def debit_wallet(self, form, test, debited_wallet):
-        """
-        Debit user wallet according to given test.
-        """
-        info = selector.strategy().fetch_for_product(form.product)
-
-        if info.price.excl_tax == 0:
-            return self.redirect_success(form)
-
-        transfer = MangoPayTransfer()
-        transfer.mangopay_credited_wallet = form.product.conf.owner.wallet
-        transfer.mangopay_debited_wallet = debited_wallet
-        transfer.debited_funds = info.price.excl_tax
-        transfer.save()
-        if test.conf.no_fees:
-            fees = 0
-        else:
-            fees = info.price.excl_tax * Decimal('0.3')
-            fees = fees.quantize(Decimal('0.01'), ROUND_HALF_UP)
-        transfer.create(fees=Money(fees, str(transfer.debited_funds.currency)))
-        if transfer.status == "FAILED":
-            if transfer.result_code == "001001":
-                raise MangoNoEnoughCredit(info.price.excl_tax)
-            else:
-                raise MangoTransfertException(
-                    "status : {status}result_code : {result_code} mangopay_id : {mangopay_id}".format(
-                        transfer.__dict__
-                    )
-                )
-        elif transfer.status == "SUCCEEDED":
-            Sale.objects.create(
-                conferencier=form.product.conf.owner,
-                student=self.request.user,
-                transfer=transfer,
-                credited_funds=info.price.excl_tax - fees,
-                fees=fees,
-                product=form.product,
-                conf=form.product.conf,
-            )
-            return self.redirect_success(form)
-        else:
-            raise MangoTransfertException(
-                "status : {status}result_code : {result_code} mangopay_id : {mangopay_id}".format(
-                    transfer.__dict__
-                )
-            )
 
     def get_success_url(self, product=None):
         if product and product.conf:

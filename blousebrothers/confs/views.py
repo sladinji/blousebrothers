@@ -78,7 +78,7 @@ class ConferenceHomeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ConferenceDetailView(ConferenceReadPermissionMixin, BBConferencierReqMixin, DetailView):
+class ConferenceDetailView(ConferenceReadPermissionMixin, DetailView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
 
@@ -218,7 +218,7 @@ def ajax_switch_for_sale(request):
     return JsonResponse({'success': True})
 
 
-class ConferenceListView(BBConferencierReqMixin, ListView):
+class ConferenceListView(ListView):
     model = Conference
     # These next two lines tell the view to index lookups by conf
     paginate_by = 10
