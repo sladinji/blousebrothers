@@ -59,7 +59,7 @@ class BasketAddView(CoreBasketAddView):
         if self.request.user.is_anonymous():
             messages.warning(self.request, _("Merci de te connecter pour pouvoir faire un dossier"),
                              extra_tags='safe noicon')
-            return HttpResponseRedirect(reverse("home"))
+            return HttpResponseRedirect(reverse("account_login"))
         free_conf = form.product.conf.owner.username == "BlouseBrothers"
 
         test, created = Test.objects.get_or_create(conf=form.product.conf, student=self.request.user)
@@ -67,6 +67,7 @@ class BasketAddView(CoreBasketAddView):
         if created and not free_conf:
             try:
                 if self.request.user.subscription \
+                        or self.request.user.customer.has_active_subscription() \
                         or self.request.user.has_friendship.filter(
                             from_user=form.product.conf.owner,
                             share_confs=True,
@@ -74,7 +75,8 @@ class BasketAddView(CoreBasketAddView):
                         or form.product.conf.owner.bbgroups.filter(
                             id__in=self.request.user.bbgroups.all()
                         ).exists():
-                    if self.request.user.subscription and self.request.user.subscription.price_paid > 0:
+                    if self.request.user.subscription and self.request.user.subscription.price_paid > 0 \
+                            or self.request.user.customer.subscription.plan.amount > 0:
                         # Do not create sale for user with subscription price = O (référents...)
                         Sale.objects.create(
                             conferencier=form.product.conf.owner,

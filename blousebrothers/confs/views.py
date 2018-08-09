@@ -237,7 +237,7 @@ class ConferenceListView(ListView):
         return qry.all()
 
 
-class ConferenceCreateView(BBLoginRequiredMixin, CreateView, FormView):
+class ConferenceCreateView(BBConferencierReqMixin, CreateView, FormView):
     template_name = 'confs/conference_form.html'
     form_class = ConferenceForm
     model = Conference

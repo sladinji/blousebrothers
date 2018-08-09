@@ -414,7 +414,7 @@ class User(AbstractUser):
             return subs[0]
 
     def has_full_access(self):
-        if self.customer.customer.has_active_subscription():
+        if self.customer.has_active_subscription():
             return True
         return [x for x in self.subs.all() if not x.is_past_due]
 
