@@ -21,13 +21,12 @@ class CatalogueView(CoreCatalogueView):
     def get(self, *args, **kwargs):
         check_bonus(self.request, self.request.user)
         if not self.request.user.is_authenticated \
-                or self.request.user.is_authenticated and not self.request.user.has_full_access() \
+                or self.request.user.is_authenticated and not self.request.user.has_full_access \
                 and 'sort_by' not in self.request.GET:
             self.request.GET = self.request.GET.copy()
             self.request.GET.update(sort_by="price-asc")
-        elif self.request.user.is_authenticated and self.request.user.has_full_access() \
+        elif self.request.user.is_authenticated and self.request.user.has_full_access \
                 and 'sort_by' not in self.request.GET:
             self.request.GET = self.request.GET.copy()
             self.request.GET.update(sort_by="newest")
         return super().get(*args, **kwargs)
-

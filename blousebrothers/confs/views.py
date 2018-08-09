@@ -505,7 +505,7 @@ class TestResetView(TestPermissionMixin, UpdateView):
     fields = ['id']
 
     def form_valid(self, form):
-        if self.request.user.has_full_access():
+        if self.request.user.has_full_access:
             self.object.finished = False
             self.object.progress = 0
             self.object.answers.all().delete()
@@ -513,7 +513,7 @@ class TestResetView(TestPermissionMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        if self.request.user.has_full_access():
+        if self.request.user.has_full_access:
             return reverse('confs:test',
                            kwargs={'slug': self.object.conf.slug})
         else:
