@@ -27,6 +27,7 @@ from django.views.generic import (
     TemplateView,
     FormView,
 )
+from djstripe.models import Customer
 from blousebrothers import stripe
 from blousebrothers.auth import BBLoginRequiredMixin
 from blousebrothers.confs.models import Item, Speciality, Conference
@@ -664,7 +665,7 @@ class SubscribeView(BBLoginRequiredMixin, FormView):
     success_url = reverse_lazy('cards:home')
 
     def form_valid(self, form):
-        customer = self.request.user.djstripe_customers.get_or_create()[0]
+        customer = Customer.get_or_create(subscriber=self.request.user)[0]
         customer.add_card(form.cleaned_data['stripeToken'])
         # customer.subscribe('plan_DNCfz58DVpORr8', trial_end=datetime.today() + timedelta(days=15))
         customer.subscribe(stripe.plan_id)
