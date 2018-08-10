@@ -57,7 +57,7 @@
         <div class="etape1">{# eq select your plan #}
             <h2>{% trans "Profite de toutes les fonctionnalités du site pour" %}</h2>
             {% block basket_form_main %}
-            <form action="{% url 'subscribe' %}" method="post" class="basket_summary" id="basket_formset">
+            <form action="{% url 'checkout:preview' %}" method="post" class="basket_summary" id="basket_formset">
                 <span class="the-total-price">
                     {% csrf_token %}
                     {{ formset.management_form }}

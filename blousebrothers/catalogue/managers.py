@@ -28,6 +28,7 @@ class BrowsableProductManager(BaseBrowsableProductManager):
                 )
             )
             if not user.is_staff:
+                qs = qs.exclude(conf__isnull=True)
                 qs = qs.filter(
                     Q(conf__for_sale=True) |
                     Q(

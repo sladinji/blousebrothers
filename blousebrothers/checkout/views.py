@@ -1,4 +1,5 @@
 from decimal import Decimal
+from djstripe.models import Customer
 from django.apps import apps
 from django.contrib import messages
 from django.conf import settings
@@ -37,14 +38,19 @@ class PaymentDetailsView(CorePaymentDetailsView):
         return ctx
 
     def handle_payment(self, order_number, total, **kwargs):
-        if total.excl_tax == Decimal('0.00'):
-            return
-        stripe_ref = Facade().charge(
-            order_number,
-            total,
-            card=self.request.POST[STRIPE_TOKEN],
-            description=self.payment_description(order_number, total, **kwargs),
-            metadata=self.payment_metadata(order_number, total, **kwargs))
+        #if total.excl_tax == Decimal('0.00'):
+        customer = Customer.get_or_create(subscriber=self.request.user)[0]
+        customer.add_card(self.request.POST[STRIPE_TOKEN])
+        # customer.subscribe('plan_DNCfz58DVpORr8', trial_end=datetime.today() + timedelta(days=15))
+        customer.subscribe(stripe.plan_id)
+        stripe_ref = customer.subscription.stripe_id
+        #else:
+        #    stripe_ref = Facade().charge(
+        #        order_number,
+        #        total,
+        #        card=self.request.POST[STRIPE_TOKEN],
+        #        description=self.payment_description(order_number, total, **kwargs),
+        #        metadata=self.payment_metadata(order_number, total, **kwargs))
 
         source_type, __ = SourceType.objects.get_or_create(name=PAYMENT_METHOD_STRIPE)
         source = Source(

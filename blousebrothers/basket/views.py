@@ -94,8 +94,7 @@ class BasketAddView(CoreBasketAddView):
                     messages.success(self.request, msg, extra_tags='safe noicon')
                     test.delete()
                     return HttpResponseRedirect(
-                        reverse("users:subscription",
-                                kwargs={'sub_id': 0}) + '?next={}'.format(self.request.path)
+                        reverse("users:redirect") + '?next={}'.format(self.request.path)
                     )
             except Exception as ex:
                 test.delete()
@@ -138,5 +137,3 @@ class VoucherAddView(CoreVoucherAddView):
         #                    extra_tags='safe noicon')
         #      return redirect(reverse('cards:home'))
         return super().form_valid(form)
-
-
