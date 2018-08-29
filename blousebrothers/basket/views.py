@@ -76,7 +76,7 @@ class BasketAddView(CoreBasketAddView):
                             id__in=self.request.user.bbgroups.all()
                         ).exists():
                     if self.request.user.subscription and self.request.user.subscription.price_paid > 0 \
-                            or self.request.user.customer.subscription.plan.amount > 0:
+                            or self.request.user.customer and self.request.user.customer.subscription.plan.amount > 0:
                         # Do not create sale for user with subscription price = O (référents...)
                         Sale.objects.create(
                             conferencier=form.product.conf.owner,
