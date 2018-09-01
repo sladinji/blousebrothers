@@ -38,6 +38,8 @@ def analyse_conf(conf):
     conf.edition_progress = int(progress)
     conf.save()
     confdict = model_to_dict(conf)
+    confdict.pop('specialities')
+    confdict.pop('items')
     confdict.update(pk=conf.id)  # to be compatible with djng rest api
     return {
         'total_q': total_q,

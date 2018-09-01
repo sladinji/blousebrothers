@@ -163,8 +163,6 @@ class ConferenceUpdateView(ConferenceWritePermissionMixin, JSONResponseMixin, Up
     def sync_data(self, edit_data):
         # process in_data
         conf, question, answers, images, qimages, ansimages, qexpimages = edit_data
-        conf.pop('items')
-        conf.pop('specialities')
         conf_pk = conf.pop('pk')
         Conference.objects.filter(pk=conf_pk).update(**conf)
         question.pop('specialities')
