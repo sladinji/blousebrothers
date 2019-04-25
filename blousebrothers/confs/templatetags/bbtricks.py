@@ -266,6 +266,8 @@ def tva(amount):
 
 @register.filter
 def HT(amount):
+    if not amount:
+        return 0
     return (amount / Decimal("1.20")).quantize(Decimal('.01'), rounding=ROUND_DOWN)
 
 
