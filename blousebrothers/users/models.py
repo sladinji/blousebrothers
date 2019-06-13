@@ -416,7 +416,8 @@ class User(AbstractUser):
 
     @cached_property
     def has_active_subscription(self):
-        return self.customer and self.customer.has_active_subscription()
+        return True
+        #return self.customer and self.customer.has_active_subscription()
 
     @cached_property
     def has_full_access(self):
