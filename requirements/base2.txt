@@ -1,5 +1,5 @@
 django-jchart==0.4.2
-numpy==1.14.5
+numpy==1.22.0
 scipy==1.1.0
 scikit-learn==0.18.1
 django-weasyprint==0.5.4
